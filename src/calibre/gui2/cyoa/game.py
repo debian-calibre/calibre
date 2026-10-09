@@ -6,10 +6,10 @@
 # box below it to enter the action to take. A picture of the scene currently
 # scrolled into view is shown on the right, when an image AI is configured.
 # The game is auto-saved after every turn; the toolbar allows saving under a
-# name of the player's choosing, loading such saves, rewinding, editing the
-# world (its characters and the story memory the AI is given) and starting
-# over in a new world, while a checkbox in the scene panel turns scene
-# images on/off.
+# name of the player's choosing, loading such saves, rewinding or restarting,
+# editing the world (its characters and the story memory the AI is given) and
+# starting over in a new world, while a checkbox in the scene panel turns
+# scene images on/off.
 
 from bisect import bisect_right
 from collections.abc import Callable
@@ -26,10 +26,10 @@ from qt.core import (
     QCursor,
     QDialog,
     QDialogButtonBox,
+    QFormLayout,
     QHBoxLayout,
     QIcon,
     QImage,
-    QInputDialog,
     QKeySequence,
     QLabel,
     QMenu,
@@ -60,9 +60,12 @@ from calibre.ai.cyoa import (
     PROTAGONIST_ID,
     AIProvider,
     GameState,
+    InvalidAIResponse,
     NonPlayerCharacter,
     PlayerCharacter,
     QuickAction,
+    adopt_turn,
+    apply_character_edits,
     deserialize_game,
     next_turn,
     npc_character_ids,
@@ -143,8 +146,110 @@ class SceneImageResult(NamedTuple):
     error_details: str = ''
 
 
+class BackToTurnDialog(Dialog):
+    # Asks for the earlier turn to go back to, either as a number of turns to
+    # go back by or as the number of the turn itself. The two boxes are kept
+    # in step, so whichever the player changed last decides the turn. Also
+    # offers restarting the adventure, see restart_chosen.
+
+    def __init__(self, num_turns: int, parent: QWidget | None = None) -> None:
+        self.num_turns = num_turns
+        # Set when the player asks to restart the adventure rather than to go
+        # back to an earlier turn.
+        self.restart_chosen = False
+        super().__init__(_('Back to turn'), 'cyoa-back-to-turn', parent)
+
+    def setup_ui(self) -> None:
+        l = QVBoxLayout(self)
+        can_go_back = self.num_turns > 1
+        if can_go_back:
+            msg = _(
+                'The adventure is at turn {}. Go back to an earlier turn, discarding all the turns after it.'
+                ' Any unsaved progress will be lost. Use the Save button to keep the game as it is now.'
+            ).format(self.num_turns)
+        else:
+            msg = _('There are no earlier turns to go back to.')
+        la = QLabel(msg, self)
+        la.setWordWrap(True)
+        l.addWidget(la)
+
+        f = QFormLayout()
+        max_back = max(1, self.num_turns - 1)
+        self.back_by = sb = QSpinBox(self)
+        sb.setRange(1, max_back)
+        sb.setToolTip('<p>' + _('How many turns to go back from the current turn'))
+        f.addRow(_('Number of turns to go &back:'), sb)
+        self.turn_number = tn = QSpinBox(self)
+        tn.setRange(1, max_back)
+        tn.setValue(max_back)
+        tn.setToolTip('<p>' + _('The number of the turn to go back to'))
+        f.addRow(_('Or go to turn &number:'), tn)
+        sb.valueChanged.connect(self.back_by_changed)
+        tn.valueChanged.connect(self.turn_number_changed)
+        l.addLayout(f)
+        self.summary_label = sl = QLabel(self)
+        sl.setWordWrap(True)
+        l.addWidget(sl)
+        l.addStretch()
+
+        ok = self.bb.button(QDialogButtonBox.StandardButton.Ok)
+        if ok is not None:
+            ok.setText(_('&Go back'))
+            ok.setIcon(QIcon.ic('edit-undo.png'))
+            ok.setEnabled(can_go_back)
+        rb = self.bb.addButton(_('&Restart…'), QDialogButtonBox.ButtonRole.ActionRole)
+        if rb is not None:
+            rb.setIcon(QIcon.ic('restart.png'))
+            rb.setToolTip(
+                '<p>'
+                + _(
+                    'Start the adventure over from the beginning. You are first taken to the world editing screen,'
+                    ' to change the world and its characters, if you like, before actually restarting.'
+                )
+            )
+            rb.clicked.connect(self.restart)
+        l.addWidget(self.bb)
+        for w in (sb, tn):
+            w.setEnabled(can_go_back)
+        self.update_summary()
+        (sb if can_go_back else self.bb).setFocus(Qt.FocusReason.OtherFocusReason)
+
+    def back_by_changed(self, num: int) -> None:
+        self.turn_number.blockSignals(True)
+        self.turn_number.setValue(self.num_turns - num)
+        self.turn_number.blockSignals(False)
+        self.update_summary()
+
+    def turn_number_changed(self, turn: int) -> None:
+        self.back_by.blockSignals(True)
+        self.back_by.setValue(self.num_turns - turn)
+        self.back_by.blockSignals(False)
+        self.update_summary()
+
+    def update_summary(self) -> None:
+        if self.num_turns < 2:
+            self.summary_label.setText('')
+            return
+        num = self.num_turns - self.target_turn
+        self.summary_label.setText(
+            ngettext('Go back to turn {0}, discarding {1} turn.', 'Go back to turn {0}, discarding {1} turns.', num).format(self.target_turn, num)
+        )
+
+    @property
+    def target_turn(self) -> int:
+        return self.turn_number.value()
+
+    def restart(self) -> None:
+        self.restart_chosen = True
+        self.accept()
+
+
 class GameWidget(QWidget):
     game_abandoned = pyqtSignal()
+    # The player wants to start the adventure over, after changing the world
+    # and its characters, if they like. The game is left as it is until they
+    # actually start the new one.
+    restart_requested = pyqtSignal()
 
     turn_result_received = pyqtSignal(int, object, object)  # (call_number, GameState the turn was played on, StructuredOutputResult)
     turn_narrative_received = pyqtSignal(int, str)  # (call_number, the next fragment of the prose of the turn being written)
@@ -175,6 +280,11 @@ class GameWidget(QWidget):
         # What the in-flight turn generation was asked for, so that it can be
         # retried if the turn times out or fails.
         self.turn_request: tuple[str, bool] | None = None
+        # Set when the player edits the world while a turn is being written.
+        # That turn is played on a copy of the game state taken before the
+        # edits, so simply adopting the copy when the turn arrives would
+        # throw them away, see state_with_turn().
+        self.world_edited_during_turn = False
         # Set while the dialog asking what to do about a turn that has taken
         # too long is open. The turn is still in flight, so a result that
         # arrives during that dialog's nested event loop is stashed in
@@ -246,11 +356,10 @@ class GameWidget(QWidget):
 
         self.save_action = toolbar_action('save.png', _('Save'), _('Save this game under a name of your choosing'), self.save_game_as)
         self.load_action = toolbar_action('document_open.png', _('Load'), _('Load a previously saved game, replacing the current game'), self.load_saved_game)
-        self.restart_action = toolbar_action('restart.png', _('Restart'), _('Restart the adventure from the first turn'), self.restart_game)
         self.back_action = toolbar_action(
             'edit-undo.png',
             _('Back to turn'),
-            _('Go back to an earlier turn, discarding all turns after it. Press {} to go back one turn').format('Alt+Left'),
+            _('Go back to an earlier turn, discarding all turns after it, or restart the adventure. Press {} to go back one turn').format('Alt+Left'),
             self.back_to_turn,
         )
         self.read_action = toolbar_action('view.png', _('Read'), _('Read the story so far, chapter by chapter, as a book'), self.read_story)
@@ -354,6 +463,9 @@ class GameWidget(QWidget):
         a.triggered.connect(self.show_scene_image_popup)
         self.edit_image_prompt_action = a = QAction(QIcon.ic('edit_input.png'), _('&Edit prompt and regenerate image'), self)
         a.triggered.connect(self.edit_scene_image_prompt)
+        self.copy_turn_text_only_action = a = QAction(QIcon.ic('edit-copy.png'), _('Copy current turn &text to clipboard'), self)
+        a.triggered.connect(self.copy_current_turn_text_only)
+        sv.copy_turn_text_only_action = a
         self.copy_turn_action = a = QAction(QIcon.ic('edit-copy.png'), _('Copy current &turn to clipboard'), self)
         a.setShortcut(QKeySequence('Ctrl+Shift+C', QKeySequence.SequenceFormat.PortableText))
         a.setShortcutContext(Qt.ShortcutContext.WidgetWithChildrenShortcut)
@@ -689,6 +801,30 @@ class GameWidget(QWidget):
             self.status_bar.showMessage(_('Copied the text and scene picture of turn {} to the clipboard').format(tn), 5000)
         else:
             self.status_bar.showMessage(_('Copied the text of turn {} to the clipboard').format(tn), 5000)
+
+    def copy_current_turn_text_only(self) -> None:
+        state = self.state
+        tn = self.visible_turn_number()
+        if state is None or not tn:
+            return
+        t = state.turns[tn - 1]
+        text_parts: list[str] = []
+        html_parts: list[str] = []
+        if t.player_input:
+            text_parts.append(f'➤ {t.player_input}')
+            html_parts.append(f'<p><i>➤ {escape(t.player_input)}</i></p>')
+        text_parts.append(t.turn.narrative)
+        html_parts.append(response_to_html(t.turn.narrative, ContentType.markdown))
+        if tn == len(state.turns) and t.turn.quick_actions:
+            text_parts.append(_('Quick actions') + ':\n' + '\n'.join(f'• {quick_action_as_text(a)}' for a in t.turn.quick_actions))
+            html_parts.append(f'<h4>{_("Quick actions")}</h4>' + ''.join(f'<p>• {escape(a.text)}{quick_action_kind_html(a)}</p>' for a in t.turn.quick_actions))
+        md = QMimeData()
+        md.setText('\n\n'.join(text_parts))
+        md.setHtml(''.join(html_parts))
+        clipboard = qapplication_or_fail().clipboard()
+        assert clipboard is not None
+        clipboard.setMimeData(md)
+        self.status_bar.showMessage(_('Copied the text of turn {} to the clipboard').format(tn), 5000)
 
     def scroll_to_turn(self, turn_number: int) -> None:
         if not self.isVisible():
@@ -1037,6 +1173,9 @@ class GameWidget(QWidget):
         # Play the turn on a copy so that rewinding/loading while the AI is
         # generating cannot corrupt the current game state.
         snapshot = deserialize_game(serialize_game(self.state))
+        # The copy is of the world as it stands now, so any edit of it from
+        # here on is one the copy does not have, see state_with_turn().
+        self.world_edited_during_turn = False
         self.turn_call = next(self.turn_counter)
         self.turn_request = (player_input, interesting_event)
         self.streamed_narrative = ''
@@ -1128,7 +1267,7 @@ class GameWidget(QWidget):
                 self.request_turn(player_input, interesting_event)
             return
         chapter_before = self.state.current_chapter if self.state is not None else -1
-        self.state = snapshot
+        self.state = state = self.state_with_turn(snapshot)
         self.session_cost += res.cost
         was_streaming = bool(self.streamed_narrative)
         self.streamed_narrative = ''
@@ -1143,7 +1282,7 @@ class GameWidget(QWidget):
         # rest of the story leaves the view, nor when the AI did not stream
         # its prose, as then the turn has not been seen at all yet.
         anchor_y = None
-        if was_streaming and self.streaming_turn_start >= 0 and snapshot.current_chapter == chapter_before:
+        if was_streaming and self.streaming_turn_start >= 0 and state.current_chapter == chapter_before:
             anchor_y = self.story_y_of_position(self.streaming_turn_start)
         self.prompt_edit.clear()
         self.prompt_edit.setFocus(Qt.FocusReason.OtherFocusReason)
@@ -1152,8 +1291,35 @@ class GameWidget(QWidget):
         if anchor_y is not None and self.turn_positions:
             self.scroll_position_to_y(self.turn_positions[-1][0], anchor_y)
         if self.images_enabled:
-            self.request_image(len(snapshot.turns))
+            self.request_image(len(state.turns))
         self._notify_turn_ready()
+
+    def state_with_turn(self, snapshot: GameState) -> GameState:
+        # The game state to play on now that the turn written on snapshot, the
+        # copy of the game state the turn was played on, has arrived. Normally
+        # that copy simply becomes the game. When the player edited the world
+        # while the AI was writing, however, the copy predates their edits, so
+        # adopting it would silently discard them and every later turn, and
+        # the picture generated for it, would go back to describing the
+        # characters as they were before the edit. So the turn the AI wrote is
+        # moved onto the edited state instead, with its summary re-derived
+        # from the edited story memory, see calibre.ai.cyoa.adopt_turn().
+        state = self.state
+        if state is None or not self.world_edited_during_turn:
+            return snapshot
+        self.world_edited_during_turn = False
+        # Rewinding or loading a game discards the turn in flight, see
+        # cancel_pending_ai_calls(), so the edited state holds exactly the
+        # turns the copy was made from, plus nothing.
+        if len(snapshot.turns) != len(state.turns) + 1:
+            return snapshot
+        try:
+            adopt_turn(state, snapshot.turns[-1])
+        except InvalidAIResponse:
+            # The edited story memory cannot carry the turn, so the turn wins
+            # over the edits: it is what the player has just read.
+            return snapshot
+        return state
 
     def _notify_turn_ready(self) -> None:
         w = self.window()
@@ -1286,7 +1452,7 @@ class GameWidget(QWidget):
     def save_game_as(self) -> None:
         if self.state is None:
             return
-        d = SaveGameDialog(self.last_save_name, self)
+        d = SaveGameDialog(self.last_save_name, self.state, self.images, self.portraits, data.creation_time(data.game_file(self.game_id)), self)
         if d.exec() != Dialog.DialogCode.Accepted:
             return
         name = d.save_name
@@ -1333,25 +1499,17 @@ class GameWidget(QWidget):
         self.autosave()
         self.refresh_ui()
 
-    def restart_game(self) -> None:
-        state = self.state
-        if state is None or len(state.turns) < 2:
-            self.status_bar.showMessage(_('The adventure is already at its first turn.'), 5000)
-            return
-        if question_dialog(
-            self, _('Are you sure?'), _('Restart the adventure from the first turn? All later turns are discarded and any unsaved progress will be lost.')
-        ):
-            self.rewind_to_turn(1)
-
     def back_to_turn(self) -> None:
         state = self.state
-        if state is None or len(state.turns) < 2:
-            self.status_bar.showMessage(_('There are no earlier turns to go back to.'), 5000)
+        if state is None:
             return
-        max_back = len(state.turns) - 1
-        num, ok = QInputDialog.getInt(self, _('Back to turn'), _('Number of turns to go back (1 to {}):').format(max_back), 1, 1, max_back)
-        if ok:
-            self.go_back(num)
+        d = BackToTurnDialog(len(state.turns), self)
+        if d.exec() != Dialog.DialogCode.Accepted:
+            return
+        if d.restart_chosen:
+            self.restart_requested.emit()
+        else:
+            self.rewind_to_turn(d.target_turn)
 
     def go_back(self, num_turns: int = 1) -> None:
         state = self.state
@@ -1405,14 +1563,13 @@ class GameWidget(QWidget):
             for old_id, new_id in zip(old_ids, npc_character_ids(state.world.npcs)):
                 if old_id != new_id and (p := self.portraits.pop(old_id, None)) is not None:
                     self.portraits[new_id] = p
-        # Apply the edits to the summaries of all stored turns, matching by
-        # the stable character ids, so that they survive rewinding the game
-        # and apply to a character the player renamed here.
-        if edits:
-            for i, t in enumerate(state.turns):
-                characters = tuple(edits.get(c.id, c) for c in t.summary.characters)
-                if characters != t.summary.characters:
-                    state.turns[i] = t._replace(summary=t.summary._replace(characters=characters))
+        # Apply the edits to the summaries of the stored turns. What is
+        # durable about a character reaches every turn, so that it survives
+        # rewinding the game, and the state they are in only the last one, see
+        # calibre.ai.cyoa.apply_character_edits(). The played character is
+        # passed separately because the world, not the summary, holds the copy
+        # of them the dialog edits.
+        apply_character_edits(state, edits, d.player_character)
         # The story memory, unlike the characters, is a snapshot of where the
         # story stands, so it is applied to the last turn alone: going back to
         # an earlier turn must restore the memory as it was at that turn.
@@ -1430,6 +1587,11 @@ class GameWidget(QWidget):
         # built from the game state every turn, so the prose already written
         # keeps the style it was written in.
         state.style = d.updated_style
+        if self.turn_call > -1:
+            # The turn the AI is writing is played on a copy of the game state
+            # taken before these edits, so it must not simply replace the
+            # state they were made on, see state_with_turn().
+            self.world_edited_during_turn = True
         # The saved world the game started from is only its template, so it is
         # deliberately left alone: the edited characters and their portraits
         # belong to this game and are stored with it.
@@ -1545,6 +1707,7 @@ if __name__ == '__main__':
     # calibre config directory.
     w.load_game('', start_game('a foggy city', world))
     w.game_abandoned.connect(lambda: print('game abandoned'))
+    w.restart_requested.connect(lambda: print('restart requested'))
     w.resize(1000, 720)
     w.show()
     app.exec()

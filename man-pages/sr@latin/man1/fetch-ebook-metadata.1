@@ -1,0 +1,107 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "FETCH-EBOOK-METADATA" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+fetch-ebook-metadata \- fetch-ebook-metadata
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+fetch\-ebook\-metadata [options]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Preuzmite metapodatke o knjizi sa onlajn izvora. Morate navesti barem jedno
+od sledećeg: naslov, autore ili ISBN.
+.sp
+Kada god prosleđujete argumente programu \fBfetch\-ebook\-metadata\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH [OPCIJE]
+.INDENT 0.0
+.TP
+.B \-\-allowed\-plugin, \-p
+Navedite ime priključka za preuzimanje metapodataka koji će se koristiti. Podrazumevano će se koristiti svi priključci za metapodatke. Može se navesti više puta za više priključaka. Sva imena priključaka: Google, Google Images, Amazon.com, Edelweiss, Open Library
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Autor(i) knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Navedite ime datoteke. Korice, ako su dostupne, biće sačuvane u njoj. Bez ove opcije, korice neće biti preuzete.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier, \-I
+Identifikatori kao što su ASIN/Goodreads id itd. Mogu se navesti više puta za više identifikatora. Na primer: \fB\-\-identifier\fP asin:B0082BAJA0
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn, \-i
+ISBN knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-opf, \-o
+Ispiši metapodatke u OPF formatu umesto u tekstu čitljivom za ljude.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout, \-d
+Vremensko ograničenje u sekundama. Podrazumevano je 30
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Naslov knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Ispiši dnevnik u konzolu (stderr)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

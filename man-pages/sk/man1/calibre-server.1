@@ -28,114 +28,114 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-server [options] [path to library folder...]
+calibre\-server [voľby] [cesta k priečinku knižnice...]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Start the calibre Content server. The calibre Content server exposes your
-calibre libraries over the internet. You can specify the path to the library
-folders as arguments to \fBcalibre\-server\fP\&. If you do not specify any paths, all the
-libraries that the main calibre program knows about will be used.
+Spustí Obsahový server calibre. Obsahový server calibre sprístupní vaše
+knižnice calibre cez internet. Cesty k priečinkom knižníc
+môžete zadať ako argumenty pre \fBcalibre\-server\fP\&. Ak nezadáte žiadne cesty, použijú sa všetky
+knižnice, o ktorých vie hlavný program calibre.
 .sp
-Whenever you pass arguments to \fBcalibre\-server\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBcalibre\-server\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
-Path to the access log file. This log contains information about clients connecting to the server and making requests. By default no access logging is done.
+Cesta k súboru prístupového záznamu. Tento záznam obsahuje informácie o klientoch pripájajúcich sa k serveru a vytvárajúcich požiadavky. Predvolene sa prístupové záznamy nevytvárajú.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ajax\-timeout
-Time (in seconds) to wait for a response from the server when making queries.
+Čas (v sekundách) čakania na odpoveď zo servera pri vykonávaní dopytov.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auth\-mode
-Choose the type of authentication used.     Set the HTTP authentication mode used by the server. Set to \fB\(dq\fPbasic\fB\(dq\fP if you are putting this server behind an SSL proxy. Otherwise, leave it as \fB\(dq\fPauto\fB\(dq\fP, which will use \fB\(dq\fPbasic\fB\(dq\fP if SSL is configured otherwise it will use \fB\(dq\fPdigest\fB\(dq\fP\&.
+Vybrať typ použitej autentifikácie.         Nastaví režim overovania HTTP použitý serverom. Nastavte na \fB\(dq\fPbasic\fB\(dq\fP, ak tento server umiestňujete za proxy SSL. Inak ho ponechajte na \fB\(dq\fPauto\fB\(dq\fP, čo použije \fB\(dq\fPbasic\fB\(dq\fP, ak je nakonfigurované SSL, inak sa použije \fB\(dq\fPdigest\fB\(dq\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-auto\-reload
-Automatically reload server when source code changes. Useful for development. You should also specify a small value for the shutdown timeout.
+Automaticky obnoviť server pri zmene zdrojového kódu. Užitočné pre vývoj. Mali by ste tiež zadať malú hodnotu pre časový limit vypnutia.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-after
-Number of login failures for ban.   The number of login failures after which an IP address is banned
+Počet neúspešných prihlásení na zablokovanie.       Počet neúspešných prihlásení, po ktorom je IP adresa zablokovaná
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ban\-for
-Ban IP addresses that have repeated login failures.         Temporarily bans access for IP addresses that have repeated login failures for the specified number of minutes. Useful to prevent attempts at guessing passwords. If set to zero, no banning is done.
+Blokovať IP adresy s opakovanými neúspešnými prihláseniami.         Dočasne zablokuje prístup pre IP adresy, ktoré majú opakované zlyhania prihlásenia, na zadaný počet minút. Užitočné na zabránenie pokusom o uhádnutie hesiel. Ak je nastavené na nulu, k blokovaniu nedochádza.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-book\-list\-mode
-Choose the default book list mode.  Set the default book list mode that will be used for new users. Individual users can override the default in their own settings. The default is to use a cover grid.
+Vybrať predvolený režim zoznamu kníh.       Nastaviť predvolený režim zoznamu kníh pre nových používateľov. Jednotliví používatelia môžu predvolené nastavenie prepísať vo vlastných nastaveniach. Predvolené je použiť mriežku obálok.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-min\-size
-Minimum size for which responses use data compression (in bytes).
+Minimálna veľkosť, pri ktorej odpovede používajú kompresiu údajov (v bajtoch).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-custom\-list\-template
-Cesta k súboru JSON obsahujúcemu šablónu pre režim vlastného zoznamu kníh. Najjednoduchší spôsob, ako vytvoriť takúto šablónu, je prejsť v programe Calibre do Nastavenia\-> Zdieľanie cez sieť\-> Šablóna zoznamu kníh, vytvoriť šablónu a exportovať ju.
+Cesta k súboru JSON obsahujúcemu šablónu pre režim vlastného zoznamu kníh. Najjednoduchší spôsob, ako vytvoriť takúto šablónu, je prejsť v programe calibre do Nastavenia\-> Zdieľanie cez sieť\-> Šablóna zoznamu kníh, vytvoriť šablónu a exportovať ju.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-daemonize
-Run process in background as a daemon (Linux only).
+Spustiť proces na pozadí ako démona (iba Linux).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-displayed\-fields
-Restrict displayed user\-defined fields.     Comma separated list of user\-defined metadata fields that will be displayed by the Content server in the /opds and /mobile views. If you specify this option, any fields not in this list will not be displayed. For example: my_rating,my_tags
+Obmedziť zobrazené používateľom definované polia.   Čiarkami oddelený zoznam používateľom definovaných polí metadát, ktoré bude zobrazovať Obsahový server v zobrazeniach /opds a /mobile. Ak túto voľbu zadáte, akékoľvek polia, ktoré nie sú v tomto zozname, sa nebudú zobrazovať. Napríklad: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-allow\-socket\-preallocation, \-\-disable\-allow\-socket\-preallocation
-Socket pre\-allocation, for example, with systemd socket activation. By default, this option is enabled.
+Predalokovanie soketu, napríklad pomocou aktivácie soketu systemd. V predvolenom nastavení je táto voľba povolená.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-auth, \-\-disable\-auth
-Password based authentication to access the server.         Normally, the server is unrestricted, allowing anyone to access it. You can restrict access to predefined users with this option. By default, this option is disabled.
+Autentifikácia heslom na prístup k serveru.         Bežne je server neobmedzený, čo umožňuje prístup komukoľvek. Touto voľbou môžete obmedziť prístup na vopred definovaných používateľov. V predvolenom nastavení je táto voľba zakázaná.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-fallback\-to\-detected\-interface, \-\-disable\-fallback\-to\-detected\-interface
-Fallback to auto\-detected interface.        If for some reason the server is unable to bind to the interface specified in the listen_on option, then it will try to detect an interface that connects to the outside world and bind to that. By default, this option is enabled.
+Použiť automaticky rozpoznané rozhranie ako náhradu.        Ak sa server z nejakého dôvodu nedokáže pripojiť k rozhraniu zadanému vo voľbe listen_on, pokúsi sa zistiť rozhranie, ktoré sa pripája k vonkajšiemu svetu, a pripojiť sa k nemu. V predvolenom nastavení je táto voľba povolená.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-local\-write, \-\-disable\-local\-write
-Allow un\-authenticated local connections to make changes.   Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the same computer as the server is running on to make changes. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means any program running on the computer can make changes to your calibre libraries. In particular, the Firefox web browser allows arbitrary websites to do so as well. By default, this option is disabled.
+Povoliť neautentifikovaným lokálnym pripojeniam robiť zmeny.        Ak nezapnete overovanie, server bežne funguje v režime iba na čítanie, aby anonymným používateľom neumožňoval vykonávať zmeny vo vašich knižniciach calibre. Táto voľba umožní komukoľvek, kto sa pripája z toho istého počítača, na ktorom beží server, vykonávať zmeny. To je užitočné, ak chcete server prevádzkovať bez overovania, ale napriek tomu použiť calibredb na vykonávanie zmien vo vašich knižniciach calibre. Upozorňujeme, že zapnutie tejto voľby znamená, že akýkoľvek program bežiaci na počítači môže vykonávať zmeny vo vašich knižniciach calibre. Konkrétne, webový prehliadač Firefox umožňuje robiť to isté aj ľubovoľným webovým stránkam. V predvolenom nastavení je táto voľba zakázaná.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-log\-not\-found, \-\-disable\-log\-not\-found
-Log HTTP 404 (Not Found) requests.  Normally, the server logs all HTTP requests for resources that are not found. This can generate a lot of log spam, if your server is targeted by bots. Use this option to turn it off. By default, this option is enabled.
+Zaznamenávať požiadavky HTTP 404 (Nenájdené).       Bežne server zaznamenáva všetky požiadavky HTTP na nenájdené zdroje. Toto môže generovať veľa spamu v zázname, ak je váš server terčom botov. Túto voľbu použite na vypnutie. V predvolenom nastavení je táto voľba povolená.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-bonjour, \-\-disable\-use\-bonjour
-Advertise OPDS feeds via BonJour.   Advertise the OPDS feeds via the BonJour service, so that OPDS based reading apps can detect and connect to the server automatically. By default, this option is enabled.
+Propagovať kanály OPDS cez BonJour.         Propagovať kanály OPDS cez službu BonJour, aby čítacie aplikácie založené na OPDS mohli automaticky rozpoznať server a pripojiť sa k nemu. V predvolenom nastavení je táto voľba povolená.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-enable\-use\-sendfile, \-\-disable\-use\-sendfile
-Zero copy file transfers for increased performance.         This will use zero\-copy in\-kernel transfers when sending files over the network, increasing performance. However, it can cause corrupted file transfers on some broken filesystems. If you experience corrupted file transfers, turn it off. By default, this option is enabled.
+Prenosy súborov bez kopírovania pre vyšší výkon.    Toto pri odosielaní súborov cez sieť použije prenosy typu zero\-copy priamo v jadre, čo zvýši výkon. Môže to však spôsobiť poškodenie prenosov súborov na niektorých chybných súborových systémoch. Ak zaznamenáte poškodené prenosy súborov, vypnite to. V predvolenom nastavení je táto voľba povolená.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -145,62 +145,62 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-ignored\-fields
-Ignored user\-defined metadata fields.       Comma separated list of user\-defined metadata fields that will not be displayed by the Content server in the /opds and /mobile views. For example: my_rating,my_tags
+Ignorované používateľom definované polia metadát.   Zoznam používateľom definovaných polí metadát oddelených čiarkou, ktoré obsahový server nezobrazí v zobrazeniach /opds a /mobile. Napríklad: my_rating,my_tags
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-The interface on which to listen for connections.   The default is to listen on all available IPv6 and IPv4 interfaces. You can change this to, for example, \fB\(dq\fP127.0.0.1\fB\(dq\fP to only listen for IPv4 connections from the local machine, or to \fB\(dq\fP0.0.0.0\fB\(dq\fP to listen to all incoming IPv4 connections.
+Rozhranie, na ktorom sa majú počúvať pripojenia.    Predvolene sa počúva na všetkých dostupných rozhraniach IPv6 a IPv4. Toto môžete zmeniť napríklad na \fB\(dq\fP127.0.0.1\fB\(dq\fP, aby sa počúvali len pripojenia IPv4 z lokálneho počítača, alebo na \fB\(dq\fP0.0.0.0\fB\(dq\fP, aby sa počúvali všetky prichádzajúce pripojenia IPv4.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-log
-Path to log file for server log. This log contains server information and errors, not access logs. By default it is written to stdout.
+Cesta k súboru záznamu pre záznam servera. Tento záznam obsahuje informácie a chyby servera, nie prístupové záznamy. Predvolene sa zapisuje do stdout.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-manage\-users
-Manage the database of users allowed to connect to this server. You can use it in automated mode by adding a \-\-. See calibre\-server \fB\-\-manage\-users\fP \fB\-\-\fP help for details. See also the \fB\-\-userdb\fP option.
+Spravovať databázu používateľov s povoleným pripojením k tomuto serveru. Môžete ju použiť v automatizovanom režime pridaním \-\-. Podrobnosti nájdete v calibre\-server \fB\-\-manage\-users\fP \fB\-\-\fP help. Pozrite tiež voľbu \fB\-\-userdb\fP\&.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-header\-line\-size
-Max. size of single HTTP header (in KB).
+Max. veľkosť jednej hlavičky HTTP (v KB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-job\-time
-Maximum time for worker processes.  Maximum amount of time worker processes are allowed to run (in minutes). Set to zero for no limit.
+Maximálny čas pre pracovné procesy.         Maximálny čas, počas ktorého môžu pracovné procesy bežať (v minútach). Nastavte na nulu pre neobmedzený čas.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-jobs
-Maximum number of worker processes.         Worker processes are launched as needed and used for large jobs such as preparing a book for viewing, adding books, converting, etc. Normally, the max. number of such processes is based on the number of CPU cores. You can control it by this setting.
+Maximálny počet pracovných procesov.        Pracovné procesy sa spúšťajú podľa potreby a používajú sa na veľké úlohy, ako je príprava knihy na zobrazenie, pridávanie kníh, konverzia atď. Zvyčajne je maximálny počet takýchto procesov založený na počte jadier CPU. Môžete ho ovládať pomocou tohto nastavenia.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-log\-size
-Max. log file size (in MB).         The maximum size of log files, generated by the server. When the log becomes larger than this size, it is automatically rotated. Set to zero to disable log rotation.
+Max. veľkosť súboru záznamu (v MB).         Maximálna veľkosť súborov záznamu generovaných serverom. Keď záznam prekročí túto veľkosť, automaticky sa rotuje. Nastavte na nulu na zakázanie rotácie záznamov.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-items
-Maximum number of books in OPDS feeds.      The maximum number of books that the server will return in a single OPDS acquisition feed.
+Maximálny počet kníh v kanáloch OPDS.       Maximálny počet kníh, ktoré server vráti v jednom kanáli získavania OPDS.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-opds\-ungrouped\-items
-Maximum number of ungrouped items in OPDS feeds.    Group items in categories such as author/tags by first letter when there are more than this number of items. Set to zero to disable.
+Maximálny počet neskupinovaných položiek v kanáloch OPDS.   Zoskupiť položky v kategóriách ako autor/značky podľa prvého písmena, keď je viac ako tento počet položiek. Nastavte na nulu na zakázanie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-max\-request\-body\-size
-Max. allowed size for files uploaded to the server (in MB).
+Max. povolená veľkosť súborov nahrávaných na server (v MB).
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-num\-per\-page
-Number of books to show in a single page.   The number of books to show in a single page in the browser.
+Počet kníh na zobrazenie na jednej strane.  Počet kníh na zobrazenie na jednej strane v prehliadači.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -210,47 +210,47 @@ Zapísať PID procesu do určeného súboru
 .INDENT 0.0
 .TP
 .B \-\-port
-The port on which to listen for connections.
+Port, na ktorom sa majú počúvať pripojenia.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search\-the\-net\-urls
-Cesta k súboru JSON obsahujúcemu URL adresy pre funkciu \fB\(dq\fPHľadať na internete\fB\(dq\fP\&. Najjednoduchší spôsob, ako takýto súbor vytvoriť, je prejsť v programe Calibre do Nastavenia\-> Zdieľanie cez sieť\->Hľadať na internete, vytvoriť URL adresy a exportovať ich.
+Cesta k súboru JSON obsahujúcemu URL adresy pre funkciu \fB\(dq\fPHľadať na internete\fB\(dq\fP\&. Najjednoduchší spôsob, ako takýto súbor vytvoriť, je prejsť v programe calibre do Nastavenia\-> Zdieľanie cez sieť\->Hľadať na internete, vytvoriť URL adresy a exportovať ich.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-shutdown\-timeout
-Total time in seconds to wait for clean shutdown.
+Celkový čas v sekundách na čakanie na čisté ukončenie.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-certfile
-Path to the SSL certificate file.
+Cesta k súboru certifikátu SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ssl\-keyfile
-Path to the SSL private key file.
+Cesta k súboru súkromného kľúča SSL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout
-Time (in seconds) after which an idle connection is closed.
+Čas (v sekundách), po ktorom sa nečinné pripojenie zatvorí.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-Allow un\-authenticated connections from specific IP addresses to make changes.      Normally, if you do not turn on authentication, the server operates in read\-only mode, so as to not allow anonymous users to make changes to your calibre libraries. This option allows anybody connecting from the specified IP addresses to make changes. Must be a comma separated list of address or network specifications. This is useful if you want to run the server without authentication but still use calibredb to make changes to your calibre libraries. Note that turning on this option means anyone connecting from the specified IP addresses can make changes to your calibre libraries.
+Povoliť neautentifikovaným pripojeniam zo zadaných IP adries vykonávať zmeny.       Ak nezapnete overovanie, server bežne funguje v režime iba na čítanie, aby anonymným používateľom neumožňoval vykonávať zmeny vo vašich knižniciach calibre. Táto voľba umožní komukoľvek, kto sa pripája zo zadaných IP adries, vykonávať zmeny. Musí to byť čiarkami oddelený zoznam adries alebo sieťových špecifikácií. To je užitočné, ak chcete server prevádzkovať bez overovania, ale napriek tomu použiť calibredb na vykonávanie zmien vo vašich knižniciach calibre. Upozorňujeme, že zapnutie tejto voľby znamená, že ktokoľvek, kto sa pripája zo zadaných IP adries, môže vykonávať zmeny vo vašich knižniciach calibre.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-url\-prefix
-A prefix to prepend to all URLs.    Useful if you wish to run this server behind a reverse proxy. For example use, /calibre as the URL prefix.
+Predpona, ktorá sa pridá pred všetky URL adresy.    Užitočné, ak chcete tento server spustiť za reverzným proxy. Napríklad použite /calibre ako predponu URL.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-userdb
-Path to the user database to use for authentication. The database is a SQLite file. To create it use \fB\-\-manage\-users\fP\&. You can read more about managing users at: \%<https://\:manual\:.calibre-ebook\:.com/\:server\:.html#\:managing-user-accounts-from-the-command-line-only>
+Cesta k používateľskej databáze na použitie pre autentifikáciu. Databáza je súbor SQLite. Na jej vytvorenie použite \fB\-\-manage\-users\fP\&. Viac o správe používateľov nájdete na: \%<https://\:manual\:.calibre-ebook\:.com/\:sk/\:server\:.html#\:managing-user-accounts-from-the-command-line-only>
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -260,7 +260,7 @@ zobraziť verziu programu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-worker\-count
-Number of worker threads used to process requests.
+Počet pracovných vlákien na spracovanie požiadaviek.
 .UNINDENT
 .SH Author
 Kovid Goyal

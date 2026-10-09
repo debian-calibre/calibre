@@ -28,56 +28,56 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-POLISH" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "EBOOK-POLISH" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 ebook-polish \- ebook-polish
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-ebook\-polish [options] input_file [output_file]
+ebook\-polish [voľby] vstupný_súbor [výstupný_súbor]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Polishing books is all about putting the shine of perfection onto
-your carefully crafted e\-books.
+Leštenie kníh je o tom, ako dať lesk dokonalosti
+vašim starostlivo vytvoreným e\-knihám.
 .sp
-Polishing tries to minimize the changes to the internal code of your e\-book.
-Unlike conversion, it does not flatten CSS, rename files, change font
-sizes, adjust margins, etc. Every action performs only the minimum set of
-changes needed for the desired effect.
+Leštenie sa snaží minimalizovať zmeny vo vnútornom kóde vašej e\-knihy.
+Na rozdiel od konverzie nemení CSS, nepremenúva súbory, nemení veľkosti
+písma, neupravuje okraje atď. Každá akcia vykoná iba minimálnu sadu
+zmien potrebných na dosiahnutie požadovaného efektu.
 .sp
-You should use this tool as the last step in your e\-book creation process.
+Tento nástroj by ste mali použiť ako posledný krok v procese vytvárania e\-knihy.
 .sp
-Note that polishing only works on files in the AZW3 alebo EPUB alebo KEPUB formats.
+Upozorňujeme, že leštenie funguje iba na súboroch vo formátoch AZW3 alebo EPUB alebo KEPUB.
 .sp
-Whenever you pass arguments to \fBebook\-polish\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBebook\-polish\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-add\-soft\-hyphens, \-H
-Add soft hyphens to all words in the book. This allows the book to be rendered better when the text is justified, in readers that do not support hyphenation.
+Pridať mäkké spojovníky do všetkých slov v knihe. Toto umožňuje lepšie vykreslenie knihy pri zarovnaní textu do bloku v čítačkách, ktoré nepodporujú delenie slov.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-compress\-images, \-i
-Losslessly compress images in the book, to reduce the filesize, without affecting image quality.
+Bezstratovo komprimovať obrázky v knihe na zmenšenie veľkosti súboru bez ovplyvnenia kvality obrázka.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Path to a cover image. Changes the cover specified in the e\-book. If no cover is present, or the cover is not properly identified, inserts a new cover.
+Cesta k obrázku obálky. Zmení obálku zadanú v e\-knihe. Ak obálka nie je prítomná, alebo nie je správne identifikovaná, vloží novú obálku.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-download\-external\-resources, \-d
-Download external resources such as images, stylesheets, etc. that point to URLs instead of files in the book. All such resources will be downloaded and added to the book so that the book no longer references any external resources.
+Stiahne externé zdroje, ako obrázky, štýly atď., ktoré ukazujú na URL adresy namiesto súborov v knihe. Všetky takéto zdroje sa stiahnu a pridajú do knihy, takže kniha už neodkazuje na žiadne externé zdroje.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-embed\-fonts, \-e
-Embed all fonts that are referenced in the document and are not already embedded. This will scan your computer for the fonts, and if they are found, they will be embedded into the document. Please ensure that you have the proper license for embedding the fonts used in this document.
+Vloží všetky písma, na ktoré sa v dokumente odkazuje a ktoré ešte nie sú vložené. Toto prehľadá váš počítač na písma, a ak sa nájdu, vložia sa do dokumentu. Uistite sa, že máte príslušnú licenciu na vloženie písiem použitých v tomto dokumente.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -87,32 +87,32 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-jacket, \-j
-Insert a \fB\(dq\fPbook jacket\fB\(dq\fP page at the start of the book that contains all the book metadata such as title, tags, authors, series, comments, etc. Any previous book jacket will be replaced.
+Vloží stránku \fB\(dq\fPobalu knihy\fB\(dq\fP na začiatok knihy, ktorá obsahuje všetky metadáta knihy, ako názov, značky, autorov, sériu, komentáre atď. Akýkoľvek predchádzajúci obal knihy sa nahradí.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Path to an OPF file. The metadata in the book is updated from the OPF file.
+Cesta k súboru OPF. Metadáta v knihe sa aktualizujú zo súboru OPF.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-jacket
-Remove a previous inserted book jacket page.
+Odstrániť predtým vloženú stranu obalu knihy.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-soft\-hyphens
-Remove soft hyphens from all text in the book.
+Odstrániť mäkké spojovníky z celého textu v knihe.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-remove\-unused\-css, \-u
-Odstráni všetky nepoužíté pravidlá CSS zo šablón štýlov a značiek <style>. Niektoré knihy vytvorené z produkčných šablón môžu mať veľký počet CSS pravidiel navyše, ktoré nezodpovedajú žiadnemu skutočnému obsahu. Tieto extra pravidlá môžu spomaľovať čítačky, ktoré ich musia všetky spracovať.
+Odstráni všetky nepoužité pravidlá CSS zo šablón štýlov a značiek <style>. Niektoré knihy vytvorené z produkčných šablón môžu mať veľký počet CSS pravidiel navyše, ktoré nezodpovedajú žiadnemu skutočnému obsahu. Tieto extra pravidlá môžu spomaľovať čítačky, ktoré ich musia všetky spracovať.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-smarten\-punctuation, \-p
-Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into their typographically correct equivalents. Note that the algorithm can sometimes generate incorrect results, especially when single quotes at the start of contractions are involved.
+Konvertuje obyčajné textové pomlčky, výpustky, úvodzovky, viacnásobné spojovníky atď. na ich typograficky správne ekvivalenty. Upozorňujeme, že algoritmus môže niekedy vygenerovať nesprávne výsledky, obzvlášť ak ide o jednoduché úvodzovky na začiatku skratiek (kontrakcií).
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -122,12 +122,12 @@ Podmnožina písma znamená zredukovanie vloženého písma iba na znaky z tohto
 .INDENT 0.0
 .TP
 .B \-\-upgrade\-book, \-U
-Upgrade the internal structures of the book, if possible. For instance, upgrades EPUB 2 books to EPUB 3 books.
+Aktualizovať vnútorné štruktúry knihy, ak je to možné. Napríklad aktualizuje knihy EPUB 2 na knihy EPUB 3.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-verbose
-Produce more verbose output, useful for debugging.
+Vytvoriť podrobnejší výstup, užitočné na ladenie.
 .UNINDENT
 .INDENT 0.0
 .TP

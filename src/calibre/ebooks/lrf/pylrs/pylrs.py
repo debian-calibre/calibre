@@ -40,6 +40,7 @@ import io
 import operator
 import os
 import re
+from collections.abc import Collection
 from datetime import date
 from xml.etree.ElementTree import Element, ElementTree, SubElement
 from xml.sax.saxutils import escape
@@ -801,7 +802,7 @@ class DocInfo:
         self.thumbnail = None
         self.language = 'en'
         self.creator = None
-        self.creationdate = str(isoformat(date.today()))
+        self.creationdate = str(isoformat(date.today()))  # noqa: DTZ011
         self.producer = f'{__appname__} v{__version__}'
         self.numberofpages = '0'
 
@@ -1077,7 +1078,7 @@ class BookSetting(LrsAttributes):
 class LrsStyle(LrsObject, LrsAttributes, LrsContainer):
     """A mixin class for styles."""
 
-    validSettings: list
+    validSettings: Collection[str]
 
     def __init__(self, elementName, defaults=None, alsoAllow=None, **overrides):
         if defaults is None:

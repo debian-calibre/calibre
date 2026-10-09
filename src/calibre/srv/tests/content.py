@@ -18,11 +18,20 @@ from calibre.utils.shared_file import share_open
 from polyglot.binary import as_base64_bytes, from_hex_unicode
 
 
-def setUpModule():
-    # Needed for cover generation
-    from calibre.gui2 import ensure_app, load_builtin_fonts
+def run_generated_cover_checks() -> list[str]:
+    # Runs in a worker process, see ContentTest.test_generated_cover()
+    import unittest
 
+    from calibre.gui2 import ensure_app, load_builtin_fonts
+    from calibre.utils.run_tests import init_env
+
+    init_env()
+    # The QApplication must be created in the main thread, not in the server
+    # thread that generates the cover
     ensure_app(), load_builtin_fonts()
+    result = unittest.TestResult()
+    ContentTest('generated_cover_checks').run(result)
+    return [tb for test, tb in result.errors + result.failures]
 
 
 class ContentTest(LibraryBaseTest):
@@ -72,6 +81,26 @@ class ContentTest(LibraryBaseTest):
             test('images/lt.png', '/icon/lt.png?sz=16', sz=16)
 
     # }}}
+
+    def test_generated_cover(self):
+        "Test serving of auto generated covers"
+        # Generating covers needs a QApplication, which tests must not create
+        # in the test process, so run the checks in a worker process
+        from calibre.utils.ipc.simple_worker import fork_job
+
+        errors = fork_job('calibre.srv.tests.content', 'run_generated_cover_checks', no_output=True)['result']
+        if errors:
+            self.fail('\n'.join(errors))
+
+    def generated_cover_checks(self):
+        with self.create_server() as server:
+            conn = server.connect()
+            conn.request('GET', '/get/cover/3')  # book 3 has no cover
+            r = conn.getresponse()
+            data = r.read()
+            self.ae(r.status, http.client.OK)
+            self.ae(r.getheader('Content-Type'), 'image/jpeg')
+            self.ae(identify(data)[0], 'jpeg')
 
     def test_get(self):  # {{{
         "Test /get"
@@ -158,8 +187,6 @@ class ContentTest(LibraryBaseTest):
             self.ae(r.status, http.client.OK)
             self.ae(data, db.cover(1))
             self.ae(r.getheader('Used-Cache'), 'yes')
-            r, data = get('cover', 3)
-            self.ae(r.status, http.client.OK)  # Auto generated cover
             r, data = get('thumb', 1)
             self.ae(r.status, http.client.OK)
             self.ae(identify(data), ('jpeg', 60, 60))
@@ -174,6 +201,21 @@ class ContentTest(LibraryBaseTest):
             r, data = get('thumb', 1, q='sz=100x100')
             self.ae(r.status, http.client.OK)
             self.ae(r.getheader('Used-Cache'), 'yes')
+            # fill scales the cover to cover the box rather than fit inside it
+            r, data = get('thumb', 1, q='sz=50x100')
+            self.ae(r.status, http.client.OK)
+            self.ae(identify(data), ('jpeg', 50, 50))
+            r, data = get('thumb', 1, q='sz=50x100&fill=1')
+            self.ae(r.status, http.client.OK)
+            self.ae(identify(data), ('jpeg', 100, 100))
+            self.ae(r.getheader('Used-Cache'), 'no')
+            r, data = get('thumb', 1, q='sz=50x100&fill=1')
+            self.ae(r.getheader('Used-Cache'), 'yes')
+            from calibre.srv.content import fill_box
+
+            self.ae(fill_box(600, 200, 60, 100), (300, 100))
+            self.ae(fill_box(100, 600, 60, 100), (60, 360))
+            self.ae(fill_box(50, 70, 60, 100), (50, 70))
             change_cover(1, 1)
             r, data = get('thumb', 1, q='sz=100')
             self.ae(r.status, http.client.OK)
@@ -255,6 +297,62 @@ class ContentTest(LibraryBaseTest):
             result = json.loads(r.read())
             self.ae(result['1']['languages'], ['eng'])
             self.ae(db.field_for('languages', 1), ('eng',))
+
+    # }}}
+
+    def test_recipe_formats_forbidden(self):  # {{{
+        "Test that recipe formats cannot be added, converted or viewed remotely"
+        from calibre.srv.utils import is_recipe_fmt
+        from calibre.utils.serialize import MSGPACK_MIME, msgpack_dumps
+
+        for fmt in ('recipe', 'RECIPE', 'original_recipe', 'downloaded_recipe', 'DOWNLOADED_RECIPE', 'original_downloaded_recipe', '.downloaded_recipe'):
+            self.assertTrue(is_recipe_fmt(fmt), fmt)
+        for fmt in ('epub', 'original_epub', 'recipes', 'zip'):
+            self.assertFalse(is_recipe_fmt(fmt), fmt)
+
+        with self.create_server(auth=True, auth_mode='basic') as server:
+            server.handler.ctx.user_manager.add_user('12', 'test')
+            db = server.handler.router.ctx.library_broker.get(None)
+            auth = {'Authorization': 'Basic ' + as_base64_bytes('12:test').decode()}
+            conn = server.connect()
+
+            def request(path, body, content_type='application/json'):
+                conn.request('POST', path, body=body, headers={'Content-Type': content_type, **auth})
+                r = conn.getresponse()
+                return r.status, r.read()
+
+            for fmt in ('recipe', 'original_recipe', 'downloaded_recipe', 'original_downloaded_recipe'):
+                data = json.dumps({
+                    'changes': {'added_formats': [{'ext': fmt, 'data_url': 'data:application/octet-stream;base64,' + as_base64_bytes(b'x').decode()}]},
+                    'loaded_book_ids': [1],
+                }).encode('utf-8')
+                status, _ = request('/cdb/set-fields/1', data)
+                self.ae(status, http.client.FORBIDDEN, fmt)
+
+                status, raw = request('/cdb/cmd/add_format/0', msgpack_dumps((1, ('x.' + fmt, b'x'), fmt.upper(), True)), MSGPACK_MIME)
+                self.ae(status, http.client.OK, fmt)
+                self.assertIn('err', json.loads(raw), fmt)
+                self.assertNotIn(fmt.upper(), db.formats(1), fmt)
+
+            # Recipe formats that are already in the library must not be
+            # converted or viewed by remote clients
+            db.add_format(1, 'DOWNLOADED_RECIPE', BytesIO(b'x'), run_hooks=False)
+            data = json.dumps({'input_fmt': 'downloaded_recipe', 'output_fmt': 'epub', 'options': {}}).encode('utf-8')
+            status, _ = request('/conversion/start/1', data)
+            self.ae(status, http.client.FORBIDDEN)
+            for path in ('/conversion/start/1', '/conversion/status/1'):
+                conn.request('GET', path, headers=auth)
+                r = conn.getresponse()
+                r.read()
+                self.ae(r.status, http.client.METHOD_NOT_ALLOWED, path)
+            conn.request('GET', '/conversion/book-data/1?input_fmt=downloaded_recipe', headers=auth)
+            r = conn.getresponse()
+            self.ae(r.status, http.client.OK)
+            self.assertNotIn('DOWNLOADED_RECIPE', json.loads(r.read())['input_formats'])
+            conn.request('GET', '/book-manifest/1/DOWNLOADED_RECIPE', headers=auth)
+            r = conn.getresponse()
+            r.read()
+            self.ae(r.status, http.client.FORBIDDEN)
 
     # }}}
 

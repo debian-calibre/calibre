@@ -477,6 +477,237 @@ class ReadingTest(BaseTest):
 
     # }}}
 
+    def test_categories_cache(self):  # {{{
+        "Test the cache of computed categories used to speed up the Tag browser"
+        from calibre.db.cache import category_quiet_writes
+
+        # A name wrongly listed as quiet means the Tag browser displays stale
+        # data, so check that the list contains only write APIs and that the
+        # writes that obviously do change the categories are absent
+        self.assertEqual(
+            set(),
+            category_quiet_writes
+            & {
+                'add_books',
+                'create_custom_column',
+                'delete_custom_column',
+                'merge_book_metadata',
+                'reload_from_db',
+                'remove_books',
+                'remove_items',
+                'rename_items',
+                'set_link_map',
+                'set_pref',
+                'set_sort_for_authors',
+            },
+            'These writes change the categories, they must not be listed as quiet',
+        )
+
+        cache = self.init_cache(self.library_path)
+        cc = cache.categories_cache
+
+        # The cache hands out shallow copies of its Tag objects, which must
+        # have every slot of the original
+        import copy
+
+        from calibre.db.categories import Tag
+
+        tag = Tag('x')
+        for i, k in enumerate(Tag.__slots__):
+            setattr(tag, k, (k, i))
+        c = copy.copy(tag)
+        self.assertIsNot(tag, c)
+        for k in Tag.__slots__:
+            self.assertIs(getattr(tag, k), getattr(c, k), f'Copying a Tag does not copy {k}')
+
+        def names(category, **kw):
+            return [(t.name, t.original_name, t.count) for t in cache.get_categories(**kw)[category]]
+
+        # A cached category must not be affected by changes made to the Tag
+        # objects handed out for it, as the Tag browser modifies them when
+        # building its tree for hierarchical categories
+        cache.set_pref('categories_using_hierarchy', ['tags'])
+        cache.set_field('tags', {1: ['A.B', 'A.C'], 2: ['A.B']})
+        expected = names('tags')
+        self.assertEqual([('A.B', 'A.B', 2), ('A.C', 'A.C', 1)], expected)
+        for i in range(3):
+            tags = cache.get_categories()['tags']
+            self.assertEqual(expected, [(t.name, t.original_name, t.count) for t in tags])
+            for tag in tags:  # what the Tag browser does to a hierarchical item
+                tag.original_name, tag.name = tag.name, tag.name.rpartition('.')[2]
+                tag.is_hierarchical = '5state'
+                tag.state = 1
+                tag.avg_rating = None
+                tag.id_set = tag.id_set | {1000 + i}
+
+        # A cached category must be recomputed once its own field changes
+        cache.set_field('tags', {2: ['A.D']})
+        self.assertEqual([('A.B', 'A.B', 1), ('A.C', 'A.C', 1), ('A.D', 'A.D', 1)], names('tags'))
+
+        # Categories restricted to a set of books must not be cached, as the
+        # cache is keyed only on the category
+        self.assertEqual([('A.D', 'A.D', 1)], names('tags', book_ids=(2,)))
+        self.assertEqual([('A.B', 'A.B', 1), ('A.C', 'A.C', 1), ('A.D', 'A.D', 1)], names('tags'))
+
+        # The value of a composite category is computed from a template that can
+        # reference any field, so while one is present an edit to any field at
+        # all must be taken to change what the Tag browser shows. The test
+        # library has the composite category #comp_tags.
+        fm = cache.field_metadata
+        before = cc.fingerprint(fm)
+        cache.set_field('comments', {1: 'a new comment'})
+        self.assertNotEqual(before, cc.fingerprint(fm), 'A composite category must make every field relevant')
+
+        # Without a composite category only the fields the categories are built
+        # from matter
+        cache.delete_custom_column(label='comp_tags')
+        cache = self.init_cache(self.library_path)
+        cc, fm = cache.categories_cache, cache.field_metadata
+        cache.set_field('tags', {1: ['A.B', 'A.C']})
+        before = cc.fingerprint(fm)
+        cache.set_field('comments', {1: 'another new comment'})
+        self.assertEqual(before, cc.fingerprint(fm), 'Editing comments must not invalidate the Tag browser')
+        cache.set_field('tags', {1: ['A.E']})
+        self.assertNotEqual(before, cc.fingerprint(fm), 'Editing tags must invalidate the Tag browser')
+
+        # A write that is not listed as quiet invalidates everything
+        before = cc.fingerprint(fm)
+        cache.set_pref('some-pref', 'some-value')
+        self.assertNotEqual(before, cc.fingerprint(fm))
+
+        # When a Virtual library is in use, which books it matches, and so the
+        # item counts, can change because of an edit to any field at all
+        before, before_all = cc.fingerprint(fm), cc.fingerprint(fm, all_fields=True)
+        cache.set_field('title', {1: 'A brand new title'})
+        self.assertEqual(before, cc.fingerprint(fm), 'Editing a title must not invalidate the Tag browser')
+        self.assertNotEqual(before_all, cc.fingerprint(fm, all_fields=True), 'Editing a title must invalidate a Virtual library')
+
+    # }}}
+
+    def test_incremental_categories(self):  # {{{
+        "Test refreshing only the changed items of a cached category"
+        import random
+        from unittest.mock import patch
+
+        from calibre.db import categories
+        from calibre.db.categories import insert_changed_items
+
+        # Inserting into a sorted list must refuse items with equal sort keys,
+        # whose order would not match the order of a full recompute
+        cats = [1, 3, 5]
+        self.assertTrue(insert_changed_items(cats, [4, 0, 6], lambda x: x))
+        self.assertEqual([0, 1, 3, 4, 5, 6], cats)
+        self.assertFalse(insert_changed_items([1, 3, 5], [3], lambda x: x))
+        self.assertFalse(insert_changed_items([1, 3, 5], [2, 2], lambda x: x))
+
+        cache = self.init_cache(self.library_path)
+        cc = cache.categories_cache
+        book_ids = sorted(cache.all_book_ids())
+        combos = tuple((sort, fl) for sort in ('name', 'popularity', 'rating') for fl in (False, True))
+        cache.set_pref('categories_using_hierarchy', ['tags'])
+
+        def snapshot(sort, fl):
+            return {
+                category: [(t.name, t.id, t.count, t.avg_rating, t.sort, frozenset(t.id_set)) for t in tags]
+                for category, tags in cache.get_categories(sort=sort, first_letter_sort=fl).items()
+            }
+
+        def current():
+            return {c: snapshot(*c) for c in combos}
+
+        def check(msg):
+            # Compare the categories, refreshed from the out of date entries,
+            # with the categories computed from scratch, which leaves every
+            # combination of sorts cached again
+            got = current()
+            cc.invalidate_all()
+            expected = current()
+            for c in combos:
+                for category, tags in expected[c].items():
+                    self.assertEqual(tags, got[c][category], f'{msg}: {category} sorted by {c} differs from a full recompute')
+
+        insertions = []
+
+        def counting_insert(*args):
+            insertions.append(insert_changed_items(*args))
+            return insertions[-1]
+
+        with patch.object(categories, 'insert_changed_items', counting_insert):
+            current()
+
+            # Random edits of the fields categories are built from or depend on
+            rng = random.Random(1)
+            names = ('Alpha', 'beta', 'Gamma', 'delta', 'Eps.x', 'Eps.y', 'a', 'A b')
+            values = {
+                'tags': lambda: rng.sample(names, rng.randint(0, 3)) if rng.random() < 0.8 else [rng.choice(names).upper()],
+                '#tags': lambda: rng.sample(names, rng.randint(0, 3)),
+                'authors': lambda: rng.sample(names, rng.randint(1, 2)),
+                'series': lambda: rng.choice(names + (None,)),
+                'publisher': lambda: rng.choice(names + (None,)),
+                'rating': lambda: rng.choice((None, 2, 4, 6, 8, 10)),
+                '#rating': lambda: rng.choice((None, 2, 4, 6, 8, 10)),
+                'languages': lambda: rng.sample(('eng', 'fra', 'deu'), rng.randint(0, 2)),
+            }
+            for i in range(60):
+                field = rng.choice(sorted(values))
+                cache.set_field(field, {book_id: values[field]() for book_id in rng.sample(book_ids, rng.randint(1, len(book_ids)))})
+                if rng.random() < 0.5:  # check after several edits too
+                    check(f'Edit {i} of {field}')
+            self.assertIn(True, insertions, 'Categories were never refreshed incrementally')
+
+            # Distinct authors with the same author sort have equal sort keys
+            # and so require a full recompute
+            cache.set_field('authors', {1: ['John Smith']})
+            current()
+            del insertions[:]
+            cache.set_field('authors', {2: ['Smith, John']})
+            check('Authors with equal sort keys')
+            self.assertIn(False, insertions)
+
+            # A change too old to be remembered requires a full recompute
+            version = cc.field_versions['tags']
+            for i in range(cc.MAX_CHANGES + 1):
+                cache.set_field('tags', {1: [f'tag{i}']})
+            self.assertIsNone(cc.changes_since('tags', version))
+            self.assertIsNotNone(cc.changes_since('tags', version + 1))
+            check('Too many changes')
+
+            # More changed items than can be refreshed are not even remembered
+            cc.MAX_INCREMENTAL_ITEMS = 2
+            try:
+                del insertions[:]
+                cache.set_field('tags', {1: ['x1', 'x2', 'x3']})
+                self.assertIsNone(cc.changes['tags'][-1][1])
+                check('Too many changed items')
+                self.assertNotIn(True, insertions)
+            finally:
+                del cc.MAX_INCREMENTAL_ITEMS
+
+            # Fields without items cannot be categories, so the ids of what
+            # changed in them are not remembered
+            cache.set_field('comments', {1: 'a comment'})
+            self.assertEqual((cc.field_versions['comments'], None, None), cc.changes['comments'][-1])
+
+            # A write that fails may have changed the in memory tables, so the
+            # categories must be recomputed afterwards
+            current()
+            executemany = cache.backend.executemany
+
+            def failing_executemany(sql, *args):
+                if sql.startswith('INSERT INTO books_tags_link'):
+                    raise OSError('Simulated failure')
+                return executemany(sql, *args)
+
+            cache.backend.executemany = failing_executemany
+            try:
+                with self.assertRaises(OSError):
+                    cache.set_field('tags', {1: ['A tag from a failed write']})
+            finally:
+                cache.backend.executemany = executemany
+            check('Failed write')
+
+    # }}}
+
     def test_get_formats(self):  # {{{
         "Test reading ebook formats using the format() method"
         from calibre.db.cache import NoSuchFormat
@@ -524,6 +755,52 @@ class ReadingTest(BaseTest):
         os.rename(path, changed_path)
         self.assertEqual(cache.format_abspath(1, fmt), path)
         self.assertFalse(os.path.exists(changed_path))
+
+    # }}}
+
+    def test_size_from_formats(self):  # {{{
+        "Test that sizes read from the scan of the data table match MAX(uncompressed_size)"
+        from calibre.db.tables import SizeTable
+        from calibre.ebooks.metadata.book.base import Metadata
+
+        cache = self.init_cache()
+        no_formats = cache.create_book_entry(Metadata('no formats'))
+        # Simulate a damaged or legacy db without the constraints on data
+        cache.backend.execute('''
+            ALTER TABLE data RENAME TO data_old;
+            CREATE TABLE data (id INTEGER PRIMARY KEY, book INTEGER, format TEXT, uncompressed_size INTEGER, name TEXT);
+            DROP TABLE data_old;
+        ''')
+        rows = (
+            (1, 'epub', 10),
+            (1, 'EPUB', 1),  # case duplicate with a smaller size after the larger one
+            (1, 'mobi', None),
+            (2, None, 7),  # NULL format
+            (3, 'a', 5),
+            (3, 'b', 'xyz'),  # text sorts after numbers in SQLite
+            (3, 'c', 'abc'),
+            (999, 'epub', 3),  # orphaned row
+        )
+        cache.backend.executemany('INSERT INTO data (book, format, uncompressed_size, name) VALUES (?,?,?,?)', [r + ('name',) for r in rows])
+        expected = {1: 10, 2: 7, 3: 'xyz', no_formats: None}
+
+        sql_table = SizeTable('size', cache.backend.tables['size'].metadata)
+        sql_table.read(cache.backend)
+        self.assertEqual(expected, sql_table.book_col_map)
+
+        cache.reload_from_db()
+        self.assertEqual(expected, cache.fields['size'].table.book_col_map)
+        self.assertIsNone(cache.fields['formats'].table.max_sizes)
+        cache.backend.execute('INSERT INTO data (book, format, uncompressed_size, name) VALUES (2, "pdf", 100, "x")')
+        cache.refresh_format_cache()
+        expected[2] = 100
+        self.assertEqual(expected, cache.fields['size'].table.book_col_map)
+
+        cache = self.init_cache(cache.backend.library_path)
+        self.assertEqual(expected, cache.fields['size'].table.book_col_map)
+        # The fallback to the SQL query when the formats table has not been read
+        self.assertFalse(cache.fields['size'].table.read_from_formats((1,), cache.fields['formats'].table))
+        self.assertEqual(expected, cache.fields['size'].table.book_col_map)
 
     # }}}
 
@@ -629,6 +906,45 @@ class ReadingTest(BaseTest):
         se({1, 2}, cache.books_in_virtual_library('12'))
         se({1}, cache.books_in_virtual_library('12', 'id:1'))
         se({2}, cache.books_in_virtual_library('1', 'id:1 or id:2'))
+
+    # }}}
+
+    def test_contains_match(self):  # {{{
+        "Test that the ASCII fast path in _match() matches plain ICU behaviour"
+        from calibre.db.search import CONTAINS_MATCH, _match
+        from calibre.utils.icu import lower as icu_lower
+        from calibre.utils.icu import primary_no_punc_contains
+
+        def icu_match(query, value):
+            # what _match() did before the ASCII fast path was added
+            return any(primary_no_punc_contains(query, icu_lower(t)) for t in value)
+
+        values = (
+            ('The Hobbit',),
+            ('Gravity’s Raiñbow',),
+            ("O'Brien, Flann", 'Flann O’Brien'),
+            ('C++ in 21 Days',),
+            ('Sci-Fi & Fantasy #1',),
+            ('',),
+            (),
+            ('ascii only', 'nön ascii'),
+        )
+        for query in ('hobbit', 'gravitys rainbow', "o'brien", 'obrien', 'c++', 'scifi', '#1', 'raiñbow', 'ñ', '', '-', 'z'):
+            query = icu_lower(query)
+            for value in values:
+                self.assertEqual(
+                    icu_match(query, value),
+                    _match(query, value, CONTAINS_MATCH),
+                    f'_match() differs from ICU for {query!r} in {value!r}',
+                )
+
+        # case sensitive and non primary searches must not use the fast path
+        self.assertTrue(_match('hobbit', ('The Hobbit',), CONTAINS_MATCH, case_sensitive=False))
+        self.assertFalse(_match('hobbit', ('The Hobbit',), CONTAINS_MATCH, case_sensitive=True))
+        self.assertTrue(_match('Hobbit', ('The Hobbit',), CONTAINS_MATCH, case_sensitive=True))
+        self.assertTrue(_match('the hobbit', ('The Hobbit',), CONTAINS_MATCH, use_primary_find_in_search=False))
+        self.assertFalse(_match('thehobbit', ('The Hobbit',), CONTAINS_MATCH, use_primary_find_in_search=False))
+        self.assertTrue(_match('thehobbit', ('The Hobbit',), CONTAINS_MATCH, use_primary_find_in_search=True))
 
     # }}}
 

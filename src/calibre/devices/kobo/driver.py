@@ -15,6 +15,7 @@ import shutil
 import time
 from contextlib import suppress
 from datetime import datetime
+from typing import ClassVar
 
 from calibre import fsync, prints, strftime
 from calibre.constants import DEBUG
@@ -94,7 +95,7 @@ class KOBO(USBMS):
     FORMATS = ['kepub', 'epub', 'pdf', 'txt', 'cbz', 'cbr']
     CAN_SET_METADATA = ['collections']
 
-    VENDOR_ID = [0x2237]
+    VENDOR_ID: ClassVar[list[int]] = [0x2237]
     BCD = [0x0110, 0x0323, 0x0326]
     ORIGINAL_PRODUCT_ID = [0x4165]
     WIFI_PRODUCT_ID = [0x4161, 0x4162]
@@ -153,7 +154,15 @@ class KOBO(USBMS):
         ),
     ]
 
-    EXTRA_CUSTOMIZATION_DEFAULT = [', '.join(['tags']), True, True, True, False, False, False]
+    EXTRA_CUSTOMIZATION_DEFAULT = [
+        ', '.join(['tags']),  # noqa: FLY002
+        True,
+        True,
+        True,
+        False,
+        False,
+        False,
+    ]
 
     OPT_COLLECTIONS = 0
     OPT_UPLOAD_COVERS = 1
@@ -1539,7 +1548,7 @@ class KOBOTOUCH(KOBO):
     )
     # icon        = 'devices/kobotouch.jpg'
 
-    supported_dbversion = 220
+    supported_dbversion = 222
     min_supported_dbversion = 53
     min_dbversion_series = 65
     min_dbversion_externalid = 65
@@ -1554,7 +1563,7 @@ class KOBOTOUCH(KOBO):
     # Starting with firmware version 3.19.x, the last number appears to be is a
     # build number. A number will be recorded here but it can be safely ignored
     # when testing the firmware version.
-    max_supported_fwversion = (5, 18, 264769)
+    max_supported_fwversion = (6, 0, 274403)
     # The following document firmware versions where new function or devices were added.
     # Not all are used, but this feels a good place to record it.
     min_fwversion_shelves = (2, 0, 0)
@@ -2092,7 +2101,7 @@ class KOBOTOUCH(KOBO):
                         kobo_metadata.pubdate = parse_date(DateCreated, assume_utc=True)
                     except Exception:
                         try:
-                            kobo_metadata.pubdate = datetime.strptime(DateCreated, '%Y-%m-%dT%H:%M:%S.%fZ')
+                            kobo_metadata.pubdate = datetime.strptime(DateCreated, '%Y-%m-%dT%H:%M:%S.%fZ')  # noqa: DTZ007
                         except Exception:
                             debug_print(f"KoboTouch:update_booklist - Cannot convert date - DateCreated='{DateCreated}'")
 

@@ -43,6 +43,7 @@ from calibre.gui2 import choose_images, config, error_dialog, qapplication_or_fa
 from calibre.gui2.viewer import link_prefix_for_location_links, performance_monitor, url_for_book_in_library
 from calibre.gui2.viewer.config import get_session_pref, load_viewer_profiles, save_viewer_profile, viewer_config_dir, vprefs
 from calibre.gui2.viewer.tts import TTS
+from calibre.gui2.webengine import SelectPopupFixer
 from calibre.srv.code import get_translations_data
 from calibre.utils.filenames import make_long_path_useable, path_from_root
 from calibre.utils.localization import _, localize_user_manual_link
@@ -309,6 +310,7 @@ class ViewerBridge(Bridge):
     html_input_focusin = from_js()
     update_reading_rates = from_js(object)
     reset_reading_rates = from_js()
+    book_storage_changed = from_js(object, object)
     profile_op = from_js(object, object, object)
 
     create_view = to_js()
@@ -530,6 +532,7 @@ class WebView(QWebEngineView):
     highlights_changed = pyqtSignal(object)
     update_reading_rates = pyqtSignal(object)
     reset_reading_rates = pyqtSignal()
+    book_storage_changed = pyqtSignal(object, object)
     edit_book = pyqtSignal(object, object, object)
     shortcuts_changed = pyqtSignal(object)
     paged_mode_changed = pyqtSignal()
@@ -601,6 +604,7 @@ class WebView(QWebEngineView):
         self.bridge.highlights_changed.connect(self.highlights_changed)
         self.bridge.update_reading_rates.connect(self.update_reading_rates)
         self.bridge.reset_reading_rates.connect(self.reset_reading_rates)
+        self.bridge.book_storage_changed.connect(self.book_storage_changed)
         self.bridge.profile_op.connect(self.profile_op)
         self.bridge.edit_book.connect(self.edit_book)
         self.bridge.show_book_folder.connect(self.show_book_folder)
@@ -624,6 +628,7 @@ class WebView(QWebEngineView):
         focus_proxy = self.focusProxy()
         assert focus_proxy is not None
         focus_proxy.installEventFilter(self)
+        self.select_popup_fixer = SelectPopupFixer(self)
 
     def eventFilter(self, a0, a1):
         match a1.type():
@@ -741,7 +746,7 @@ class WebView(QWebEngineView):
         self.current_content_file = data
         self.content_file_changed.emit(self.current_content_file)
 
-    def start_book_load(self, initial_position=None, highlights=None, current_book_data=None, reading_rates=None):
+    def start_book_load(self, initial_position=None, highlights=None, current_book_data=None, reading_rates=None, book_storage=None):
         key = (_book_path,)
         book_url = link_prefix_for_location_links(add_open_at=False)
         book_in_library_url = url_for_book_in_library()
@@ -754,6 +759,7 @@ class WebView(QWebEngineView):
             book_url,
             reading_rates,
             book_in_library_url,
+            book_storage,
         )
 
     def execute_when_ready(self, action, *args):

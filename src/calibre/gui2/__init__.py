@@ -89,10 +89,11 @@ from calibre.utils.config_base import tweaks
 from calibre.utils.date import UNDEFINED_DATE
 from calibre.utils.file_type_icons import EXT_MAP
 from calibre.utils.img import set_image_allocation_limit
-from calibre.utils.localization import _, get_lang, install_qt_translator
+from calibre.utils.localization import _, bcp47_locale_name, install_qt_translator
 from calibre.utils.resources import get_image_path as I
 from calibre.utils.resources import get_path as P
 from calibre.utils.resources import user_dir
+from calibre_extensions import avif as _avif_plugin  # noqa: F401  registers the AVIF image format with Qt
 from calibre_extensions.progress_indicator import icon_from_name, icon_from_paths, set_icon_theme
 
 del pqc, geometry_for_restore_as_dict
@@ -526,6 +527,7 @@ def create_defs():
     defs['color_palette'] = 'system'
     defs['tag_browser_old_look'] = False
     defs['tag_browser_hide_empty_categories'] = False
+    defs['tag_browser_folders_first'] = False
     defs['tag_browser_always_autocollapse'] = False
     defs['tag_browser_restore_tree_expansion'] = False
     defs['tag_browser_allow_keyboard_focus'] = False
@@ -1236,7 +1238,7 @@ def choose_files_and_remember_all_files(window, name, title, filters=[], select_
 
 
 def is_dark_theme():
-    app = cast(QApplication, QApplication.instance())
+    app = cast('QApplication', QApplication.instance())
     if app is not None:
         pal = app.palette()
         return pal.is_dark_theme()
@@ -1511,7 +1513,7 @@ class Application(QApplication):
             QTimer.singleShot(0, lambda: QApplication.setFont(font_from_prefs))
         self.line_height = max(12, QFontMetrics(self.font()).lineSpacing())
 
-        dl = QLocale(get_lang())
+        dl = QLocale(bcp47_locale_name())
         if str(dl.bcp47Name()) != 'C':
             QLocale.setDefault(dl)
         global gui_thread, qt_app
@@ -1888,7 +1890,7 @@ def qapplication_or_fail() -> Application:
     ans = QApplication.instance()
     if ans is None:
         raise RuntimeError('No QApplication has been constructed')
-    return cast(Application, ans)
+    return cast('Application', ans)
 
 
 def destroy_app():

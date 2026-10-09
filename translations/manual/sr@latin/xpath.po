@@ -7,21 +7,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-03-02 13:48+0000\n"
-"PO-Revision-Date: 2020-07-03 02:15+0000\n"
-"Last-Translator: Kovid Goyal <kovid@kovidgoyal.net>\n"
-"Language-Team: Serbian (Latin) (http://www.transifex.com/calibre/calibre/language/sr@latin/)\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"PO-Revision-Date: 2014-06-17 08:35+0000\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: Serbian (Latin) (http://app.transifex.com/calibre/calibre/language/sr@latin/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: sr@latin\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:4
+#: ../../../__w/calibre/calibre/manual/xpath.rst:4
 msgid "XPath tutorial"
-msgstr ""
+msgstr "Uvod u XPath"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:6
+#: ../../../__w/calibre/calibre/manual/xpath.rst:6
 msgid ""
 "In this tutorial, you will be given a gentle introduction to `XPath "
 "<https://en.wikipedia.org/wiki/XPath>`_, a query language that can be used "
@@ -30,37 +30,37 @@ msgid ""
 "yield a ton of information. This tutorial, however, focuses on using XPath "
 "for e-book related tasks like finding chapter headings in an unstructured "
 "HTML document."
-msgstr ""
+msgstr "U ovom vodiču upoznaćete osnove jezika `XPath <https://en.wikipedia.org/wiki/XPath>`_, koji omogućava izbor bilo kog dela `HTML <https://en.wikipedia.org/wiki/HTML>`_ dokumenta u programu calibre. XPath je široko prihvaćen standard o kojem možete pronaći mnogo dodatnih informacija. Ovde se usredsređujemo na njegovu upotrebu pri radu s e-knjigama, na primer na pronalaženje naslova poglavlja u HTML dokumentu bez jasne strukture."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:16
+#: ../../../__w/calibre/calibre/manual/xpath.rst:16
 msgid "Contents"
-msgstr ""
+msgstr "Sadržaj"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:19
+#: ../../../__w/calibre/calibre/manual/xpath.rst:19
 msgid "Selecting by tag name"
-msgstr ""
+msgstr "Izbor po nazivu oznake"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:21
+#: ../../../__w/calibre/calibre/manual/xpath.rst:21
 msgid ""
 "The simplest form of selection is to select tags by name. For example, "
 "suppose you want to select all the ``<h2>`` tags in a document. The XPath "
 "query for this is simply::"
-msgstr ""
+msgstr "Najjednostavnije je izabrati oznake po nazivu. Pretpostavimo, na primer, da želite da izaberete sve oznake ``<h2>`` u dokumentu. XPath upit glasi::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:27
+#: ../../../__w/calibre/calibre/manual/xpath.rst:27
 msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr ""
+msgstr "Prefiks `//` znači *pretraži sve nivoe dokumenta*. Ako želite da pronađete oznake ``<span>`` unutar oznaka ``<a>``, upotrebite::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:33
+#: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr ""
+msgstr "Ako želite da tražite oznake na određenom nivou dokumenta, promenite prefiks::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:39
+#: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
 "This will match only ``<p>A very short e-book to demonstrate the use of "
 "XPath.</p>`` in the :ref:`sample_ebook` but not any of the other ``<p>`` "
@@ -68,18 +68,18 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr ""
+msgstr "Ovo će u :ref:`sample_ebook` pronaći samo ``<p>A very short e-book to demonstrate the use of XPath.</p>``, a ne i ostale oznake ``<p>``. Prefiks ``h:`` u gornjim primerima potreban je za prepoznavanje XHTML oznaka, jer calibre sav sadržaj interno predstavlja kao XHTML. U XHTML-u oznake imaju *imenski prostor*, a ``h:`` je njegov prefiks za HTML oznake."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:45
+#: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
 "Now suppose you want to select both ``<h1>`` and ``<h2>`` tags. To do that, "
-"we need a XPath construct called *predicate*. A :dfn:`predicate` is simply a"
-" test that is used to select tags. Tests can be arbitrarily powerful and as "
-"this tutorial progresses, you will see more powerful examples. A predicate "
+"we need an XPath construct called *predicate*. A :dfn:`predicate` is simply "
+"a test that is used to select tags. Tests can be arbitrarily powerful and as"
+" this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "Pretpostavimo da želite da izaberete i oznake ``<h1>`` i oznake ``<h2>``. Za to nam je potreban XPath izraz koji se zove *predikat*. :dfn:`Predikat` je uslov na osnovu kojeg se biraju oznake. Takvi uslovi mogu biti veoma složeni, a kasnije ćemo videti još primera. Predikat se piše tako što se uslov stavi između uglastih zagrada::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:53
+#: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
 "There are several new features in this XPath expression. The first is the "
 "use of the wildcard ``*``. It means *match any tag*. Now look at the test "
@@ -89,75 +89,87 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr ""
+msgstr "U ovom XPath izrazu ima nekoliko novih elemenata. Prvi je džoker znak ``*``, koji znači *bilo koja oznaka*. Zatim pogledajte uslov ``name()='h1' or name()='h2'``. Funkcija :term:`name()` je primer *ugrađene funkcije*: vraća naziv oznake. Pomoću nje biramo oznake čiji je naziv `h1` ili `h2`. Pošto :term:`name()` zanemaruje imenske prostore, prefiks ``h:`` ovde nije potreban. XPath ima i druge korisne ugrađene funkcije; neke ćemo upoznati u nastavku."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:62
+#: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"
-msgstr ""
+msgstr "Izbor po atributima"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:64
+#: ../../../__w/calibre/calibre/manual/xpath.rst:64
 msgid ""
 "To select tags based on their attributes, the use of predicates is "
 "required::"
-msgstr ""
+msgstr "Da biste birali oznake na osnovu njihovih atributa, koristite predikate::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:70
+#: ../../../__w/calibre/calibre/manual/xpath.rst:70
 msgid ""
 "Here, the ``@`` operator refers to the attributes of the tag. You can use "
 "some of the `XPath built-in functions`_ to perform more sophisticated "
 "matching on attribute values."
-msgstr ""
+msgstr "Ovde se operator ``@`` odnosi na atribute oznake. Za složenije poređenje vrednosti atributa možete koristiti neke od `XPath built-in functions`_."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:75
+msgid ""
+"When XPath expressions are used for conversion options such as chapter "
+"detection or the start reading at position, they are evaluated against the "
+"*input* document, before calibre flattens the CSS. CSS flattening rewrites "
+"class names, so the class names you see in the converted output (things like"
+" ``calibre1``) do not exist yet when your expression runs. Copy class names "
+"from the input document, not from the converted book. If in doubt, match on "
+"tag names and text content instead, as these are not changed by the "
+"conversion."
+msgstr "Kada se XPath izrazi koriste u podešavanjima konverzije, na primer za otkrivanje poglavlja ili određivanje mesta na kojem počinje čitanje, primenjuju se na *ulazni* dokument, pre nego što calibre objedini CSS. Pri tome se nazivi klasa menjaju, pa nazivi koje vidite u konvertovanoj knjizi (kao što je ``calibre1``) još ne postoje kada se XPath izraz izvršava. Preuzimajte nazive klasa iz ulaznog dokumenta, a ne iz konvertovane knjige. Ako niste sigurni, birajte po nazivima oznaka i tekstu, jer se oni tokom konverzije ne menjaju."
+
+#: ../../../__w/calibre/calibre/manual/xpath.rst:86
 msgid "Selecting by tag content"
-msgstr ""
+msgstr "Izbor po sadržaju oznake"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:88
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
-msgstr ""
+msgstr "Pomoću XPath-a možete birati oznake i na osnovu teksta koji sadrže. Najbolje je da za to upotrebite *regularne izraze* preko ugrađene funkcije :term:`re:test()`::"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:94
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
-msgstr ""
+msgstr "Ovde se operator ``.`` odnosi na sadržaj oznake, kao što se operator ``@`` odnosi na njene atribute."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:100
 msgid "Sample e-book"
-msgstr ""
+msgstr "Primer e-knjige"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:106
 msgid "XPath built-in functions"
-msgstr ""
+msgstr "Ugrađene XPath funkcije"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:109
 msgid "name()"
-msgstr ""
+msgstr "name()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:111
 msgid "The name of the current tag."
-msgstr ""
+msgstr "Naziv trenutne oznake."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:112
 msgid "contains()"
-msgstr ""
+msgstr "contains()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:114
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
-msgstr ""
+msgstr "``contains(s1, s2)`` vraća `true` ako s1 sadrži s2."
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:115
 msgid "re:test()"
-msgstr ""
+msgstr "re:test()"
 
-#: ../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:117
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr ""
+msgstr "``re:test(src, pattern, flags)`` vraća `true` ako se tekst `src` poklapa s regularnim izrazom `pattern`. Naročito je korisna zastavica ``i``, koja zanemaruje razliku između velikih i malih slova. Uvod u sintaksu regularnih izraza nalazi se u `dokumentaciji <https://docs.python.org/library/re.html>`_."

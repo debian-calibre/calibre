@@ -1,0 +1,1044 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "CALIBREDB" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+calibredb \- calibredb
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb komanda [mogućnosti] [argumenti]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+\fBcalibredb\fP je interfejs komandne linije za calibre bazu podataka. Ima
+nekoliko potkomandi, dokumentovanih ispod.
+.sp
+\fBcalibredb\fP se može koristiti za manipulaciju calibre bazom podataka
+navedenom putanjom ili calibre Serverom sadržaja koji radi na
+lokalnoj mašini ili preko interneta. Možete pokrenuti calibre
+Server sadržaja koristeći \fBcalibre\-server\fP
+program ili u glavnom calibre programu kliknite na Poveži/deli  → 
+Pokreni server sadržaja\&. Pošto \fBcalibredb\fP može da menja vaše
+calibre biblioteke, prvo morate podesiti autentifikaciju na serveru. Postoje
+dva načina za to:
+.INDENT 0.0
+.INDENT 3.5
+.INDENT 0.0
+.IP \(bu 2
+Ako planirate da se povežete samo na server koji radi na istom računaru,
+možete jednostavno koristiti opciju \fB\-\-enable\-local\-write\fP
+Servera sadržaja, da dozvolite bilo kom programu, uključujući calibredb, koji radi na
+lokalnom računaru da menja vaše calibre podatke. Kada pokrećete
+server iz glavnog calibre programa, ova opcija se nalazi u
+Podešavanja → Deljenje preko mreže → Napredno\&. Ipak, budite oprezni,
+jer neki pregledači, prvenstveno Firefox, dozvoljavaju proizvoljnim veb\-sajtovima da takođe
+pristupe lokalnim serverima. Ako koristite Firefox, bolje je da podesite korisničko ime
+i lozinku, kao što je opisano ispod. Ograničenje pristupa lokalnoj mreži
+još uvek nije implementirano od verzije Firefox v149.
+.IP \(bu 2
+Ako želite da omogućite pristup preko interneta, onda bi trebalo da podesite
+korisničke naloge na serveru i koristite opcije \fB\-\-username\fP i \fB\-\-password\fP
+za \fBcalibredb\fP da biste mu dali pristup. Možete podesiti
+autentifikaciju korisnika za \fBcalibre\-server\fP korišćenjem opcije \fB\-\-enable\-auth\fP
+i korišćenjem \fB\-\-manage\-users\fP za kreiranje korisničkih naloga.
+Ako pokrećete server iz glavnog calibre programa, koristite
+Podešavanja → Deljenje preko mreže → Zahtevaj korisničko ime/lozinku\&.
+.UNINDENT
+.UNINDENT
+.UNINDENT
+.sp
+Da biste se povezali na pokrenuti Server sadržaja, prosledite URL servera
+opciji \fB\-\-with\-library\fP, pogledajte dokumentaciju te opcije za
+detalje i primere.
+.INDENT 0.0
+.IP \(bu 2
+GLOBALNE MOGUĆNOSTI
+.IP \(bu 2
+list
+.IP \(bu 2
+add
+.INDENT 2.0
+.IP \(bu 2
+DODAVANJE IZ FASCIKLI
+.UNINDENT
+.IP \(bu 2
+remove
+.IP \(bu 2
+add_format
+.IP \(bu 2
+remove_format
+.IP \(bu 2
+show_metadata
+.IP \(bu 2
+set_metadata
+.IP \(bu 2
+export
+.IP \(bu 2
+catalog
+.INDENT 2.0
+.IP \(bu 2
+EPUB OPCIJE
+.UNINDENT
+.IP \(bu 2
+saved_searches
+.IP \(bu 2
+add_custom_column
+.IP \(bu 2
+custom_columns
+.IP \(bu 2
+remove_custom_column
+.IP \(bu 2
+set_custom
+.IP \(bu 2
+restore_database
+.IP \(bu 2
+check_library
+.IP \(bu 2
+list_categories
+.IP \(bu 2
+backup_metadata
+.IP \(bu 2
+clone
+.IP \(bu 2
+embed_metadata
+.IP \(bu 2
+search
+.IP \(bu 2
+fts_index
+.IP \(bu 2
+fts_search
+.UNINDENT
+.SH GLOBALNE MOGUĆNOSTI
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-library\-path, \-\-with\-library
+Putanja do calibre biblioteke. Podrazumevano je korišćenje putanje sačuvane u podešavanjima. Takođe se možete povezati na calibre Content server da biste izvršili radnje na udaljenim bibliotekama. Da biste to uradili, koristite URL u obliku: \%<http://\:hostname:port/#\:library_id> na primer, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id je ID biblioteke na koju želite da se povežete na Content serveru. Možete koristiti specijalnu vrednost za library_id od \- da biste dobili listu ID\-jeva biblioteka dostupnih na serveru. Za detalje o tome kako da podesite pristup preko Content servera, pogledajte \%<https://\:manual\:.calibre-ebook\:.com/\:generated/\:en/\:calibredb\:.html>\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-password
+Lozinka za povezivanje na calibre Content server. Da biste pročitali lozinku sa standardnog ulaza, koristite specijalnu vrednost: <stdin>. Da biste pročitali lozinku iz datoteke, koristite: <f:/path/to/file> (tj. <f: praćeno punom putanjom do datoteke i završnim >). Uglaste zagrade u navedenom su obavezne, ne zaboravite da ih izbegnete (escape) ili koristite navodnike za vašu ljusku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timeout
+Vremensko ograničenje, u sekundama, pri povezivanju na calibre biblioteku preko mreže. Podrazumevano je dva minuta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-username
+Korisničko ime za povezivanje na calibre Content server
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SH LIST
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb spisak [mogućnosti]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Spisak knjiga iz calibre biblioteke.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-ascending
+Razvrstaj rezultate u rastućem redosledu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-fields, \-f
+Polja za prikaz prilikom listanja knjiga u bazi podataka. Treba da bude lista polja razdvojena zarezima. Dostupna polja: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Podrazumevano: title,authors. Specijalno polje \fB\(dq\fPall\fB\(dq\fP se može koristiti za izbor svih polja. Pored gorenavedenih ugrađenih polja, prilagođena polja su takođe dostupna kao *ime_polja, na primer, za prilagođeno polje #rating, koristite ime: *rating
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generiše izlaz u JSON formatu, koji je pogodniji za mašinsko parsiranje. Uzrokuje ignorisanje opcija za širinu linije i separator.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-limit
+Maksimalan broj rezultata za prikaz. Podrazumevano: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-width, \-w
+Najveća širina reda u izlazu. Podrazumeva se širina ekrana.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix
+Prefiks za sve putanje. Podrazumeva se apsolutna putanja do fascikle koja sadrži biblioteku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filtriraj rezultate koristeći upit za pretragu. Za format upita molim vas da pogledate odgovarajući deo Korisničkog uputstva. Podrazumeva se da neće biti filtriranja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-separator
+Znaci koji služe za razdvajanje polja. Podrazumeva se razmak.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sort\-by
+Polje po kojem se sortiraju rezultati. Možete navesti više polja tako što ćete ih razdvojiti zarezima. Dostupna polja: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Podrazumevano: id. Pored gorenavedenih ugrađenih polja, prilagođena polja su takođe dostupna kao *ime_polja, na primer, za prilagođeno polje #rating, koristite ime: *rating
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Šablon koji se pokreće ako je \fB\(dq\fPtemplate\fB\(dq\fP u listi polja. Imajte na umu da se šabloni ignorišu prilikom povezivanja na calibre server. Podrazumevano: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_file, \-t
+Putanja do datoteke koja sadrži šablon za pokretanje ako je \fB\(dq\fPtemplate\fB\(dq\fP u listi polja. Podrazumevano: None
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template_heading
+Naslov za kolonu šablona. Podrazumevano: template. Ova opcija se ignoriše ako je postavljena opcija \fB\-\-for\-machine\fP
+.UNINDENT
+.SH ADD
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb add [opcije] datoteka1 datoteka2 datoteka3 ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Dodajte navedene datoteke kao knjige u bazu podataka. Možete navesti i fascikle, pogledajte
+opcije vezane za fascikle ispod.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-authors, \-a
+Postavi autora za dodatu knjigu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-automerge, \-m
+Ako se pronađu knjige sa sličnim naslovima i autorima, automatski spoji dolazne formate (datoteke) u postojeće zapise knjiga. Vrednost \fB\(dq\fPignore\fB\(dq\fP znači da se duplirani formati odbacuju. Vrednost \fB\(dq\fPoverwrite\fB\(dq\fP znači da se duplirani formati u biblioteci prepisuju novododatim datotekama. Vrednost \fB\(dq\fPnew_record\fB\(dq\fP znači da se duplirani formati smeštaju u novi zapis knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover, \-c
+Putanja do korica koje će se koristiti za dodatu knjigu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-duplicates, \-d
+Dodaj knjige u bazu podataka čak i ako već postoje. Poređenje se vrši na osnovu naslova knjiga i autora. Imajte na umu da opcija \fB\-\-automerge\fP ima prednost.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-empty, \-e
+Dodaj praznu knjigu (knjiga bez formata)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-identifier, \-I
+Postavi identifikatore za ovu knjigu, npr. \-I asin:XXX \-I isbn:YYY
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn, \-i
+Postavi ISBN za dodatu knjigu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-languages, \-l
+Lista jezika odvojenih zarezom (najbolje je koristiti ISO639 kodove jezika, mada neka imena jezika takođe mogu biti prepoznata)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series, \-s
+Postavi seriju za dodatu knjigu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index, \-S
+Podesite broj serije dodate knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags, \-T
+Postavi oznake za dodatu knjigu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title, \-t
+Postavi naslov za dodatu knjigu
+.UNINDENT
+.SS DODAVANJE IZ FASCIKLI
+.sp
+Opcije za kontrolu dodavanja knjiga iz fascikli. Podrazumevano se dodaju samo datoteke koje imaju ekstenzije poznatih tipova e\-knjiga.
+.INDENT 0.0
+.TP
+.B \-\-add
+Šablon (glob) imena datoteke, datoteke koje se podudaraju sa ovim šablonom biće dodate prilikom skeniranja fascikli za datotekama, čak i ako nisu poznatog tipa e\-knjige. Može se navesti više puta za više šablona.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore
+Šablon (glob) imena datoteke, datoteke koje se podudaraju sa ovim šablonom biće ignorisane prilikom skeniranja fascikli za datotekama. Može se navesti više puta za više šablona. Na primer: *.pdf će ignorisati sve PDF datoteke
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-one\-book\-per\-directory, \-1
+Pretpostavi da svaka fascikla ima samo jednu logičku knjigu i da su sve datoteke u njoj različiti formati e\-knjige te knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-recurse, \-r
+Obrađuj fascikle rekurzivno
+.UNINDENT
+.SH REMOVE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb remove ids
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Uklanja knjige identifikovane pomoću ids iz baze podataka. ids treba da bude lista id brojeva razdvojena zarezima (id brojeve možete dobiti korišćenjem komande search). Na primer, 23,34,57\-85 (kada se navodi opseg, poslednji broj u opsegu nije uključen).
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Ne koristi Kanta za otpatke
+.UNINDENT
+.SH ADD_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb add_format [opcije] id datoteka_eknjige
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Dodajte e\-knjigu iz datoteka_eknjige u dostupne formate za logičku knjigu identifikovanu pomoću id. Možete dobiti id korišćenjem komande search. Ako format već postoji, biće zamenjen, osim ako nije navedena opcija da se ne zamenjuje.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-extra\-data\-file
+Dodaj datoteku kao dodatnu datoteku sa podacima uz knjigu, a ne kao format e\-knjige
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-replace
+Ne zamenjuj format ako već postoji
+.UNINDENT
+.SH REMOVE_FORMAT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb remove_format [opcije] id fmt
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Uklanja format fmt iz logičke knjige identifikovane pomoću id. Možete dobiti id korišćenjem komande search. fmt treba da bude ekstenzija datoteke kao što je LRF ili TXT ili EPUB. Ako logička knjiga nema dostupan fmt, ne radi ništa.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH SHOW_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb show_metadata [opcije] id
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Prikaži metapodatke sačuvane u calibre bazi podataka za knjigu identifikovanu pomoću id.
+id je ID broj iz komande search.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-opf
+Prikaži metapodatke u OPF obliku (XML)
+.UNINDENT
+.SH SET_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb set_metadata [opcije] id_knjige [/putanja/do/metadata.opf]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Postavite metapodatke sačuvane u calibre bazi podataka za knjigu identifikovanu pomoću
+id_knjige iz OPF datoteke metadata.opf. id_knjige je ID broj knjige iz
+komande search. Možete dobiti brzi uvid u OPF format koristeći
+prekidač \-\-as\-opf za komandu show_metadata. Takođe možete postaviti metapodatke
+pojedinačnih polja pomoću opcije \-\-field. Ako koristite opciju \-\-field, nema
+potrebe da navodite OPF datoteku.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-field, \-f
+Polje za postavljanje. Format je ime_polja:vrednost, na primer: \fB\-\-field\fP tags:oznaka1,oznaka2. Koristite \fB\-\-list\-fields\fP da dobijete listu svih imena polja. Možete navesti ovu opciju više puta da biste postavili više polja. Napomena: Za jezike morate koristiti ISO639 kodove jezika (npr. en za engleski, fr za francuski i tako dalje). Za identifikatore, sintaksa je \fB\-\-field\fP identifiers:isbn:XXXX,doi:YYYYY. Za logička (da/ne) polja koristite true i false ili yes i no.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-fields, \-l
+Izlistaj imena polja metapodataka koja se mogu koristiti sa opcijom \fB\-\-field\fP
+.UNINDENT
+.SH EXPORT
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb export [opcije] ids
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Izvezite knjige navedene pomoću ids (lista odvojena zarezima) u sistem fajlova.
+Operacija izvoza čuva sve formate knjige, njene korice i metapodatke (u
+OPF fajlu). Svi dodatni fajlovi sa podacima povezani sa knjigom se takođe čuvaju.
+Možete dobiti ID brojeve iz komande za pretragu.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-all
+Izvezi sve knjige iz baze podataka zanemarivši listu identifikatora.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-asciiize
+Neka calibre konvertuje sve neengleske znakove u engleske ekvivalente za nazive datoteka. Ovo je korisno ako čuvate na stari sistem datoteka bez potpune podrške za Unicode nazive datoteka. Navođenje ove mogućnosti će sprečiti ovu akciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-cover
+Obično će calibre sačuvati naslovnu stranu u posebnu datoteku zajedno sa samim datotekama e\-knjige. Navođenje ove mogućnosti će sprečiti ovu akciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-save\-extra\-files
+Sačuvaj sve datoteke sa podacima povezane sa knjigom prilikom čuvanja knjige Navođenje ove mogućnosti će sprečiti ovu akciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-update\-metadata
+Calibre će obično ažurirati metapodatke u sačuvanim datotekama koristeći podatke iz svoje biblioteke. Ovo usporava čuvanje na disk. Navođenje ove mogućnosti će sprečiti ovu akciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dont\-write\-opf
+Calibre će obično upisati metapodatke u posebnu OPF datoteku uz datoteku koja sadrži e\-knjigu. Navođenje ove mogućnosti će sprečiti ovu akciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Zarezima razdvojena lista formata koji će biti sačuvani za svaku od knjiga. Podrazumeva se da se čuvaju svi raspoloživi formati.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-progress
+Prijavi napredak
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-whitespace
+Zameni razmake donjim crtama.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-single\-dir
+Izvezi sve knjige u jedan folder
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-template
+Šablon za kontrolu naziva datoteke i strukture fascikli sačuvanih datoteka. Podrazumevano je \fB\(dq\fP{author_sort}/{title}/{title} \- {authors}\fB\(dq\fP, što će sačuvati knjige u podfasciklu po autoru sa nazivima datoteka koji sadrže naslov i autora. Dostupne kontrole su: {author_sort, authors, id, isbn, languages, last_modified, pages, pubdate, publisher, rating, series, series_index, tags, timestamp, title}
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timefmt
+Format za prikaz datuma. %d \- dan, %b \- mesec, %m \- broj meseca, %Y \- godina. Podrazumevano je: %b, %Y
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-dir
+Izvezi knjige u navedeni folder. Podrazumevano je .
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-to\-lowercase
+Promeni putanju za mala slova.
+.UNINDENT
+.SH CATALOG
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb catalog /putanja/do/odredišta.(csv|epub|mobi|xml...) [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Izvezite katalog u formatu navedenom ekstenzijom putanja/do/odredišta.
+Opcije kontrolišu kako se unosi prikazuju u generisanom izlazu kataloga.
+Imajte na umu da različiti formati kataloga podržavaju različite skupove opcija. Da
+biste videli različite opcije, navedite ime izlaznog fajla, a zatim
+opciju \-\-help.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-ids, \-i
+Zarezima razdvojena lista identifikatora za uključivanje u katalog. Ako je navedena zanemariće se mogućnost \fB\-\-search\fP\&. Podrazumeva se: sve
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Filtriraj rezultate na osnovu upita za pretragu. Za format upita molim vas da pogledate u odgovarajući odeljak Korisničkog uputstva. Podrazumeva se: bez filtriranja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Prikaži detaljne informacije. Korisno za traženje grešaka.
+.UNINDENT
+.SS EPUB OPCIJE
+.INDENT 0.0
+.TP
+.B \-\-catalog\-title
+Naslov generisanog kataloga koji se koristi kao naslov u metapodacima. Podrazumevano: \fB\(aq\fPMy Books\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cross\-reference\-authors
+Kreiraj unakrsne reference u odeljku Autori za knjige sa više autora. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline
+Sačuvaj izlaz iz različitih faza procesa konverzije u navedenu fasciklu. Korisno ako niste sigurni u kojoj fazi procesa konverzije se javlja greška. Podrazumevano: \fB\(aq\fPNone\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclude\-genre
+Regex koji opisuje oznake koje treba isključiti kao žanrove. Podrazumevano: \fB\(aq\fP[.+]|^+$\fB\(aq\fP isključuje oznake u zagradama, npr. \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP, i \fB\(aq\fP+\fB\(aq\fP, podrazumevanu oznaku za pročitane knjige. Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-exclusion\-rules
+Određuje pravila koja se koriste za izuzimanje knjiga iz generisanog kataloga. Model pravila za izuzimanje je ili (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fP<comma\-separated list of tags>\fB\(aq\fP) ili (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<custom column>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP). Na primer: ((\fB\(aq\fPArchived books\fB\(aq\fP,\fB\(aq\fP#status\fB\(aq\fP,\fB\(aq\fPArchived\fB\(aq\fP),) izuzeće knjigu čija je vrednost \fB\(aq\fPArchived\fB\(aq\fP u prilagođenoj koloni \fB\(aq\fPstatus\fB\(aq\fP\&. Kada je definisano više pravila, primeniće se sva pravila. Podrazumevano: \fB\(dq\fP((\fB\(aq\fPCatalogs\fB\(aq\fP,\fB\(aq\fPTags\fB\(aq\fP,\fB\(aq\fPCatalog\fB\(aq\fP),)\fB\(dq\fP Primenjuje se na izlazne formate: AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-authors
+Uključi odeljak \fB\(aq\fPAutori\fB\(aq\fP u katalog. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-descriptions
+Uključi odeljak \fB\(aq\fPOpisi\fB\(aq\fP u katalog. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-genres
+Uključi odeljak \fB\(aq\fPŽanrovi\fB\(aq\fP u katalog. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-recently\-added
+Uključi odeljak \fB\(aq\fPNedavno dodato\fB\(aq\fP u katalog. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-series
+Uključi odeljak \fB\(aq\fPSerije\fB\(aq\fP u katalog. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-generate\-titles
+Uključi odeljak \fB\(aq\fPNaslovi\fB\(aq\fP u katalog. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-genre\-source\-field
+Izvorno polje za odeljak \fB\(aq\fPŽanrovi\fB\(aq\fP\&. Podrazumevano: \fB\(aq\fPOznake\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-header\-note\-source\-field
+Prilagođeno polje koje sadrži tekst napomene za umetanje u zaglavlje Opisa. Podrazumevano: \fB\(aq\fP\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-merge\-comments\-rule
+#<custom field>:[before|after]:[True|False] određuje:  <custom field> Prilagođeno polje koje sadrži beleške koje treba spojiti sa komentarima  [before|after] Položaj beležaka u odnosu na komentare  [True|False] \- Između beležaka i komentara umeće se horizontalna linija Podrazumevano: \fB\(aq\fP::\fB\(aq\fP Primenjuje se na izlazne formate: AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Određuje izlazni profil. U nekim slučajevima, izlazni profil je potreban za optimizaciju kataloga za uređaj. Na primer, \fB\(aq\fPkindle\fB\(aq\fP ili \fB\(aq\fPkindle_dx\fB\(aq\fP kreira strukturirani Sadržaj sa odeljcima i člancima. Podrazumevano: \fB\(aq\fPNone\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefix\-rules
+Određuje pravila za uključivanje prefiksa koji označavaju pročitane knjige, stavke sa liste želja i druge prefikse koje je odredio korisnik. Model pravila za prefiks je (\fB\(aq\fP<rule name>\fB\(aq\fP,\fB\(aq\fP<source field>\fB\(aq\fP,\fB\(aq\fP<pattern>\fB\(aq\fP,\fB\(aq\fP<prefix>\fB\(aq\fP). Kada je definisano više pravila, koristiće se prvo pravilo koje se podudara. Podrazumevano: \fB\(dq\fP((\fB\(aq\fPRead books\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fP+\fB\(aq\fP,\fB\(aq\fP✓\fB\(aq\fP),(\fB\(aq\fPWishlist item\fB\(aq\fP,\fB\(aq\fPtags\fB\(aq\fP,\fB\(aq\fPWishlist\fB\(aq\fP,\fB\(aq\fP×\fB\(aq\fP))\fB\(dq\fP Primenjuje se na izlazne formate: AZW3, EPUB, MOBI
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preset
+Koristi imenovani unapred podešeni profil kreiran pomoću GUI graditelja kataloga. Unapred podešeni profil određuje sva podešavanja za pravljenje kataloga. Podrazumevano: \fB\(aq\fPNone\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-thumb\-width
+Nagoveštaj veličine (u inčima) za naslovne strane knjiga u katalogu. Opseg: 1.0 \- 2.0 Podrazumevano: \fB\(aq\fP1.0\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-existing\-cover
+Zameni postojeću naslovnu stranu prilikom generisanja kataloga. Podrazumevano: \fB\(aq\fPFalse\fB\(aq\fP Primenjuje se na: AZW3, EPUB, MOBI izlazne formate
+.UNINDENT
+.SH SAVED_SEARCHES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb saved_searches [opcije] (list|add|remove)
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Upravljajte sačuvanim pretragama u ovoj bazi podataka.
+Ako pokušate da dodate upit sa imenom koje već postoji, biće
+zamenjen.
+.sp
+Sintaksa za dodavanje:
+.sp
+calibredb \fBsaved_searches\fP add ime_pretrage izraz_pretrage
+.sp
+Sintaksa za uklanjanje:
+.sp
+calibredb \fBsaved_searches\fP remove ime_pretrage
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH ADD_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb add_custom_column [mogućnost] etiketa naziv tip
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Napravi kolonu. Etiketa je računaru razumljivo ime kolone. Trebalo
+bi da ne sadrži praznine ili zareze. Naziv je ime kolone razumljivo korisniku.
+Tip je jedan od: bool, comments, composite, datetime, enumeration, float, int, rating, series, text
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-display
+Rečnik opcija za prilagođavanje načina na koji će se podaci u ovoj koloni tumačiti. Ovo je JSON niska. Za kolone nabrajanja, koristite \fB\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP Postoji mnogo opcija koje mogu ići u promenljivu display. Opcije po tipu kolone su: composite: composite_template, composite_sort, make_category,contains_html, use_decorations datetime: date_format enumeration: enum_values, enum_colors, use_decorations int, float: number_format text: is_names, use_decorations  Najbolji način da pronađete dozvoljene kombinacije je da napravite prilagođenu kolonu odgovarajućeg tipa u grafičkom interfejsu, a zatim pogledate rezervni OPF za knjigu (osigurajte da je novi OPF kreiran od kada je kolona dodata). Videćete JSON za \fB\(dq\fPdisplay\fB\(dq\fP za novu kolonu u OPF\-u.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-is\-multiple
+Ova kolona čuva etikete kao podatke (tj. kao više vrednosti razdvojenih zarezima). Ovo važi ako je tip tekst.
+.UNINDENT
+.SH CUSTOM_COLUMNS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb custom_columns [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Izlistajte dostupne prilagođene kolone. Prikazuje labele i ID\-jeve kolona.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-details, \-d
+Prikaži detalje o svakoj koloni.
+.UNINDENT
+.SH REMOVE_CUSTOM_COLUMN
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb remove_custom_column [opcije] label
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Uklanja prilagođenu kolonu identifikovanu pomoću label. Dostupne kolone
+možete videti pomoću komande custom_columns.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-force, \-f
+Nemoj da pitaš za odobrenje.
+.UNINDENT
+.SH SET_CUSTOM
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb set_custom [opcije] kolona id vrednost
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Postavite vrednost prilagođene kolone za knjigu identifikovanu pomoću id.
+Možete dobiti listu ID\-jeva koristeći komandu search.
+Možete dobiti listu imena prilagođenih kolona koristeći komandu custom_columns.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-append, \-a
+Ako kolona čuva više vrednosti, dodaj navedene vrednosti postojećim umesto da budu zamenjene.
+.UNINDENT
+.SH RESTORE_DATABASE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb restore_database [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Obnavlja ovu bazu podataka iz metapodataka sačuvanih u OPF datotekama u svakoj
+fascikli calibre biblioteke. Ovo je korisno ako je vaša metadata.db datoteka
+oštećena.
+.sp
+UPOZORENJE: Ova komanda potpuno regeneriše vašu bazu podataka. Izgubićete
+sve sačuvane pretrage, korisničke kategorije, plugboards, sačuvana podešavanja
+konverzije po knjizi i prilagođene recepte. Obnovljeni metapodaci biće tačni samo onoliko
+koliko i podaci pronađeni u OPF datotekama.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-really\-do\-it, \-r
+Zaista izvrši oporavak. Ova komanda neće biti pokrenuta ako ne izaberete ovu mogućnost.
+.UNINDENT
+.SH CHECK_LIBRARY
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb check_library [mogućnosti]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Izvrši neke provere u direktorijumima s bibliotekom. Izveštaji su invalid_titles, extra_titles, invalid_authors, extra_authors, missing_formats, extra_formats, extra_files, missing_covers, extra_covers, malformed_formats, malformed_paths, failed_folders
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Izlaz u CSV formatu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_extensions, \-e
+Zarezima razdvojena lista proširenja koje će biti zanemarena. Podrazumevano: sve
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-ignore_names, \-n
+Zarezima razdvojena lista imena koja će biti zanemarena. Podrazumevano: sve
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-report, \-r
+Zarezima razdvojena lista izveštaja. Podrazumevano: sve
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-vacuum\-fts\-db
+Izvrši vacuum nad bazom podataka za pretragu celog teksta. Ovo može biti veoma sporo i zahtevati puno memorije, u zavisnosti od veličine baze podataka.
+.UNINDENT
+.SH LIST_CATEGORIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb list_categories [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Generiše izveštaj o informacijama o kategorijama u bazi podataka. Informacije
+su ekvivalentne onome što je prikazano u Pregledaču oznaka.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-categories, \-r
+Lista imena za pretragu kategorija razdvojena zarezima. Podrazumevano: all
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-csv, \-c
+Izlaz u CSV formatu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-dialect
+Tip CSV datoteke za generisanje. Izbori: excel, excel\-tab, unix
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-item_count, \-i
+Ispiši samo broj stavki po kategoriji umesto broja po stavki u kategoriji.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-width, \-w
+Najveća širina reda u izlazu. Podrazumeva se širina ekrana.
+.UNINDENT
+.SH BACKUP_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb backup_metadata [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Napravite rezervnu kopiju metapodataka sačuvanih u bazi podataka u pojedinačne OPF fajlove u svakom
+folderu knjige. Ovo se obično dešava automatski, ali možete pokrenuti ovu
+komandu da forsirate ponovno generisanje OPF fajlova, pomoću opcije \-\-all.
+.sp
+Imajte na umu da obično nema potrebe za ovim, jer se OPF fajlovi automatski
+čuvaju, svaki put kada se metapodaci promene.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-all
+Obično ova komanda radi samo na knjigama koje imaju zastarele OPF fajlove. Ova opcija omogućava da radi na svim knjigama.
+.UNINDENT
+.SH CLONE
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb clone putanja/do/nove/biblioteke
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Kreirajte klon trenutne biblioteke. Ovo kreira novu, praznu biblioteku koja ima sve
+iste prilagođene kolone, Virtuelne biblioteke i druga podešavanja kao trenutna biblioteka.
+.sp
+Klonirana biblioteka neće sadržati knjige. Ako želite da kreirate potpuni duplikat, uključujući
+sve knjige, onda jednostavno koristite alate vašeg sistema fajlova da kopirate folder biblioteke.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.SH EMBED_METADATA
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb embed_metadata [opcije] book_id
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Ažurirajte metapodatke u samim fajlovima knjiga sačuvanim u calibre biblioteci iz
+metapodataka u calibre bazi podataka. Obično se metapodaci ažuriraju samo prilikom
+izvoza fajlova iz calibre\-a, ova komanda je korisna ako želite da se fajlovi
+ažuriraju na mestu. Imajte na umu da različiti formati fajlova podržavaju različite količine
+metapodataka. Možete koristiti specijalnu vrednost \(aqall\(aq za book_id da ažurirate metapodatke
+u svim knjigama. Takođe možete navesti više ID\-jeva knjiga odvojenih razmacima i opsege ID\-jeva
+odvojene crticama. Na primer: calibredb \fBembed_metadata\fP 1 2 10\-15 23
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-only\-formats, \-f
+Ažuriraj metapodatke samo u fajlovima navedenog formata. Navedite ovo više puta za više formata. Podrazumevano, svi formati se ažuriraju.
+.UNINDENT
+.SH SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb search [opcije] izraz za pretragu
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Pretražuje biblioteku za navedeni termin pretrage, vraćajući zarezima odvojenu
+listu ID\-jeva knjiga koji odgovaraju izrazu za pretragu. Izlazni format je koristan
+za prosleđivanje drugim komandama koje prihvataju listu ID\-jeva kao ulaz.
+.sp
+Izraz za pretragu može biti bilo šta iz calibre\-ovog moćnog jezika za upite
+pretrage, na primer: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-limit, \-l
+Maksimalan broj rezultata za vraćanje. Podrazumevano su svi rezultati.
+.UNINDENT
+.SH FTS_INDEX
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb fts_index [options] enable/disable/status/reindex
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Kontroliše proces indeksiranja za pretragu celog teksta (FTS).
+.INDENT 0.0
+.TP
+.B enable
+Uključuje FTS indeksiranje za ovu biblioteku
+.TP
+.B disable
+Isključuje FTS indeksiranje za ovu biblioteku
+.TP
+.B status
+Prikazuje trenutni status indeksiranja
+.TP
+.B reindex
+Može se koristiti za ponovno indeksiranje određenih knjiga ili
+cele biblioteke. Za ponovno indeksiranje određenih knjiga
+navedite ID\-ove knjiga kao dodatne argumente nakon
+komande reindex. Ako ID\-ovi knjiga nisu navedeni,
+cela biblioteka se ponovo indeksira.
+.UNINDENT
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-indexing\-speed
+Brzina indeksiranja. Koristite fast za brzo indeksiranje koristeći sve resurse vašeg računara i slow za indeksiranje koje manje opterećuje resurse. Imajte na umu da se brzina resetuje na slow nakon svakog pokretanja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-wait\-for\-completion
+Sačekaj dok se sve knjige ne indeksiraju, povremeno prikazujući napredak indeksiranja
+.UNINDENT
+.SH FTS_SEARCH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb fts_search [options] izraz za pretragu
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Izvršite pretragu celog teksta u celoj biblioteci ili njenom podskupu.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-do\-not\-match\-on\-related\-words
+Poklapaj samo tačne reči, a ne srodne reči. Tako se correction neće poklapati sa correcting.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-include\-snippets
+Uključi isečke teksta koji okružuju svako poklapanje. Imajte na umu da ovo znatno usporava pretragu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-indexing\-threshold
+Koliki deo biblioteke mora biti indeksiran pre nego što se dozvoli pretraga, u procentima. Podrazumevano je 90
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-match\-end\-marker
+Oznaka koja se koristi za označavanje kraja poklopljene reči unutar isečka
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-match\-start\-marker
+Oznaka koja se koristi za označavanje početka poklopljene reči unutar isečka
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-format
+Format u kojem će se prikazati rezultati pretrage. Bilo \fB\(dq\fPtext\fB\(dq\fP za običan tekst ili \fB\(dq\fPjson\fB\(dq\fP za JSON izlaz.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-restrict\-to
+Ograničite pretražene knjige, bilo korišćenjem izraza za pretragu ili ID\-ova. Na primer: ids:1,2,3 za ograničavanje po ID\-ovima ili search:tag:foo za ograničavanje na knjige koje imaju oznaku foo.
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 05:21+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2026\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
@@ -501,6 +501,15 @@ msgid ""
 msgstr "`weights`: Slovník, který mapuje váhy na názvy. Pokud některé názvy v index nejsou ve weights, předpokládá se, že mají váhu 0."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.warmup_excluded_domains:1
+msgid ""
+"The domains the 'camoufox' browser must stay away from while warming itself "
+"up, so that the first time it is seen by the site being downloaded from is "
+"as part of the download proper. By default these are the domains of any "
+"statically declared feeds."
+msgstr "Domény, kterým se má prohlížeč 'camoufox' při úvodní přípravě vyhnout, aby jej web, ze kterého se stahuje obsah, poprvé zaznamenal až při samotném stahování. Ve výchozím nastavení jde o domény všech kanálů pevně zadaných v předpisu."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
 msgid ""
 "Set to True and implement :meth:`get_obfuscated_article` to handle websites "
@@ -534,6 +543,21 @@ msgid ""
 "'qt' support HTTP/2, which mechanize does not and are thus harder to "
 "fingerprint for bot protection services."
 msgstr "Simulovaný prohlížečový engine, který se má použít při stahování ze serverů. Výchozí je použití pythonového prohlížečového enginu mechanize, který podporuje přihlašování. Pokud však přihlašování nepotřebujete, zvažte změnu na 'webengine', který k provádění síťových požadavků používá skutečný prohlížeč Chromium, nebo na 'qt', který používá síťový backend Qt. 'webengine' i 'qt' podporují HTTP/2, což mechanize nepodporuje, a proto je pro služby ochrany proti botům obtížnější je identifikovat pomocí fingerprintingu."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:7
+msgid ""
+"For a site that defeats all of those, use 'camoufox', which downloads and "
+"drives a real Firefox based browser built to hide the fact that it is "
+"automated. It is by far the heaviest of the four: it downloads the browser "
+"on first use, warms it up by visiting a few commonly browsed sites before "
+"starting on your feeds, and actually navigates to every article, running its"
+" scripts, rather than just requesting it. In exchange, the articles are "
+"fetched exactly as a person browsing the site would fetch them, and their "
+"images come out of the browser without being downloaded a second time. Note "
+"that it ignores any user agent you set, since it uses one that matches the "
+"rest of the fingerprint it presents."
+msgstr "Pro web, který rozpozná automatizaci u všech předchozích možností, použijte 'camoufox'. Ten stáhne a ovládá skutečný prohlížeč založený na Firefoxu, navržený tak, aby skryl, že je automatizovaný. Ze všech čtyř možností je zdaleka nejnáročnější: při prvním použití stáhne prohlížeč, před zahájením načítání kanálů jej připraví návštěvou několika běžně navštěvovaných webů a místo pouhého požadavku na každý článek jej skutečně otevře a spustí jeho skripty. Články se díky tomu načítají stejně jako při běžném procházení webu a jejich obrázky se získávají přímo z prohlížeče bez opětovného stahování. Ignoruje vámi nastaveného user agenta, protože používá takového, který odpovídá zbytku otisku prohlížeče."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1

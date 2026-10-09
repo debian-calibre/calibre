@@ -8,6 +8,7 @@ from qt.core import QComboBox, QDialog, QDialogButtonBox, QFormLayout, QIcon, QL
 
 from calibre.gui2 import error_dialog, gprefs, question_dialog
 from calibre.gui2.actions import InterfaceAction, show_menu_under_widget
+from calibre.gui2.central import NarrowDesires, Visibility, WideDesires
 from calibre.gui2.geometry import _restore_geometry, delete_geometry, save_geometry
 from calibre.utils.icu import sort_key
 from calibre.utils.localization import _
@@ -23,6 +24,17 @@ class Panel(Enum):
     COVER_BROWSER = 'cb'
     QUICKVIEW = 'qv'
     BOOKSHELF = 'bs'
+
+
+def default_layout_settings():
+    return {
+        'layout': 'wide',
+        'wide_visibility': Visibility().serialize(),
+        'narrow_visibility': Visibility().serialize(),
+        'wide_desires': WideDesires().serialize(),
+        'narrow_desires': NarrowDesires().serialize(),
+        'alternate_view': '',
+    }
 
 
 class SaveLayoutDialog(QDialog):
@@ -185,13 +197,42 @@ class LayoutActions(InterfaceAction):
         _restore_geometry(self.gui, gprefs, f'saved_layout_{name}')
         # Now the panel sizes inside the central widget
         layouts = gprefs['saved_layouts']
-        settings = layouts[name]
+        self.apply_settings(layouts[name])
+
+    def reset_layout(self):
+        """reset_layout()
+        Reset the layout of the main window to the calibre defaults: the wide
+        layout with the Tag browser, book list, Book details and search bar
+        visible and the default panel sizes. The window size is not changed.
+        """
+        # Quickview is a separate widget that must be closed via its button
+        self.set_visible(Panel.QUICKVIEW, False)
+        self.apply_settings(default_layout_settings())
+        self.gui.layout_container.update_button_states_from_visibility()
+        self.set_visible(Panel.SEARCH_BAR, True)
+
+    def apply_settings(self, settings):
+        """apply_settings()
+        Apply the specified GUI layout settings, as returned by :meth:`current_settings`.
+        """
         # Order is important here. change_layout() must be called before
         # unserializing the settings or panes like book details won't display
         # properly.
         self.gui.layout_container.change_layout(self.gui, settings['layout'] == 'wide')
         self.gui.layout_container.unserialize_settings(settings)
         self.gui.layout_container.relayout()
+        # The alternate views (cover grid, bookshelf) are not part of the
+        # central container settings. Layouts saved by older versions of
+        # calibre don't have this key, in which case leave the view unchanged.
+        alternate_view = settings.get('alternate_view')
+        if alternate_view is not None:
+            if alternate_view == 'grid':
+                self.set_visible(Panel.GRID_VIEW, True)
+            elif alternate_view == 'bookshelf':
+                self.set_visible(Panel.BOOKSHELF, True)
+            else:
+                self.set_visible(Panel.GRID_VIEW, False)
+                self.set_visible(Panel.BOOKSHELF, False)
 
     def save_current_layout(self):
         """save_current_layout()
@@ -209,7 +250,14 @@ class LayoutActions(InterfaceAction):
         :return: the current gui layout settings.
         """
 
-        return self.gui.layout_container.serialized_settings()
+        settings = self.gui.layout_container.serialized_settings()
+        if self.gui.grid_view_button.isChecked():
+            settings['alternate_view'] = 'grid'
+        elif self.gui.bookshelf_view_button.isChecked():
+            settings['alternate_view'] = 'bookshelf'
+        else:
+            settings['alternate_view'] = ''
+        return settings
 
     def save_named_layout(self, name, settings):
         """save_named_layout()
@@ -301,7 +349,7 @@ class LayoutActions(InterfaceAction):
             QUICKVIEW: 'qv'
             BOOKSHELF: 'bs'
         """
-        self._button_from_enum(name).isChecked()
+        return self._button_from_enum(name).isChecked()
 
     def hide_all(self):
         for name in self.gui.button_order:

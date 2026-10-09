@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 10:21+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -511,10 +511,20 @@ msgid ""
 msgstr "見つかった問題はすべて、使いやすい便利な一覧として表示されます。一覧の中でエントリをクリックすると、そのエラーに関するヘルプが表示され、自動的に修正可能なエラーであれば自動修正のためのオプションが表示されます。エラーの上でダブルクリックすると、エラーの発生した場所をエディタで開くので、自分で修正することもできます。"
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:339
+msgid ""
+"If there is a type of problem you do not care about, click the "
+":guilabel:`Skip problems of this type` link in the help for that error. All "
+"problems of that type will no longer be reported. When some types of "
+"problems are being skipped, an entry at the bottom of the list says so. "
+"Click it to see the list of skipped problem types and un-skip any of them. "
+"Errors that prevent the book from being parsed cannot be skipped."
+msgstr "気にしない種類の問題がある場合は、そのエラーのヘルプにある :guilabel:`この種類の問題をスキップ` リンクをクリックしてください。そうすれば、その種類の問題は今後報告されなくなります。特定の種類の問題がスキップされている場合、リストの一番下にその旨を示す項目が表示されます。それをクリックすると、スキップされている問題の種類の一覧が表示され、任意の問題のスキップ設定を解除することができます。本の解析を妨げるエラーはスキップできません。"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:346
 msgid "Some of the checks performed are:"
 msgstr "実行されるチェックには次のようなものがあります:"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:341
+#: ../../../__w/calibre/calibre/manual/edit.rst:348
 msgid ""
 "Malformed HTML markup. Any HTML markup that does not parse as well-formed "
 "XML is reported. Correcting it will ensure that your markup works as "
@@ -525,7 +535,7 @@ msgid ""
 "which is highly fault tolerant and then converting to well formed XML."
 msgstr "不正な形式の HTML マークアップ。整形式 XML として解析されない HTML マークアップがすべて報告されます。これを修正すれば、すべてのコンテキストでマークアップが意図したとおりに機能するようになります。calibre は自動修正することもできますが、自動修正はときに予期しない影響を及ぼすこともあるので、利用には注意が必要です。いつものように自動修正の前にチェックポイントが作成されるので、変更を元に戻すのは簡単です。自動修正はマークアップを HTML5 アルゴリズムを使用して解析します。これはフォールトトレラント性が高く、整形式 XML に変換します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:350
+#: ../../../__w/calibre/calibre/manual/edit.rst:357
 msgid ""
 "Malformed or unknown CSS styles. Any CSS that is not valid or that has "
 "properties not defined in the CSS 2.1 standard (plus a few from CSS 3) are "
@@ -533,36 +543,36 @@ msgid ""
 "<style> tags in HTML files."
 msgstr "不正な形式、または不明な CSS スタイル。無効な CSS または CSS 2.1 標準 (および CSS 3 のいくつか) で定義されていないプロパティを持つ CSS がすべて報告されます。CSS はすべてのスタイルシート、インラインのスタイル属性、および HTML ファイル内の <style> タグでチェックされます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:355
+#: ../../../__w/calibre/calibre/manual/edit.rst:362
 msgid ""
 "Broken links. Links that point to files inside the book that are missing are"
 " reported."
 msgstr "リンク切れ。本の中へのリンクで、リンク先が存在しないものが報告されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:358
+#: ../../../__w/calibre/calibre/manual/edit.rst:365
 msgid ""
 "Unreferenced files. Files in the book that are not referenced by any other "
 "file or are not in the spine are reported."
 msgstr "参照されないファイル。他のどのファイルからも参照されていない、またはスパインの中にないファイルが報告されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:361
+#: ../../../__w/calibre/calibre/manual/edit.rst:368
 msgid ""
 "Various common problems in OPF files such as duplicate spine or manifest "
 "items, broken idrefs or meta cover tags, missing required sections and so "
 "on."
 msgstr "OPF ファイルのさまざまな一般的な問題。スパインまたはマニフェスト項目の重複、idref または meta cover タグの破損、必要な章の欠落など。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:365
+#: ../../../__w/calibre/calibre/manual/edit.rst:372
 msgid ""
 "Various compatibility checks for known problems that can cause the book to "
 "malfunction on reader devices."
 msgstr "さまざまな互換性チェック。リーダデバイス上で本が誤動作する可能性のある既知の問題についてチェック。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:369
+#: ../../../__w/calibre/calibre/manual/edit.rst:376
 msgid "Adding a cover"
 msgstr "表紙の追加"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:371
+#: ../../../__w/calibre/calibre/manual/edit.rst:378
 msgid ""
 "You can easily add a cover to the book via :guilabel:`Tools->Add cover`. "
 "This allows you to either choose an existing image in the book as the cover "
@@ -573,11 +583,11 @@ msgid ""
 "the OPF."
 msgstr "本の表紙は :guilabel:`ツール->表紙を追加` から簡単に追加できます。本の中にすでにある画像を表紙として選択するか、新しい画像を本にインポートして表紙とするか、いずれかの方法で表紙が追加できます。EPUB ファイルを編集するときには、表紙の HTML ラッパーが自動的に生成されます。本にすでに表紙が存在していれば、置き換えられます。ツールはまた、OPF で表紙ファイルを正しく表紙としてマークすることも自動的に処理します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:380
+#: ../../../__w/calibre/calibre/manual/edit.rst:387
 msgid "Embedding referenced fonts"
 msgstr "参照されているフォントの埋め込み"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:382
+#: ../../../__w/calibre/calibre/manual/edit.rst:389
 msgid ""
 "Accessed via :guilabel:`Tools->Embed reference fonts`, this tool finds all "
 "fonts referenced in the book and if they are not already embedded, searches "
@@ -586,11 +596,11 @@ msgid ""
 "licensed fonts, before doing this."
 msgstr ":guilabel:`ツール->参照されているフォントを埋め込む` からアクセスできるこのツールは、本の中で参照しているすべてのフォントを探し出し、それがすでに埋め込まれているかどうかを確認します。まだ埋め込まれていなければ、コンピュータ上でフォントを探して本に埋め込みます。これを行う前に、商用ライセンスのフォントを埋め込むにあたっては著作権上の問題がないことを十分確認してください。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:389
+#: ../../../__w/calibre/calibre/manual/edit.rst:396
 msgid "Subsetting embedded fonts"
 msgstr "埋め込みフォントのサブセット化"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:391
+#: ../../../__w/calibre/calibre/manual/edit.rst:398
 msgid ""
 "Accessed via :guilabel:`Tools->Subset embedded fonts`, this tool reduces all"
 " the fonts in the book to only contain glyphs for the text actually present "
@@ -600,11 +610,11 @@ msgid ""
 "work for the new text. So do this only as the last step in your workflow."
 msgstr ":guilabel:`ツール->埋め込みフォントのサブセット化` からアクセスできるこのツールは、本で実際にテキストに使用している文字のグリフだけを残すよう、本の中のフォントを削減します。通常この処理を行うと、フォントファイルのサイズを最大 50% ほど削減します。ただしフォントをサブセット化してしまうと、その後に新しいテキストを追加してその中にフォントに含まれていない文字があると、新しいテキストにはフォントが適用されません。ですからこれは必ずワークフローの中で最後のステップとして行ってください。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:399
+#: ../../../__w/calibre/calibre/manual/edit.rst:406
 msgid "Smartening punctuation"
 msgstr "句読点のスマート化"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:401
+#: ../../../__w/calibre/calibre/manual/edit.rst:408
 msgid ""
 "Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into "
 "their typographically correct equivalents. Note that the algorithm can "
@@ -613,40 +623,40 @@ msgid ""
 "punctuation`."
 msgstr "プレーンテキストのダッシュ、省略記号、引用符、複数のハイフンなどを、タイポグラフィ的に正しい同等の文字に変換します。ただしこのアルゴリズムは誤った結果を生成することがあります。特に、一重引用符が短縮語の先頭で使われているときにそうなりがちです。:guilabel:`ツール->句読点のスマート化` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:408
+#: ../../../__w/calibre/calibre/manual/edit.rst:415
 msgid "Transforming CSS properties"
 msgstr "CSS プロパティの変換"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:410
+#: ../../../__w/calibre/calibre/manual/edit.rst:417
 msgid ""
 "Create rules to transform the styling of the book. For example, create a "
 "rule to convert all red text to green or to double the font size of all text"
 " in the book or make text of a certain font family italic, etc."
 msgstr "本のスタイルを変えるためのルールを作成します。たとえば赤字のテキストをすべて緑に変換したり、本の中のすべてのテキストのフォントサイズを 2 倍にしたり、ある特定のフォントファミリのテキストをイタリック体にしたりするようなルールを作成します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:414
+#: ../../../__w/calibre/calibre/manual/edit.rst:421
 msgid ""
 "Creating the rules is simple, the rules follow a natural language format, "
 "that looks like:"
 msgstr "ルールの作成は簡単です。ルールは自然言語の形式に従い、次のようになります::"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:417
+#: ../../../__w/calibre/calibre/manual/edit.rst:424
 msgid "If the property *color* is *red* *change* it to *green*"
 msgstr "If the property *color* is *red* *change* it to *green*"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:418
+#: ../../../__w/calibre/calibre/manual/edit.rst:425
 msgid "If the property *font-size* is *any value* *multiply* the value by *2*"
 msgstr "If the property *font-size* is *any value* *multiply* the value by *2*"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:420
+#: ../../../__w/calibre/calibre/manual/edit.rst:427
 msgid "Accessed via :guilabel:`Tools->Transform styles`."
 msgstr ":guilabel:`ツール->スタイルを変換` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:423
+#: ../../../__w/calibre/calibre/manual/edit.rst:430
 msgid "Removing unused CSS rules"
 msgstr "使用されていない CSS 規則の削除"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:425
+#: ../../../__w/calibre/calibre/manual/edit.rst:432
 msgid ""
 "Remove all unused CSS rules from stylesheets and <style> tags. Some books "
 "created from production templates can have a large number of extra CSS rules"
@@ -655,11 +665,11 @@ msgid ""
 " unused CSS`."
 msgstr "使用されていない CSS 規則をすべてスタイルシートおよび <style> タグから削除します。製品テンプレートから作成された一部の書籍には、実際のコンテンツには適用されない余分な CSS 規則が大量に含まれていることがあります。こうした余分なルールは、すべてを処理する必要のあるリーダの性能を落とします。:guilabel:`ツール->使われていない CSS 規則を削除` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:432
+#: ../../../__w/calibre/calibre/manual/edit.rst:439
 msgid "Fixing HTML"
 msgstr "HTML の修正"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:434
+#: ../../../__w/calibre/calibre/manual/edit.rst:441
 msgid ""
 "This tool simply converts HTML that cannot be parsed as XML into well-formed"
 " XML. It is very common in e-books to have non-well-formed XML, so this tool"
@@ -671,11 +681,11 @@ msgid ""
 " the HTML. Accessed via :guilabel:`Tools->Fix HTML`."
 msgstr "このツールは、ただ単に XML として解析できない HTML を整形式の XML に変換するだけです。電子書籍の XML が整形式でないことは非常によくあることですが、このツールはそうした HTML を修正する処理を自動化しただけのものです。ツールは HTML を HTML5 アルゴリズム (すべての最新のブラウザで使用されているアルゴリズム) で解析し、その結果を XML に変換します。ただし自動修正では、直感に反する結果をもたらすことがあります。必要に応じて、上で紹介した本のチェックツールを使って HTML の問題を探し出し、手動で修正することもできます。:guilabel:`ツール->HTMLを修正` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:444
+#: ../../../__w/calibre/calibre/manual/edit.rst:451
 msgid "Beautifying files"
 msgstr "ファイルの整形"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:446
+#: ../../../__w/calibre/calibre/manual/edit.rst:453
 msgid ""
 "This tool is used to auto-format all HTML and CSS files so that they \"look "
 "pretty\". The code is auto-indented so that it lines up nicely, blank lines "
@@ -685,7 +695,7 @@ msgid ""
 "then run beautify.  Accessed via :guilabel:`Tools->Beautify all files`."
 msgstr "このツールは、すべての HTML および CSS ファイルを「きれいに見える」よう自動整形します。コードは自動でインデントされて行頭がきれいにそろえられ、必要に応じて空行が挿入されたりします。整形は、壊れた HTML/CSS も自動修正します。したがって、いかなる自動修正もされたくない場合には、本のチェックツールを使用してすべての問題点を修正してから整形を実行してください。:guilabel:`ツール->すべてのファイルを整形` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:454
+#: ../../../__w/calibre/calibre/manual/edit.rst:461
 msgid ""
 "In HTML any text can have significant whitespace, via the CSS white-space "
 "directive. Therefore, beautification could potentially change the rendering "
@@ -699,11 +709,11 @@ msgid ""
 "Tidy <https://infohound.net/tidy/>`_."
 msgstr "HTML では CSS 空白ディレクティブを介して、任意のテキストに重要な空白を含めることができます。したがって整形により HTML のレンダリングが変わってしまう可能性が潜在的にあります。可能な限りこれを回避するために、整形アルゴリズムは他のブロックレベルタグを含むブロックレベルタグのみを整形します。たとえば、<p> タグの内側のテキストの空白は変更されません。しかし <p> タグや <div> タグしか含まない <body> タグは整形されます。このため、あるファイルに適切なブロックレベルタグが含まれていない場合には、整形ツールは何もしないことがあります。その場合には、そこまで注意深くない別の整形ツールを試してみるとよいでしょう。たとえば `HTML Tidy <https://infohound.net/tidy/>`_ などがあります。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:467
+#: ../../../__w/calibre/calibre/manual/edit.rst:474
 msgid "Inserting an inline Table of Contents"
 msgstr "インライン目次の挿入"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:469
+#: ../../../__w/calibre/calibre/manual/edit.rst:476
 msgid ""
 "Normally in e-books, the Table of Contents is separate from the main text "
 "and is typically accessed via a special Table of Contents button/menu in the"
@@ -712,7 +722,7 @@ msgid ""
 "generated based on the currently defined Table of Contents."
 msgstr "通常、電子書籍では、目次はメインのテキストとは分離されていて、たいていは電子書籍リーダデバイスの特別な目次ボタン/メニューからアクセスします。calibre は本のテキストの一部となる *インライン* の目次を自動的に生成することができます。これは現在定義されている目次をもとにして生成されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:475
+#: ../../../__w/calibre/calibre/manual/edit.rst:482
 msgid ""
 "If you use this tool multiple times, each invocation will cause the "
 "previously created inline Table of Contents to be replaced. The tool can be "
@@ -720,11 +730,11 @@ msgid ""
 "Contents`."
 msgstr "このツールを複数回使用すると、ツールが呼び出されるたびに以前生成したインライン目次を置き換えます。このツールは :guilabel:`ツール->目次->インライン目次を挿入` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:480
+#: ../../../__w/calibre/calibre/manual/edit.rst:487
 msgid "Setting Semantics"
 msgstr "セマンティクスの設定"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:482
+#: ../../../__w/calibre/calibre/manual/edit.rst:489
 msgid ""
 "This tool is used to set *semantics* in EPUB files. Semantics are simply, "
 "links in the OPF file that identify certain locations in the book as having "
@@ -735,11 +745,11 @@ msgid ""
 "semantics`."
 msgstr "このツールは EPUB ファイルに *セマンティクス* を設定するのに使用します。セマンティクスとは、OPF ファイル内の単なるリンクで、本の中のある場所を特別な意味を持つものとして特定します。このツールは序文、献辞、表紙、目次などを特定するために使用できます。特定したい情報のセマンティックなタイプを選択し、次にリンク先となる本の中の位置を選択します。このツールは :guilabel:`ツール->セマンティクスを設定` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:490
+#: ../../../__w/calibre/calibre/manual/edit.rst:497
 msgid "Filtering style information"
 msgstr "スタイル情報の絞り込み"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:492
+#: ../../../__w/calibre/calibre/manual/edit.rst:499
 msgid ""
 "This tool can be used to easily remove specified CSS style properties from "
 "the entire book. You can tell it what properties you want removed, for "
@@ -750,22 +760,22 @@ msgid ""
 "tool can be accessed via :guilabel:`Tools->Filter style information`."
 msgstr "このツールを使用すると、指定した CSS プロパティを本全体から簡単に削除できます。削除したいプロパティ、スタイルシート、``<style>`` タグおよびインラインの ``style`` を指定できます。たとえば ``color, background-color, line-height`` と指定すると出現したすべての場所から削除されます。スタイル情報を削除した後、すべての変更の概要が表示されるので、何が変更されたのか正確に確認できます。このツールは :guilabel:`ツール->スタイル情報を絞り込み` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:502
+#: ../../../__w/calibre/calibre/manual/edit.rst:509
 msgid "Upgrading the book's internals"
 msgstr "本の内部のアップグレード"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:504
+#: ../../../__w/calibre/calibre/manual/edit.rst:511
 msgid ""
 "This tool can be used to upgrade the book's internals, if possible. For "
 "instance it will upgrade EPUB 2 books to EPUB 3 books. The tool can be "
 "accessed via :guilabel:`Upgrade book internals`."
 msgstr "このツールを使うと、可能であれば本の内部をアップグレードできます。たとえば EPUB 2 の本を EPUB 3 にアップグレードします。このツールは :guilabel:`本の内部をアップグレード` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:511
+#: ../../../__w/calibre/calibre/manual/edit.rst:518
 msgid "Checkpoints"
 msgstr "チェックポイント"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:513
+#: ../../../__w/calibre/calibre/manual/edit.rst:520
 msgid ""
 ":guilabel:`Checkpoints` are a way to mark the current state of the book as "
 "\"special\". You can then go on to do whatever changes you want to the book "
@@ -774,13 +784,13 @@ msgid ""
 "automated tools described in the previous section."
 msgstr ":guilabel:`チェックポイント` は、本の現在の状態を \"特別\" なものとしてマークする方法です。マークしたら、好きなように本を変更し、その結果が気に入らなければチェックポイントした状態に戻せます。チェックポイントは、上で説明した自動化ツールを使用するたびに自動的に作成されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:519
+#: ../../../__w/calibre/calibre/manual/edit.rst:526
 msgid ""
 "You can create a checkpoint via :guilabel:`Edit->Create checkpoint`. And go "
 "back to a previous checkpoint with :guilabel:`Edit->Revert to ...`"
 msgstr "チェックポイントは :guilabel:`編集->チェックポイントを作成` から作成できます。前のチェックポイントに戻すには、:guilabel:`編集->元に戻す ...` を実行します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:522
+#: ../../../__w/calibre/calibre/manual/edit.rst:529
 msgid ""
 "The check pointing functionality is in addition to the normal Undo/redo "
 "mechanism when editing individual files. Checkpoints are needed for when "
@@ -788,7 +798,7 @@ msgid ""
 "able to revert a large group of related changes as a whole."
 msgstr "チェックポイント機能は、個別のファイルを編集するときに通常の「元に戻す/やり直す」メカニズムに追加されます。チェックポイントは変更が本の中の複数のファイルにわたっている場合や、大規模な変更をまとめて元に戻したい場合などに必要です。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:527
+#: ../../../__w/calibre/calibre/manual/edit.rst:534
 msgid ""
 "You can see a list of available checkpoints via "
 ":guilabel:`View->Checkpoints`. You can compare the current state of the book"
@@ -798,15 +808,15 @@ msgid ""
 "undoing all changes since that checkpoint was created."
 msgstr "利用可能なチェックポイントは :guilabel:`表示->チェックポイント` から確認できます。本の現在の状態と、指定したチェックポイントとは :ref:`diff` ツールを用いて比較することが可能です。それには比較したいチェックポイントを選択して、:guilabel:`比較` ボタンをクリックします。:guilabel:`元に戻す` ボタンを使用すると、本を指定したチェックポイントに戻し、そのチェックポイント以降に行われたすべての変更が取り消されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:535
+#: ../../../__w/calibre/calibre/manual/edit.rst:542
 msgid "The Live preview panel"
 msgstr "ライブプレビューパネル"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:537
+#: ../../../__w/calibre/calibre/manual/edit.rst:544
 msgid "The Live preview panel showing a rendering of the current file"
 msgstr "現在のファイルのレンダリングを表示するライブプレビューパネル"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:541
+#: ../../../__w/calibre/calibre/manual/edit.rst:548
 msgid ""
 "The live preview panel shows you the changes you are making live (with a "
 "second or two of delay). As you edit HTML or CSS files, the preview panel is"
@@ -818,7 +828,7 @@ msgid ""
 " will be opened in the edit and the preview panel, automatically."
 msgstr "ライブプレビューパネルでは、変更内容がリアルタイムで表示されます（1～2秒の遅延あり）。HTMLまたはCSSファイルを編集すると、プレビューパネルが自動的に更新され、変更内容が反映されます。エディター内でカーソルを動かすと、プレビューパネルはその位置を追跡し、本の対応する位置を表示します。プレビューパネル内をクリックすると、エディター内のカーソルがクリックした要素上に移動します。本の別のファイルへのリンクをクリックすると、そのファイルが自動的にエディターとプレビューパネルで開きます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:550
+#: ../../../__w/calibre/calibre/manual/edit.rst:557
 msgid ""
 "You can turn off the automatic syncing of position and live preview of "
 "changes -- by buttons under the preview panel. The live update of the "
@@ -827,7 +837,7 @@ msgid ""
 "render."
 msgstr "位置の自動的な同期と変更のライブビューは、プレビューパネルの下にあるボタンで無効に設定できます。プレビューパネルのライブ更新はエディタ内で入力中でないときにしか行われないため、気を散らされたり、プレビューのレンダリングを待つせいで遅くなったりすることはありません。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:555
+#: ../../../__w/calibre/calibre/manual/edit.rst:562
 msgid ""
 "The preview panel shows you how the text will look when viewed. However, the"
 " preview panel is not a substitute for actually testing your book on an "
@@ -839,18 +849,18 @@ msgid ""
 "reader device or software emulator."
 msgstr "プレビューパネルでは、テキストがどのように表示されるかを確認できます。ただし、プレビューパネルは実際のリーダーデバイスで実際に本をテストする代わりにはなりません。実際のリーダーよりも優れている点と劣る点があります。ほとんどのリーダーデバイスよりも、エラーや不正確なマークアップをはるかに許容します。また、ページ余白、改ページ、フォント名エイリアシングを使用する埋め込みフォントは表示されません。本の作業中はプレビューパネルを使用してください。作業が完了したら、実際のリーダーデバイスまたはソフトウェアエミュレータで確認してください。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:564
+#: ../../../__w/calibre/calibre/manual/edit.rst:571
 msgid ""
 "The preview panel does not support embedded fonts if the name of the font "
 "inside the font file does not match the name in the CSS @font-face rule. You"
 " can use the Check Book tool to quickly find and fix any such problem fonts."
 msgstr "フォントファイル内のフォントの名前がCSS@font-face規則にある名前と一致しない場合、プレビューパネルは埋め込みフォントをサポートしません。本のチェックツールを使用すれば、このような問題のあるフォントをすばやく見つけて修正できます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:570
+#: ../../../__w/calibre/calibre/manual/edit.rst:577
 msgid "Splitting HTML files"
 msgstr "HTML ファイルの分割"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:574
+#: ../../../__w/calibre/calibre/manual/edit.rst:581
 msgid ""
 "One, perhaps non-obvious, use of the preview panel is to split long HTML "
 "files. While viewing the file you want to split, click the :guilabel:`Split "
@@ -861,18 +871,18 @@ msgid ""
 "be performed."
 msgstr "おそらく意外に思われるでしょうが、プレビューパネルの利用法のひとつは、長い HTML ファイルを分割することです。分割するファイルを表示しているときに、プレビューパネルの下にある :guilabel:`分割モード` ボタン |spmb| をクリックします。次に、ファイルを分割したい場所にマウスを移動してクリックします。マウスの動きに合わせて、分割が発生する正確な場所を緑の太線で表示されます。分割したい場所が決まったら、クリックするだけで分割が実行されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:572
+#: ../../../__w/calibre/calibre/manual/edit.rst:579
 msgid "spmb"
 msgstr "spmb"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:581
+#: ../../../__w/calibre/calibre/manual/edit.rst:588
 msgid ""
 "Splitting the file will automatically update all links and references that "
 "pointed into the bottom half of the file and will open the newly split file "
 "in an editor."
 msgstr "ファイルを分割すると、ファイルの下半分を指すすべてのリンクと参照が自動的に更新され、新しく分割されたファイルがエディタで開かれます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:585
+#: ../../../__w/calibre/calibre/manual/edit.rst:592
 msgid ""
 "You can also split a single HTML file at multiple locations automatically, "
 "by right clicking inside the file in the editor and choosing "
@@ -881,15 +891,15 @@ msgid ""
 "on."
 msgstr "ひとつの HTML ファイりうを複数の位置で自動的に分割することも可能です。それにはエディタでファイル内を右クリックし、:guilabel:`複数の位置で分割` を選択します。これにより巨大なファイルを、見出しタグだけのファイルや、特定のクラスを持つタグだけ、などに簡単に分割できます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:595
+#: ../../../__w/calibre/calibre/manual/edit.rst:602
 msgid "The Live CSS panel"
 msgstr "ライブ CSS パネル"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:597
+#: ../../../__w/calibre/calibre/manual/edit.rst:604
 msgid "The Live CSS panel showing the styles for the current element"
 msgstr "現在の要素のスタイルを表示するライブ CSS パネル"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:602
+#: ../../../__w/calibre/calibre/manual/edit.rst:609
 msgid ""
 "The :guilabel:`Live CSS` panel shows you all the style rules that apply to "
 "the tag you are currently editing. The name of tag, along with its line "
@@ -897,7 +907,7 @@ msgid ""
 "rules."
 msgstr ":guilabel:`Live CSS` パネルには、現在編集しているタグに適用されるすべてのスタイル規則が表示されます。タグの名前とその行番号がエディタに表示され、その後に一致するスタイル規則の一覧が表示されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:606
+#: ../../../__w/calibre/calibre/manual/edit.rst:613
 msgid ""
 "It is a great way to quickly see which style rules apply to any tag. The "
 "view also has clickable links (in blue), which take you directly to the "
@@ -906,30 +916,30 @@ msgid ""
 "rules that are inherited from parent tags are shown."
 msgstr "これは、タグに適用されているスタイル規則がどれかを手早く確認できる、優れた方法です。ビューにはクリック可能なリンク (青色) もあり、そのスタイル規則を変更したい場合には、スタイルを定義している場所に直接移動できます。タグに直接適用されるスタイル規則と、親タグから継承される規則が表示されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:612
+#: ../../../__w/calibre/calibre/manual/edit.rst:619
 msgid ""
 "The panel also shows you what the finally calculated styles for the tag are."
 " Properties in the list that are superseded by higher priority rules are "
 "shown with a line through them."
 msgstr "パネルには、そのタグの最終的に計算されたスタイルも表示されます。リスト内のプロパティが優先度の高い規則で上書きされた場合には、打消し線とともに表示されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:616
+#: ../../../__w/calibre/calibre/manual/edit.rst:623
 msgid "You can enable the Live CSS panel via :guilabel:`View->Live CSS`."
 msgstr "ライブ CSS パネルは :guilabel:`表示->ライブ CSS` で有効にできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:623
+#: ../../../__w/calibre/calibre/manual/edit.rst:630
 msgid "Miscellaneous tools"
 msgstr "その他のツール"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:625
+#: ../../../__w/calibre/calibre/manual/edit.rst:632
 msgid "There are a few more tools that can be useful while you edit the book."
 msgstr "本の編集に役立つツールは、他にもいくつかあります。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:628
+#: ../../../__w/calibre/calibre/manual/edit.rst:635
 msgid "The Table of Contents view"
 msgstr "目次ビュー"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:630
+#: ../../../__w/calibre/calibre/manual/edit.rst:637
 msgid ""
 "The Table of Contents view shows you the current table of contents in the "
 "book. Double clicking on any entry opens the place that entry points to in "
@@ -938,19 +948,19 @@ msgid ""
 ":guilabel:`View->Table of Contents`."
 msgstr "目次ビューには、本の現在の目次が表示されます。エントリをダブルクリックすると、そのエントリが指す場所がエディタで開きます。右クリックして目次を編集したり、ビューを更新したり、すべての項目を展開したり折りたたんだりできます。目次ビューには :guilabel:`表示->目次` でアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:637
+#: ../../../__w/calibre/calibre/manual/edit.rst:644
 msgid "Checking the spelling of words in the book"
 msgstr "本の中身のスペルチェック"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:639
+#: ../../../__w/calibre/calibre/manual/edit.rst:646
 msgid "You can run a spelling checker via :guilabel:`Tools->Check spelling`."
 msgstr "スペルチェッカは :guilabel:`ツール->スペルチェック` からアクセスできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:641
+#: ../../../__w/calibre/calibre/manual/edit.rst:648
 msgid "The Check spelling tool"
 msgstr "スペルチェックツール"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:646
+#: ../../../__w/calibre/calibre/manual/edit.rst:653
 msgid ""
 "Words are shown with the number of times they occur in the book and the "
 "language the word belongs to. Language information is taken from the books "
@@ -961,14 +971,14 @@ msgid ""
 "English::"
 msgstr "単語は、本の中での出現回数とその単語が属する言語とともに表示されます。言語情報は、書誌と HTML ファイルの ``lang`` 属性から取得されます。そのおかげで複数の言語のテキストを含む本でもスペルチェッカがうまく機能します。たとえば、次の HTML 抽出では、color という単語はアメリカ英語としてチェックされ、colour という単語はイギリス英語としてチェックされます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:656
+#: ../../../__w/calibre/calibre/manual/edit.rst:663
 msgid ""
 "You can double click a word to highlight the next occurrence of that word in"
 " the editor. This is useful if you wish to manually edit the word, or see "
 "what context it is in."
 msgstr "単語をダブルクリックすると、エディタ内でその単語が次に出現する箇所をハイライト表示できます。これは、単語を手動で編集したい場合や、単語がどのような文脈で使われているのかを確認したい場合に便利です。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:660
+#: ../../../__w/calibre/calibre/manual/edit.rst:667
 msgid ""
 "To change a word, simply double click one of the suggested alternative "
 "spellings on the right, or type in your own corrected spelling and click the"
@@ -978,7 +988,7 @@ msgid ""
 "menu."
 msgstr "単語を変更するには、右側に提案されている代替スペルのひとつをダブルクリックするか、自分で修正したスペルを入力して、:guilabel:`選択した単語を変更` ボタンをクリックします。これで、本の中にあるその単語がすべて置き換えられます。メインの単語リストで単語を右クリックして、右クリックメニューから単語を簡単に変更することもできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:666
+#: ../../../__w/calibre/calibre/manual/edit.rst:673
 msgid ""
 "You can have the spelling checker ignore a word for the current session by "
 "clicking the :guilabel:`Ignore` button. You can also add a word to the user "
@@ -987,7 +997,7 @@ msgid ""
 "dictionary you want the word added to."
 msgstr ":guilabel:`無視` ボタンをクリックすると、スペルチェッカに現在のセッションの単語を無視させることができます。 :guilabel:`辞書に追加` ボタンをクリックして、ユーザ辞書に単語を追加することもできます。スペルチェッカは複数のユーザ辞書をサポートしており、どの辞書に単語を追加するかを選択できます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:672
+#: ../../../__w/calibre/calibre/manual/edit.rst:679
 msgid ""
 "You can also have the spelling checker display all the words in your book, "
 "not just the incorrectly spelled ones. This is useful to see what words are "
@@ -995,7 +1005,7 @@ msgid ""
 "individual words."
 msgstr "スペルチェッカでは、単にスペルの間違った単語を表示させるだけでなく、本の中のすべての単語を表示させることも可能です。本の中でどの単語が最もよく使われているのか確認して、それぞれの単語に対して検索と置換を実行するときに役に立ちます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:677
+#: ../../../__w/calibre/calibre/manual/edit.rst:684
 msgid ""
 "If you make any changes to the book by editing files while the spell check "
 "tool is open, you should click the :guilabel:`Refresh` button in the Spell "
@@ -1003,18 +1013,18 @@ msgid ""
 "you could lose the changes you have made in the editor."
 msgstr "スペルチェックツールが開いているときにファイルを編集して本に変更を加えた場合は、スペルチェックツールの :guilabel:`更新` ボタンをクリックする必要があります。これをせずにスペルチェックツールを使い続けると、エディタで行った変更が失われる可能性があります。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:683
+#: ../../../__w/calibre/calibre/manual/edit.rst:690
 msgid ""
 "To exclude an individual file from being spell checked when running the "
 "spell check tool, you can use the :guilabel:`Exclude files` button or add "
 "the following comment just under the opening tag in the file::"
 msgstr "スペルチェックツールの実行時にファイルを対象から除外するには、:guilabel:`ファイルを除外` ボタンを使用するか、ファイルの開始タグのすぐ下に次のコメントを追加します::"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:691
+#: ../../../__w/calibre/calibre/manual/edit.rst:698
 msgid "Adding new dictionaries"
 msgstr "新規辞書の追加"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:693
+#: ../../../__w/calibre/calibre/manual/edit.rst:700
 msgid ""
 "The spelling checker comes with builtin dictionaries for the English and "
 "Spanish languages. You can install your own dictionaries via "
@@ -1024,11 +1034,11 @@ msgid ""
 "Extensions repository <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
 msgstr "このスペルチェッカには、英語とスペイン語のビルトイン辞書が付属しています。自分で辞書を追加するには :guilabel:`環境設定->エディタ->スペル辞書の管理` から行います。スペルチェッカは、LibreOffice プログラムの辞書 (.oxt 形式) を使用できます。これらの辞書は、 `The LibreOffice Extensions repository <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_ からダウンロードできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:702
+#: ../../../__w/calibre/calibre/manual/edit.rst:709
 msgid "Inserting special characters"
 msgstr "特殊文字の挿入"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:704
+#: ../../../__w/calibre/calibre/manual/edit.rst:711
 msgid ""
 "You can insert characters that are difficult to type by using the "
 ":guilabel:`Edit->Insert special character` tool. This shows you all Unicode "
@@ -1039,7 +1049,7 @@ msgid ""
 "Search and replace tool."
 msgstr "入力が難しい文字を挿入するには、:guilabel:`編集->特殊文字を挿入` ツールを使用します。このツールはすべての Unicode 文字を表示するので、入力したい文字をクリックします。:kbd:`Ctrl` キーを押しながらクリックすると、選択した文字を挿入した後にウィンドウが勝手に閉じます。このツールを使用すれば、メインテキストや検索と置換ツールなどに特殊文字を挿入できます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:712
+#: ../../../__w/calibre/calibre/manual/edit.rst:719
 msgid ""
 "Because there are a lot of characters, you can define your own "
 ":guilabel:`Favorite` characters, that will be shown first. Simply right "
@@ -1050,7 +1060,7 @@ msgid ""
 "favorites around."
 msgstr "膨大な数の文字があるので、:guilabel:`お気に入り` の文字を定義して、それが最初に表示されるようにすることができます。文字の上で右クリックするだけで、お気に入りとしてマークできます。お気に入りの文字を右クリックして、お気に入りから削除することもできます。最後に、お気に入りの文字の並び順を変更するには、:guilabel:`お気に入りの再配置` ボタンをクリックして、お気に入りの文字をドラッグ&ドロップします。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:719
+#: ../../../__w/calibre/calibre/manual/edit.rst:726
 msgid ""
 "You can also directly type in special characters using the keyboard. To do "
 "this, you type the Unicode code for the character (in hexadecimal) and then "
@@ -1061,7 +1071,7 @@ msgid ""
 ":kbd:`Alt+X` and so on."
 msgstr "キーボードを使用して特殊文字を直接入力することもできます。それには文字の Unicode コードを (16進数で) 入力してから、:kbd:`Alt+X` キーを押すと、前に入力したコードが対応する文字に変換されます。たとえば、ÿ と入力するには、ff と入力してから :kbd:`Alt+X` を押します。ノンブレークスペースを入力するには a0 と入力してから :kbd:`Alt+X` を使用し、水平方向の省略記号を入力するには 2026と入力してから :kbd:`Alt+X` を押します。他も同様です。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:727
+#: ../../../__w/calibre/calibre/manual/edit.rst:734
 msgid ""
 "Finally, you can type in special characters by using HTML named entities. "
 "For example, typing &nbsp; will be replaced by a non breaking space when you"
@@ -1069,11 +1079,11 @@ msgid ""
 "colon."
 msgstr "最後に、HTML の名前付きエンティティを使用して特殊文字を入力することもできます。たとえば &nbsp; と入力するとノンブレークスペースに置き換わります。置換が起きるのはセミコロンを入力したときだけです。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:732
+#: ../../../__w/calibre/calibre/manual/edit.rst:739
 msgid "The code inspector view"
 msgstr "コードインスペクタビュー"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:734
+#: ../../../__w/calibre/calibre/manual/edit.rst:741
 msgid ""
 "This view shows you the HTML coding and CSS that applies to the current "
 "element of interest. You open it by right clicking a location in the preview"
@@ -1085,11 +1095,11 @@ msgid ""
 "ability to live edit inside the Inspector is under development."
 msgstr "このビューには、要素に適用される HTML コーディングと CSS が表示されます。このビューを開くには、プレビューパネル内で右クリックして :guilabel:`検査` を選択します。これでその要素の HTML コーディングが見られるようになり、さらに重要なことに、適用される CSS スタイルも確認できます。スタイルを動的に編集すれば、その変更がどのような影響を与えるかをその場で確認できます。ただしスタイルを編集しても、実際には本のコンテンツは変更されません。手軽に試すことができるだけです。インスペクタ内でライブ編集する機能は、現在開発中です。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:744
+#: ../../../__w/calibre/calibre/manual/edit.rst:751
 msgid "Checking external links"
 msgstr "外部リンクのチェック"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:746
+#: ../../../__w/calibre/calibre/manual/edit.rst:753
 msgid ""
 "You can use this tool to check all links in your book that point to external"
 " websites. The tool will try to visit every externally linked website, and "
@@ -1097,11 +1107,11 @@ msgid ""
 "for you to fix."
 msgstr "このツールを使用すると、本の中にあるすべての外部サイトへのリンクを確認できます。このツールはリンクされている外部サイトにアクセスを試み、アクセスに失敗すると、すべてのリンク切れを修正に便利な形式で報告します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:753
+#: ../../../__w/calibre/calibre/manual/edit.rst:760
 msgid "Downloading external resources"
 msgstr "外部リソースのダウンロード"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:755
+#: ../../../__w/calibre/calibre/manual/edit.rst:762
 msgid ""
 "You can use this tool to automatically download any images/stylesheets/etc. "
 "in the book that are not bundled with the book (i.e. they have URLs pointing"
@@ -1110,11 +1120,11 @@ msgid ""
 " to them to use the downloaded files."
 msgstr "このツールを使用すると、本に付属していない (つまりインターネット上の場所を指す URL が含まれている) 画像/スタイルシートなどを自動的に本の中にダウンロードできます。ツールはそのようなすべてのリソースを見つけて自動的にダウンロードし、本に追加し、ダウンロードしたファイルを使用するようにすべての参照を書き換えます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:763
+#: ../../../__w/calibre/calibre/manual/edit.rst:770
 msgid "Arranging files into folders by type"
 msgstr "ファイルをタイプ別にフォルダに配置"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:765
+#: ../../../__w/calibre/calibre/manual/edit.rst:772
 msgid ""
 "Often when editing EPUB files that you get from somewhere, you will find "
 "that the files inside the EPUB are arranged haphazardly, in different sub-"
@@ -1124,11 +1134,11 @@ msgid ""
 " the EPUB, it does not change how they are displayed in the File browser."
 msgstr "どこかで拾った EPUB ファイルを編集すると、EPUB 内のファイルがさまざまなサブフォルダに無秩序に配置されていることがよくあります。このツールを使用すれば、タイプに基づいてすべてのファイルをサブフォルダに自動的に移動できます。このツールへは :guilabel:`ツール->フォルダに整理` からアクセスできます。ただしこのツールが変更するのは EPUB 内でのファイルの置き場所だけで、ファイルブラウザでどのように表示されるかは変更しません。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:773
+#: ../../../__w/calibre/calibre/manual/edit.rst:780
 msgid "Importing files in other e-book formats as EPUB"
 msgstr "その他の電子書籍形式から EPUB にインポート"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:775
+#: ../../../__w/calibre/calibre/manual/edit.rst:782
 msgid ""
 "The editor includes the ability to import files in some other e-book formats"
 " directly as a new EPUB, without going through a full conversion. This is "
@@ -1137,11 +1147,11 @@ msgid ""
 " as a new book`."
 msgstr "エディタには、全変換を行うことなく何か別の形式の本にファイルを直接インポートして新しい EPUB とする機能が含まれています。これは、自分で編集した HTML ファイルから EPUB ファイルを直接作成したい場合に特に有用です。これを行うには、:guilabel:`ファイル->HTML または DOCX を新しい本としてインポート` を実行します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:788
+#: ../../../__w/calibre/calibre/manual/edit.rst:795
 msgid "The Reports tool"
 msgstr "レポートツール"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:790
+#: ../../../__w/calibre/calibre/manual/edit.rst:797
 msgid ""
 "The editor includes a nice *Reports* tool (via :guilabel:`Tools->Reports`) "
 "that shows summaries of the files, images, links, words, characters and "
@@ -1153,35 +1163,35 @@ msgid ""
 "where the link points."
 msgstr "エディターには便利な *レポート* ツール（ :guilabel:`ツール -> レポート` ）が搭載されており、本で使用されているファイル、画像、リンク、単語、文字、スタイルの概要を表示します。レポートの各行はホットリンクされています。行をダブルクリックすると、その項目が使用されている箇所、または定義されている箇所（該当する場合）にジャンプします。例えば、 :guilabel:`リンク` ビューでは、 :guilabel:`ソース` 列のエントリをダブルクリックするとリンクが定義されている箇所にジャンプし、 :guilabel:`ターゲット` 列のエントリをダブルクリックするとリンク先に移動できます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:798
+#: ../../../__w/calibre/calibre/manual/edit.rst:805
 msgid "The Reports tool with information and statistics about the book"
 msgstr "本の情報と統計を表示するレポートツール"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:805
+#: ../../../__w/calibre/calibre/manual/edit.rst:812
 msgid "Special features in the code editor"
 msgstr "コードエディタの特殊な機能"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:807
+#: ../../../__w/calibre/calibre/manual/edit.rst:814
 msgid ""
 "The calibre HTML editor is very powerful. It has many features that make "
 "editing of HTML (and CSS) easier."
 msgstr "calibre の HTML エディタは非常に強力です。HTML (および CSS) の編集を容易にする機能がいくつも備わっています。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:811
+#: ../../../__w/calibre/calibre/manual/edit.rst:818
 msgid "Syntax highlighting"
 msgstr "構文の強調表示"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:813
+#: ../../../__w/calibre/calibre/manual/edit.rst:820
 msgid ""
 "The HTML editor has very sophisticated syntax highlighting. Features "
 "include:"
 msgstr "HTML エディタが持つ構文の強調表示は、非常に洗練されています。この機能には次のものが含まれています:"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:815
+#: ../../../__w/calibre/calibre/manual/edit.rst:822
 msgid "The text inside bold, italic and heading tags is made bold/italic"
 msgstr "太字、イタリック、見出しタグ内のテキストは太字/イタリック体になります"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:816
+#: ../../../__w/calibre/calibre/manual/edit.rst:823
 msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
@@ -1189,45 +1199,45 @@ msgid ""
 "select the contents of a tag with :kbd:`Ctrl+Alt+T` or :kbd:`Ctrl+Shift+T`."
 msgstr "HTML上でカーソルを移動すると、一致するHTMLタグがハイライト表示され、キーボードショートカット :kbd:`Ctrl+{` と :kbd:`Ctrl+}` を使って開始タグまたは終了タグに移動できます。同様に、 :kbd:`Ctrl+Alt+T` または :kbd:`Ctrl+Shift+T` でタグの内容を選択することもできます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:821
+#: ../../../__w/calibre/calibre/manual/edit.rst:828
 msgid "Invalid HTML is highlighted with a red underline"
 msgstr "無効な HTML は赤い下線で強調表示されます"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:822
+#: ../../../__w/calibre/calibre/manual/edit.rst:829
 msgid ""
 "Spelling errors in the text inside HTML tags and attributes such as title "
 "are highlighted. The spell checking is language aware, based on the value of"
 " the ``lang`` attribute of the current tag and the overall book language."
 msgstr "HTML タグ内のテキストのスペルミスや、title などの属性が強調表示されます。スペルチェックは言語を認識しますが、それは現在のタグの lang 属性の値と全体的な本の言語に基づいて判断しています。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:825
+#: ../../../__w/calibre/calibre/manual/edit.rst:832
 msgid "CSS embedded inside ``<style>`` tags is highlighted"
 msgstr "``<style>`` タグの内側に埋め込まれた CSS を強調表示します"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:826
+#: ../../../__w/calibre/calibre/manual/edit.rst:833
 msgid ""
 "Special characters that can be hard to distinguish such as non-breaking "
 "spaces, different types of hyphens, etc. are highlighted."
 msgstr "ノンブレークスペース、さまざまな種類のハイフンなど、識別しにくい特殊文字を強調表示します"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:828
+#: ../../../__w/calibre/calibre/manual/edit.rst:835
 msgid ""
 "Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
 " the filenames highlighted. If the filename they point to does not exist, "
 "the filename is marked with a red underline."
 msgstr "``<a>`` タグ、``<img>``、および ``<link>`` タグ内にある他のファイルへのリンクはすべて、ファイル名が強調表示されます。リンク先のファイルが存在しない場合、そのファイル名を赤い下線でマークします。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:833
+#: ../../../__w/calibre/calibre/manual/edit.rst:840
 msgid "Context sensitive help"
 msgstr "状況依存のヘルプ"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:835
+#: ../../../__w/calibre/calibre/manual/edit.rst:842
 msgid ""
 "You can right click on an HTML tag name or a CSS property name to get help "
 "for that tag or property."
 msgstr "HTML タグ名または CSS プロパティ名を右クリックすると、そのタグまたはプロパティのヘルプを表示できます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:837
+#: ../../../__w/calibre/calibre/manual/edit.rst:844
 msgid ""
 "You can also hold down the :kbd:`Ctrl` key and click on any filename inside "
 "a link tag to open that file in the editor automatically. Similarly, "
@@ -1235,18 +1245,18 @@ msgid ""
 " matches the tag and class."
 msgstr "リンクタグ内のファイル名を :kbd:`Ctrl` キーを押しながらクリックすると、そのファイルをエディタで自動的に開きます。同様にクラス名を :kbd:`Ctrl` キーを押しながらクリックすると、そのタグとクラスに一致する最初のスタイル規則に移動します。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:841
+#: ../../../__w/calibre/calibre/manual/edit.rst:848
 msgid ""
 "Right clicking a class name in an HTML file will allow you to rename the "
 "class, changing all occurrences of the class throughout the book and all its"
 " stylesheets."
 msgstr "HTMLファイルの中のクラス名を右クリックすると、クラスの名前を変更できます。このとき、本およびスタイルシートの中でそのクラスが使われていればすべて名前が変更されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:848
+#: ../../../__w/calibre/calibre/manual/edit.rst:855
 msgid "Auto-complete"
 msgstr "自動補完"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:850
+#: ../../../__w/calibre/calibre/manual/edit.rst:857
 msgid ""
 "When editing an e-book, one of the most tedious tasks is creating links to "
 "other files inside the book, or to CSS stylesheets, or images. You have to "
@@ -1254,7 +1264,7 @@ msgid ""
 "has auto-complete to make that easier."
 msgstr "電子書籍を編集するにあたって最も面倒な作業のひとつは、書籍内の他のファイル、CSSスタイルシート、または画像へのリンクを作成することです。正しいファイル名と、ファイルへの相対パスを把握する必要があります。エディタには自動補完があり、作業が簡単になります。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:855
+#: ../../../__w/calibre/calibre/manual/edit.rst:862
 msgid ""
 "As you type a filename, the editor automatically pops up suggestions. Simply"
 " use the :kbd:`Tab` key to select the correct file name. The editor even "
@@ -1264,7 +1274,7 @@ msgid ""
 "the right anchor."
 msgstr "ファイル名を入力すると、自動的にエディタが候補をポップアップ表示します。 :kbd:`タブ` キーを使うだけで、正しいファイル名を選択できます。別の HTML ファイル内のアンカもリンク先の候補として挙がります。 ``#`` 文字を入力した後、エディタはリンク先ファイル内のすべてのアンカを一覧表示します。一覧には、アンカを正しく選択できるよう小さなテキストのスニペットが表示されます。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:861
+#: ../../../__w/calibre/calibre/manual/edit.rst:868
 msgid ""
 "Note that unlike most other completion systems, the editor's completion "
 "system uses subsequence matching. This means that you can type just two or "
@@ -1276,11 +1286,11 @@ msgid ""
 " system, you will find it saves you a lot of time and effort."
 msgstr "ただし他のほとんどの補完システムとは異なり、このエディタの補完システムはサブシーケンスマッチングを使用しています。つまりファイル名のどこか 2 文字または 3 文字を入力するだけで、ファイル名を補完できます。たとえば、ファイル名 ``../images/arrow1.png`` が必要な場合は、ia1と入力してから :kbd:`タブ` キーを押せば、ファイル名が補完されます。一致するものを検索するとき、この補完システムは単語の先頭またはパス区切り文字の直後にある文字を優先します。このシステムに慣れると、多くの時間と労力を節約できることがわかるでしょう。"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:871
+#: ../../../__w/calibre/calibre/manual/edit.rst:878
 msgid "Snippets"
 msgstr "スニペット"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:873
+#: ../../../__w/calibre/calibre/manual/edit.rst:880
 msgid ""
 "The calibre E-book editor supports *snippets*. A snippet is a piece of text "
 "that is either re-used often or contains a lot of redundant text. The editor"

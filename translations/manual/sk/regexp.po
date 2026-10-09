@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Patrik Špaňo <pa4k.xyon@gmail.com>, 2026\n"
 "Language-Team: Slovak (http://app.transifex.com/calibre/calibre/language/sk/)\n"
@@ -20,7 +20,7 @@ msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:4
 msgid "All about using regular expressions in calibre"
-msgstr ""
+msgstr "Všetko o používaní regulárnych výrazov v calibre"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:6
 msgid ""
@@ -28,15 +28,15 @@ msgid ""
 "sophisticated manipulation of e-book content and metadata. This tutorial is "
 "a gentle introduction to getting you started with using regular expressions "
 "in calibre."
-msgstr ""
+msgstr "Regulárne výrazy sú funkcie používané na mnohých miestach v calibre na sofistikovanú manipuláciu s obsahom e-kníh a metadátami. Tento návod je jemným úvodom, ktorý vás naučí začať používať regulárne výrazy v calibre."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:11
 msgid "Contents"
-msgstr ""
+msgstr "Obsah"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:14
 msgid "First, a word of warning and a word of courage"
-msgstr ""
+msgstr "Najprv slovo varovania a slovo povzbudenia"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:16
 msgid ""
@@ -52,11 +52,11 @@ msgid ""
 "regular expressions really well have trouble reading the more complex ones, "
 "but writing them isn't as difficult- you construct the expression step by "
 "step. So, take a step and follow me into the rabbit hole."
-msgstr ""
+msgstr "Toto bude nevyhnutne trochu technické — napokon, regulárne výrazy sú technickým nástrojom na technické veci. Budem musieť použiť nejaký žargón a koncepty, ktoré sa môžu zdať komplikované alebo spletité. Pokúsim sa tieto koncepty vysvetliť čo najjasnejšie, ale naozaj sa bez ich použitia nezaobídem. Aj tak sa nenechajte odradiť žiadnym žargónom, pretože som sa pokúsil vysvetliť všetko nové. A hoci sa samotné regulárne výrazy môžu zdať ako tajomná čierna mágia (alebo, prozaickejšie, náhodný reťazec nezmyselných písmen a znakov), sľubujem, že nie sú až také komplikované. Aj tí, ktorí regulárnym výrazom naozaj dobre rozumejú, majú problém prečítať tie zložitejšie, ale ich písanie nie je také ťažké — výraz zostavujete krok za krokom. Takže urobte krok a poďte so mnou do králičej nory."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:19
 msgid "Where in calibre can you use regular expressions?"
-msgstr ""
+msgstr "Kde v calibre môžete používať regulárne výrazy?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:21
 msgid ""
@@ -67,11 +67,11 @@ msgid ""
 "expressions in its :guilabel:`Search and replace` feature. Finally, you can "
 "use regular expressions when searching the calibre book list and when "
 "searching inside the calibre E-book viewer."
-msgstr ""
+msgstr "Existuje niekoľko miest, kde calibre používa regulárne výrazy. Je to :guilabel:`Hľadať a nahradiť` v možnostiach konverzie, zisťovanie metadát z názvov súborov v nastaveniach importu a Hľadať a nahradiť pri hromadnej úprave metadát kníh. Editor kníh calibre môže tiež používať regulárne výrazy vo svojej funkcii :guilabel:`Hľadať a nahradiť`. Nakoniec môžete regulárne výrazy používať pri vyhľadávaní v zozname kníh calibre a pri vyhľadávaní v prehliadači e-kníh calibre."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:30
 msgid "What on earth *is* a regular expression?"
-msgstr ""
+msgstr "Čo je to vlastne *regulárny výraz*?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:32
 msgid ""
@@ -79,7 +79,7 @@ msgid ""
 "expression can *match* a number of different strings. This is what makes "
 "regular expression so powerful -- they are a concise way of describing a "
 "potentially large number of variations."
-msgstr ""
+msgstr "Regulárny výraz je spôsob, ako opísať množiny reťazcov. Jeden regulárny výraz môže *zodpovedať* viacerým rôznym reťazcom. To je to, čo robí regulárne výrazy takými výkonnými -- sú stručným spôsobom, ako opísať potenciálne veľké množstvo variácií."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:34
 msgid ""
@@ -94,11 +94,11 @@ msgid ""
 "complicated because regular expressions allow for variations in the strings "
 "it matches, so one expression can match multiple strings, which is why "
 "people bother using them at all. More on that in a bit."
-msgstr ""
+msgstr "Slovo „reťazec“ tu používam v zmysle, v akom sa používa v programovacích jazykoch: reťazec jedného alebo viacerých znakov vrátane skutočných znakov, číslic, interpunkcie a takzvaných bielych znakov (zalomenia riadkov, tabulátory atď.). Upozorňujeme, že vo všeobecnosti sa veľké a malé písmená nepovažujú za rovnaké, takže „a“ je iný znak ako „A“ atď. V calibre sú regulárne výrazy v vyhľadávacom poli nerozlišujúce veľkosť písmen, ale v možnostiach konverzie áno. Existuje spôsob, ako dosiahnuť, aby každý regulárny výraz nerozlišoval veľkosť písmen, ale o tom budeme diskutovať neskôr. Je to komplikované, pretože regulárne výrazy umožňujú variácie v reťazcoch, ktorým zodpovedajú, takže jeden výraz môže zodpovedať viacerým reťazcom, a preto ich ľudia vôbec používajú. Viac o tom o chvíľu."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:37
 msgid "Care to explain?"
-msgstr ""
+msgstr "Môžete to vysvetliť?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:39
 msgid ""
@@ -110,11 +110,11 @@ msgid ""
 "though, that this *only* matches the exact string ``\"Hello, World!\"``, not"
 " e.g. ``\"Hello, wOrld!\"`` or ``\"hello, world!\"`` or any other such "
 "variation."
-msgstr ""
+msgstr "No, preto sme tu. Po prvé, toto je najdôležitejší koncept regulárnych výrazov: *Reťazec sám osebe je regulárny výraz, ktorý zodpovedá sám sebe*. To znamená, že ak by som chcel pomocou regulárneho výrazu zodpovedať reťazcu ``\"Hello, World!\"``, regulárny výraz, ktorý by som použil, by bol ``Hello, World!``. A áno, naozaj je to také jednoduché. Všimnete si však, že toto zodpovedá *iba* presnému reťazcu ``\"Hello, World!\"``, nie napríklad ``\"Hello, wOrld!\"`` alebo ``\"hello, world!\"`` alebo akejkoľvek inej takejto variácii."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:42
 msgid "That doesn't sound too bad. What's next?"
-msgstr ""
+msgstr "To neznie tak zle. Čo ďalej?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:44
 msgid ""
@@ -136,11 +136,11 @@ msgid ""
 "needed to three: The second expression ``Page [0-9][0-9] of 423`` would "
 "match all two-digit page numbers, and I'm sure you can guess what the third "
 "expression would look like. Yes, go ahead. Write it down."
-msgstr ""
+msgstr "Ďalej je začiatok naozaj dobrých vecí. Pamätáte si, kde som povedal, že regulárne výrazy môžu zodpovedať viacerým reťazcom? Tu to začína byť trochu komplikovanejšie. Povedzme, ako o niečo praktickejšie cvičenie, že e-kniha, ktorú ste chceli konvertovať, mala nepríjemnú pätu s počítaním strán, ako „Page 5 of 423“. Je zrejmé, že číslo stránky by stúpalo od 1 do 423, takže by ste museli zodpovedať 423 rôznym reťazcom, však? Nesprávne, v skutočnosti: regulárne výrazy vám umožňujú definovať množiny znakov, ktorým sa zodpovedá: Na definovanie množiny vložíte všetky znaky, ktoré chcete mať v množine, do hranatých zátvoriek. Takže napríklad množina ``[abc]`` by zodpovedala znaku „a“, „b“ alebo „c“. *Množiny vždy zodpovedajú iba jednému zo znakov v množine*. „Rozumejú“ rozsahom znakov, to znamená, že ak by ste chceli zodpovedať všetkým malým písmenám, použili by ste množinu ``[a-z]``, pre malé aj veľké písmená by ste použili ``[a-zA-Z]`` atď. Chápete? Takže samozrejme, pomocou výrazu ``Page [0-9] of 423`` by ste dokázali zodpovedať prvým 9 stránkam, čím by sa počet potrebných výrazov znížil na tri: Druhý výraz ``Page [0-9][0-9] of 423`` by zodpovedal všetkým dvojciferným číslam strán a som si istý, že uhádnete, ako by vyzeral tretí výraz. Áno, pokračujte. Napíšte ho."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:47
 msgid "Hey, neat! This is starting to make sense!"
-msgstr ""
+msgstr "Hej, super! Toto začína dávať zmysel!"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:49
 msgid ""
@@ -166,7 +166,7 @@ msgid ""
 " matching page numbers, wouldn't that be the single one expression to match "
 "all the page numbers? Yes, the expression ``Page [0-9]+ of 423`` would match"
 " every page number in that book!"
-msgstr ""
+msgstr "Dúfal som, že to poviete. Ale pripravte sa, teraz to bude ešte lepšie! Práve sme videli, že pomocou množín sme mohli zodpovedať jednému z niekoľkých znakov naraz. Ale môžete dokonca opakovať znak alebo množinu, čím sa počet potrebných výrazov na spracovanie vyššie uvedeného príkladu s číslami strán zníži na jeden. Áno, JEDEN! Vzrušení? Mali by ste byť! Funguje to takto: Niektoré takzvané špeciálne znaky, „+“, „?“ a „*“, *opakujú jediný prvok, ktorý im predchádza*. (Prvok znamená buď jediný znak, množinu znakov, escape sekvenciu alebo skupinu (o posledných dvoch sa dozvieme neskôr) — v skratke akúkoľvek jedinú entitu v regulárnom výraze). Tieto znaky sa nazývajú zástupné znaky alebo kvantifikátory. Presnejšie, „?“ zodpovedá *0 alebo 1* predchádzajúcemu prvku, „*“ zodpovedá *0 alebo viac* predchádzajúcim prvkom a „+“ zodpovedá *1 alebo viac* predchádzajúcim prvkom. Niekoľko príkladov: Výraz ``a?`` by zodpovedal buď „“ (čo je prázdny reťazec, v tomto prípade nie príliš užitočný) alebo „a“, výraz ``a*`` by zodpovedal „“, „a“, „aa“ alebo akémukoľvek počtu a za sebou, a nakoniec výraz ``a+`` by zodpovedal „a“, „aa“ alebo akémukoľvek počtu a za sebou (Poznámka: nezodpovedal by prázdnemu reťazcu!). To isté platí pre množiny: Výraz ``[0-9]+`` by zodpovedal *každému celému číslu, ktoré existuje*! Viem, čo si myslíte, a máte pravdu: Ak to použijete vo vyššie uvedenom prípade porovnávania čísel strán, nebol by to ten jediný výraz na zodpovedanie všetkým číslam strán? Áno, výraz ``Page [0-9]+ of 423`` by zodpovedal každému číslu stránky v tej knihe!"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:52
 msgid ""
@@ -186,13 +186,13 @@ msgid ""
 "``<p[^>]*>`` will match that same opening tag- you'll see why after the next"
 " section. Just note that there quite frequently is more than one way to "
 "write a regular expression."
-msgstr ""
+msgstr "Poznámka k týmto kvantifikátorom: Vo všeobecnosti sa snažia zodpovedať čo najviac textu, takže pri ich používaní buďte opatrní. Nazýva sa to „nenásytné správanie“ — určite chápete prečo. Problém nastane, keď sa napríklad pokúsite zodpovedať značke. Zoberme si napríklad reťazec ``\"<p class=\"calibre2\">Title here</p>\"`` a povedzme, že chcete zodpovedať otváracej značke (časť medzi prvým párom lomených zátvoriek, o značkách neskôr). Mysleli by ste si, že výraz ``<p.*>`` by zodpovedal tejto značke, ale v skutočnosti zodpovedá celému reťazcu! (Znak „.“ je ďalší špeciálny znak. Zodpovedá čomukoľvek *okrem* zalomení riadkov, takže v podstate výraz ``.*`` by zodpovedal akémukoľvek jednému riadku, na ktorý si spomeniete). Namiesto toho skúste použiť ``<p.*?>``, ktorý robí kvantifikátor „*“ nenásytným. Tento výraz by zodpovedal iba prvej otváracej značke, ako sa zamýšľalo. V skutočnosti existuje aj iný spôsob, ako to dosiahnuť: Výraz ``<p[^>]*>`` bude zodpovedať tej istej otváracej značke — dôvod uvidíte po ďalšej sekcii. Len si všimnite, že pomerne často existuje viac ako jeden spôsob, ako napísať regulárny výraz."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:56
 msgid ""
 "Well, these special characters are very neat and all, but what if I wanted "
 "to match a dot or a question mark?"
-msgstr ""
+msgstr "No, tieto špeciálne znaky sú veľmi fajn, ale čo ak by som chcel zodpovedať bodke alebo otáznik?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:58
 msgid ""
@@ -207,11 +207,11 @@ msgid ""
 "the way, concerning those special characters: Consider any character we "
 "discuss in this introduction as having some function to be special and thus "
 "needing to be escaped if you want the literal character."
-msgstr ""
+msgstr "To samozrejme môžete urobiť: Jednoducho vložte spätné lomítko pred akýkoľvek špeciálny znak a bude interpretovaný ako doslovný znak bez akéhokoľvek špeciálneho významu. Táto dvojica spätného lomítka nasledovaného jediným znakom sa nazýva escape sekvencia a akt vloženia spätného lomítka pred špeciálny znak sa nazýva escapovanie tohto znaku. Escape sekvencia sa interpretuje ako jediný prvok. Samozrejme existujú escape sekvencie, ktoré robia viac než len escapovanie špeciálnych znakov, napríklad ``\"\\t\"`` znamená tabulátor. K niektorým escape sekvenciám sa dostaneme neskôr. A mimochodom, čo sa týka tých špeciálnych znakov: Považujte akýkoľvek znak, o ktorom v tomto úvode hovoríme, za znak s nejakou funkciou, ktorý je teda špeciálny a vyžaduje escapovanie, ak chcete doslovný znak."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:61
 msgid "So, what are the most useful sets?"
-msgstr ""
+msgstr "Aké sú teda najužitočnejšie množiny?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:63
 msgid ""
@@ -220,7 +220,7 @@ msgid ""
 "uppercase letter, ``[a-zA-Z]`` matching a single letter and ``[a-zA-Z0-9]`` "
 "matching a single letter or number. You can also use an escape sequence as "
 "shorthand:"
-msgstr ""
+msgstr "Vedel som, že sa opýtate. Niektoré užitočné množiny sú ``[0-9]`` zodpovedajúca jedinému číslu, ``[a-z]`` zodpovedajúca jedinému malému písmenu, ``[A-Z]`` zodpovedajúca jedinému veľkému písmenu, ``[a-zA-Z]`` zodpovedajúca jedinému písmenu a ``[a-zA-Z0-9]`` zodpovedajúca jedinému písmenu alebo číslu. Môžete tiež použiť escape sekvenciu ako skratku:"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:69
 msgid "``\\d``"
@@ -228,7 +228,7 @@ msgstr "``\\d``"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:70
 msgid "is equivalent to ``[0-9]``"
-msgstr ""
+msgstr "je ekvivalentné s ``[0-9]``"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:72
 msgid "``\\w``"
@@ -236,7 +236,7 @@ msgstr "``\\w``"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:73
 msgid "is equivalent to ``[a-zA-Z0-9_]``"
-msgstr ""
+msgstr "je ekvivalentné s ``[a-zA-Z0-9_]``"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:76
 msgid "``\\s``"
@@ -244,14 +244,14 @@ msgstr "``\\s``"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:77
 msgid "is equivalent to any whitespace"
-msgstr ""
+msgstr "je ekvivalentné s akýmkoľvek bielym znakom"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:80
 msgid ""
 "\"Whitespace\" is a term for anything that won't be printed. These "
 "characters include space, tabulator, line feed, form feed, carriage return, "
 "non-breaking spaces, etc."
-msgstr ""
+msgstr "„Biely znak“ je termín pre čokoľvek, čo sa nevytlačí. Tieto znaky zahŕňajú medzeru, tabulátor, posun riadku, posun stránky, návrat vozíka, pevné medzery atď."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:83
 msgid ""
@@ -260,7 +260,7 @@ msgid ""
 "found, for instance in Preferences->Searching in calibre itself and on the "
 "Search panel in the calibre :guilabel:`E-book viewer` as well as the calibre"
 " :guilabel:`Edit book` tool."
-msgstr ""
+msgstr "Množiny veľkých a malých písmen môžu zodpovedať veľkým aj malým písmenám, ak je povolené nastavenie nerozlišovania veľkosti písmen pri vyhľadávaní. Takéto nastavenia sa nachádzajú napríklad v Nastavenia->Vyhľadávanie v samotnom calibre a na paneli Vyhľadávanie v calibre :guilabel:`Prehliadač e-kníh`, ako aj v nástroji calibre :guilabel:`Upraviť knihu`."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:89
 msgid ""
@@ -275,13 +275,13 @@ msgid ""
 " ``<p[^>]*>`` from the previous section, now you can see that the character "
 "set it's using tries to match any character except for a closing angle "
 "bracket."
-msgstr ""
+msgstr "Ako poslednú poznámku k množinám, môžete tiež definovať množinu ako akýkoľvek znak *okrem* tých v množine. Urobíte to tak, že ako *úplne prvý znak v množine* uvediete znak ``\"^\"``. Takže ``[^a]`` by zodpovedal akémukoľvek znaku okrem „a“. Nazýva sa to doplnenie množiny. Tie skratky escape sekvencií, ktoré sme videli skôr, môžu byť tiež doplnené: ``\"\\D\"`` znamená akýkoľvek nečíselný znak, čo je ekvivalentné s ``[^0-9]``. Ostatné skratky môžu byť doplnené, uhádli ste, použitím príslušného veľkého písmena namiesto malého. Takže, keď sa vrátime k príkladu ``<p[^>]*>`` z predchádzajúcej sekcie, teraz môžete vidieť, že množina znakov, ktorú používa, sa snaží zodpovedať akémukoľvek znaku okrem zatváracej lomenej zátvorky."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:94
 msgid ""
 "But if I had a few varying strings I wanted to match, things get "
 "complicated?"
-msgstr ""
+msgstr "Ale ak mám niekoľko rôznych reťazcov, ktorým chcem zodpovedať, veci sa komplikujú?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:96
 msgid ""
@@ -297,7 +297,7 @@ msgid ""
 "bar character): If you use the expression ``(Title|Author)`` you'll either "
 "get a match for \"Title\" (on the odd pages) or you'd match \"Author\" (on "
 "the even pages). Well, wasn't that easy?"
-msgstr ""
+msgstr "Nebojte sa, život je stále dobrý a jednoduchý. Zoberme si tento príklad: Kniha, ktorú konvertujete, má na každej nepárnej strane napísané „Title“ a na každej párnej strane napísané „Author“. Vyzerá to skvele v tlačenej podobe, však? Ale v e-knihách je to nepríjemné. Môžete zoskupiť celé výrazy do obyčajných zátvoriek a znak ``\"|\"`` vám umožní zodpovedať *buď* výrazu napravo od neho *alebo* výrazu naľavo od neho. Skombinujte to a máte hotovo. Príliš rýchle pre vás? Dobre, najprv zoskupíme výrazy pre nepárne a párne stránky, čím dostaneme ``(Title)(Author)`` ako naše dva potrebné výrazy. Teraz to zjednodušíme použitím zvislej čiary (``\"|\"`` sa nazýva znak zvislej čiary): Ak použijete výraz ``(Title|Author)``, dostanete buď zhodu pre „Title“ (na nepárnych stranách), alebo zodpoviete „Author“ (na párnych stranách). No nebolo to jednoduché?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:98
 msgid ""
@@ -313,11 +313,11 @@ msgid ""
 "will be selected. If you were to use ``c|Calibre``, you'd get a match on the"
 " string \"c\" or on the string \"Calibre\", which isn't what we wanted. In "
 "short: If in doubt, use grouping together with the vertical bar."
-msgstr ""
+msgstr "Samozrejme, zvislú čiaru môžete použiť aj bez zoskupovacích zátvoriek. Pamätáte si, keď som povedal, že kvantifikátory opakujú prvok, ktorý im predchádza? Nuž, zvislá čiara funguje trochu inak: Výraz „Title|Author“ bude tiež zodpovedať buď reťazcu „Title“, alebo reťazcu „Author“, rovnako ako vyššie uvedený príklad so zoskupením. *Zvislá čiara vyberá medzi celým výrazom, ktorý jej predchádza a ktorý po nej nasleduje*. Takže, ak by ste chceli zodpovedať reťazcom „Calibre“ a „calibre“ a chceli by ste vyberať iba medzi veľkým a malým „c“, museli by ste použiť výraz ``(c|C)alibre``, kde zoskupenie zaručuje, že sa vyberie iba „c“. Ak by ste použili ``c|Calibre``, dostali by ste zhodu s reťazcom „c“ alebo s reťazcom „Calibre“, čo nie je to, čo sme chceli. V skratke: Ak máte pochybnosti, použite zoskupenie spolu so zvislou čiarou."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:101
 msgid "You missed..."
-msgstr ""
+msgstr "Zabudli ste..."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:103
 msgid ""
@@ -328,13 +328,13 @@ msgid ""
 "you want to reference, thus, the fifth group would be referenced as ``\\5``."
 " So, if you searched for ``([^ ]+) \\1`` in the string \"Test Test\", you'd "
 "match the whole string!"
-msgstr ""
+msgstr "...počkať chvíľu, s skupinami sa dá urobiť ešte jedna naozaj skvelá vec. Ak máte skupinu, ktorej ste predtým zodpovedali, môžete použiť odkazy na túto skupinu neskôr vo výraze: Skupiny sa číslujú od 1 a odkazujete na ne escapovaním čísla skupiny, na ktorú chcete odkázať, takže piata skupina by bola odkazovaná ako ``\\5``. Takže, ak by ste hľadali ``([^ ]+) \\1`` v reťazci „Test Test“, zodpovedali by ste celému reťazcu!"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:107
 msgid ""
 "In the beginning, you said there was a way to make a regular expression case"
 " insensitive?"
-msgstr ""
+msgstr "Na začiatku ste povedali, že existuje spôsob, ako dosiahnuť, aby regulárny výraz nerozlišoval veľkosť písmen?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:109
 msgid ""
@@ -345,7 +345,7 @@ msgid ""
 "the specific flags you want. For ignoring case, the flag is ``i``, thus you "
 "include ``(?i)`` in your expression. Thus, ``(?i)test`` would match "
 "\"Test\", \"tEst\", \"TEst\" and any case variation you could think of."
-msgstr ""
+msgstr "Áno, povedal, ďakujem za pozornosť a pripomenutie. Môžete calibre povedať, ako chcete, aby sa určité veci spracúvali, pomocou niečoho, čo sa nazýva príznaky. Príznaky zahrniete do výrazu pomocou špeciálnej konštrukcie ``(?príznaky sem)``, kde samozrejme nahradíte „príznaky sem“ konkrétnymi príznakmi, ktoré chcete. Pre ignorovanie veľkosti písmen je príznak ``i``, takže do výrazu zahrniete ``(?i)``. Takže ``(?i)test`` by zodpovedal „Test“, „tEst“, „TEst“ a akejkoľvek variácii veľkosti písmen, na ktorú si spomeniete."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:111
 msgid ""
@@ -354,17 +354,17 @@ msgid ""
 "expression, just put them in the same statement: ``(?is)`` would ignore case"
 " and make the dot match all. It doesn't matter which flag you state first, "
 "``(?si)`` would be equivalent to the above."
-msgstr ""
+msgstr "Ďalší užitočný príznak umožňuje, aby bodka zodpovedala akémukoľvek znaku, *vrátane* zalomenia riadku, je to príznak ``s``. Ak chcete použiť viacero príznakov vo výraze, jednoducho ich vložte do toho istého príkazu: ``(?is)`` by ignoroval veľkosť písmen a spôsobil, že bodka zodpovedá všetkému. Nezáleží na tom, ktorý príznak uvediete prvý, ``(?si)`` by bol ekvivalentný s vyššie uvedeným."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:114
 msgid ""
 "I think I'm beginning to understand these regular expressions now... how do "
 "I use them in calibre?"
-msgstr ""
+msgstr "Myslím, že už začínam chápať tieto regulárne výrazy... ako ich používam v calibre?"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:117
 msgid "Conversions"
-msgstr ""
+msgstr "Konverzie"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:119
 msgid ""
@@ -380,7 +380,7 @@ msgid ""
 "the button labeled :guilabel:`Test` and calibre highlights the parts it "
 "would replace were you to use the regexp. Once you're satisfied, hit OK and "
 "convert. Be careful if your conversion source has tags like this example::"
-msgstr ""
+msgstr "Začnime nastaveniami konverzie, ktoré sú naozaj skvelé. V časti :guilabel:`Hľadať a nahradiť` môžete zadať regexp (skratka pre regulárny výraz), ktorý opisuje reťazec, ktorý bude počas konverzie nahradený. Skvelou časťou je sprievodca. Kliknite na palicu sprievodcu a získate náhľad toho, čo calibre počas procesu konverzie „vidí“. Posuňte sa nadol k reťazcu, ktorý chcete odstrániť, vyberte ho a skopírujte, vložte ho do poľa regexp v hornej časti okna. Ak existujú variabilné časti, ako napríklad čísla strán, použite množiny a kvantifikátory, aby ste ich pokryli, a zároveň nezabudnite escapovať špeciálne znaky, ak nejaké sú. Stlačte tlačidlo s označením :guilabel:`Test` a calibre zvýrazní časti, ktoré by nahradil, keby ste použili regexp. Keď ste spokojní, stlačte OK a konvertujte. Buďte opatrní, ak váš zdroj konverzie obsahuje značky ako v tomto príklade::"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:129
 msgid ""
@@ -407,11 +407,11 @@ msgid ""
 "note that should you accidentally remove more or fewer tags than you "
 "actually wanted to, calibre tries to repair the damaged code after doing the"
 " removal."
-msgstr ""
+msgstr "(bez hanby vytrhnuté z `tohto vlákna <https://www.mobileread.com/forums/showthread.php?t=75594\">`_). Museli by ste odstrániť aj niektoré značky. V tomto príklade by som odporučil začať značkou ``<b class=\"calibre2\">``, teraz musíte skončiť zodpovedajúcou zatváracou značkou (otváracie značky sú ``<tag>``, zatváracie značky sú ``</tag>``), čo je v tomto prípade jednoducho nasledujúca ``</b>``. (Ak vám to nie je jasné, pozrite si dobrú HTML príručku alebo sa opýtajte na fóre). Otváracu značku možno opísať pomocou ``<b.*?>``, zatváraciu značku pomocou ``</b>``, takže by sme mohli odstrániť všetko medzi týmito značkami pomocou ``<b.*?>.*?</b>``. Ale použitie tohto výrazu by bol zlý nápad, pretože odstraňuje všetko uzavreté v <b> značkách (ktoré, mimochodom, vykresľujú uzavretý text tučným písmom), a je veľký predpoklad, že týmto spôsobom odstránime časti knihy. Namiesto toho zahrňte aj začiatok uzavretého reťazca, čím vznikne regulárny výraz ``<b.*?>\\s*Generated\\s+by\\s+ABC\\s+Amber\\s+LIT.*?</b>``. ``\\s`` s kvantifikátormi sú tu zahrnuté namiesto explicitného použitia medzier, ako vidno v reťazci, aby zachytili akékoľvek variácie reťazca, ktoré sa môžu vyskytnúť. Nezabudnite skontrolovať, čo calibre odstráni, aby ste sa uistili, že neodstránite žiadne časti, ktoré chcete zachovať, ak testujete nový výraz. Ak skontrolujete iba jeden výskyt, môžete prehliadnuť nezhodu niekde inde v texte. Tiež si všimnite, že ak omylom odstránite viac alebo menej značiek, než ste skutočne chceli, calibre sa po odstránení pokúsi poškodený kód opraviť."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:132
 msgid "Adding books"
-msgstr "Vloženie kníh"
+msgstr "Pridávanie kníh"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:134
 msgid ""
@@ -434,11 +434,11 @@ msgid ""
 "calibre provides, you need to add the file extension to your testing "
 "filename, otherwise you won't get any matches at all, despite using a "
 "working expression."
-msgstr ""
+msgstr "Ďalšia vec, na ktorú môžete použiť regulárne výrazy, je extrahovanie metadát z názvov súborov. Túto funkciu nájdete v časti nastavení „Pridávanie kníh“. Je tu špeciálna funkcia: Môžete použiť názvy polí pre polia metadát, napríklad ``(?P<title>)`` by naznačovalo, že calibre používa túto časť reťazca ako názov knihy. Povolené názvy polí sú uvedené v oknách spolu s ďalším užitočným testovacím poľom. Príklad: Povedzme, že chcete importovať celú kopu súborov s názvami ako ``Classical Texts: The Divine Comedy by Dante Alighieri.mobi``. (Očividne, toto už je vo vašej knižnici, keďže všetci milujeme klasickú taliansku poéziu) alebo ``Science Fiction epics: The Foundation Trilogy by Isaac Asimov.epub``. Toto je očividne schéma pomenovania, z ktorej calibre nevytiahne žiadne zmysluplné údaje — jeho štandardný výraz na extrahovanie metadát je ``(?P<title>.+) - (?P<author>[^_]+)``. Regulárny výraz, ktorý tu bude fungovať, by bol ``[a-zA-Z]+: (?P<title>.+) by (?P<author>.+)``. Upozorňujeme, že vnútri skupiny pre pole metadát musíte použiť výrazy na opis toho, čomu pole skutočne zodpovedá. A tiež si všimnite, že pri používaní testovacieho poľa, ktoré calibre poskytuje, musíte k testovaciemu názvu súboru pridať príponu súboru, inak nezískate žiadne zhody, napriek použitiu funkčného výrazu."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:138
 msgid "Bulk editing metadata"
-msgstr ""
+msgstr "Hromadná úprava metadát"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:140
 msgid ""
@@ -464,7 +464,7 @@ msgid ""
 "do that as well. As you by now have undoubtedly noticed, there's a checkbox "
 "labeled :guilabel:`Case sensitive`, so you won't have to use flags to select"
 " behaviour here."
-msgstr ""
+msgstr "Poslednou časťou je regulárny výraz :guilabel:`Hľadať a nahradiť` v poliach metadát. Môžete k nemu pristúpiť výberom viacerých kníh v knižnici a použitím hromadnej úpravy metadát. Pri používaní tejto poslednej funkcie buďte veľmi opatrní, pretože môže spôsobiť **Veľmi zlé veci** vašej knižnici! Pomocou testovacích polí dvakrát skontrolujte, či vaše výrazy robia to, čo chcete, a označte iba knihy, ktoré naozaj chcete zmeniť! V režime vyhľadávania regulárnych výrazov môžete vyhľadávať v jednom poli, nahradiť text niečím a dokonca zapísať výsledok do iného poľa. Praktický príklad: Povedzme, že vaša knižnica obsahovala knihy série Duna od Franka Herberta s názvami ako ``Dune 1 - Dune``, ``Dune 2 - Dune Messiah`` atď. Teraz chcete dostať ``Dune`` do poľa série. Môžete to urobiť tak, že v poli názvu vyhľadáte ``(.*?) \\d+ - .*`` a nahradíte ho výrazom ``\\1`` v poli série. Vidíte, čo som tam urobil? Je to odkaz na prvú skupinu, ktorou nahrádzate pole série. Teraz, keď máte sériu nastavenú, stačí už len ďalšie vyhľadávanie ``.*? -`` v poli názvu a nahradiť ho reťazcom ``\"\"`` (prázdny reťazec), opäť v poli názvu, a vaše metadáta sú čisté a upratané. Nie je to skvelé? Mimochodom, namiesto nahradenia celého poľa môžete k poľu tiež pripojiť alebo pred neho vložiť, takže ak by ste *chceli*, aby bol názov knihy doplnený o informácie o sérii na začiatku, mohli by ste to urobiť tiež. Ako ste si už určite všimli, existuje zaškrtávacie políčko s označením :guilabel:`Rozlišovať veľkosť písmen`, takže tu nebudete musieť používať príznaky na výber správania."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:142
 msgid ""
@@ -473,7 +473,7 @@ msgid ""
 "started and to enable you to continue learning by yourself- a good starting "
 "point would be the `Python documentation for regexps "
 "<https://docs.python.org/library/re.html>`_."
-msgstr "Tak, týmto sa končí tento veľmi stručný úvod do regulárnych výrazov. Dúfam, že som vám ukázal dosť na to, aby ste mohli aspoň začať a aby ste mohli pokračovať v samoštúdiu - dobrým východiskovým bodom by bola `Dokumentácia k regulárnym výrazom jazyka Python <https://docs.python.org/library/re.html>`_."
+msgstr "Tak, týmto sa takmer končí tento veľmi stručný úvod do regulárnych výrazov. Dúfam, že som vám ukázal dosť na to, aby ste mohli aspoň začať a aby ste mohli pokračovať v samoštúdiu — dobrým východiskovým bodom by bola `dokumentácia k regulárnym výrazom jazyka Python <https://docs.python.org/library/re.html>`_."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:144
 msgid ""
@@ -483,47 +483,47 @@ msgid ""
 "yourself in the foot. (God, I love that expression...). But should you, "
 "despite the warning, injure your foot (or any other body parts), try to "
 "learn from it."
-msgstr ""
+msgstr "Ešte posledné slovo varovania: Regexpy sú výkonné, ale tiež naozaj ľahké pokaziť. Calibre poskytuje naozaj skvelé možnosti testovania, aby ste zistili, či sa vaše výrazy správajú tak, ako očakávate. Používajte ich. Skúste sa nestreliť do nohy. (Bože, milujem tento výraz...). Ale ak by ste sa napriek varovaniu zranili na nohe (alebo na akýchkoľvek iných častiach tela), skúste sa z toho poučiť."
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:148
 msgid "Quick reference"
-msgstr ""
+msgstr "Rýchla referencia"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:156
 msgid "Credits"
-msgstr ""
+msgstr "Poďakovanie"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:158
 msgid "Thanks for helping with tips, corrections and such:"
-msgstr ""
+msgstr "Ďakujeme za pomoc s tipmi, opravami a podobne:"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:160
 msgid "ldolse"
-msgstr ""
+msgstr "ldolse"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:161
 msgid "kovidgoyal"
-msgstr ""
+msgstr "kovidgoyal"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:162
 msgid "chaley"
-msgstr ""
+msgstr "chaley"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:163
 msgid "dwanthny"
-msgstr ""
+msgstr "dwanthny"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:164
 msgid "kacir"
-msgstr ""
+msgstr "kacir"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:165
 msgid "Starson17"
-msgstr ""
+msgstr "Starson17"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:166
 msgid "Orpheu"
-msgstr ""
+msgstr "Orpheu"
 
 #: ../../../__w/calibre/calibre/manual/regexp.rst:168
 msgid ""
@@ -532,4 +532,4 @@ msgid ""
 "library used by calibre is: `regex <https://bitbucket.org/mrabarnett/mrab-"
 "regex/src/hg/>`_ which supports several useful enhancements over the Python "
 "standard library one."
-msgstr ""
+msgstr "Viac o regexpoch nájdete v `Používateľskej príručke Pythonu <https://docs.python.org/library/re.html>`_. Skutočná knižnica regulárnych výrazov, ktorú calibre používa, je: `regex <https://bitbucket.org/mrabarnett/mrab-regex/src/hg/>`_, ktorá podporuje niekoľko užitočných vylepšení oproti štandardnej knižnici Pythonu."

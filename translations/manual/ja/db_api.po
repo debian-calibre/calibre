@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-10-08 02:41+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -291,6 +291,15 @@ msgstr "著者のリストを指定して、著者の author_sort 文字列を�
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "著者IDを指定してauthor sorts文字列を返します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
+msgstr "指定された `book_id`、`format`、`user_type`、および `user` に対応する、本ごとのストレージ（ビューアーの `localStorage` 用）を返します。ストレージが存在しない場合は `None` を返します。このストレージは、`{'timestamp': エポックからの経過秒数, 'data': {key: value}}` という形式の辞書です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -1223,6 +1232,15 @@ msgstr "指定されたアイテムの、以前に廃止されたノートを復
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "注釈の更新"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr "指定された `book_id`、`format`、`user_type`、および `user` に対応する本ごとのストレージを設定します。ただし、既存のストレージが新しいものである場合は設定されません。更新後に有効となるストレージを返します。空のデータを含むエントリーを渡すことで、ストレージをクリアできます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

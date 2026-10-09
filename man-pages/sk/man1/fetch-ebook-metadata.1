@@ -28,27 +28,27 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "FETCH-EBOOK-METADATA" "1" "septembra 18, 2026" "9.15.0" "calibre"
+.TH "FETCH-EBOOK-METADATA" "1" "októbra 09, 2026" "9.16.0" "calibre"
 .SH NAME
 fetch-ebook-metadata \- fetch-ebook-metadata
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-fetch\-ebook\-metadata [options]
+fetch\-ebook\-metadata [voľby]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Fetch book metadata from online sources. You must specify at least one
-of title, authors or ISBN.
+Získať metadáta knihy z online zdrojov. Musíte zadať aspoň jeden
+z názov, autori alebo ISBN.
 .sp
-Whenever you pass arguments to \fBfetch\-ebook\-metadata\fP that have spaces in them, enclose the arguments in quotation marks. For example: \(dq/some path/with spaces\(dq
+Vždy, keď odovzdávate \fBfetch\-ebook\-metadata\fP argumenty obsahujúce medzery, uzavrite ich do úvodzoviek. Napríklad: \(dq/some path/with spaces\(dq
 .SH [MOŽNOSTI]
 .INDENT 0.0
 .TP
 .B \-\-allowed\-plugin, \-p
-Specify the name of a metadata download plugin to use. By default, all metadata plugins will be used. Can be specified multiple times for multiple plugins. All plugin names: Google, Google Images, Amazon.com, Edelweiss, Open Library
+Zadajte názov zásuvného modulu na stiahnutie metadát, ktorý sa má použiť. Predvolene sa použijú všetky zásuvné moduly metadát. Možno zadať viackrát pre viacero modulov. Všetky názvy modulov: Google, Google Images, Amazon.com, Edelweiss, Open Library
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -58,7 +58,7 @@ Autor(i) knihy
 .INDENT 0.0
 .TP
 .B \-\-cover, \-c
-Specify a filename. The cover, if available, will be saved to it. Without this option, no cover will be downloaded.
+Zadajte názov súboru. Obálka, ak je dostupná, sa doň uloží. Bez tejto voľby sa nestiahne žiadna obálka.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -68,7 +68,7 @@ zobraziť túto nápovedu a skončiť
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-Identifiers such as ASIN/Goodreads id etc. Can be specified multiple times for multiple identifiers. For example: \fB\-\-identifier\fP asin:B0082BAJA0
+Identifikátory ako ASIN/Goodreads id atď. Možno zadať viackrát pre viacero identifikátorov. Napríklad: \fB\-\-identifier\fP asin:B0082BAJA0
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -78,12 +78,12 @@ Kniha ISBN
 .INDENT 0.0
 .TP
 .B \-\-opf, \-o
-Output the metadata in OPF format instead of human readable text.
+Vypísať metadáta vo formáte OPF namiesto textu čitateľného človekom.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-timeout, \-d
-Timeout in seconds. Default is 30
+Časový limit v sekundách. Predvolené je 30
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -93,7 +93,7 @@ Názov knihy
 .INDENT 0.0
 .TP
 .B \-\-verbose, \-v
-Print the log to the console (stderr)
+Vypísať záznam do konzoly (stderr)
 .UNINDENT
 .INDENT 0.0
 .TP

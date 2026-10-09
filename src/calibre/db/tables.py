@@ -116,6 +116,16 @@ class OneToOneTable(Table):
             us = self.unserialize
             self.book_col_map = {book_id: us(val) for book_id, val in query}
 
+    @property
+    def is_books_table_column(self):
+        return self.metadata.get('table') == 'books' and bool(self.metadata.get('column'))
+
+    def read_from_column_data(self, book_ids, vals):
+        """Same as read() except the data is supplied by read_books_table_columns()"""
+        if self.unserialize is not None:
+            vals = map(self.unserialize, vals)
+        self.book_col_map = dict(zip(book_ids, vals))
+
     def remove_books(self, book_ids, db):
         clean = set()
         for book_id in book_ids:
@@ -125,10 +135,45 @@ class OneToOneTable(Table):
         return clean
 
 
+def read_books_table_columns(db, tables):
+    """
+    Read all the specified tables, which must be columns in the books table,
+    using a single scan of the books table rather than one scan per column,
+    which is faster in larger libraries. Returns False if the tables must
+    be read individually instead.
+    """
+    tables = tuple(tables)
+    if len(tables) < 2:
+        return False
+    try:
+        rows = db.execute('SELECT id, {} FROM books'.format(', '.join(t.metadata['column'] for t in tables))).fetchall()
+    except UnicodeDecodeError:
+        # The db is damaged, the individual reads work around that
+        return False
+    if rows:
+        book_ids, *columns = zip(*rows)
+    else:
+        book_ids, columns = (), [()] * len(tables)
+    del rows
+    for table, vals in zip(tables, columns):
+        table.read_from_column_data(book_ids, vals)
+    return True
+
+
 class PathTable(OneToOneTable):
     def set_path(self, book_id, path, db):
         self.book_col_map[book_id] = path
         db.execute('UPDATE books SET path=? WHERE id=?', (path, book_id))
+
+
+def sqlite_sort_key(val):
+    """Sort key matching the order SQLite uses when comparing values of
+    different storage classes: numbers < text < blobs"""
+    if isinstance(val, numbers.Number):
+        return 0, val
+    if isinstance(val, str):
+        return 1, val
+    return 2, bytes(val)
 
 
 class SizeTable(OneToOneTable):
@@ -140,6 +185,19 @@ class SizeTable(OneToOneTable):
         )
         self.book_col_map = dict(query)
 
+    def read_from_formats(self, book_ids, formats_table):
+        """Same as read() except the sizes are taken from the scan of the
+        data table done by formats_table.read(). Returns False if the formats
+        table has no sizes from a read, in which case read() must be used."""
+        max_sizes = formats_table.pop_max_sizes()
+        if max_sizes is None:
+            return False
+        # Iterate over book_ids rather than max_sizes so that books without
+        # formats get None and orphaned rows in data are ignored, as in read()
+        msg = max_sizes.get
+        self.book_col_map = {book_id: msg(book_id) for book_id in book_ids}
+        return True
+
     def update_sizes(self, size_map):
         self.book_col_map.update(size_map)
 
@@ -147,6 +205,10 @@ class SizeTable(OneToOneTable):
 class UUIDTable(OneToOneTable):
     def read(self, db):
         OneToOneTable.read(self, db)
+        self.uuid_to_id_map = {v: k for k, v in self.book_col_map.items()}
+
+    def read_from_column_data(self, book_ids, vals):
+        OneToOneTable.read_from_column_data(self, book_ids, vals)
         self.uuid_to_id_map = {v: k for k, v in self.book_col_map.items()}
 
     def update_uuid_cache(self, book_id_val_map):
@@ -262,7 +324,7 @@ class ManyToOneTable(Table):
             ans: dict[str, int | None] = {name: None for name in item_names}
             res: Iterable[tuple[str, int]] = db.get(f'SELECT {colname}, id FROM {self.metadata["table"]} WHERE {colname} IN ({inq})', serialized_names)
             if self.unserialize is not None:
-                unserialize = cast(Callable[[str], str], self.unserialize)
+                unserialize = cast('Callable[[str], str]', self.unserialize)
                 res = ((unserialize(name), iid) for name, iid in res)
             ans.update(res)
             return ans
@@ -614,6 +676,7 @@ class AuthorsTable(ManyToManyTable):
 class FormatsTable(ManyToManyTable):
     do_clean_on_remove = False
     supports_notes = False
+    max_sizes = None
 
     def read_id_maps(self, db):
         pass
@@ -626,8 +689,22 @@ class FormatsTable(ManyToManyTable):
         self.size_map = sm = defaultdict(dict)
         self.col_book_map = cbm = defaultdict(set)
         bcm = defaultdict(list)
+        # The equivalent of SELECT book, MAX(uncompressed_size) FROM data
+        # GROUP BY book, computed here to avoid a second scan of data when
+        # reading the size table. It considers all rows, including those with
+        # a NULL format or with formats that differ only in case.
+        self.max_sizes = msz = {}
 
         for book, fmt, name, sz in db.execute('SELECT book, format, name, uncompressed_size FROM data'):
+            if sz is not None:
+                cur = msz.get(book)
+                try:
+                    if cur is None or sz > cur:
+                        msz[book] = sz
+                except TypeError:
+                    # damaged db with non-numeric sizes
+                    if sqlite_sort_key(sz) > sqlite_sort_key(cur):
+                        msz[book] = sz
             if fmt is not None:
                 fmt = fmt.upper()
                 cbm[fmt].add(book)
@@ -636,6 +713,13 @@ class FormatsTable(ManyToManyTable):
                 sm[book][fmt] = sz
 
         self.book_col_map = {k: tuple(sorted(v)) for k, v in bcm.items()}
+
+    def pop_max_sizes(self):
+        """Return the maximum size of the rows in data for each book, as seen
+        by the last read(). Only available once per read() as it is not kept
+        up to date by changes to formats."""
+        ans, self.max_sizes = self.max_sizes, None
+        return ans
 
     def remove_books(self, book_ids, db):
         clean = ManyToManyTable.remove_books(self, book_ids, db)

@@ -1,0 +1,629 @@
+.\" Man page generated from reStructuredText
+.\" by the Docutils 0.22.4 manpage writer.
+.
+.
+.nr rst2man-indent-level 0
+.
+.de1 rstReportMargin
+\\$1 \\n[an-margin]
+level \\n[rst2man-indent-level]
+level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
+-
+\\n[rst2man-indent0]
+\\n[rst2man-indent1]
+\\n[rst2man-indent2]
+..
+.de1 INDENT
+.\" .rstReportMargin pre:
+. RS \\$1
+. nr rst2man-indent\\n[rst2man-indent-level] \\n[an-margin]
+. nr rst2man-indent-level +1
+.\" .rstReportMargin post:
+..
+.de UNINDENT
+. RE
+.\" indent \\n[an-margin]
+.\" old: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.nr rst2man-indent-level -1
+.\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
+.in \\n[rst2man-indent\\n[rst2man-indent-level]]u
+..
+.TH "EBOOK-CONVERT" "1" "октобар 09, 2026" "9.16.0" "calibre"
+.SH NAME
+ebook-convert \- ebook-convert
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+ebook\-convert ulazna_datoteka izlazna_datoteka [opcije]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Konvertuje e\-knjigu iz jednog formata u drugi.
+.sp
+ulazna_datoteka je ulaz, a izlazna_datoteka je izlaz. Obe moraju biti navedene kao prva dva argumenta komande.
+.sp
+Izlazni format e\-knjige se pogađa na osnovu ekstenzije izlazna_datoteka. izlazna_datoteka takođe može biti u specijalnom formatu .EXT gde je EXT ekstenzija izlazne datoteke. U ovom slučaju, ime izlazne datoteke se izvodi iz imena ulazne datoteke. Imajte na umu da imena datoteka ne smeju počinjati crticom. Konačno, ako izlazna_datoteka nema ekstenziju, onda se tretira kao fascikla i \(dqotvorena e\-knjiga\(dq (OEB) koja se sastoji od HTML datoteka se upisuje u tu fasciklu. Ove datoteke su one koje bi normalno bile prosleđene izlaznom priključku.
+.sp
+Nakon navođenja ulazne i izlazne datoteke, možete prilagoditi konverziju navođenjem različitih opcija. Dostupne opcije zavise od tipova ulazne i izlazne datoteke. Da biste dobili pomoć za njih, navedite ulaznu i izlaznu datoteku, a zatim koristite opciju \-h.
+.sp
+Za kompletnu dokumentaciju sistema za konverziju pogledajte
+Konverzija e\-knjiga \%<#\:conversion>
+.sp
+Kada god prosleđujete argumente programu \fBebook\-convert\fP koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.sp
+Opcije i podrazumevane vrednosti za opcije se menjaju u zavisnosti od
+ulaznog i izlaznog formata, tako da uvek treba da proverite sa:
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+ebook\-convert myfile.input_format myfile.output_format \-h
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Ispod su opcije koje su zajedničke za sve konverzije, praćene
+opcijama specifičnim za svaki ulazni i izlazni format.
+.INDENT 0.0
+.IP \(bu 2
+ULAZNE MOGUĆNOSTI
+.IP \(bu 2
+IZLAZNE MOGUĆNOSTI
+.IP \(bu 2
+IZGLED I PONAŠANJE
+.IP \(bu 2
+HEURISTIČKA OBRADA
+.IP \(bu 2
+PRETRAGA I ZAMENA
+.IP \(bu 2
+DETEKCIJA STRUKTURE
+.IP \(bu 2
+SADRŽAJ
+.IP \(bu 2
+METAPODACI
+.IP \(bu 2
+OTKLANJANJE GREŠAKA
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-help, \-h
+prikaži ovu poruku pomoći pa izađi
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-input\-profile
+Izaberite ulazni profil. Ulazni profil pruža sistemu za pretvaranje podatke o tome kako da tumači različite informacije u ulaznom dokumentu. Na primer, dužine koje zavise od rezolucije (tj. dužine u pikselima). Mogući izbori su: cybookg3, cybook_opus, default, hanlinv3, hanlinv5, illiad, irexdr1000, irexdr800, kindle, msreader, mobipocket, nook, sony, sony300, sony900
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-list\-recipes
+Prikaži imena ugrađenih recepata. Možete kreirati e\-knjigu iz ugrađenog recepta ovako: ebook\-convert \fB\(dq\fPIme recepta.recipe\fB\(dq\fP izlaz.epub
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output\-profile
+Navedite izlazni profil. Izlazni profil govori sistemu za konverziju kako da optimizuje kreirani dokument za navedeni uređaj. U nekim slučajevima, izlazni profil se može koristiti za optimizaciju izlaza za određeni uređaj, ali to je retko potrebno. Opcije su:cybookg3, cybook_opus, default, generic_eink, generic_eink_hd, generic_eink_large, hanlinv3, hanlinv5, illiad, ipad, ipad3, irexdr1000, irexdr800, jetbook5, kindle, kindle_dx, kindle_fire, kindle_oasis, kindle_pw, kindle_pw3, kindle_scribe, kindle_voyage, kobo, msreader, mobipocket, nook, nook_color, nook_hd_plus, pocketbook_inkpad3, pocketbook_lux, pocketbook_hd, pocketbook_900, pocketbook_pro_912, galaxy, sony, sony300, sony900, sony\-landscape, sonyt3, tablet
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-version
+prikaži broj verzije programa i izađi
+.UNINDENT
+.SH ULAZNE MOGUĆNOSTI
+.sp
+Mogućnosti koje kontrolišu obradu ulazne mobi datoteke
+.INDENT 0.0
+.TP
+.B \-\-input\-encoding
+Odredite kodni raspored ulaznog dokumenta. Ako je podešeno ova mogućnost će zameniti sve kodne rasporede označene u samom dokumentu. Ovo je posebno korisno za dokumente koji u sebi ne sadrže nijedan kodni raspored, ili u kojima su naznake kodnog rasporeda neispravne
+.UNINDENT
+.SH IZLAZNE MOGUĆNOSTI
+.sp
+Podešavanja koja kontrolišu rezultat obrade epub
+.INDENT 0.0
+.TP
+.B \-\-dont\-split\-on\-page\-breaks
+Isključi deljenje na prelomima stranica. Obično se ulazne datoteke automatski dele na svakom prelomu stranice u dve datoteke. Ovo daje izlaznu e\-knjigu koja se može brže obraditi i sa manje resursa. Međutim, deljenje je sporo i ako vaša izvorna datoteka sadrži veoma veliki broj preloma stranica, trebalo bi da isključite deljenje na prelomima stranica.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-flatten
+Ovo podešavanje je potrebno samo ako nameravate da koristite EPUB format s FBReaderJ. Ovo će \fB\(dq\fPizravnati\fB\(dq\fP datoteke sistema u EPUBu i postaviti sve datoteke na najviši nivo hijerarhije.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-inline\-toc
+Umetni ugrađeni sadržaj koji će se pojaviti kao deo glavnog teksta knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-max\-image\-size
+Maksimalna veličina slike (širina x visina). Vrednost profile znači da se koristi veličina ekrana iz izlaznog profila. Vrednost none znači da maksimalna veličina nije navedena. Na primer, vrednost 100x200 će prouzrokovati da se svim slikama promeni veličina tako da njihova širina ne bude veća od 100 piksela, a visina ne veća od 200 piksela. Imajte na umu da ovo utiče samo na veličinu samih datoteka slika. Bilo koja slika može biti prikazana u drugoj veličini u zavisnosti od stilizacije koja joj je primenjena u dokumentu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-toc\-at\-end
+Stavi umetnuti ugrađeni sadržaj na kraj knjige umesto na početak.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-epub\-version
+Verzija EPUB datoteke za generisanje. EPUB 2 je najšire kompatibilan, koristite EPUB 3 samo ako znate da vam je zaista potreban.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extract\-to
+Raspakuj sadržaj generisane knjige u navedenu fasciklu. Sadržaj fascikle se prvo briše, pa budite oprezni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-flow\-size
+Podeli sve HTML datoteke veće od ove veličine (u KB). Ovo je neophodno jer većina EPUB čitača ne može da obradi velike datoteke. Podrazumevana vrednost od 260KB je veličina potrebna za Adobe Digital Editions. Postavite na 0 da onemogućite deljenje na osnovu veličine.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-default\-epub\-cover
+Obično, ako ulazna datoteka nema naslovnu stranu, a vi niste definisali svoju, biće napravljena podrazumevana naslovna strana koja sadrži naslov, autore, itd. Ova mogućnost onemogućava pravljenje podrazumevane naslovne strane.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-svg\-cover
+Ne koristi SVG format za korice knjige. Koristite ovu mogućnost ako će vaša EPUB knjiga biti korišćena na uređaju koji ne podržava SVG format, kao što je iPhone, ili JetBook Lite. Bez korišćenja ove mogućnosti ovakvi uređaji će umesto korica prikazati praznu stranu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-preserve\-cover\-aspect\-ratio
+Kada se koristi SVG korice ova mogućnost će mu promeniti veličinu srazmerno raspoloživoj veličini ekrana, čuvajući originalne razmere (odnos širine i visine). Ovo znači da će se možda pojaviti beline u vrhu, ili na dnu strane, ali slika neće biti izobličena. Bez ove mogućnosti slika može biti delimično izobličena, ali neće biti belina po ivicama.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pretty\-print
+Ako je izabrano, dodatak će pokušati da napravi što čitljiviji izlaz za korisnika. Ovo ne mora da ima uticaj na sve izabrane dodatke.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-title
+Naslov za bilo koji generisani ugrađeni sadržaj.
+.UNINDENT
+.SH IZGLED I PONAŠANJE
+.sp
+Podešavanja koja kontrolišu izgled rezultata obrade
+.INDENT 0.0
+.TP
+.B \-\-asciiize
+Preslovi Unicode karaktere u ASCII reprezentaciju. Koristite pažljivo jer će ovo zameniti Unicode karaktere sa ASCII. Na primer, zameniće \fB\(dq\fPPelé\fB\(dq\fP sa \fB\(dq\fPPele\fB\(dq\fP\&. Takođe, imajte na umu da će se u slučajevima kada postoji više reprezentacija karaktera (karakteri koje dele kineski i japanski na primer) koristiti reprezentacija zasnovana na trenutnom jeziku interfejsa programa calibre.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-base\-font\-size
+Osnovna veličina fonta u tačkama (pts). Sve veličine fontova u proizvedenoj knjizi biće srazmerno promenjene na osnovu ove veličine. Izborom veće veličine možete povećati fontove u izlazu i obrnuto. Podrazumevano, kada je vrednost nula, osnovna veličina fonta se bira na osnovu izlaznog profila koji ste izabrali.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-change\-justification
+Promeni poravnanje teksta. Vrednost \fB\(dq\fPLevo\fB\(dq\fP prevodi sav i levo i desno poravnat tekst u levo poravnat (tj. neporavnat). Vrednost \fB\(dq\fPPoravnaj\fB\(dq\fP prevodi sav neporavnat tekst u tekst poravnat i levo i desno. Vrednost \fB\(dq\fPIzvorno\fB\(dq\fP ne menja poravnanje. Obratite pažnju da samo neki formati podržavaju poravnanje teksta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-font\-rescaling
+Onemogući bilo kakvu promenu veličine slova.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-all\-fonts
+Ugradi svaki font koji je referenciran u ulaznom dokumentu, a nije već ugrađen. Ovo će pretražiti vaš sistem za fontovima, i ako se pronađu, biće ugrađeni. Ugrađivanje će raditi samo ako format u koji konvertujete podržava ugrađene fontove, kao što su EPUB, AZW3, DOCX ili PDF. Molimo vas da se uverite da imate odgovarajuću licencu za ugrađivanje fontova korišćenih u ovom dokumentu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-embed\-font\-family
+Ugradi navedenu porodicu fontova u knjigu. Ovo određuje \fB\(dq\fPosnovni\fB\(dq\fP font koji se koristi za knjigu. Ako ulazni dokument navodi sopstvene fontove, oni mogu zameniti ovaj osnovni font. Možete koristiti opciju za filtriranje informacija o stilu da biste uklonili fontove iz ulaznog dokumenta. Imajte na umu da ugrađivanje fontova radi samo sa nekim izlaznim formatima, uglavnom EPUB, AZW3 i DOCX.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-expand\-css
+Podrazumevano, calibre će koristiti skraćeni oblik za različita CSS svojstva kao što su margin, padding, border, itd. Ova opcija će uzrokovati da umesto toga koristi puni prošireni oblik. Imajte na umu da se CSS uvek proširuje prilikom generisanja EPUB datoteka sa izlaznim profilom postavljenim na jedan od Nook profila, jer Nook ne može da obradi skraćeni CSS.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-extra\-css
+Putanja do datoteke sa CSS opisom, ili sam CSS opis. Ovaj CSS opis će biti dodat u stilska pravila koja se već nalaze u izvornoj datoteci te se stoga može koristiti i da ih promeni.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-filter\-css
+Lista CSS svojstava odvojenih zarezom koja će biti uklonjena iz svih pravila CSS stila. Ovo je korisno ako prisustvo nekih informacija o stilu sprečava njihovo prepisivanje na vašem uređaju. Na primer: font\-family,color,margin\-left,margin\-right
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-font\-size\-mapping
+Veza između naziva tipova slova u CSS opisu i veličine slova u štamparskim tačkama . Na primer, 12,12,14,16,18,20,22,24. Ovo povezuje veličine slova od xx\-small do xx\-large, gde se ova poslednja veličina koristi za najveća slova. Algoritam za promenu veličine slova koristi ove veličine da bi pretvaranje učinio što \fB\(dq\fPpametnijom\fB\(dq\fP\&. Podrazumevana veza je ona navedena u izabranom izlaznom profilu.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line
+Ubaci prazan red između pasusa. Ne radi ako ulazna datoteka ne koristi pasuse (odrednice <p>, ili <div>oznake).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-blank\-line\-size
+Podesite visinu umetnutih praznih redova (u em). Visina linija između pasusa biće dvostruko veća od vrednosti podešene ovde.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-keep\-ligatures
+Zadrži ligature prisutne u ulaznom dokumentu. Ligatura je kombinovani karakter para karaktera kao što su ff, fi, fl i tako dalje. Većina čitača nema podršku za ligature u svojim podrazumevanim fontovima, pa je malo verovatno da će se ispravno prikazati. Podrazumevano, calibre će pretvoriti ligaturu u odgovarajući par normalnih karaktera. Imajte na umu da ligature ovde znače samo unicode ligature, a ne ligature kreirane putem CSS\-a ili stilova fonta. Ova opcija će ih umesto toga zadržati.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-line\-height
+Visina reda u štamparskim tačkama. Kontroliše razmak između redova. Odnosi se samo na elemente koji ne zadaju sopstvenu visinu reda. U većini slučajeva podešavanje minimalne visine reda je mnogo korisnije. Podrazumeva se da neće biti izmene visine reda.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-linearize\-tables
+Neki loše stvoreni dokumenti koriste tabele da bi odredili izgled teksta na strani. Posle pretvaranja ovakvih dokumenata tekst često izlazi van granica strane, a mogući su i drugi vizuelni problemi. Izborom ove mogućnosti sadržina tabela će biti predstavljena linearno kako bi se izbegli gore navedeni problemi.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-bottom
+Postavi donju marginu u pts. Podrazumevano je 5.0. Postavljanje ovoga na manje od nule će uzrokovati da margina ne bude postavljena (podešavanje margine u originalnom dokumentu će biti sačuvano). Napomena: Formati orijentisani na stranice kao što su PDF i DOCX imaju sopstvena podešavanja margina koja imaju prioritet.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-left
+Postavi levu marginu u pts. Podrazumevano je 5.0. Postavljanje ovoga na manje od nule će uzrokovati da margina ne bude postavljena (podešavanje margine u originalnom dokumentu će biti sačuvano). Napomena: Formati orijentisani na stranice kao što su PDF i DOCX imaju sopstvena podešavanja margina koja imaju prioritet.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-right
+Postavi desnu marginu u pts. Podrazumevano je 5.0. Postavljanje ovoga na manje od nule će uzrokovati da margina ne bude postavljena (podešavanje margine u originalnom dokumentu će biti sačuvano). Napomena: Formati orijentisani na stranice kao što su PDF i DOCX imaju sopstvena podešavanja margina koja imaju prioritet.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-margin\-top
+Postavi gornju marginu u pts. Podrazumevano je 5.0. Postavljanje ovoga na manje od nule će uzrokovati da margina ne bude postavljena (podešavanje margine u originalnom dokumentu će biti sačuvano). Napomena: Formati orijentisani na stranice kao što su PDF i DOCX imaju sopstvena podešavanja margina koja imaju prioritet.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-minimum\-line\-height
+Minimalna visina reda, data kao procenat od izračunate veličine slova. calibre će obezbediti da svaki element ima najmanje ovoliku visinu reda, bez obzira na to šta je navedeno u ulaznom dokumentu. Postavite na nulu da biste onemogućili. Koristite ovo podešavanje pre nego da postavite apsolutnu visinu reda, ukoliko ne znate tačno šta radite. Na primer, dvostruku visinu ćete postići ako ovde navedete 240.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing
+Ukloni dodatni razmak između pasusa. Takođe uvuci sve pasuse za 1.5em. Uklanjanje razmaka neće raditi ako ulazna datoteka ne koristi pasuse (odrednice <p>, ili <div>oznake).
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-paragraph\-spacing\-indent\-size
+Kada calibre uklanja prazne redove između pasusa, automatski postavlja uvlačenje pasusa, kako bi se osiguralo da se pasusi mogu lako razlikovati. Ova opcija kontroliše širinu tog uvlačenja (u em). Ako ovu vrednost postavite na negativnu, onda se koristi uvlačenje navedeno u ulaznom dokumentu, odnosno calibre ne menja uvlačenje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-smarten\-punctuation
+Pretvori obične navodnike, crtice i tri tačke u njihove tipografski ispravne ekvivalente. Za detalje, pogledajte: \%<https://\:daringfireball\:.net/\:projects/\:smartypants>\&.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-subset\-embedded\-fonts
+Izdvoji podskup svih ugrađenih fontova. Svaki ugrađeni font se smanjuje tako da sadrži samo glifove korišćene u ovom dokumentu. Ovo smanjuje veličinu datoteka fontova. Korisno ako ugrađujete posebno veliki font sa mnogo nekorišćenih glifova.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-css\-rules
+Putanja do datoteke koja sadrži pravila za transformaciju CSS stilova u ovoj knjizi. Najlakši način da napravite takvu datoteku je da koristite čarobnjaka za kreiranje pravila u calibre grafičkom interfejsu. Pristupite mu u odeljku \fB\(dq\fPIzgled i ponašanje\->Transformiši stilove\fB\(dq\fP u dijalogu za konverziju. Kada kreirate pravila, možete koristiti dugme \fB\(dq\fPIzvezi\fB\(dq\fP da ih sačuvate u datoteku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-transform\-html\-rules
+Putanja do datoteke koja sadrži pravila za transformaciju HTML\-a u ovoj knjizi. Najlakši način da napravite takvu datoteku je da koristite čarobnjaka za kreiranje pravila u calibre grafičkom interfejsu. Pristupite mu u odeljku \fB\(dq\fPIzgled i ponašanje\->Transformiši HTML\fB\(dq\fP u dijalogu za konverziju. Kada kreirate pravila, možete koristiti dugme \fB\(dq\fPIzvezi\fB\(dq\fP da ih sačuvate u datoteku.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-unsmarten\-punctuation
+Pretvori ukrasne navodnike, crtice i tri tačke u njihove obične ekvivalente.
+.UNINDENT
+.SH HEURISTIČKA OBRADA
+.sp
+Izmenite tekst i strukturu dokumenta koristeći uobičajene obrasce. Podrazumevano je onemogućeno. Koristite \-\-enable\-heuristics da omogućite. Pojedinačne akcije se mogu onemogućiti pomoću opcija \-\-disable\-
+.nf
+*
+.fi
+\&.
+.INDENT 0.0
+.TP
+.B \-\-disable\-dehyphenate
+Analiziraj reči sa crticom u celom dokumentu. Sam dokument se koristi kao rečnik da bi se odredilo da li crtice treba zadržati ili ukloniti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-delete\-blank\-paragraphs
+Ukloni prazne pasuse iz dokumenta ako se nalaze između svakog drugog pasusa.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-fix\-indents
+Uključi uvlačenje sačinjeno od višestrukih razmaka u CSS uvlačenje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-format\-scene\-breaks
+Levo poravnati markeri za prelom scene se centriraju. Zameni meke prelome scena koji koriste više praznih linija horizontalnim linijama.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-italicize\-common\-cases
+Traži uobičajene reči i šablone koje označavaju iskošeno i pretvori ih u iskošeno.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-markup\-chapter\-headings
+Otkrij neformatirane naslove poglavlja i podnaslove. Promeni ih u h1 i h2 oznake. Ova mogućnost neće napraviti sadržaj, osim ako se koristi zajedno s izborom za otkrivanje strukture dokumenta.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-renumber\-headings
+Traži pojave uzastopnih <h1> ili <h2> tagova. Tagovi se ponovo numerišu da bi se sprečilo deljenje na sredini naslova poglavlja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-unwrap\-lines
+Spoj redove koristeći interpunkciju i druge tragove oblikovanja.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-enable\-heuristics
+Omogući heurističku obradu. Ova mogućnost mora biti uključena da bi bila izvršena heuristička obrada.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-html\-unwrap\-factor
+Razmera korišćena za određivanje mesta na kome će biti poništen prelom reda. Dozvoljene vrednosti su razlomljeni brojevi od 0 do 1. Podrazumevana vrednost je 0,4, odmah ispod linije srednje dužine. Ako samo nekoliko redova u dokumentu treba da bude spojeno, ovu vrednost treba smanjiti.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace\-scene\-breaks
+Zameni prelome scena navedenim tekstom. Podrazumevano se koristi tekst iz ulaznog dokumenta.
+.UNINDENT
+.SH PRETRAGA I ZAMENA
+.sp
+Izmeni tekst i strukturu dokumenta upotrebom korisničkih šablona
+.INDENT 0.0
+.TP
+.B \-\-search\-replace
+Putanja do datoteke koja sadrži regularne izraze za pretragu i zamenu. Datoteka mora sadržati naizmenične linije regularnog izraza praćene obrascem za zamenu (koji može biti prazna linija). Regularni izraz mora biti u Python regex sintaksi, a datoteka mora biti UTF\-8 kodirana.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-replace
+Zamena za tekst pronađen pomoću opcije sr1\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr1\-search
+Obrazac pretrage (regularni izraz) koji će biti zamenjen sa sr1\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-replace
+Zamena za tekst pronađen pomoću opcije sr2\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr2\-search
+Obrazac pretrage (regularni izraz) koji će biti zamenjen sa sr2\-replace.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-replace
+Zamena za tekst pronađen pomoću opcije sr3\-search.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-sr3\-search
+Obrazac pretrage (regularni izraz) koji će biti zamenjen sa sr3\-replace.
+.UNINDENT
+.SH DETEKCIJA STRUKTURE
+.sp
+Kontrola automatskog određivanja strukture dokumenta.
+.INDENT 0.0
+.TP
+.B \-\-add\-alt\-text\-to\-img
+Kada <img> oznaka nema alt atribut, proveri povezanu datoteku slike za metapodatke koji navode alternativni tekst i iskoristi ga za popunjavanje alt atributa. Alt atribut poboljšava pristupačnost pružanjem tekstualnih opisa za korisnike koji ne mogu da vide ili u potpunosti interpretiraju vizuelni sadržaj.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter
+XPath izraz za detekciju naslova poglavlja. Podrazumevano je da se <h1> ili <h2> oznake koje sadrže reči \fB\(dq\fPchapter\fB\(dq\fP, \fB\(dq\fPbook\fB\(dq\fP, \fB\(dq\fPsection\fB\(dq\fP, \fB\(dq\fPprologue\fB\(dq\fP, \fB\(dq\fPepilogue\fB\(dq\fP ili \fB\(dq\fPpart\fB\(dq\fP smatraju naslovima poglavlja, kao i sve oznake koje imaju class=\fB\(dq\fPchapter\fB\(dq\fP\&. Korišćeni izraz mora da se evaluira u listu elemenata. Da biste onemogućili detekciju poglavlja, koristite izraz \fB\(dq\fP/\fB\(dq\fP\&. Pogledajte XPath uputstvo u calibre korisničkom priručniku za dodatnu pomoć o korišćenju ove funkcije.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-chapter\-mark
+Navedite kako će se označiti otkrivena poglavlja. Navođenje \fB\(dq\fPpagebreak\fB\(dq\fP dovodi do dodavanja znaka za novi red pre svakog poglavlja. Vrednost \fB\(dq\fPrule\fB\(dq\fP dodaje horizontalnu liniju. Vrednost \fB\(dq\fPnone\fB\(dq\fP isključuje posebno označavanje poglavlja, a vrednost \fB\(dq\fPboth\fB\(dq\fP dodaje i novi red i vodoravnu liniju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-disable\-remove\-fake\-margins
+Neki dokumenti određuju margine stranice navođenjem leve i desne margine na svakom pojedinačnom pasusu. calibre će pokušati da detektuje i ukloni ove margine. Ponekad ovo može dovesti do uklanjanja margina koje nije trebalo ukloniti. U tom slučaju možete onemogućiti uklanjanje.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-insert\-metadata
+Umetni metapodatke knjige na početak knjige. Ovo je korisno ako vaš čitač e\-knjiga ne podržava direktno prikazivanje/pretraživanje metapodataka.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-page\-breaks\-before
+XPath izraz. Prelomi stranica se ubacuju pre navedenih elemenata. Da biste onemogućili, koristite izraz: /
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-prefer\-metadata\-cover
+Koristi naslovnu stranu iz ulazne datoteke umesto posebno navedene.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-remove\-first\-image
+Ukloni prvu sliku iz ulazne e\-knjige. Korisno ako ulazni dokument ima sliku korica koja nije identifikovana kao korica. U ovom slučaju, ako postavite koricu u programu calibre, izlazni dokument će završiti sa dve slike korica ako ne navedete ovu opciju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-start\-reading\-at
+XPath izraz za detekciju lokacije u dokumentu na kojoj treba započeti čitanje. Neki programi za čitanje e\-knjiga (najistaknutije Kindle) koriste ovu lokaciju kao poziciju na kojoj će otvoriti knjigu. Pogledajte XPath uputstvo u calibre korisničkom priručniku za dodatnu pomoć pri korišćenju ove funkcije.
+.UNINDENT
+.SH SADRŽAJ
+.sp
+Nadzor automatskog pravljenja Sadržaja. Podrazumeva se da će, ako ulazna datoteka već ima Sadržaj, on će biti korišćen umesto automatskog.
+.INDENT 0.0
+.TP
+.B \-\-duplicate\-links\-in\-toc
+Prilikom kreiranja sadržaja (TOC) iz linkova u ulaznom dokumentu, dozvoli duplirane unose, tj. dozvoli više od jednog unosa sa istim tekstom, pod uslovom da pokazuju na različite lokacije.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level1\-toc
+XPath izraz koji navodi sve oznake koje treba dodati u Sadržaj na prvom nivou. Ako je ovo navedeno, ima prednost nad ostalim oblicima automatskog prepoznavanja. Pogledajte XPath uputstvo u calibre korisničkom priručniku za primere.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level2\-toc
+XPath izraz koji navodi sve oznake koje treba dodati u Sadržaj na drugom nivou. Svaka stavka se dodaje ispod prethodne stavke prvog nivoa. Pogledajte XPath uputstvo u calibre korisničkom priručniku za primere.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-level3\-toc
+XPath izraz koji navodi sve oznake koje treba dodati u Sadržaj na trećem nivou. Svaka stavka se dodaje ispod prethodne stavke drugog nivoa. Pogledajte XPath uputstvo u calibre korisničkom priručniku za primere.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-max\-toc\-links
+Najveći broj odrednica koje će biti dodate u sadržaj. Postavi na 0 da onemogućiš ovu mogućnost. Podrazumeva se: 50. Odrednice se dodaju u sadržaj samo ako je broj otkrivenih poglavlja manji od zadatog.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-chapters\-in\-toc
+Nemoj dodavati automatski otkrivena poglavlja u sadržaju.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-filter
+Isključi odrednice iz sadržaja ako njihovi naslovi odgovaraju zadatom regularnom izrazu. Biće uklonjene sve takve odrednice, kao i one koje su ispod njih u hijerarhiji.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-toc\-threshold
+Ako se otkrije manje od ovog broja poglavlja, ona će biti dodata u sadržaj. Podrazumeva se: 6
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-use\-auto\-toc
+Obično, ako ulazna datoteka već ima sadržaj, on će biti korišćen umesto automatski napravljenog. Izborom ove mogućnosti možete da učinite da se uvek koristi automatski napravljen sadržaj.
+.UNINDENT
+.SH METAPODACI
+.sp
+Podešavanja za upisivanje metapodataka u izlaznoj datoteci
+.INDENT 0.0
+.TP
+.B \-\-author\-sort
+Izraz koji će biti korišćen za razvrstavanje po imenu autora.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-authors
+Postavi autore. Više autora treba razdvojiti znakom &.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-book\-producer
+Navedi producenta knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-comments
+Postavi opis e\-knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-cover
+Postavi korice iz navedene datoteke ili URL\-a.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-isbn
+Navedi ISBN broj knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-language
+Navedi jezik
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-pubdate
+Postavi datum izdavanja (pretpostavlja se da je u lokalnoj vremenskoj zoni, osim ako vremenska zona nije eksplicitno navedena)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-publisher
+Postavi izdavača e\-knjige.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-rating
+Navedi ocenu. Treba da bude brojčana, između 1 i 5.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
+Pročitaj metapodatke iz navedene OPF datoteke. Metapodaci pročitani iz ove datoteke imaju prednost nad svim metapodacima u izvornoj datoteci.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series
+Postavi seriju kojoj ova e\-knjiga pripada.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-series\-index
+Navedi broj knjige u ovoj seriji.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-tags
+Izaberi etikete za knjigu. Lista razdvojena zarezima.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-timestamp
+Postavi vremensku oznaku knjige (više se nigde ne koristi)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title
+Postavi naslov.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-title\-sort
+Verzija naslova koji će se koristiti za razvrstavanje
+.UNINDENT
+.SH OTKLANJANJE GREŠAKA
+.sp
+Podešavanja koja pomažu da ispravite greške pri pretvaranju
+.INDENT 0.0
+.TP
+.B \-\-debug\-pipeline, \-d
+Sačuvaj izlaz iz različitih faza procesa konverzije u navedenu fasciklu. Korisno ako niste sigurni u kojoj fazi procesa konverzije se javlja greška.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verbose, \-v
+Nivo opširnosti. Navedite više puta za veću opširnost. Navođenje dva puta će rezultirati potpunom opširnošću, jednom srednjom opširnošću, a nula puta najmanjom opširnošću.
+.UNINDENT
+.SH Author
+Kovid Goyal
+.SH Copyright
+Kovid Goyal
+.\" End of generated man page.

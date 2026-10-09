@@ -32,6 +32,7 @@ Typical usage::
 
 import asyncio
 import base64
+import hashlib
 import json
 import math
 import os
@@ -45,26 +46,44 @@ import tempfile
 import threading
 import time
 import unicodedata
-from collections.abc import Callable, Iterable, Mapping, Sequence
+from collections.abc import AsyncGenerator, Callable, Iterable, Mapping, Sequence
+from contextlib import asynccontextmanager
 from functools import lru_cache
+from http import HTTPStatus
 from typing import Any, NamedTuple
 
-from calibre.constants import cache_dir, ismacos, iswindows
+from calibre.constants import cache_dir, ismacos, iswindows, sanitize_env_vars_in
 from calibre.utils.filenames import make_long_path_useable
 from calibre.utils.safe_atexit import remove_folder_atexit
-from calibre.web.automate.download_deps import browserforge_data, camoufox_installer, camoufox_resource_dir, debug
+from calibre.web.automate.camoufox_fonts import ESSENTIAL_FONTS, FALLBACK_REPORTABLE_FONTS
+from calibre.web.automate.download_deps import Install, browserforge_data, camoufox_font_lists, camoufox_install, camoufox_resource_dir, debug
 
 DEFAULT_TIMEOUT = 60.0  # seconds, for individual protocol commands
 # The browser answers an input event only once the page has actually seen it,
-# see Mouse.dispatch, and an event the page never sees is never answered at
-# all, so the wait for one is kept short. An event that has not been
-# acknowledged within a few seconds never will be.
-INPUT_TIMEOUT = 5.0  # seconds, for a single input event
-INPUT_DIAGNOSTIC_TIMEOUT = 5.0  # seconds, for each question asked of a browser that stopped accepting input
+# see Mouse.dispatch. Older browsers never answer an event the page does not
+# see, newer ones give up on it themselves after five seconds and answer
+# anyway. Those five seconds start only once the browser has switched to the
+# tab and flushed its compositor, so on a loaded machine an event that does
+# arrive can be answered well after five seconds. The wait for an answer is
+# therefore comfortably longer than the browser's own, so that an event which
+# is merely slow is not mistaken for one that is never going to be answered.
+# It does not include waiting for the gestures of other pages, see
+# Mouse.gesture(), which would otherwise be dispatched in between, nor any
+# time the whole browser spends not answering anything, see Page.send_input().
+INPUT_TIMEOUT = 20.0  # seconds, for a single input event
+INPUT_DIAGNOSTIC_TIMEOUT = INPUT_TIMEOUT  # seconds, for each question asked of a browser that stopped accepting input
 LAUNCH_TIMEOUT = 180.0  # seconds, the first launch has to create a fresh profile
 CLOSE_TIMEOUT = 20.0  # seconds to wait for the browser to exit before killing it
 PROFILE_REMOVE_TIMEOUT = 30.0  # seconds to keep trying to delete the profile directory, see remove_profile_dir()
 MAX_TRACKED_REQUESTS = 2048  # per page, bounds the memory used to map URLs to network requests
+# A wait that the page itself times out needs the reply to arrive after its own
+# deadline rather than before it, see Page.wait_for_selector()
+IN_PAGE_REPLY_GRACE = 5.0  # seconds added to the timeout of a call the page ends by itself
+# What the browser says when a navigation tears down the world a call was
+# running in. It is the only signal for it: the reply can reach us before the
+# events announcing the new document do, so the state of the page at the time
+# cannot be used to tell this apart from a call that failed for another reason.
+CONTEXT_DESTROYED = 'execution context was destroyed'
 
 # The OS names used by camoufox in its config, its bundled data directories and
 # its user agent strings, respectively
@@ -75,6 +94,13 @@ OS_ABBREV = {'windows': 'win', 'macos': 'mac', 'linux': 'lin'}
 
 def current_os() -> str:
     return 'windows' if iswindows else ('macos' if ismacos else 'linux')
+
+
+def discard_task(task: asyncio.Future[Any]) -> None:
+    """Cancel a task whose outcome is no longer wanted, without the exception it
+    may already have ended with being reported as never retrieved."""
+    task.cancel()
+    task.add_done_callback(lambda t: t.cancelled() or t.exception())
 
 
 class Error(Exception):
@@ -96,14 +122,27 @@ class BrowserClosedError(Error):
 class InputWedged(Error):
     """The browser stopped acknowledging input events.
 
-    Every mouse, wheel and key event the browser is sent is dispatched from a
-    single queue shared by the whole browser process, and the browser works
-    through it one event at a time, answering each only once the page has seen
-    it. An event that never reaches the page is therefore never answered, and
-    worse, nothing behind it in the queue is ever dispatched either, so the page
-    can no longer be given input of any kind. Nothing here can undo that, the page has
-    to be abandoned, so once it happens further input events fail immediately
-    rather than waiting for a reply that will not come.
+    Every mouse and wheel event the browser is sent is dispatched from a single
+    queue shared by the whole browser process, which switches to the tab of
+    each event in turn, and the browser works through it one event at a time,
+    answering each only once the page has seen it. An event that never reaches
+    the page is therefore never answered, and worse, nothing behind it in the
+    queue is ever dispatched either, so the page can no longer be given input
+    of any kind. Nothing here can undo that, the page has to be abandoned, so
+    once it happens further input events fail immediately rather than waiting
+    for a reply that will not come.
+    """
+
+
+class InputLost(Error):
+    """The browser did not acknowledge a key event or an insertion of text in time.
+
+    Unlike mouse events, these are not dispatched from the queue described in
+    :class:`InputWedged`, they are handed straight to the process the page runs
+    in, each on its own, so one that is lost or answered late, as happens on a
+    heavily loaded machine, holds nothing else up and the page can go on being
+    given input. Whether the page saw the event is unknown, so whatever was
+    being typed has to be checked, and typed again if need be.
     """
 
 
@@ -165,54 +204,6 @@ BROWSERFORGE_MAP: dict[str, Any] = {
         'chargingTime': 'battery:chargingTime',
         'dischargingTime': 'battery:dischargingTime',
     },
-}
-
-# Fonts that must always be present in the generated font subset, because a real
-# installation of the OS in question always has them
-ESSENTIAL_FONTS = {
-    'macos': (
-        'Arial',
-        'Helvetica',
-        'Times New Roman',
-        'Courier New',
-        'Verdana',
-        'Georgia',
-        'Trebuchet MS',
-        'Tahoma',
-        'Helvetica Neue',
-        'Lucida Grande',
-        'Menlo',
-        'Monaco',
-        'Geneva',
-        'PingFang HK',
-        'PingFang SC',
-        'PingFang TC',
-    ),
-    'windows': (
-        'Arial',
-        'Times New Roman',
-        'Courier New',
-        'Verdana',
-        'Georgia',
-        'Trebuchet MS',
-        'Tahoma',
-        'Segoe UI',
-        'Calibri',
-        'Cambria Math',
-        'Nirmala UI',
-        'Consolas',
-    ),
-    'linux': (
-        'Arimo',
-        'Cousine',
-        'Tinos',
-        'Twemoji Mozilla',
-        'Noto Sans Devanagari',
-        'Noto Sans JP',
-        'Noto Sans KR',
-        'Noto Sans SC',
-        'Noto Sans TC',
-    ),
 }
 
 # Fonts used by fingerprinting scripts to detect the OS. They must be present or
@@ -379,6 +370,35 @@ def font_families_in(path: str) -> set[str]:
     return ans
 
 
+def font_dirs(resource_dir: str, target_os: str) -> list[str]:
+    """The directories containing the fonts camoufox bundles for target_os.
+
+    Older camoufox bundles have a full copy of the fonts for each OS in
+    fonts/<os>. Newer Linux bundles store each font only once, in a directory
+    named for the set of OSes that use it, with fonts/groups.json recording
+    the directories each OS reads. Newer macOS and Windows bundles have all
+    fonts directly in the fonts directory, in which case the returned list is
+    empty.
+    """
+    base = os.path.join(resource_dir, 'fonts')
+    groups_path = os.path.join(base, 'groups.json')
+    try:
+        with open(groups_path, 'rb') as f:
+            raw = f.read()
+    except FileNotFoundError:
+        pass
+    else:
+        try:
+            groups = json.loads(raw)['readBy'][OS_ABBREV[target_os]]
+        except (ValueError, KeyError, TypeError) as e:
+            raise Error(f'The camoufox font groups file {groups_path} is invalid: {e}') from e
+        if not isinstance(groups, list) or not all(isinstance(g, str) for g in groups):
+            raise Error(f'The camoufox font groups file {groups_path} does not have a list of groups for {target_os}')
+        return [d for g in groups if os.path.isdir(d := os.path.join(base, g))]
+    d = os.path.join(base, OS_DIRS[target_os])
+    return [d] if os.path.isdir(d) else []
+
+
 def read_font_families(resource_dir: str, target_os: str) -> tuple[str, ...]:
     """The font families camoufox bundles for target_os.
 
@@ -388,9 +408,8 @@ def read_font_families(resource_dir: str, target_os: str) -> tuple[str, ...]:
     browser cannot actually render.
     """
     ans: set[str] = set()
-    base = os.path.join(resource_dir, 'fonts')
     # Fonts directly in the fonts dir, such as Twemoji, are shared by every OS
-    for d in (base, os.path.join(base, OS_DIRS[target_os])):
+    for d in [os.path.join(resource_dir, 'fonts')] + font_dirs(resource_dir, target_os):
         try:
             names = os.listdir(d)
         except OSError:
@@ -406,11 +425,43 @@ def read_font_families(resource_dir: str, target_os: str) -> tuple[str, ...]:
     return tuple(sorted(ans))
 
 
+def install_cache_key(resource_dir: str, version: str) -> str:
+    """A key identifying the camoufox install in resource_dir, for naming cached
+    files derived from it. The version alone is not enough as there can be more
+    than one install of a version, for example, a system one and a downloaded one."""
+    return f'{version}-{hashlib.sha256(os.path.abspath(resource_dir).encode("utf-8")).hexdigest()[:12]}'
+
+
+def reportable_font_families(resource_dir: str, version: str, target_os: str) -> tuple[tuple[str, ...], bool]:
+    """The font families from read_font_families() that a real target_os machine
+    can report, and whether the list is definitive.
+
+    Older camoufox bundles have the fonts for each OS in a directory of their
+    own. Newer bundles have the fonts of every OS in one directory on macOS and
+    Windows and many fonts shared between OSes on Linux, which includes
+    families a real target_os machine would never report, so these are
+    restricted to the families upstream camoufox reports for target_os. If
+    that list cannot be downloaded, a list embedded in calibre, which may be
+    for a different camoufox version, is used instead and the result is not
+    definitive.
+    """
+    ans = read_font_families(resource_dir, target_os)
+    if os.path.isdir(os.path.join(resource_dir, 'fonts', OS_DIRS[target_os])):
+        return ans, True
+    definitive = True
+    try:
+        reportable = frozenset(camoufox_font_lists(version)[OS_ABBREV[target_os]])
+    except Exception as e:
+        debug(f'Failed to get the list of fonts camoufox {version} reports for {target_os}, using the fallback list instead, with error: {e}')
+        reportable, definitive = frozenset(FALLBACK_REPORTABLE_FONTS[target_os]), False
+    return tuple(f for f in ans if f in reportable), definitive
+
+
 @lru_cache(maxsize=4)
 def font_families(resource_dir: str, version: str, target_os: str) -> tuple[str, ...]:
-    """Like read_font_families() but cached on disk, since parsing a few hundred
-    font files takes a noticeable fraction of a second."""
-    cache_path = os.path.join(cache_dir(), f'camoufox-fonts-{version}.json')
+    """Like reportable_font_families() but cached on disk, since parsing a few
+    hundred font files takes a noticeable fraction of a second."""
+    cache_path = os.path.join(cache_dir(), f'camoufox-reportable-fonts-{install_cache_key(resource_dir, version)}.json')
     try:
         with open(cache_path, 'rb') as f:
             cached = json.loads(f.read())
@@ -420,13 +471,14 @@ def font_families(resource_dir: str, version: str, target_os: str) -> tuple[str,
         cached = {}
     if not isinstance(cached, dict):
         cached = {}
-    ans = read_font_families(resource_dir, target_os)
-    cached[target_os] = list(ans)
-    try:
-        with open(cache_path, 'wb') as f:
-            f.write(json.dumps(cached).encode('utf-8'))
-    except OSError:
-        pass  # an unwritable cache dir is not fatal, we just pay to parse again
+    ans, definitive = reportable_font_families(resource_dir, version, target_os)
+    if definitive:  # otherwise try again the next time calibre is run
+        cached[target_os] = list(ans)
+        try:
+            with open(cache_path, 'wb') as f:
+                f.write(json.dumps(cached).encode('utf-8'))
+        except OSError:
+            pass  # an unwritable cache dir is not fatal, we just pay to parse again
     return ans
 
 
@@ -457,9 +509,10 @@ def fontconfig_path(resource_dir: str, version: str, target_os: str) -> str:
     to the ones camoufox bundles for target_os, and return its path.
 
     The bundled fonts.conf refers to the font directory relative to the current
-    working directory, which is of no use to us, so it is rewritten to use an
-    absolute path. Only needed on Linux, elsewhere camoufox restricts the fonts
-    itself.
+    working directory, which is of no use to us, so it is rewritten to use
+    absolute paths to only the font directories for target_os, as fontconfig
+    scans directories recursively. Only needed on Linux, elsewhere camoufox
+    restricts the fonts itself.
     """
     for name in ('fontconfig', 'fontconfigs'):  # renamed in camoufox v150
         src = os.path.join(resource_dir, name, OS_DIRS[target_os], 'fonts.conf')
@@ -469,12 +522,19 @@ def fontconfig_path(resource_dir: str, version: str, target_os: str) -> str:
         raise Error(f'The camoufox install in {resource_dir} has no fonts.conf for {target_os}')
     with open(src) as f:
         conf = f.read()
-    fonts_dir = os.path.join(resource_dir, 'fonts')
-    conf = conf.replace('<dir prefix="cwd">fonts</dir>', f'<dir>{fonts_dir}</dir>')
+    dirs = font_dirs(resource_dir, target_os) or [os.path.join(resource_dir, 'fonts')]
+    conf = conf.replace('<dir prefix="cwd">fonts</dir>', '\n\t'.join(f'<dir>{d}</dir>' for d in dirs))
     base = os.path.join(cache_dir(), 'camoufox-fontconfig')
     os.makedirs(base, exist_ok=True)
-    ans = os.path.join(base, f'fonts-{version}-{target_os}.conf')
-    if not os.path.exists(ans):
+    ans = os.path.join(base, f'fonts-{install_cache_key(resource_dir, version)}-{target_os}.conf')
+    try:
+        with open(ans) as f:
+            existing = f.read()
+    except FileNotFoundError:
+        existing = ''
+    # Compare contents rather than just checking existence, so that a file
+    # written by an older calibre is replaced
+    if existing != conf:
         # Write atomically, several processes can be doing this at once
         fd, tmp = tempfile.mkstemp(dir=base, suffix='.conf')
         try:
@@ -1234,8 +1294,11 @@ class Connection:
             async with asyncio.timeout(timeout):
                 message = await future
         except TimeoutError:
-            self.replies.pop(message_id, None)
             raise TimeoutExceeded(f'{method} did not complete in {timeout} seconds')
+        finally:
+            # Also when the wait is cancelled, so that a reply nobody wants any
+            # more is not waited for indefinitely
+            self.replies.pop(message_id, None)
         if (error := message.get('error')) is not None:
             raise ProtocolError(method, error.get('message') or 'Unknown error', error.get('data') or '')
         # A method with no return value produces a message with no result at all
@@ -1663,6 +1726,34 @@ class Mouse:
         """The whole pixel the cursor is currently on."""
         return self.x, self.y
 
+    @asynccontextmanager
+    async def gesture(self) -> AsyncGenerator[None]:
+        """Keep the mouse of every other page of the browser still until this is done.
+
+        The browser dispatches the mouse events of all its pages one at a time,
+        and before each one it brings the window of the page the event is for
+        to the front, see :class:`InputWedged`. Events for several pages that
+        are sent at the same time therefore switch windows on every single
+        event, which costs several times what the events themselves do and,
+        on a busy Windows machine, gets an event answered so late that it is
+        given up on. Each page moving and clicking in turn, a whole movement or
+        click at a time, is also what a single hand would do.
+
+        A task that is already in a gesture can start another inside it, so a
+        click is a single gesture that includes the movement to its target.
+        """
+        browser = self.page.browser
+        task = asyncio.current_task()
+        if task is not None and browser.mouse_lock_holder is task:
+            yield
+            return
+        async with browser.mouse_lock:
+            browser.mouse_lock_holder = task
+            try:
+                yield
+            finally:
+                browser.mouse_lock_holder = None
+
     async def dispatch(self, event_type: str, x: float, y: float, *, button: int = 0, click_count: int = 0, modifiers: int = 0) -> None:
         """Send a single mouse event to the page, at the whole pixel nearest to (x, y).
 
@@ -1671,12 +1762,13 @@ class Mouse:
         whose grid is not necessarily the one this coordinate is measured on,
         so sending one risks an event that never arrives anywhere and a command
         that never completes, see :meth:`move_onto_pixel`. An event that has
-        not been answered within :data:`INPUT_TIMEOUT` never will be, and it
-        takes every later event down with it, see :class:`InputWedged`.
+        not been answered within :data:`INPUT_TIMEOUT` of the browser answering
+        everything else, see :meth:`Page.send_input`, is not going to be, and
+        it takes every later event down with it, see :class:`InputWedged`.
         """
         self.page.check_accepts_input()
         try:
-            await self.page.send(
+            await self.page.send_input(
                 'Page.dispatchMouseEvent',
                 {
                     'type': event_type,
@@ -1687,7 +1779,6 @@ class Mouse:
                     'modifiers': modifiers,
                     'clickCount': click_count,
                 },
-                timeout=INPUT_TIMEOUT,
             )
         except TimeoutExceeded as err:
             self.position_known = False
@@ -1729,23 +1820,24 @@ class Mouse:
             default, None, means the browser's, see :class:`Browser`.
         :param modifiers: the modifier keys to hold down, see :data:`MODIFIERS`
         """
-        self.page.check_accepts_input()
-        mask = modifier_mask(modifiers)
-        if human is None:
-            human = True
-        if max_time is None:
-            max_time = self.page.browser.max_move_time
-        width, height = await self.page.viewport()
-        x, y = clamp_to_viewport(x, y, width, height)
-        if human:
-            started = time.monotonic()
-            for px, py, at in human_trajectory((self.x, self.y), (x, y), max_time=max_time):
-                if (delay := started + at - time.monotonic()) > 0:
-                    await asyncio.sleep(delay)
-                await self.move_onto_pixel(*clamp_to_viewport(px, py, width, height), mask)
-        # The steps of a path that land on the pixel the cursor is already on
-        # are skipped, including the last one, so the journey is finished here
-        await self.move_onto_pixel(x, y, mask)
+        async with self.gesture():
+            self.page.check_accepts_input()
+            mask = modifier_mask(modifiers)
+            if human is None:
+                human = True
+            if max_time is None:
+                max_time = self.page.browser.max_move_time
+            width, height = await self.page.viewport()
+            x, y = clamp_to_viewport(x, y, width, height)
+            if human:
+                started = time.monotonic()
+                for px, py, at in human_trajectory((self.x, self.y), (x, y), max_time=max_time):
+                    if (delay := started + at - time.monotonic()) > 0:
+                        await asyncio.sleep(delay)
+                    await self.move_onto_pixel(*clamp_to_viewport(px, py, width, height), mask)
+            # The steps of a path that land on the pixel the cursor is already on
+            # are skipped, including the last one, so the journey is finished here
+            await self.move_onto_pixel(x, y, mask)
 
     async def down(self, button: str = 'left', *, click_count: int = 1, modifiers: Sequence[str] = ()) -> None:
         """Press a mouse button where the cursor currently is.
@@ -1757,25 +1849,27 @@ class Mouse:
         clear of the edges.
         """
         number, bit = mouse_button(button)
-        self.page.check_accepts_input()
-        await self.move_onto_pixel(*clamp_to_viewport(self.x, self.y, *await self.page.viewport()), modifier_mask(modifiers))
-        self.buttons |= bit
-        try:
-            await self.dispatch('mousedown', self.x, self.y, button=number, click_count=click_count, modifiers=modifier_mask(modifiers))
-        except BaseException:
-            self.buttons &= ~bit
-            raise
+        async with self.gesture():
+            self.page.check_accepts_input()
+            await self.move_onto_pixel(*clamp_to_viewport(self.x, self.y, *await self.page.viewport()), modifier_mask(modifiers))
+            self.buttons |= bit
+            try:
+                await self.dispatch('mousedown', self.x, self.y, button=number, click_count=click_count, modifiers=modifier_mask(modifiers))
+            except BaseException:
+                self.buttons &= ~bit
+                raise
 
     async def up(self, button: str = 'left', *, click_count: int = 1, modifiers: Sequence[str] = ()) -> None:
         """Release a mouse button where the cursor currently is."""
         number, bit = mouse_button(button)
-        self.page.check_accepts_input()
-        self.buttons &= ~bit
-        try:
-            await self.dispatch('mouseup', self.x, self.y, button=number, click_count=click_count, modifiers=modifier_mask(modifiers))
-        except BaseException:
-            self.buttons |= bit
-            raise
+        async with self.gesture():
+            self.page.check_accepts_input()
+            self.buttons &= ~bit
+            try:
+                await self.dispatch('mouseup', self.x, self.y, button=number, click_count=click_count, modifiers=modifier_mask(modifiers))
+            except BaseException:
+                self.buttons |= bit
+                raise
 
     async def click(
         self,
@@ -1800,15 +1894,16 @@ class Mouse:
         mouse_button(button)  # fail before moving if the button name is not valid
         if click_count < 1:
             raise ValueError(f'{click_count} is not a valid number of clicks')
-        await self.move(x, y, human=human, max_time=max_time, modifiers=modifiers)
-        # A hand comes to rest on its target before the finger presses
-        await asyncio.sleep(MOTION_RNG.uniform(*SETTLE_TIME))
-        for i in range(click_count):
-            if i:
-                await asyncio.sleep(MOTION_RNG.uniform(*DOUBLE_CLICK_INTERVAL))
-            await self.down(button, click_count=i + 1, modifiers=modifiers)
-            await asyncio.sleep(MOTION_RNG.uniform(*CLICK_DWELL) if delay is None else delay)
-            await self.up(button, click_count=i + 1, modifiers=modifiers)
+        async with self.gesture():
+            await self.move(x, y, human=human, max_time=max_time, modifiers=modifiers)
+            # A hand comes to rest on its target before the finger presses
+            await asyncio.sleep(MOTION_RNG.uniform(*SETTLE_TIME))
+            for i in range(click_count):
+                if i:
+                    await asyncio.sleep(MOTION_RNG.uniform(*DOUBLE_CLICK_INTERVAL))
+                await self.down(button, click_count=i + 1, modifiers=modifiers)
+                await asyncio.sleep(MOTION_RNG.uniform(*CLICK_DWELL) if delay is None else delay)
+                await self.up(button, click_count=i + 1, modifiers=modifiers)
 
 
 # }}}
@@ -2183,10 +2278,10 @@ class Keyboard:
     async def dispatch(self, event_type: str, info: KeyInfo, *, repeat: bool = False) -> None:
         """Send a single key event to the page.
 
-        Key events are dispatched from the same queue as mouse events and the
-        browser answers one only once the page has seen it, so an event the
-        page never sees is never answered and takes every later input event down
-        with it, see :meth:`Mouse.dispatch` and :class:`InputWedged`.
+        The browser answers a key event only once the page has seen it. Key
+        events do not go through the queue mouse events do, so one that has not
+        been answered in time, see :meth:`Page.send_input`, is given up on, see
+        :class:`InputLost`, without writing the page off.
 
         The text the key produces is not sent: the browser works it out from the
         key itself, which is what makes the page see the same composition and
@@ -2194,16 +2289,13 @@ class Keyboard:
         """
         self.page.check_accepts_input()
         try:
-            await self.page.send(
+            await self.page.send_input(
                 'Page.dispatchKeyEvent',
                 {'type': event_type, 'key': info.key, 'code': info.code, 'keyCode': info.key_code, 'location': info.location, 'repeat': repeat},
-                timeout=INPUT_TIMEOUT,
             )
         except TimeoutExceeded as err:
-            self.page.input_wedged = True
-            raise InputWedged(
-                f'The browser did not acknowledge a {event_type} for the {info.key} key within {INPUT_TIMEOUT} seconds,'
-                f' so this page can no longer be given input. {await self.page.input_diagnostics()}'
+            raise InputLost(
+                f'The browser did not acknowledge a {event_type} for the {info.key} key within {INPUT_TIMEOUT} seconds. {await self.page.input_diagnostics()}'
             ) from err
 
     async def down(self, key: str, *, repeat: bool = False) -> None:
@@ -2233,6 +2325,10 @@ class Keyboard:
             self.pressed.remove(info.key)
         try:
             await self.dispatch('keyup', info)
+        except InputLost:
+            # Holding on to the key would have every later press of it sent as
+            # an auto repeat, which a key the page never saw released is not
+            raise
         except BaseException:
             if was_held:
                 self.pressed.append(info.key)
@@ -2297,12 +2393,10 @@ class Keyboard:
         """Insert text into the focused element without checking that there is one."""
         self.page.check_accepts_input()
         try:
-            await self.page.send('Page.insertText', {'text': text}, timeout=INPUT_TIMEOUT)
+            await self.page.send_input('Page.insertText', {'text': text})
         except TimeoutExceeded as err:
-            self.page.input_wedged = True
-            raise InputWedged(
-                f'The browser did not acknowledge the insertion of {text!r} within {INPUT_TIMEOUT} seconds,'
-                f' so this page can no longer be given input. {await self.page.input_diagnostics()}'
+            raise InputLost(
+                f'The browser did not acknowledge the insertion of {text!r} within {INPUT_TIMEOUT} seconds. {await self.page.input_diagnostics()}'
             ) from err
 
     async def insert_text(self, text: str) -> None:
@@ -2399,12 +2493,22 @@ class Keyboard:
 # }}}
 
 
+class ResponseInfo(NamedTuple):
+    """What the server said when the page asked for something."""
+
+    status: int
+    status_text: str
+    headers: tuple[tuple[str, str], ...]
+    from_cache: bool
+
+
 class Resource(NamedTuple):
     """The bytes of something the page loaded, such as an image."""
 
     url: str
     content_type: str
     data: bytes
+    status: int = HTTPStatus.OK
 
 
 class Element:
@@ -2644,6 +2748,7 @@ class Page:
         self.request_urls: dict[str, str] = {}
         self.requests_by_url: dict[str, str] = {}
         self.content_types: dict[str, str] = {}
+        self.responses: dict[str, ResponseInfo] = {}
         # The size of the viewport, cached since every cursor movement needs it
         self.viewport_size: tuple[float, float] | None = None
         # Whether the browser has stopped acknowledging input events for this page
@@ -2698,9 +2803,13 @@ class Page:
             case 'Network.requestWillBeSent':
                 self.track_request(params['requestId'], params['url'])
             case 'Network.responseReceived':
-                for header in params.get('headers') or ():
-                    if header.get('name', '').lower() == 'content-type':
-                        self.content_types[params['requestId']] = header.get('value') or ''
+                headers = tuple((h.get('name') or '', h.get('value') or '') for h in params.get('headers') or ())
+                for name, value in headers:
+                    if name.lower() == 'content-type':
+                        self.content_types[params['requestId']] = value
+                self.responses[params['requestId']] = ResponseInfo(
+                    int(params.get('status') or 0), params.get('statusText') or '', headers, bool(params.get('fromCache'))
+                )
         self.events.dispatch(method, params)
 
     def track_request(self, request_id: str, url: str) -> None:
@@ -2708,6 +2817,7 @@ class Page:
             oldest = next(iter(self.request_urls))
             old_url = self.request_urls.pop(oldest)
             self.content_types.pop(oldest, None)
+            self.responses.pop(oldest, None)
             if self.requests_by_url.get(old_url) == oldest:
                 del self.requests_by_url[old_url]
         self.request_urls[request_id] = url
@@ -2747,6 +2857,41 @@ class Page:
         if self.input_wedged:
             raise InputWedged(f'{self} stopped acknowledging input events, no more input can be delivered to it')
 
+    async def send_input(self, method: str, params: Mapping[str, Any]) -> dict[str, Any]:
+        """Send an input event and wait for the browser to acknowledge it.
+
+        Raises :class:`TimeoutExceeded` once the event has gone unanswered for
+        :data:`INPUT_TIMEOUT` while the browser was answering other commands,
+        which is the sign of an event that is never going to be answered. The
+        whole browser, starved of CPU on a heavily loaded machine, can also go
+        tens of seconds without answering anything, the JavaScript of its pages
+        included, and then carry on as if nothing happened, answering the event
+        too. Such a stall is waited out for as long as any other command would
+        be, :data:`DEFAULT_TIMEOUT`, rather than being mistaken for an event
+        that was lost.
+        """
+        reply = asyncio.ensure_future(self.send(method, params, 2 * INPUT_TIMEOUT + DEFAULT_TIMEOUT))
+        try:
+            if not (await asyncio.wait((reply,), timeout=INPUT_TIMEOUT))[0]:
+                # Whether the browser is answering anything at all
+                probe = asyncio.ensure_future(self.evaluate('1', timeout=DEFAULT_TIMEOUT))
+                try:
+                    await asyncio.wait((reply, probe), return_when=asyncio.FIRST_COMPLETED)
+                finally:
+                    discard_task(probe)
+                if not reply.done():
+                    # The browser stayed busy for longer than any command is
+                    # waited on, or it is answering again and the event gets
+                    # the time it would have had, had it not been busy. An error
+                    # is an answer too, from a page that is navigating say.
+                    if (err := probe.exception()) is not None and (isinstance(err, (TimeoutExceeded, BrowserClosedError)) or not isinstance(err, Error)):
+                        raise err
+                    if not (await asyncio.wait((reply,), timeout=INPUT_TIMEOUT))[0]:
+                        raise TimeoutExceeded(f'{method} was not acknowledged within {INPUT_TIMEOUT} seconds of the browser answering other commands')
+            return reply.result()
+        finally:
+            discard_task(reply)
+
     async def input_diagnostics(self) -> str:
         """What can be discovered about a browser that stopped acknowledging input.
 
@@ -2765,6 +2910,8 @@ class Page:
         # A movement onto the pixel the cursor is already on is discarded by
         # the browser without being dispatched, so probe with a different one
         probe = (1.0, 1.0) if (self.mouse.x, self.mouse.y) != (1.0, 1.0) else (2.0, 2.0)
+        # The probe moves the cursor somewhere the mouse does not know about
+        self.mouse.position_known = False
         try:
             await self.send(
                 'Page.dispatchMouseEvent',
@@ -2774,7 +2921,7 @@ class Page:
         except Exception as err:
             notes.append(f'A further mouse event was not acknowledged either ({err.__class__.__name__}), the input queue is stuck for good.')
         else:
-            notes.append('A further mouse event was acknowledged, so only the one event was lost.')
+            notes.append('A further mouse event was acknowledged, so only the one event was lost or answered late.')
         if (process := self.browser.process) is not None and (log := process.log_tail(10).strip()):
             notes.append(f'The tail of the browser log:\n{log}')
         return ' '.join(notes)
@@ -2807,6 +2954,28 @@ class Page:
             return method == 'Runtime.executionContextCreated' and (params.get('auxData') or {}).get('frameId') == self.main_frame
 
         await wait_for(self.events.expect(is_our_context), timeout, 'a JavaScript execution context')
+        return self.execution_context
+
+    async def wait_for_new_execution_context(self, previous: str, timeout: float = DEFAULT_TIMEOUT) -> str:
+        """The execution context of the main frame, waiting for one that is not
+        previous.
+
+        Used after a navigation has destroyed previous, since the reply saying
+        so can arrive before the events that replace it in :attr:`contexts`, so
+        that looking the current one up would hand back the dead one.
+        """
+        current = self.contexts.get(self.main_frame)
+        if current is not None and current != previous:
+            return current
+
+        def is_a_new_context(method: str, params: Mapping[str, Any]) -> bool:
+            return (
+                method == 'Runtime.executionContextCreated'
+                and (params.get('auxData') or {}).get('frameId') == self.main_frame
+                and params.get('executionContextId') != previous
+            )
+
+        await wait_for(self.events.expect(is_a_new_context), timeout, 'a new JavaScript execution context')
         return self.execution_context
 
     def unwrap(self, result: Mapping[str, Any], by_value: bool) -> Any:  # noqa: ANN401
@@ -2847,9 +3016,12 @@ class Page:
         return await self.call_with_handles(function_declaration, [{'value': a} for a in args], by_value=by_value, timeout=timeout)
 
     async def call_with_handles(
-        self, function_declaration: str, args: Sequence[Mapping[str, Any]], *, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT
+        self, function_declaration: str, args: Sequence[Mapping[str, Any]], *, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT, context: str = ''
     ) -> Any:  # noqa: ANN401
-        context = await self.wait_for_execution_context(timeout)
+        """Pass context to run the function in a particular execution context,
+        for a caller that needs to know which one its call was made in, see
+        :meth:`wait_for_selector`."""
+        context = context or await self.wait_for_execution_context(timeout)
         result = await self.send(
             'Runtime.callFunction',
             {'executionContextId': context, 'functionDeclaration': function_declaration, 'args': list(args), 'returnByValue': by_value},
@@ -2912,11 +3084,15 @@ class Page:
         name = {'load': 'load', 'domcontentloaded': 'DOMContentLoaded'}.get(state.lower())
         if name is None:
             raise ValueError(f'{state} is not a valid state to wait for, use load or domcontentloaded')
+        # Until the page is ready there is no main frame to match events
+        # against, and waiting on the empty frame id would simply time out
+        deadline = time.monotonic() + timeout
+        await self.wait_until_ready(timeout)
         if name in self.lifecycle.get(self.main_frame, ()):
             return
         await wait_for(
             self.events.expect(lambda method, params: method == 'Page.eventFired' and params['frameId'] == self.main_frame and params['name'] == name),
-            timeout,
+            max(deadline - time.monotonic(), 0),
             f'the {name} event',
         )
 
@@ -2964,11 +3140,60 @@ class Page:
         A mutation observer is used, so this returns as soon as the element
         appears rather than polling. Pass visible=True to additionally require
         that the element has a non zero size and is not hidden.
+
+        If the page navigates while waiting, the search starts again in the new
+        document, since what was asked for is the element, not the element in
+        one particular document.
         """
-        handle = await self.call(WAIT_FOR_SELECTOR_JS, css_selector, int(timeout * 1000), visible, by_value=False, timeout=timeout + 5)
-        if not isinstance(handle, Element):
-            raise TimeoutExceeded(f'No element matching {css_selector!r} appeared within {timeout} seconds')
-        return handle
+        await self.wait_until_ready(timeout)
+        deadline = time.monotonic() + timeout
+        remaining = max(deadline - time.monotonic(), 0)
+        context = await self.wait_for_execution_context(remaining)
+        while True:
+            remaining = max(deadline - time.monotonic(), 0)
+            args = ({'value': css_selector}, {'value': int(remaining * 1000)}, {'value': visible})
+            try:
+                handle = await self.call_with_handles(WAIT_FOR_SELECTOR_JS, args, by_value=False, timeout=remaining + IN_PAGE_REPLY_GRACE, context=context)
+            except ProtocolError as err:
+                # A navigation destroys the world the observer is running in,
+                # which fails the call rather than returning from it
+                if CONTEXT_DESTROYED not in err.message.lower() or time.monotonic() >= deadline:
+                    raise
+                context = await self.wait_for_new_execution_context(context, max(deadline - time.monotonic(), 0))
+                continue
+            if isinstance(handle, Element):
+                return handle
+            # The observer gave up. Its timer was set for the time left when it
+            # was installed, so this is the deadline unless a navigation cut it
+            # short, in which case there is still time to look in the new document.
+            if time.monotonic() >= deadline:
+                raise TimeoutExceeded(f'No element matching {css_selector!r} appeared within {timeout} seconds')
+            context = await self.wait_for_execution_context(max(deadline - time.monotonic(), 0))
+
+    async def wait_for_dom_ready(self, timeout: float = DEFAULT_TIMEOUT) -> None:
+        """Wait until the DOM of the current document is fully parsed.
+
+        This is the DOMContentLoaded event, so it returns while images,
+        stylesheets and other sub-resources may still be loading.
+        """
+        await self.wait_for_load('domcontentloaded', timeout)
+
+    async def wait_for_page_loaded(self, timeout: float = DEFAULT_TIMEOUT) -> None:
+        """Wait until the current document and all of its sub-resources have loaded.
+
+        This is the load event, so unlike :meth:`wait_for_dom_ready` it waits
+        for images, stylesheets and the like as well as for the DOM.
+        """
+        await self.wait_for_load('load', timeout)
+
+    async def wait_for_element(self, css_selector: str, *, timeout: float = DEFAULT_TIMEOUT) -> Element:
+        """Wait until an element matching css_selector exists in the DOM and return it.
+
+        The element need only be present, it can be hidden or have zero size.
+        Use ``wait_for_selector(css_selector, visible=True)`` to wait for one
+        the user could actually see.
+        """
+        return await self.wait_for_selector(css_selector, timeout=timeout)
 
     async def find(self, css_selector: str) -> Element | None:
         """The first element matching css_selector, or None."""
@@ -3130,6 +3355,15 @@ class Page:
             urls = tuple(x for x in urls if matches(x))
         return urls
 
+    def response_for(self, url: str) -> ResponseInfo | None:
+        """What the server said when this page requested url, if it is still known.
+
+        The record is dropped once the request ages out of the tracking done by
+        :meth:`track_request`, and is None for a URL the page never asked for.
+        """
+        request_id = self.requests_by_url.get(url)
+        return None if request_id is None else self.responses.get(request_id)
+
     async def get_resource(self, url: str, *, timeout: float = DEFAULT_TIMEOUT) -> Resource:
         """The bytes of a resource, such as an image, that this page loaded.
 
@@ -3145,13 +3379,16 @@ class Page:
             except ProtocolError:
                 result = {}
             if result.get('base64body') is not None and not result.get('evicted'):
-                return Resource(url, self.content_types.get(request_id, ''), base64.b64decode(result['base64body']))
+                response = self.responses.get(request_id)
+                status = HTTPStatus.OK if response is None else response.status
+                return Resource(url, self.content_types.get(request_id, ''), base64.b64decode(result['base64body']), status)
         result = await self.call(FETCH_JS, url, timeout=timeout)
         if not isinstance(result, dict):
             raise Error(f'Failed to fetch {url} from the page')
-        if not (200 <= int(result.get('status') or 0) < 300):
+        status = int(result.get('status') or 0)
+        if not (200 <= status < 300):
             raise Error(f'Fetching {url} from the page failed with HTTP status {result.get("status")}')
-        return Resource(url, result.get('contentType') or '', base64.b64decode(result.get('base64') or ''))
+        return Resource(url, result.get('contentType') or '', base64.b64decode(result.get('base64') or ''), status)
 
     async def screenshot(self, *, mime_type: str = 'image/png', quality: int = 0, full_page: bool = False) -> bytes:
         """A screenshot of the page as image data."""
@@ -3207,6 +3444,9 @@ class Browser:
         as it goes can react badly to a character that is only there for a moment.
     :param block_images: do not load images at all
     :param block_webrtc: disable WebRTC entirely
+    :param ignore_https_errors: load pages even when their TLS certificates do
+        not validate, needed by the news download system, which has to cope
+        with whatever certificates news sites happen to be serving
     :param enable_cache: keep previously loaded pages and requests around, using more memory
     :param proxy: a proxy to route all traffic through, as a dict with the keys
         ``type`` (one of http, https, socks, socks4), ``host``, ``port`` and
@@ -3214,6 +3454,9 @@ class Browser:
     :param config: camoufox config properties that override the generated ones
     :param firefox_user_prefs: Firefox preferences to set
     :param allow_prerelease: use pre-release builds of the browser
+    :param install: an existing install of the browser to use as is. By default
+        the browser is installed, or updated, as needed, which can mean
+        downloading hundreds of megabytes before it starts.
     """
 
     def __init__(
@@ -3229,11 +3472,13 @@ class Browser:
         typing_mistakes: float = 0.0,
         block_images: bool = False,
         block_webrtc: bool = False,
+        ignore_https_errors: bool = False,
         enable_cache: bool = True,
         proxy: Mapping[str, Any] | None = None,
         config: Mapping[str, Any] | None = None,
         firefox_user_prefs: Mapping[str, Any] | None = None,
         allow_prerelease: bool = False,
+        install: Install | None = None,
         launch_timeout: float = LAUNCH_TIMEOUT,
         keep_log: bool = False,
     ) -> None:
@@ -3247,7 +3492,9 @@ class Browser:
         self.typing_wpm = typing_wpm or DEFAULT_TYPING_WPM
         self.typing_mistakes = typing_mistakes
         self.block_images, self.block_webrtc, self.enable_cache = block_images, block_webrtc, enable_cache
+        self.ignore_https_errors = ignore_https_errors
         self.proxy, self.extra_config, self.allow_prerelease = proxy, config, allow_prerelease
+        self.install = install
         self.extra_user_prefs = firefox_user_prefs
         self.launch_timeout, self.keep_log = launch_timeout, keep_log
         self.connection = Connection()
@@ -3259,6 +3506,9 @@ class Browser:
         self.pages: dict[str, Page] = {}
         self.pending_pages: dict[str, asyncio.Future[Page]] = {}
         self.new_pages: list[Page] = []
+        # Held for the whole of a mouse gesture, and by which task, see Mouse.gesture()
+        self.mouse_lock = asyncio.Lock()
+        self.mouse_lock_holder: asyncio.Task[Any] | None = None
         self.closed = False
 
     def __repr__(self) -> str:
@@ -3296,6 +3546,8 @@ class Browser:
 
     def build_environment(self, resource_dir: str) -> dict[str, str]:
         env = dict(os.environ)
+        # The browser must not load the libraries of the calibre bundle
+        sanitize_env_vars_in(env)
         env.update(config_environment(self.config))
         if not iswindows and not ismacos:
             # Only Linux needs to be told where the bundled fonts are, on the
@@ -3310,7 +3562,8 @@ class Browser:
         if self.process is not None:
             raise Error('This browser has already been launched')
         loop = asyncio.get_running_loop()
-        install = await loop.run_in_executor(None, lambda: camoufox_installer(allow_prerelease=self.allow_prerelease))
+        if (install := self.install) is None:
+            install = await loop.run_in_executor(None, lambda: camoufox_install(allow_prerelease=self.allow_prerelease))
         binary, self.version = install.path, install.version
         resource_dir = camoufox_resource_dir(binary)
         self.config = await loop.run_in_executor(
@@ -3347,6 +3600,8 @@ class Browser:
             raise Error(f'The camoufox browser failed to start: {err}\nBrowser log:\n{self.process.log_tail()}') from err
         result = await self.connection.send('Browser.createBrowserContext', {'removeOnDetach': True})
         self.browser_context_id = result['browserContextId']
+        if self.ignore_https_errors:
+            await self.set_ignore_https_errors(True)
         if self.proxy:
             await self.set_proxy(self.proxy)
         await self.new_page()
@@ -3434,6 +3689,10 @@ class Browser:
             if proxy.get(key):
                 params[key] = proxy[key]
         await self.connection.send('Browser.setContextProxy', params)
+
+    async def set_ignore_https_errors(self, ignore: bool = True) -> None:
+        """Stop refusing to load pages whose TLS certificates do not validate."""
+        await self.connection.send('Browser.setIgnoreHTTPSErrors', {'browserContextId': self.browser_context_id, 'ignoreHTTPSErrors': ignore})
 
     async def set_extra_headers(self, headers: Mapping[str, str]) -> None:
         await self.connection.send(
