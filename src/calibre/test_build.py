@@ -117,8 +117,8 @@ class BuildTest(unittest.TestCase):
         self.assertEqual(data, decompress(cdata))
 
     def test_html5lib(self):
-        import html5lib.html5parser  # noqa: F401
-        from html5lib import parse  # noqa: F401
+        import html5lib.html5parser  # ruff: ignore[unused-import]
+        from html5lib import parse  # ruff: ignore[unused-import]
 
     def test_html5_parser(self):
         from html5_parser import parse
@@ -199,9 +199,7 @@ class BuildTest(unittest.TestCase):
         create_key_pair()
 
     def test_fonttools(self):
-        from fontTools.subset import main
-
-        main
+        from fontTools.subset import main  # ruff: ignore[unused-import]
 
     def test_msgpack(self):
         from calibre.utils.date import utcnow
@@ -259,8 +257,8 @@ class BuildTest(unittest.TestCase):
                 au(v, 'getenv-' + k)
         t = time.localtime()
         fmt = '%Y%a%b%e%H%M'
-        for fmt in (fmt, fmt.encode('ascii')):
-            x = strftime(fmt, t)
+        for fm in (fmt, fmt.encode('ascii')):
+            x = strftime(fm, t)
             au(x, 'strftime')
         tdir = tempfile.mkdtemp(dir=winutil.temp_path())
         path = os.path.join(tdir, 'test-create-file.txt')
@@ -416,11 +414,8 @@ class BuildTest(unittest.TestCase):
             import _imaging  # type: ignore
             import _imagingft  # type: ignore
             import _imagingmath  # type: ignore
-
-            _imaging, _imagingmath, _imagingft
         except ImportError:
-            from PIL import _imaging, _imagingft, _imagingmath
-        _imaging, _imagingmath, _imagingft
+            from PIL import _imaging, _imagingft, _imagingmath  # ruff: ignore[unused-import]
         from io import StringIO
 
         from PIL import features
@@ -526,16 +521,14 @@ class BuildTest(unittest.TestCase):
 
     def test_feedparser(self):
         # sgmllib is needed for feedparser parsing malformed feeds
-        import feedparser_sgmllib as sgmllib
+        import feedparser_sgmllib as sgmllib  # ruff: ignore[unused-import]
 
-        from calibre.web.feeds.feedparser import parse  # type: ignore
-
-        sgmllib, parse
+        from calibre.web.feeds.feedparser import parse  # type: ignore  # ruff: ignore[unused-import]
 
     def test_openssl(self):
         import ssl
 
-        ssl.PROTOCOL_TLS_CLIENT
+        ssl.PROTOCOL_TLS_CLIENT  # ruff: ignore[useless-expression]
         if ismacos or (iswindows and not is_ci):
             paths = ssl.get_default_verify_paths()
             capath = paths.capath
@@ -610,7 +603,7 @@ def test():
 def test_qt_main():
     from unittest import TestCase
 
-    from qt.core import QFontDatabase, QImageReader, QNetworkAccessManager, QSslSocket
+    from qt.core import QFontDatabase, QImageReader, QImageWriter, QNetworkAccessManager, QSslSocket
 
     from calibre.utils.img import image_from_data, image_to_data, test
 
@@ -633,6 +626,10 @@ def test_qt_main():
     # AVIF comes from our own Qt image format plugin, which is registered with
     # Qt by importing calibre_extensions.avif, done by calibre.utils.img above
     self.assertIn('avif', fmts, f'The AVIF image format plugin was not loaded. Available plugins: {fmts}')
+    # Similarly for JPEG-XL, which can also be written
+    self.assertIn('jxl', fmts, f'The JPEG-XL image format plugin was not loaded. Available plugins: {fmts}')
+    wfmts = {x.data().decode('utf-8') for x in QImageWriter.supportedImageFormats()}
+    self.assertIn('jxl', wfmts, f'The JPEG-XL image format plugin cannot write images. Available plugins: {wfmts}')
     data = P('images/blank.png', allow_user_override=False, data=True)
     img = image_from_data(data)
     image_from_data(P('catalog/mastheadImage.gif', allow_user_override=False, data=True))

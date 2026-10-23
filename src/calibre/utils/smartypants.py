@@ -865,14 +865,14 @@ def run_tests(return_tests=False):
         def test_skip_tags(self):
             self.assertEqual(
                 sp(
-                    '''<script type="text/javascript">\n<!--\nvar href = "http://www.google.com";\nvar linktext = "google";\ndocument.write('<a href="' + href + '">' + linktext + "</a>");\n//-->\n</script>'''  # noqa: E501
+                    '''<script type="text/javascript">\n<!--\nvar href = "http://www.google.com";\nvar linktext = "google";\ndocument.write('<a href="' + href + '">' + linktext + "</a>");\n//-->\n</script>'''  # ruff: ignore[line-too-long]
                 ),
-                '''<script type="text/javascript">\n<!--\nvar href = "http://www.google.com";\nvar linktext = "google";\ndocument.write('<a href="' + href + '">' + linktext + "</a>");\n//-->\n</script>''',  # noqa: E501
+                '''<script type="text/javascript">\n<!--\nvar href = "http://www.google.com";\nvar linktext = "google";\ndocument.write('<a href="' + href + '">' + linktext + "</a>");\n//-->\n</script>''',  # ruff: ignore[line-too-long]
             )
             self.assertEqual(
                 sp('''<p>He said &quot;Let's write some code.&quot; This code here <code>if True:\n\tprint &quot;Okay&quot;</code> is python code.</p>'''),
                 '''<p>He said &#8220;Let&#8217;s write some code.&#8221; This code here <code>if True:\n\tprint &quot;Okay&quot;</code> is python code.</p>''',
-            )  # noqa: E501
+            )
 
             self.assertEqual(sp('''<script/><p>It's ok</p>'''), '''<script/><p>It&#8217;s ok</p>''')
 

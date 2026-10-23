@@ -187,7 +187,9 @@ class ConvertAction(InterfaceActionWithLibraryDrop):
             self.gui.jobs_pointer.start()
             self.gui.status_bar.show_message(ngettext('Starting conversion of the book', 'Starting conversion of {} books', num).format(num), 2000)
 
-    def queue_convert_jobs(self, jobs, changed, bad, rows, previous, converted_func, extra_job_args=[], rows_are_ids=False):
+    def queue_convert_jobs(self, jobs, changed, bad, rows, previous, converted_func, extra_job_args=None, rows_are_ids=False):
+        if extra_job_args is None:
+            extra_job_args = []
         for func, args, desc, fmt, id, temp_files in jobs:
             func, _, parts = func.partition(':')
             parts = set(parts.split(';'))

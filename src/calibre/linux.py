@@ -313,7 +313,9 @@ class ZshCompleter:  # {{{
                 self.dest = os.path.join(c, '_calibre')
                 break
 
-    def get_options(self, parser, cover_opts=('--cover',), opf_opts=('--opf',), file_map={}):
+    def get_options(self, parser, cover_opts=('--cover',), opf_opts=('--opf',), file_map=None):
+        if file_map is None:
+            file_map = {}
         if hasattr(parser, 'option_list'):
             options = parser.option_list
             for group in parser.option_groups:
@@ -359,7 +361,9 @@ class ZshCompleter:  # {{{
             help_txt = f'"[{h}]"'
             yield f'{exclude}{ostrings}{help_txt}{arg} '
 
-    def opts_and_exts(self, name, op, exts, cover_opts=('--cover',), opf_opts=('--opf',), file_map={}):
+    def opts_and_exts(self, name, op, exts, cover_opts=('--cover',), opf_opts=('--opf',), file_map=None):
+        if file_map is None:
+            file_map = {}
         if not self.dest:
             return
         exts = sorted({x.lower() for x in exts})
@@ -1151,7 +1155,9 @@ complete -F _'''
 pics = ['bmp', 'gif', 'jpeg', 'jpg', 'png']  # keep sorted alphabetically
 
 
-def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(), file_map={}):
+def opts_and_exts(name, op, exts, cover_opts=('--cover',), opf_opts=(), file_map=None):
+    if file_map is None:
+        file_map = {}
     opts = ' '.join(options(op))
     exts.extend([i.upper() for i in exts])
     exts = '|'.join(sorted(exts))
@@ -1278,7 +1284,7 @@ def get_appdata():
             'description': (
                 _('calibre is the one stop solution to all your e-book needs.'),
                 _(
-                    'You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.'  # noqa: E501
+                    'You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.'  # ruff: ignore[line-too-long]
                 ),
             ),
             'screenshots': (
@@ -1307,7 +1313,7 @@ def get_appdata():
             'description': (
                 _('The calibre E-book editor allows you to edit the text and styles inside the book with a live preview of your changes.'),
                 _(
-                    'It can edit books in both the EPUB and AZW3 (Kindle) formats. It includes various useful tools for checking the book for errors, editing the Table of Contents, performing automated cleanups, etc.'  # noqa: E501
+                    'It can edit books in both the EPUB and AZW3 (Kindle) formats. It includes various useful tools for checking the book for errors, editing the Table of Contents, performing automated cleanups, etc.'  # ruff: ignore[line-too-long]
                 ),
             ),
             'screenshots': (

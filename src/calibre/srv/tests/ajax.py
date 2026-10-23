@@ -18,7 +18,8 @@ from calibre.utils.resources import get_image_path as I
 from polyglot.binary import as_base64_bytes
 
 
-def make_request(conn, url, headers={}, prefix='/ajax', username=None, password=None, method='GET', data=None):
+def make_request(conn, url, headers=None, prefix='/ajax', username=None, password=None, method='GET', data=None):
+    headers = dict(headers or {})
     if username and password:
         headers[b'Authorization'] = b'Basic ' + as_base64_bytes(username + ':' + password)
     conn.request(method, prefix + url, headers=headers, body=data)
@@ -126,6 +127,51 @@ class ContentTest(LibraryBaseTest):
             self.assertIsNone(data['1']['payload']['new_book_id'])
             self.assertTrue(source_db.has_id(1))
             self.ae(target_db.all_book_ids(), target_book_ids)
+
+    # }}}
+
+    def test_fts_actions_change_only_the_requested_library(self):  # {{{
+        other_library_path = self.mkdtemp()
+        self.create_db(other_library_path)
+        with self.create_server(libraries=(self.library_path, other_library_path), auth=True, auth_mode='basic') as server:
+            server.handler.ctx.user_manager.add_user('12', 'test')
+            ctx = server.handler.router.ctx
+            library_map = ctx.library_broker.library_map
+            other_library_id = next(library_id for library_id, name in library_map.items() if name == os.path.basename(other_library_path))
+            default_db = ctx.library_broker.get(None)
+            other_db = ctx.library_broker.get(other_library_id)
+            conn = server.connect()
+
+            def request(path, library_id=None, method='POST', data=None, **query):
+                if library_id is not None:
+                    query['library_id'] = library_id
+                return make_request(conn, f'{path}?{urlencode(query)}', username='12', password='test', prefix='', method=method, data=data)[0].status
+
+            self.ae(request('/fts/indexing', other_library_id, data=b'true'), OK)
+            self.assertTrue(other_db.is_fts_enabled())
+            self.assertFalse(default_db.is_fts_enabled())
+            self.ae(request('/fts/reindex', other_library_id, data=b'"all"'), OK)
+            self.ae(request('/fts/search', other_library_id, method='GET', query='x'), OK)
+            # A library that does not exist must not fall back to the default one
+            self.ae(request('/fts/indexing', 'no-such-library', data=b'true'), NOT_FOUND)
+            self.ae(request('/fts/reindex', 'no-such-library', data=b'"all"'), NOT_FOUND)
+            self.ae(request('/fts/disable', 'no-such-library'), NOT_FOUND)
+            self.ae(request('/fts/search', 'no-such-library', method='GET', query='x'), NOT_FOUND)
+            self.ae(request('/fts/snippets/1', 'no-such-library', method='GET', query='x'), NOT_FOUND)
+            # Nor must any other endpoint that changes the database
+            self.ae(request('/conversion/start/1', 'no-such-library', data=b'{}'), NOT_FOUND)
+            self.assertFalse(default_db.is_fts_enabled())
+            # Disabling destroys the index, so it must not be possible with GET
+            self.ae(request('/fts/disable', other_library_id, method='GET'), METHOD_NOT_ALLOWED)
+            self.assertTrue(other_db.is_fts_enabled())
+            self.ae(request('/fts/disable', other_library_id), OK)
+            self.assertFalse(other_db.is_fts_enabled())
+            # No library_id means the default library
+            self.ae(request('/fts/indexing', data=b'true'), OK)
+            self.assertTrue(default_db.is_fts_enabled())
+            self.ae(request('/fts/disable'), OK)
+            self.assertFalse(default_db.is_fts_enabled())
+            self.assertFalse(other_db.is_fts_enabled())
 
     # }}}
 
@@ -409,6 +455,8 @@ class ContentTest(LibraryBaseTest):
             for q in 'books-init init get-books'.split():
                 ae(sr('/interface-data/' + q), {1, 2})
             ae(sr('/interface-data/get-books?vl=1'), {1})
+            for q in 'books-init init'.split():
+                ae(set(ok(url_for('/interface-data/' + q) + '?extra_books=1,3')['metadata']), {'1', '2'})
             ok(url_for('/interface-data/book-metadata', book_id=1))
             nf(url_for('/interface-data/book-metadata', book_id=3))
 

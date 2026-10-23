@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -935,6 +935,14 @@ msgid ""
 msgstr "Вилучити книги, вказані за допомогою параметра book_ids з бази даних і вилучити відповідні файли форматів. Якщо значенням ``permanent`` є False, файли форматів надсилатимуться до окремої теки смітника бібліотеки."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr "Якщо файли деяких книг не вдається вилучити або перемістити до смітника, ці книги залишаться незмінними, а після вилучення усіх інших книг буде надіслано повідомлення про виняток :class:`BooksNotRemoved`."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
 msgid ""
 "Delete the specified extra files, either to Recycle Bin or permanently."
@@ -1178,8 +1186,10 @@ msgstr "Встановлює документ нотаток. Якщо прид�
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
-msgstr "Встановити дані щодо кількості сторінок для вказаної книги"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
+msgstr "Встановити дані щодо кількості сторінок для вказаної книги. Не виконує ніяких дій, якщо книги не існує."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

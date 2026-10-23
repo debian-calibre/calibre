@@ -89,12 +89,14 @@ class EbookDownload:
         filename='',
         save_loc='',
         add_to_lib=True,
-        tags=[],
+        tags=None,
         create_browser=None,
         log=None,
         abort=None,
         notifications=None,
     ):
+        if tags is None:
+            tags = []
         dfilename = ''
         try:
             dfilename = self._download(cookie_file, url, filename, save_loc, add_to_lib, create_browser)
@@ -148,7 +150,6 @@ class EbookDownload:
             book_id = db.create_book_entry(mi)
             db.new_api.add_format(book_id, ext.upper(), path)
         gui.library_view.model().books_added(1)
-        gui.library_view.model().count_changed()
 
     def _save_as(self, dfilename, save_loc):
         if not save_loc or not dfilename:
@@ -168,9 +169,11 @@ def start_ebook_download(
     filename='',
     save_loc='',
     add_to_lib=True,
-    tags=[],
+    tags=None,
     create_browser=None,
 ):
+    if tags is None:
+        tags = []
     description = _('Downloading %s') % as_unicode(filename or url, errors='replace')
     job = ThreadedJob(
         'ebook_download',
@@ -186,7 +189,9 @@ def start_ebook_download(
 
 
 class EbookDownloadMixin:
-    def download_ebook(self: Main, url='', cookie_file=None, filename='', save_loc='', add_to_lib=True, tags=[], create_browser=None):
+    def download_ebook(self: Main, url='', cookie_file=None, filename='', save_loc='', add_to_lib=True, tags=None, create_browser=None):
+        if tags is None:
+            tags = []
         if tags:
             if isinstance(tags, (str, bytes)):
                 tags = tags.split(',')

@@ -248,16 +248,27 @@ class ContainerTests(BaseTest):
         c.add_file(
             one,
             b'<head><link href="../stylesheet.css"><p><a name="one" href="../two/two.html">1</a><a name="two" href="../two/two.html#one">2</a>',
-        )  # noqa: E501
+        )
         c.add_file(
             two,
             b'<head><link href="../page_styles.css"><p><a name="one" href="two.html#two">1</a>'
             b'<a name="two" href="../one/one.html#one">2</a><a href="#one">3</a>',
-        )  # noqa: E501
+        )
         merge(c, 'text', (one, two), one)
         self.check_links(c)
         root = c.parsed(one)
         self.assertEqual(1, len(root.xpath('//*[@href="../page_styles.css"]')))
+
+        book = get_simple_book()
+        c = get_container(book)
+        c.add_file(one, b'<p id="x" aria-labelledby="x">1</p>')
+        c.add_file(two, b'<p id="x">2</p><p aria-labelledby="x y" aria-describedby="x">3</p><label for="x">4</label>')
+        merge(c, 'text', (one, two), one)
+        root = c.parsed(one)
+        self.assertEqual(root.xpath('//*[@id]/@id'), ['x', 'x_1'])
+        self.assertEqual(root.xpath('//*/@aria-labelledby'), ['x', 'x_1 y'])
+        self.assertEqual(root.xpath('//*/@aria-describedby'), ['x_1'])
+        self.assertEqual(root.xpath('//*/@for'), ['x_1'])
 
         book = get_simple_book()
         c = get_container(book)

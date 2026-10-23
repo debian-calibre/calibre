@@ -88,7 +88,7 @@ def process_result(log, result):
     return (plugin, width, height, fmt, data)
 
 
-def run_download(log, results, abort, title=None, authors=None, identifiers={}, timeout=30, get_best_cover=False):
+def run_download(log, results, abort, title=None, authors=None, identifiers=None, timeout=30, get_best_cover=False):
     """
     Run the cover download, putting results into the queue :param:`results`.
 
@@ -97,6 +97,8 @@ def run_download(log, results, abort, title=None, authors=None, identifiers={}, 
         (plugin, width, height, fmt, bytes)
 
     """
+    if identifiers is None:
+        identifiers = {}
     if title == _('Unknown'):
         title = None
     if authors == [_('Unknown')]:
@@ -165,7 +167,7 @@ def run_download(log, results, abort, title=None, authors=None, identifiers={}, 
         log('\n' + '*' * 80)
 
 
-def download_cover(log, title=None, authors=None, identifiers={}, timeout=30):
+def download_cover(log, title=None, authors=None, identifiers=None, timeout=30):
     '''
     Synchronous cover download. Returns the "best" cover as per user
     prefs/cover resolution.
@@ -174,6 +176,8 @@ def download_cover(log, title=None, authors=None, identifiers={}, timeout=30):
 
     Returns None if no cover is found.
     '''
+    if identifiers is None:
+        identifiers = {}
     rq = Queue()
     abort = Event()
 

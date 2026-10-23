@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -446,6 +446,15 @@ msgid ""
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
 msgstr "replace_func を使用して、name のすべてのリンクを置き換えます。replace_func は URL を受け入れ、置き換えられた URL を返す呼び出し可能である必要があります。また、実際の置換が行われた場合に True に設定される 'replaced' 属性が必要です。このような呼び出し可能オブジェクトは作成するには、:class:`LinkReplacer` および :class:`LinkRebaser` classes を使用すると便利です。"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.replace_links:7
+msgid ""
+"In HTML files, attributes that refer to elements in the same file by id, "
+"such as aria-labelledby, are also replaced. Each id is passed to "
+"replace_func as a URL of the form #id with file_type set to 'idref' and is "
+"replaced only if replace_func returns a URL of the same form."
+msgstr "HTMLファイルでは、aria-labelledbyなど、同じファイル内の要素をIDで参照する属性も置換されます。各IDは、file_typeが 'idref' に設定された「#id」という形式のURLとしてreplace_funcに渡され、replace_funcが同じ形式のURLを返した場合にのみ置換されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1

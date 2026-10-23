@@ -239,7 +239,9 @@ class TBS:  # {{{
     trailing byte sequence for the record.
     """
 
-    def __init__(self, data, is_periodical, first=False, section_map={}, after_first=False):
+    def __init__(self, data, is_periodical, first=False, section_map=None, after_first=False):
+        if section_map is None:
+            section_map = {}
         self.section_map = section_map
 
         if is_periodical:

@@ -133,7 +133,6 @@ class View:
                     label = self.cache.backend.field_metadata.custom_field_prefix + label + '_index'
 
             fm = self.field_metadata[label]
-            fm
             if label == 'authors':
                 fmt = partial(format_is_multiple, repl='|')
             elif label in {'tags', 'languages', 'formats'}:
@@ -314,7 +313,9 @@ class View:
             },
         )
 
-    def multisort(self, fields=[], subsort=False, only_ids=None):
+    def multisort(self, fields=None, subsort=False, only_ids=None):
+        if fields is None:
+            fields = []
         sorted_book_ids = self._do_sort(self._map if only_ids is None else only_ids, fields=fields, subsort=subsort)
         if only_ids is None:
             self._map = tuple(sorted_book_ids)

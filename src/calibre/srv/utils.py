@@ -18,14 +18,13 @@ from calibre.utils.localization import get_translator
 from calibre.utils.logging import ThreadSafeLog
 from calibre.utils.shared_file import share_open
 from calibre.utils.socket_inheritance import set_socket_inherit
-from polyglot.binary import as_hex_unicode as encode_name
-from polyglot.binary import from_hex_unicode as decode_name
+from polyglot.binary import as_hex_unicode as encode_name  # ruff: ignore[unused-import]
+from polyglot.binary import from_hex_unicode as decode_name  # ruff: ignore[unused-import]
 from polyglot.builtins import as_unicode
 
 HTTP1 = 'HTTP/1.0'
 HTTP11 = 'HTTP/1.1'
 DESIRED_SEND_BUFFER_SIZE = 16 * 1024  # windows 7 uses an 8KB sndbuf
-encode_name, decode_name
 
 
 def connection_header_tokens(value):
@@ -456,10 +455,12 @@ def get_db(ctx, rd, library_id):
 
 
 def get_library_data(ctx, rd, strict_library_id=False):
+    # Endpoints that change the database must never fall back to the default
+    # library when asked for one that does not exist
     library_id = rd.query.get('library_id')
     library_map, default_library = ctx.library_info(rd)
     if library_id not in library_map:
-        if strict_library_id and library_id:
+        if (strict_library_id or rd.needs_db_write) and library_id:
             raise HTTPNotFound(f'No library with id: {library_id}')
         library_id = default_library
     db = get_db(ctx, rd, library_id)

@@ -129,7 +129,11 @@ class RecursiveFetcher:
     CSS_IMPORT_PATTERN = re.compile(r'\@import\s+url\((.*?)\)', re.IGNORECASE)
     default_timeout = socket.getdefaulttimeout()  # Needed here as it is used in __del__
 
-    def __init__(self, options, log, image_map={}, css_map={}, job_info=None):
+    def __init__(self, options, log, image_map=None, css_map=None, job_info=None):
+        if css_map is None:
+            css_map = {}
+        if image_map is None:
+            image_map = {}
         bd = options.dir
         if not isinstance(bd, str):
             bd = bd.decode(filesystem_encoding)
@@ -618,7 +622,9 @@ class RecursiveFetcher:
         return res
 
 
-def option_parser(usage=_('%prog URL\n\nWhere URL is for example: {}').format('https://google.com')):
+def option_parser(usage=None):
+    if usage is None:
+        usage = _('%prog URL\n\nWhere URL is for example: {}').format('https://google.com')
     parser = OptionParser(usage=usage)
     parser.add_option(
         '-d',
@@ -706,7 +712,9 @@ def option_parser(usage=_('%prog URL\n\nWhere URL is for example: {}').format('h
     return parser
 
 
-def create_fetcher(options, image_map={}, log=None):
+def create_fetcher(options, image_map=None, log=None):
+    if image_map is None:
+        image_map = {}
     if log is None:
         log = Log(level=Log.DEBUG) if options.verbose else Log()
     return RecursiveFetcher(options, log, image_map={})

@@ -8,8 +8,7 @@ from gettext import gettext as _
 
 from ajax import ajax_send
 from book_list.book_details import (
-    add_stars_to, basic_table_rules, fetch_metadata, field_sorter, no_book,
-    report_load_failure
+    add_stars_to, basic_table_rules, fetch_metadata, field_sorter, no_book
 )
 from book_list.comments_editor import (
     create_comments_editor, focus_comments_editor, get_comments_html, set_comments_html
@@ -22,7 +21,7 @@ from book_list.library_data import (
 from book_list.router import back, push_state, show_note
 from book_list.theme import get_color
 from book_list.top_bar import create_top_bar, set_title
-from book_list.ui import set_panel_handler, show_panel
+from book_list.ui import panel_is_shown, report_load_failure, set_panel_handler, show_panel
 from date import UNDEFINED_DATE_ISO, format_date
 from dom import add_extra_css, build_rule, clear, svgicon
 from file_uploads import update_status_widget, upload_files_widget, upload_status_widget
@@ -87,7 +86,7 @@ add_extra_css(def ():
     style += build_rule(
         sel + '.rating-edit-container > li',
         margin='0.5ex 0.5rem', margin_left='0', padding='0.5ex 0.5rem',
-        border='solid 1px currentColor', border_radius='1ex', cursor='pointer'
+        border='var(--calibre-border-style-control)', border_radius='1ex', cursor='pointer'
     )
     style += build_rule(sel + '.rating-edit-container > li.current-rating', color=get_color('window-background'), background=get_color('window-foreground'))
     # Floating editor modal (field editing)
@@ -103,7 +102,7 @@ add_extra_css(def ():
         background_color=get_color('window-background'),
         border='var(--calibre-border-style-subtle)',
         border_radius='16px',
-        box_shadow='0 24px 64px rgba(0,0,0,0.18)',
+        box_shadow='var(--calibre-shadow-dialog)',
         padding='1rem'
     )
     # Modal content styling: align with overall theme
@@ -125,7 +124,7 @@ add_extra_css(def ():
         padding='0.6rem 0.75rem',
         border_radius='12px',
         border='var(--calibre-border-style-subtle)',
-        background_color='rgba(0,0,0,0.02)'
+        background_color='var(--calibre-color-faint-background)'
     )
     style += build_rule(sel + 'div[data-ctype="edit"] textarea',
         min_height='10rem',
@@ -147,8 +146,8 @@ add_extra_css(def ():
         border_radius='14px',
         overflow='hidden',
         border='var(--calibre-border-style-subtle)',
-        background='rgba(0,0,0,0.04)',
-        box_shadow='0 10px 24px rgba(0,0,0,0.12)'
+        background='var(--calibre-color-placeholder-background)',
+        box_shadow='var(--calibre-shadow-cover)'
     )
     style += build_rule(sel + 'div[data-ctype="edit"] .cover-edit-preview img',
         width='100%',
@@ -648,7 +647,7 @@ def add_identifier(container_id, name, val):
         return
     b = create_button(_('Remove'), action=remove_identifier)
     c.appendChild(E.li(
-        style='padding-bottom: 1ex; margin-bottom: 1ex; border-bottom: solid 1px currentColor',
+        style='padding-bottom: 1ex; margin-bottom: 1ex; border-bottom: var(--calibre-border-style-strong)',
         E.table(
             style='width: 100%',
             E.tr(
@@ -1273,12 +1272,15 @@ def render_metadata(mi, table, container_id, book_id):  # {{{
 # }}}
 
 
-def changes_submitted(container_id, book_id, end_type, xhr, ev):
+def changes_submitted(container_id, book_id, library_id, end_type, xhr, ev):
     nonlocal changes, has_changes
+    # The submitted changes, has_changes was reset when they were submitted
     changes = {}
-    has_changes = False
+    # Errors are reported even if the editor was closed, so that the user
+    # does not think the changes were saved
     if end_type is 'abort':
-        on_close(container_id)
+        if panel_is_shown(container_id):
+            on_close(container_id)
         return
     if end_type is not 'load':
         error_dialog(_('Failed to update metadata on server'), _(
@@ -1289,19 +1291,23 @@ def changes_submitted(container_id, book_id, end_type, xhr, ev):
     except Exception as err:
         error_dialog(_('Could not update metadata for book'), _('Server returned an invalid response'), err.toString())
         return
-
     cq = get_current_query()
     if cq.from_read_book:
         window.parent.postMessage(
             {
-                'type': 'update_cached_book_metadata', 'library_id': cq.library_id,
-                'book_id': cq.book_id, 'metadata': dirtied[book_id], 'from_read_book': cq.from_read_book,
+                'type': 'update_cached_book_metadata', 'library_id': library_id,
+                'book_id': book_id, 'metadata': dirtied[book_id], 'from_read_book': cq.from_read_book,
             },
             document.location.protocol + '//' + document.location.host
         )
     else:
         for bid in dirtied:
-            set_book_metadata(bid, dirtied[bid])
+            set_book_metadata(bid, dirtied[bid], library_id)
+    if not panel_is_shown(container_id):
+        return  # the editor was closed, or hidden by the reader, while saving
+    # Do not reset has_changes before this, as it could belong to an editor
+    # opened since
+    has_changes = False
     on_close(container_id)
 
 
@@ -1365,10 +1371,11 @@ def submit_changes(container_id, book_id):
     data = {'changes': changes, 'loaded_book_ids': loaded_book_ids()}
     w = upload_status_widget()
     d.appendChild(w)
+    library_id = current_library_id()
     ajax_send(
-        f'cdb/set-fields/{book_id}/{current_library_id()}',
+        f'cdb/set-fields/{book_id}/{library_id}',
         data,
-        changes_submitted.bind(None, container_id, book_id),
+        changes_submitted.bind(None, container_id, book_id, library_id),
         on_progress.bind(None, container_id, book_id)
     )
 
@@ -1508,10 +1515,9 @@ def create_edit_metadata(container):
 
 
 def on_books_loaded(container_id, ok):
-    container = document.getElementById(container_id)
-    if not container:
+    if not panel_is_shown(container_id):
         return
-    container = container.lastChild
+    container = document.getElementById(container_id).lastChild
     clear(container)
     if not ok:
         report_load_failure(container)

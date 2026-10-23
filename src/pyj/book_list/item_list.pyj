@@ -18,7 +18,7 @@ add_extra_css(def ():
         padding='0.6rem 0.75rem',
         border='var(--calibre-border-style-subtle)',
         border_radius='12px',
-        background_color='rgba(0,0,0,0.02)',
+        background_color='var(--calibre-color-faint-background)',
         font_style='normal',
         opacity='0.8'
     )
@@ -28,13 +28,13 @@ add_extra_css(def ():
         border='var(--calibre-border-style-subtle)',
         border_radius='14px',
         background_color=get_color('window-background'),
-        box_shadow='0 1px 2px rgba(0,0,0,0.06)',
+        box_shadow='var(--calibre-shadow-hairline)',
         cursor='pointer',
         overflow='hidden'
     )
     style += build_rule(sel + 'li:hover',
         background_color='var(--calibre-color-primary-light)',
-        box_shadow='0 8px 20px rgba(0,0,0,0.10)',
+        box_shadow='var(--calibre-shadow-lift)',
         transform='translateY(-1px)'
     )
     style += build_rule(sel + 'li:active', transform='translateY(0px)')
@@ -89,7 +89,7 @@ def build_list(container, items, subtitle):
     clear(c)
     c.classList.add(CLASS_NAME)
     if subtitle:
-        c.appendChild(E.p(subtitle, style='font-style:normal; font-weight:700; padding: 1em 1ex; border-bottom: solid 1px currentColor'))
+        c.appendChild(E.p(subtitle, style='font-style:normal; font-weight:700; padding: 1em 1ex; border-bottom: var(--calibre-border-style-strong)'))
     ul = E.ul()
     c.appendChild(ul)
     has_icons = False

@@ -9,6 +9,7 @@ import os
 import shutil
 import stat
 import sys
+import tempfile
 import time
 import uuid
 from contextlib import closing, suppress
@@ -49,12 +50,13 @@ from calibre.db.tables import (
     read_books_table_columns,
 )
 from calibre.db.utils import atomic_write
+from calibre.db.write import normalize_whitespace
 from calibre.ebooks.metadata import author_to_author_sort, title_sort
 from calibre.library.field_metadata import FieldMetadata
 from calibre.ptempfile import PersistentTemporaryFile, TemporaryFile
 from calibre.utils import pickle_binary_string, unpickle_binary_string
 from calibre.utils.config import from_json, prefs, to_json, tweaks
-from calibre.utils.copy_files import copy_files, copy_tree, rename_files, windows_check_if_files_in_use
+from calibre.utils.copy_files import SourceDeletionFailed, copy_files, copy_tree, rename_files, windows_check_if_files_in_use
 from calibre.utils.date import EPOCH, parse_date, utcfromtimestamp, utcnow
 from calibre.utils.filenames import (
     ascii_filename,
@@ -317,7 +319,7 @@ def AumSortedConcatenate():
 
     def step(ctxt, ndx, author, sort, link):
         if author is not None:
-            ctxt[ndx] = ':::'.join((author, sort, link))  # noqa: FLY002
+            ctxt[ndx] = ':::'.join((author, sort, link))  # ruff: ignore[static-join-to-f-string]
 
     def finalize(ctxt):
         try:
@@ -529,9 +531,81 @@ def rmtree_with_retry(path, sleep_time=1):
     except OSError as e:
         if e.errno == errno.ENOENT and not os.path.exists(path):
             return
-        if iswindows and getattr(e, 'winerror') == winutil.ERROR_SHARING_VIOLATION:
+        if iswindows and e.winerror == winutil.ERROR_SHARING_VIOLATION:
             time.sleep(sleep_time)  # In case something has temporarily locked a file
         shutil.rmtree(path)
+
+
+def replace_with_retry(src: str, dest: str) -> None:
+    try:
+        os.replace(src, dest)
+    except OSError:
+        if iswindows:
+            time.sleep(1)  # In case something has temporarily locked the file
+            os.replace(src, dest)
+        else:
+            raise
+
+
+def prepare_replacement_for(dest: str, dest_stat: os.stat_result, tpath: str) -> bool:
+    """Give the file at tpath the same identity (permissions, ownership,
+    extended attributes/ACLs) as the existing file at dest so that it can be
+    renamed over dest. Returns False if that is not possible, in which case
+    dest must be overwritten in place instead."""
+    if not stat.S_ISREG(dest_stat.st_mode) or dest_stat.st_nlink > 1:
+        # dest is a symlink or hardlink, replacing it would break the link
+        return False
+    try:
+        shutil.copystat(dest, tpath)
+        os.utime(tpath)  # copystat copies the times of the old file as well
+        if not iswindows:
+            tstat = os.stat(tpath)
+            if (tstat.st_uid, tstat.st_gid) != (dest_stat.st_uid, dest_stat.st_gid):
+                os.chown(tpath, dest_stat.st_uid, dest_stat.st_gid)
+    except OSError:
+        return False
+    return True
+
+
+def write_stream_to_format_file(stream, dest: str) -> int:
+    """Write the contents of stream to dest, returning the number of bytes
+    written. If dest already exists, it is left unchanged if reading from
+    stream or writing the data fails."""
+    try:
+        dest_stat = os.lstat(dest)
+    except FileNotFoundError:
+        try:
+            with open(dest, 'wb') as f:
+                shutil.copyfileobj(stream, f)
+                return f.tell()
+        except BaseException:
+            # Do not leave a partially written new file behind
+            with suppress(OSError):
+                os.remove(dest)
+            raise
+    try:
+        # No file extension so that a temp file orphaned by a crash is never
+        # mistaken for a book format, for example when restoring the database
+        fd, tpath = tempfile.mkstemp(prefix='.calibre-format-', dir=os.path.dirname(dest))
+    except OSError:
+        # Cannot create files in the book folder, fall back to overwriting the
+        # existing file in place
+        with open(dest, 'wb') as f:
+            shutil.copyfileobj(stream, f)
+            return f.tell()
+    try:
+        with open(fd, 'wb') as f:
+            shutil.copyfileobj(stream, f)
+            size = f.tell()
+        if prepare_replacement_for(dest, dest_stat, tpath):
+            replace_with_retry(tpath, dest)
+        else:
+            with open(tpath, 'rb') as src, open(dest, 'wb') as f:
+                shutil.copyfileobj(src, f)
+    finally:
+        with suppress(FileNotFoundError):
+            os.remove(tpath)
+    return size
 
 
 class DB:
@@ -600,7 +674,7 @@ class DB:
         SchemaUpgrade(self, self.library_path, self.field_metadata)
 
         # Guarantee that the library_id is set
-        self.library_id
+        self.library_id  # ruff: ignore[useless-expression]
 
         # Fix legacy triggers and columns
         self.execute('''
@@ -931,7 +1005,7 @@ class DB:
                     x = x.split(d['multiple_seps']['ui_to_list'])
                 x = [y.strip() for y in x if y.strip()]
                 x = [y.decode(preferred_encoding, 'replace') if not isinstance(y, str) else y for y in x]
-                return [' '.join(y.split()) for y in x]
+                return [normalize_whitespace(y) for y in x]
             else:
                 return x if x is None or isinstance(x, str) else x.decode(preferred_encoding, 'replace')
 
@@ -1231,7 +1305,7 @@ class DB:
             self.notes.export_non_db_data(zf)
 
     def restore_notes(self, report_progress):
-        self.notes.restore(self.conn, self.tables, report_progress)
+        return self.notes.restore(self.conn, self.tables, report_progress)
 
     def import_note(self, field, item_id, html, basedir, ctime, mtime):
         id_val = self.tables[field].id_map[item_id]
@@ -1410,14 +1484,14 @@ class DB:
             self.execute('UPDATE custom_columns SET name=? WHERE id=?', (name, num))
             changed = True
         if label is not None:
-            old_label = self.custom_column_num_to_label_map.get(num)
+            old_label = self.conn.get('SELECT label FROM custom_columns WHERE id=?', (num,), all=False)
             self.execute('UPDATE custom_columns SET label=? WHERE id=?', (label, num))
             changed = True
             if old_label is not None and old_label != label:
                 self.notes.rename_field(self.conn, '#' + old_label, '#' + label)
         if is_editable is not None:
             self.execute('UPDATE custom_columns SET editable=? WHERE id=?', (bool(is_editable), num))
-            self.custom_column_num_map[num]['is_editable'] = bool(is_editable)
+            self.custom_column_num_map[num]['editable'] = bool(is_editable)
             changed = True
         if display is not None:
             self.execute('UPDATE custom_columns SET display=? WHERE id=?', (json.dumps(display), num))
@@ -1425,9 +1499,11 @@ class DB:
         # Note: the caller is responsible for scheduling a metadata backup if necessary
         return changed
 
-    def create_custom_column(self, label, name, datatype, is_multiple, editable=True, display={}):  # {{{
+    def create_custom_column(self, label, name, datatype, is_multiple, editable=True, display=None):  # {{{
         import re
 
+        if display is None:
+            display = {}
         if not label:
             raise ValueError(_('No label was provided'))
         if re.match(r'^\w*$', label) is None or not label[0].isalpha() or label.lower() != label:
@@ -1599,7 +1675,7 @@ class DB:
     def reopen(self, force=True):
         self.close(force=force, unload_formatter_functions=False)
         self._conn = None
-        self.conn
+        self.conn  # ruff: ignore[useless-expression] # Connect to refresh
         self.notes.reopen(self)
 
     def dump_and_restore(self, callback=None, sql=None):
@@ -1910,6 +1986,8 @@ class DB:
     def rename_format_file(self, book_id, src_fname, src_fmt, dest_fname, dest_fmt, path):
         src_path = self.format_abspath(book_id, src_fmt, src_fname, path)
         dest_path = self.format_abspath(book_id, dest_fmt, dest_fname, path)
+        if not dest_path:
+            dest_path = os.path.join(self.library_path, path, dest_fname + '.' + dest_fmt.lower())
         atomic_rename(src_path, dest_path)
         return os.path.getsize(dest_path)
 
@@ -2137,19 +2215,10 @@ class DB:
                         traceback.print_exc()
 
         if isinstance(stream, str) and stream:
-            try:
-                os.replace(stream, dest)
-            except OSError:
-                if iswindows:
-                    time.sleep(1)
-                    os.replace(stream, dest)
-                else:
-                    raise
+            replace_with_retry(stream, dest)
             size = os.path.getsize(dest)
         elif not getattr(stream, 'name', False) or not samefile(dest, stream.name):
-            with open(dest, 'wb') as f:
-                shutil.copyfileobj(stream, f)
-                size = f.tell()
+            size = write_stream_to_format_file(stream, dest)
             if mtime is not None:
                 os.utime(dest, (mtime, mtime))
         elif os.path.exists(dest):
@@ -2403,20 +2472,16 @@ class DB:
                     dest = candidate
                     break
                 num += 1
+        ldest = make_long_path_useable(dest)
+        os.makedirs(os.path.dirname(ldest), exist_ok=True)
+        # Do not destroy an existing file if reading the source fails part way
         if isinstance(stream, str):
-            try:
-                shutil.copy2(make_long_path_useable(stream), make_long_path_useable(dest))
-            except FileNotFoundError:
-                os.makedirs(make_long_path_useable(os.path.dirname(dest)), exist_ok=True)
-                shutil.copy2(make_long_path_useable(stream), make_long_path_useable(dest))
+            src = make_long_path_useable(stream)
+            with open(src, 'rb') as f:
+                write_stream_to_format_file(f, ldest)
+            shutil.copystat(src, ldest)  # as shutil.copy2() does
         else:
-            try:
-                d = open(make_long_path_useable(dest), 'wb')
-            except FileNotFoundError:
-                os.makedirs(make_long_path_useable(os.path.dirname(dest)), exist_ok=True)
-                d = open(make_long_path_useable(dest), 'wb')
-            with d:
-                shutil.copyfileobj(stream, d)
+            write_stream_to_format_file(stream, ldest)
         return os.path.relpath(dest, bookdir).replace(os.sep, '/')
 
     def write_backup(self, path, raw):
@@ -2500,7 +2565,21 @@ class DB:
         dest = os.path.join(self.trash_dir, 'b', str(book_id))
         if os.path.exists(dest):
             rmtree_with_retry(dest)
-        copy_tree(book_dir_abspath, dest, delete_source=True)
+        try:
+            copy_tree(book_dir_abspath, dest, delete_source=True)
+        except SourceDeletionFailed:
+            raise  # dest is a complete copy of the book
+        except Exception:
+            # Nothing was deleted from the book folder, remove the incomplete
+            # copy so that it cannot be restored from the trash
+            try:
+                rmtree_with_retry(dest)
+            except Exception:
+                import traceback
+
+                prints(f'Failed to remove incomplete trash entry: {dest}')
+                traceback.print_exc()
+            raise
 
     def move_book_files_to_trash(self, book_id, format_abspaths, metadata):
         dest = os.path.join(self.trash_dir, 'f', str(book_id))
@@ -2617,25 +2696,45 @@ class DB:
         return books, files
 
     def remove_books(self, path_map, permanent=False):
+        """
+        Delete the folders of the specified books (or move them to the trash)
+        and remove the books from the database. A book whose folder could not be
+        deleted or moved is left in the database. Returns a map of book id to
+        error details for such books.
+        """
+        import traceback
+
         self.ensure_trash_dir()
-        self.executemany('DELETE FROM books WHERE id=?', [(x,) for x in path_map])
+        removed, failures = [], {}
         parent_paths = set()
         for book_id, path in path_map.items():
             if path:
                 path = os.path.abspath(os.path.join(self.library_path, path))
                 if os.path.exists(path) and self.is_deletable(path):
-                    self.rmtree(path) if permanent else self.move_book_to_trash(book_id, path)
+                    try:
+                        self.rmtree(path) if permanent else self.move_book_to_trash(book_id, path)
+                    except SourceDeletionFailed:
+                        # The book is safely in the trash, only some leftover
+                        # files could not be removed from the library folder
+                        prints(f'Book {book_id} was moved to the trash but some files were left behind in: {path}')
+                        traceback.print_exc()
+                    except Exception:
+                        failures[book_id] = traceback.format_exc()
+                        continue
                     parent_paths.add(os.path.dirname(path))
+            removed.append(book_id)
+        self.executemany('DELETE FROM books WHERE id=?', [(x,) for x in removed])
         for path in parent_paths:
             remove_dir_if_empty(path, ignore_metadata_caches=True)
+        return failures
 
     def add_custom_data(self, name, val_map, delete_first):
-        if delete_first:
-            self.execute('DELETE FROM books_plugin_data WHERE name=?', (name,))
-        self.executemany(
-            'INSERT OR REPLACE INTO books_plugin_data (book, name, val) VALUES (?, ?, ?)',
-            [(book_id, name, json.dumps(val, default=to_json)) for book_id, val in val_map.items()],
-        )
+        # Serialize before changing anything, and delete and insert in one transaction, so that a failure cannot lose the old data
+        rows = [(book_id, name, json.dumps(val, default=to_json)) for book_id, val in val_map.items()]
+        with self.conn:
+            if delete_first:
+                self.execute('DELETE FROM books_plugin_data WHERE name=?', (name,))
+            self.executemany('INSERT OR REPLACE INTO books_plugin_data (book, name, val) VALUES (?, ?, ?)', rows)
 
     def get_custom_book_data(self, name, book_ids, default=None):
         book_ids = frozenset(book_ids)
@@ -2764,7 +2863,7 @@ class DB:
             try:
                 annot = json.loads(data)
             except Exception:
-                pass
+                continue
             if not ignore_removed or not annot.get('removed'):
                 yield {'format': fmt, 'user_type': user_type, 'user': user, 'annotation': annot}
 
@@ -3037,7 +3136,7 @@ class DB:
             os.rmdir(odir)
         except OSError:
             pass
-        self.conn  # Connect to the moved metadata.db
+        self.conn  # ruff: ignore[useless-expression] # Connect to the moved metadata.db
         progress(_('Completed'), total, total)
 
     def _backup_database(self, path, name, extra_sql='', num_of_retries=10, busy_timeout=60):

@@ -8,9 +8,9 @@ from gettext import gettext as _
 from ajax import absolute_path, encode_query
 from book_list.constants import book_list_container_id, read_book_container_id, cs_top_bar_host_id
 from book_list.globals import get_current_query, get_session_data
-from book_list.library_data import current_library_id
+from book_list.library_data import current_library_id, set_substitute_url_library
 from dom import clear
-from modals import close_all_modals
+from modals import SEPARATOR_CLASS, close_all_modals
 from read_book.globals import ui_operations
 from utils import (
     encode_query_with_path, parse_url_params, request_full_screen,
@@ -165,6 +165,20 @@ def push_state(query, replace=False, mode='book_list', call_handler=True):
     apply_url(not call_handler)
 
 
+def show_substituted_library(library_id):
+    # The book, note, search, virtual library and sort in the URL are those of
+    # the requested library, so do not apply them to the substituted one, it
+    # could have a different book with the same id. Show its book list instead.
+    if not is_reading_book():
+        q = {'library_id': library_id}
+        if parse_url_params().panel:
+            q.panel = 'book_list'
+        push_state(q, replace=True)
+
+
+set_substitute_url_library(show_substituted_library)
+
+
 def on_pop_state(ev):
     apply_url()
 
@@ -198,7 +212,7 @@ def report_a_load_failure(container, msg, error_html):
         E.div(msg),
         err,
         E.div(
-            style='margin-top: 1em; border-top: solid 1px currentColor; padding-top: 1ex;',
+            class_=SEPARATOR_CLASS,
             E.a(onclick=def (): home(replace=True);, href='javascript: void(0)', class_='blue-link', _('Go back to the home page')))
         ),
     )

@@ -10,6 +10,10 @@ An existing install is re-used, with a check for updates performed in a backgrou
 thread at most once a day. Any update that is found is installed the next time the
 relevant function is called. All of this is safe to do simultaneously from multiple
 threads and multiple processes.
+
+Superseded versions are removed only once no process is using them, since a
+running browser can open files from its install at any time. Processes mark a
+version as in use by holding a shared lock on it, see :class:`VersionLock`.
 """
 
 import hashlib
@@ -33,8 +37,15 @@ from urllib.request import OpenerDirector, ProxyHandler, Request, build_opener
 from calibre import get_proxies
 from calibre.constants import __version__, bin_install_dir, ismacos, iswindows
 from calibre.ptempfile import TemporaryDirectory
-from calibre.utils.lock import ExclusiveFile
+from calibre.utils.lock import ExclusiveFile, unix_open
 from calibre.utils.safe_atexit import remove_dir
+
+if iswindows:
+    import msvcrt
+
+    from calibre_extensions import winutil
+else:
+    import fcntl
 
 UPDATE_CHECK_INTERVAL = 24 * 3600  # seconds
 INSTALL_LOCK_TIMEOUT = 3600  # seconds, installing camoufox means downloading hundreds of megabytes
@@ -43,6 +54,7 @@ NETWORK_TIMEOUT = 120  # seconds
 FONT_LISTS_TIMEOUT = 20  # seconds
 
 METADATA_FILE_NAME = 'metadata.json'
+VERSION_LOCK_SUFFIX = '.lock'
 VERSION_PAT = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9._-]*')
 
 CAMOUFOX_REPO = 'daijro/camoufox'
@@ -97,7 +109,7 @@ def download_data(url: str, headers: dict[str, str] | None = None, timeout: floa
         return response.read()
 
 
-def download_json(url: str, headers: dict[str, str] | None = None, timeout: float = NETWORK_TIMEOUT) -> Any:  # noqa: ANN401
+def download_json(url: str, headers: dict[str, str] | None = None, timeout: float = NETWORK_TIMEOUT) -> Any:  # ruff: ignore[any-type]
     return json.loads(download_data(url, headers, timeout))
 
 
@@ -199,6 +211,90 @@ def install_root() -> str:
     return bin_install_dir()
 
 
+def open_shared_lock(path: str) -> IO[bytes]:
+    """Open path, creating it if needed, holding a lock on it that any number of
+    processes can hold at once, but that stops :func:`remove_version_if_unused`
+    from removing the version it belongs to."""
+    if iswindows:
+        # Not sharing delete access means the file cannot be deleted while
+        # this handle is open, which is what remove_version_if_unused() checks
+        h = winutil.create_file(path, winutil.GENERIC_READ, winutil.FILE_SHARE_READ, winutil.OPEN_ALWAYS, winutil.FILE_ATTRIBUTE_NORMAL)
+        fd = msvcrt.open_osfhandle(int(h), os.O_RDONLY)
+        ans = os.fdopen(fd, 'rb')
+        h.detach()
+        return ans
+    ans = unix_open(path)
+    try:
+        # Never blocks as exclusive locks are only taken, briefly, by
+        # remove_version_if_unused() which, like the callers of this function,
+        # runs with the metadata file locked
+        fcntl.flock(ans.fileno(), fcntl.LOCK_SH | fcntl.LOCK_NB)
+    except BaseException:
+        ans.close()
+        raise
+    return ans
+
+
+def remove_version_if_unused(version_dir: str) -> bool:
+    """Remove version_dir and its lock file unless some process holds a
+    :class:`VersionLock` on it. Returns False if it is in use. Must only be
+    called with the metadata file locked."""
+    lock_path = version_dir + VERSION_LOCK_SUFFIX
+    if iswindows:
+        try:
+            os.remove(lock_path)
+        except FileNotFoundError:
+            pass
+        except PermissionError:
+            return False  # held open by a process using this version
+        remove_dir(version_dir)
+        return True
+    try:
+        f = open(lock_path, 'rb')
+    except FileNotFoundError:
+        remove_dir(version_dir)
+        return True
+    with f:
+        try:
+            fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return False
+        remove_dir(version_dir)
+        os.remove(lock_path)
+    return True
+
+
+class VersionLock:
+    """Stops an installed version being removed by updates, for as long as it
+    is held. Hold one for as long as anything uses the files of the install,
+    a running browser, for instance, since it can open them at any time.
+
+    Released by :meth:`release`, using this object as a context manager, or
+    the process exiting.
+    """
+
+    def __init__(self, version_dir: str) -> None:
+        self.file: IO[bytes] | None = open_shared_lock(version_dir + VERSION_LOCK_SUFFIX)
+
+    def fileno(self) -> int:
+        """The descriptor of the open lock file. On POSIX a child process given
+        a copy of it keeps the lock held until both it and we release it."""
+        if self.file is None:
+            raise ValueError('This lock has been released')
+        return self.file.fileno()
+
+    def release(self) -> None:
+        f, self.file = self.file, None
+        if f is not None:
+            f.close()
+
+    def __enter__(self) -> VersionLock:
+        return self
+
+    def __exit__(self, *args: object) -> None:
+        self.release()
+
+
 def read_metadata(f: IO[bytes]) -> dict[str, Any]:
     f.seek(0)
     raw = f.read()
@@ -224,7 +320,8 @@ class Installer:
     The install lives in ``<install_root()>/<name>/<version>`` with the state of
     the install recorded in ``<install_root()>/<name>/metadata.json``. That file
     doubles as the lock file used to make installs safe against simultaneous
-    access from multiple processes.
+    access from multiple processes. Each version also has a
+    ``<version>.lock`` file used to mark it as in use, see :class:`VersionLock`.
     """
 
     def __init__(self, name: str) -> None:
@@ -237,7 +334,7 @@ class Installer:
 
     # Implemented by subclasses {{{
 
-    def latest_release(self, **kw: Any) -> Release:  # noqa: ANN401
+    def latest_release(self, **kw: Any) -> Release:  # ruff: ignore[any-type]
         raise NotImplementedError('Must be implemented by subclass')
 
     def unpack(self, downloaded_file: str, dest: str) -> None:
@@ -283,14 +380,21 @@ class Installer:
             return False
         return os.path.isdir(version_dir) and self.is_complete(version_dir)
 
-    def remove_other_versions(self, keep: str) -> None:
+    def remove_unused_versions(self, keep: str) -> None:
+        """Remove all versions other than keep that are not in use. Those that
+        are in use are tried again on the next call."""
         base = self.base
-        for x in os.listdir(base):
-            path = os.path.join(base, x)
-            if x not in (keep, METADATA_FILE_NAME) and os.path.isdir(path):
-                # A previously installed version can still be in use by a
-                # running browser, in which case removal is retried at exit
-                remove_dir(path)
+        names = os.listdir(base)
+        candidates = {x for x in names if x != keep and os.path.isdir(os.path.join(base, x))}
+        # Lock files whose version directory is already gone
+        candidates.update(x[: -len(VERSION_LOCK_SUFFIX)] for x in names if x.endswith(VERSION_LOCK_SUFFIX))
+        candidates.discard(keep)
+        for x in candidates:
+            try:
+                remove_version_if_unused(os.path.join(base, x))
+            except OSError:
+                debug(f'Failed to remove the unused {self.name} install {x} with error:')
+                traceback.print_exc()
 
     # }}}
 
@@ -298,6 +402,10 @@ class Installer:
         """Download and unpack release, making it live only once it is complete."""
         dest = self.version_dir(release.version)
         base = self.base
+        # A left over from an earlier install of this version that is not
+        # referred to by the metadata, re-use it if it is still in use
+        if not remove_version_if_unused(dest) and self.is_complete(dest):
+            return
         with TemporaryDirectory('-install', self.name, dir=base) as tdir:
             downloaded = os.path.join(tdir, 'download')
             download_file(release.url, downloaded, release.sha256)
@@ -309,8 +417,7 @@ class Installer:
                 raise ValueError(f'The {self.name} package downloaded from {release.url} is missing needed files')
             self.finalize(unpacked)
             if os.path.exists(dest):
-                # Left over from an interrupted install, no running process can
-                # be using it as it is not referred to by the metadata
+                # Not fully removed above, no running process is using it
                 os.rename(dest, os.path.join(tdir, 'previous'))
             os.rename(unpacked, dest)
 
@@ -321,7 +428,6 @@ class Installer:
         metadata['installed_at'] = metadata['last_update_check'] = time.time()
         metadata.pop('update_available', None)
         write_metadata(f, metadata)
-        self.remove_other_versions(release.version)
         return metadata
 
     def apply_pending_update(self, f: IO[bytes], metadata: dict[str, Any], update: dict[str, Any]) -> dict[str, Any]:
@@ -350,21 +456,60 @@ class Installer:
             return None
         return update
 
-    def __call__(self, **kw: Any) -> Install:  # noqa: ANN401
-        """Return the installed dependency, installing or updating it as needed."""
+    def ensure_installed(self, f: IO[bytes], kw: dict[str, Any]) -> tuple[str, bool]:
+        """Install or update as needed, returning the version to use and whether
+        an update check is due. Must be called with the metadata file locked."""
         needs_update_check = False
+        metadata = read_metadata(f)
+        if not self.is_installed(metadata.get('version', '')):
+            metadata = self.install(f, self.latest_release(**kw), metadata)
+        else:
+            if (update := self.pending_update(metadata)) is not None:
+                metadata = self.apply_pending_update(f, metadata, update)
+            needs_update_check = self.pending_update(metadata) is None and time.time() - (metadata.get('last_update_check') or 0) > UPDATE_CHECK_INTERVAL
+        version = metadata['version']
+        self.remove_unused_versions(version)
+        return version, needs_update_check
+
+    def __call__(self, **kw: Any) -> Install:  # ruff: ignore[any-type]
+        """Return the installed dependency, installing or updating it as needed.
+
+        The returned install can be removed by an update at any time, use
+        :meth:`use` when it is going to be used for any length of time.
+        """
         with self.thread_lock, ExclusiveFile(self.metadata_path, timeout=INSTALL_LOCK_TIMEOUT) as f:
-            metadata = read_metadata(f)
-            if not self.is_installed(metadata.get('version', '')):
-                metadata = self.install(f, self.latest_release(**kw), metadata)
-            else:
-                if (update := self.pending_update(metadata)) is not None:
-                    metadata = self.apply_pending_update(f, metadata, update)
-                needs_update_check = self.pending_update(metadata) is None and time.time() - (metadata.get('last_update_check') or 0) > UPDATE_CHECK_INTERVAL
-            version = metadata['version']
+            version, needs_update_check = self.ensure_installed(f, kw)
         if needs_update_check:
             self.start_update_check(kw)
         return Install(self.payload_path(self.version_dir(version)), version)
+
+    def use(self, **kw: Any) -> tuple[Install, VersionLock]:  # ruff: ignore[any-type]
+        """Like calling this object, except that the returned install is not
+        removed by updates until the returned lock is released."""
+        with self.thread_lock, ExclusiveFile(self.metadata_path, timeout=INSTALL_LOCK_TIMEOUT) as f:
+            version, needs_update_check = self.ensure_installed(f, kw)
+            version_dir = self.version_dir(version)
+            lock = VersionLock(version_dir)
+        if needs_update_check:
+            self.start_update_check(kw)
+        return Install(self.payload_path(version_dir), version), lock
+
+    def lock_install(self, install: Install) -> VersionLock | None:
+        """Stop an install obtained earlier, possibly by another process, from
+        being removed by updates. Returns None if install was not made by this
+        installer or has already been removed."""
+        if VERSION_PAT.fullmatch(install.version) is None:
+            return None
+        version_dir = os.path.join(self.install_dir, install.version)
+        if not os.path.isdir(version_dir) or os.path.normcase(os.path.abspath(install.path)) != os.path.normcase(
+            os.path.abspath(self.payload_path(version_dir))
+        ):
+            return None
+        with self.thread_lock, ExclusiveFile(self.metadata_path, timeout=INSTALL_LOCK_TIMEOUT):
+            # Checked again now that it cannot be removed while being locked
+            if not self.is_installed(install.version):
+                return None
+            return VersionLock(version_dir)
 
     @property
     def metadata_path(self) -> str:
@@ -427,18 +572,40 @@ ARCH_MAP = {
     'i386': 'i686',
     'arm64': 'arm64',
     'aarch64': 'arm64',
-    'armv7l': 'arm64',
-    'armv6l': 'arm64',
-    'armv5l': 'arm64',
 }
+
+
+def is_32bit_userspace() -> bool:
+    # platform.machine() reports the kernel architecture, which can be 64-bit
+    # even when userspace is 32-bit, for example, on Raspberry Pi OS
+    return sys.maxsize <= 2**32
 
 
 def camoufox_arch() -> str:
     machine = platform.machine().lower()
+    if camoufox_os() == 'lin' and (is_32bit_userspace() or machine in ('i386', 'i686', 'x86') or machine.startswith('armv')):
+        raise ValueError(
+            'The camoufox browser is not available for 32-bit Linux systems, it needs a 64-bit (x86_64 or arm64) operating system.'
+            f' This system is {machine}, with a {"32" if is_32bit_userspace() else "64"}-bit userspace.'
+        )
     ans = ARCH_MAP.get(machine)
     if ans is None:
         raise ValueError(f'The CPU architecture {machine} is not supported by camoufox')
     return ans
+
+
+# Architectures to fall back to when there is no camoufox build for the native
+# architecture. Windows on ARM can run x86_64 binaries via emulation and
+# camoufox does not provide win.arm64 builds.
+CAMOUFOX_EMULATED_ARCHS: dict[tuple[str, str], tuple[str, ...]] = {
+    ('win', 'arm64'): ('x86_64',),
+}
+
+
+def camoufox_archs() -> tuple[str, ...]:
+    """The architectures whose camoufox builds can be used, in order of preference."""
+    native = camoufox_arch()
+    return (native,) + CAMOUFOX_EMULATED_ARCHS.get((camoufox_os(), native), ())
 
 
 # The path of the browser executable relative to the install directory
@@ -446,19 +613,21 @@ CAMOUFOX_LAUNCH_PATH = ('camoufox.exe',) if iswindows else (('Camoufox.app', 'Co
 
 
 @lru_cache(maxsize=2)
-def camoufox_asset_pattern() -> re.Pattern[str]:
-    return re.compile(rf'camoufox-(?P<version>[^-]+)-(?P<build>[^-]+)-{camoufox_os()}\.{camoufox_arch()}\.zip')
+def camoufox_asset_pattern(os_name: str, archs: tuple[str, ...]) -> re.Pattern[str]:
+    arch = '|'.join(map(re.escape, archs))
+    return re.compile(rf'camoufox-(?P<version>[^-]+)-(?P<build>[^-]+)-{re.escape(os_name)}\.(?P<arch>{arch})\.zip')
 
 
 class Camoufox(Installer):
     def __init__(self) -> None:
         super().__init__('camoufox')
 
-    def latest_release(self, allow_prerelease: bool = False, **kw: Any) -> Release:  # noqa: ANN401
-        pat = camoufox_asset_pattern()
+    def latest_release(self, allow_prerelease: bool = False, **kw: Any) -> Release:  # ruff: ignore[any-type]
+        os_name, archs = camoufox_os(), camoufox_archs()
+        pat = camoufox_asset_pattern(os_name, archs)
         releases = download_json(f'https://api.github.com/repos/{CAMOUFOX_REPO}/releases?per_page=50', github_api_headers())
         ans: Release | None = None
-        ans_key: tuple[int, ...] = ()
+        ans_key: tuple[tuple[int, ...], int] = ((), 0)
         for release in releases:
             if release.get('draft'):
                 continue
@@ -470,13 +639,14 @@ class Camoufox(Installer):
                 if not allow_prerelease and (release.get('prerelease') or build.split('.')[0].lower() == 'alpha'):
                     continue
                 version = m.group('version') + '-' + build
-                key = version_sort_key(version)
+                # Prefer the newest version and for the same version, the native architecture
+                key = version_sort_key(version), -archs.index(m.group('arch'))
                 if ans is None or key > ans_key:
                     # GitHub reports asset checksums as: sha256:hexdigest
                     sha256 = (asset.get('digest') or '').partition('sha256:')[2]
                     ans, ans_key = Release(version, asset['browser_download_url'], sha256), key
         if ans is None:
-            raise ValueError(f'No camoufox release for {camoufox_os()}.{camoufox_arch()} found in {CAMOUFOX_REPO}')
+            raise ValueError(f'No camoufox release for {" or ".join(f"{os_name}.{a}" for a in archs)} found in {CAMOUFOX_REPO}')
         return ans
 
     def unpack(self, downloaded_file: str, dest: str) -> None:
@@ -532,7 +702,7 @@ def system_camoufox() -> SystemCamoufox | None:
         return None
     data = json.loads(raw)
     if not isinstance(data, dict):
-        raise ValueError(f'The system camoufox specification in {path} is not a JSON object')  # noqa: TRY004
+        raise ValueError(f'The system camoufox specification in {path} is not a JSON object')  # ruff: ignore[type-check-without-type-error]
     binary, resource_dir = data.get('binary'), data.get('resource_dir')
     if not isinstance(binary, str) or not binary or not isinstance(resource_dir, str) or not resource_dir:
         raise ValueError(f'The system camoufox specification in {path} does not specify both binary and resource_dir')
@@ -569,6 +739,22 @@ def camoufox_install(allow_prerelease: bool = False) -> Install:
     if (sc := system_camoufox()) is not None:
         return Install(sc.binary, system_camoufox_version(sc))
     return camoufox_installer(allow_prerelease=allow_prerelease)
+
+
+def use_camoufox(allow_prerelease: bool = False) -> tuple[Install, VersionLock | None]:
+    """Like :func:`camoufox_install` except that the install is not removed by
+    updates until the returned lock is released. The lock is None for a system
+    camoufox, which calibre never removes."""
+    if (sc := system_camoufox()) is not None:
+        return Install(sc.binary, system_camoufox_version(sc)), None
+    return camoufox_installer.use(allow_prerelease=allow_prerelease)
+
+
+def lock_camoufox_install(install: Install) -> VersionLock | None:
+    """Stop install, as returned by :func:`camoufox_install`, possibly in another
+    process, from being removed by updates. Returns None if install is not one
+    downloaded by calibre or has already been removed."""
+    return camoufox_installer.lock_install(install)
 
 
 def camoufox_binary(allow_prerelease: bool = False) -> str:
@@ -614,7 +800,7 @@ class BrowserforgeData(Installer):
     def __init__(self) -> None:
         super().__init__('browserforge')
 
-    def latest_release(self, **kw: Any) -> Release:  # noqa: ANN401
+    def latest_release(self, **kw: Any) -> Release:  # ruff: ignore[any-type]
         # The data files are distributed as the apify_fingerprint_datapoints package
         name = BROWSERFORGE_DATA_PACKAGE.replace('_', '-')
         data = download_json(f'https://pypi.org/pypi/{name}/json')
@@ -646,6 +832,9 @@ class BrowserforgeData(Installer):
 browserforge_installer = BrowserforgeData()
 _patch_lock = Lock()
 _patched_data_dir = ''
+# browserforge can read the data files at any time once patched to use them, so
+# every version handed out is kept in use for the lifetime of the process
+_browserforge_data_locks: dict[str, VersionLock] = {}
 
 
 def packaged_browserforge_data_version() -> str:
@@ -702,12 +891,12 @@ def patch_browserforge_data_files(data_dir: str) -> None:
             if headers is not None:
                 for getter in ('get_browser_helper_file', 'get_header_network', 'get_headers_order', 'get_input_network'):
                     setattr(headers, getter, getattr(apify_fingerprint_datapoints, getter))
-                header_generator = getattr(headers, 'HeaderGenerator')
+                header_generator = headers.HeaderGenerator
                 header_generator.input_generator_network = BayesianNetwork(paths['get_input_network'])
                 header_generator.header_generator_network = BayesianNetwork(paths['get_header_network'])
             if fingerprints is not None:
-                setattr(fingerprints, 'get_fingerprint_network', getattr(apify_fingerprint_datapoints, 'get_fingerprint_network'))
-                fingerprint_generator = getattr(fingerprints, 'FingerprintGenerator')
+                setattr(fingerprints, 'get_fingerprint_network', apify_fingerprint_datapoints.get_fingerprint_network)
+                fingerprint_generator = fingerprints.FingerprintGenerator
                 fingerprint_generator.fingerprint_generator_network = BayesianNetwork(paths['get_fingerprint_network'])
         _patched_data_dir = data_dir
 
@@ -723,13 +912,15 @@ def browserforge_data(patch_browserforge: bool = True) -> str:
     patched as well, on a best effort basis.
     """
     try:
-        install = browserforge_installer()
+        install, lock = browserforge_installer.use()
     except Exception:
         # The data files bundled with apify_fingerprint_datapoints are a
         # perfectly usable fallback
         debug('Failed to download the browserforge data files with error:')
         traceback.print_exc()
         return packaged_browserforge_data_dir()
+    if _browserforge_data_locks.setdefault(install.version, lock) is not lock:
+        lock.release()
     if patch_browserforge and is_newer(install.version, packaged_browserforge_data_version()):
         try:
             patch_browserforge_data_files(install.path)

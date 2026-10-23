@@ -19,7 +19,7 @@ try:
 except OSError:
     os.chdir(os.path.expanduser('~'))
 
-from calibre.constants import (
+from calibre.constants import (  # ruff: ignore[unused-import]
     __appname__,
     __author__,
     __version__,
@@ -40,11 +40,6 @@ initialize_calibre()
 from calibre.prints import prints
 from calibre.utils.icu import safe_chr
 from calibre.utils.resources import get_path as P
-
-if False:
-    # Prevent pyflakes from complaining
-    __appname__, islinux, __version__
-    isfrozen, __author__, isbsd, config_dir, plugins
 
 _mt_inited = False
 
@@ -212,7 +207,7 @@ def load_library(name, cdll):
     if ismacos:
         name += '.dylib'
         if hasattr(sys, 'frameworks_dir'):
-            return cdll.LoadLibrary(os.path.join(getattr(sys, 'frameworks_dir'), name))
+            return cdll.LoadLibrary(os.path.join(sys.frameworks_dir, name))
         return cdll.LoadLibrary(name)
     return cdll.LoadLibrary(name + '.so')
 
@@ -488,7 +483,7 @@ def my_unichr(num):
 XML_ENTITIES = {'"': '&quot;', "'": '&apos;', '<': '&lt;', '>': '&gt;', '&': '&amp;'}
 
 
-def entity_to_unicode(match, exceptions=(), encoding=None, result_exceptions={}):
+def entity_to_unicode(match, exceptions=(), encoding=None, result_exceptions=None):
     """
     :param match: A match object such that '&'+match.group(1)';' is the entity.
 
@@ -505,6 +500,8 @@ def entity_to_unicode(match, exceptions=(), encoding=None, result_exceptions={})
     from calibre.ebooks.html_entities import entity_to_unicode_in_python
     from calibre_extensions.fast_html_entities import replace_all_entities
 
+    if result_exceptions is None:
+        result_exceptions = {}
     if not encoding and not exceptions and (not result_exceptions or result_exceptions is XML_ENTITIES):
         return replace_all_entities(match.group(), result_exceptions is XML_ENTITIES)
     return entity_to_unicode_in_python(match, exceptions, encoding, result_exceptions)

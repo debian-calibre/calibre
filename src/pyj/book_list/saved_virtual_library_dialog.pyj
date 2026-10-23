@@ -129,7 +129,7 @@ add_extra_css(def (): return '''
         line-height: 1;
         border: var(--calibre-border-style-subtle);
         border-radius: 8px;
-        background: rgba(0,0,0,0.02);
+        background: var(--calibre-color-faint-background);
         color: inherit;
         cursor: pointer;
         transition: background 120ms ease, border-color 120ms ease;
@@ -137,10 +137,6 @@ add_extra_css(def (): return '''
     & .vl-import-icon-btn:hover {
         background: var(--calibre-color-primary-light);
         border-color: var(--calibre-color-border);
-    }
-    & .vl-import-icon-btn:focus {
-        outline: none;
-        box-shadow: var(--calibre-focus-ring);
     }
     & .vl-import-icon-overlay {
         position: absolute;

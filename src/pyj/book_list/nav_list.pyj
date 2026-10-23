@@ -242,7 +242,7 @@ add_extra_css(def ():
     )
     style += build_rule(sel + 'a.cs-tag-bubble:hover', background_color='var(--calibre-color-primary-light)')
     style += build_rule(sel + 'a.cs-tag-bubble:active', transform='scale(0.99)')
-    style += build_rule(sel + 'a.cs-tag-bubble:focus', outline='none', box_shadow='var(--calibre-focus-ring)')
+    style += build_rule(sel + 'a.cs-tag-bubble:focus-visible', outline='none', box_shadow='var(--calibre-focus-ring)')
     style += build_rule(sel + 'a.cs-tag-bubble .cs-tag-meta', font_size='0.85em', opacity='0.78')
     style += build_rule(sel + '.cs-show-more-wrap',
         padding='0.25rem 1rem 1rem 1rem',
@@ -256,7 +256,7 @@ add_extra_css(def ():
         padding='0.55rem 0.9rem',
         border_radius='999px',
         border='var(--calibre-border-style-subtle)',
-        background_color='rgba(0,0,0,0.02)',
+        background_color='var(--calibre-color-faint-background)',
         color=get_color('window-foreground'),
         text_decoration='none',
         cursor='pointer',
@@ -273,7 +273,7 @@ add_extra_css(def ():
         user_select='none'
     )
     style += build_rule(sel + '.cs-rating-stars-base',
-        color='rgba(0,0,0,0.18)'
+        color='var(--calibre-color-rating-empty-star)'
     )
     style += build_rule(sel + '.cs-rating-stars-fill',
         position='absolute',
@@ -338,12 +338,12 @@ add_extra_css(def ():
         object_fit='cover',
         border_radius='12px',
         border='var(--calibre-border-style-subtle)',
-        background_color='rgba(0,0,0,0.05)',
-        box_shadow='0 12px 32px rgba(0,0,0,0.16)',
+        background_color='var(--calibre-color-placeholder-background)',
+        box_shadow='var(--calibre-shadow-cover)',
         transition='transform 200ms ease, box-shadow 200ms ease'
     )
     style += build_rule('.cs-nav-list[data-field="series"]:not([data-series-display="list"]) .cs-series-stack-covers img.cover-img:hover',
-        box_shadow='0 26px 64px rgba(0,0,0,0.22)'
+        box_shadow='var(--calibre-shadow-cover-lift)'
     )
     # Per-count sizing/positioning: odd stacks only (1 / 3 / 5).
     style += r'''

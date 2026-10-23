@@ -17,7 +17,7 @@ from calibre.db.cache import Cache
 from calibre.db.categories import CATEGORY_SORTS
 from calibre.db.errors import NoSuchFormat
 from calibre.db.view import View
-from calibre.db.write import clean_identifier, get_series_values
+from calibre.db.write import clean_identifier, get_series_values, normalize_whitespace
 from calibre.utils.date import utcnow
 from calibre.utils.icu import lower as icu_lower
 from calibre.utils.search_query_parser import set_saved_searches
@@ -26,7 +26,7 @@ from calibre.utils.search_query_parser import set_saved_searches
 def cleanup_tags(tags):
     tags = [x.strip().replace(',', ';') for x in tags if x.strip()]
     tags = [x.decode(preferred_encoding, 'replace') if isinstance(x, bytes) else x for x in tags]
-    tags = [' '.join(x.split()) for x in tags]
+    tags = [normalize_whitespace(x) for x in tags]
     ans, seen = [], set()
     for tag in tags:
         if tag.lower() not in seen:
@@ -425,8 +425,10 @@ class LibraryDatabase:
         """
         self.listeners.add(listener)
 
-    def notify(self, event, ids=[]):
+    def notify(self, event, ids=None):
         "Notify all listeners"
+        if ids is None:
+            ids = []
         for listener in self.listeners:
             try:
                 listener(event, ids)
@@ -756,10 +758,18 @@ class LibraryDatabase:
         if notify:
             self.notify('metadata', ids)
 
-    def bulk_modify_tags(self, ids, add=[], remove=[], notify=False):
+    def bulk_modify_tags(self, ids, add=None, remove=None, notify=False):
+        if remove is None:
+            remove = []
+        if add is None:
+            add = []
         self._do_bulk_modify('tags', ids, add, remove, notify)
 
-    def set_custom_bulk_multiple(self, ids, add=[], remove=[], label=None, num=None, notify=False):
+    def set_custom_bulk_multiple(self, ids, add=None, remove=None, label=None, num=None, notify=False):
+        if remove is None:
+            remove = []
+        if add is None:
+            add = []
         data = self.backend.custom_field_metadata(label, num)
         if not data['editable']:
             raise ValueError('Column {!r} is not editable'.format(data['label']))
@@ -958,7 +968,9 @@ class LibraryDatabase:
     def delete_custom_column(self, label=None, num=None):
         self.new_api.delete_custom_column(label, num)
 
-    def create_custom_column(self, label, name, datatype, is_multiple, editable=True, display={}):
+    def create_custom_column(self, label, name, datatype, is_multiple, editable=True, display=None):
+        if display is None:
+            display = {}
         return self.new_api.create_custom_column(label, name, datatype, is_multiple, editable=editable, display=display)
 
     def set_custom_column_metadata(self, num, name=None, label=None, is_editable=None, display=None, notify=True, update_last_modified=False):
@@ -1176,10 +1188,10 @@ for func, field in {
 }.items():
 
     def getter(field):
-        def func(self):
+        def f(self):
             return self.field_id_map(field)
 
-        return func
+        return f
 
     setattr(LibraryDatabase, func, getter(field))
 

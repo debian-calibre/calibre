@@ -26,7 +26,7 @@ from qt.webengine import (
 from calibre import detect_ncpus, human_readable, prepare_string_for_xml
 from calibre.constants import FAKE_HOST, FAKE_PROTOCOL, __appname__, __version__, ismacos, iswindows
 from calibre.ebooks.metadata.xmp import metadata_to_xmp_packet
-from calibre.ebooks.oeb.base import XHTML, XPath
+from calibre.ebooks.oeb.base import XHTML, XPath, rewrite_idrefs
 from calibre.ebooks.oeb.polish.container import Container as ContainerBase
 from calibre.ebooks.oeb.polish.toc import get_toc
 from calibre.ebooks.oeb.polish.utils import guess_type
@@ -543,15 +543,25 @@ def create_margin_files(container):
 # Link handling {{{
 def add_anchors_markup(root, uuid, anchors):
     body = last_tag(root)
-    # column-span is needed so that the page break is honored when body is
-    # multi-column, otherwise the div ends up in a column alongside content,
-    # which is then lost when the anchors page is deleted.
+    # A separate column spanning element is used to force the page break, as
+    # when body is multi-column a page break on a non-spanning element only
+    # causes a column break, so the anchors end up in a column alongside
+    # content, which is then lost when the anchors page is deleted.
     # See https://bugs.launchpad.net/calibre/+bug/2142731
+    # The anchors themselves must not be inside the spanner as some versions
+    # of Chromium report the location of the spanner and its descendants as
+    # being on the first page, causing the anchors page to not be deleted.
+    # See https://bugs.launchpad.net/calibre/+bug/2170285
+    breaker = body.makeelement(
+        XHTML('div'),
+        style='display:block !important; page-break-before: always !important; break-before: always !important; column-span: all !important;'
+        ' height: 0 !important; margin: 0 !important; padding: 0 !important; border-width: 0 !important',
+    )
+    body.append(breaker)
     div = body.makeelement(
         XHTML('div'),
         id=uuid,
-        style='display:block !important; page-break-before: always !important; break-before: always !important; white-space: pre-wrap !important;'
-        ' column-span: all !important',
+        style='display:block !important; white-space: pre-wrap !important',
     )
     div.text = '\n\n'
     body.append(div)
@@ -649,6 +659,7 @@ def make_anchors_unique(container: ContainerBase, log: Log) -> dict[str, str | N
             if key not in mapping:
                 new_id = mapping[key] = f'a{count}'
                 elem.set('id', new_id)
+        rewrite_idrefs(root, lambda eid: mapping.get((spine_name, eid), eid))  # ruff: ignore[function-uses-loop-variable]
         body = last_tag(root)
         if not body.get('id'):
             count += 1
@@ -816,7 +827,7 @@ def add_pagenum_toc(root, toc, opts, page_number_display_map):
     .calibre-pdf-toc .level-%d td:first-of-type { padding-left: %.1gem }
     .calibre-pdf-toc .level-%d td:first-of-type { padding-left: %.1gem }
     .calibre-pdf-toc .level-%d td:first-of-type { padding-left: %.1gem }
-    '''  # noqa: UP031
+    '''  # ruff: ignore[printf-string-formatting]
         % tuple(indents)
         + (opts.extra_css or '')
     )

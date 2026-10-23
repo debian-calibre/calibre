@@ -24,7 +24,15 @@ from unittest.mock import patch
 
 from calibre.constants import cache_dir, iswindows
 from calibre.web.automate import camoufox
-from calibre.web.automate.download_deps import Install, camoufox_install, camoufox_installer, camoufox_resource_dir, system_camoufox
+from calibre.web.automate.download_deps import (
+    VERSION_LOCK_SUFFIX,
+    Install,
+    VersionLock,
+    camoufox_install,
+    camoufox_installer,
+    camoufox_resource_dir,
+    system_camoufox,
+)
 
 TEST_PAGE = '''<!DOCTYPE html><html><head><title>Test Page</title></head><body>
 <h1 id="title">Hello</h1>
@@ -137,6 +145,35 @@ def installed_camoufox() -> Install | None:
     except Exception:
         return None
     return Install(binary, version)
+
+
+def install_lock_is_free(version_dir: str) -> bool:
+    """Whether nothing holds a VersionLock on the camoufox install in
+    version_dir. Unlike remove_version_if_unused() does not delete anything."""
+    import fcntl
+
+    with open(version_dir + VERSION_LOCK_SUFFIX, 'rb') as f:
+        try:
+            fcntl.flock(f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            return False
+    return True
+
+
+def browser_worker_main(install_data: list[str]) -> None:
+    """Run a browser in a worker process until killed, for test_browser_exits_with_worker()."""
+    import sys
+
+    async def main() -> None:
+        browser = camoufox.Browser(headless=True, install=Install(*install_data))
+        await browser.launch()
+        if browser.process is None:
+            raise RuntimeError('The browser was launched without a process')
+        print('BROWSER_PID', browser.process.pid, flush=True)
+        await asyncio.get_running_loop().run_in_executor(None, sys.stdin.read)
+        await browser.close()
+
+    asyncio.run(main())
 
 
 class TestCamoufoxConfig(unittest.TestCase):
@@ -282,6 +319,41 @@ class TestCamoufoxTransport(unittest.TestCase):
             camoufox.close_fd(read_fd)
             camoufox.close_fd(write_fd)
 
+    @unittest.skipIf(iswindows, 'on Windows the browser is in a job object that kills it along with us')
+    def test_spawn_inherits_fd(self) -> None:
+        """A lock given to the browser stays held until it exits, even if we
+        release ours, or crash, first."""
+        tdir = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tdir)
+        version_dir = os.path.join(tdir, 'version')
+        lock = VersionLock(version_dir)
+        # Echoes the command pipe to the response pipe, to check that passing
+        # the extra descriptor does not disturb them, then lingers. A calibre
+        # worker rather than /bin/sh and cat, whose behavior with inherited
+        # descriptors differs between platforms, the echo failing on macOS.
+        from calibre.utils.ipc.launch import Worker
+
+        w = Worker({})
+        exe = w.executable
+        cmd = [exe] if isinstance(exe, str) else list(exe)
+        code = 'import os, time; os.fstat(5); os.write(4, os.read(3, 4)); time.sleep(60)'
+        log_path = os.path.join(tdir, 'log')
+        process = camoufox.spawn_posix(cmd + ['--pipe-worker', code], w.env, log_path, lock.fileno())
+        try:
+            os.write(process.write_fd, b'ping')
+            camoufox.close_fd(process.write_fd)
+            if (echoed := os.read(process.read_fd, 4)) != b'ping':
+                with open(log_path, errors='replace') as f:
+                    self.fail(f'The child did not echo the command pipe, got {echoed!r}. Its output:\n{f.read()}')
+            lock.release()
+            self.assertFalse(install_lock_is_free(version_dir))
+            process.kill()
+            self.assertIsNotNone(process.returncode)
+            self.assertTrue(install_lock_is_free(version_dir))
+        finally:
+            process.kill()
+            camoufox.close_fd(process.read_fd)
+
     def test_remove_profile_dir(self) -> None:
         """The profile directory is deleted even if it is briefly undeletable."""
         base = tempfile.mkdtemp()
@@ -332,6 +404,17 @@ class TestCamoufoxTransport(unittest.TestCase):
             camoufox.remove_profile_dir(path, timeout=0)
         self.assertEqual(deferred, [path])
         self.assertTrue(os.path.exists(path))
+
+    def test_startup_failure_message(self) -> None:
+        binary = os.path.join('dbin', 'camoufox', '1.0', 'camoufox.exe')
+        closed = camoufox.BrowserClosedError('The browser process exited')
+        msg = camoufox.startup_failure_message(closed, '\n', binary, windows=True)
+        self.assertIn('anti-virus', msg)
+        self.assertIn(os.path.dirname(binary), msg)
+        # No hint when the browser wrote something, timed out or is not on Windows
+        self.assertNotIn('anti-virus', camoufox.startup_failure_message(closed, 'some error\n', binary, windows=True))
+        self.assertNotIn('anti-virus', camoufox.startup_failure_message(camoufox.TimeoutExceeded('timed out'), '', binary, windows=True))
+        self.assertNotIn('anti-virus', camoufox.startup_failure_message(closed, '', binary, windows=False))
 
     def test_crt_handle_block(self) -> None:
         """The layout of the inherited file descriptor block handed to Windows.
@@ -787,7 +870,7 @@ class TestCamoufoxMouse(unittest.TestCase):
         sent: list[tuple[str, str]] = []
 
         class RecordingPage(camoufox.Page):
-            async def send(self, method: str, params: Mapping[str, Any] | None = None, timeout: float = camoufox.DEFAULT_TIMEOUT) -> dict[str, Any]:  # noqa: ASYNC109
+            async def send(self, method: str, params: Mapping[str, Any] | None = None, timeout: float = camoufox.DEFAULT_TIMEOUT) -> dict[str, Any]:  # ruff: ignore[async-function-with-timeout]
                 sent.append((self.target_id, str((params or {}).get('type'))))
                 await asyncio.sleep(0)  # give the other page the chance to get in between
                 return {}
@@ -814,12 +897,13 @@ class TestCamoufoxMouse(unittest.TestCase):
         # the event is given up on only once the browser answers everything
         # but it
         browser = camoufox.Browser()
+        probes: list[str] = []
 
         class BusyPage(camoufox.Page):
             busy_until = 0.0  # until when the browser answers nothing at all
             answers_input = True
 
-            async def answer(self, timeout: float, is_input: bool) -> None:  # noqa: ASYNC109
+            async def answer(self, timeout: float, is_input: bool) -> None:  # ruff: ignore[async-function-with-timeout]
                 try:
                     async with asyncio.timeout(timeout):
                         await asyncio.sleep(max(self.busy_until - time.monotonic(), 0))
@@ -828,32 +912,42 @@ class TestCamoufoxMouse(unittest.TestCase):
                 except TimeoutError:
                     raise camoufox.TimeoutExceeded('not answered')
 
-            async def send(self, method: str, params: Mapping[str, Any] | None = None, timeout: float = camoufox.DEFAULT_TIMEOUT) -> dict[str, Any]:  # noqa: ASYNC109
+            async def send(self, method: str, params: Mapping[str, Any] | None = None, timeout: float = camoufox.DEFAULT_TIMEOUT) -> dict[str, Any]:  # ruff: ignore[async-function-with-timeout]
                 await self.answer(timeout, is_input=True)
                 return {}
 
-            async def evaluate(self, expression: str, *, by_value: bool = True, timeout: float = camoufox.DEFAULT_TIMEOUT) -> int:  # noqa: ASYNC109
+            async def evaluate(self, expression: str, *, by_value: bool = True, timeout: float = camoufox.DEFAULT_TIMEOUT) -> int:  # ruff: ignore[async-function-with-timeout]
+                probes.append(expression)
                 await self.answer(timeout, is_input=False)
                 return 1
 
         def send(busy_for: float, answers_input: bool = True) -> float:
             page = BusyPage(browser, 't', 't')
             page.busy_until, page.answers_input = time.monotonic() + busy_for, answers_input
+            del probes[:]
             started = time.monotonic()
             asyncio.run(page.send_input('Page.dispatchMouseEvent', {}))
             return time.monotonic() - started
 
-        with patch.object(camoufox, 'INPUT_TIMEOUT', 0.05), patch.object(camoufox, 'DEFAULT_TIMEOUT', 1.0):
-            self.assertLess(send(0), 0.05)
+        # The timings asserted on are wall clock ones, so they leave a wide
+        # margin for a slow, heavily loaded CI machine
+        with patch.object(camoufox, 'INPUT_TIMEOUT', 0.05), patch.object(camoufox, 'DEFAULT_TIMEOUT', 2.0):
+            # An event answered promptly is never followed up on. Checked by
+            # what was asked of the browser rather than by how long it took, as
+            # the time taken is at the mercy of the machine.
+            send(0)
+            self.assertEqual(probes, [])
             # busy for several times as long as an event is waited on
             self.assertGreaterEqual(send(0.3), 0.3)
+            self.assertEqual(probes, ['1'])
             # An event that is not answered once the browser answers everything
             # else is given up on, busy or not
             for busy_for in (0, 0.3):
                 started = time.monotonic()
                 with self.assertRaises(camoufox.TimeoutExceeded):
                     send(busy_for, answers_input=False)
-                self.assertLess(time.monotonic() - started, 0.8)
+                # well short of DEFAULT_TIMEOUT, so not waited out as a stall
+                self.assertLess(time.monotonic() - started, 1.5)
             # as is one in a browser that is busy for longer than any command is waited on
             with self.assertRaises(camoufox.TimeoutExceeded):
                 send(5)
@@ -1124,6 +1218,56 @@ class TestCamoufoxBrowser(unittest.TestCase):
 
         self.run_browser(check, target_os='windows', locale='en-US', window=(1280, 800))
 
+    def test_browser_holds_install_lock(self) -> None:
+        async def check(browser: camoufox.Browser) -> None:
+            if (lock := browser.install_lock) is None:
+                raise unittest.SkipTest('a system camoufox is never removed and so not locked')
+            # The browser is given a copy of the lock, see test_spawn_inherits_fd().
+            # spawn() ignores it on Windows, where the browser is in a job object
+            # that kills it along with us, so it cannot outlive our lock.
+            self.assertEqual(spawn.call_args.args[3], lock.fileno())
+
+        with patch.object(camoufox, 'spawn', wraps=camoufox.spawn) as spawn:
+            self.run_browser(check)
+
+    @unittest.skipIf(iswindows, 'on Windows the browser is in a job object that kills it along with us')
+    def test_browser_exits_with_worker(self) -> None:
+        import signal
+
+        from calibre.utils.ipc.simple_worker import start_pipe_worker
+
+        p = start_pipe_worker(f'from calibre.web.automate.test_camoufox import browser_worker_main; browser_worker_main({list(self.install)!r})')
+        browser_pid = 0
+        try:
+            for line in p.stdout:
+                if line.startswith(b'BROWSER_PID '):
+                    browser_pid = int(line.split()[1])
+                    break
+            self.assertGreater(browser_pid, 0, 'the worker did not start the browser')
+            p.kill()
+            p.wait(10)
+
+            def browser_running() -> bool:
+                try:
+                    os.killpg(browser_pid, 0)
+                except ProcessLookupError:
+                    return False
+                return True
+
+            deadline = time.monotonic() + 30
+            while browser_running() and time.monotonic() < deadline:
+                time.sleep(0.05)
+            self.assertFalse(browser_running(), 'the browser outlived the worker that started it')
+        finally:
+            if p.poll() is None:
+                p.kill()
+                p.wait(10)
+            if browser_pid:
+                with contextlib.suppress(ProcessLookupError):
+                    os.killpg(browser_pid, signal.SIGKILL)
+            p.stdin.close()
+            p.stdout.close()
+
     def test_navigation_and_html(self) -> None:
         base = self.server.base
 
@@ -1195,6 +1339,34 @@ class TestCamoufoxBrowser(unittest.TestCase):
                 self.assertEqual(await element.text(), 'Hello')
             finally:
                 await navigate
+
+        self.run_shared(check)
+
+    def test_context_not_found(self) -> None:
+        base = self.server.base
+
+        async def check(browser: camoufox.Browser) -> None:
+            page = browser.page
+            await page.open(base + 'index.html')
+            real = page.execution_context
+            # Just after a navigation the browser can fail to find the context
+            # the events about the new document say is current, see
+            # Page.context_to_retry_in(), until it finds it again
+            page.contexts[page.main_frame] = 'id-no-such-context'
+            asyncio.get_running_loop().call_later(0.3, page.contexts.__setitem__, page.main_frame, real)
+            self.assertEqual(await page.evaluate('1 + 1', timeout=30), 2)
+            self.assertEqual(await page.call('(a, b) => a + b', 2, 3, timeout=30), 5)
+            # Or a navigation replaces it
+            page.contexts[page.main_frame] = 'id-no-such-context'
+            navigate = asyncio.create_task(navigate_after(page, 0.3, base + 'type.html'))
+            try:
+                self.assertTrue((await page.evaluate('location.href', timeout=30)).endswith('type.html'))
+            finally:
+                await navigate
+            # A context that is never found is an error once the time is up
+            page.contexts[page.main_frame] = 'id-no-such-context'
+            with self.assertRaises(camoufox.Error):
+                await page.evaluate('1 + 1', timeout=1)
 
         self.run_shared(check)
 
@@ -1483,7 +1655,7 @@ class TestCamoufoxBrowser(unittest.TestCase):
         lost = list(methods)
         send = page.send
 
-        async def send_losing_answer(method: str, params: Mapping[str, Any] | None = None, timeout: float = camoufox.DEFAULT_TIMEOUT) -> dict[str, Any]:  # noqa: ASYNC109
+        async def send_losing_answer(method: str, params: Mapping[str, Any] | None = None, timeout: float = camoufox.DEFAULT_TIMEOUT) -> dict[str, Any]:  # ruff: ignore[async-function-with-timeout]
             if lost and lost[0] == method:
                 del lost[0]
                 await send(method, params, timeout)

@@ -118,7 +118,8 @@ history_length(2000) #value of -1 means no limit
         import atexit
         import readline
 
-        import pyreadline.unicode_helper  # noqa: F401  # type: ignore
+        # Imported for its side effect of setting up the pyreadline codepage
+        import pyreadline.unicode_helper  # type: ignore
         # Normally the codepage for pyreadline is set to be sys.stdout.encoding
         # if you need to change this uncomment the following line
         # pyreadline.unicode_helper.pyreadline_codepage="utf8"
@@ -164,19 +165,21 @@ class Helper:
         return pydoc.help(*args, **kwds)
 
 
-def simple_repl(user_ns={}):
+def simple_repl(user_ns=None):
+    if user_ns is None:
+        user_ns = {}
     if iswindows:
         setup_pyreadline()
     else:
         try:
-            import readline, rlcompleter  # noqa: I001, E401, F401
+            import readline, rlcompleter  # ruff: ignore[unsorted-imports, multiple-imports-on-one-line, unused-import]
 
             readline.parse_and_bind('tab: complete')
         except ImportError:
             pass
 
     user_ns = user_ns or {}
-    import sys, re  # noqa: I001, E401, F401
+    import sys, re  # ruff: ignore[unsorted-imports, multiple-imports-on-one-line, unused-import]
 
     for x in ('os', 'sys', 're'):
         user_ns[x] = user_ns.get(x, globals().get(x, locals().get(x)))

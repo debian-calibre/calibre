@@ -217,7 +217,9 @@ class TestAuth(BaseTest):
         with TestServer(r.dispatch) as server:
             r.auth_controller.log = server.log
 
-            def test(conn, path, headers={}, status=http.client.OK, body=b'', request_body=b''):
+            def test(conn, path, headers=None, status=http.client.OK, body=b'', request_body=b''):
+                if headers is None:
+                    headers = {}
                 conn.request('GET', path, request_body, headers)
                 r = conn.getresponse()
                 self.ae(r.status, status)

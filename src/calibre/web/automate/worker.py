@@ -12,6 +12,7 @@ import sys
 import time
 from collections.abc import Awaitable, Callable
 from functools import partial
+from threading import Thread
 from typing import IO, Any, NamedTuple, cast
 
 from calibre.constants import islinux, ismacos, iswindows
@@ -45,7 +46,7 @@ def get_random_socket_path(name: str, random_suffix: str = '') -> str:
     return os.path.join(base_dir(), f'{name}.sock')
 
 
-def debug(*a: object, **kw: Any) -> None:  # noqa: ANN401
+def debug(*a: object, **kw: Any) -> None:  # ruff: ignore[any-type]
     kw['file'] = sys.stderr
     kw['flush'] = True
     print(*a, **kw)
@@ -106,7 +107,7 @@ class SingleObjectProtocol(asyncio.Protocol):
             self.transport.close()
 
 
-async def echo(x: Any) -> Any:  # noqa: ANN401
+async def echo(x: Any) -> Any:  # ruff: ignore[any-type]
     return x
 
 
@@ -193,12 +194,12 @@ async def no_setup() -> None:
 
 
 async def handler_with_setup(
-    x: Any,  # noqa: ANN401
+    x: Any,  # ruff: ignore[any-type]
     handler: Handler,
     setup: Callable[[], Awaitable[None]],
     setup_done: asyncio.Event,
     setup_lock: asyncio.Lock,
-) -> Any:  # noqa: ANN401
+) -> Any:  # ruff: ignore[any-type]
     if not setup_done.is_set():
         async with setup_lock:
             if not setup_done.is_set():
@@ -249,11 +250,42 @@ async def async_main(
         finalizer()
 
 
-def main(*a: Any, **kw: Any) -> None:  # noqa: ANN401
+def main(*a: Any, **kw: Any) -> None:  # ruff: ignore[any-type]
     asyncio.run(async_main(*a, **kw))
 
 
-def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = '', input_data: Any = None) -> tuple[str, Callable[[], int]]:  # noqa: ANN401
+def relay_stderr(stream: IO[bytes]) -> None:
+    # Ignore errors writing to our stderr, there is nowhere to report them
+    try:
+        while data := os.read(stream.fileno(), 4096):
+            try:
+                sys.stderr.buffer.write(data)
+                sys.stderr.buffer.flush()
+            except OSError, AttributeError:
+                pass
+    except OSError:
+        pass  # the worker has exited
+
+
+def worker_stderr_kwargs() -> dict[str, int]:
+    """Keyword arguments to pass to start_pipe_worker() to give the worker a usable stderr.
+
+    The worker is created as a DETACHED_PROCESS on Windows, so if our stderr is a
+    console, the stderr handle the worker inherits is invalid there and writing
+    to it fails with EINVAL. Windows GUI apps also have no usable stderr. In
+    these cases, when running in debug mode pipe the worker's stderr and relay
+    it to ours, otherwise discard it. See also calibre.utils.ipc.pool.
+    """
+    import subprocess
+
+    from calibre.constants import DEBUG
+
+    if not iswindows or not (getattr(sys, 'gui_app', False) or getattr(sys.stderr, 'isatty', lambda: False)()):
+        return {}
+    return {'stderr': subprocess.PIPE if DEBUG else subprocess.DEVNULL}
+
+
+def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = '', input_data: Any = None) -> tuple[str, Callable[[], int]]:  # ruff: ignore[any-type]
     """
     Run the specified handler, delayed_setup and finalizer functions in a worker process, passing input_data (if not None)
     to each function as its first parameter.
@@ -291,7 +323,9 @@ def start_worker(handler: str = '', delayed_setup: str = '', finalizer: str = ''
         args.append('read_input_data=True')
     invoke = f'main({", ".join(args)})'
     command.append(invoke)
-    p = start_pipe_worker('\n'.join(command))
+    p = start_pipe_worker('\n'.join(command), **worker_stderr_kwargs())
+    if p.stderr is not None:
+        Thread(target=relay_stderr, args=(p.stderr,), name='AutomateWorkerStderr', daemon=True).start()
     if input_data is not None:
         stdin = json.dumps(input_data).encode()
         p.stdin.write(stdin)
@@ -358,7 +392,7 @@ def connect_to_named_pipe(worker_path: str, timeout: float = 120.0) -> IO[bytes]
                 raise
 
 
-def make_request(worker_path: str, data: Any = None) -> Response:  # noqa: ANN401
+def make_request(worker_path: str, data: Any = None) -> Response:  # ruff: ignore[any-type]
     "Make a request and get a response from the worker"
     data = msgpack_dumps(data)
     datalen = struct.pack('!I', len(data))

@@ -10,6 +10,19 @@
     --calibre-radius: 14px;
     --calibre-border-style: 1px solid var(--calibre-color-border);
     --calibre-border-style-subtle: 1px solid var(--calibre-color-border-subtle);
+    --calibre-border-style-strong: 1px solid var(--calibre-color-border-strong);
+    /* For the boundaries of controls, which need at least 3:1 contrast */
+    --calibre-border-style-control: 1px solid var(--calibre-color-border-control);
+    /* Elevation, the shadow colors are themed so they stay visible in dark mode */
+    --calibre-shadow-hairline: 0 1px 2px var(--calibre-color-shadow-faint);
+    --calibre-shadow-small: 0 1px 3px var(--calibre-color-shadow);
+    --calibre-shadow-lift: 0 8px 20px var(--calibre-color-shadow-faint);
+    --calibre-shadow-popup: 0 2px 14px var(--calibre-color-shadow);
+    --calibre-shadow-card: 0 12px 32px var(--calibre-color-shadow-faint);
+    --calibre-shadow-card-lift: 0 16px 44px var(--calibre-color-shadow);
+    --calibre-shadow-cover: 0 10px 26px var(--calibre-color-shadow);
+    --calibre-shadow-cover-lift: 0 18px 48px var(--calibre-color-shadow-strong);
+    --calibre-shadow-dialog: 0 16px 48px var(--calibre-color-shadow-strong);
     --calibre-focus-ring: 0 0 0 3px var(--calibre-color-primary-light-2);
 
     /* Motion system */
@@ -19,6 +32,22 @@
     --cs-dur-2: 220ms;
     --cs-dur-3: 360ms;
     --cs-transition: var(--cs-dur-2) var(--cs-ease);
+}
+
+/* Honor the OS reduce motion setting. This applies to every element, so it
+ * also covers rules that use literal durations or inline styles. Durations are
+ * made near zero rather than zero or none so that transitionend/animationend
+ * still fire for code that waits on them. Loading spinners are exempt, as they
+ * convey progress and do not move across the screen. */
+@media (prefers-reduced-motion: reduce) {
+    *:not(.spin, .cs-loading-overlay svg, .cs-bd-loading-overlay svg), *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-delay: 0s !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        transition-delay: 0s !important;
+        scroll-behavior: auto !important;
+    }
 }
 
 html, body { height: 100%; }
@@ -43,8 +72,10 @@ a {
 
     &:visited { color: var(--calibre-color-primary); opacity: 0.92; }
     &:hover { text-decoration: underline; }
-    &:focus { outline: none; box-shadow: var(--calibre-focus-ring); border-radius: 8px; }
+    &:focus-visible { outline: none; box-shadow: var(--calibre-focus-ring); border-radius: 8px; }
 }
+
+button:focus-visible { outline: none; box-shadow: var(--calibre-focus-ring); }
 
 a.calibre-icon-button {
     display: inline-flex;
@@ -60,12 +91,12 @@ a.calibre-icon-button {
     }
     &:hover {
         background-color: var(--calibre-color-primary-light);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+        box-shadow: var(--calibre-shadow-lift);
         text-decoration: none;
     }
     &:active {
         background-color: var(--calibre-color-primary-light-2);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        box-shadow: var(--calibre-shadow-lift);
     }
     &[aria-disabled="true"] {
         opacity: 0.5;
@@ -113,12 +144,12 @@ a.calibre-push-button {
     }
     &:hover {
         background-color: var(--calibre-color-primary-light);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.10);
+        box-shadow: var(--calibre-shadow-lift);
         text-decoration: none;
     }
     &:active {
         background-color: var(--calibre-color-primary-light-2);
-        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        box-shadow: var(--calibre-shadow-lift);
     }
     &[aria-disabled="true"] {
         opacity: 0.5;
@@ -164,12 +195,11 @@ input[type="checkbox"], input[type="radio"] {
 input[type="text"], input[type="number"], input[type="search"], input[type="url"] {
     padding: 0.55em 0.75em;
     border-radius: 999px;
-    border: var(--calibre-border-style-subtle);
+    border: var(--calibre-border-style-control);
     background-color: var(--calibre-color-surface-3);
     color: var(--calibre-color-window-foreground);
     box-sizing: border-box;
     &:hover {
-        border: var(--calibre-border-style);
         background-color: var(--calibre-color-primary-light);
     }
 }

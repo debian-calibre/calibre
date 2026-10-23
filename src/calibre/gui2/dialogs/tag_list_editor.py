@@ -26,7 +26,8 @@ from qt.core import (
 )
 
 from calibre import sanitize_file_name
-from calibre.gui2 import choose_files, choose_save_file, error_dialog, gprefs, question_dialog
+from calibre.constants import builtin_colors_dark
+from calibre.gui2 import choose_files, choose_save_file, error_dialog, gprefs, qapplication_or_fail, question_dialog
 from calibre.gui2.actions.show_quickview import get_quickview_action_plugin
 from calibre.gui2.complete2 import EditWithComplete
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -416,8 +417,8 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         cancel_btn = self.buttonBox.button(QDialogButtonBox.StandardButton.Cancel)
         assert cancel_btn is not None
         cancel_btn.setText(_('&Cancel'))
-        self.buttonBox.accepted.connect(self.accepted)
-        self.buttonBox.rejected.connect(self.rejected)
+        self.buttonBox.accepted.connect(self.handle_accepted)
+        self.buttonBox.rejected.connect(self.handle_rejected)
 
         self.search_box.initialize('tag_list_search_box_' + cat_name)
         le = self.search_box.lineEdit()
@@ -836,7 +837,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
                 else:
                     item.setText(tag)
                 if self.is_enumerated and str(item.text()) not in self.enum_permitted_values:
-                    item.setBackground(QColor('#FF2400'))
+                    item.setBackground(QColor(builtin_colors_dark['red'] if qapplication_or_fail().is_dark_theme else '#FF2400'))
                     item.setToolTip('<p>' + _("This is not one of this column's permitted values ({0})").format(', '.join(self.enum_permitted_values)) + '</p>')
                 item.setFlags(item.flags() | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsEditable)
                 table.setItem(row, VALUE_COLUMN, item)
@@ -1218,7 +1219,7 @@ class TagListEditor(QDialog, Ui_TagListEditor):
         gprefs['tag_list_editor_table_widths'] = self.table_column_widths
         super().save_geometry(gprefs, 'tag_list_editor_dialog_geometry')
 
-    def accepted(self):
+    def handle_accepted(self):
         for t in self.all_tags.values():
             if t['is_deleted']:
                 continue
@@ -1229,6 +1230,6 @@ class TagListEditor(QDialog, Ui_TagListEditor):
             self.links[name] = self.current_links.get(t['key'], '')
         self.save_geometry()
 
-    def rejected(self):
+    def handle_rejected(self):
         self.notes_utilities.restore_all_notes()
         self.save_geometry()

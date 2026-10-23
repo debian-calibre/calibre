@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014-2015,2017,2019-2021,2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -446,6 +446,15 @@ msgid ""
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
 msgstr "Замінити усі посилання у `name` за допомогою функції `replace_func`, яка має приймати адресу і повертати замінену адресу. Вона також повинна мати атрибут `replaced`, який встановлюється у значення True, якщо було виконано хоч одну заміну. Зручним способом створення таких функцій є використання класів :class:`LinkReplacer` та :class:`LinkRebaser`."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.replace_links:7
+msgid ""
+"In HTML files, attributes that refer to elements in the same file by id, "
+"such as aria-labelledby, are also replaced. Each id is passed to "
+"replace_func as a URL of the form #id with file_type set to 'idref' and is "
+"replaced only if replace_func returns a URL of the same form."
+msgstr "У файлах HTML також буде замінено атрибути, які посилаються на елементи в межах того самого файла за допомогою ідентифікатора— наприклад, `aria-labelledby`. Кожен ідентифікатор буде передано до `replace_func` у вигляді адреси формату `#id`, причому параметр `file_type` встановлюється у значення `'idref'`; заміна відбувається лише в тому разі, якщо `replace_func` повертає адресу того самого формату."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1

@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Andrei Stepanov, 2026\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -346,7 +346,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr "Копировать обложку в файл как объект ``dest``. Возвращает False, если обложки не существует или если dest - тот же файл, что и текущая обложка. dest также может быть путем, и в этом случае обложка копируется по нему тогда и только тогда, когда путь отличается от текущего пути (с учетом чувствительности к регистру)."
+msgstr "Копировать обложку в файл как объект ``dest``. Возвращает False, если обложки не существует или если dest - тот же файл, что и текущая обложка. dest также может быть путём, и в этом случае обложка копируется по нему тогда и только тогда, когда путь отличается от текущего пути (с учетом чувствительности к регистру)."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -355,7 +355,7 @@ msgid ""
 "format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
 "a path (to a file), in which case the format is copied to it, iff the path "
 "is different from the current path (taking case sensitivity into account)."
-msgstr "Копировать формат fmt в файл как объект dest. Если указанный формат не существует, вызывает ошибку :class:`NoSuchFormat`. dest также может быть путем (к файлу), и в этом случае формат копируется по нему, если путь отличается от текущего пути (с учетом чувствительности к регистру)."
+msgstr "Копировать формат fmt в файл как объект dest. Если указанный формат не существует, вызывает ошибку :class:`NoSuchFormat`. dest также может быть путём (к файлу), и в этом случае формат копируется по нему, если путь отличается от текущего пути (с учетом чувствительности к регистру)."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
@@ -937,6 +937,14 @@ msgid ""
 msgstr "Удалить записи книг, указанных в book_ids, из базы данных и удалить их файлы. Если для параметра ``permanent`` установлено значение False, файлы помещаются в корзину для библиотеки."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr "Если файлы некоторых книг не удаётся удалить или переместить в корзину, эти книги остаются без изменений, и после удаления всех остальных книг вызывается исключение :class:`BooksNotRemoved`."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
 msgid ""
 "Delete the specified extra files, either to Recycle Bin or permanently."
@@ -1146,7 +1154,7 @@ msgstr "dict(field_value:ссылка, ...). Обратите внимание, 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7
 msgid "books changed by setting the link"
-msgstr "книги изменены путем установки ссылки"
+msgstr "книги изменены путём установки ссылки"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
@@ -1180,8 +1188,10 @@ msgstr "Установить документ с примечаниями. Ес�
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
-msgstr "Установить информацию о количестве страниц для указанной книги"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
+msgstr "Установить сведения о количестве страниц для указанной книги. Ничего не делает, если книга не существует."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

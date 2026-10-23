@@ -89,7 +89,7 @@ def do_list(fields, data, opts):
 
     widths = list(base_widths)
     titles = map(
-        lambda x, y: '%-*s%s' % (x - len(separator), y, separator),  # noqa: UP031
+        lambda x, y: '%-*s%s' % (x - len(separator), y, separator),  # ruff: ignore[printf-string-formatting]
         widths,
         fields,
     )
@@ -105,7 +105,7 @@ def do_list(fields, data, opts):
             for i, field in enumerate(text):
                 ft = field[l] if l < len(field) else ''
                 filler = ' ' * (widths[i] - len(ft) - 1)
-                print(ft.encode('utf-8') + filler.encode('utf-8'), end=separator)
+                print(ft + filler, end=separator)
             print()
 
 

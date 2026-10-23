@@ -324,7 +324,7 @@ class Spine(ResourceCollection):  # {{{
             if idref is not None:
                 path = path_map.get(idref)
                 if path and path not in seen:
-                    r = Spine.Item(lambda x: idref, path, is_path=True)
+                    r = Spine.Item(lambda x: idref, path, is_path=True)  # ruff: ignore[function-uses-loop-variable]
                     r.is_linear = itemref.get('linear', 'yes') == 'yes'
                     r.idref = idref
                     s.append(r)
@@ -356,7 +356,7 @@ class Spine(ResourceCollection):  # {{{
             path = self.manifest.path_for_id(id)
             if path is None:
                 raise ValueError('id %s not in manifest')
-            items.append(Spine.Item(lambda x: id, path, is_path=True))
+            items.append(Spine.Item(lambda x: id, path, is_path=True))  # ruff: ignore[function-uses-loop-variable]
         super().replace(start, end, items)
 
     def linear_items(self):
@@ -409,7 +409,7 @@ class Guide(ResourceCollection):  # {{{
 
     def set_cover(self, path):
         for i in tuple(self):
-            if 'cover' in i.type.lower():
+            if 'cover' in (i.type or '').lower():
                 self.remove(i)
         for typ in ('cover', 'other.ms-coverimage-standard', 'other.ms-coverimage'):
             self.append(Guide.Reference(path, is_path=True))
@@ -1298,7 +1298,7 @@ class OPF:  # {{{
         if id is None:
             for t in ('cover', 'other.ms-coverimage-standard', 'other.ms-coverimage'):
                 for item in self.guide:
-                    if item.type.lower() == t:
+                    if item.type and item.type.lower() == t:
                         self.create_manifest_item(item.href(), guess_type(path)[0])
 
     def get_metadata_element(self, name):
@@ -1525,7 +1525,11 @@ class OPFCreator(Metadata):
         M = ElementMaker(namespace=DNS, nsmap={'dc': DC11_NS, 'calibre': CALIBRE_NS, 'opf': OPF2_NS})
         DC = ElementMaker(namespace=DC11_NS)
 
-        def DC_ELEM(tag, text, dc_attrs={}, opf_attrs={}):
+        def DC_ELEM(tag, text, dc_attrs=None, opf_attrs=None):
+            if opf_attrs is None:
+                opf_attrs = {}
+            if dc_attrs is None:
+                dc_attrs = {}
             if text:
                 elem = getattr(DC, tag)(clean_ascii_chars(text), **dc_attrs)
             else:

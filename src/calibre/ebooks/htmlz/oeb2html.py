@@ -13,7 +13,7 @@ from css_parser import replaceUrls
 from lxml import html
 
 from calibre import prepare_string_for_xml
-from calibre.ebooks.oeb.base import OEB_IMAGES, SVG_NS, XHTML, XHTML_NS, XLINK, barename, namespace, rewrite_links, urlnormalize
+from calibre.ebooks.oeb.base import OEB_IMAGES, SVG_NS, XHTML, XHTML_NS, XLINK, barename, namespace, rewrite_idrefs, rewrite_links, urlnormalize
 from calibre.ebooks.oeb.stylizer import Stylizer
 from calibre.utils.localization import _
 from calibre.utils.logging import default_log
@@ -141,6 +141,7 @@ class OEB2HTML:
                 continue
             if 'id' in el.attrib:
                 el.attrib['id'] = self.get_link_id(page.href, el.attrib['id'])[1:]
+        rewrite_idrefs(root, lambda eid: self.links.get(f'{page.href}#{eid}', '#' + eid)[1:])
 
     def get_css(self, oeb_book):
         css = ''
@@ -435,7 +436,7 @@ def oeb2html_inline_css(oeb_book, log, opts):
 
 def oeb2html_class_css(oeb_book, log, opts):
     izer = OEB2HTMLClassCSSizer(log)
-    setattr(opts, 'class_style', 'inline')
+    opts.class_style = 'inline'
     html = izer.oeb2html(oeb_book, opts)
     images = izer.images
     return html, images
