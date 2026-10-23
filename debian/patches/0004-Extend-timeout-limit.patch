@@ -14,7 +14,7 @@ Add some more time to wait test results.
  4 files changed, 11 insertions(+), 11 deletions(-)
 
 diff --git a/src/calibre/srv/tests/base.py b/src/calibre/srv/tests/base.py
-index 9d9baaf..b5512c3 100644
+index 7bff192..cb917f8 100644
 --- a/src/calibre/srv/tests/base.py
 +++ b/src/calibre/srv/tests/base.py
 @@ -139,7 +139,7 @@ class TestServer(Thread):
@@ -27,10 +27,10 @@ index 9d9baaf..b5512c3 100644
          kwargs['port'] = kwargs.get('port', 0)
          kwargs['userdb'] = kwargs.get('userdb', ':memory:')
 diff --git a/src/calibre/srv/tests/http.py b/src/calibre/srv/tests/http.py
-index d0e43d4..f299e23 100644
+index 86a1418..cf813f8 100644
 --- a/src/calibre/srv/tests/http.py
 +++ b/src/calibre/srv/tests/http.py
-@@ -105,7 +105,7 @@ class TestHTTP(BaseTest):
+@@ -107,7 +107,7 @@ class TestHTTP(BaseTest):
          def handler(data):
              return data.lang_code + data._('Unknown')
  
@@ -39,7 +39,7 @@ index d0e43d4..f299e23 100644
              conn = server.connect()
  
              def test(al, q):
-@@ -167,7 +167,7 @@ class TestHTTP(BaseTest):
+@@ -188,7 +188,7 @@ class TestHTTP(BaseTest):
              conn._HTTPConnection__state = http.client._CS_REQ_SENT  # type: ignore
              return conn.getresponse()
  
@@ -48,7 +48,7 @@ index d0e43d4..f299e23 100644
  
          with TestServer(
              handler,
-@@ -327,7 +327,7 @@ class TestHTTP(BaseTest):
+@@ -358,7 +358,7 @@ class TestHTTP(BaseTest):
              conn = server.connect()
  
              # Test closing
@@ -57,7 +57,7 @@ index d0e43d4..f299e23 100644
  
              def assert_no_active_connections():
                  server.loop.wakeup()
-@@ -358,8 +358,8 @@ class TestHTTP(BaseTest):
+@@ -389,8 +389,8 @@ class TestHTTP(BaseTest):
              conn.close()
  
              # Test timeout
@@ -68,7 +68,7 @@ index d0e43d4..f299e23 100644
              conn.request('GET', '/something')
              r = conn.getresponse()
              self.ae(r.status, 200), self.ae(r.read(), b'something')
-@@ -377,7 +377,7 @@ class TestHTTP(BaseTest):
+@@ -408,7 +408,7 @@ class TestHTTP(BaseTest):
          with (
              NamedTemporaryFile(suffix='test.epub') as f,
              open(P('localization/locales.zip'), 'rb') as lf,
@@ -77,7 +77,7 @@ index d0e43d4..f299e23 100644
          ):
              fdata = (string.ascii_letters * 100).encode('ascii')
              f.write(fdata), f.seek(0)
-@@ -480,7 +480,7 @@ class TestHTTP(BaseTest):
+@@ -524,7 +524,7 @@ class TestHTTP(BaseTest):
                  lf.seek(0)
                  data = lf.read()
                  server.change_handler(lambda _conn: lf)
@@ -86,7 +86,7 @@ index d0e43d4..f299e23 100644
                  conn.request('GET', '/test')
                  r = conn.getresponse()
                  self.ae(r.status, http.client.OK)
-@@ -489,7 +489,7 @@ class TestHTTP(BaseTest):
+@@ -533,7 +533,7 @@ class TestHTTP(BaseTest):
                  self.ae(hashlib.sha1(data).hexdigest(), hashlib.sha1(rdata).hexdigest())
                  self.ae(data, rdata)
                  time_taken = monotonic() - start_time
@@ -109,10 +109,10 @@ index 15281ac..4337252 100644
              service = b.services[0]
              self.ae(service.type, '_calibre._tcp.local.')
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index eb9567c..ad4d291 100644
+index 6ab5dcb..8545992 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -725,7 +725,7 @@ def test_webengine_worker_main():
+@@ -722,7 +722,7 @@ def test_webengine_worker_main():
      p.titleChanged.connect(do_webengine_test)
      p.renderProcessTerminated.connect(render_process_crashed)
      p.runJavaScript(f'document.title = "test-run-{os.getpid()}";')

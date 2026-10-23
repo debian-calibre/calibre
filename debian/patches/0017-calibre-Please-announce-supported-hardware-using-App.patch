@@ -55,11 +55,11 @@ Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index f3ee0e9..a58498d 100644
+index 40999a9..02b9635 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -1281,6 +1281,10 @@ def get_appdata():
-                     'You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.'  # noqa: E501
+@@ -1287,6 +1287,10 @@ def get_appdata():
+                     'You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.'  # ruff: ignore[line-too-long]
                  ),
              ),
 +            'provides': [
@@ -69,7 +69,7 @@ index f3ee0e9..a58498d 100644
              'screenshots': (
                  (
                      1408,
-@@ -1338,6 +1342,10 @@ def get_appdata():
+@@ -1344,6 +1348,10 @@ def get_appdata():
                  _('The calibre E-book viewer allows you to read e-books in over a dozen different formats.'),
                  _('It has a full screen mode for distraction free reading and can display the text with multiple columns per screen.'),
              ),
@@ -80,7 +80,7 @@ index f3ee0e9..a58498d 100644
              'screenshots': (
                  (
                      1408,
-@@ -1408,7 +1416,7 @@ def make_appdata_releases():
+@@ -1414,7 +1422,7 @@ def make_appdata_releases():
  
  def write_appdata(key, entry, base, translators):
      from lxml.builder import E
@@ -89,7 +89,7 @@ index f3ee0e9..a58498d 100644
  
      fpath = os.path.join(base, f'{key}.metainfo.xml')
      screenshots = E.screenshots()
-@@ -1449,6 +1457,14 @@ def write_appdata(key, entry, base, translators):
+@@ -1455,6 +1463,14 @@ def write_appdata(key, entry, base, translators):
          tp = t.gettext(entry['summary'])
          if tp != entry['summary']:
              root.append(E.summary(tp, **{'{http://www.w3.org/XML/1998/namespace}lang': lang}))

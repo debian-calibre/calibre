@@ -31,10 +31,10 @@ Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
  1 file changed, 4 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 7f9f473..f3ee0e9 100644
+index 9d7db25..40999a9 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -1299,6 +1299,7 @@ def get_appdata():
+@@ -1305,6 +1305,7 @@ def get_appdata():
                  ),
              ),
              'desktop-id': 'calibre-gui.desktop',
@@ -42,7 +42,7 @@ index 7f9f473..f3ee0e9 100644
              'include-releases': True,
          },
          'calibre-ebook-edit': {
-@@ -1328,6 +1329,7 @@ def get_appdata():
+@@ -1334,6 +1335,7 @@ def get_appdata():
                  ),
              ),
              'desktop-id': 'calibre-ebook-edit.desktop',
@@ -50,7 +50,7 @@ index 7f9f473..f3ee0e9 100644
          },
          'calibre-ebook-viewer': {
              'name': 'calibre - E-book Viewer',
-@@ -1349,6 +1351,7 @@ def get_appdata():
+@@ -1355,6 +1357,7 @@ def get_appdata():
                  ),
              ),
              'desktop-id': 'calibre-ebook-viewer.desktop',
@@ -58,7 +58,7 @@ index 7f9f473..f3ee0e9 100644
          },
      }
  
-@@ -1422,7 +1425,7 @@ def write_appdata(key, entry, base, translators):
+@@ -1428,7 +1431,7 @@ def write_appdata(key, entry, base, translators):
                  description.append(E.p(tp, **{'{http://www.w3.org/XML/1998/namespace}lang': lang}))
  
      root = E.component(

@@ -9,13 +9,13 @@ FFmpeg 8 drops "libpostproc" and move it to source-plugins.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/setup/build_environment.py b/setup/build_environment.py
-index 498b4f5..470ec3f 100644
+index 90840da..3b83d32 100644
 --- a/setup/build_environment.py
 +++ b/setup/build_environment.py
-@@ -232,7 +232,7 @@ else:
-     libavif_inc_dirs = pkgconfig_include_dirs('libavif', 'LIBAVIF_INC_DIR', '/usr/include')
-     libavif_lib_dirs = pkgconfig_lib_dirs('libavif', 'LIBAVIF_LIB_DIR', '/usr/lib')
-     libavif_libs = pkgconfig_libs('libavif', '', 'avif')
+@@ -241,7 +241,7 @@ else:
+     libjxl_inc_dirs = pkgconfig_include_dirs('libjxl', 'LIBJXL_INC_DIR', '/usr/include')
+     libjxl_lib_dirs = pkgconfig_lib_dirs('libjxl', 'LIBJXL_LIB_DIR', '/usr/lib')
+     libjxl_libs = pkgconfig_libs('libjxl', '', 'jxl') + pkgconfig_libs('libjxl_threads', '', 'jxl_threads') + pkgconfig_libs('libjxl_cms', '', 'jxl_cms')
 -    for x in ('libavcodec', 'libavformat', 'libavdevice', 'libavfilter', 'libavutil', 'libpostproc', 'libswresample', 'libswscale'):
 +    for x in ('libavcodec', 'libavformat', 'libavdevice', 'libavfilter', 'libavutil', 'libswresample', 'libswscale'):
          for inc in pkgconfig_include_dirs(x, '', '/usr/include'):

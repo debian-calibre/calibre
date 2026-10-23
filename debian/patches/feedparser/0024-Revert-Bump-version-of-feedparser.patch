@@ -14,7 +14,7 @@ This reverts commit d01f57527db17c7e784ee39d6b846ad8c98f399e.
  2 files changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/pyproject.toml b/pyproject.toml
-index a158c60..ccc0347 100644
+index 056a3e1..8fcbb25 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
 @@ -16,8 +16,8 @@ dependencies = [
@@ -29,17 +29,17 @@ index a158c60..ccc0347 100644
  	"html2text == 2025.4.15",
  	"soupsieve == 2.9",
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 9c567bd..08561b8 100644
+index 07e3926..53c74a8 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -530,7 +530,9 @@ class BuildTest(unittest.TestCase):
+@@ -525,7 +525,9 @@ class BuildTest(unittest.TestCase):
  
      def test_feedparser(self):
          # sgmllib is needed for feedparser parsing malformed feeds
--        import feedparser_sgmllib as sgmllib
+-        import feedparser_sgmllib as sgmllib  # ruff: ignore[unused-import]
 +        # on python3 you can get it by taking it from python2 stdlib and
 +        # running 2to3 on it
 +        import sgmllib
  
-         from calibre.web.feeds.feedparser import parse  # type: ignore
+         from calibre.web.feeds.feedparser import parse  # type: ignore  # ruff: ignore[unused-import]
  
