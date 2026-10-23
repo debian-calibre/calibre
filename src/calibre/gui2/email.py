@@ -530,7 +530,9 @@ class EmailMixin:  # {{{
             )
             d.exec()
 
-    def email_sent(self: Main, job, remove=[]):
+    def email_sent(self: Main, job, remove=None):
+        if remove is None:
+            remove = []
         if job.failed:
             self.job_exception(job, dialog_title=_('Failed to email book'))
             return
@@ -572,5 +574,5 @@ class EmailMixin:  # {{{
 if __name__ == '__main__':
     from qt.core import QApplication
 
-    app = QApplication([])  # noqa: F841
+    app = QApplication([])
     print(select_recipients())

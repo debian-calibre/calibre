@@ -33,6 +33,7 @@ from qt.core import (
 
 from calibre import fit_image, human_readable, prepare_string_for_xml, strftime
 from calibre.constants import DEBUG, config_dir, dark_link_color, filesystem_encoding
+from calibre.db.errors import BooksNotRemoved
 from calibre.db.search import CONTAINS_MATCH, EQUALS_MATCH, REGEXP_MATCH, _match
 from calibre.db.utils import force_to_bool
 from calibre.devices.interface import BookList
@@ -65,7 +66,7 @@ ALIGNMENT_MAP = {
 def render_pin(color=None, save_to=None):
     app = qapplication_or_fail()
     if color is None:
-        color = '#00b000' if app.is_dark_theme else 'green'
+        color = app.success_text_color
     svg = P('pin-template.svg', data=True).replace(b'fill:#f39509', ('fill:' + color).encode('utf-8'))
     pm = QPixmap()
     dpr = app.devicePixelRatio()
@@ -567,7 +568,12 @@ class BooksModel(QAbstractTableModel):  # {{{
     def delete_books_by_id(self, ids, permanent=False):
         db = self.db
         assert db is not None
-        db.new_api.remove_books(ids, permanent=permanent)
+        try:
+            db.new_api.remove_books(ids, permanent=permanent)
+        except BooksNotRemoved as err:
+            if err.removed:
+                self.ids_deleted(err.removed)
+            raise
         self.ids_deleted(ids)
 
     def ids_deleted(self, ids):
@@ -1640,11 +1646,11 @@ class OnDeviceSearch(SearchQueryParser):  # {{{
         all_locs = set(self.USABLE_LOCATIONS) - {'all', 'tags', 'search'}
         locations = all_locs if location == 'all' else [location]
         q = {
-            'title': lambda x: getattr(x, 'title').lower(),
-            'author': lambda x: ' & '.join(getattr(x, 'authors')).lower(),
-            'collections': lambda x: ','.join(getattr(x, 'device_collections')).lower(),
+            'title': lambda x: x.title.lower(),
+            'author': lambda x: ' & '.join(x.authors).lower(),
+            'collections': lambda x: ','.join(x.device_collections).lower(),
             'format': lambda x: os.path.splitext(x.path)[1].lower(),
-            'inlibrary': lambda x: getattr(x, 'in_library'),
+            'inlibrary': lambda x: x.in_library,
             'tags': lambda x: getattr(x, 'tags', []),
         }
         for x in ('author', 'format'):

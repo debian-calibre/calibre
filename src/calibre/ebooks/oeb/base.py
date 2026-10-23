@@ -10,6 +10,7 @@ import os
 import re
 import sys
 from collections import defaultdict
+from collections.abc import Callable, Iterator
 from functools import lru_cache
 from itertools import count
 from operator import attrgetter
@@ -392,6 +393,66 @@ def rewrite_links(root, link_repl_func, resolve_base_href=False):
             el.set('style', repl)
 
 
+# Attributes whose values are space separated lists of ids of elements in the
+# same document
+IDREF_ATTRS = frozenset((
+    'aria-activedescendant',
+    'aria-controls',
+    'aria-describedby',
+    'aria-details',
+    'aria-errormessage',
+    'aria-flowto',
+    'aria-labelledby',
+    'aria-owns',
+))
+# Attributes that are lists of ids only on specific tags
+TAG_IDREF_ATTRS = {
+    'label': frozenset(('for',)),
+    'output': frozenset(('for',)),
+    'td': frozenset(('headers',)),
+    'th': frozenset(('headers',)),
+}
+
+
+def iteridrefs(root: etree._Element) -> Iterator[tuple[etree._Element, str, list[str]]]:
+    """
+    Iterate over all attributes in the document that refer to other elements
+    in the same document by id, such as aria-labelledby. Yields tuples of the
+    form (element, attribute name, list of ids).
+    """
+    for el in root.iter('*'):
+        attribs = el.attrib
+        attrs = IDREF_ATTRS.intersection(attribs)
+        tag = el.tag
+        extra = TAG_IDREF_ATTRS.get(barename(tag).lower()) if isinstance(tag, str) else None
+        if extra:
+            attrs |= extra.intersection(attribs)
+        for attr in sorted(attrs):
+            ids = attribs[attr].split()
+            if ids:
+                yield el, attr, ids
+
+
+def rewrite_idrefs(root: etree._Element, id_repl_func: Callable[[str], str | None]) -> bool:
+    """
+    Rewrite all ids in attributes that refer to other elements in the same
+    document by id, such as aria-labelledby. For each id
+    ``id_repl_func(id)`` is called and the return value replaces the id. If
+    it returns None or the empty string, the id is removed and if no ids
+    remain, so is the attribute. Returns True iff something was changed.
+    """
+    changed = False
+    for el, attr, ids in iteridrefs(root):
+        new_ids = [x for x in map(id_repl_func, ids) if x]
+        if new_ids != ids:
+            changed = True
+            if new_ids:
+                el.set(attr, ' '.join(new_ids))
+            else:
+                del el.attrib[attr]
+    return changed
+
+
 types_map = get_types_map()
 EPUB_MIME = types_map['.epub']
 XHTML_MIME = types_map['.xhtml']
@@ -408,13 +469,14 @@ PNG_MIME = types_map['.png']
 SVG_MIME = types_map['.svg']
 WEBP_MIME = types_map['.webp']
 AVIF_MIME = types_map['.avif']
+JXL_MIME = types_map['.jxl']
 BINARY_MIME = 'application/octet-stream'
 
 XHTML_CSS_NAMESPACE = f'@namespace "{XHTML_NS}";\n'
 
 OEB_STYLES = {CSS_MIME, OEB_CSS_MIME, 'text/x-oeb-css', 'xhtml/css'}
 OEB_DOCS = {XHTML_MIME, 'text/html', OEB_DOC_MIME, 'text/x-oeb-document'}
-OEB_RASTER_IMAGES = {GIF_MIME, JPEG_MIME, PNG_MIME, WEBP_MIME, AVIF_MIME}
+OEB_RASTER_IMAGES = {GIF_MIME, JPEG_MIME, PNG_MIME, WEBP_MIME, AVIF_MIME, JXL_MIME}
 OEB_IMAGES = {GIF_MIME, JPEG_MIME, PNG_MIME, SVG_MIME}
 
 MS_COVER_TYPE = 'other.ms-coverimage-standard'
@@ -804,7 +866,11 @@ class Metadata:
             def __set__(self, obj, value):
                 obj.attrib[self.term_attr(obj)] = value
 
-        def __init__(self, term, value, attrib={}, nsmap={}, **kwargs):
+        def __init__(self, term, value, attrib=None, nsmap=None, **kwargs):
+            if nsmap is None:
+                nsmap = {}
+            if attrib is None:
+                attrib = {}
             self.attrib = attrib = dict(attrib)
             self.nsmap = nsmap = dict(nsmap)
             attrib.update(kwargs)
@@ -881,7 +947,9 @@ class Metadata:
         def __str__(self):
             return as_unicode(self.value)
 
-        def to_opf1(self, dcmeta=None, xmeta=None, nsrmap={}):
+        def to_opf1(self, dcmeta=None, xmeta=None, nsrmap=None):
+            if nsrmap is None:
+                nsrmap = {}
             attrib = {}
             for key, value in self.attrib.items():
                 if namespace(key) == OPF2_NS:
@@ -897,7 +965,9 @@ class Metadata:
                 elem.attrib['content'] = prefixname(self.value, nsrmap)
             return elem
 
-        def to_opf2(self, parent=None, nsrmap={}):
+        def to_opf2(self, parent=None, nsrmap=None):
+            if nsrmap is None:
+                nsrmap = {}
             attrib = {}
             for key, value in self.attrib.items():
                 attrib[key] = prefixname(value, nsrmap)
@@ -918,8 +988,12 @@ class Metadata:
         self.items = defaultdict(list)
         self.primary_writing_mode = None
 
-    def add(self, term, value, attrib={}, nsmap={}, **kwargs):
+    def add(self, term, value, attrib=None, nsmap=None, **kwargs):
         """Add a new metadata item."""
+        if nsmap is None:
+            nsmap = {}
+        if attrib is None:
+            attrib = {}
         item = self.Item(term, value, attrib, nsmap, **kwargs)
         items = self.items[barename(item.term)]
         items.append(item)

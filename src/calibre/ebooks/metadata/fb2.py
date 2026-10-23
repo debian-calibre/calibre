@@ -44,7 +44,9 @@ class Context:
     def XPath(self, *args):
         return etree.XPath(*args, namespaces=self.namespaces)
 
-    def get_or_create(self, parent, tag, attribs={}, at_start=True):
+    def get_or_create(self, parent, tag, attribs=None, at_start=True):
+        if attribs is None:
+            attribs = {}
         xpathstr = './fb:' + tag
         for n, v in attribs.items():
             xpathstr += f'[@{n}="{v}"]'
@@ -55,7 +57,9 @@ class Context:
             ans = self.create_tag(parent, tag, attribs, at_start)
         return ans
 
-    def create_tag(self, parent, tag, attribs={}, at_start=True):
+    def create_tag(self, parent, tag, attribs=None, at_start=True):
+        if attribs is None:
+            attribs = {}
         ans = parent.makeelement(f'{{{self.fb_ns}}}{tag}')
         ans.attrib.update(attribs)
         if at_start:
@@ -471,8 +475,8 @@ def ensure_namespace(doc):
     # https://bugs.launchpad.net/bugs/1404701
     bare_tags = False
     for x in ('description', 'body'):
-        for x in doc.findall(x):
-            if '{' not in x.tag:
+        for z in doc.findall(x):
+            if '{' not in z.tag:
                 bare_tags = True
                 break
     if bare_tags:

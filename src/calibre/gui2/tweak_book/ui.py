@@ -765,7 +765,9 @@ class Main(MainWindow):
             _('Show the Find/replace panel'),
         )
 
-        def sreg(name, text, action, overrides={}, keys=(), description=None, icon=None):
+        def sreg(name, text, action, overrides=None, keys=(), description=None, icon=None):
+            if overrides is None:
+                overrides = {}
             return reg(
                 icon,
                 text,

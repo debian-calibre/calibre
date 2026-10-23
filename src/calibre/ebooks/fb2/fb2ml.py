@@ -114,7 +114,7 @@ class FB2MLizer:
         metadata['title'] = self.oeb_book.metadata.title[0].value
         metadata['appname'] = __appname__
         metadata['version'] = __version__
-        metadata['date'] = f'{datetime.now().day}.{datetime.now().month}.{datetime.now().year}'  # noqa: DTZ005
+        metadata['date'] = f'{datetime.now().day}.{datetime.now().month}.{datetime.now().year}'  # ruff: ignore[call-datetime-now-without-tzinfo]
         if self.oeb_book.metadata.language:
             lc = lang_as_iso639_1(self.oeb_book.metadata.language[0].value)
             if not lc:
@@ -392,7 +392,7 @@ class FB2MLizer:
             s_tags.append(tag)
         return s_out, s_tags
 
-    def dump_text(self, elem_tree, stylizer, page, tag_stack=[]):
+    def dump_text(self, elem_tree, stylizer, page, tag_stack=None):
         """
         This function is intended to be used in a recursive manner. dump_text will
         run though all elements in the elem_tree and call itself on each element.
@@ -408,6 +408,8 @@ class FB2MLizer:
         """
         from calibre.ebooks.oeb.base import XHTML_NS, barename, namespace
 
+        if tag_stack is None:
+            tag_stack = []
         elem = elem_tree
 
         # Ensure what we are converting is not a string and that the fist tag is part of the XHTML namespace.

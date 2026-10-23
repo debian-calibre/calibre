@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Sebastian Rasmussen <sebras@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -100,7 +100,7 @@ msgstr "När indexeringsförloppet ändras"
 msgid ""
 "When items such as tags or authors are removed from some books. Arguments: "
 "(field_name, affected book ids, ids of removed items)"
-msgstr "När objekt som taggar eller författare tas bort från vissa böcker. Argument: (field_name, berörda bok-id, id för borttagna poster)"
+msgstr "När objekt som taggar eller författare tas bort från vissa böcker. Argument: (field_name, berörda bok-ID:n, ID:n för borttagna poster)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.items_renamed:1
@@ -286,7 +286,7 @@ msgstr "Returnera författardata som en uppslagstabell med nycklarna: name, sort
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr "Om inga författare med angivna identiteter hittas returneras en tom uppslagstabell. Om author_ids är None, returneras data för alla författare."
+msgstr "Om inga författare med angivna ID:n hittas returneras en tom uppslagstabell. Om author_ids är None returneras data för alla författare."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -300,6 +300,15 @@ msgstr "Utifrån en lista med författare, returnera author_sort-strängen för 
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Returnera författarsorteringsvärden för angivna författare."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
+msgstr "Returnera den bokspecifika lagringen (används för localStorage i visarna) för angivna book_id, format, user_type och user, eller None om ingen lagring finns. Lagringen är en dict av formen: {'timestamp': seconds since epoch, 'data': {key: value}}."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -407,7 +416,7 @@ msgstr "Returnera data som är lämpliga för användning i :meth:`has_book`. De
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_annotations:1
 msgid "Delete annotations with the specified ids."
-msgstr "Ta bort noteringar med de angivna identiteterna."
+msgstr "Ta bort noteringar med de angivna ID:na."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.delete_custom_book_data:1
@@ -439,7 +448,7 @@ msgstr "Ta bort för gamla poster ur papperskorgen"
 #: calibre.db.cache.Cache.export_note:1
 msgid ""
 "Export the note as a single HTML document with embedded images as data: URLs"
-msgstr "Exportera anteckningen som ett enda HTML-dokument med inbäddade bilder som data: URL:er"
+msgstr "Exportera anteckningen som ett enda HTML-dokument med inbäddade bilder i form av data:-URL:er"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.fast_field_for:1
@@ -933,6 +942,14 @@ msgid ""
 msgstr "Ta bort böckerna som specificeras av book_ids från databasen och ta bort deras formatfiler. Om ``permanent`` är False, placeras formatfilerna i papperskorgen per bibliotek."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
 msgid ""
 "Delete the specified extra files, either to Recycle Bin or permanently."
@@ -1137,7 +1154,7 @@ msgstr "uppslagsnamnet"
 #: calibre.db.cache.Cache.set_link_map:5
 msgid ""
 "dict(field_value:link, ...). Note that these are values, not field ids."
-msgstr "dict(field_value:link, ...). Observera att detta är värden, inte fältidentiteter."
+msgstr "dict(field_value:link, ...). Observera att detta är värden, inte fält-ID:n."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_link_map:7
@@ -1176,8 +1193,10 @@ msgstr "Ange anteckningsdokumentet. Om den sökbara texten skiljer sig från dok
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
-msgstr "Ange information om sidantal för den angivna boken"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
@@ -1232,6 +1251,15 @@ msgstr "Återaktivera en tidigare inaktiverad anteckning för det angivna objekt
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "Uppdatera noteringar."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr "Ange den bokspecifika lagringen för angivna book_id, format, user_type och user, om inte den befintliga lagringen är nyare än entry. Returnerar den lagring som gäller efter uppdateringen. Töm lagringen genom att skicka in en post med tomma data."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

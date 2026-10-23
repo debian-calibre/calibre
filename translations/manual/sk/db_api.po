@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Martin Sowa, 2026\n"
 "Language-Team: Slovak (http://app.transifex.com/calibre/calibre/language/sk/)\n"
@@ -934,6 +934,14 @@ msgid ""
 msgstr "Odstráni knihy určené pomocou book_ids z databázy a vymaže ich formátové súbory. Ak je ``permanent`` False, formátové súbory sa umiestnia do koša konkrétnej knižnice."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
 msgid ""
 "Delete the specified extra files, either to Recycle Bin or permanently."
@@ -1177,8 +1185,10 @@ msgstr "Nastaví dokument poznámok. Ak sa prehľadávateľný text líši od do
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
-msgstr "Nastaví informácie o počte strán pre zadanú knihu"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

@@ -221,7 +221,7 @@ class PluginWidget(QWidget, Ui_Form):
 
         results = _('No genres will be excluded')
 
-        regex = str(getattr(self, 'exclude_genre').text()).strip()
+        regex = str(self.exclude_genre.text()).strip()
         if not regex:
             self.exclude_genre_results.clear()
             self.exclude_genre_results.setText(results)
@@ -1358,7 +1358,7 @@ class PrefixRules(GenericRulesTable):
         data = self.create_blank_row_data()
         data['ordinal'] = row
         _prefix_item = self.item(row, int(self.COLUMNS['ENABLED']['ordinal']))
-        assert isinstance(_prefix_item, QCheckBox)
+        assert _prefix_item is not None
         data['enabled'] = _prefix_item.checkState() == Qt.CheckState.Checked
         _pfx_name_w = self.cellWidget(row, int(self.COLUMNS['NAME']['ordinal']))
         assert isinstance(_pfx_name_w, QLineEdit)

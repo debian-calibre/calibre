@@ -169,7 +169,9 @@ class ReBinary:
     def is_block(self, style):
         return style['display'] not in ('inline', 'inline-block')
 
-    def tree_to_binary(self, elem, nsrmap=NSRMAP, parents=[], inhead=False, preserve=False):
+    def tree_to_binary(self, elem, nsrmap=NSRMAP, parents=None, inhead=False, preserve=False):
+        if parents is None:
+            parents = []
         if not isinstance(elem.tag, (str, bytes)):
             # Don't emit any comments or raw entities
             return

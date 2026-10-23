@@ -286,7 +286,9 @@ def choose_images(window, name, title, select_only_single_file=True, formats=Non
     return choose_files(window, name, title, select_only_single_file=select_only_single_file, filters=file_types)
 
 
-def choose_save_file(window, name, title, filters=[], all_files=True, initial_path=None, initial_filename=None):
+def choose_save_file(window, name, title, filters=None, all_files=True, initial_path=None, initial_filename=None):
+    if filters is None:
+        filters = []
     no_save_dir = False
     default_dir = '~'
     filename = initial_filename

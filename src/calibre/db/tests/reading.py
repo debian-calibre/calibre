@@ -963,8 +963,7 @@ class ReadingTest(BaseTest):
                 else:
                     self.miss_counter += 1
 
-            @property
-            def cc(self):
+            def clean_counts(self):
                 self.hit_counter = self.miss_counter = 0
 
             @property
@@ -977,11 +976,11 @@ class ReadingTest(BaseTest):
         ae = self.assertEqual
 
         def test(hit, result, *args, **kw):
-            c.cc
+            c.clean_counts()
             num = kw.get('num', 2)
             ae(cache.search(*args), result)
             ae(c.counts, (num, 0) if hit else (0, num))
-            c.cc
+            c.clean_counts()
 
         test(False, {3}, 'Unknown')
         test(True, {3}, 'Unknown')
@@ -1002,6 +1001,50 @@ class ReadingTest(BaseTest):
         cache.set_field('publisher', {3: 'ppppp', 2: 'other'})
         # Test cache update worked
         test(True, {2, 3}, 'title:=xxx or title:"=Title One"')
+
+    # }}}
+
+    def test_restore_format_from_trash_clears_caches(self):  # {{{
+        "Test that composite columns and cached searches are not stale after a format is restored from the trash"
+        cache = self.init_cache()
+        cache.create_custom_column('cfmt', 'CFMT', 'composite', False, display={'composite_template': '{formats}'})
+        cache.close()
+        cache = self.init_cache()
+        self.assertEqual('FMT1', cache.field_for('#cfmt', 2))
+        self.assertIn(2, cache.search('formats:FMT1'))
+        cache.remove_formats({2: ['FMT1']})
+        self.assertEqual('', cache.field_for('#cfmt', 2))
+        self.assertNotIn(2, cache.search('formats:FMT1'))
+        cache.move_format_from_trash(2, 'FMT1')
+        self.assertEqual('FMT1', cache.field_for('#cfmt', 2))
+        self.assertIn(2, cache.search('formats:FMT1'))
+
+    # }}}
+
+    def test_composite_of_virtual_libraries(self):  # {{{
+        "Test that a composite column showing the Virtual libraries is not stale after a book changes Virtual library"
+        cache = self.init_cache()
+        cache.create_custom_column('cvl', 'CVL', 'composite', False, display={'composite_template': '{virtual_libraries}'})
+        cache.close()
+        cache = self.init_cache()
+        cache.set_pref('virtual_libraries', {'VL Rated': 'rating:>=4', 'VL Tagged': 'tags:true'})
+        # Rendering the composite for the books computes their Virtual libraries while a cached search uses it
+        cache.search('#cvl:"~VL"')
+        for book_id in (1, 2, 3):
+            cache.field_for('#cvl', book_id)
+        cache.set_field('rating', {2: 10})
+        self.assertEqual('VL Rated, VL Tagged', cache.field_for('#cvl', 2))
+
+    # }}}
+
+    def test_saved_search_add_clears_search_cache(self):  # {{{
+        "Test that redefining a saved search does not leave stale cached searches"
+        cache = self.init_cache()
+        cache.saved_search_add('Mine', 'tags:true')
+        self.assertEqual({1, 2}, cache.search('search:"=Mine"'))
+        cache.saved_search_add('Mine', 'series:true and rating:>=3')
+        self.assertEqual({1}, self.init_cache(cache.backend.library_path).search('search:"=Mine"'))
+        self.assertEqual({1}, cache.search('search:"=Mine"'))
 
     # }}}
 
@@ -1133,6 +1176,25 @@ class ReadingTest(BaseTest):
 
     # }}}
 
+    def test_proxy_metadata_repeated_access(self):  # {{{
+        "Test that repeated access to identifier and language attributes of ProxyMetadata is stable"
+        cache = self.init_cache()
+        cache.set_field('identifiers', {1: {'isbn': '9781234567897'}})
+        cache.set_field('languages', {1: ('eng', 'deu')})
+        pmi = cache.get_proxy_metadata(1)
+        self.assertEqual((pmi.isbn, pmi.isbn), ('9781234567897', '9781234567897'))
+        self.assertEqual((pmi.language, pmi.language), ('eng', 'eng'))
+        pmi = cache.get_proxy_metadata(1)
+        self.assertEqual((pmi.identifiers, pmi.isbn), ({'isbn': '9781234567897'}, '9781234567897'))
+        self.assertEqual((pmi.languages, pmi.language), (['eng', 'deu'], 'eng'))
+        cache.set_field('identifiers', {1: {}})
+        cache.set_field('languages', {1: ()})
+        pmi = cache.get_proxy_metadata(1)
+        self.assertEqual((pmi.isbn, pmi.isbn), (None, None))
+        self.assertEqual((pmi.language, pmi.language), ('und', 'und'))
+
+    # }}}
+
     def test_marked_field(self):  # {{{
         "Test the marked field"
         db = self.init_legacy()
@@ -1235,7 +1297,7 @@ class ReadingTest(BaseTest):
     def test_last_read_positions(self):  # {{{
         cache = self.init_cache(self.library_path)
         self.assertFalse(cache.get_last_read_positions(1, 'x', 'u'))
-        self.assertRaises(Exception, cache.set_last_read_position, 12, 'x', cfi='c')
+        self.assertRaises(Exception, cache.set_last_read_position, 12, 'x', cfi='c')  # ruff: ignore[assert-raises-exception]
         epoch = time()
         cache.set_last_read_position(1, 'EPUB', 'user', 'device', 'cFi', epoch, 0.3)
         self.assertFalse(cache.get_last_read_positions(1, 'x', 'u'))

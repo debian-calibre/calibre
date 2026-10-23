@@ -40,7 +40,7 @@ from urllib.error import URLError
 from urllib.parse import urlencode, urlparse
 from urllib.request import Request
 
-from calibre.web.automate.camoufox import DEFAULT_TIMEOUT, Error, InputWedged, Page, TimeoutExceeded, debug, remove_profile_dir
+from calibre.web.automate.camoufox import DEFAULT_TIMEOUT, Error, InputWedged, Page, TimeoutExceeded, debug
 from calibre.web.automate.download_deps import Install
 from calibre.web.automate.worker import make_request, start_worker
 
@@ -193,7 +193,7 @@ class Session:
 class State:
     """Everything the worker process owns, created once on first request."""
 
-    def __init__(self, browser: Any, max_tabs: int) -> None:  # noqa: ANN401
+    def __init__(self, browser: Any, max_tabs: int) -> None:  # ruff: ignore[any-type]
         self.browser = browser
         self.max_tabs = max(1, max_tabs)
         self.sessions: OrderedDict[str, Session] = OrderedDict()
@@ -460,12 +460,14 @@ async def submit_form(session: Session, page: Page, request: Mapping[str, Any]) 
     def remaining() -> float:
         return max(deadline - time.monotonic(), 0)
 
-    loaded = await fetch_document(session, page, url, timeout)
-    if loaded.get('error'):
-        return loaded
     # Neither the values nor anything derived from them is ever logged, since
     # what goes into a login form is a password
     try:
+        # Loading the page counts against the timeout too, and on a slow
+        # machine can use all of it, which is just as much the form timing out
+        loaded = await fetch_document(session, page, url, timeout)
+        if loaded.get('error'):
+            return loaded
         for selector, value in fields:
             if not await fill_field(page, selector, value, remaining):
                 return error_result(f'Submitting the form at {url} failed: could not type into {selector}', url=page.url)
@@ -542,7 +544,7 @@ async def setup_browser(input_data: Mapping[str, Any]) -> None:
     state = State(browser, int(input_data.get('max_tabs') or DEFAULT_MAX_TABS))
 
 
-async def handle_request(input_data: Mapping[str, Any], request: Mapping[str, Any]) -> Any:  # noqa: ANN401
+async def handle_request(input_data: Mapping[str, Any], request: Mapping[str, Any]) -> Any:  # ruff: ignore[any-type]
     """Handle one request from the recipe process."""
     assert state is not None
     action = str(request.get('action') or '')
@@ -567,30 +569,13 @@ async def handle_request(input_data: Mapping[str, Any], request: Mapping[str, An
 
 
 def finalize(input_data: Mapping[str, Any]) -> None:
-    """Shut the browser down when the worker's server stops.
-
-    This is called from inside the worker's event loop, so it cannot await
-    anything. It does not need to: closing the browser is blocking work from
-    beginning to end, which is why Browser.close() farms it out to a thread.
-    Skipping it would leave the browser process running once its parent exits.
-    """
+    """Shut the browser down when the worker's server stops."""
     global state
     current, state = state, None
-    if current is None:
-        return
-    browser = current.browser
-    process, browser.process = browser.process, None
-    with suppress(Exception):
-        if process is not None:
-            if not browser.closed:
-                with suppress(Exception):
-                    browser.connection.send_nowait('Browser.close')
-            browser.reap(process, browser.connection.transport)
-    browser.closed = True
-    profile_dir, browser.profile_dir = browser.profile_dir, ''
-    if profile_dir:
-        with suppress(Exception):
-            remove_profile_dir(profile_dir)
+    if current is not None:
+        from calibre.web.automate.browser import close_browser_from_loop
+
+        close_browser_from_loop(current.browser)
 
 
 # }}}
@@ -617,10 +602,10 @@ class Response:
         self._headers = [(str(n), str(v)) for n, v in result.get('headers') or ()]
         self._data = BytesIO(result.get('data') or b'')
 
-    def read(self, *a: Any) -> bytes:  # noqa: ANN401
+    def read(self, *a: Any) -> bytes:  # ruff: ignore[any-type]
         return self._data.read(*a)
 
-    def seek(self, *a: Any) -> int:  # noqa: ANN401
+    def seek(self, *a: Any) -> int:  # ruff: ignore[any-type]
         return self._data.seek(*a)
 
     def tell(self) -> int:
@@ -637,7 +622,7 @@ class Response:
     code = status
 
     @property
-    def headers(self) -> Any:  # noqa: ANN401
+    def headers(self) -> Any:  # ruff: ignore[any-type]
         from email.message import EmailMessage
 
         ans = EmailMessage()
@@ -655,7 +640,7 @@ class Response:
     def geturl(self) -> str:
         return self.url
 
-    def getinfo(self) -> Any:  # noqa: ANN401
+    def getinfo(self) -> Any:  # ruff: ignore[any-type]
         return self.headers
 
     def close(self) -> None:
@@ -664,7 +649,7 @@ class Response:
     def __enter__(self) -> Response:
         return self
 
-    def __exit__(self, *a: Any) -> None:  # noqa: ANN401
+    def __exit__(self, *a: Any) -> None:  # ruff: ignore[any-type]
         self.close()
 
 
@@ -691,7 +676,7 @@ class Worker:
                 )
             return self.path
 
-    def request(self, payload: Mapping[str, Any]) -> Any:  # noqa: ANN401
+    def request(self, payload: Mapping[str, Any]) -> Any:  # ruff: ignore[any-type]
         # Deliberately not holding self.lock: every request gets a connection
         # of its own and the worker serves them concurrently, which is what
         # lets the recipe's download threads make progress in parallel
@@ -812,7 +797,7 @@ class Browser:
 
     # Fetching {{{
 
-    def _open(self, url_or_request: Request | str, data: Any = None, timeout: float | None = None, as_document: bool = False) -> Response:  # noqa: ANN401
+    def _open(self, url_or_request: Request | str, data: Any = None, timeout: float | None = None, as_document: bool = False) -> Response:  # ruff: ignore[any-type]
         method = 'POST' if data else 'GET'
         headers: list[tuple[str, str]] = []
         if isinstance(url_or_request, Request):
@@ -854,7 +839,7 @@ class Browser:
         })
         return response_from_result(result)
 
-    def open(self, url_or_request: Request | str, data: Any = None, timeout: float | None = None, as_document: bool = True) -> Response:  # noqa: ANN401
+    def open(self, url_or_request: Request | str, data: Any = None, timeout: float | None = None, as_document: bool = True) -> Response:  # ruff: ignore[any-type]
         """Load a URL the way a person clicking a link would.
 
         Unless as_document is False the page is navigated to in this browser's
@@ -862,7 +847,7 @@ class Browser:
         """
         return self._open(url_or_request, data, timeout, as_document)
 
-    def open_novisit(self, url_or_request: Request | str, data: Any = None, timeout: float | None = None, as_document: bool = False) -> Response:  # noqa: ANN401
+    def open_novisit(self, url_or_request: Request | str, data: Any = None, timeout: float | None = None, as_document: bool = False) -> Response:  # ruff: ignore[any-type]
         """Get a URL without navigating to it.
 
         Used for the images and stylesheets of the document this browser last

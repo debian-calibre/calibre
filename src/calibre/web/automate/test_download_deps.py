@@ -28,7 +28,7 @@ class FakeInstaller(dd.Installer):
         self.num_of_installs = 0
         self.fail_downloads_of: set[str] = set()
 
-    def latest_release(self, **kw: Any) -> dd.Release:  # noqa: ANN401
+    def latest_release(self, **kw: Any) -> dd.Release:  # ruff: ignore[any-type]
         self.num_of_release_queries += 1
         return self.available
 
@@ -174,6 +174,61 @@ class TestDownloadDeps(unittest.TestCase):
         i.check_for_update({})
         self.assertEqual(self.read_metadata()['update_available']['version'], '3.0')
 
+    def test_download_deps_versions_in_use(self) -> None:
+        i = self.installer
+        install, lock = i.use()
+        self.assertEqual(install.version, '1.0')
+        # Any number of users can hold a version at the same time
+        install2, lock2 = i.use()
+        self.assertEqual(install2, install)
+
+        # A version in use must survive an update, since a running browser can
+        # open files from it at any time
+        i.available = dd.Release('2.0', 'fake://2.0', '')
+        self.make_update_check_due()
+        i()
+        self.wait_for_update_check()
+        self.assertEqual(i().version, '2.0')
+        self.assertEqual(self.installed_versions(), {'1.0', '2.0'})
+        self.assertEqual(open(install.path).read(), '1.0')
+
+        # and must be removed only once all its users are done with it
+        lock.release()
+        i()
+        self.assertEqual(self.installed_versions(), {'1.0', '2.0'})
+        with lock2:
+            pass
+        lock.release()  # releasing twice must be harmless
+        i()
+        self.assertEqual(self.installed_versions(), {'2.0'})
+        self.assertFalse(os.path.exists(i.version_dir('1.0') + dd.VERSION_LOCK_SUFFIX))
+
+        # An install obtained earlier, as by another process, can be locked
+        install = i()
+        lock3 = i.lock_install(install)
+        self.assertIsNotNone(lock3)
+        self.assertIsNone(i.lock_install(dd.Install(os.path.join(self.tdir, 'elsewhere'), '2.0')))
+        self.assertIsNone(i.lock_install(dd.Install(i.payload_path(os.path.join(i.install_dir, '1.0')), '1.0')))
+        i.available = dd.Release('3.0', 'fake://3.0', '')
+        self.make_update_check_due()
+        i()
+        self.wait_for_update_check()
+        self.assertEqual(i().version, '3.0')
+        self.assertEqual(self.installed_versions(), {'2.0', '3.0'})
+        if lock3 is not None:
+            lock3.release()
+        i()
+        self.assertEqual(self.installed_versions(), {'3.0'})
+
+        # A version still in use that the metadata no longer refers to must be
+        # re-used rather than replaced from under its users
+        install, lock = i.use()
+        self.write_metadata({})
+        num_of_installs = i.num_of_installs
+        self.assertEqual(i().path, install.path)
+        self.assertEqual(i.num_of_installs, num_of_installs)
+        lock.release()
+
     def test_download_deps_failed_update(self) -> None:
         i = self.installer
         i()
@@ -299,6 +354,55 @@ class TestDownloadDeps(unittest.TestCase):
                 dd.camoufox_installer.latest_release()
         finally:
             dd.download_json = original
+
+    def test_download_deps_camoufox_emulated_arch(self) -> None:
+        def asset(build: str, arch: str) -> dict[str, Any]:
+            name = f'camoufox-152.0.4-{build}-win.{arch}.zip'
+            return {'name': name, 'browser_download_url': f'https://example.com/{name}'}
+
+        orig_json, orig_os, orig_arch = dd.download_json, dd.camoufox_os, dd.camoufox_arch
+        try:
+            # Windows on ARM falls back to x86_64 builds, preferring native builds of the same version
+            dd.camoufox_os, dd.camoufox_arch = (lambda: 'win'), (lambda: 'arm64')
+            self.assertEqual(dd.camoufox_archs(), ('arm64', 'x86_64'))
+            dd.download_json = lambda *a, **kw: [{'prerelease': False, 'assets': [asset('beta.29', 'x86_64'), asset('beta.29', 'i686')]}]
+            self.assertEqual(dd.camoufox_installer.latest_release().url, 'https://example.com/camoufox-152.0.4-beta.29-win.x86_64.zip')
+            dd.download_json = lambda *a, **kw: [
+                {'prerelease': False, 'assets': [asset('beta.30', 'x86_64'), asset('beta.29', 'arm64'), asset('beta.29', 'x86_64')]},
+            ]
+            self.assertEqual(dd.camoufox_installer.latest_release().version, '152.0.4-beta.30')
+            dd.download_json = lambda *a, **kw: [{'prerelease': False, 'assets': [asset('beta.29', 'x86_64'), asset('beta.29', 'arm64')]}]
+            self.assertEqual(dd.camoufox_installer.latest_release().url, 'https://example.com/camoufox-152.0.4-beta.29-win.arm64.zip')
+            # Other platforms have native builds and no fallbacks
+            for os_name, arch in (('lin', 'arm64'), ('mac', 'arm64'), ('mac', 'x86_64'), ('win', 'x86_64')):
+                dd.camoufox_os, dd.camoufox_arch = (lambda: os_name), (lambda: arch)  # ruff: ignore[function-uses-loop-variable]
+                self.assertEqual(dd.camoufox_archs(), (arch,))
+        finally:
+            dd.download_json, dd.camoufox_os, dd.camoufox_arch = orig_json, orig_os, orig_arch
+
+    def test_download_deps_camoufox_32bit_linux(self) -> None:
+        orig_os, orig_machine, orig_32bit = dd.camoufox_os, dd.platform.machine, dd.is_32bit_userspace
+        try:
+            dd.camoufox_os = lambda: 'lin'
+            for machine, is_32bit, expected in (
+                ('x86_64', False, 'x86_64'),
+                ('aarch64', False, 'arm64'),
+                ('i686', True, ''),
+                ('i386', True, ''),
+                ('armv7l', True, ''),
+                ('armv6l', True, ''),
+                # 32-bit userspace on a 64-bit kernel
+                ('aarch64', True, ''),
+                ('x86_64', True, ''),
+            ):
+                dd.platform.machine, dd.is_32bit_userspace = (lambda: machine), (lambda: is_32bit)  # ruff: ignore[function-uses-loop-variable]
+                if expected:
+                    self.assertEqual(dd.camoufox_arch(), expected)
+                else:
+                    with self.assertRaisesRegex(ValueError, '32-bit Linux'):
+                        dd.camoufox_arch()
+        finally:
+            dd.camoufox_os, dd.platform.machine, dd.is_32bit_userspace = orig_os, orig_machine, orig_32bit
 
     @unittest.skipIf(iswindows, 'UNIX file permissions are not used on Windows')
     def test_download_deps_camoufox_permissions(self) -> None:

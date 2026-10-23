@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -65,7 +65,7 @@ msgid ""
 "Take a `url` pointing to the webpage with article content and return the "
 ":term:`URL` pointing to the print version of the article. By default does "
 "nothing. For example::"
-msgstr "Ta en `url` som hänvisar till en webbplats med artikelinnehåll och returnerar :term:`URL` som hänvisar till en utskrivbar version av artikeln. Som standard gör den ingenting. Till exempel::"
+msgstr "Ta en `url` som hänvisar till en webbsida med artikelinnehåll och returnera en :term:`URL` som hänvisar till artikelns utskriftsversion. Gör som standard ingenting. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.tag_to_string:1
@@ -114,7 +114,7 @@ msgid ""
 "actually used is device dependent (currently only used by the Kindles). Note"
 " that the referenced image must be one that was successfully downloaded, "
 "otherwise it will be ignored."
-msgstr "Anropa detta från populate_article_metadata med attributet src för en <img>-tagg från artikeln som är lämplig att använda som miniatyrbild som representerar artikeln i innehållsförteckningen. Huruvida miniatyrbilden faktiskt används är enhetsberoende (används för närvarande endast av Kindle-läsenheter). Observera att den refererade bilden måste vara en som hämtats ner, annars kommer den att ignoreras."
+msgstr "Anropa detta från populate_article_metadata med attributet src för en <img>-tagg från artikeln som är lämplig att använda som miniatyrbild som representerar artikeln i innehållsförteckningen. Huruvida miniatyrbilden faktiskt används är enhetsberoende (används för närvarande endast av Kindle-läsenheter). Den refererade bilden måste ha hämtats utan fel, annars ignoreras den."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.canonicalize_internal_url:1
@@ -206,7 +206,7 @@ msgstr "Returnera en webbläsarinstans för att hämta dokument från webben. So
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_browser:6
 msgid "To customize the browser override this method in your sub-class as::"
-msgstr "För att anpassa webbläsaren åsidosätt denna metod i din underklass som::"
+msgstr "För att anpassa webbläsaren åsidosätter du denna metod i din underklass så här::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.get_cover_url:1
@@ -342,7 +342,7 @@ msgstr "Den här metoden bör implementeras i recept som analyserar en webbplats
 msgid ""
 "It must return a list. Each element of the list must be a 2-element tuple of"
 " the form ``('feed title', list of articles)``."
-msgstr "Det måste returnera en lista. Varje element i listan måste vara en tvåelementstupel av formen ``('feed title', list of articles)``."
+msgstr "Metoden måste returnera en lista. Varje element i listan måste vara en tvåelementstupel av formen ``('feed title', list of articles)``."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.parse_index:10
@@ -362,7 +362,7 @@ msgid ""
 "If you want to abort processing for some reason and have calibre show the "
 "user a simple message instead of an error, call "
 ":meth:`abort_recipe_processing`."
-msgstr "Om du vill avbryta behandlingen av någon anledning och låta calibre visa användaren ett enkelt budskap i stället för ett fel, anropa :meth:`abort_recipe_processing`."
+msgstr "Om du vill avbryta behandlingen av någon anledning och låta calibre visa användaren ett enkelt meddelande i stället för ett fel, anropa :meth:`abort_recipe_processing`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.populate_article_metadata:1
@@ -450,7 +450,7 @@ msgid ""
 "Perform some processing on downloaded image data. This is called on the raw "
 "data before any resizing is done. Must return the processed raw data. Return"
 " None to skip the image."
-msgstr "Utför viss bearbetning av hämtade bilddata. Denna anropas på rådata innan någon storleksändring görs. Måste returnera bearbetade rådata. Returnera None för att hoppa över bilden."
+msgstr "Utför viss bearbetning av hämtade bilddata. Metoden anropas på rådata innan någon storleksändring görs. Den måste returnera bearbetade rådata. Returnera None för att hoppa över bilden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.preprocess_raw_html:1
@@ -493,7 +493,7 @@ msgstr "Denna metod anropas med källkoden för varje hämtad :term:`HTML`-fil, 
 msgid ""
 "Convenience method to sort the titles in `index` according to `weights`. "
 "`index` is sorted in place. Returns `index`."
-msgstr "Bekväm metod för att sortera titlarna i `index` enligt `weights`. `index` sorteras på plats. Returnerar `index`."
+msgstr "Hjälpmetod för att sortera titlarna i `index` enligt `weights`. `index` sorteras på plats. Returnerar `index`."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.sort_index_by:4
@@ -506,6 +506,15 @@ msgid ""
 "`weights`: A dictionary that maps weights to titles. If any titles in index "
 "are not in weights, they are assumed to have a weight of 0."
 msgstr "`weights`: En ordbok som mappar vikter till titlar. Titlar i index som saknas i weights antas ha vikten 0."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.warmup_excluded_domains:1
+msgid ""
+"The domains the 'camoufox' browser must stay away from while warming itself "
+"up, so that the first time it is seen by the site being downloaded from is "
+"as part of the download proper. By default these are the domains of any "
+"statically declared feeds."
+msgstr "Domäner som webbläsaren 'camoufox' måste undvika under förberedelserna, så att webbplatsen som innehållet hämtas från ser webbläsaren för första gången först vid själva hämtningen. Som standard är detta domänerna för alla statiskt deklarerade flöden."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.articles_are_obfuscated:1
@@ -543,10 +552,25 @@ msgid ""
 msgstr "Den simulerade webbläsarmotor som ska användas vid hämtning från servrar. Som standard används Pythons webbläsarmotor mechanize, som stöder inloggning. Om du inte behöver inloggning kan du överväga 'webengine', som använder en faktisk Chromium-webbläsare för nätverksförfrågningarna, eller 'qt', som använder Qt Networking. Både 'webengine' och 'qt' stöder HTTP/2, vilket mechanize inte gör. De är därför svårare för botskyddstjänster att identifiera genom digitala fingeravtryck."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
+#: calibre.web.feeds.news.BasicNewsRecipe.browser_type:7
+msgid ""
+"For a site that defeats all of those, use 'camoufox', which downloads and "
+"drives a real Firefox based browser built to hide the fact that it is "
+"automated. It is by far the heaviest of the four: it downloads the browser "
+"on first use, warms it up by visiting a few commonly browsed sites before "
+"starting on your feeds, and actually navigates to every article, running its"
+" scripts, rather than just requesting it. In exchange, the articles are "
+"fetched exactly as a person browsing the site would fetch them, and their "
+"images come out of the browser without being downloaded a second time. Note "
+"that it ignores any user agent you set, since it uses one that matches the "
+"rest of the fingerprint it presents."
+msgstr "För en webbplats som blockerar alla dessa alternativ kan du använda 'camoufox', som hämtar och styr en riktig Firefox-baserad webbläsare som är byggd för att dölja att den är automatiserad. Detta är det klart mest resurskrävande av de fyra alternativen: det hämtar webbläsaren vid första användningen, förbereder den genom att besöka några vanliga webbplatser innan dina flöden behandlas och besöker sedan faktiskt varje artikel och kör dess skript i stället för att bara begära den. I gengäld hämtas artiklarna precis som när en person besöker webbplatsen, och deras bilder tas direkt från webbläsaren utan att hämtas en andra gång. Observera att en angiven användaragent ignoreras, eftersom webbläsaren använder en som stämmer överens med resten av det fingeravtryck den visar upp."
+
+#: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.center_navbar:1
 msgid ""
 "If True the navigation bar is center aligned, otherwise it is left aligned"
-msgstr "Om True centreras navigationslisten annars är den vänsterjusterad"
+msgstr "Om värdet är True centreras navigeringsfältet, annars vänsterjusteras det"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.compress_news_images:1
@@ -652,7 +676,7 @@ msgstr "Lista över flöden som ska hämtas. Kan vara antingen ``[url1, url2, ..
 msgid ""
 "List of regular expressions that determines which links to ignore. If empty "
 "it is ignored. Used only if is_link_wanted is not implemented. For example::"
-msgstr "Lista med reguljära uttryck som avgör vilka länkar att ignorera. Om den är tom ignoreras den. Används endast om is_link_wanted inte implementeras. Till exempel::"
+msgstr "Lista med reguljära uttryck som avgör vilka länkar som ska ignoreras. Listan ignoreras om den är tom. Används endast om is_link_wanted inte har implementerats. Till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.filter_regexps:7
@@ -681,7 +705,7 @@ msgid ""
 "Ignore duplicates of articles that are present in more than one section. A "
 "duplicate article is an article that has the same title and/or URL. To "
 "ignore articles with the same title, set this to::"
-msgstr "Ignorera dubbletter av artiklar som finns i mer än ett avsnitt. En dubblettartikel är en artikel som har samma titel och/eller URL. Att ignorera artiklar med samma titel, ställ in detta till::"
+msgstr "Ignorera dubbletter av artiklar som finns i mer än ett avsnitt. En dubblettartikel är en artikel som har samma titel och/eller URL. För att ignorera artiklar med samma titel anger du::"
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.ignore_duplicate_articles:7
@@ -830,7 +854,7 @@ msgid ""
 "if parse_index is overridden in the sub class. It is meant only for recipes "
 "that return a list of feeds using `feeds` or :meth:`get_feeds`. It is also "
 "used if you use the ignore_duplicate_articles option."
-msgstr "Om True tas tomma flöden bort från utmatningen. Det här alternativet har ingen effekt om parse_index åsidosätts i underklassen. Den är avsedd endast för recept som returnerar en lista med flöden som använder `feeds` eller :meth:`get_feeds`. Den används också om du använder alternativet ignore_duplicate_articles."
+msgstr "Om värdet är True tas tomma flöden bort från utmatningen. Alternativet har ingen effekt om parse_index åsidosätts i underklassen. Det är bara avsett för recept som returnerar en lista med flöden via `feeds` eller :meth:`get_feeds`. Det används också om alternativet ignore_duplicate_articles används."
 
 #: ../../../__w/calibre/calibre/src/calibre/web/feeds/news.pydocstring of
 #: calibre.web.feeds.news.BasicNewsRecipe.remove_javascript:1

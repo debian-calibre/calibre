@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: un_pogaz, 2025-2026\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -938,6 +938,14 @@ msgid ""
 msgstr "Supprimer de la base de données les livres spécifiés par les book_ids et effacer leurs formats de fichier . Si ``permanent`` est à False, alors les formats de fichiers sont placés dans la corbeille de la bibliothèque."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr "Si les fichiers de certains livres ne peuvent pas être supprimés ou déplacés vers la corbeille, ces livres restent inchangés et l'exception :class:`BooksNotRemoved` est levée une fois que tous les autres livres ont été supprimés."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
 msgid ""
 "Delete the specified extra files, either to Recycle Bin or permanently."
@@ -1181,8 +1189,10 @@ msgstr "Définir le document de notes. Si le texte consultable est différent du
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
-msgstr "Définir le nombre de pages pour le livre spécifié"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
+msgstr "Définir le nombre de pages pour le livre spécifié. Ne fait rien si le livre n'existe pas."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1

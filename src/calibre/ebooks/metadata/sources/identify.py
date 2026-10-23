@@ -48,7 +48,7 @@ class Worker(Thread):
         self.plugin.dl_time_spent = time.time() - start
 
     @property
-    def name(self):
+    def name(self):  # ty: ignore[invalid-property-type-override]
         return self.plugin.name
 
 
@@ -57,6 +57,18 @@ def is_worker_alive(workers):
         if w.is_alive():
             return True
     return False
+
+
+# Sources that download using the shared browser can take much longer than the
+# wait after the first result, since the first download of a session waits for
+# the browser to launch and warm up, so they get this long instead
+CAMOUFOX_WAIT_AFTER_FIRST_RESULT = 120  # seconds
+
+
+def wait_after_first_result(plugin, wait_time):
+    if getattr(plugin, 'uses_camoufox_worker', False):
+        return max(wait_time, CAMOUFOX_WAIT_AFTER_FIRST_RESULT)
+    return wait_time
 
 
 # }}}
@@ -360,10 +372,12 @@ def identify(
     abort,  # {{{
     title=None,
     authors=None,
-    identifiers={},
+    identifiers=None,
     timeout=30,
     allowed_plugins=None,
 ):
+    if identifiers is None:
+        identifiers = {}
     if title == _('Unknown'):
         title = None
     if authors == [_('Unknown')]:
@@ -416,7 +430,7 @@ def identify(
         if not is_worker_alive(workers):
             break
 
-        if first_result_at is not None and time.time() - first_result_at > wait_time:
+        if first_result_at is not None and all(time.time() - first_result_at > wait_after_first_result(w.plugin, wait_time) for w in workers if w.is_alive()):
             log.warn('Not waiting any longer for more results. Still running sources:')
             for worker in workers:
                 if worker.is_alive():

@@ -386,7 +386,7 @@ def google_consent_cookies():
     b['name'], b['value'] = 'CONSENT', 'PENDING+987'
     yield b
     template = b'\x08\x01\x128\x08\x14\x12+boq_identityfrontenduiserver_20231107.05_p0\x1a\x05en-US \x03\x1a\x06\x08\x80\xf1\xca\xaa\x06'
-    template.replace(b'20231107', date.today().strftime('%Y%m%d').encode('ascii'))  # noqa: DTZ011
+    template.replace(b'20231107', date.today().strftime('%Y%m%d').encode('ascii'))  # ruff: ignore[call-date-today]
     b = base.copy()
     b['name'], b['value'] = 'SOCS', standard_b64encode(template).decode('ascii').rstrip('=')
     yield b
@@ -399,7 +399,7 @@ def google_specialize_browser(br):
                 br.set_simple_cookie(c['name'], c['value'], c['domain'], path=c['path'])
             br.google_consent_cookie_added = True
     # google serves JS based pages without the right user agent
-    br.set_user_agent('Lynx/2.8.6rel.5 libwww-FM/2.14')  # noqa
+    br.set_user_agent('Lynx/2.8.6rel.5 libwww-FM/2.14')
     return br
 
 

@@ -56,7 +56,16 @@ from calibre.constants import cache_dir, ismacos, iswindows, sanitize_env_vars_i
 from calibre.utils.filenames import make_long_path_useable
 from calibre.utils.safe_atexit import remove_folder_atexit
 from calibre.web.automate.camoufox_fonts import ESSENTIAL_FONTS, FALLBACK_REPORTABLE_FONTS
-from calibre.web.automate.download_deps import Install, browserforge_data, camoufox_font_lists, camoufox_install, camoufox_resource_dir, debug
+from calibre.web.automate.download_deps import (
+    Install,
+    VersionLock,
+    browserforge_data,
+    camoufox_font_lists,
+    camoufox_resource_dir,
+    debug,
+    lock_camoufox_install,
+    use_camoufox,
+)
 
 DEFAULT_TIMEOUT = 60.0  # seconds, for individual protocol commands
 # The browser answers an input event only once the page has actually seen it,
@@ -84,6 +93,12 @@ IN_PAGE_REPLY_GRACE = 5.0  # seconds added to the timeout of a call the page end
 # events announcing the new document do, so the state of the page at the time
 # cannot be used to tell this apart from a call that failed for another reason.
 CONTEXT_DESTROYED = 'execution context was destroyed'
+# What the browser says when it is sent a call for a world it does not know,
+# which, during a navigation, can be the world the events about it say is the
+# current one, see Page.send_in_context(). The call never ran, so unlike one cut
+# short by CONTEXT_DESTROYED it is safe to make again.
+CONTEXT_NOT_FOUND = 'failed to find execution context'
+CONTEXT_RETRY_DELAY = 0.1  # seconds to wait for a replacement before calling a context that was not found again
 
 # The OS names used by camoufox in its config, its bundled data directories and
 # its user agent strings, respectively
@@ -580,7 +595,7 @@ def config_property_types(resource_dir: str) -> dict[str, str]:
         return {entry['property']: entry['type'] for entry in json.loads(f.read())}
 
 
-def value_has_type(value: Any, expected: str) -> bool:  # noqa: ANN401
+def value_has_type(value: Any, expected: str) -> bool:  # ruff: ignore[any-type]
     match expected:
         case 'str':
             return isinstance(value, str)
@@ -726,7 +741,7 @@ class Transport:
         self.reader.start()
         self.writer.start()
 
-    def call_in_loop(self, func: Callable[..., Any], *args: Any) -> None:  # noqa: ANN401
+    def call_in_loop(self, func: Callable[..., Any], *args: Any) -> None:  # ruff: ignore[any-type]
         try:
             self.loop.call_soon_threadsafe(func, *args)
         except RuntimeError:
@@ -816,6 +831,24 @@ class Process:
             return ''
 
 
+def startup_failure_message(err: Exception, log: str, binary: str, windows: bool = iswindows) -> str:
+    """The error message for a browser that failed to start, with a hint about the
+    likely cause when the browser exited before writing anything to its log."""
+    ans = f'The camoufox browser failed to start: {err}\nBrowser log:\n{log}'
+    if windows and isinstance(err, BrowserClosedError) and not log.strip():
+        # This is what happens when Windows cannot load the browser's DLLs, for
+        # example, xul.dll, which the browser reports with a "Couldn't load
+        # XPCOM" dialog. Almost always this is because security software has
+        # quarantined or blocked some of the files in the browser install.
+        ans += (
+            '\nThe browser exited without any output. This usually means that some of its files were'
+            ' quarantined or blocked by anti-virus software. Check your anti-virus software and add an'
+            f' exclusion for the folder: {os.path.dirname(binary)}'
+            ' then delete that folder so that the browser is downloaded again.'
+        )
+    return ans
+
+
 class PosixProcess(Process):
     def poll(self) -> int | None:
         if self.returncode is None:
@@ -866,24 +899,39 @@ def reserve_high_fd(fd: int, minimum: int = 5) -> int:
             os.close(x)
 
 
-def spawn_posix(argv: Sequence[str], env: Mapping[str, str], log_path: str) -> PosixProcess:
-    """Start the browser with its command pipe on fd 3 and its response pipe on fd 4."""
+def spawn_posix(argv: Sequence[str], env: Mapping[str, str], log_path: str, inherit_fd: int = -1) -> PosixProcess:
+    """Start the browser with its command pipe on fd 3 and its response pipe on fd 4.
+
+    There is no need to arrange for the browser to be killed should we crash,
+    since it quits by itself when the command pipe is closed, which happens
+    when we exit, however that happens.
+
+    If inherit_fd is not negative, the browser gets a copy of it on fd 5, which
+    keeps any lock on the file it refers to held until the browser exits.
+    """
+    # Above all the descriptors set up in the child, so that none is
+    # overwritten before it has been copied to where it belongs
+    minimum = 6
     command_read, command_write = os.pipe()
     response_read, response_write = os.pipe()
-    command_read, response_write = reserve_high_fd(command_read), reserve_high_fd(response_write)
-    command_write, response_read = reserve_high_fd(command_write), reserve_high_fd(response_read)
-    log_fd = os.open(log_path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600)
+    command_read, response_write = reserve_high_fd(command_read, minimum), reserve_high_fd(response_write, minimum)
+    command_write, response_read = reserve_high_fd(command_write, minimum), reserve_high_fd(response_read, minimum)
+    log_fd = reserve_high_fd(os.open(log_path, os.O_WRONLY | os.O_CREAT | os.O_TRUNC, 0o600), minimum)
+    inherited = -1 if inherit_fd < 0 else reserve_high_fd(os.dup(inherit_fd), minimum)
+    file_actions = [
+        (os.POSIX_SPAWN_DUP2, command_read, 3),
+        (os.POSIX_SPAWN_DUP2, response_write, 4),
+        (os.POSIX_SPAWN_DUP2, log_fd, 1),
+        (os.POSIX_SPAWN_DUP2, log_fd, 2),
+    ]
+    if inherited > -1:
+        file_actions.append((os.POSIX_SPAWN_DUP2, inherited, 5))
     try:
         pid = os.posix_spawn(
             argv[0],
             list(argv),
             dict(env),
-            file_actions=[
-                (os.POSIX_SPAWN_DUP2, command_read, 3),
-                (os.POSIX_SPAWN_DUP2, response_write, 4),
-                (os.POSIX_SPAWN_DUP2, log_fd, 1),
-                (os.POSIX_SPAWN_DUP2, log_fd, 2),
-            ],
+            file_actions=file_actions,
             # Put the browser in its own process group so that, for example, a
             # Ctrl-C in a terminal does not kill it out from under us
             setpgroup=0,
@@ -893,8 +941,9 @@ def spawn_posix(argv: Sequence[str], env: Mapping[str, str], log_path: str) -> P
             os.close(fd)
         raise
     finally:
-        for fd in (command_read, response_write, log_fd):
-            os.close(fd)
+        for fd in (command_read, response_write, log_fd, inherited):
+            if fd > -1:
+                os.close(fd)
     return PosixProcess(pid, response_read, command_write, log_path)
 
 
@@ -1189,10 +1238,13 @@ if iswindows:  # {{{
 # }}}
 
 
-def spawn(argv: Sequence[str], env: Mapping[str, str], log_path: str) -> Process:
+def spawn(argv: Sequence[str], env: Mapping[str, str], log_path: str, inherit_fd: int = -1) -> Process:
+    """Start the browser. inherit_fd is only used on POSIX, see spawn_posix(). On
+    Windows the browser is in a job object that kills it when we exit, so it
+    can never outlive anything we hold."""
     if iswindows:
         return spawn_windows(argv, env, log_path)  # type: ignore[name-defined]
-    return spawn_posix(argv, env, log_path)
+    return spawn_posix(argv, env, log_path, inherit_fd)
 
 
 def remove_profile_dir(path: str, timeout: float = PROFILE_REMOVE_TIMEOUT) -> None:
@@ -1346,7 +1398,7 @@ class EventWaiter:
         self.waiters.clear()
 
 
-async def wait_for(future: asyncio.Future[Any], timeout: float, what: str) -> Any:  # noqa: ANN401
+async def wait_for(future: asyncio.Future[Any], timeout: float, what: str) -> Any:  # ruff: ignore[any-type]
     try:
         async with asyncio.timeout(timeout):
             return await future
@@ -1418,7 +1470,7 @@ WAIT_FOR_SELECTOR_JS = '''(selector, timeout, visible) => new Promise((resolve) 
         resolve(value);
     };
     observer = new MutationObserver(() => { const el = match(); if (el) done(el); });
-    observer.observe(document.documentElement, {childList: true, subtree: true, attributes: true});
+    observer.observe(document, {childList: true, subtree: true, attributes: true});
     timer = setTimeout(() => done(null), timeout);
     const again = match();
     if (again) done(again);
@@ -2525,7 +2577,7 @@ class Element:
         if self.disposed:
             raise Error('This element handle has been disposed')
 
-    async def call(self, function_declaration: str, *args: Any, by_value: bool = True) -> Any:  # noqa: ANN401
+    async def call(self, function_declaration: str, *args: Any, by_value: bool = True) -> Any:  # ruff: ignore[any-type]
         """Call a JavaScript function with this element as its first argument."""
         self.check_alive()
         return await self.page.call_with_handles(function_declaration, [{'objectId': self.object_id}, *[{'value': a} for a in args]], by_value=by_value)
@@ -2978,7 +3030,41 @@ class Page:
         await wait_for(self.events.expect(is_a_new_context), timeout, 'a new JavaScript execution context')
         return self.execution_context
 
-    def unwrap(self, result: Mapping[str, Any], by_value: bool) -> Any:  # noqa: ANN401
+    async def context_to_retry_in(self, not_found: str, timeout: float) -> str:
+        """The execution context to make a call again in, that failed because
+        the browser could not find the context not_found.
+
+        Seen on Windows just after a navigation had loaded its page: the
+        browser can, for a moment, not know a context that the events it sent
+        say is current, either because the events replacing it have yet to
+        arrive or because it is looking for it in a part of itself that does
+        not have it. So a replacement is waited for, briefly, and if none
+        arrives, not_found is tried again.
+        """
+        try:
+            return await self.wait_for_new_execution_context(not_found, min(timeout, CONTEXT_RETRY_DELAY))
+        except TimeoutExceeded:
+            return await self.wait_for_execution_context(max(timeout - CONTEXT_RETRY_DELAY, 0))
+
+    async def send_in_context(self, method: str, params: Mapping[str, Any], timeout: float) -> dict[str, Any]:
+        """Send a command that runs JavaScript in the execution context of the
+        main frame, making it again in the context there is by then, if the
+        browser could not find the one it was made in, see :data:`CONTEXT_NOT_FOUND`."""
+        deadline = time.monotonic() + timeout
+        context = await self.wait_for_execution_context(timeout)
+        reported = False
+        while True:
+            try:
+                return await self.send(method, {**params, 'executionContextId': context}, max(deadline - time.monotonic(), 0))
+            except ProtocolError as err:
+                if CONTEXT_NOT_FOUND not in err.message.lower() or time.monotonic() >= deadline:
+                    raise
+                if not reported:
+                    reported = True
+                    debug(f'{method} failed as {context} was not found, trying again')
+                context = await self.context_to_retry_in(context, max(deadline - time.monotonic(), 0))
+
+    def unwrap(self, result: Mapping[str, Any], by_value: bool) -> Any:  # ruff: ignore[any-type]
         if (details := result.get('exceptionDetails')) is not None:
             raise JavaScriptError(details.get('text') or details.get('stack') or repr(details.get('value')))
         obj = result.get('result') or {}
@@ -2990,7 +3076,7 @@ class Page:
             return {'Infinity': float('inf'), '-Infinity': float('-inf'), '-0': -0.0, 'NaN': float('nan')}[unserializable]
         return obj.get('value')
 
-    async def evaluate(self, expression: str, *, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT) -> Any:  # noqa: ANN401
+    async def evaluate(self, expression: str, *, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT) -> Any:  # ruff: ignore[any-type]
         """Evaluate a JavaScript expression in the page and return its value.
 
         Pass by_value=False to get an :class:`Element` handle back for
@@ -3003,11 +3089,10 @@ class Page:
         ``(async () => (await fetch(url)).status)()`` works. When in doubt, wrap
         the expression in an async function.
         """
-        context = await self.wait_for_execution_context(timeout)
-        result = await self.send('Runtime.evaluate', {'executionContextId': context, 'expression': expression, 'returnByValue': by_value}, timeout)
+        result = await self.send_in_context('Runtime.evaluate', {'expression': expression, 'returnByValue': by_value}, timeout)
         return self.unwrap(result, by_value)
 
-    async def call(self, function_declaration: str, *args: Any, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT) -> Any:  # noqa: ANN401
+    async def call(self, function_declaration: str, *args: Any, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT) -> Any:  # ruff: ignore[any-type]
         """Call a JavaScript function in the page, passing args to it.
 
         See :meth:`evaluate` for the caveat about functions that return a
@@ -3017,16 +3102,16 @@ class Page:
 
     async def call_with_handles(
         self, function_declaration: str, args: Sequence[Mapping[str, Any]], *, by_value: bool = True, timeout: float = DEFAULT_TIMEOUT, context: str = ''
-    ) -> Any:  # noqa: ANN401
+    ) -> Any:  # ruff: ignore[any-type]
         """Pass context to run the function in a particular execution context,
         for a caller that needs to know which one its call was made in, see
-        :meth:`wait_for_selector`."""
-        context = context or await self.wait_for_execution_context(timeout)
-        result = await self.send(
-            'Runtime.callFunction',
-            {'executionContextId': context, 'functionDeclaration': function_declaration, 'args': list(args), 'returnByValue': by_value},
-            timeout,
-        )
+        :meth:`wait_for_selector`. Without one, the call is made in the
+        current context, see :meth:`send_in_context`."""
+        params = {'functionDeclaration': function_declaration, 'args': list(args), 'returnByValue': by_value}
+        if context:
+            result = await self.send('Runtime.callFunction', {**params, 'executionContextId': context}, timeout)
+        else:
+            result = await self.send_in_context('Runtime.callFunction', params, timeout)
         return self.unwrap(result, by_value)
 
     # }}}
@@ -3156,10 +3241,17 @@ class Page:
                 handle = await self.call_with_handles(WAIT_FOR_SELECTOR_JS, args, by_value=False, timeout=remaining + IN_PAGE_REPLY_GRACE, context=context)
             except ProtocolError as err:
                 # A navigation destroys the world the observer is running in,
-                # which fails the call rather than returning from it
-                if CONTEXT_DESTROYED not in err.message.lower() or time.monotonic() >= deadline:
+                # which fails the call rather than returning from it, or leaves
+                # the browser briefly unable to find it, see context_to_retry_in()
+                message = err.message.lower()
+                if time.monotonic() >= deadline:
                     raise
-                context = await self.wait_for_new_execution_context(context, max(deadline - time.monotonic(), 0))
+                if CONTEXT_DESTROYED in message:
+                    context = await self.wait_for_new_execution_context(context, max(deadline - time.monotonic(), 0))
+                elif CONTEXT_NOT_FOUND in message:
+                    context = await self.context_to_retry_in(context, max(deadline - time.monotonic(), 0))
+                else:
+                    raise
                 continue
             if isinstance(handle, Element):
                 return handle
@@ -3495,6 +3587,8 @@ class Browser:
         self.ignore_https_errors = ignore_https_errors
         self.proxy, self.extra_config, self.allow_prerelease = proxy, config, allow_prerelease
         self.install = install
+        # Stops an update removing the files of the install while the browser is running
+        self.install_lock: VersionLock | None = None
         self.extra_user_prefs = firefox_user_prefs
         self.launch_timeout, self.keep_log = launch_timeout, keep_log
         self.connection = Connection()
@@ -3503,6 +3597,7 @@ class Browser:
         self.browser_context_id = ''
         self.config: dict[str, Any] = {}
         self.version = ''
+        self.binary = ''
         self.pages: dict[str, Page] = {}
         self.pending_pages: dict[str, asyncio.Future[Page]] = {}
         self.new_pages: list[Page] = []
@@ -3518,7 +3613,7 @@ class Browser:
         await self.launch()
         return self
 
-    async def __aexit__(self, *args: Any) -> None:  # noqa: ANN401
+    async def __aexit__(self, *args: Any) -> None:  # ruff: ignore[any-type]
         await self.close()
 
     # Launching {{{
@@ -3562,29 +3657,36 @@ class Browser:
         if self.process is not None:
             raise Error('This browser has already been launched')
         loop = asyncio.get_running_loop()
-        if (install := self.install) is None:
-            install = await loop.run_in_executor(None, lambda: camoufox_install(allow_prerelease=self.allow_prerelease))
-        binary, self.version = install.path, install.version
-        resource_dir = camoufox_resource_dir(binary)
-        self.config = await loop.run_in_executor(
-            None,
-            lambda: generate_config(
-                resource_dir,
-                self.version,
-                target_os=self.target_os,
-                window=self.window,
-                fonts=self.fonts,
-                locale=self.locale,
-                extra=self.extra_config,
-            ),
-        )
-        self.profile_dir = tempfile.mkdtemp(prefix='camoufox-profile-')
-        log_path = os.path.join(self.profile_dir, 'browser-log.txt')
-        env = self.build_environment(resource_dir)
-        self.connection.root_handler = self.handle_event
-        self.connection.on_closed = self.connection_closed
+        if (given_install := self.install) is None:
+            install, self.install_lock = await loop.run_in_executor(None, lambda: use_camoufox(allow_prerelease=self.allow_prerelease))
+        else:
+            install = given_install
+            self.install_lock = await loop.run_in_executor(None, lambda: lock_camoufox_install(given_install))
         try:
-            self.process = await loop.run_in_executor(None, lambda: spawn(self.build_command_line(binary), env, log_path))
+            binary, self.version = install.path, install.version
+            self.binary = binary
+            resource_dir = camoufox_resource_dir(binary)
+            self.config = await loop.run_in_executor(
+                None,
+                lambda: generate_config(
+                    resource_dir,
+                    self.version,
+                    target_os=self.target_os,
+                    window=self.window,
+                    fonts=self.fonts,
+                    locale=self.locale,
+                    extra=self.extra_config,
+                ),
+            )
+            self.profile_dir = tempfile.mkdtemp(prefix='camoufox-profile-')
+            log_path = os.path.join(self.profile_dir, 'browser-log.txt')
+            env = self.build_environment(resource_dir)
+            self.connection.root_handler = self.handle_event
+            self.connection.on_closed = self.connection_closed
+            # The browser holds the lock on the install too, so that it stays
+            # held for as long as the browser runs, even if we crash
+            lock_fd = -1 if self.install_lock is None else self.install_lock.fileno()
+            self.process = await loop.run_in_executor(None, lambda: spawn(self.build_command_line(binary), env, log_path, lock_fd))
             self.connection.start(self.process, loop)
             await self.enable(loop)
         except BaseException:
@@ -3597,7 +3699,7 @@ class Browser:
             await self.connection.send('Browser.enable', {'attachToDefaultContext': False, 'userPrefs': prefs}, timeout=self.launch_timeout)
         except (TimeoutExceeded, BrowserClosedError) as err:
             assert self.process is not None
-            raise Error(f'The camoufox browser failed to start: {err}\nBrowser log:\n{self.process.log_tail()}') from err
+            raise Error(startup_failure_message(err, self.process.log_tail(), self.binary)) from err
         result = await self.connection.send('Browser.createBrowserContext', {'removeOnDetach': True})
         self.browser_context_id = result['browserContextId']
         if self.ignore_https_errors:
@@ -3669,10 +3771,20 @@ class Browser:
             await page.open(url, wait=wait, timeout=timeout)
         return page
 
-    async def popup_pages(self) -> tuple[Page, ...]:
-        """Tabs the pages themselves opened, for example by a link with target=_blank."""
-        ans = tuple(self.new_pages)
-        self.new_pages.clear()
+    async def popup_pages(self, opener: Page | None = None) -> tuple[Page, ...]:
+        """Tabs the pages themselves opened, for example by a link with
+        target=_blank or one clicked with the new tab modifier held down.
+
+        Each tab is handed back once only. If opener is given only the tabs it
+        opened are handed back, the rest being left for whoever is driving the
+        tabs that opened them.
+        """
+        if opener is None:
+            ans = tuple(self.new_pages)
+            self.new_pages.clear()
+        else:
+            ans = tuple(p for p in self.new_pages if p.opener_id == opener.target_id)
+            self.new_pages[:] = [p for p in self.new_pages if p.opener_id != opener.target_id]
         return ans
 
     # Browser wide settings {{{
@@ -3746,6 +3858,9 @@ class Browser:
                 pass
             transport = self.connection.transport
             await loop.run_in_executor(None, self.reap, process, transport)
+        install_lock, self.install_lock = self.install_lock, None
+        if install_lock is not None:
+            install_lock.release()
         self.closed = True
         self.pages.clear()
         if self.profile_dir and not self.keep_log:

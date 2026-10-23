@@ -987,10 +987,10 @@ class FormatterFuncsCaller:
                 except Exception as e:
                     # Change the error message to return the name used in the template
                     e = e.__class__(
-                        _('Error in function {0} :: {1}').format(name, re.sub(r'\w+\.evaluate\(\)\s*', '', str(e), 1))
+                        _('Error in function {0} :: {1}').format(name, re.sub(r'\w+\.evaluate\(\)\s*', '', str(e), count=1))
                     )  # remove UserFunction.evaluate() | Builtin*.evaluate()
                     setattr(e, 'is_internal', True)
-                    raise e  # noqa: TRY201
+                    raise e  # ruff: ignore[verbose-raise]
                 return rslt
 
             return call
@@ -1836,7 +1836,7 @@ class TemplateFormatter(string.Formatter):
 
             raise ValueError(_('Error in function {0} on line {1} : {2} - {3}').format(ss.name, ss.lineno, type(e).__name__, str(e)))
         if not isinstance(rslt, str):
-            raise ValueError(_('The Python template returned a non-string value: {!r}').format(rslt))  # noqa: TRY004
+            raise ValueError(_('The Python template returned a non-string value: {!r}').format(rslt))  # ruff: ignore[type-check-without-type-error]
         return rslt
 
     def compile_python_template(self, template):

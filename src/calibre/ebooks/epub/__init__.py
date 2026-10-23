@@ -27,10 +27,12 @@ def simple_container_xml(opf_path, extra_entries=''):
     '''
 
 
-def initialize_container(path_to_container, opf_name='metadata.opf', extra_entries=[]):
+def initialize_container(path_to_container, opf_name='metadata.opf', extra_entries=None):
     """
     Create an empty EPUB document, with a default skeleton.
     """
+    if extra_entries is None:
+        extra_entries = []
     rootfiles = ''
     for path, mimetype, _ in extra_entries:
         rootfiles += f'<rootfile full-path="{path}" media-type="{mimetype}"/>'

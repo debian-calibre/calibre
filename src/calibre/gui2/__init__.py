@@ -93,11 +93,16 @@ from calibre.utils.localization import _, bcp47_locale_name, install_qt_translat
 from calibre.utils.resources import get_image_path as I
 from calibre.utils.resources import get_path as P
 from calibre.utils.resources import user_dir
-from calibre_extensions import avif as _avif_plugin  # noqa: F401  registers the AVIF image format with Qt
+from calibre_extensions import avif as _avif_plugin  # ruff: ignore[unused-import]  registers the AVIF image format with Qt
 from calibre_extensions.progress_indicator import icon_from_name, icon_from_paths, set_icon_theme
 
+try:
+    from calibre_extensions import jxl as _jxl_plugin  # ruff: ignore[unused-import]  registers the JPEG-XL image format with Qt
+except ImportError:
+    pass  # for people running from source
+
 del pqc, geometry_for_restore_as_dict
-timed_print  # for plugin compat
+timed_print  # ruff: ignore[useless-expression] # for plugin compat
 NO_URL_FORMATTING = QUrl.UrlFormattingOption.None_
 BOOK_DETAILS_DISPLAY_DEBOUNCE_DELAY = 100  # 100 ms is threshold for human visual response
 
@@ -142,7 +147,7 @@ class IconResourceManager:
         self.light_theme_name = self.user_light_theme_name or any_light or self.default_light_theme_name
         # self.dump_available_icon_resource_names()
 
-    @lru_cache(maxsize=4)
+    @lru_cache(maxsize=4)  # ruff: ignore[cached-instance-method]
     def user_icon_theme_metadata(self, which):
         path = self.user_theme_resource_file(which)
         if path not in self.registered_user_resource_files:
@@ -808,8 +813,6 @@ def _config():  # {{{
     # This option is no longer used. It remains for compatibility with upgrades
     # so the value can be migrated
     c.add_opt('tag_browser_hidden_categories', default=set(), help=_('Tag browser categories not to display'))
-
-    c.add_opt
     return ConfigProxy(c)
 
 
@@ -1214,12 +1217,12 @@ if has_windows_file_dialog_helper:
 elif has_linux_file_dialog_helper:
     choose_dir, choose_files, choose_save_file, choose_images = map(linux_native_dialog, 'dir files save_file images'.split())
 else:
-    from calibre.gui2.qt_file_dialogs import choose_dir, choose_files, choose_images, choose_save_file
-
-    choose_files, choose_images, choose_dir, choose_save_file
+    from calibre.gui2.qt_file_dialogs import choose_dir, choose_files, choose_images, choose_save_file  # ruff: ignore[unused-import]
 
 
-def choose_files_and_remember_all_files(window, name, title, filters=[], select_only_single_file=False, default_dir='~'):
+def choose_files_and_remember_all_files(window, name, title, filters=None, select_only_single_file=False, default_dir='~'):
+    if filters is None:
+        filters = []
     pref_name = f'{name}-last-used-filter-spec-all-files'
     lufs = dynamic.get(pref_name, False)
     af = _('All files'), ['*']
@@ -1391,6 +1394,17 @@ def setup_unix_signals(self):
     return original_handlers
 
 
+def webengine_args(disable_gpu: bool = False) -> list[str]:
+    # Prevent Qt WebEngine from searching for the Widevine CDM in the install
+    # locations of other browsers. We dont need DRM and on macOS 27 accessing
+    # ~/Library/Application Support/Google/Chrome causes a privacy prompt
+    # https://bugs.launchpad.net/calibre/+bug/2170887
+    ans = ['--webEngineArgs', '--widevine-path=' + os.path.join(os.path.abspath(os.sep), 'calibre-no-widevine-cdm')]
+    if disable_gpu:
+        ans.append('--disable-gpu')
+    return ans
+
+
 def setup_to_run_webengine():
     # Allow import of webengine after construction of QApplication on new enough PyQt
     QApplication.setAttribute(Qt.ApplicationAttribute.AA_ShareOpenGLContexts)
@@ -1446,8 +1460,7 @@ class Application(QApplication):
             args.extend(self.palette_manager.args_to_qt)
         # We disable GPU acceleration as it causes crashes/black screen in some Windows systems and
         # isnt really needed for performance for our use cases.
-        if not tweaks['qt_webengine_uses_gpu']:
-            args.extend(('--webEngineArgs', '--disable-gpu'))
+        args.extend(webengine_args(disable_gpu=not tweaks['qt_webengine_uses_gpu']))
         self.headless = headless
         from calibre_extensions import progress_indicator
 
@@ -1568,6 +1581,14 @@ class Application(QApplication):
     def emphasis_window_background_color(self):
         return (builtin_colors_dark if self.is_dark_theme else builtin_colors_light)['yellow']
 
+    @property
+    def error_text_color(self) -> str:
+        return '#ff6b6b' if self.is_dark_theme else 'red'
+
+    @property
+    def success_text_color(self) -> str:
+        return '#00b000' if self.is_dark_theme else 'green'
+
     @pyqtSlot(int, result='QIcon')
     def get_qt_standard_icon(self, standard_pixmap):
         return self.palette_manager.get_qt_standard_icon(standard_pixmap)
@@ -1624,18 +1645,16 @@ class Application(QApplication):
 
     def load_builtin_fonts(self, scan_for_fonts=False):
         if scan_for_fonts:
-            from calibre.utils.fonts.scanner import font_scanner
-
             # Start scanning the users computer for fonts
-            font_scanner
+            from calibre.utils.fonts.scanner import font_scanner  # ruff: ignore[unused-import]
 
         load_builtin_fonts()
 
-    @lru_cache(maxsize=256)
+    @lru_cache(maxsize=256)  # ruff: ignore[cached-instance-method]
     def cached_qimage(self, name, device_pixel_ratio=0):
         return self.cached_qpixmap(name, device_pixel_ratio).toImage()
 
-    @lru_cache(maxsize=256)
+    @lru_cache(maxsize=256)  # ruff: ignore[cached-instance-method]
     def cached_qpixmap(self, name, device_pixel_ratio=0):
         # get the actual size of the image since QIcon does not tell us this for
         # icons loaded from a theme
@@ -1861,7 +1880,7 @@ def ensure_app(headless=True) -> QApplication:
                         os.environ.get('CALIBRE_HEADLESS_PLATFORM', 'headless'),
                     ]
                     # WebEngine GPU not needed in headless mode
-                    args += ['--webEngineArgs', '--disable-gpu']
+                    args += webengine_args(disable_gpu=True)
                     if ismacos:
                         os.environ['QT_MAC_DISABLE_FOREGROUND_APPLICATION_TRANSFORM'] = '1'
                 if headless and iswindows:

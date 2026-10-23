@@ -160,12 +160,12 @@ class Matches(QAbstractItemModel):
                         '<p>'
                         + _('This store distributes e-books with DRM. It may have some titles without DRM, but you will need to check on a per title basis.')
                         + '</p>'
-                    )  # noqa: E501
+                    )
             elif col == 3:
                 return (
                     '<p>'
                     + _(
-                        'This store is headquartered in %s. This is a good indication of what market the store caters to. However, this does not necessarily mean that the store is limited to that market only.'  # noqa: E501
+                        'This store is headquartered in %s. This is a good indication of what market the store caters to. However, this does not necessarily mean that the store is limited to that market only.'  # ruff: ignore[line-too-long]
                     )
                     % result.headquarters
                     + '</p>'
@@ -232,7 +232,9 @@ class SearchFilter(SearchQueryParser):
         'name',
     ]
 
-    def __init__(self, all_plugins=[]):
+    def __init__(self, all_plugins=None):
+        if all_plugins is None:
+            all_plugins = []
         SearchQueryParser.__init__(self, locations=self.USABLE_LOCATIONS)
         self.srs = set(all_plugins)
 
@@ -278,14 +280,14 @@ class SearchFilter(SearchQueryParser):
                 accessor = q[locvalue]
                 if query == 'true':
                     if locvalue in ('affiliate', 'drm', 'enabled'):
-                        if accessor(sr) == True:  # noqa: E712
+                        if accessor(sr) == True:  # ruff: ignore[true-false-comparison]
                             matches.add(sr)
                     elif accessor(sr) is not None:
                         matches.add(sr)
                     continue
                 if query == 'false':
                     if locvalue in ('affiliate', 'drm', 'enabled'):
-                        if accessor(sr) == False:  # noqa: E712
+                        if accessor(sr) == False:  # ruff: ignore[true-false-comparison]
                             matches.add(sr)
                     elif accessor(sr) is None:
                         matches.add(sr)

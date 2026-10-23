@@ -717,7 +717,7 @@ class DiffSplit(QSplitter):  # {{{
                 v.images[top] = (img, w, lines)
 
                 def mapnum(x):
-                    return x if x <= top else x + delta
+                    return x if x <= top else x + delta  # ruff: ignore[function-uses-loop-variable]
 
                 lnm = LineNumberMap()
                 lnm.max_width = v.line_number_map.max_width
@@ -1028,7 +1028,7 @@ class DiffView(QWidget):  # {{{
             assert bar is not None
             self.bars.append(bar)
             setattr(bar, 'scroll_idx', len(self.bars) - 1)
-            connect_lambda(bar.valueChanged[int], self, lambda self: self.scrolled(getattr(self.sender(), 'scroll_idx')))
+            connect_lambda(bar.valueChanged[int], self, lambda self: self.scrolled(self.sender().scroll_idx))
         self.view.left.resized.connect(self.resized)
         handle1 = self.view.handle(1)
         assert isinstance(handle1, DiffSplitHandle)

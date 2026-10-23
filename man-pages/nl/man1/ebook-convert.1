@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "EBOOK-CONVERT" "1" "oktober 09, 2026" "9.16.0" "calibre"
+.TH "EBOOK-CONVERT" "1" "oktober 23, 2026" "9.17.0" "calibre"
 .SH NAME
 ebook-convert \- ebook-convert
 .INDENT 0.0
@@ -42,9 +42,9 @@ ebook\-convert input_file output_file [opties]
 .sp
 Converteer een e\-boek van het ene naar het andere formaat.
 .sp
-input_file is de invoer en output_file is de uitvoer. Beiden moeten gespecificeerd worden als de eerste twee argumenten bij het commando.
+input_file is de invoer en output_file is de uitvoer. Beide moeten gespecificeerd worden als de eerste twee argumenten bij het commando.
 .sp
-Het e\-boek uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een \(dqopen e\-boek\(dq (OEB) bestaande uit HTML\-bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
+Het e\-boek\-uitvoerformaat wordt geraden van de extensie van output_file. output_file kan ook van het speciale .EXT\-formaat zijn, waar EXT de uitvoerbestandextensie is. In dit geval wordt de naam van het invoerbestand die van het uitvoerbestand. Merk op dat de bestandsnaam niet mag beginnen met een koppelteken. Als, tot slot, output_file geen extensie heeft, wordt het gezien als een map en wordt een \(dqopen e\-boek\(dq (OEB) bestaande uit HTML\-bestanden geschreven in die map. Deze bestanden zijn dezelfde die normaal gezien naar de uitvoer plug\-in zouden zijn gepasseerd.
 .sp
 Na specificatie van het invoer\- en uitvoerbestand kan u de conversie aanpassen door een aantal opties te kiezen. De beschikbare opties hangen af van het type invoer\- en uitvoerbestanden. Voor hulp specificeer het invoer\- en uitvoerbestand en gebruik dan de \-h optie.
 .sp
@@ -59,7 +59,7 @@ de input en output waarden. U moet dus altijd controleren bij:
 ebook\-convert myfile.input_format myfile.output_format \-h
 .sp
 Hier onder staan de opties die gleden voor alle conversies, gevolgd door de
-opties die specifiek zijn voor elk input en output formaat.
+opties die specifiek zijn voor elk input\- en outputformaat.
 .INDENT 0.0
 .IP \(bu 2
 INVOEROPTIES
@@ -441,7 +441,7 @@ In sommige documenten worden voor elke alinea apart linker\- en rechtermarges op
 .INDENT 0.0
 .TP
 .B \-\-insert\-metadata
-Voeg de boek\-metadata in aan het begin van het boek. Dit is nuttig als uw e\-boeklezer de directie manier van tonen/zoeken van metadata niet ondersteunt.
+Voeg de boek\-metagegevens in aan het begin van het boek. Dit is nuttig als uw e\-reader de directie manier van tonen/zoeken van metagegevens niet ondersteunt.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -461,7 +461,7 @@ Verwijder de eerste afbeelding van het oorspronkelijke e\-boek. Nuttig als het b
 .INDENT 0.0
 .TP
 .B \-\-start\-reading\-at
-Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-boek leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
+Een XPath\-expressie om de locatie in het document te detecteren waar te beginnen met lezen. Sommige e\-boek\-leesprogramma\fB\(aq\fPs (vooral de Kindle) gebruiken deze locatie als de positie om het boek te openen. Raadpleeg de XPath\-zelfstudie in de calibre gebruikershandleiding voor meer hulp bij het gebruik van deze functie.
 .UNINDENT
 .SH INHOUDSOPGAVE
 .sp
@@ -532,7 +532,7 @@ Geef de producent op.
 .INDENT 0.0
 .TP
 .B \-\-comments
-Stel de e\-boek omschrijving in.
+Stel de e\-boek\-omschrijving in.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -557,7 +557,7 @@ Stel de publicatiedatum in (veronderstellend de locale tijdzone, behalve als de 
 .INDENT 0.0
 .TP
 .B \-\-publisher
-Stel de e\-boek uitgever in.
+Stel de e\-boek\-uitgever in.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -567,7 +567,7 @@ Waardering geven. Moet een getal tussen de 1 en 5 zijn.
 .INDENT 0.0
 .TP
 .B \-\-read\-metadata\-from\-opf, \-\-from\-opf, \-m
-Lees metadata uit het opgegeven OPF\-bestand. Metadata die hieruit worden gelezen negeren metadata in het bronbestand.
+Lees metagegevens uit het opgegeven OPF\-bestand. Metagegevens die hieruit worden gelezen negeren metagegevens in het bronbestand.
 .UNINDENT
 .INDENT 0.0
 .TP

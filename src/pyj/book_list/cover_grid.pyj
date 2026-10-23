@@ -5,6 +5,7 @@ from __python__ import hash_literals, bound_methods
 from elementmaker import E
 from gettext import gettext as _
 
+from book_list.details_list import show_missing_cover
 from book_list.globals import get_session_data
 from dom import clear, set_css, build_rule
 
@@ -250,15 +251,15 @@ def cover_grid_css():
         height='100%',
         overflow='hidden',
         border_radius=BORDER_RADIUS + 'px',
-        box_shadow='0 clamp(10px, 1.8vh, 14px) clamp(26px, 4.2vh, 48px) rgba(0,0,0,0.18)',
+        box_shadow='0 clamp(10px, 1.8vh, 14px) clamp(26px, 4.2vh, 48px) var(--calibre-color-shadow-strong)',
         border='var(--calibre-border-style-subtle)',
-        background_color='rgba(0,0,0,0.02)',
+        background_color='var(--calibre-color-faint-background)',
         transition='box-shadow 160ms ease, background-color 160ms ease, border-color 160ms ease'
     )
     ans += build_rule(f'{item_sel}:hover > .cs-cover-frame',
         background_color='var(--calibre-color-primary-light)',
         border_color='var(--calibre-color-border)',
-        box_shadow='0 clamp(14px, 2.6vh, 18px) clamp(34px, 5.2vh, 62px) rgba(0,0,0,0.24), 0 0 0 4px var(--calibre-color-primary-light)'
+        box_shadow='0 clamp(14px, 2.6vh, 18px) clamp(34px, 5.2vh, 62px) var(--calibre-color-shadow-strong), 0 0 0 4px var(--calibre-color-primary-light)'
     )
 
     # Cover overlay (title + author)
@@ -351,17 +352,7 @@ def init(container):
 
 
 def on_img_load(img, load_type):
-    div = img.parentNode
-    if not div:
-        return
-    if load_type is not 'load':
-        clear(div)
-        div.appendChild(E.div(
-            E.h2(img.dataset.title, style='text-align:center; font-size:larger; font-weight: bold'),
-            E.div(_('by'), style='text-align: center'),
-            E.h2(img.dataset.authors, style='text-align:center; font-size:larger; font-weight: bold')
-        ))
-        set_css(div, border='dashed 1px currentColor', border_radius=BORDER_RADIUS + 'px')
+    show_missing_cover(img, load_type, BORDER_RADIUS)
 
 
 def create_item(book_id, metadata, create_image, show_book_details, href):

@@ -18,7 +18,9 @@ from calibre.utils.localization import _
 
 
 class ET:
-    def __init__(self, func_name, args, kwargs={}, old=None, legacy=None):
+    def __init__(self, func_name, args, kwargs=None, old=None, legacy=None):
+        if kwargs is None:
+            kwargs = {}
         self.func_name = func_name
         self.args, self.kwargs = args, kwargs
         self.old, self.legacy = old, legacy
@@ -626,9 +628,9 @@ class LegacyTest(BaseTest):
                     else:
                         compare_argspecs(argspec, nargspec, attr)
         finally:
-            for db in (ndb, db):
-                db.close()
-                db.break_cycles()
+            for idb in (ndb, db):
+                idb.close()
+                idb.break_cycles()
 
         if missing:
             pc = len(missing) / total

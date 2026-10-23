@@ -1,12 +1,157 @@
 [
     {
+        "version": "9.17.0",
+        "date": "2026-10-23",
+        "new features": [
+            {
+                "title": "Conversion: Add support for reading images in the JPEG XL format"
+            },
+            {
+                "title": "Conversion: Add support for CSS Level 4 selectors"
+            },
+            {
+                "tickets": [
+                    2170895
+                ],
+                "title": "Edit book: Check book: Add a check for dangling ARIA references and update ARIA references when auto fixing invalid ids"
+            },
+            {
+                "title": "MOBI/AZW3/PDB Output: Speed up compression, making conversion to these formats faster"
+            },
+            {
+                "title": "Content server/E-book viewer: Honor the prefers-reduced-motion setting of the operating system"
+            },
+            {
+                "title": "Speed up adding books and starting calibre in large libraries with the Tag browser hidden"
+            },
+            {
+                "tickets": [
+                    2022353
+                ],
+                "title": "Catalogs: Use calibre as the creator of generated catalogs and record the generation date as the publication date"
+            },
+            {
+                "title": "Create your own Adventure: Improve the character selection screen"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2170990
+                ],
+                "title": "PDF Input: Fix a regression in the previous release that broke conversion of some PDF files"
+            },
+            {
+                "tickets": [
+                    2170400
+                ],
+                "title": "EPUB 3 conversion: Fix a regression in the previous release that caused invalid navigation markup to be generated"
+            },
+            {
+                "tickets": [
+                    2170595
+                ],
+                "title": "Fix a regression in the previous release that caused non-breaking spaces to be converted to regular spaces in comments and text columns"
+            },
+            {
+                "tickets": [
+                    2170285
+                ],
+                "title": "PDF Output: Fix a blank page at the end of chapters in some multi column layouts"
+            },
+            {
+                "title": "Amazon and Google Images metadata sources: Get them working again using camoufox"
+            },
+            {
+                "title": "Various robustness and edge case improvements int he database backed around data files, notes and formats"
+            },
+            {
+                "title": "Fix various stale cached values for composite columns and searches after changing series, restoring formats from the trash and redefining saved searches"
+            },
+            {
+                "title": "Fix setting a custom series with the same series index sometimes not being saved"
+            },
+            {
+                "title": "Fix appending multiple values to custom columns"
+            },
+            {
+                "title": "Full text search: Fix searching in libraries without book files"
+            },
+            {
+                "tickets": [
+                    2170887
+                ],
+                "title": "macOS: E-book viewer: Fix the viewer triggering the \"access data from other apps\" prompt for Google Chrome on macOS 27"
+            },
+            {
+                "tickets": [
+                    1483666
+                ],
+                "title": "EPUB/MOBI catalog: Sort a series before longer series names that start with it"
+            },
+            {
+                "title": "EPUB/MOBI catalog: Fix an error when generating catalogs from the GUI with prefix rules"
+            },
+            {
+                "tickets": [
+                    2017568
+                ],
+                "title": "ODT Input: Preserve restarted list numbering"
+            },
+            {
+                "title": "Kobo driver: Fix a regression in cover handling for older Tolino firmware and keep dots in filenames on Tolino devices"
+            },
+            {
+                "title": "Edit book: Fix the choose file dialog when importing books not being kept above the editor window"
+            },
+            {
+                "title": "calibredb list_categories: Fix output showing bytes representations"
+            },
+            {
+                "title": "Fix templates using {isbn} or {languages} more than once returning the wrong value"
+            },
+            {
+                "title": "Fix decoding of HTML entities that decode to more bytes than themselves"
+            },
+            {
+                "title": "Fix an error when cancelling a metadata download"
+            },
+            {
+                "title": "Content server: Fix full text search actions being applied to the default library instead of the library being viewed"
+            },
+            {
+                "title": "Content server: Fix various issues with showing books from the wrong library when switching between libraries"
+            },
+            {
+                "title": "Content server: Notify the calibre GUI of new formats created by conversions in the server"
+            },
+            {
+                "title": "Content server/E-book viewer: Various fixes for dark mode and keyboard focus styling"
+            },
+            {
+                "title": "Fix various hardcoded colors being unreadable in dark mode"
+            }
+        ],
+        "improved recipes": [
+            "The Economist",
+            "Associated Press",
+            "Washington Post",
+            "SCMP",
+            "Scientific American",
+            "The Monthly",
+            "NYT Magazine",
+            "Respekt"
+        ],
+        "new recipes": []
+    },
+    {
         "version": "9.16.0",
         "date": "2026-10-09",
         "new features": [
             {
                 "type": "major",
                 "title": "Read aloud: Add the high quality Kokoro voices, which sound much more natural than the Piper voices, especially for English",
-                "description": "To use them, select the Piper backend in the Read aloud configuration and choose one of the Kokoro voices. The voice will be automatically downloaded the first time it is used."
+                "description": "To use them, select the Neural engine backend in the Read aloud configuration and choose one of the Kokoro voices. The voice will be automatically downloaded the first time it is used."
             },
             {
                 "type": "major",
@@ -47,7 +192,7 @@
                 "tickets": [
                     2168471
                 ],
-                "title": "E-book viewer: Allow e-books to store up to 1MB of data persistently"
+                "title": "E-book viewer: Allow e-books to store up to 1,048,576 UTF-16 code units of data persistently"
             },
             {
                 "tickets": [

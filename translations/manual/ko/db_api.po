@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-10-21 15:20+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022,2026\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
@@ -292,6 +292,15 @@ msgstr "저자 목록이 주어지면, 계산된 문자열보다 저자와 연�
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "지정된 저자들의 저자 정렬을 반환합니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -907,12 +916,30 @@ msgid ""
 msgstr "책의 OPF 메타데이터 백업을 바이트 문자열로 반환하거나 해당 백업이 존재하지 않으면 None을 반환합니다."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.refresh_format_sizes:1
+msgid ""
+"Update the database with the on-disk sizes of the specified format files. "
+"``size_map`` maps ``(book_id, fmt)`` to the size of the format file. Used to"
+" fix stored sizes that have gone stale because format files were changed "
+"outside of calibre. Returns the ids of the books whose stored sizes were "
+"changed."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
 "placed in the per-library trash directory."
 msgstr "book_ids로 지정된 책을 데이터베이스에서 제거하고 해당 형식 파일을 삭제합니다. ``permanent``가 False이면 형식 파일이 라이브러리별 휴지통 디렉터리에 배치됩니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
@@ -1158,8 +1185,10 @@ msgstr "노트 문서를 설정합니다. 검색 가능한 텍스트가 문서�
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
-msgstr "지정된 책의 페이지 수 정보를 설정합니다"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pref:1
@@ -1214,6 +1243,15 @@ msgstr "지정된 항목에 대해 이전에 은퇴된 노트를 은퇴 해제�
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "주석을 업데이트합니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "oktober 09, 2026" "9.16.0" "calibre"
+.TH "CALIBREDB" "1" "oktober 23, 2026" "9.17.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -195,7 +195,7 @@ Velden te tonen bij het maken van boekenlijsten in de database. Moet een lijst m
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Genereer uitvoer in JSON formaat, dit is veel beter voor machine verificatie. Zorgt ervoor dat de lengte van lijnen en de afscheidings opties genegeerd zullen worden.
+Genereer uitvoer in JSON\-formaat, dit is veel beter voor machine verificatie. Zorgt ervoor dat de lengte van lijnen en de afscheidings opties genegeerd zullen worden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -318,11 +318,11 @@ Stel de titel in voor toegevoegde boek(en)
 .UNINDENT
 .SS TOEVOEGEN VANUIT MAPPEN
 .sp
-Opties voor beheer van boeken toevoegen vanuit mappen. Standaard enkel bestanden met extensies van gekende e\-boek bestandtypes.
+Opties voor beheer van boeken toevoegen vanuit mappen. Standaard enkel bestanden met extensies van gekende e\-boek\-bestandtypes.
 .INDENT 0.0
 .TP
 .B \-\-add
-Een bestandsnaam (glob) patroon, bestanden die overeenkomen met dit patroon zullen worden toegevoegd bij het scannen van mappen voor bestanden, zelfs als ze geen bekend e\-boek bestandstype hebben. Kan meerdere keren worden opgegeven voor meerdere patronen.
+Een bestandsnaam (glob) patroon, bestanden die overeenkomen met dit patroon zullen worden toegevoegd bij het scannen van mappen voor bestanden, zelfs als ze geen bekend e\-boek\-bestandstype hebben. Kan meerdere keren worden opgegeven voor meerdere patronen.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -403,27 +403,27 @@ calibredb show_metadata [opties] id
 .UNINDENT
 .UNINDENT
 .sp
-Toon de metadata die in de calibre database zijn opgeslagen voor het boek dat bij id hoort.
+Toon de metagegevens die in de calibre database zijn opgeslagen voor het boek dat bij id hoort.
 id is een id nummer verkregen met het zoek\-commando.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-as\-opf
-Metadata in OPF\-formaat (XML) afdrukken
+Metagegevens in OPF\-formaat (XML) afdrukken
 .UNINDENT
 .SH SET_METADATA
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibredb set_metadata [options] book_id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metagegevens.opf]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Stel de metadata in die zijn opgeslagen in de Calibre\-database voor het boek geïdentificeerd door
-book_id uit het OPF\-bestand metadata.opf. book_id is een boek\-id\-nummer van de
+Stel de metagegevens in die zijn opgeslagen in de Calibre\-database voor het boek geïdentificeerd door
+book_id uit het OPF\-bestand metagegevens.opf. book_id is een boek\-id\-nummer van de
 zoekopdracht. U kunt snel een idee krijgen van het OPF\-formaat door de
 \-\-as\-opf schakelt over naar de opdracht show_metadata. U kunt ook de metagegevens van
 individuele velden met de optie \-\-field. Als u de optie \-\-field gebruikt, is er
@@ -438,7 +438,7 @@ Het veld om te zetten. Formaat is veld_naam:waarde, bijvoorbeeld: \fB\-\-field\f
 .INDENT 0.0
 .TP
 .B \-\-list\-fields, \-l
-Toon de metadata veldnamen die kunnen worden gebruikt met de \fB\-\-field\fP optie
+Toon de metagegevens veldnamen die kunnen worden gebruikt met de \fB\-\-field\fP optie
 .UNINDENT
 .SH EXPORT
 .INDENT 0.0
@@ -479,12 +479,12 @@ Alle gegevensbestanden die bij het boek horen opslaan bij het opslaan van het bo
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-Normaal zal calibre de metadata in opgeslagen bestanden bijwerken met informatie in de calibre bibliotheek. Maakt opslaan op schijf langzamer. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal zal calibre de metagegevens in opgeslagen bestanden bijwerken met informatie in de calibre bibliotheek. Maakt opslaan op schijf langzamer. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normaal gesproken, zal calibre de metadata in een apart OPF\-bestand opslaan, samen met de daadwerkelijke e\-boek\-bestanden. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
+Normaal gesproken, zal calibre de metagegevens in een apart OPF\-bestand opslaan, samen met de daadwerkelijke e\-boek\-bestanden. Als u dit opgeeft zal het gedrag uitgeschakeld worden.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -562,7 +562,7 @@ Laat gedetailleerde uitvoerinformatie zien. Nuttig bij het opsporen van probleme
 .INDENT 0.0
 .TP
 .B \-\-catalog\-title
-Titel van gegenereerde catalogus gebruikt als titel in metadata. Standaard: \fB\(aq\fPMy Books\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
+Titel van gegenereerde catalogus gebruikt als titel in metagegevens. Standaard: \fB\(aq\fPMy Books\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -647,7 +647,7 @@ Gebruik een benoemde voorinstelling gemaakt met de GUI catalogus bouwer. Een voo
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Formaat tip (in inches) voor boekomslagen in catalogus. Bereik: 1.0 \- 2.0 Standaard: \fB\(aq\fP1.0\fB\(aq\fP Van toepassing op: AZW3, EPUB, MOBI uitvoerformaten
+Formaattip (in inches) voor boekomslagen in catalogus. Bereik: 1.0 \- 2.0 Standaard: \fB\(aq\fP1.0\fB\(aq\fP Van toepassing op: AZW3\-, EPUB\-, MOBI\-uitvoerformaten
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -771,13 +771,13 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Herstel deze database van de metadata bewaard in OPF\-bestanden in
-elke map van de calibre bibliotheek. Nuttig als uw metadata.db bestand
+Herstel deze database van de metagegevens bewaard in OPF\-bestanden in
+elke map van de calibre bibliotheek. Nuttig als uw metagegevens.db bestand
 gecorrumpeerd is.
 .sp
 WAARSCHUWING/ Dit commando regenereert uw database volledig. U zal alle
 zoekacties, gebruikerscategorieën, adapters, opgeslagen per\-boek conversies
-en aangepaste recepten verliezen. Herstelde metadata zullen maar zo accuraat zijn als
+en aangepaste recepten verliezen. Herstelde metagegevens zullen maar zo accuraat zijn als
 wat is gevonden in de OPF\-bestanden.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
@@ -874,14 +874,14 @@ calibredb backup_metadata [opties]
 .UNINDENT
 .INDENT 0.0
 .TP
-.B Maak een back\-up van de metadata uit de database in individuele OPF bestanden
+.B Maak een back\-up van de metagegevens uit de database in individuele OPF bestanden
 in elke boek map. Dit gebeurt normaal automatisch maar u kan dit commando
 .UNINDENT
 .sp
 uitvoeren om een vernieuwing van de OPF af te dwingen met de \-\-all optie.
 .sp
 NB: Dit is normaal niet nodig omdat er van de OPF\-bestanden automatisch
-een back\-up wordt gemaakt elke keer metadata is veranderd.
+een back\-up wordt gemaakt elke keer metagegevens is veranderd.
 .sp
 Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanhalingstekens omsluiten. Bv.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -916,11 +916,11 @@ calibredb ingevoegde_metadata [opties] boek_id
 .UNINDENT
 .UNINDENT
 .sp
-Update de metadata in het eigenlijke boek file opgeslagen in calibre bibliotheek vanuit
-de metadata in de calibre database. Normaal worden metadata enkel geüpdatet wanneer
+Update de metagegevens in het eigenlijke boek file opgeslagen in calibre bibliotheek vanuit
+de metagegevens in de calibre database. Normaal worden metagegevens enkel geüpdatet wanneer
 files uit calibre worden geëxporteerd, dit commando is nuttig indien u wilt dat de bestanden worden
-geüpdatet ter plaatse. Opgelet dat verschillende formaten verschillende hoeveelheden metadata
-ondersteunen. U kan de speciale waarde \(dqall\(dq gebruiken in plaats van boek_id om de metadata van alle
+geüpdatet ter plaatse. Opgelet dat verschillende formaten verschillende hoeveelheden metagegevens
+ondersteunen. U kan de speciale waarde \(dqall\(dq gebruiken in plaats van boek_id om de metagegevens van alle
 boeken aan te passen. U kan ook verschillende boek id\(aqs meegeven gescheiden door spaties en id reeksen
 gescheiden door koppeltekens. Bijvoorbeeld: calibredb ingevoegde_metadata 1 2 10\-15 23
 .sp
@@ -928,7 +928,7 @@ Als u aan calibredb parameters met spaties mee wilt geven, moet u deze met aanha
 .INDENT 0.0
 .TP
 .B \-\-only\-formats, \-f
-Update alleen de metadata in specifieke bestands types. Gebruik dit meerdere keren om verschillende formaten aan te passen. Standaard worden alle formaten aangepast.
+Update alleen de metagegevens in specifieke bestands types. Gebruik dit meerdere keren om verschillende formaten aan te passen. Standaard worden alle formaten aangepast.
 .UNINDENT
 .SH SEARCH
 .INDENT 0.0

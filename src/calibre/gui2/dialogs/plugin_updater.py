@@ -44,7 +44,7 @@ from calibre.customize.ui import (
     is_disabled,
     remove_plugin,
 )
-from calibre.gui2 import error_dialog, gprefs, info_dialog, open_url, question_dialog, safe_open_url
+from calibre.gui2 import error_dialog, gprefs, info_dialog, open_url, qapplication_or_fail, question_dialog, safe_open_url
 from calibre.gui2.preferences.plugins import ConfigWidget
 from calibre.utils.date import UNDEFINED_DATE, format_date
 from calibre.utils.https import get_https_resource_securely
@@ -435,7 +435,7 @@ class DisplayPluginModel(QAbstractTableModel):
         elif role == Qt.ItemDataRole.ForegroundRole:
             if col != 1:  # Never change colour of the donation column
                 if display_plugin.is_deprecated:
-                    return QBrush(Qt.GlobalColor.blue)
+                    return qapplication_or_fail().palette().link()
                 if display_plugin.is_disabled():
                     return QBrush(Qt.GlobalColor.gray)
         return None

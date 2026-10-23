@@ -26,7 +26,7 @@ from polyglot.builtins import as_bytes
 
 if TYPE_CHECKING:
     from calibre.devices.mtp.windows.driver import MTP_DEVICE as BASE
-else:  # noqa
+else:  # ruff: ignore[collapsible-else-if]
     if iswindows:
         from calibre.devices.mtp.windows.driver import MTP_DEVICE as BASE
     else:
@@ -863,7 +863,6 @@ def main():
     import io
     from pprint import pprint
 
-    io
     dev = MTP_DEVICE(None)
     dev.startup()
     try:

@@ -2136,7 +2136,10 @@ html5_entities = {
 }
 
 
-def entity_to_unicode_in_python(match, exceptions=(), encoding='cp1252', result_exceptions={}):
+def entity_to_unicode_in_python(match, exceptions=(), encoding='cp1252', result_exceptions=None):
+    if result_exceptions is None:
+        result_exceptions = {}
+
     def check(ch):
         return result_exceptions.get(ch, ch)
 
@@ -2204,6 +2207,25 @@ def find_tests():
             t('a&#x1034fA;b', 'a\U001034fab')
             t('a&#0;b&#x000;c', 'abc')
             x('&amp;&lt;&gt;&apos;&quot;', '&amp;&lt;&gt;&apos;&quot;')
+
+        def test_html_entity_replacement_expanding(self):
+            # Some entities decode to more UTF-8 bytes than the entity itself
+            from calibre_extensions.fast_html_entities import replace_all_entities
+
+            for name in ('nGt', 'nLt'):
+                ent = f'&{name};'
+                val = html5_entities[name]
+                self.assertGreater(len(val.encode()), len(ent))
+                for keep_xml_entities in (False, True):
+                    for count in (1, 16, 1000, 300000):
+                        for suffix in ('', 'A' * 32):
+                            inp = ent * count + suffix
+                            exp = val * count + suffix
+                            self.assertEqual(exp, replace_all_entities(inp, keep_xml_entities))
+                            self.assertEqual(exp.encode(), replace_all_entities(inp.encode(), keep_xml_entities))
+                    inp = f'a {ent} b &amp; c &#65; {ent}{ent} d'
+                    exp = f'a {val} b {"&amp;" if keep_xml_entities else "&"} c A {val}{val} d'
+                    self.assertEqual(exp, replace_all_entities(inp, keep_xml_entities))
 
     return unittest.defaultTestLoader.loadTestsFromTestCase(TestHTMLEntityReplacement)
 

@@ -26,7 +26,7 @@ def fts_search(ctx, rd):
     Optional: ?query=<search query>&library_id=<default library>&use_stemming=<y or n>&query_id=arbitrary&restriction=arbitrary
     """
 
-    db = get_library_data(ctx, rd)[0]
+    db = get_library_data(ctx, rd, strict_library_id=True)[0]
     if not db.is_fts_enabled():
         raise HTTPPreconditionRequired('Full text searching is not enabled on this library')
     metadata_cache = {}
@@ -74,7 +74,7 @@ def fts_search(ctx, rd):
     return ans
 
 
-@endpoint('/fts/disable', needs_db_write=True)
+@endpoint('/fts/disable', needs_db_write=True, methods=('POST',))
 def fts_disable(ctx, rd):
     db = get_library_data(ctx, rd)[0]
     if db.is_fts_enabled():
@@ -122,7 +122,7 @@ def fts_snippets(ctx, rd, book_ids):
     Optional: ?query=<search query>&library_id=<default library>&use_stemming=<y or n>
     &query_id=arbitrary&snippet_size=32&highlight_start=\x1c&highlight_end=\x1e
     """
-    db = get_library_data(ctx, rd)[0]
+    db = get_library_data(ctx, rd, strict_library_id=True)[0]
     if not db.is_fts_enabled():
         raise HTTPPreconditionRequired('Full text searching is not enabled on this library')
 

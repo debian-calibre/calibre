@@ -68,6 +68,13 @@ from calibre.utils.ipc.simple_worker import WorkerError, fork_job
 from calibre.utils.logging import GUILog as Log
 from calibre.utils.resources import get_image_path as I
 
+
+def metadata_job_env() -> dict[str, str]:
+    from calibre.web.automate.metadata import env_for_metadata_jobs
+
+    return env_for_metadata_jobs()
+
+
 # }}}
 
 
@@ -457,7 +464,12 @@ class IdentifyWorker(Thread):  # {{{
                     (self.title, self.authors, self.identifiers),
                     no_output=True,
                     abort=self.abort,
+                    env=metadata_job_env(),
                 )
+                if res['result'] is None:
+                    # The download was aborted by the user, so there are no results
+                    self.results = []
+                    return
                 self.results, covers, caches, log_dump = res['result']
                 self.results = [OPF(BytesIO(r), basedir=os.getcwd(), populate_spine=False).to_book_metadata() for r in self.results]
                 for r, cov in zip(self.results, covers):
@@ -526,7 +538,9 @@ class IdentifyWidget(QWidget):  # {{{
     def emit_book_selected(self, book):
         self.book_selected.emit(book, self.caches)
 
-    def start(self, title=None, authors=None, identifiers={}):
+    def start(self, title=None, authors=None, identifiers=None):
+        if identifiers is None:
+            identifiers = {}
         self.log.clear()
         self.log('Starting download')
         parts, simple_desc = [], ''
@@ -551,6 +565,8 @@ class IdentifyWidget(QWidget):  # {{{
         QTimer.singleShot(50, self.poll_results)
 
     def poll_results(self):
+        if self.abort.is_set():
+            return
         if self.worker.is_alive():
             QTimer.singleShot(50, self.poll_results)
         else:
@@ -647,8 +663,10 @@ class CoverWorker(Thread):  # {{{
                     (self.title, self.authors, self.identifiers, self.caches, tdir),
                     no_output=True,
                     abort=self.abort,
+                    env=metadata_job_env(),
                 )
-                self.log.append_dump(res['result'])
+                if res['result'] is not None:  # None when the download was aborted
+                    self.log.append_dump(res['result'])
             finally:
                 self.keep_going = False
                 t.join()
@@ -1262,7 +1280,9 @@ class FullFetch(QDialog):  # {{{
         else:
             QDialog.accept(self)
 
-    def start(self, title=None, authors=None, identifiers={}):
+    def start(self, title=None, authors=None, identifiers=None):
+        if identifiers is None:
+            identifiers = {}
         self.title, self.authors = title, authors
         self.identify_widget.start(title=title, authors=authors, identifiers=identifiers)
         return self.exec()

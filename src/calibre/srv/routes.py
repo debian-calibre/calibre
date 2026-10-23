@@ -128,8 +128,8 @@ def endpoint[**P](
     # Needs write access to the calibre database
     needs_db_write: bool = False,
 ) -> Callable[[Callable[Concatenate[Context, RequestData, P], Any]], RouteFunction]:
-    from calibre.srv.handler import Context  # noqa
-    from calibre.srv.http_response import RequestData  # noqa
+    from calibre.srv.handler import Context  # ruff: ignore[unused-import]
+    from calibre.srv.http_response import RequestData  # ruff: ignore[unused-import]
 
     def annotate[**P](f: Callable[Concatenate[Context, RequestData, P], Any]) -> RouteFunction:
         r = route.rstrip('/') or '/'
@@ -369,6 +369,7 @@ class Router:
         if endpoint_.needs_db_write:
             assert self.ctx is not None
             self.ctx.check_for_write_access(data)
+            data.needs_db_write = True
         ans = endpoint_(self.ctx, data, *args)
         self.finalize_session(endpoint_, data, ans)
         outheaders = data.outheaders

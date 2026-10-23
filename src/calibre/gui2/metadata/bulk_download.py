@@ -97,7 +97,7 @@ class ConfirmDialog(QDialog):
         b = self.b = self.bb.addButton(_('&Configure download'), QDialogButtonBox.ButtonRole.ActionRole)
         assert b is not None
         b.setIcon(QIcon.ic('config.png'))
-        connect_lambda(b.clicked, self, lambda self: show_config(self))  # noqa: PLW0108
+        connect_lambda(b.clicked, self, lambda self: show_config(self))  # ruff: ignore[unnecessary-lambda]
         l.addWidget(self.bb, 1, 0, 1, 2)
         b = self.bb.addButton(_('Download &both'), QDialogButtonBox.ButtonRole.AcceptRole)
         assert b is not None
@@ -239,6 +239,9 @@ def download(all_ids, tf, db, do_identify, covers, ensure_fields, log=None, abor
     assert abort is not None
     assert log is not None
 
+    from calibre.web.automate.metadata import env_for_metadata_jobs
+
+    env = env_for_metadata_jobs()
     try:
         for ids in batches:
             if abort.is_set():
@@ -257,6 +260,7 @@ def download(all_ids, tf, db, do_identify, covers, ensure_fields, log=None, abor
                     abort=abort,
                     heartbeat=heartbeat,
                     no_output=True,
+                    env=env,
                 )
             except WorkerError as e:
                 if e.orig_tb:

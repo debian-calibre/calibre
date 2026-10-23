@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.16.0\n"
+"Project-Id-Version: calibre 9.17.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-09 07:32+0530\n"
+"POT-Creation-Date: 2026-10-23 08:33+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -561,6 +561,10 @@ msgstr ""
 msgid "Remove the books specified by the book_ids from the database and delete their format files. If ``permanent`` is False, then the format files are placed in the per-library trash directory."
 msgstr ""
 
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_books:5
+msgid "If the files of some books cannot be deleted or moved to the trash, those books are left unchanged and :class:`BooksNotRemoved` is raised after all the other books have been removed."
+msgstr ""
+
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.remove_extra_files:1
 msgid "Delete the specified extra files, either to Recycle Bin or permanently."
 msgstr ""
@@ -702,7 +706,7 @@ msgid "Set the notes document. If the searchable text is different from the docu
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
+msgid "Set page count information for the specified book. Does nothing if the book does not exist."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_pref:1

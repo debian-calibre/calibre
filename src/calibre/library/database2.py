@@ -187,7 +187,7 @@ class LibraryDatabase2(LibraryDatabase, SchemaUpgrade, CustomColumns):
         self.is_case_sensitive = not iswindows and not os.path.exists(self.dbpath.replace('metadata.db', 'MeTAdAtA.dB'))
         SchemaUpgrade.__init__(self)
         # Guarantee that the library_id is set
-        self.library_id
+        self.library_id  # ruff: ignore[useless-expression]
 
         # if we are to copy the prefs and structure from some other DB, then
         # we need to do it before we call initialize_dynamic
@@ -574,7 +574,7 @@ class LibraryDatabase2(LibraryDatabase, SchemaUpgrade, CustomColumns):
         ):
             fm = {'comment': 'comments', 'metadata_last_modified': 'last_modified'}.get(prop, prop)
             setattr(self, prop, functools.partial(self.get_property, loc=self.FIELD_MAP[fm]))
-        setattr(self, 'title_sort', functools.partial(self.get_property, loc=self.FIELD_MAP['sort']))
+        self.title_sort = functools.partial(self.get_property, loc=self.FIELD_MAP['sort'])
 
         d = self.conn.get('SELECT book FROM metadata_dirtied', all=True)
         with self.dirtied_lock:
@@ -767,8 +767,10 @@ class LibraryDatabase2(LibraryDatabase, SchemaUpgrade, CustomColumns):
         """
         self.listeners.add(listener)
 
-    def notify(self, event, ids=[]):
+    def notify(self, event, ids=None):
         "Notify all listeners"
+        if ids is None:
+            ids = []
         for listener in self.listeners:
             try:
                 listener(event, ids)
@@ -3109,7 +3111,11 @@ class LibraryDatabase2(LibraryDatabase, SchemaUpgrade, CustomColumns):
         if notify:
             self.notify('metadata', ids)
 
-    def bulk_modify_tags(self, ids, add=[], remove=[], notify=False):
+    def bulk_modify_tags(self, ids, add=None, remove=None, notify=False):
+        if remove is None:
+            remove = []
+        if add is None:
+            add = []
         add = self.cleanup_tags(add)
         remove = self.cleanup_tags(remove)
         remove = set(remove) - set(add)

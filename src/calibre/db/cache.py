@@ -21,7 +21,7 @@ from threading import Lock
 from time import mktime, monotonic, time
 from typing import Any, NamedTuple
 
-from calibre import as_unicode, detect_ncpus
+from calibre import as_unicode, detect_ncpus, prints
 from calibre.constants import iswindows, preferred_encoding
 from calibre.customize.ui import run_plugins_on_import, run_plugins_on_postadd, run_plugins_on_postdelete, run_plugins_on_postimport
 from calibre.db import SPOOL_SIZE, _get_next_series_num_for_list
@@ -29,7 +29,7 @@ from calibre.db.annotations import merge_annotations
 from calibre.db.book_storage import BookStorageEntry
 from calibre.db.categories import CategoriesCache, CategoriesInvalidatingLock, get_categories, items_of_books
 from calibre.db.constants import COVER_FILE_NAME, DATA_DIR_NAME, NOTES_DIR_NAME, Pages
-from calibre.db.errors import NoSuchBook, NoSuchFormat
+from calibre.db.errors import BooksNotRemoved, NoSuchBook, NoSuchFormat
 from calibre.db.fields import IDENTITY, InvalidLinkTable, create_field
 from calibre.db.lazy import FormatMetadata, FormatsList, ProxyMetadata
 from calibre.db.listeners import EventDispatcher, EventType
@@ -85,11 +85,14 @@ def quiet_write_api[T: types.FunctionType](f: T) -> T:
     # Cache API methods that take the write lock but must not invalidate the whole
     # cache of computed categories, so they use the quiet write lock instead, generaly
     # when they cannot change any of the data the categories are computed from.
-    # set_field and set_metadata are the two exceptions: they do change that data,
-    # but every change they make goes through set_field(), which reports the changed
-    # field itself, so only the categories that depend on that field need to be
-    # recomputed. A function wrongly decorated means the Tag browser silently
-    # displays stale data, so it is guarded by ReadingTest.test_categories_cache().
+    # set_field, set_metadata, create_book_entry and move_format_from_trash are the
+    # exceptions: they do change that data, but they report every change they make,
+    # set_field() itself and the others through set_field() or by calling
+    # categories_cache.field_changed() explicitly, so only the categories that
+    # depend on the changed fields need to be recomputed. add_format() is not a
+    # write API, but uses the quiet write lock directly in the same way. A function
+    # wrongly decorated means the Tag browser silently displays stale data, so it
+    # is guarded by ReadingTest.test_categories_cache().
     write_api(f)
     category_quiet_writes.add(f.__name__)
     return f
@@ -320,11 +323,20 @@ class Cache:
     @quiet_write_api
     def clear_search_caches(self, book_ids=None):
         self.clear_search_cache_count += 1
-        self._search_api.update_or_clear(self, book_ids)
-        self.vls_for_books_cache = None
-        self.vls_for_books_lib_in_process = None
+        # Refreshing the cached searches renders the composite columns of the changed books, which must not use the old cache of
+        # the virtual libraries for {virtual_libraries}. Rendering refills that cache from searches not yet refreshed, so discard
+        # it again afterwards.
+        self._clear_vls_for_books_cache()
+        try:
+            self._search_api.update_or_clear(self, book_ids)
+        finally:
+            self._clear_vls_for_books_cache()
 
     _clear_search_caches = clear_search_caches
+
+    def _clear_vls_for_books_cache(self) -> None:
+        self.vls_for_books_cache = None
+        self.vls_for_books_lib_in_process = None
 
     @quiet_write_api
     def clear_extra_files_cache(self, book_id=None):
@@ -559,9 +571,8 @@ class Cache:
     _fts_start_measuring_rate = fts_start_measuring_rate
 
     def _update_fts_indexing_numbers(self, job_time=None):
-        # this is called when new formats are added and when a format is
-        # indexed, but NOT when books or formats are deleted, so total may not
-        # be up to date.
+        # this is called when formats are added, removed or indexed and when
+        # books are removed
         nl = self.backend.fts.number_dirtied()
         nt = self.backend.get('SELECT COUNT(*) FROM main.data')[0][0] or 0
         if not nl:
@@ -1627,11 +1638,21 @@ class Cache:
         except Exception:
             return False
         if self.backend.is_format_accessible(book_id, original_fmt, ofmt_name, path):
-            self.add_format(book_id, fmt, BytesIO(), run_hooks=False)
-            fmt_name = self.fields['formats'].format_fname(book_id, fmt)
+            try:
+                fmt_name = self.fields['formats'].format_fname(book_id, fmt)
+            except Exception:
+                fmt_name = None
+            # Rename the original over the current format before touching any
+            # records, so that if the rename fails, the current format is left
+            # intact.
+            fmt_name = fmt_name or ofmt_name
             file_size = self.backend.rename_format_file(book_id, ofmt_name, original_fmt, fmt_name, fmt, path)
-            self.fields['formats'].table.update_fmt(book_id, fmt, fmt_name, file_size, self.backend)
+            self.format_metadata_cache[book_id].pop(fmt, None)
+            self._record_format_added(book_id, fmt, fmt_name, file_size)
+            self.event_dispatcher(EventType.format_added, book_id, fmt)
+            # This also updates last modified and queues a pages scan
             self._remove_formats({book_id: (original_fmt,)})
+            self._queue_next_fts_job()
             return True
         return False
 
@@ -2120,7 +2141,11 @@ class Cache:
         format: str = '',
         format_size: int = 0,
     ) -> None:
-        "Set page count information for the specified book"
+        "Set page count information for the specified book. Does nothing if the book does not exist."
+        if not self._has_id(book_id):
+            # For example, the book was deleted while its pages were being
+            # counted in the background
+            return
         now = sqlite_datetime(utcnow())
         self.backend.execute(
             '''
@@ -2264,12 +2289,16 @@ class Cache:
             try:
                 raw = metadata_to_opf(mi)
                 self._write_backup(book_id, raw)
+            except Exception:
+                prints('Failed to write backup metadata for id:', book_id)
+                traceback.print_exc()
+                ok = False
+            else:
+                ok = True
                 if remove_from_dirtied:
                     self._clear_dirtied(book_id, sequence)
-            except Exception:
-                pass
             if callback is not None:
-                callback(book_id, mi, True)
+                callback(book_id, mi, ok)
 
     _dump_metadata = dump_metadata
 
@@ -2384,7 +2413,9 @@ class Cache:
                 raise
 
         try:
-            with self.backend.conn:  # Speed up set_metadata by not operating in autocommit mode
+            # Speed up set_metadata by not operating in autocommit mode. The files of notes changed by the transaction (for example
+            # the note of a tag that is no longer used is retired) are restored if it is rolled back.
+            with self.backend.notes.file_transaction(), self.backend.conn:
                 for field in ('rating', 'series_index', 'timestamp'):
                     val = getattr(mi, field)
                     if val is not None:
@@ -2459,6 +2490,24 @@ class Cache:
         size, fname = self.backend.add_format(book_id, fmt, stream, title, author, path, name, mtime=mtime)
         return size, fname
 
+    def _record_format_added(self, book_id, fmt, fname, size):
+        # Updates the formats and size of the book for a format file that has
+        # been added and reports the change to the cache of computed
+        # categories, so that callers can use the quiet write lock.
+        try:
+            max_size = self.fields['formats'].table.update_fmt(book_id, fmt, fname, size, self.backend)
+            self.fields['size'].table.update_sizes({book_id: max_size})
+        finally:
+            # Report the change even if something above failed part way
+            # through, since the tables may already have changed. Unlike in
+            # set_field() the changed items are known exactly even then: the
+            # only item of the formats category a book's format can affect is
+            # that format, and a full recompute would read the same in memory
+            # tables. Size is not a category, but which books a Virtual
+            # library matches can depend on it.
+            self.categories_cache.field_changed('formats', (fmt,), (book_id,))
+            self.categories_cache.field_changed('size', None, (book_id,))
+
     @api
     def add_format(self, book_id, fmt, stream_or_path, replace=True, run_hooks=True, dbapi=None):
         """
@@ -2479,7 +2528,14 @@ class Cache:
             needs_close = True
             fmt = check_ebook_format(stream_or_path, fmt)
 
-        with self.write_lock:
+        # Adding a format changes only the formats and size of the book, which
+        # _record_format_added() reports, so the whole cache of computed
+        # categories need not be thrown away. Adding books adds a format to
+        # every book it creates, so in larger libraries that cost would be paid
+        # for every added book. Since this is not a quiet_write_api function,
+        # ReadingTest.test_categories_cache() cannot check it, every write made
+        # under this lock must be reported explicitly.
+        with self.quiet_write_lock:
             if not self._has_id(book_id):
                 raise NoSuchBook(book_id)
             fmt = (fmt or '').upper()
@@ -2506,8 +2562,7 @@ class Cache:
                     stream.close()
             del stream
 
-            max_size = self.fields['formats'].table.update_fmt(book_id, fmt, fname, size, self.backend)
-            self.fields['size'].table.update_sizes({book_id: max_size})
+            self._record_format_added(book_id, fmt, fname, size)
             self._update_last_modified((book_id,))
             self._queue_pages_scan(book_id)
             self.event_dispatcher(EventType.format_added, book_id, fmt)
@@ -2573,6 +2628,8 @@ class Cache:
         self._update_last_modified(tuple(formats_map))
         for book_id in formats_map:
             self._queue_pages_scan(book_id)
+        if self.backend.fts_enabled:
+            self._update_fts_indexing_numbers()
         self.event_dispatcher(EventType.formats_removed, formats_map)
         return removed_map
 
@@ -2656,7 +2713,9 @@ class Cache:
 
     _has_id = has_id
 
-    @write_api
+    # Most fields are set through set_field(), which reports the changed items
+    # itself, everything else this changes is reported explicitly below
+    @quiet_write_api
     def create_book_entry(self, mi, cover=None, add_duplicates=True, force_id=None, apply_import_tags=True, preserve_uuid=False):
         if mi.tags:
             mi.tags = list(mi.tags)
@@ -2692,6 +2751,10 @@ class Cache:
             )
         book_id = self.backend.last_insert_rowid()
         self.event_dispatcher(EventType.book_created, book_id)
+        # Put the values the database assigned to the fields from the books table in memory before _set_metadata() renders the
+        # composite columns and refreshes the cached searches of the new book
+        self.fields['size'].table.book_col_map[book_id] = 0
+        self._read_books_table_fields(book_id)
 
         mi.timestamp = utcnow() if (mi.timestamp is None or is_date_undefined(mi.timestamp)) else mi.timestamp
         mi.pubdate = UNDEFINED_DATE if mi.pubdate is None else mi.pubdate
@@ -2703,21 +2766,41 @@ class Cache:
             for field, link_map in lm.items():
                 if self._has_link_map(field):
                     self._set_link_map(field, link_map, only_set_if_no_existing_link=True)
+                    # The Tag browser displays the links of the items of a
+                    # category, so it must be rebuilt for this one
+                    self.categories_cache.field_changed(field)
         if preserve_uuid and mi.uuid:
             self._set_field('uuid', {book_id: mi.uuid})
-        # Update the caches for fields from the books table
-        self.fields['size'].table.book_col_map[book_id] = 0
-        row = next(self.backend.execute('SELECT sort, series_index, author_sort, uuid, has_cover FROM books WHERE id=?', (book_id,)))
-        for field, val in zip(('sort', 'series_index', 'author_sort', 'uuid', 'cover'), row):
-            if field == 'cover':
-                val = bool(val)
-            elif field == 'uuid':
-                self.fields[field].table.uuid_to_id_map[val] = book_id
-            self.fields[field].table.book_col_map[book_id] = val
+        # The writes of _set_metadata() keep the in memory values up to date, this only catches values changed in the database
+        # behind their back, so the caches of the book are refreshed only if one of them is stale
+        if self._read_books_table_fields(book_id):
+            self._clear_composite_caches((book_id,))
+            self._clear_search_caches((book_id,))
+        # These are not categories, but which books a Virtual library matches
+        # can depend on them
+        for field in ('size', 'sort', 'series_index', 'author_sort', 'uuid', 'cover'):
+            self.categories_cache.field_changed(field, None, (book_id,))
 
         return book_id
 
     _create_book_entry = create_book_entry
+
+    def _read_books_table_fields(self, book_id: int) -> bool:
+        # Copy the values of the fields stored in the books table into memory for a newly created book. Returns True if any
+        # in memory value was changed.
+        changed = False
+        row = next(self.backend.execute('SELECT sort, series_index, author_sort, uuid, has_cover FROM books WHERE id=?', (book_id,)))
+        for field, val in zip(('sort', 'series_index', 'author_sort', 'uuid', 'cover'), row):
+            table = self.fields[field].table
+            if field == 'cover':
+                val = bool(val)
+            if book_id in table.book_col_map and table.book_col_map[book_id] == val:
+                continue
+            if field == 'uuid':
+                table.update_uuid_cache({book_id: val})
+            table.book_col_map[book_id] = val
+            changed = True
+        return changed
 
     @api
     def add_books(self, books, add_duplicates=True, apply_import_tags=True, preserve_uuid=False, run_hooks=True, dbapi=None):
@@ -2751,7 +2834,11 @@ class Cache:
     def remove_books(self, book_ids, permanent=False):
         """Remove the books specified by the book_ids from the database and delete
         their format files. If ``permanent`` is False, then the format files
-        are placed in the per-library trash directory."""
+        are placed in the per-library trash directory.
+
+        If the files of some books cannot be deleted or moved to the trash,
+        those books are left unchanged and :class:`BooksNotRemoved` is raised
+        after all the other books have been removed."""
         path_map = {}
         for book_id in book_ids:
             try:
@@ -2759,7 +2846,10 @@ class Cache:
             except Exception:
                 path = None
             path_map[book_id] = path
-            if not permanent and path:
+            # Only write metadata.opf into an existing folder, as creating the
+            # folder would cause any existing trash entry for this book to be
+            # replaced by a folder containing only metadata.opf
+            if not permanent and path and os.path.isdir(os.path.join(self.backend.library_path, path)):
                 # ensure metadata.opf is written and up-to-date so we can restore the book
                 try:
                     mi = self._metadata_as_object_for_dump(book_id)
@@ -2767,7 +2857,9 @@ class Cache:
                     self.backend.write_backup(path, raw)
                 except Exception:
                     traceback.print_exc()
-        self.backend.remove_books(path_map, permanent=permanent)
+        failures = self.backend.remove_books(path_map, permanent=permanent)
+        if failures:
+            book_ids = tuple(book_id for book_id in path_map if book_id not in failures)
         for field in self.fields.values():
             try:
                 table = field.table
@@ -2779,7 +2871,11 @@ class Cache:
         self._clear_caches(book_ids=book_ids, template_cache=False, search_cache=False)
         for cc in self.cover_caches:
             cc.invalidate(book_ids)
+        if self.backend.fts_enabled:
+            self._update_fts_indexing_numbers()
         self.event_dispatcher(EventType.books_removed, book_ids)
+        if failures:
+            raise BooksNotRemoved(failures, book_ids)
 
     _remove_books = remove_books
 
@@ -2914,10 +3010,12 @@ class Cache:
             restrict_to_book_ids = frozenset(restrict_to_book_ids)
         affected_books = field.table.remove_items(item_ids, self.backend, restrict_to_book_ids=restrict_to_book_ids)
         if affected_books:
+            not_dirtied = affected_books
             if hasattr(field, 'index_field'):
-                self._set_field(field.index_field.name, {bid: 1.0 for bid in affected_books})
-            else:
-                self._mark_as_dirty(affected_books)
+                # set_field() marks as dirty only the books whose series index changed, but all of them lose the series
+                not_dirtied = affected_books - self._set_field(field.index_field.name, {bid: 1.0 for bid in affected_books})
+            if not_dirtied:
+                self._mark_as_dirty(not_dirtied)
             self._clear_link_map_cache(affected_books)
         self.event_dispatcher(EventType.items_removed, field, affected_books, item_ids)
         return affected_books
@@ -3239,7 +3337,9 @@ class Cache:
     _delete_custom_column = delete_custom_column
 
     @write_api
-    def create_custom_column(self, label, name, datatype, is_multiple, editable=True, display={}):
+    def create_custom_column(self, label, name, datatype, is_multiple, editable=True, display=None):
+        if display is None:
+            display = {}
         return self.backend.create_custom_column(label, name, datatype, is_multiple, editable=editable, display=display)
 
     _create_custom_column = create_custom_column
@@ -3408,6 +3508,7 @@ class Cache:
     @write_api
     def saved_search_add(self, name, val):
         self._search_api.saved_searches.add(name, val)
+        self._clear_search_caches()
 
     _saved_search_add = saved_search_add
 
@@ -3526,7 +3627,8 @@ class Cache:
 
     _copy_format_from_trash = copy_format_from_trash
 
-    @write_api
+    # Changes only the formats and size of the book, which _record_format_added() reports
+    @quiet_write_api
     def move_format_from_trash(self, book_id, fmt):
         """Undelete a format from the trash directory"""
         if not self._has_id(book_id):
@@ -3541,8 +3643,12 @@ class Cache:
             raise ValueError(f'No format {fmt} found in book {book_id}')
         size, fname = self._do_add_format(book_id, fmt, fpath, name)
         self.format_metadata_cache.pop(book_id, None)
-        max_size = self.fields['formats'].table.update_fmt(book_id, fmt, fname, size, self.backend)
-        self.fields['size'].table.update_sizes({book_id: max_size})
+        self._record_format_added(book_id, fmt, fname, size)
+        # Composite columns (and searches) that use the formats of the book are stale now. Unlike add_format() this does not change the
+        # last modified time of the book
+        if self.composites:
+            self._clear_composite_caches((book_id,))
+        self._clear_search_caches((book_id,))
         self._queue_pages_scan(book_id)
         self.event_dispatcher(EventType.format_added, book_id, fmt)
         self.backend.remove_trash_formats_dir_if_empty(book_id)
@@ -3681,7 +3787,7 @@ class Cache:
                         continue
 
                     if field_obj.is_composite:
-                        v = field_obj.get_value_with_cache(book_id, lambda x: proxy_metadata)
+                        v = field_obj.get_value_with_cache(book_id, lambda x: proxy_metadata)  # ruff: ignore[function-uses-loop-variable]
                     else:
                         v = self._fast_field_for(field_obj, book_id)
 

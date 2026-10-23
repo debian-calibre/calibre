@@ -3,14 +3,15 @@
 
 import json as stdlib_json
 import os
+import reprlib
 import shutil
 import tempfile
 from threading import Lock
 
-from calibre.customize.ui import input_profiles, output_profiles, run_plugins_on_postconvert
+from calibre.customize.ui import available_output_formats, input_profiles, output_profiles, run_plugins_on_postconvert
 from calibre.db.errors import NoSuchBook
 from calibre.srv.changes import formats_added
-from calibre.srv.errors import BookNotFound, HTTPForbidden, HTTPNotFound
+from calibre.srv.errors import BookNotFound, HTTPBadRequest, HTTPForbidden, HTTPNotFound
 from calibre.srv.routes import endpoint, json
 from calibre.srv.utils import get_library_data, is_recipe_fmt
 from calibre.utils.localization import _
@@ -38,8 +39,9 @@ FORBIDDEN_CLIENT_OPTIONS = frozenset({
 
 
 class JobStatus:
-    def __init__(self, job_id, book_id, tdir, library_id, pathtoebook, conversion_data):
+    def __init__(self, job_id, book_id, tdir, library_id, pathtoebook, conversion_data, username=None):
         self.job_id = job_id
+        self.username = username
         self.log = self.traceback = ''
         self.book_id = book_id
         # sanitize output_fmt to prevent path traversal
@@ -189,7 +191,7 @@ def queue_job(ctx, rd, library_id, db, fmt, book_id, conversion_data):
     )
     expire_old_jobs()
     with cache_lock:
-        conversion_jobs[job_id] = JobStatus(job_id, book_id, tdir, library_id, src_file.name, conversion_data)
+        conversion_jobs[job_id] = JobStatus(job_id, book_id, tdir, library_id, src_file.name, conversion_data, username=rd.username)
     return job_id
 
 
@@ -204,10 +206,30 @@ def start_conversion(ctx, rd, book_id):
     db, library_id = get_library_data(ctx, rd)[:2]
     if not ctx.has_id(rd, db, book_id):
         raise BookNotFound(book_id, db)
-    data = stdlib_json.loads(rd.request_body_file.read())
-    input_fmt = data['input_fmt']
+    try:
+        data = stdlib_json.loads(rd.request_body_file.read())
+    except ValueError as err:
+        raise HTTPBadRequest(f'Invalid conversion request: {err}')
+    if not isinstance(data, dict):
+        raise HTTPBadRequest('Invalid conversion request: must be a JSON object')
+    if not isinstance(data.setdefault('options', {}), dict):
+        raise HTTPBadRequest('Invalid conversion request: options must be a JSON object')
+    # input_fmt is used to build the path of the source file, so it must be
+    # one of the formats the book actually has, not an arbitrary string
+    input_fmt = data.get('input_fmt')
+    if not isinstance(input_fmt, str):
+        raise HTTPBadRequest(f'Unsupported input format: {reprlib.repr(input_fmt)}')
     if is_recipe_fmt(input_fmt):
         raise HTTPForbidden('Converting recipe files is not allowed, as they allow code execution')
+    input_fmt = data['input_fmt'] = input_fmt.upper()
+    if input_fmt not in db.formats(book_id):
+        raise HTTPBadRequest(f'Unsupported input format: {reprlib.repr(input_fmt)}')
+    # output_fmt is used to build the path the worker writes to, so it must be
+    # the name of an actual output format, not an arbitrary string
+    output_fmt = data.get('output_fmt')
+    if not isinstance(output_fmt, str) or output_fmt.lower() not in available_output_formats():
+        raise HTTPBadRequest(f'Unsupported output format: {reprlib.repr(output_fmt)}')
+    data['output_fmt'] = output_fmt.lower()
     job_id = queue_job(ctx, rd, library_id, db, input_fmt, book_id, data)
     return job_id
 
@@ -220,9 +242,12 @@ def start_conversion(ctx, rd, book_id):
     methods=receive_data_methods,
 )
 def conversion_status(ctx, rd, job_id):
+    db, library_id = get_library_data(ctx, rd)[:2]
     with cache_lock:
         job_status = conversion_jobs.get(job_id)
-        if job_status is None:
+        # Job ids are sequential, so only the user that started the job, in
+        # the library it was started in, may query, abort or complete it
+        if job_status is None or job_status.username != rd.username or job_status.library_id != library_id:
             raise HTTPNotFound(f'No job with id: {job_id}')
         job_status.last_check_at = monotonic()
         if job_status.running:
@@ -242,16 +267,13 @@ def conversion_status(ctx, rd, job_id):
             'log': job_status.log,
         }
         if job_status.ok:
-            db, library_id = get_library_data(ctx, rd)[:2]
-            if library_id != job_status.library_id:
-                raise HTTPNotFound('job library_id does not match')
             fmt = job_status.output_path.rpartition('.')[-1]
             try:
                 db.add_format(job_status.book_id, fmt, job_status.output_path)
             except NoSuchBook:
                 raise HTTPNotFound(f'book_id {job_status.book_id} not found in library')
             run_plugins_on_postconvert(db, job_status.book_id, fmt)
-            formats_added({job_status.book_id: (fmt,)})
+            ctx.notify_changes(db.backend.library_path, formats_added({job_status.book_id: (fmt.upper(),)}))
             ans['size'] = os.path.getsize(job_status.output_path)
             ans['fmt'] = fmt
         return ans

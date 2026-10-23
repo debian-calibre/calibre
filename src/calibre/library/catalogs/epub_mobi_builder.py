@@ -280,14 +280,14 @@ class CatalogBuilder:
          (str): sort key
         """
         if not book['series']:
-            fs = '{:<%d}!{!s}' % longest_author_sort  # noqa: UP031
+            fs = '{:<%d}!{!s}' % longest_author_sort  # ruff: ignore[printf-string-formatting]
             key = fs.format(capitalize(book['author_sort']), capitalize(book['title_sort']))
         else:
             index = book['series_index']
             integer = int(index)
             fraction = index - integer
             series_index = f"{integer:04}{str(f'{fraction:0.4f}').lstrip('0')}"
-            fs = '{:<%d}~{!s}{!s}' % longest_author_sort  # noqa: UP031
+            fs = '{:<%d}~{!s} {!s}' % longest_author_sort  # ruff: ignore[printf-string-formatting]
             key = fs.format(capitalize(book['author_sort']), self.generate_sort_title(book['series']), series_index)
         return key
 
@@ -795,7 +795,7 @@ class CatalogBuilder:
         if self.DEBUG and self.opts.verbose:
             tl = [i['title'] for i in books_by_author]
             lt = max(tl, key=len)
-            fs = '{:<6}{:<%d} {:<%d} {}' % (len(lt), len(las))  # noqa: UP031
+            fs = '{:<6}{:<%d} {:<%d} {}' % (len(lt), len(las))  # ruff: ignore[printf-string-formatting]
             print(fs.format('', 'Title', 'Author', 'Series'))
             for i in books_by_author:
                 print(fs.format('', i['title'], i['author_sort'], i['series']))
@@ -3052,7 +3052,9 @@ class CatalogBuilder:
         makeelement('content', navPointTag, src=content_src)
         return navPointTag
 
-    def generate_ncx_subsection(self, navPointTag, section_id, section_text, content_src, cm_tags={}):
+    def generate_ncx_subsection(self, navPointTag, section_id, section_text, content_src, cm_tags=None):
+        if cm_tags is None:
+            cm_tags = {}
         navPointVolumeTag = makeelement('navPoint', navPointTag, id=section_id, playOrder=self.play_order)
         if self.generate_for_kindle_mobi:
             navPointVolumeTag.set('class', 'article')
@@ -3661,6 +3663,7 @@ class CatalogBuilder:
             xmlns:calibre="http://calibre.kovidgoyal.net/2009/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
         <dc:title>{title}</dc:title>
         <dc:creator>{creator}</dc:creator>
+        <dc:date>{date}</dc:date>
         <dc:language>{lang}</dc:language>
         <meta name="calibre:publication_type" content="{pt}"/>
     </metadata>
@@ -3671,6 +3674,7 @@ class CatalogBuilder:
             '''.format(
             title=prepare_string_for_xml(self.opts.catalog_title),
             creator=prepare_string_for_xml(self.opts.creator),
+            date=strftime('%Y-%m-%d'),
             lang=prepare_string_for_xml(lang),
             pt='periodical:default' if self.generate_for_kindle_mobi else '',
         )

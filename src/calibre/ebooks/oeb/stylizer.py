@@ -94,7 +94,7 @@ FONT_SIZE_NAMES = {'xx-small', 'x-small', 'small', 'medium', 'large', 'x-large',
 
 ALLOWED_MEDIA_TYPES = frozenset({'screen', 'all', 'aural', 'amzn-kf8'})
 IGNORED_MEDIA_FEATURES = frozenset(
-    'width min-width max-width height min-height max-height device-width min-device-width max-device-width device-height min-device-height max-device-height aspect-ratio min-aspect-ratio max-aspect-ratio device-aspect-ratio min-device-aspect-ratio max-device-aspect-ratio color min-color max-color color-index min-color-index max-color-index monochrome min-monochrome max-monochrome -webkit-min-device-pixel-ratio resolution min-resolution max-resolution scan grid'.split()  # noqa: E501
+    'width min-width max-width height min-height max-height device-width min-device-width max-device-width device-height min-device-height max-device-height aspect-ratio min-aspect-ratio max-aspect-ratio device-aspect-ratio min-device-aspect-ratio max-device-aspect-ratio color min-color max-color color-index min-color-index max-color-index monochrome min-monochrome max-monochrome -webkit-min-device-pixel-ratio resolution min-resolution max-resolution scan grid'.split()  # ruff: ignore[line-too-long]
 )
 
 
@@ -217,10 +217,10 @@ class StylizerRules:
             normalizer = normalizers.get(name, None)
             is_important = prop.priority == 'important'
             if normalizer is not None:
-                for name, val in normalizer(name, prop.propertyValue).items():
-                    style[name] = val
+                for key, val in normalizer(name, prop.propertyValue).items():
+                    style[key] = val
                     if is_important:
-                        style.important_properties.add(name)
+                        style.important_properties.add(key)
             elif name == 'text-align':
                 style['text-align'] = self._apply_text_align(prop.value)
                 if is_important:

@@ -457,7 +457,9 @@ class AddAction(InterfaceAction):
                 ok += [x[0] for x in duplicates]
         return ok
 
-    def add_isbns(self, books, add_tags=[], check_for_existing=False):
+    def add_isbns(self, books, add_tags=None, check_for_existing=False):
+        if add_tags is None:
+            add_tags = []
         books = list(books)
         if check_for_existing:
             books = self.check_for_existing_isbns(books)
@@ -638,12 +640,23 @@ class AddAction(InterfaceAction):
         )
 
     def refresh_gui(self, num, set_current_row=-1, recount=True):
-        self.gui.library_view.model().books_added(num)
+        tv = self.gui.tags_view
+        orig = tv.disable_recounting
+        if recount:
+            # books_added() changes the count, which recounts the Tag browser
+            # using a position based index. The added books can insert new
+            # items, changing positions, so recount only once, below, using a
+            # name based index instead.
+            tv.disable_recounting = True
+        try:
+            self.gui.library_view.model().books_added(num)
+        finally:
+            tv.disable_recounting = orig
         if set_current_row > -1:
             self.gui.library_view.set_current_row(0)
         self.gui.refresh_cover_browser()
         if recount:
-            self.gui.tags_view.recount()
+            tv.recount()
 
     def _files_added(self, adder, on_card=None, delete_after_add=()):
         if adder.items:

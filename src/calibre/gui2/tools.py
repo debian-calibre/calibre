@@ -154,7 +154,9 @@ def convert_single_ebook(
 # Bulk convert {{{
 
 
-def convert_bulk_ebook(parent, queue, db, book_ids, out_format=None, args=[]):
+def convert_bulk_ebook(parent, queue, db, book_ids, out_format=None, args=None):
+    if args is None:
+        args = []
     total = len(book_ids)
     if total == 0:
         return None, None, None

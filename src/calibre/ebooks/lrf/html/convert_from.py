@@ -454,10 +454,12 @@ class HTMLConverter:
                 prop[key] = val
         return prop
 
-    def tag_css(self, tag, parent_css={}):
+    def tag_css(self, tag, parent_css=None):
         """
         Return a dictionary of style properties applicable to Tag tag.
         """
+        if parent_css is None:
+            parent_css = {}
 
         def merge_parent_css(prop, pcss):
             # float should not be inherited according to the CSS spec
@@ -491,8 +493,8 @@ class HTMLConverter:
             if isinstance(cls, list):
                 cls = ' '.join(cls)
             cls = cls.lower()
-            for cls in cls.split():
-                for classname in ['.' + cls, tagname + '.' + cls]:
+            for c in cls.split():
+                for classname in ['.' + c, tagname + '.' + c]:
                     if classname in self.css:
                         prop.update(self.css[classname])
                     if classname in self.pseudo_css:
@@ -732,11 +734,13 @@ class HTMLConverter:
             page.append(canvas)
             self.book.append(page)
 
-    def process_children(self, ptag, pcss, ppcss={}):
+    def process_children(self, ptag, pcss, ppcss=None):
         """Process the children of ptag"""
         # Need to make a copy of contents as when
         # extract is called on a child, it will
         # mess up the iteration.
+        if ppcss is None:
+            ppcss = {}
         for c in copy.copy(ptag.contents):
             if isinstance(c, HTMLConverter.IGNORED_TAGS):
                 continue
@@ -835,7 +839,7 @@ class HTMLConverter:
             ]:
                 src = src.replace(x, y)
 
-            valigner: Callable[..., object] = lambda x: x  # noqa: E731
+            valigner: Callable[..., object] = lambda x: x  # ruff: ignore[lambda-assignment]
             if 'vertical-align' in css:
                 valign = css['vertical-align']
                 if valign in ('sup', 'super', 'sub'):

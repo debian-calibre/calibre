@@ -753,6 +753,9 @@ def find_tests(which_tests=None, exclude_tests=None):
         from calibre.web.automate.test_recipes import find_tests
 
         a(find_tests())
+        from calibre.web.automate.test_metadata import find_tests
+
+        a(find_tests())
     if ok('icu'):
         from calibre.utils.icu_test import find_tests
 
@@ -841,6 +844,12 @@ def find_tests(which_tests=None, exclude_tests=None):
 
         a(find_tests())
         from calibre.utils.avif_test import find_tests
+
+        a(find_tests())
+        from calibre.utils.jxl_test import find_tests
+
+        a(find_tests())
+        from calibre.utils.imghdr_test import find_tests
 
         a(find_tests())
         from calibre.ebooks.metadata.test_author_sort import find_tests
