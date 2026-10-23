@@ -23,4 +23,10 @@ else ifeq (arm64, $(DEB_HOST_ARCH))
   TEST_FLAGS += --exclude-test-name=import_of_all_python_modules
   TEST_FLAGS += --exclude-test-name=piper
   TEST_FLAGS += --exclude-test-name=plugins
+else ifeq (armhf, $(DEB_HOST_ARCH))
+  # 32-bit platform is not supported by Camoufox
+  TEST_FLAGS += --exclude-test-name=download_deps_camoufox_release_selection
+else ifeq (i386, $(DEB_HOST_ARCH))
+  # 32-bit platform is not supported by Camoufox
+  TEST_FLAGS += --exclude-test-name=download_deps_camoufox_release_selection
 endif
