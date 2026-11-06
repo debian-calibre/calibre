@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
 "Last-Translator: Jonatan Nyberg, 2026\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -121,7 +121,7 @@ msgstr "Lägg till en fil i denna behållare. Poster för filen skapas automatis
 msgid ""
 "Add an entry to the manifest for a file with the specified name. Returns the"
 " manifest id."
-msgstr "Lägg till en post i manifestet för en fil med angivna namnet. Returnerar manifest-id."
+msgstr "Lägg till en post i manifestet för en fil med det angivna namnet. Returnerar manifest-id."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.add_properties:1
@@ -198,7 +198,7 @@ msgstr "Returnera filstorleken i byte för filen med det angivna kanoniska namne
 msgid ""
 "Add an item to the manifest with href derived from the given name. Ensures "
 "uniqueness of href and id automatically. Returns generated item."
-msgstr "Lägg till en post i manifestet med href härledd från det angivna namnet. Säkerställer unika href och id automatiskt. Returnerar genererad post."
+msgstr "Lägg till en post i manifestet med ett href-värde som härleds från det angivna namnet. Säkerställer automatiskt att href och id är unika. Returnerar den skapade posten."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -254,7 +254,7 @@ msgstr "Iterera över alla länkar i name. Om get_line_numbers är True returner
 msgid ""
 "Ensure that `name` does not already exist in this book. If it does, return a"
 " modified version that does not exist."
-msgstr "Se till att `name` inte redan finns i denna bok. Om den gör det, returnera en ändrad version som inte finns."
+msgstr "Se till att `name` inte redan finns i denna bok. Om namnet redan finns returneras en ändrad version som inte finns."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.manifest_has_name:1
@@ -311,7 +311,7 @@ msgstr "Konvertera ett namn till en href relativt base, som måste vara ett namn
 #: calibre.ebooks.oeb.polish.container.Container.names_that_must_not_be_changed:1
 msgid ""
 "Set of names that must never be renamed. Depends on the e-book file format."
-msgstr "Uppsättning med namn som aldrig får byta namn. Beror på e-bokformatet."
+msgstr "En mängd med namn som aldrig får ändras. Beror på e-bokformatet."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -319,7 +319,7 @@ msgstr "Uppsättning med namn som aldrig får byta namn. Beror på e-bokformatet
 msgid ""
 "Set of names that must never be deleted from the container. Depends on the "
 "e-book file format."
-msgstr "Uppsättning med namn som aldrig får tas bort från behållaren. Beror på e-bokformat."
+msgstr "En mängd med namn som aldrig får tas bort från behållaren. Beror på e-bokformatet."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of
@@ -327,7 +327,7 @@ msgstr "Uppsättning med namn som aldrig får tas bort från behållaren. Beror 
 msgid ""
 "Set of names that are allowed to be missing from the manifest. Depends on "
 "the e-book file format."
-msgstr "Uppsättning av namn som får saknas i manifestet. Beror på e-bokformat."
+msgstr "En mängd med namn som får saknas i manifestet. Beror på e-bokformatet."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.open:1
@@ -344,12 +344,22 @@ msgid "The parsed OPF file"
 msgstr "Den analyserade OPF-filen"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_dir:1
+msgid "The absolute path to the folder containing the OPF file"
+msgstr "Den absoluta sökvägen till mappen som innehåller OPF-filen"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_get_or_create:1
 msgid ""
 "Convenience method to either return the first XML element with the specified"
 " name or create it under the opf:package element and then return it, if it "
 "does not already exist."
 msgstr "Hjälpmetod som returnerar det första XML-elementet med det angivna namnet. Om elementet inte finns skapas det under ``opf:package`` och returneras sedan."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_name:1
+msgid "The canonical name of the OPF file"
+msgstr "OPF-filens kanoniska namn"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
@@ -395,7 +405,7 @@ msgstr "Om True och filen har en textbaserad MIME-typ, avkoda den och returnera 
 msgid ""
 "If True the returned unicode object is normalized to the NFC normal form as "
 "is required for the EPUB and AZW3 file formats."
-msgstr "Om True är det återgivna unicode-objektet normaliserat till NFC-normalformen som krävs för filformaten EPUB och AZW3."
+msgstr "Om True normaliseras det returnerade unicode-objektet till NFC-normalformen, som krävs för filformaten EPUB och AZW3."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.relpath:1
@@ -454,6 +464,15 @@ msgid ""
 "ways of creating such callables are using the :class:`LinkReplacer` and "
 ":class:`LinkRebaser` classes."
 msgstr "Ersätt alla länkar i ``name`` med ``replace_func``. Funktionen måste vara ett anropbart objekt som tar emot en URL och returnerar den nya URL:en. Den måste även ha attributet ``replaced``, som sätts till True när en faktisk ersättning görs. Sådana objekt kan enkelt skapas med :class:`LinkReplacer` och :class:`LinkRebaser`."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.replace_links:7
+msgid ""
+"In HTML files, attributes that refer to elements in the same file by id, "
+"such as aria-labelledby, are also replaced. Each id is passed to "
+"replace_func as a URL of the form #id with file_type set to 'idref' and is "
+"replaced only if replace_func returns a URL of the same form."
+msgstr "I HTML-filer ersätts även attribut som refererar till element i samma fil via id, till exempel aria-labelledby. Varje id skickas till replace_func som en URL på formen #id, med file_type satt till 'idref', och ersätts bara om replace_func returnerar en URL av samma form."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.serialize_item:1
@@ -528,7 +547,7 @@ msgstr "Om False, ersätts inte länkar i OPF-filen."
 #: of calibre.ebooks.oeb.polish.replace.rename_files:1
 msgid ""
 "Rename files in the container, automatically updating all links to them."
-msgstr "Byt namn på filer i behållaren, uppdaterar automatiskt alla länkar till dem."
+msgstr "Byt namn på filer i behållaren och uppdatera automatiskt alla länkar till dem."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.rename_files:3
@@ -628,7 +647,7 @@ msgstr "Bör vara ett XPath-uttryck som //h:div[@id=\"split_here\"]. Kan också 
 #: of calibre.ebooks.oeb.polish.split.split:8
 msgid ""
 "If True the split occurs before the identified element otherwise after it."
-msgstr "Om True sker uppdelningen innan det identifierade elementet annars efter det."
+msgstr "Om True sker uppdelningen före det identifierade elementet, annars efter det."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.split:9
@@ -647,7 +666,7 @@ msgstr "Dela den angivna filen på flera platser (alla taggar som matchar det an
 #: of calibre.ebooks.oeb.polish.split.multisplit:5
 msgid ""
 "If True the splits occur before the identified element otherwise after it."
-msgstr "Om True sker uppdelningar innan det identifierade elementet annars efter det."
+msgstr "Om True sker uppdelningarna före det identifierade elementet, annars efter det."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:1
@@ -655,7 +674,7 @@ msgid ""
 "Merge the specified files into a single file, automatically migrating all "
 "links and references to the affected files. The file must all either be HTML"
 " or CSS files."
-msgstr "Slå samman de angivna filerna till en enda fil, migrera alla länkar och referenser till de berörda filerna automatiskt. Alla filer måste vara antingen HTML- eller CSS-filer."
+msgstr "Slå samman de angivna filerna till en enda fil och uppdatera automatiskt alla länkar och referenser till de berörda filerna. Filerna måste antingen alla vara HTML-filer eller alla vara CSS-filer."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/split.pydocstring
 #: of calibre.ebooks.oeb.polish.split.merge:4
@@ -672,7 +691,7 @@ msgstr "Listan med filer som ska slås samman"
 msgid ""
 "Which of the merged files is the *master* file, that is, the file that will "
 "remain after merging."
-msgstr "Vilken av filerna som ska slås samman som är *huvudfilen*, det vill säga den fil som blir kvar efter sammanslagningen."
+msgstr "Vilken av filerna som är *huvudfilen*, det vill säga den fil som blir kvar efter sammanslagningen."
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:85
 msgid "Managing covers"
@@ -681,7 +700,7 @@ msgstr "Hantera omslag"
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:1
 msgid "Set the cover of the book to the image pointed to by cover_path."
-msgstr "Ställ in omslaget på boken till den bild som hänvisas till av cover_path."
+msgstr "Använd bilden som cover_path pekar på som bokens omslag."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.set_cover:3
@@ -721,7 +740,7 @@ msgstr "Markera den angivna HTML-filen som titelsidan för EPUB:en."
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_titlepage:3
 msgid "If True the HTML file is moved to the start of the spine"
-msgstr "Om True kommer HTML-filen flyttas till början av läsordningen"
+msgstr "Om True flyttas HTML-filen till början av läsordningen"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:96
 msgid "Working with CSS"
@@ -760,18 +779,18 @@ msgstr "Om True tas klassattribut i HTML som inte matchar några CSS-regler ocks
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.remove_unused_css:5
 msgid "If True, rules with identical selectors are merged."
-msgstr "Om True, slå samman regler med identiska väljare."
+msgstr "Om True slås regler med identiska väljare samman."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.remove_unused_css:6
 msgid "If True, rules with identical properties are merged."
-msgstr "Om True, slå samman regler med identiska egenskaper."
+msgstr "Om True slås regler med identiska egenskaper samman."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.remove_unused_css:7
 msgid ""
 "If True, stylesheets that are not referenced by any content are removed"
-msgstr "Om True, tas formatmallar som inte refereras av något innehåll bort"
+msgstr "Om True tas formatmallar som inget innehåll refererar till bort"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/css.pydocstring
 #: of calibre.ebooks.oeb.polish.css.filter_css:1
@@ -916,14 +935,14 @@ msgid ""
 "Register a keyboard shortcut that will trigger the specified ``qaction``. "
 "This keyboard shortcut will become automatically customizable by the user in"
 " the Keyboard shortcuts section of the editor preferences."
-msgstr "Registrera ett kortkommando som utlöser angiven ``qaction``. Användaren kan automatiskt anpassa kortkommandot under Kortkommandon i redigerarens inställningar."
+msgstr "Registrera ett kortkommando som utlöser angiven ``qaction``. Kortkommandot blir automatiskt tillgängligt för anpassning under Kortkommandon i redigerarens inställningar."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:4
 msgid ""
 "A QAction object, it will be triggered when the configured key combination "
 "is pressed by the user."
-msgstr "Ett QAction-objekt kommer att utlösas när den anpassade tangentkombinationen trycks av användaren."
+msgstr "Ett QAction-objekt som utlöses när användaren trycker på den inställda tangentkombinationen."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.register_shortcut:6
@@ -989,7 +1008,7 @@ msgstr "Skapa en återställningskontrollpunkt med det namn som anges som ``msg`
 msgid ""
 "Update all the components of the user interface to reflect the latest data "
 "in the current book container."
-msgstr "Uppdatera alla komponenter i användargränssnittet för att återspegla de senaste data i den aktuella bokbehållaren."
+msgstr "Uppdatera alla komponenter i användargränssnittet så att de återspeglar aktuella data i den nuvarande bokbehållaren."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.apply_container_update_to_gui:3
@@ -1021,14 +1040,14 @@ msgstr "Returnera namnet på filen som för närvarande redigeras eller None om 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.edit_file:1
 msgid "Open the file specified by name in an editor"
-msgstr "Öppna filen som namnges i en redigerare"
+msgstr "Öppna filen som anges med name i en redigerare"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.edit_file:3
 msgid ""
 "The media type of the file, for example, ``'text/html'``. If not specified "
 "it is guessed from the file extension."
-msgstr "Mediatypen för filen, till exempel, ``'text/html'``. Om inget angetts uppskattas den från filändelsen."
+msgstr "Filens medietyp, till exempel ``'text/html'``. Om den inte anges härleds den från filändelsen."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.edit_file:4
@@ -1040,14 +1059,14 @@ msgstr "En mall för att initiera den öppnade redigeraren med"
 msgid ""
 "Open the e-book at ``path`` for editing. Will show an error if the e-book is"
 " not in a supported format or the current book has unsaved changes."
-msgstr "Öppna e-bok på ``path`` för redigering. Kommer att visa ett fel om e-boken inte är i ett format som stöds eller den aktuella boken har osparade ändringar."
+msgstr "Öppna e-boken på ``path`` för redigering. Ett fel visas om e-bokens format inte stöds eller om den aktuella boken har osparade ändringar."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.open_book:3
 msgid ""
 "The name of a file inside the newly opened book to start editing. Can also "
 "be a list of names."
-msgstr "Namnet på en fil inne i den nyöppnade boken för att börja redigera. Kan också vara en lista med namn."
+msgstr "Namnet på en fil i den nyöppnade boken som ska öppnas för redigering. Kan också vara en lista med namn."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.rewind_savepoint:1
@@ -1059,7 +1078,7 @@ msgstr "Ångra skapandet av den föregående återställningskontrollpunkten. De
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.save_book:1
 msgid "Save the book. Saving is performed in the background"
-msgstr "Spara boken. Sparning utförs i bakgrunden"
+msgstr "Spara boken. Boken sparas i bakgrunden"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.set_modified:1

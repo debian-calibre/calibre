@@ -5,6 +5,7 @@ import re
 import sys
 import time
 from functools import cmp_to_key
+from typing import TYPE_CHECKING
 
 from calibre import force_unicode
 from calibre.constants import preferred_encoding
@@ -17,8 +18,11 @@ from calibre.utils.config_base import tweaks
 from calibre.utils.icu import sort_key
 from polyglot.builtins import cmp
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
-def none_cmp(xx, yy):
+
+def none_cmp(xx: tuple[Metadata, object, object], yy: tuple[Metadata, object, object]) -> int:
     x = xx[1]
     y = yy[1]
     if x is None and y is None:
@@ -47,9 +51,7 @@ def none_cmp(xx, yy):
 
 
 class Book(Metadata):
-    _thumbnail_value = None
-
-    def __init__(self, prefix, lpath, size=None, other=None):
+    def __init__(self, prefix: str, lpath: str, size: int | None = None, other: Metadata | None = None) -> None:
         from calibre.ebooks.metadata.meta import path_to_ext
 
         Metadata.__init__(self, '')
@@ -63,6 +65,11 @@ class Book(Metadata):
         else:
             self.lpath = lpath
         self.mime = mime_type_ext(path_to_ext(lpath))
+        # The database id in the application database that this file corresponds to.
+        # Note that db_id cannot be a property as Metadata.__getattribute__()
+        # handles all standard field names itself.
+        match = re.search(r'_(\d+)$', lpath.rpartition('.')[0])
+        self.db_id = int(match.group(1)) if match else None
         self.size = size  # will be set later if None
         try:
             self.datetime = time.gmtime(os.path.getctime(self.path))
@@ -71,41 +78,28 @@ class Book(Metadata):
         if other:
             self.smart_update(other)
 
-    def __eq__(self, other):
+    def __eq__(self, other: object) -> bool:
         # use lpath because the prefix can change, changing path
         return self.lpath == getattr(other, 'lpath', None)
 
     @property
-    def db_id(self):
-        """The database id in the application database that this file corresponds to"""
-
-        match = re.search(r'_(\d+)$', self.lpath.rpartition('.')[0])
-        if match:
-            return int(match.group(1))
-        return None
-
-    @property
-    def title_sorter(self):
+    def title_sorter(self) -> str:
         """String to sort the title. If absent, title is returned"""
         return title_sort(self.title)
 
-    @property
-    def thumbnail(self):
-        return self._thumbnail_value
-
 
 class BookList(_BookList):
-    def __init__(self, oncard, prefix, settings):
+    def __init__(self, oncard: str | None, prefix: str | None, settings: object) -> None:
         _BookList.__init__(self, oncard, prefix, settings)
-        self._bookmap = {}
+        self._bookmap: dict[str, Book] = {}
 
-    def supports_collections(self):
+    def supports_collections(self) -> bool:
         return False
 
-    def add_book(self, book, replace_metadata):
+    def add_book(self, book: Metadata, replace_metadata: bool) -> Metadata | None:
         return self.add_book_extended(book, replace_metadata, check_for_duplicates=True)
 
-    def add_book_extended(self, book, replace_metadata, check_for_duplicates):
+    def add_book_extended(self, book: Metadata, replace_metadata: bool, check_for_duplicates: bool) -> Metadata | None:
         """
         Add the book to the booklist, if needed. Return None if the book is
         already there and not updated, otherwise return the book.
@@ -122,25 +116,25 @@ class BookList(_BookList):
             return self[b]
         return None
 
-    def remove_book(self, book):
+    def remove_book(self, book: Metadata) -> None:
         self.remove(book)
 
-    def get_collections(self, collection_attributes=None):
+    def get_collections(self, collection_attributes: Sequence[str] | None = None) -> dict[str, list[Metadata]]:
         return {}
 
 
 class CollectionsBookList(BookList):
-    def supports_collections(self):
+    def supports_collections(self) -> bool:
         return True
 
-    def in_category_sort_rules(self, attr):
+    def in_category_sort_rules(self, attr: str) -> str | None:
         sorts = tweaks['sony_collection_sorting_rules']
         for attrs, sortattr in sorts:
             if attr in attrs or '*' in attrs:
                 return sortattr
         return None
 
-    def compute_category_name(self, field_key, field_value, field_meta):
+    def compute_category_name(self, field_key: str, field_value: str, field_meta: dict[str, object]) -> str:
         from calibre.utils.formatter import EvalFormatter
 
         renames = tweaks['sony_collection_renaming_rules']
@@ -158,7 +152,7 @@ class CollectionsBookList(BookList):
         )
         return cat_name.strip()
 
-    def get_collections(self, collection_attributes=None):
+    def get_collections(self, collection_attributes: Sequence[str] | None = None) -> dict[str, list[Metadata]]:
         from calibre.utils.config import device_prefs
 
         debug_print('Starting get_collections:', device_prefs['manage_device_metadata'])
@@ -171,13 +165,13 @@ class CollectionsBookList(BookList):
         # right decisions
         use_renaming_rules = device_prefs['manage_device_metadata'] == 'on_connect'
 
-        collections = {}
+        collections: dict[str, dict[str, tuple[Metadata, object, object]]] = {}
 
         # get the special collection names
         all_by_author = ''
         all_by_title = ''
-        ca = []
-        all_by_something = []
+        ca: list[str] = []
+        all_by_something: list[tuple[str, str]] = []
         for c in collection_attributes or []:
             if c.startswith('aba:') and c[4:].strip():
                 all_by_author = c[4:].strip()
@@ -297,14 +291,14 @@ class CollectionsBookList(BookList):
                 collections[n][lpath] = (book, book.get(sb, ''), tsval)
 
         # Sort collections
-        result = {}
+        result: dict[str, list[Metadata]] = {}
 
         for category, lpaths in collections.items():
             books = sorted(lpaths.values(), key=cmp_to_key(none_cmp))
             result[category] = [x[0] for x in books]
         return result
 
-    def rebuild_collections(self, booklist, oncard):
+    def rebuild_collections(self, booklist: BookList, oncard: str | None) -> None:
         """
         For each book in the booklist for the card oncard, remove it from all
         its current collections, then add it to the collections specified in

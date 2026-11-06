@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
@@ -77,7 +75,7 @@ def search(query, max_results=10, timeout=60):
 
 
 class BaenWebScriptionStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         url = 'http://www.baenebooks.com/'
         if external or self.config.get('open_external', False):
             open_url(QUrl(detail_item or url))
@@ -88,8 +86,7 @@ class BaenWebScriptionStore(BasicStoreConfig, StorePlugin):
             d.exec()
 
     def search(self, query, max_results=10, timeout=60):
-        for result in search(query, max_results, timeout):
-            yield result
+        yield from search(query, max_results, timeout)
 
 
 if __name__ == '__main__':

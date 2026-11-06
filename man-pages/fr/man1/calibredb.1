@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "octobre 23, 2026" "9.17.0" "calibre"
+.TH "CALIBREDB" "1" "novembre 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -136,6 +136,18 @@ search
 fts_index
 .IP \(bu 2
 fts_search
+.IP \(bu 2
+notes
+.IP \(bu 2
+items
+.IP \(bu 2
+virtual_libraries
+.IP \(bu 2
+annotations
+.IP \(bu 2
+trash
+.IP \(bu 2
+data_files
 .UNINDENT
 .SH OPTIONS GLOBALES
 .INDENT 0.0
@@ -354,7 +366,7 @@ Chaque fois que vous passez à calibredb des arguments comportant des espaces,  
 .INDENT 0.0
 .TP
 .B \-\-permanent
-N\fB\(aq\fPutilisez pas les Corbeille
+Ne pas utiliser la corbeille
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -453,7 +465,7 @@ calibredb export [options] ids
 .UNINDENT
 .sp
 Exporter les livres spécifiés par ids (une liste séparée par des virgules) vers le système de fichiers.
-L’opération d’\fBexport\fP enregistre tous les formats du livre, la couverture et les métadonnées (dans n’importe quel
+L\(aqopération d\(aq\fBexport\fP enregistre tous les formats du livre, la couverture et les métadonnées (dans n\(aqimporte quel
 un fichier OPF). Tous les fichiers de données supplémentaires associés au livre sont également enregistrés.
 Vous pouvez obtenir les numéros id à partir de la commande search.
 .sp
@@ -665,20 +677,24 @@ Remplace la couverture existante lorsque le catalogue est généré. Par défaut
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [options] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
 Gère les recherches sauvegardées stockées dans la base de données.
-Si vous essayez d’ajouter une requête avec un nom préexistant, elle sera
+Si vous essayez d\(aqajouter une requête avec un nom préexistant, elle sera
 remplacée.
 .sp
-Syntaxe pour l\(aqajout :
+Syntaxe pour l\(aqaffichage de la liste, action par défaut\ :
+.sp
+calibredb \fBsaved_searches\fP list
+.sp
+Syntaxe pour l\(aqajout\ :
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntaxe pour la suppression :
+Syntaxe pour la suppression\ :
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -785,6 +801,9 @@ ATTENTION : cette commande régénère complètement votre base de données.
 Vous perdrez toutes les recherches sauvegardées, les catégories utilisateur,
 les tableaux de connexions, les réglages de conversion par livre et les recettes personnalisées.
 Les métadonnées restaurées seront aussi précises que ce qui sera trouvé dans les fichiers OPF.
+.sp
+Le code de sortie est 0 si la restauration a réussi, 1 si elle a complètement échoué et
+2 si la base de données a été restaurée mais que certains livres ou d\(aqautres données n\(aqont pas pu l\(aqêtre.
 .sp
 Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1039,6 +1058,343 @@ Le format de sortie des résultats de la recherche. Soit \fB\(dq\fPtext\fB\(dq\f
 .TP
 .B \-\-restrict\-to
 Restreindre les livres recherchés, en utilisant une expression de recherche ou des identifiants. Par exemple : ids:1,2,3 pour restreindre par ids ou search:tag:foo pour restreindre aux livres ayant le tag foo.
+.UNINDENT
+.SH NOTES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb notes [options] [list|search|show|set|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Gère les \fBnotes\fP associées à des éléments tels que les auteurs, les séries, les balises et
+les éditeurs. FIELD correspond au nom de recherche du champ, par exemple\ : authors,
+series, tags, publisher ou #mycolumn. ITEM correspond au nom de l\(aqélément, par
+exemple le nom d\(aqun auteur. La correspondance des éléments ne tient pas compte de la casse.
+.sp
+Répertorier les éléments comportant des \fBnotes\fP, éventuellement uniquement ceux du champ spécifié. Il s\(aqagit de l\(aqaction par défaut\ :
+.sp
+calibredb \fBnotes\fP list [FIELD]
+.sp
+Effectuez une recherche dans le texte des \fBnotes\fP en utilisant la même syntaxe de recherche en texte intégral SQLite que
+l\(aqoutil « Parcourir les \fBnotes\fP » de Calibre. Affichez le champ, le nom de l\(aqélément et un extrait
+pour chaque résultat. Utilisez l\(aqoption \-\-field pour rechercher uniquement dans les \fBnotes\fP d\(aqun champ particulier\ :
+.sp
+calibredb \fBnotes\fP search \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+.sp
+Afficher la note d\(aqun élément au format Markdown, ou avec l\(aqoption \-\-as\-html sous forme de
+document HTML avec toutes les images intégrées, adapté à une utilisation avec l\(aqoption set\ :
+.sp
+calibredb \fBnotes\fP show FIELD ITEM
+.sp
+Remplacer la note d\(aqun élément par le contenu d\(aqun fichier HTML. Utilisez \- pour
+lire le code HTML à partir de l\(aqentrée standard. Les images sont intégrées sous forme de données encodées en base64\ :
+les URL sont ajoutées à la note, tant pour les bibliothèques locales que pour les bibliothèques distantes. Lorsque vous utilisez une
+bibliothèque locale et que vous lisez à partir d\(aqun fichier, les images référencées par des chemins relatifs par rapport
+au fichier sont également ajoutées\ :
+.sp
+calibredb \fBnotes\fP set FIELD ITEM FICHIER
+.sp
+Supprime la note d\(aqun élément\ :
+.sp
+calibredb \fBnotes\fP remove FIELD ITEM
+.sp
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-html
+Lors de l\fB\(aq\fPaffichage d\fB\(aq\fPune note, l\fB\(aq\fPafficher au format HTML plutôt qu\fB\(aq\fPau format Markdown
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-field
+Lorsque vous effectuez une recherche dans les notes, limitez celle\-ci à ce champ, par exemple\ : authors, tags ou #mycolumn
+.UNINDENT
+.SH ITEMS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb items [options] (rename|remove) FIELD ITEM ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Renommer ou supprimer des éléments tels que les auteurs, les balises, les séries et les éditeurs dans tous les
+livres, de la même manière que les actions « Gérer les auteurs, les balises, etc. » de l\(aqinterface de Calibre.
+FIELD correspond au nom de référence du champ, par exemple : authors, tags,
+series, publisher ou #mycolumn. La correspondance des éléments se fait sans distinction de majuscules/minuscules.
+.sp
+Renommer un élément. Si un élément nommé NEW_NAME existe déjà, les deux éléments sont
+fusionnés. Pour les champs contenant plusieurs valeurs, NEW_NAME peut contenir plus
+d\(aqune valeur, séparées par le séparateur du champ, par exemple une virgule
+pour les balises. L\(aqélément est alors remplacé par toutes les valeurs :
+.sp
+calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
+.sp
+Supprimer un ou plusieurs éléments de tous les livres. Les auteurs ne peuvent pas être supprimés :
+.sp
+calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
+.sp
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Ne modifier que les livres correspondant à l\fB\(aq\fPexpression de recherche indiquée, par exemple\ : tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+.UNINDENT
+.SH VIRTUAL_LIBRARIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb virtual_libraries [options] [list|add|rename|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Gère les bibliothèques virtuelles de cette bibliothèque. Une bibliothèque virtuelle est une recherche
+qui se comporte comme si la bibliothèque ne contenait que les livres correspondant à cette recherche. Pour lister
+ou rechercher les livres d\(aqune bibliothèque virtuelle, utilisez\ : calibredb search \(aqvl:\(dqnom\(dq\(aq
+.sp
+Répertorier les bibliothèques virtuelles, avec leurs recherches et le nombre de livres. Il s\(aqagit de l\(aqaction par défaut\ :
+.sp
+calibredb \fBvirtual_libraries\fP list
+.sp
+Créer une bibliothèque virtuelle à partir d\(aqune recherche\ :
+.sp
+calibredb \fBvirtual_libraries\fP add NAME SEARCH_EXPRESSION
+.sp
+Renommer une bibliothèque virtuelle\ :
+.sp
+calibredb \fBvirtual_libraries\fP rename NAME NEW_NAME
+.sp
+Supprimer des bibliothèques virtuelles ; les livres qu\(aqelles contiennent ne sont pas modifiés\ :
+.sp
+calibredb \fBvirtual_libraries\fP remove NAME [NAME ...]
+.sp
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Générer une sortie au format JSON, ce format étant mieux adapté à l\fB\(aq\fPanalyse automatique.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Remplacer la recherche d\fB\(aq\fPune bibliothèque virtuelle existante portant le même nom lors de l\fB\(aq\fPajout
+.UNINDENT
+.SH ANNOTATIONS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+%pannotations [options] [list|search|export|import|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Gère les \fBannotations\fP, c\(aqest\-à\-dire les passages surlignés et les signets, des livres, telles qu\(aqelles
+ont été créées dans la visionneuse de livres électroniques Calibre ou synchronisées depuis d\(aqautres applications.
+.sp
+Afficher la liste des \fBannotations\fP, avec leurs identifiants. Il s\(aqagit de l\(aqaction par défaut\ :
+.sp
+calibredb \fBannotations\fP list
+.sp
+Rechercher du texte surligné, des notes d\(aqannotation et des titres de signets en utilisant la même
+syntaxe de recherche en texte intégral SQLite que l\(aqoutil Parcourir les \fBannotations\fP\&. Les résultats sont
+classés par pertinence et incluent les identifiants d\(aqannotation, les titres des livres et les
+extraits correspondants. Utilisez \-\-search pour limiter les livres, \-\-type pour limiter le
+type d\(aqannotation, \-\-user\-type et \-\-annotation\-user pour limiter l\(aqutilisateur, \-\-no\-stemming pour
+rechercher des formes de mots exactes, ou \-\-format json pour obtenir un tableau JSON de résultats comprenant
+les données d\(aqannotation et les extraits\ :
+.sp
+calibredb \fBannotations\fP search \(dqsearch expression\(dq
+.sp
+Exportez les \fBannotations\fP au format texte brut, Markdown ou JSON, regroupées par livre. Le
+fichier JSON correspond à la même collection d\(aq\fBannotations\fP Calibre que celle créée par le bouton
+Exporter de l\(aqoutil Parcourir les \fBannotations\fP\ :
+.sp
+calibredb \fBannotations\fP export
+.sp
+Importez une collection d\(aq\fBannotations\fP Calibre exportée au format JSON par cette commande ou
+par l\(aqoutil Parcourir les \fBannotations\fP\&. La collection doit contenir les annotations
+d\(aqun seul livre. BOOK_ID correspond à l\(aqidentifiant du livre de destination, et non à l\(aqidentifiant stocké dans le
+fichier. Seules les \fBannotations\fP au format FORMAT sont importées, celles aux
+autres formats sont ignorées. Le format FORMAT doit exister dans le livre de destination. Utilisez la
+même édition du livre afin que les positions correspondent\ :
+.sp
+calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
+.sp
+Utilisez \- pour FILE afin de lire depuis l\(aqentrée standard. L\(aqensemble de la collection est
+validé avant l\(aqimportation. Les \fBannotations\fP sont fusionnées avec celles existantes selon
+les règles de la visionneuse\ : les surlignages sont mis en correspondance par UUID et les signets par titre,
+et l\(aqhorodatage le plus récent prévaut. Les importations répétées ne créent pas de doublons.
+Les \fBannotations\fP et positions de lecture non liées sont conservées.
+.sp
+Par défaut, les \fBannotations\fP sont importées dans celles de la visionneuse de livres électroniques de Calibre.
+Utilisez \-\-user\-type web \-\-annotation\-user USER pour les importer à la place dans celles d\(aqun
+utilisateur du serveur de contenu. Les collections exportées enregistrent l\(aqutilisateur auquel
+appartiennent les \fBannotations\fP, et si une collection contient des \fBannotations\fP de plus d\(aqun
+utilisateur, elle est rejetée. Utilisez les options \-\-user\-type et \-\-annotation\-user
+lors de l\(aqexportation, pour exporter les \fBannotations\fP d\(aqun seul utilisateur.
+.sp
+Supprimez définitivement les \fBannotations\fP dont les identifiants sont spécifiés, comme indiqué par la commande list\ :
+.sp
+calibredb \fBannotations\fP remove ID [ID ...]
+.sp
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-annotation\-user
+Afficher, rechercher ou exporter uniquement les annotations de l\fB\(aq\fPutilisateur spécifié. Pour l\fB\(aq\fPimportation, l\fB\(aq\fPutilisateur du serveur de contenu pour lequel les annotations doivent être importées doit être spécifié à l\fB\(aq\fPaide de l\fB\(aq\fPoption \fB\-\-user\-type\fP web. Notez qu\fB\(aq\fPil peut s\fB\(aq\fPagir de n\fB\(aq\fPimporte quel utilisateur, et pas uniquement de celui utilisé pour se connecter à une bibliothèque distante.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-format, \-f
+Le format d\fB\(aq\fPexportation, l\fB\(aq\fPun des suivants\ : text, markdown, json. Pour la recherche : texte ou json. Valeur par défaut\ : text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-stemming
+Pour la recherche, privilégiez la correspondance exacte des formes des mots plutôt que celle des racines
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Afficher, rechercher ou exporter uniquement les annotations des livres correspondant à la requête de recherche indiquée, par exemple\ : \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-type, \-t
+Afficher, rechercher ou exporter uniquement les annotations du type spécifié, parmi les suivantes\ : highlight, bookmark
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-user\-type
+Afficher, rechercher ou exporter uniquement les annotations du type d\fB\(aq\fPutilisateur spécifié. Pour l\fB\(aq\fPimportation, indiquez le type d\fB\(aq\fPutilisateur pour lequel vous souhaitez importer les annotations\ : la visionneuse de livre numérique Calibre (local) ou un utilisateur du serveur de contenu (Web). La valeur par défaut pour l\fB\(aq\fPimportation est local.
+.UNINDENT
+.SH TRASH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb trash [options] (list|restore|delete|empty) [IDS]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Gère les livres et les formats qui ont été supprimés et placés dans la corbeille.
+Les éléments de la corbeille sont automatiquement supprimés de manière définitive au bout de quelques jours.
+IDS est une liste d\(aqidentifiants de livres séparés par des virgules, comme pour la commande remove, par
+exemple\ : 23,34,57\-85 (lorsqu\(aqon spécifie une plage, le dernier numéro de la plage n\(aqest
+pas inclus).
+.sp
+Afficher la liste des livres et formats supprimés, en commençant par les plus récents, avec
+l\(aqheure de leur suppression en heure locale. Les formats supprimés de livres qui n\(aqexistent plus
+sont marqués comme non restaurables, ils ne peuvent être que supprimés. Avec
+\-\-for\-machine, les heures sont exprimées en UTC\ :
+.sp
+calibredb \fBtrash\fP list
+.sp
+Restaurer les livres supprimés, ou avec l\(aqoption \-\-formats, les formats supprimés des livres\ :
+.sp
+calibredb \fBtrash\fP restore IDS
+.sp
+Supprimer définitivement des entrées de la corbeille\ :
+.sp
+calibredb \fBtrash\fP delete IDS
+.sp
+Supprimer définitivement tout le contenu de la corbeille\ :
+.sp
+calibredb \fBtrash\fP empty
+.sp
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Générer une sortie au format JSON pour l\fB\(aq\fPaction list, ce format étant mieux adapté à l\fB\(aq\fPanalyse automatique.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Agir sur les formats supprimés des livres indiqués, plutôt que sur les livres supprimés
+.UNINDENT
+.SH DATA_FILES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Gère les fichiers de données supplémentaires associés à un livre, dans des bibliothèques locales ou distantes.
+Les noms sont relatifs au répertoire de données du livre. Utilisez / pour les sous\-répertoires\ ;
+est également accepté. Les fichiers dont le nom contient un sont répertoriés, mais ne peuvent
+pas être gérés autrement.
+Les formats de livres électroniques, les couvertures et les fichiers metadata.opf ne sont pas accessibles via cette commande.
+Les bibliothèques distantes nécessitent un compte disposant d\(aqun accès en écriture, comme pour les autres commandes de gestion,
+et ne prennent pas en charge les comptes soumis à des restrictions de recherche par bibliothèque.
+.sp
+Répertorie les noms de fichiers, leur taille en octets et leur date de modification (en secondes depuis l\(aqépoque Unix).
+Utilisez \-\-for\-machine pour une sortie au format JSON\ :
+.sp
+calibredb \fBdata_files\fP list BOOK_ID
+.sp
+Ajouter un fichier en utilisant son nom de base, ou \-\-name pour spécifier un nom ou un sous\-répertoire.
+Les fichiers existants ne sont pas remplacés sauf si \-\-replace est spécifié. Cette option est également
+disponible via add_format \-\-as\-extra\-data\-file\ :
+.sp
+calibredb \fBdata_files\fP add BOOK_ID FILE
+.sp
+Enregistrer un fichier de données dans \-\-output sur la machine locale. Les fichiers de sortie existants
+ne sont pas remplacés, sauf si l\(aqoption \-\-replace est spécifiée\ :
+.sp
+calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
+.sp
+Renommer un fichier. Les destinations existantes ne sont pas remplacées, sauf si l\(aqoption \-\-replace est activée\ :
+.sp
+calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
+.sp
+Déplacer un fichier vers la corbeille du système d\(aqexploitation. Avec l\(aqoption \-\-permanent, supprimez\-le
+définitivement à la place. Pour les bibliothèques distantes, cette opération s\(aqeffectue sur le serveur\ :
+.sp
+calibredb \fBdata_files\fP remove BOOK_ID NAME
+.sp
+Les répertoires laissés vides par les opérations de renommage et de suppression sont supprimés. Avec les
+bibliothèques distantes, chaque fichier est transféré en une seule requête ; par conséquent, les fichiers très volumineux
+nécessitent suffisamment de mémoire tant sur le client que sur le serveur, et les téléchargements sont limités
+par la taille maximale des requêtes du serveur.
+.sp
+Chaque fois que vous passez à calibredb des arguments comportant des espaces,  entourez l’argument à l’aide de guillemets. Par exemple: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Afficher la liste des fichiers au format JSON
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-name
+Nom à attribuer au fichier ajouté, par rapport au répertoire de données
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output
+Une destination locale pour l\fB\(aq\fPaction get
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Supprimer définitivement le fichier de données au lieu de l\fB\(aq\fPenvoyer dans la corbeille
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Autoriser le remplacement des fichiers existants lors de l\fB\(aq\fPajout, de la récupération ou du renommage
 .UNINDENT
 .SH Author
 Kovid Goyal

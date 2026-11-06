@@ -2,6 +2,7 @@
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid@kovidgoyal.net>
 
 import os
+from typing import IO, TYPE_CHECKING
 
 from calibre import fit_image
 from calibre.utils.img import add_borders_to_image as abti
@@ -10,8 +11,11 @@ from calibre.utils.img import save_cover_data_to as _save_cover_data_to
 from calibre.utils.imghdr import identify as _identify
 from calibre.utils.magick import Image, create_canvas
 
+if TYPE_CHECKING:
+    from qt.core import QImage
 
-def _data_to_image(data):
+
+def _data_to_image(data: Image | bytes) -> Image:
     if isinstance(data, Image):
         img = data
     else:
@@ -20,7 +24,7 @@ def _data_to_image(data):
     return img
 
 
-def minify_image(data, minify_to=(1200, 1600), preserve_aspect_ratio=True):
+def minify_image(data: Image | bytes, minify_to: tuple[int, int] = (1200, 1600), preserve_aspect_ratio: bool = True) -> Image:
     """
     Minify image to specified size if image is bigger than specified
     size and return minified image, otherwise, original image is
@@ -42,15 +46,15 @@ def minify_image(data, minify_to=(1200, 1600), preserve_aspect_ratio=True):
 
 
 def save_cover_data_to(
-    data,
-    path,
-    bgcolor='#ffffff',
-    resize_to=None,
-    return_data=False,
-    compression_quality=90,
-    minify_to=None,
-    grayscale=False,
-):
+    data: Image | QImage | bytes,
+    path: str,
+    bgcolor: str = '#ffffff',
+    resize_to: tuple[int, int] | None = None,
+    return_data: bool = False,
+    compression_quality: int = 90,
+    minify_to: tuple[int, int] | None = None,
+    grayscale: bool = False,
+) -> bytes | None:
     """
     Saves image in data to path, in the format specified by the path
     extension. Removes any transparency. If there is no transparency and no
@@ -69,14 +73,12 @@ def save_cover_data_to(
     tweak is used.
 
     """
-    fmt = os.path.splitext(path)[1]
-    if return_data:
-        path = None
+    fmt = os.path.splitext(path)[1][1:]
     if isinstance(data, Image):
         data = data.img
     return _save_cover_data_to(
         data,
-        path,
+        None if return_data else path,
         bgcolor=bgcolor,
         resize_to=resize_to,
         compression_quality=compression_quality,
@@ -86,7 +88,15 @@ def save_cover_data_to(
     )
 
 
-def thumbnail(data, width=120, height=120, bgcolor='#ffffff', fmt='jpg', preserve_aspect_ratio=True, compression_quality=70):
+def thumbnail(
+    data: bytes,
+    width: int | None = 120,
+    height: int | None = 120,
+    bgcolor: str = '#ffffff',
+    fmt: str = 'jpg',
+    preserve_aspect_ratio: bool = True,
+    compression_quality: int = 70,
+) -> tuple[int, int, bytes]:
     img = Image()
     img.load(data)
     owidth, oheight = img.size
@@ -108,7 +118,7 @@ def thumbnail(data, width=120, height=120, bgcolor='#ffffff', fmt='jpg', preserv
     return (canvas.size[0], canvas.size[1], data)
 
 
-def identify_data(data):
+def identify_data(data: bytes | IO[bytes]) -> tuple[int, int, str | None]:
     """
     Identify the image in data. Returns a 3-tuple
     (width, height, format)
@@ -118,7 +128,7 @@ def identify_data(data):
     return width, height, fmt
 
 
-def identify(path):
+def identify(path: str) -> tuple[int, int, str | None]:
     """
     Identify the image at path. Returns a 3-tuple
     (width, height, format)
@@ -129,6 +139,8 @@ def identify(path):
     return width, height, fmt
 
 
-def add_borders_to_image(img_data, left=0, top=0, right=0, bottom=0, border_color='#ffffff', fmt='jpg'):
+def add_borders_to_image(
+    img_data: bytes | QImage, left: int = 0, top: int = 0, right: int = 0, bottom: int = 0, border_color: str = '#ffffff', fmt: str = 'jpg'
+) -> bytes:
     img = abti(img_data, left=left, top=top, right=right, bottom=bottom, border_color=border_color)
     return image_to_data(img, fmt=fmt)

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 13:52+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>, 2014,2017-2021,2024,2026\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
@@ -298,10 +298,78 @@ msgid ""
 msgstr "Puede dejar el servidor de contenidos ejecutándose, incluso puede abrir el mismo libro en varios dispositivos y se mantendrá la última posición de lectura. Si no es así, puede forzar la sincronización pulsando en el cuarto superior y eligiendo :guilabel:`Sincronizar`."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:195
+msgid "Searching book contents in OPDS applications"
+msgstr "Buscar en el contenido de los libros en aplicaciones OPDS"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:197
+msgid ""
+"When full text indexing is enabled for a library, its OPDS catalog offers a "
+"catalog entry titled :guilabel:`Search book contents`. Open this entry and "
+"use the application's search control to find books by words and phrases "
+"inside them, using calibre's existing full text index. Each feed has a "
+"single search link, so clients do not have to choose between multiple search"
+" links. Results contain the normal book information and download links. A "
+"book is listed once even if more than one of its formats matches. Only books"
+" available to the current user are searched."
+msgstr "Cuando el indexado de texto completo está habilitado en una biblioteca, su catálogo OPDS ofrece una entrada llamada :guilabel:`Buscar en contenido de libros`. Abra esta entrada y use los controles de búsqueda de la aplicación para buscar libros por palabras y frases en su interior, usando el índice de texto completo existente en calibre. Cada canal tiene un único enlace de búsqueda, por lo que los clientes no tienen que elegir entre múltiples enlaces de búsqueda. Los resultados contienen la información del libro y enlaces de descarga usuales. Cada libro se muestra sólo una vez aunque coincidan varios de sus formatos. Sólo se busca en los libros disponibles para el usuario actual."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:206
+msgid ""
+"The original search continues to search book metadata. Content search uses "
+"the same SQLite full text query syntax as calibre's full text search window."
+" It searches the text indexed so far; books still waiting to be indexed will"
+" not appear yet. The content search entry is absent when indexing is "
+"disabled. Both OPDS 1 and OPDS 2 catalogs support content search, through "
+"the normal search URL with ``full_text=y`` added to its query parameters."
+msgstr "La búsqueda original sigue buscando en los metadatos de los libros. La búsqueda de contenido usa la misma sintaxis de consulta de búsqueda SQLite que la ventana de búsqueda de texto completo de calibre. Se busca en el texto indexado hasta el momento; los libros que todavía están en espera de ser indexados no aparecen aún. La entrada de búsqueda de contenido está ausente si el indexado está deshabilitado. Tanto los catálogos OPDS 1 como los OPDS 2 permiten la búsqueda de contenido, mediante el URL normal de búsqueda con ``full_text=y`` añadido a sus parámetros de consulta."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:215
+msgid "Reading comics in OPDS applications"
+msgstr "Leer cómics en aplicaciones OPDS"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:217
+msgid ""
+"Applications that support OPDS 2.0 and the `Readium Divina format "
+"<https://readium.org/webpub-manifest/profiles/divina>`_ can read CBZ comics "
+"one page at a time, without downloading the entire archive. Connect the "
+"application to the server's ``/opds`` catalog. OPDS 2.0 applications request"
+" the JSON catalog using ``Accept: application/opds+json``."
+msgstr "Las aplicaciones compatibles con OPDS 2.0 y el `formato Readium Divina <https://readium.org/webpub-manifest/profiles/divina>`_ pueden leer cómics CBZ página a página, sin descargar el archivo completo. Conecte la aplicación con el catálogo ``/opds`` del servidor. Las aplicaciones OPDS 2.0 solicitan el catálogo JSON usando ``Accept: application/opds+json``."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:223
+msgid ""
+"Comic entries link to a Divina manifest. The server lists pages only when "
+"the application opens that manifest, using the same page order as calibre's "
+"comic conversion. Each page offers its original image format, including AVIF"
+" and JPEG XL, and alternate formats the server can produce. GIF pages, which"
+" may be animated, are only offered in their original format. The application"
+" chooses an image format it supports from those links. JPEG is offered as "
+"the default for AVIF and JPEG XL pages when conversion is available."
+msgstr "Las entradas de cómic enlazan con un manifiesto Divina. El servidor ofrece una lista de páginas sólo cuando la aplicación abre dicho manifiesto, usando el mismo orden de páginas que la conversión de cómics de calibre. Cada página ofrece su formato de imagen original, incluyendo AVIF y JPEG XL, y formatos alternativos que el servidor puede generar. Las páginas GIF, que pueden estar animadas, sólo se ofrecen en su formato original. La aplicación elige un formato de imagen que admita de entre esos enlaces. De manera predeterminada se ofrece JPEG  para páginas AVIF y JPEG XL cuando está disponible la conversión."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:231
+msgid ""
+"For manga, a ``ComicInfo.xml`` file with ``Manga`` set to "
+"``YesAndRightToLeft`` tells the application to use right-to-left reading "
+"direction. The file can be in the root of the archive or in the folder "
+"containing the page images. Page images remain in their original order. The "
+"reading direction is only given in the comic manifest, not in OPDS feeds, as"
+" finding it requires opening the archive."
+msgstr "Para manga, un archivo ``ComicInfo.xml`` con un valor ``YesAndRightToLeft`` para ``Manga`` le dice a la aplicación que use una dirección de lectura de derecha a izquierda. El archivo puede estar en la raíz del archivo del cómic o en la carpeta que contiene las imágenes de página. Las imágenes de página se mantienen en su orden original. La dirección de lectura se da sólo en el manifiesto del cómic, no en los canales OPDS, ya que para encontrarla hay que abrir el archivo."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:238
+msgid ""
+"The normal username/password and library restrictions apply to manifests and"
+" page images. Complete archive downloads remain available. This feature "
+"supports CBZ archives; CBR and CB7 comics can still be downloaded as "
+"complete files."
+msgstr "Las restricciones habituales de biblioteca y de usuario y contraseña se aplican a manifiestos e imágenes de página. Las descargas completas de archivos siguen estando disponibles. Esta funcionalidad es compatible con archivos CBZ, los cómics CBR y CB7 pueden descargarse como archivos completos."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:244
 msgid "Browser support"
 msgstr "Soporte de navegadores"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:197
+#: ../../../__w/calibre/calibre/manual/server.rst:246
 msgid ""
 "The new calibre server makes lots of use of advanced HTML 5 and CSS 3 "
 "features. As such it requires an up-to-date browser to use. It has been "
@@ -309,7 +377,7 @@ msgid ""
 " desktop."
 msgstr "El nuevo servidor de calibre hace uso de características avanzadas HTML 5 y CSS 3. Por lo tanto, requiere el uso de un navegador actualizado. Se ha probado en Chrome sobre Android y Safari sobre iOS, así como en Chrome y Firefox en el escritorio."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:201
+#: ../../../__w/calibre/calibre/manual/server.rst:250
 msgid ""
 "The server is careful to use functionality that has either been already "
 "standardised or is on the standards track. As such if it does not currently "
@@ -317,14 +385,14 @@ msgid ""
 "caught up."
 msgstr "El servidor procura usar características que han sido aceptadas como estándar o están en el camino. Por lo tanto, si actualmente no funciona en su navegador preferido, probablemente funcione una vez que el navegador se haya actualizado."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:206
+#: ../../../__w/calibre/calibre/manual/server.rst:255
 msgid ""
 "If you are using a particularly old or limited browser or you don't like to "
 "run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` "
 "to the server address."
 msgstr "Si está usando un navegador antiguo o limitado o si no quiere ejecutar JavaScript, pude usar la vista *móvil*, simplimente añadiendo ``/mobile`` a la dirección del servidor."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:211
+#: ../../../__w/calibre/calibre/manual/server.rst:260
 msgid ""
 "On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
 "Safari are all actually the same browser under the hood. The new server "
@@ -332,11 +400,11 @@ msgid ""
 "tested with Chrome version 58 and newer."
 msgstr "En iOS, Apple permite un único motor de navegador, así que Firefox, Chrome y Safari son en realidad el mismo navigador en su interior. La nueva interfaz del navegador requiere iOS 10.3.2 o posterior. En Android, el servidor se ha probado con Chrome, versión 58 y posterior."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:217
+#: ../../../__w/calibre/calibre/manual/server.rst:266
 msgid "Enabling offline support"
 msgstr "Activar modo sin conexión"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:219
+#: ../../../__w/calibre/calibre/manual/server.rst:268
 msgid ""
 "The server has full support for offline mode, you can open a book and once "
 "it is loaded, continue reading it offline. However, typical browsers require"
@@ -346,17 +414,17 @@ msgid ""
 "offline mode."
 msgstr "El servidor admite un modo sin conexión, puede abrir un libro y, una ves cargado, continuar leyéndolo sin conexión. Sin embargo, normalmente los navegadores requieren el uso de HTTPS para activar el modo sin conexión (trabajadores de servicio). Por tanto, :ref:`Configure la compatibilidad HTTPS <cs_https_mode>` como se describe más arriba. Desplácese a la parte inferior de la página principal y verá in mensaje sobre el estado del modo sin conexión."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:226
+#: ../../../__w/calibre/calibre/manual/server.rst:275
 msgid ""
 "Alternately, you can open a book and keep the browser tab open. As long as "
 "the tab stays open you can continue reading the book, even when offline."
 msgstr "Como opción alternativa, puede abrir un libro y mantener abierta la pestaña del navegador. Mientras la pestaña permanezca abierta podrá seguir leyendo el libro, incluso sin conexión."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:230
+#: ../../../__w/calibre/calibre/manual/server.rst:279
 msgid "Managing user accounts from the command-line only"
 msgstr "Administrar cuentas de usuario en la línea de órdenes"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:232
+#: ../../../__w/calibre/calibre/manual/server.rst:281
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -365,28 +433,75 @@ msgid ""
 "line."
 msgstr "El programa calibre tiene una sección en :guilabel:`Preferencias` que le permite administrar las cuentas de usuario del servidor. Sin embargo, si quiere ejecutar el servidor independiente y no puede ejectuar el programa principal de calibre en el mismo equipo o con el mismo usuario, también puede administrar las cuentas de usuario en la línea de órdenes."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:237
+#: ../../../__w/calibre/calibre/manual/server.rst:286
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
 "database in the folder ``/srv/calibre``, then you create it by running::"
 msgstr "Puede administrar las cuentas de usuario con la opción ``--manage-users`` del programa independiente ``calibre-server``. Supongamos que quiere almacenar la base de datos de usuarios en la carpeta ``/srv/calibre``, la puede crear ejecutando::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:244
+#: ../../../__w/calibre/calibre/manual/server.rst:293
 msgid ""
 "Just follow the prompts to create user accounts, set their permissions, etc."
 " Once you are done, you can run the server as::"
 msgstr "Simplemente siga las instrucciones para crear cuentas de usuario, establecer sus permisos, etc. Una vez que haya terminado, puede ejecutar el servidor como::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:249
+#: ../../../__w/calibre/calibre/manual/server.rst:298
 msgid "It will use the user accounts you created in the previous step."
 msgstr "Usará las cuentas de usuario creadas en el paso anterior."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:253
+#: ../../../__w/calibre/calibre/manual/server.rst:301
+msgid "Syncing reading progress with KOReader"
+msgstr "Sincronizar el progreso de lectura con KOReader"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:303
+msgid ""
+"The Content server can act as a progress sync server for the `KOReader "
+"<https://koreader.rocks>`_ e-book reader, so that devices running KOReader "
+"can sync your reading position in books with each other. In KOReader, go to "
+":guilabel:`Tools->Progress sync->Custom sync server` and enter the address "
+"of the Content server followed by ``/kosync``, for example::"
+msgstr "El servidor de contenidos puede hacer de servidor de sincronización de progreso para el lector `KOReader <https://koreader.rocks>`_, de manera que los dispositivos que ejecuten KOReader puedan sincronizar la posición de lectura en los libros entre ellos. En KOReader, vaya a :guilabel:`Herramientas > Sincronizar progreso de lectura > Servidor de sincronización personalizado` e introduzca la dirección del servidor de contenidos seguida de ``/kosync``, por ejemplo::"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:311
+msgid ""
+"If you are `Using a URL prefix`_, include it before ``/kosync``. Then use "
+":guilabel:`Login` with the username and password of a user account on the "
+"Content server. Accounts cannot be created from KOReader, they are managed "
+"by calibre as described above. Users that are only allowed read access "
+"cannot sync their reading positions. If user accounts are not enabled on the"
+" server, any username and password can be used, but reading positions can "
+"only be synced from devices that are allowed to make changes without "
+"authentication, see the :guilabel:`Allow un-authenticated local connections "
+"to make changes` and :guilabel:`Allow un-authenticated connections from "
+"specific IP addresses to make changes` options. Reading positions synced "
+"while user accounts are not enabled are kept separate from those of user "
+"accounts. The reading positions of each user are stored separately in the "
+"user database of the server."
+msgstr "Si está `usando un prefijo de URL <Usar un prefijo de URL>`_, inclúyalo antes de ``//kosync``. Después use :guilabel:``Iniciar sesión`` con el nombre de usuario y contraseña de una cuenta de usuario del servidor de contenidos. No pueden crearse cuentas desde KOReader, ya que es calibre quien las gestiona como se describe más arriba. Los usuarios que sólo tienen acceso de lectura no pueden sincronizar sus posiciones de lectura. Si las cuentas de usuario no están habilitadas en el servidor, puede usarse cualquier nombre de usuario y contraseña, pero las posiciones de lectura sólo pueden sincronizarse desde dispositivos que tienen permiso para hacer cambios sin autenticación, vea las opciones :guilabel:`Permitir hacer cambios a las conexiones locales sin autenticación\n` y :guilabel:`Permitir hacer cambios a las conexiones sin autenticación desde direcciones IP específicas\n`. Las posiciones de lectura sincronizadas cuando las cuentas de usuario no están habilitadas se mantienen separadas de las de cuentas de usuario. Las posiciones de lectura de cada usuario se almacenan por separado en la base de datos de usuario del servidor."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:324
+msgid ""
+"By default, KOReader identifies books by a checksum of the book file. The "
+"Content server can change the metadata embedded in books when they are "
+"downloaded, so copies of a book downloaded at different times can have "
+"different checksums. Once KOReader has synced with the server, it remembers "
+"the checksums of downloaded books and of the library files they were created"
+" from, so that all copies of the same format of a book share one reading "
+"position. Different formats of a book have separate reading positions, as "
+"positions in one format cannot be used in another. Copies downloaded before "
+"KOReader first synced with the server, or obtained other than by downloading"
+" them from the server, are not recognized. If reading positions do not sync "
+"for such copies, set :guilabel:`Document matching method` in the KOReader "
+"progress sync settings to :guilabel:`Filename` on all devices and keep the "
+"file names of books the same."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/server.rst:340
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Integrar el servidor de contenidos de calibre en otros servidores"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:255
+#: ../../../__w/calibre/calibre/manual/server.rst:342
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -395,7 +510,7 @@ msgid ""
 "server."
 msgstr "Aquí le mostraremos cómo integrar el servidor de contenido de Calibre en otro servidor. La razón más común es usar SSL o servir la biblioteca de Calibre como parte de un sitio más grande. La técnica básica consiste en ejecutar el servidor de Calibre y configurar un proxy inverso desde el servidor principal."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:260
+#: ../../../__w/calibre/calibre/manual/server.rst:347
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -404,36 +519,36 @@ msgid ""
 "with your main server."
 msgstr "Un proxy inverso es cuando el servidor principal acepta peticiones entrantes y las traslada al servidor de calibre. A continuación, lee la respuesta desde el servidor de calibre y la envía al cliente. Esto significa que sólo tiene que ejecutar el servidor de calibre de forma normal sin tratar de integrarlo estrechamente con el servidor principal."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:267
+#: ../../../__w/calibre/calibre/manual/server.rst:354
 msgid "Using a full virtual host"
 msgstr "Usar un servidor virtual completo"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:269
+#: ../../../__w/calibre/calibre/manual/server.rst:356
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "La configuración más sencilla es dedicar un servidor virtual completo al servidor de calibre. En este caso, ejecute el servidor de calibre como::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:274
+#: ../../../__w/calibre/calibre/manual/server.rst:361
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Ahora configure el servidor virtual en el servidor principal, por ejemplo, para nginx::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:289
+#: ../../../__w/calibre/calibre/manual/server.rst:376
 msgid "Or, for Apache::"
 msgstr "O, para Apache::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:304
+#: ../../../__w/calibre/calibre/manual/server.rst:391
 msgid "Using a URL prefix"
 msgstr "Usar un prefijo de URL"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:306
+#: ../../../__w/calibre/calibre/manual/server.rst:393
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Si no quiere dedicar un servidor virtual completo a calibre, puede hacer que use un prefijo de URL. Inicie el servidor de calibre como::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:311
+#: ../../../__w/calibre/calibre/manual/server.rst:398
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -441,17 +556,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr "El parámetro clave aquí es ``--url-prefix /calibre``. Esto hace que el servidor de contenidos sirva todos los URL con el prefijo calibre. Para verlo en acción, visite ``http://localhost:8080/calibre`` en su navegador. Debería ver la página web habitual del servidor de contenido, pero ahora se ejecutará desde /calibre."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:313
+#: ../../../__w/calibre/calibre/manual/server.rst:400
 msgid "With nginx, the required configuration is::"
 msgstr "Con nginx, la configuración necesaria es::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:330
+#: ../../../__w/calibre/calibre/manual/server.rst:417
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr "Para Apache, primero active los módulos de proxy añadiendo lo siguiente a :file:`httpd.conf`::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:335
+#: ../../../__w/calibre/calibre/manual/server.rst:422
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -459,7 +574,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr "La técnica exacta para habilitar los módulos proxy variará según la instalación de Apache. Una vez que tenga los módulos proxy habilitados, agregue las siguientes reglas a :file:`httpd.conf` (o, si está usando servidores virtuales, al archivo conf del servidor virtual en cuestión)::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:342
+#: ../../../__w/calibre/calibre/manual/server.rst:429
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -468,7 +583,7 @@ msgid ""
 "transparently."
 msgstr "Eso es todo, ahora podrá acceder al servidor de contenidos de calibre bajo el URL ``/calibre`` en su servidor principal. Las reglas anteriores pasan todas las peticiones bajo ``/calibre`` al servidor de calibre que se ejecuta en el puerto 8080 y gracias a la opción ``--url-prefix`` mencionada anteriormente, el servidor de calibre las gestiona de forma transparente."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:347
+#: ../../../__w/calibre/calibre/manual/server.rst:434
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -476,7 +591,7 @@ msgid ""
 "from the reverse proxy."
 msgstr "Al usar un proxy inverso, debe decirle al servidor de contenidos de calibre que atienda sólo a peticiones del servidor local, usando ``--listen-on 127.0.0.1``. De esta forma, el servidor sólo recibirá conexiones del mismo equipo, es decir, del proxy inverso."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:354
+#: ../../../__w/calibre/calibre/manual/server.rst:441
 msgid ""
 "If you have set up SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -484,11 +599,11 @@ msgid ""
 "server``."
 msgstr "Si ha configurado SSL para su servidor principal, debe indicarle al servidor de calibre que use autenticación básica en lugar de autenticación implícita, ya que es más rápida. Para ello, pase la opción ``--auth-mode=basic`` a ``calibre-server``."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:363
+#: ../../../__w/calibre/calibre/manual/server.rst:450
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr "Crear un servicio para el servidor de calibre en un sistema Linux moderno"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:365
+#: ../../../__w/calibre/calibre/manual/server.rst:452
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -496,7 +611,7 @@ msgid ""
 "the contents shown below::"
 msgstr "Crear un servicio para ejecutar calibre en el arranque de un sistema basado en Linux moderno (`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_) es sencillo. No tiene más que crear el archivo ``/etc/systemd/system/calibre-server.service`` con el siguiente contenido::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:384
+#: ../../../__w/calibre/calibre/manual/server.rst:471
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
@@ -506,25 +621,25 @@ msgid ""
 "needed. See the help for the ``calibre-server`` command."
 msgstr "Cambio ``mylinuxuser`` y ``mylinuxgroup`` al usuario y grupo bajo los que quiere que se ejecute el servidor. Debería ser el mismo usuario y grupo al que pertenecen los archivos en la carpeta de la biblioteca de calibre. Tenga en cuenta que no suele ser una buena idea ejecutar el servidor como superusuario. Cambie también la ruta de acceso a la carpeta de la biblioteca de calibre según su caso. Puede añadir varias bibliotecas si lo desea. Vea la ayuda para la orden ``calibre-server``."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:391
+#: ../../../__w/calibre/calibre/manual/server.rst:478
 msgid "Now run::"
 msgstr "Ahora ejecute::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:395
+#: ../../../__w/calibre/calibre/manual/server.rst:482
 msgid "to start the server. Check its status with::"
 msgstr "para iniciar el servidor. Compruebe su estado con::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:399
+#: ../../../__w/calibre/calibre/manual/server.rst:486
 msgid "To make it start at boot, run::"
 msgstr "Para hacer que se inicie en el arranque, ejecute::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:405
+#: ../../../__w/calibre/calibre/manual/server.rst:492
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr "El servidor de calibre *no* necesita un servidor X en ejecución, pero necesita tener instaladas las bibliotecas X, pues algunos de los componentes que usa enlazan con ellas."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:410
+#: ../../../__w/calibre/calibre/manual/server.rst:497
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."

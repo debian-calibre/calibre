@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: un_pogaz, 2025-2026\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -253,8 +253,9 @@ msgstr "Ensemble gelé d'ids pour toutes les valeurs dans le champ``name``. "
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
-"many fields)"
-msgstr "Ensemble gelé de tous les champs de noms (devrait uniquement être utilisé pour les champs many-one et many-many)"
+"many fields). If book_ids is not None, only names used by the specified "
+"books are returned."
+msgstr "Ensemble gelé de tous les champs de noms (devrait uniquement être utilisé pour les champs many-one et many-many). Si book_ids n'est pas None, seuls les valeurs utilisés par les livres spécifiés sont retourné."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
@@ -296,6 +297,14 @@ msgstr "En fonction d'une liste d'auteurs, renvoie la chaîne author_sort pour l
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Renvoie la clé de trie d'auteur pour les auteurs spécifiés."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid ""
+"Return a map of annotation id to book id for those of the specified "
+"annotation ids that exist. `ignore_removed` controls whether removed "
+"(deleted) annotations are also returned."
+msgstr "Renvoie une table associant les identifiants d'annotation aux identifiants de livre pour les identifiants d'annotation spécifiés qui existent. Le paramètre `ignore_removed` permet de déterminer si les annotations supprimées sont également renvoyées."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.book_storage_for_book:1
@@ -654,8 +663,10 @@ msgstr "Donne les données pour le nom. Par défaut renvoie les données pour to
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
-"must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Renvoie un mappage des nombres id aux valeurs pour le champ spécifié. Le champ doit être un champ many-one ou many-many, autrement une ValueError est évoquée."
+"must be a many-one or many-many field, otherwise a ValueError is raised. If "
+"book_ids is not None, only items used by the specified books are returned. "
+"For the title field the ids are book ids."
+msgstr "Renvoie un mappage des nombres id aux valeurs pour le champ spécifié. Le champ doit être un champ many-one ou many-many, autrement une ValueError est évoquée. Si book_ids n'est pas None, seuls les valeurs utilisés par les livres spécifiés sont retourné. Pour le champ title, les identifiants correspondent aux identifiants des livres."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -788,6 +799,13 @@ msgstr "Importer une note précédemment exportée ou un fichier HTML arbitraire
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "Initialiser ce cache avec des données depuis le système principal."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_using_notes_resource:1
+msgid ""
+"Return the set of (field, item_id) pairs for all notes that use the resource"
+" with the specified hash"
+msgstr "Retourne le set des paires (champ, item_id) pour toutes les notes qui utilisent la ressource dont le hachage est spécifié"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
@@ -1088,6 +1106,21 @@ msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "Recherche dans le texte des notes à l'aide d'un index FTS. Si la requête est vide, le système renvoie toutes les notes."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:1
+msgid ""
+"Return True if the specified search query, or any saved search it uses, "
+"contains a template search. The query is checked without being evaluated. "
+"Use this to stop untrusted users from storing search expressions, such as "
+"saved searches, containing templates, since stored expressions are later "
+"evaluated with templates allowed, for example, in Virtual libraries."
+msgstr "Renvoie True si la requête de recherche spécifiée, ou toute recherche enregistrée qu'elle utilise, contient une recherche basée sur un modèle. La requête est vérifiée sans être évaluée. Utilisez cette fonction pour empêcher les utilisateurs non fiables d'enregistrer des expressions de recherche, telles que des recherches enregistrées, contenant des modèles, car les expressions enregistrées sont ensuite évaluées en autorisant l'utilisation de modèles, par exemple dans les bibliothèques virtuelles."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
+msgstr "Soulève une exception ParseException si la requête ne peut pas être analysée."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1

@@ -3,6 +3,7 @@
 
 import os
 from io import BytesIO
+from typing import TYPE_CHECKING
 
 from PIL import Image, ImageOps
 
@@ -12,6 +13,12 @@ from calibre.ebooks.mobi.utils import mobify_image, rescale_image, write_font_re
 from calibre.ebooks.oeb.base import OEB_RASTER_IMAGES
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.imghdr import what
+
+if TYPE_CHECKING:
+    import unittest
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import Manifest, OEBBook
 
 # Image formats calibre can read but that no MOBI/AZW3 viewer can display, so
 # they are converted to PNG before being added to the book
@@ -41,7 +48,7 @@ def process_jpegs_for_amazon(data: bytes) -> bytes:
     return data
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import struct
     import unittest
 
@@ -71,13 +78,13 @@ def find_tests():
             img = PILImage.open(BytesIO(data))
             return 'exif' in img.info
 
-        def test_jpeg_without_exif_is_unchanged(self):
+        def test_jpeg_without_exif_is_unchanged(self) -> None:
             data = self._make_minimal_jpeg()
             # PIL saves with JFIF by default, not EXIF — should pass through unchanged
             result = process_jpegs_for_amazon(data)
             self.assertFalse(self._has_exif_segment(result))
 
-        def test_jpeg_with_populated_exif_is_stripped(self):
+        def test_jpeg_with_populated_exif_is_stripped(self) -> None:
             from PIL import Image as PILImage
 
             img = PILImage.new('RGB', (8, 8), color=(0, 255, 0))
@@ -90,7 +97,7 @@ def find_tests():
             result = process_jpegs_for_amazon(data)
             self.assertFalse(self._has_exif_segment(result))
 
-        def test_jpeg_with_empty_exif_segment_is_stripped(self):
+        def test_jpeg_with_empty_exif_segment_is_stripped(self) -> None:
             # Regression test for https://bugs.launchpad.net/bugs/1943495:
             # empty EXIF segments (APP1 marker, zero tag entries) must also be removed.
             base = self._make_minimal_jpeg()
@@ -103,23 +110,24 @@ def find_tests():
 
 
 class Resources:
-    def __init__(self, oeb, opts, is_periodical, add_fonts=False, process_images=True):
+    def __init__(self, oeb: OEBBook, opts: Values, is_periodical: bool, add_fonts: bool = False, process_images: bool = True) -> None:
         self.oeb, self.log, self.opts = oeb, oeb.log, opts
         self.is_periodical = is_periodical
         self.process_images = process_images
 
-        self.item_map = {}
-        self.records = []
-        self.mime_map = {}
+        self.item_map: dict[str, int] = {}
+        self.records: list[bytes | None] = []
+        self.mime_map: dict[str, str] = {}
         self.masthead_offset = 0
-        self.used_image_indices = set()
-        self.image_indices = set()
-        self.cover_offset = self.thumbnail_offset = None
+        self.used_image_indices: set[int] = set()
+        self.image_indices: set[int] = set()
+        self.cover_offset: int | None = None
+        self.thumbnail_offset: int | None = None
         self.has_fonts = False
 
         self.add_resources(add_fonts)
 
-    def process_image(self, data):
+    def process_image(self, data: bytes) -> bytes:
         if not self.process_images:
             return process_jpegs_for_amazon(data)
         func = mobify_image if self.opts.mobi_keep_original_images else rescale_image
@@ -134,12 +142,13 @@ class Resources:
                 from calibre.utils.img import optimize_png
 
                 optimize_png(pt.name)
-                data = open(pt.name, 'rb').read()
+                with open(pt.name, 'rb') as f:
+                    data = f.read()
             finally:
                 os.remove(pt.name)
             return func(data)
 
-    def add_resources(self, add_fonts):
+    def add_resources(self, add_fonts: bool) -> None:
         oeb = self.oeb
         oeb.logger.info('Serializing resources...')
         index = 1
@@ -171,7 +180,9 @@ class Resources:
             if item.media_type.lower() in UNSUPPORTED_IMAGE_TYPES:
                 self.convert_unsupported_image(item)
             try:
-                data = self.process_image(item.data)
+                idata = item.data
+                assert isinstance(idata, bytes)  # raster images are unparsed bytes, errors are handled below
+                data = self.process_image(idata)
             except Exception:
                 self.log.warn(f'Bad image file {item.href!r}')
                 continue
@@ -209,16 +220,18 @@ class Resources:
                     self.item_map[item.href] = len(self.records)
                     self.has_fonts = True
 
-    def convert_unsupported_image(self, item):
+    def convert_unsupported_image(self, item: Manifest.Item) -> None:
         from calibre.utils.img import image_and_format_from_data, image_to_data
 
-        img, fmt = image_and_format_from_data(item.data)
+        idata = item.data
+        assert isinstance(idata, bytes)  # only called for raster images, which are unparsed bytes
+        img, fmt = image_and_format_from_data(idata)
         if f'image/{fmt}' in UNSUPPORTED_IMAGE_TYPES and not img.isNull():
             self.log.info(f'Converting {fmt.upper()} image {item.href} to PNG')
             item.data = image_to_data(img, fmt='PNG')
             item.media_type = 'image/png'
 
-    def add_extra_images(self):
+    def add_extra_images(self) -> None:
         """
         Add any images that were created after the call to add_resources()
         """
@@ -226,7 +239,9 @@ class Resources:
             if item.media_type not in OEB_RASTER_IMAGES or item.href in self.item_map:
                 continue
             try:
-                data = self.process_image(item.data)
+                idata = item.data
+                assert isinstance(idata, bytes)  # raster images are unparsed bytes, errors are handled below
+                data = self.process_image(idata)
             except Exception:
                 self.log.warn(f'Bad image file {item.href!r}')
             else:
@@ -235,13 +250,13 @@ class Resources:
             finally:
                 item.unload_data_from_memory()
 
-    def serialize(self, records, used_images):
+    def serialize(self, records: list[bytes | None], used_images: set[str]) -> None:
         used_image_indices = self.used_image_indices | {v - 1 for k, v in self.item_map.items() if k in used_images}
         for i in self.image_indices - used_image_indices:
             self.records[i] = PLACEHOLDER_GIF
         records.extend(self.records)
 
-    def __bool__(self):
+    def __bool__(self) -> bool:
         return bool(self.records)
 
     __nonzero__ = __bool__

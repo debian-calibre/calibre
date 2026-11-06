@@ -9,27 +9,40 @@ from collections import OrderedDict
 from hashlib import md5, sha256
 from itertools import permutations
 from threading import Lock
+from typing import TYPE_CHECKING, Protocol
 
 from calibre.srv.errors import HTTPAuthRequired, HTTPForbidden, HTTPSimpleResponse
 from calibre.srv.http_request import parse_uri
-from calibre.srv.utils import encode_path, parse_http_dict
+from calibre.srv.utils import encode_path, header_as_str, parse_http_dict
 from calibre.utils.monotonic import monotonic
-from polyglot.binary import as_hex_unicode, from_base64_unicode, from_hex_bytes
+from polyglot.binary import as_hex_unicode, from_base64_unicode, from_hex_bytes, from_hex_unicode
+
+if TYPE_CHECKING:
+    from calibre.srv.http_response import RequestData
+    from calibre.srv.routes import RouteFunction
+    from calibre.utils.logging import Log
+
+
+class UserCredentials(Protocol):
+    def get(self, username: str, /) -> str | None:
+        "Return the password for the specified user or None if no such user exists"
+        ...
+
 
 MAX_AGE_SECONDS = 3600
 nonce_counter, nonce_counter_lock = 0, Lock()
 
 
 class BanList:
-    def __init__(self, ban_time_in_minutes=0, max_failures_before_ban=5):
+    def __init__(self, ban_time_in_minutes: float = 0, max_failures_before_ban: int = 5) -> None:
         self.interval = max(0, ban_time_in_minutes) * 60
         self.max_failures_before_ban = max(0, max_failures_before_ban)
         self._active = bool(self.interval and self.max_failures_before_ban)
         if self._active:
-            self.items = OrderedDict()
+            self.items: OrderedDict[str | None, tuple[float, int]] = OrderedDict()
             self.lock = Lock()
 
-    def is_banned(self, key):
+    def is_banned(self, key: str | None) -> bool:
         if not self._active:
             return False
         with self.lock:
@@ -41,7 +54,7 @@ class BanList:
             return False
         return monotonic() - previous_fail < self.interval
 
-    def failed(self, key):
+    def failed(self, key: str | None) -> None:
         if not self._active:
             return
         with self.lock:
@@ -49,7 +62,7 @@ class BanList:
             fail_count = 0 if x is None else x[1]
             now = monotonic()
             self.items[key] = now, fail_count + 1
-            remove = []
+            remove: list[str | None] = []
             for old in reversed(self.items):
                 previous_fail = self.items[old][0]
                 if now - previous_fail > self.interval:
@@ -60,31 +73,31 @@ class BanList:
                 self.items.pop(r, None)
 
 
-def as_bytestring(x):
+def as_bytestring(x: str | bytes) -> bytes:
     if not isinstance(x, bytes):
         x = x.encode('utf-8')
     return x
 
 
-def as_unicodestring(x):
+def as_unicodestring(x: str | bytes) -> str:
     if isinstance(x, bytes):
         x = x.decode('utf-8')
     return x
 
 
-def md5_hex(s):
+def md5_hex(s: str | bytes) -> str:
     return as_unicodestring(md5(as_bytestring(s)).hexdigest())
 
 
-def sha256_hex(s):
+def sha256_hex(s: str | bytes) -> str:
     return as_unicodestring(sha256(as_bytestring(s)).hexdigest())
 
 
-def base64_decode(s):
+def base64_decode(s: str | bytes) -> str:
     return from_base64_unicode(s)
 
 
-def synthesize_nonce(key_order, realm, secret, timestamp=None):
+def synthesize_nonce(key_order: str, realm: str, secret: str, timestamp: str | None = None) -> str:
     """
     Create a nonce. Can be used for either digest or cookie based auth.
     The nonce is of the form timestamp:hash with hash being a hash of the
@@ -104,13 +117,13 @@ def synthesize_nonce(key_order, realm, secret, timestamp=None):
     return nonce
 
 
-def validate_nonce(key_order, nonce, realm, secret):
+def validate_nonce(key_order: str, nonce: str, realm: str, secret: str) -> bool:
     timestamp, hashpart = nonce.partition(':')[::2]
     s_nonce = synthesize_nonce(key_order, realm, secret, timestamp)
     return s_nonce == nonce
 
 
-def is_nonce_stale(nonce, max_age_seconds=MAX_AGE_SECONDS):
+def is_nonce_stale(nonce: str, max_age_seconds: float = MAX_AGE_SECONDS) -> bool:
     try:
         timestamp = struct.unpack(b'!dH', from_hex_bytes(as_bytestring(nonce.partition(':')[0])))[0]
         return timestamp + max_age_seconds < monotonic()
@@ -123,14 +136,15 @@ class DigestAuth:  # {{{
     valid_algorithms = {'MD5', 'MD5-SESS'}
     valid_qops = {'auth', 'auth-int'}
 
-    def __init__(self, header_val):
+    def __init__(self, header_val: str) -> None:
         data = parse_http_dict(header_val)
-        self.realm = data.get('realm')
-        self.username = data.get('username')
-        self.nonce = data.get('nonce')
-        self.uri = data.get('uri')
+        # These fields are required, and their presence is validated below
+        self.realm = data.get('realm', '')
+        self.username = data.get('username', '')
+        self.nonce = data.get('nonce', '')
+        self.uri = data.get('uri', '')
         self.method = data.get('method')
-        self.response = data.get('response')
+        self.response = data.get('response', '')
         self.algorithm = data.get('algorithm', 'MD5').upper()
         self.cnonce = data.get('cnonce')
         self.opaque = data.get('opaque')
@@ -151,10 +165,10 @@ class DigestAuth:  # {{{
         elif self.cnonce or self.nonce_count:
             raise HTTPSimpleResponse(http.client.BAD_REQUEST, 'qop missing')
 
-    def H(self, val):
+    def H(self, val: str | bytes) -> str:
         return md5_hex(val)
 
-    def H_A2(self, data):
+    def H_A2(self, data: RequestData) -> str:
         """Returns the H(A2) string. See :rfc:`2617` section 3.2.2.3."""
         # RFC 2617 3.2.2.3
         # If the "qop" directive's value is "auth" or is unspecified,
@@ -169,7 +183,7 @@ class DigestAuth:  # {{{
             a2 = f'{data.method}:{self.uri}'
         return self.H(a2)
 
-    def request_digest(self, pw, data):
+    def request_digest(self, pw: str, data: RequestData) -> str:
         ha1 = self.H(f'{self.username}:{self.realm}:{pw}')
         ha2 = self.H_A2(data)
         # Request-Digest -- RFC 2617 3.2.2.1
@@ -194,7 +208,7 @@ class DigestAuth:  # {{{
 
         return self.H(f'{ha1}:{req}')
 
-    def validate_request(self, pw, data, log=None):
+    def validate_request(self, pw: str, data: RequestData, log: Log | None = None) -> bool:
         # We should also be checking for replay attacks by using nonce_count,
         # however, various HTTP clients, most prominently Firefox don't
         # implement nonce-counts correctly, so we cannot do the check.
@@ -241,14 +255,14 @@ class AuthController:
 
     def __init__(
         self,
-        user_credentials=None,
-        prefer_basic_auth=False,
-        realm='calibre',
-        max_age_seconds=MAX_AGE_SECONDS,
-        log=None,
-        ban_time_in_minutes=0,
-        ban_after=5,
-    ):
+        user_credentials: UserCredentials | None = None,
+        prefer_basic_auth: bool = False,
+        realm: str = 'calibre',
+        max_age_seconds: float = MAX_AGE_SECONDS,
+        log: Log | None = None,
+        ban_time_in_minutes: float = 0,
+        ban_after: int = 5,
+    ) -> None:
         self.user_credentials, self.prefer_basic_auth = user_credentials, prefer_basic_auth
         self.ban_list = BanList(ban_time_in_minutes=ban_time_in_minutes, max_failures_before_ban=ban_after)
         self.log = log
@@ -259,28 +273,64 @@ class AuthController:
         if '"' in realm:
             raise ValueError('Double-quotes are not allowed in the authentication realm')
 
-    def check(self, un, pw):
+    def check(self, un: str, pw: str) -> str | bool:
         uc = self.user_credentials
         assert uc is not None
         return pw and uc.get(un) == pw
 
-    def __call__(self, data, endpoint):
+    def __call__(self, data: RequestData, endpoint: RouteFunction) -> None:
         path = encode_path(*data.path)
-        http_auth_needed = not (endpoint.android_workaround and self.validate_android_cookie(path, data.cookies.get(self.ANDROID_COOKIE)))
-        if http_auth_needed:
-            self.do_http_auth(data, endpoint)
-            if endpoint.android_workaround:
-                data.outcookie[self.ANDROID_COOKIE] = synthesize_nonce(self.key_order, path, self.secret)
-                data.outcookie[self.ANDROID_COOKIE]['path'] = path
+        if endpoint.android_workaround:
+            username = self.validate_android_cookie(path, data.cookies.get(self.ANDROID_COOKIE))
+            if username is not None:
+                # Authorization checks done by the endpoint are applied for this user
+                data.username = username
+                return
+        self.do_http_auth(data, endpoint)
+        if endpoint.android_workaround and data.username:
+            data.outcookie[self.ANDROID_COOKIE] = self.android_cookie_for(path, data.username)
+            data.outcookie[self.ANDROID_COOKIE]['path'] = path
 
-    def validate_android_cookie(self, path, cookie):
-        return cookie and validate_nonce(self.key_order, cookie, path, self.secret) and not is_nonce_stale(cookie, self.max_age_seconds)
+    def android_cookie_realm(self, path: str, username: str) -> str | None:
+        """
+        The realm used for the android cookie nonce binds it to the path, the
+        user and the user's current password, so that the cookie is
+        invalidated when the user is removed or their password is changed.
+        Returns None if the user does not exist.
+        """
+        uc = self.user_credentials
+        pw = None if uc is None else uc.get(username)
+        if pw is None:
+            return None
+        return f'{path}\0{username}\0{sha256_hex(pw)}'
 
-    def do_http_auth(self, data, endpoint):
+    def android_cookie_for(self, path: str, username: str) -> str:
+        realm = self.android_cookie_realm(path, username)
+        if realm is None:
+            raise ValueError(f'No user named {username!r} exists')
+        return f'{synthesize_nonce(self.key_order, realm, self.secret)}:{as_hex_unicode(username)}'
+
+    def validate_android_cookie(self, path: str, cookie: str | None) -> str | None:
+        "Return the username the cookie was issued to if it is valid for path, otherwise None"
+        if not cookie:
+            return None
+        nonce, sep, hex_username = cookie.rpartition(':')
+        if not sep:
+            return None
+        try:
+            username = from_hex_unicode(hex_username)
+        except ValueError:  # covers binascii.Error and UnicodeDecodeError
+            return None
+        realm = self.android_cookie_realm(path, username)
+        if realm is None or not validate_nonce(self.key_order, nonce, realm, self.secret) or is_nonce_stale(nonce, self.max_age_seconds):
+            return None
+        return username
+
+    def do_http_auth(self, data: RequestData, endpoint: RouteFunction) -> None:
         ban_key = data.remote_addr
         if self.ban_list.is_banned(ban_key):
             raise HTTPForbidden('Too many login attempts', log=f'Too many login attempts from: {data.remote_addr}')
-        auth = data.inheaders.get('Authorization')
+        auth = header_as_str(data.inheaders.get('Authorization', ''))
         nonce_is_stale = False
         log_msg = None
         data.username = None

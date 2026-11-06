@@ -2,10 +2,18 @@
 
 import os
 import shutil
+from typing import TYPE_CHECKING
 
-from calibre.customize.conversion import OptionRecommendation, OutputFormatPlugin
+from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation, OutputFormatPlugin
 from calibre.ptempfile import TemporaryDirectory, TemporaryFile
+from calibre.utils import StreamOrPath
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 NEWLINE_TYPES = ['system', 'unix', 'old_mac', 'windows']
 
@@ -117,7 +125,7 @@ class TXTOutput(OutputFormatPlugin):
         ),
     }
 
-    def convert(self, oeb_book, output, input_plugin, opts, log):
+    def convert(self, oeb_book: OEBBook, output: str, input_plugin: InputFormatPlugin, opts: Values, log: Log) -> None:
         output_path = output
         from calibre.ebooks.txt.newlines import TxtNewlines, specified_newlines
         from calibre.ebooks.txt.txtml import TXTMLizer
@@ -140,21 +148,10 @@ class TXTOutput(OutputFormatPlugin):
         log.debug('\tReplacing newlines with selected type...')
         txt = specified_newlines(TxtNewlines(opts.newline).newline, txt)
 
-        close = False
-        if not hasattr(output_path, 'write'):
-            close = True
-            if not os.path.exists(os.path.dirname(output_path)) and os.path.dirname(output_path) != '':
-                os.makedirs(os.path.dirname(output_path))
-            out_stream = open(output_path, 'wb')
-        else:
-            out_stream = output_path
-
-        out_stream.seek(0)
-        out_stream.truncate()
-        out_stream.write(txt.encode(opts.txt_output_encoding, 'replace'))
-
-        if close:
-            out_stream.close()
+        with StreamOrPath(output_path, 'wb', makedirs=True) as out_stream:
+            out_stream.seek(0)
+            out_stream.truncate()
+            out_stream.write(txt.encode(opts.txt_output_encoding, 'replace'))
 
 
 class TXTZOutput(TXTOutput):
@@ -162,7 +159,7 @@ class TXTZOutput(TXTOutput):
     author = 'John Schember'
     file_type = 'txtz'
 
-    def convert(self, oeb_book, output, input_plugin, opts, log):
+    def convert(self, oeb_book: OEBBook, output: str, input_plugin: InputFormatPlugin, opts: Values, log: Log) -> None:
         output_path = output
         from calibre.ebooks.oeb.base import OEB_IMAGES, xml2str
         from calibre.utils.zipfile import ZipFile
@@ -202,7 +199,8 @@ class TXTZOutput(TXTOutput):
                     if can_reference_images or is_cover:
                         os.makedirs(path, exist_ok=True)
                         with open(ipath, 'wb') as imgf:
-                            imgf.write(item.data)
+                            # SVG images have parsed data, so serialize them
+                            imgf.write(item.bytes_representation)
                     if is_cover:
                         cover_relhref = os.path.relpath(ipath, tdir).replace(os.sep, '/')
 

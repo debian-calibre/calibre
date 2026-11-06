@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 02:31+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Marcin Kozioł <koziol.martin@gmail.com>, 2022-2023\n"
 "Language-Team: Polish (http://app.transifex.com/calibre/calibre/language/pl/)\n"
@@ -439,6 +439,13 @@ msgid ""
 msgstr "Jeśli True, ta wtyczka jest uruchamiana po konwersji na końcowym pliku utworzonym przez wtyczkę konwersji wyjściowej."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -751,6 +758,23 @@ msgid ""
 "of which have ISBNs and some of which do not, the results without ISBNs will"
 " be ignored"
 msgstr "Jeśli ustawione na True, a to źródło zwróci wiele wyników dla zapytania, z których niektóre mają numery ISBN, a inne nie, wyniki bez numerów ISBN zostaną zignorowane"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.uses_camoufox_worker:1
+msgid ""
+"If set to True this source uses the Camoufox browser shared by all metadata "
+"downloads, see :mod:`calibre.web.automate.metadata`, which is then started "
+"before metadata is downloaded, so that it is ready in time. Such sources are"
+" also waited for longer after the first result from any source arrives, "
+"since downloading with a browser is slow."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -1394,6 +1418,16 @@ msgstr "Separator ścieżek dla ścieżek do książek na urządzeniu"
 #: calibre.devices.interface.DevicePlugin.icon:1
 msgid "Icon for this device"
 msgstr "Ikona tego urządzenia"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.type:1
+msgid "Alias for field number 0"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.value:1
+msgid "Alias for field number 1"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.OPEN_FEEDBACK_MESSAGE:1
@@ -2124,7 +2158,7 @@ msgstr "Wywoływane przez menedżera urządzeń podczas uruchamiania wtyczek. Je
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2137,8 +2171,9 @@ msgstr "Tę metodę można wywołać w wątku GUI. Sterownik, który implementuj
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "Ta metoda jest wywoływana w celu uruchomienia wtyczki. Wtyczka powinna zacząć akceptować połączenia urządzeń, jednak robi to. Jeśli wtyczka już akceptuje połączenia, nie rób nic."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2272,8 +2307,8 @@ msgstr "Zwróć True, jeśli urządzenie obsługuje kolekcje dla tej listy ksią
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "Dodaj książkę do listy książek. Intencją jest zachowanie wszelkich wewnętrznych metadanych urządzenia. Zwróć True, jeśli listy książek muszą być zsynchronizowane"
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2761,6 +2796,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "Wywoływane raz na wtyczkę, gdy główny GUI jest w trakcie zamykania. Zwolnij wszystkie używane zasoby, ale staraj się nie blokować wyłączania przez dłuższy czas."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

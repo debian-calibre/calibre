@@ -3,6 +3,7 @@
 import re
 from functools import partial
 from random import shuffle
+from typing import TYPE_CHECKING
 
 from qt.core import QCheckBox, QDialog, QDialogButtonBox, QGridLayout, QIcon, QLabel, QMenu, QSize, QStyle, Qt, QTabWidget, QTimer, QVBoxLayout, QWidget
 
@@ -16,9 +17,11 @@ from calibre.gui2.store.search.adv_search_builder import AdvSearchBuilderDialog
 from calibre.gui2.store.search.download_thread import CacheUpdateThreadPool, SearchThreadPool
 from calibre.gui2.store.search.models import Matches
 from calibre.gui2.store.search.search_ui import Ui_Dialog
-from calibre.gui2.widgets2 import HistoryLineEdit2
 from calibre.utils.filenames import ascii_filename
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from calibre.gui2.widgets2 import HistoryLineEdit2
 
 
 def add_items_to_context_menu(widget: HistoryLineEdit2, menu: QMenu) -> None:
@@ -32,7 +35,7 @@ class SearchDialog(QDialog, Ui_Dialog):
     SEARCH_TEXT = _('&Search')
     STOP_TEXT = _('&Stop')
 
-    def __init__(self, gui, parent=None, query=''):
+    def __init__(self, gui, parent=None, query='') -> None:
         QDialog.__init__(self, parent)
         self.setupUi(self)
         s = self.style()
@@ -121,7 +124,7 @@ class SearchDialog(QDialog, Ui_Dialog):
 
         self.restore_state()
 
-    def setup_store_checks(self):
+    def setup_store_checks(self) -> None:
         first_run = self.config.get('first_run', True)
 
         # Add check boxes for each store so the user
@@ -153,12 +156,12 @@ class SearchDialog(QDialog, Ui_Dialog):
 
         self.config['first_run'] = False
 
-    def build_adv_search(self):
+    def build_adv_search(self) -> None:
         adv = AdvSearchBuilderDialog(self)
         if adv.exec() == QDialog.DialogCode.Accepted:
             self.search_edit.setText(adv.search_string())
 
-    def resize_columns(self):
+    def resize_columns(self) -> None:
         total = 600
         # Cover
         self.results_view.setColumnWidth(0, 85)
@@ -176,7 +179,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         # Affiliate
         self.results_view.setColumnWidth(6, 20)
 
-    def toggle_search(self):
+    def toggle_search(self) -> None:
         if self.searching:
             self.search_pool.abort()
             m = self.results_view.model()
@@ -194,7 +197,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         self.search.setEnabled(False)
         QTimer.singleShot(1000, lambda: self.search.setEnabled(True))
 
-    def do_search(self):
+    def do_search(self) -> None:
         # Stop all running threads.
         self.checker.stop()
         self.search_pool.abort()
@@ -268,7 +271,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         query = query.strip()
         return query.encode('utf-8')
 
-    def save_state(self):
+    def save_state(self) -> None:
         self.save_geometry(self.config, 'geometry')
         self.config['store_splitter_state'] = bytearray(self.store_splitter.saveState())
         rv_model = self.results_view.model()
@@ -284,7 +287,7 @@ class SearchDialog(QDialog, Ui_Dialog):
             store_check[k] = v.isChecked()
         self.config['store_checked'] = store_check
 
-    def restore_state(self):
+    def restore_state(self) -> None:
         self.restore_geometry(self.config, 'geometry')
         splitter_state = self.config.get('store_splitter_state', None)
         if splitter_state:
@@ -321,7 +324,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         assert rv_header is not None
         rv_header.setSortIndicator(_rv_m.sort_col, so)
 
-    def load_settings(self):
+    def load_settings(self) -> None:
         # Seconds
         self.timeout = self.config.get('timeout', 75)
         # Milliseconds
@@ -336,7 +339,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         self.cover_thread_count = self.config.get('cover_thread_count', 2)
         self.details_thread_count = self.config.get('details_thread_count', 4)
 
-    def do_config(self):
+    def do_config(self) -> None:
         # Save values that need to be synced between the dialog and the
         # search widget.
         self.config['open_external'] = self.open_external.isChecked()
@@ -380,7 +383,7 @@ class SearchDialog(QDialog, Ui_Dialog):
     def sizeHint(self):
         return QSize(800, 600)
 
-    def config_changed(self):
+    def config_changed(self) -> None:
         self.load_settings()
 
         self.open_external.setChecked(self.should_open_external)
@@ -392,7 +395,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         _cc_m.cover_pool.set_thread_count(self.cover_thread_count)
         _cc_m.details_pool.set_thread_count(self.details_thread_count)
 
-    def get_results(self):
+    def get_results(self) -> None:
         # We only want the search plugins to run
         # a maximum set amount of time before giving up.
         self.hang_check += 1
@@ -420,10 +423,10 @@ class SearchDialog(QDialog, Ui_Dialog):
                 show_copy_button=False,
             )
 
-    def update_book_total(self, total):
+    def update_book_total(self, total) -> None:
         self.total.setText(f'{total}')
 
-    def result_item_activated(self, index):
+    def result_item_activated(self, index) -> None:
         _ria_m = self.results_view.model()
         assert _ria_m is not None
         assert isinstance(_ria_m, Matches)
@@ -434,7 +437,7 @@ class SearchDialog(QDialog, Ui_Dialog):
         else:
             self.open_store(result)
 
-    def download_book(self, result):
+    def download_book(self, result) -> None:
         d = ChooseFormatDialog(self, _('Choose format to download to your library.'), list(result.downloads.keys()))
         if d.exec() == QDialog.DialogCode.Accepted:
             ext = d.format()
@@ -443,7 +446,7 @@ class SearchDialog(QDialog, Ui_Dialog):
             show_download_info(result.title, parent=self)
             self.gui.download_ebook(result.downloads[ext], filename=fname, create_browser=result.create_browser)
 
-    def open_store(self, result):
+    def open_store(self, result) -> None:
         self.gui.istores[result.store_name].open(
             gui=self.gui,
             parent=self,
@@ -451,7 +454,7 @@ class SearchDialog(QDialog, Ui_Dialog):
             external=self.open_external.isChecked(),
         )
 
-    def check_progress(self):
+    def check_progress(self) -> None:
         m = self.results_view.model()
         assert m is not None
         assert isinstance(m, Matches)
@@ -466,19 +469,19 @@ class SearchDialog(QDialog, Ui_Dialog):
             if not self.pi.isAnimated():
                 self.pi.startAnimation()
 
-    def stores_select_all(self):
+    def stores_select_all(self) -> None:
         for check in self.store_checks.values():
             check.setChecked(True)
 
-    def stores_select_invert(self):
+    def stores_select_invert(self) -> None:
         for check in self.store_checks.values():
             check.setChecked(not check.isChecked())
 
-    def stores_select_none(self):
+    def stores_select_none(self) -> None:
         for check in self.store_checks.values():
             check.setChecked(False)
 
-    def dialog_closed(self, result):
+    def dialog_closed(self, result) -> None:
         _dc_m = self.results_view.model()
         assert _dc_m is not None
         assert isinstance(_dc_m, Matches)

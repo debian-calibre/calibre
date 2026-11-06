@@ -10,13 +10,14 @@
 # Kovid Goyal <kovid@kovidgoyal.net>, 2022
 # toshi oota <ppp15479@gmail.com>, 2021
 # Yuka Kachi, 2022
+# Yuka Kachi, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-07-30 18:07+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
+"Last-Translator: Yuka Kachi, 2022\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +38,7 @@ msgid ""
 "operating system of your choice. calibre is written primarily in `Python "
 "<https://www.python.org>`_ with some C/C++ code for speed and system "
 "interfacing. Note that calibre requires at least Python 3.8."
-msgstr "calibre は完全にオープンソースであり、 `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_ のもとにライセンスされています。これは自由にプログラムをダウンロードして、思う存分変更できることを意味します。この章では、選んだ OS 上で calibre の開発環境を構築するにはどうすればよいかを学べます。calibre は主に `Python <https://www.python.org>`_で書かれており、一部は速度とシステムインタフェースのために C/C++ のコードで書かれています。calibre には Python 3.8 以上が必要です。"
+msgstr "calibre は完全にオープンソースであり、 `GNU GPL v3 <https://www.gnu.org/licenses/gpl.html>`_ のもとにライセンスされています。これは自由にプログラムをダウンロードして、思う存分変更できることを意味します。この章では、選んだ OS 上で calibre の開発環境を構築するにはどうすればよいかを学べます。calibre は主に `Python <https://www.python.org>`_ で書かれており、一部は速度とシステムインタフェースのために C/C++ のコードで書かれています。calibre には Python 3.8 以上が必要です。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:14
 msgid "Contents"
@@ -70,7 +71,7 @@ msgid ""
 ":ref:`recipe system <news>` for fetching news. For more examples of plugins "
 "designed to add features to calibre, see the `Index of plugins "
 "<https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_."
-msgstr "calibre のモジュール化された設計は、 ``プラグイン`` の形で表されます。calibre のプラグイン作成に関しては :ref:`チュートリアル<customize>` があります。たとえば calibre に新しいデバイスを追加するためには、通常はデバイスドライバプラグインの形で 100 行未満くらいのコードを書く必要があります。 `ビルトインドライバ` を参照できます。同様に、新しい形式への変換をサポートしたい場合にも、その形式の入力/出力プラグインを書く必要があります。モジュール化された設計のもうひとつの例は、ニュース取得の :ref:`レシピシステム<news>` です。calibre に機能追加するために設計されたプラグインのその他の例については、 `プラグイン目録 <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_ を参照してください。"
+msgstr "calibre のモジュール化された設計は、 ``Plugins`` の形で表されます。calibre のプラグイン作成に関しては :ref:`チュートリアル<customize>` があります。たとえば calibre に新しいデバイスを追加するためには、通常はデバイスドライバプラグインの形で 100 行未満くらいのコードを書く必要があります。 `ビルトインドライバ <https://github.com/kovidgoyal/calibre/tree/master/src/calibre/devices>`_ を参照できます。同様に、新しい形式への変換をサポートしたい場合にも、その形式の入力/出力プラグインを書く必要があります。モジュール化された設計のもうひとつの例は、ニュース取得の :ref:`レシピシステム<news>` です。calibre に機能追加するために設計されたプラグインのその他の例については、 `プラグイン目録 <https://www.mobileread.com/forums/showthread.php?p=1362767#post1362767>`_ を参照してください。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:34
 msgid "Code layout"
@@ -524,7 +525,7 @@ msgstr "同様にして、電子書籍ビューアは次にように開始しま
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:308
 msgid "The e-book editor can be started as::"
-msgstr "電子書籍の編集は次のように開始できます:"
+msgstr "電子書籍エディターは次のように起動できます::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:313
 msgid "Using an interactive Python interpreter"
@@ -543,7 +544,7 @@ msgid ""
 "local scope). The interactive prompt even has :kbd:`Tab` completion for "
 "object properties and you can use the various Python facilities for "
 "introspection, such as :func:`dir`, :func:`type`, :func:`repr`, etc."
-msgstr "コマンドラインから実行すると、これはローカルに定義された変数 (ローカルスコープ内の変数) にアクセスできるインタラクティブな Python インタプリタを開始します。インタラクティブプロンプトはオブジェクトプロパティの :kbd:`タブ` 補完機能も備えており、さまざまな Python 機能を :func:`dir`, :func:`type`, :func:`repr` などの内省に使用できます。"
+msgstr "コマンドラインから実行すると、これはローカルに定義された変数 (ローカルスコープ内の変数) にアクセスできるインタラクティブな Python インタプリタを開始します。インタラクティブプロンプトはオブジェクトプロパティの :kbd:`Tab` 補完機能も備えており、さまざまな Python 機能を :func:`dir`, :func:`type`, :func:`repr` などの内省に使用できます。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:326
 msgid "Using the Python debugger as a remote debugger"

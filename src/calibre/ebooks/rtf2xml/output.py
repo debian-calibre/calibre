@@ -23,7 +23,7 @@ class Output:
     Output file
     """
 
-    def __init__(self, file, orig_file, output_dir=None, out_file=None, no_ask=True):
+    def __init__(self, file: str, orig_file: str, output_dir: str | None = None, out_file: str | None = None, no_ask: bool = True) -> None:
         """
         Required:
             'file' -- xml file ready to output
@@ -39,7 +39,7 @@ class Output:
         self.__no_ask = no_ask
         self.__out_file = out_file
 
-    def output(self):
+    def output(self) -> None:
         """
         Required:
             nothing
@@ -57,7 +57,7 @@ class Output:
         else:
             self.__output_to_standard_func()
 
-    def __output_to_dir_func(self):
+    def __output_to_dir_func(self) -> None:
         """
         Requires:
             nothing
@@ -89,7 +89,7 @@ class Output:
         else:
             self.__output_to_standard_func()
 
-    def __output_to_file_func(self):
+    def __output_to_file_func(self) -> None:
         """
         Required:
             nothing
@@ -98,12 +98,13 @@ class Output:
         Logic:
             read one line at a time. Output to standard
         """
+        assert self.__out_file is not None
         with open_for_read(self.__file) as read_obj:
             with open_for_write(self.__out_file) as write_obj:
                 for line in read_obj:
                     write_obj.write(line)
 
-    def __output_to_standard_func(self):
+    def __output_to_standard_func(self) -> None:
         """
         Required:
             nothing

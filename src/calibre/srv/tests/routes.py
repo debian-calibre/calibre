@@ -3,12 +3,20 @@
 
 import os
 from tempfile import TemporaryDirectory
+from typing import TYPE_CHECKING
 
 from calibre.srv.tests.base import BaseTest
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from calibre.srv.handler import Context
+    from calibre.srv.http_response import RequestData
+    from calibre.srv.routes import Route, RouteFunction
+
 
 class TestRouter(BaseTest):
-    def test_library_id_construction(self):
+    def test_library_id_construction(self) -> None:
         from calibre.srv.library_broker import correct_case_of_last_path_component, db_matches, library_id_from_path
 
         self.ae(library_id_from_path('as'), 'as')
@@ -20,7 +28,7 @@ class TestRouter(BaseTest):
             self.ae(library_id_from_path('X:' + os.sep), 'X')
 
         class MockDB:
-            def __init__(self, base):
+            def __init__(self, base: str) -> None:
                 self.new_api = self
                 self.server_library_id = 'lid'
                 self.dbpath = os.path.join(base, 'metadata.db')
@@ -31,14 +39,14 @@ class TestRouter(BaseTest):
             self.ae(correct_case_of_last_path_component(os.path.join(tdir, 'test')), path)
             self.ae(correct_case_of_last_path_component(os.path.join(tdir, 'Test')), path)
             db = MockDB(tdir)
-            self.assertTrue(db_matches(db, db.server_library_id, None))
+            self.assertTrue(db_matches(db, db.server_library_id, os.path.join(tdir, 'other')))
             self.assertTrue(db_matches(db, db.server_library_id.upper(), tdir))
 
-    def test_route_construction(self):
+    def test_route_construction(self) -> None:
         "Test route construction"
         from calibre.srv.routes import Route, RouteError, endpoint
 
-        def makeroute(route, func=lambda c, d: None, **kwargs):
+        def makeroute(route: str, func: Callable[..., object] = lambda c, d: None, **kwargs: object) -> Route:
             return Route(endpoint(route, **kwargs)(func))
 
         r = makeroute('/')
@@ -47,7 +55,7 @@ class TestRouter(BaseTest):
         r = makeroute('/slash/')
         self.ae(r.endpoint.route, '/slash')
 
-        def emr(route):
+        def emr(route: str) -> None:
             self.assertRaises(RouteError, makeroute, route)
 
         emr('no_start')
@@ -59,44 +67,44 @@ class TestRouter(BaseTest):
         emr('/x/{a=1}')
         self.assertRaises(RouteError, makeroute, '/a/b', lambda c, d, b, a: None)
 
-    def test_route_finding(self):
+    def test_route_finding(self) -> None:
         "Test route finding"
         from calibre.srv.routes import HTTPNotFound, Router, endpoint
 
         router = Router()
 
-        def find(path):
+        def find(path: str) -> tuple[RouteFunction, list[object]]:
             path = list(filter(None, path.split('/')))
             ep, args = router.find_route(path)
             args = list(args)
             return ep, args
 
         @endpoint('/')
-        def root(ctx, data):
+        def root(ctx: Context, data: RequestData) -> None:
             pass
 
         @endpoint('/defval/{a=1}')
-        def defval(ctx, data, a):
+        def defval(ctx: Context, data: RequestData, a: int) -> None:
             pass
 
         @endpoint('/varpath/{a}/{b}')
-        def varpath(ctx, data, a, b):
+        def varpath(ctx: Context, data: RequestData, a: str, b: str) -> None:
             pass
 
         @endpoint('/soak/{+rest}')
-        def soak(ctx, dest, rest):
+        def soak(ctx: Context, dest: RequestData, rest: str) -> None:
             pass
 
         @endpoint('/soak_opt/{+rest="xxx"}')
-        def soak_opt(ctx, dest, rest):
+        def soak_opt(ctx: Context, dest: RequestData, rest: str) -> None:
             pass
 
         @endpoint('/needs quoting/{x}')
-        def quoting(ctx, dest, x):
+        def quoting(ctx: Context, dest: RequestData, x: str) -> None:
             pass
 
         @endpoint('/get/{a}/{b=None}')
-        def get(ctx, dest, a, b):
+        def get(ctx: Context, dest: RequestData, a: str, b: str | None) -> None:
             pass
 
         for x in locals().values():

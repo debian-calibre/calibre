@@ -4,25 +4,29 @@
 
 import struct
 import sys
+from typing import IO, TYPE_CHECKING
 
 from calibre import prints
 from calibre.ebooks.metadata import MetaInformation, string_to_authors
 
+if TYPE_CHECKING:
+    from calibre.ebooks.metadata.book.base import Metadata
+
 MAGIC = b'\xb0\x0c\xb0\x0c\x02\x00NUVO\x00\x00\x00\x00'
 
 
-def get_metadata(stream):
+def get_metadata(stream: IO[bytes]) -> Metadata:
     """Return metadata as a L{MetaInfo} object"""
     title = 'Unknown'
     mi = MetaInformation(title, ['Unknown'])
     stream.seek(0)
     try:
-        if not stream.read(14) == MAGIC:
+        if stream.read(14) != MAGIC:
             print("Couldn't read RB header from file", file=sys.stderr)
             return mi
         stream.read(10)
 
-        def read_i32():
+        def read_i32() -> int:
             return struct.unpack('<I', stream.read(4))[0]
 
         stream.seek(read_i32())

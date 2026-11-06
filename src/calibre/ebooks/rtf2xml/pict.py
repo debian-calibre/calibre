@@ -12,6 +12,7 @@
 #########################################################################
 import os
 import sys
+from typing import IO
 
 from calibre.ebooks.rtf2xml import copy
 from calibre.ptempfile import better_mktemp
@@ -24,13 +25,13 @@ class Pict:
 
     def __init__(
         self,
-        in_file,
-        bug_handler,
-        out_file,
-        copy=None,
-        orig_file=None,
-        run_level=1,
-    ):
+        in_file: str,
+        bug_handler: type[Exception],
+        out_file: str,
+        copy: int | None = None,
+        orig_file: str | None = None,
+        run_level: int = 1,
+    ) -> None:
         self.__file = in_file
         self.__bug_handler = bug_handler
         self.__copy = copy
@@ -46,24 +47,24 @@ class Pict:
         self.__initiate_pict_dict()
         self.__out_file = out_file
 
-    def __initiate_pict_dict(self):
+    def __initiate_pict_dict(self) -> None:
         self.__pict_dict = {
             'ob<nu<open-brack': self.__open_br_func,
             'cb<nu<clos-brack': self.__close_br_func,
             'tx<nu<__________': self.__text_func,
         }
 
-    def __open_br_func(self, line):
+    def __open_br_func(self, line: str) -> str:
         return '{\n'
 
-    def __close_br_func(self, line):
+    def __close_br_func(self, line: str) -> str:
         return '}\n'
 
-    def __text_func(self, line):
+    def __text_func(self, line: str) -> str:
         # tx<nu<__________<true text
         return line[17:]
 
-    def __make_dir(self):
+    def __make_dir(self) -> None:
         """Make a directory to put the image data in"""
         _orig_path = getattr(self.__orig_file, 'name', self.__orig_file)
         assert isinstance(_orig_path, (str, bytes, os.PathLike))
@@ -95,12 +96,12 @@ class Pict:
             if self.__run_level > 1:
                 sys.stderr.write('Files removed.\n')
 
-    def __create_pict_file(self):
+    def __create_pict_file(self) -> None:
         """Create a file for all the pict data to be written to."""
         self.__pict_file = os.path.join(self.__dir_name, 'picts.rtf')
         self.__write_pic_obj = open_for_write(self.__pict_file, append=True)
 
-    def __in_pict_func(self, line):
+    def __in_pict_func(self, line: str) -> bool:
         if self.__cb_count == self.__pict_br_count:
             self.__in_pict = False
             self.__write_pic_obj.write('}\n')
@@ -111,7 +112,7 @@ class Pict:
                 self.__write_pic_obj.write(action(line))
             return False
 
-    def __default(self, line, write_obj):
+    def __default(self, line: str, write_obj: IO[str]) -> bool:
         """Determine if each token marks the beginning of pict data.
         If it does, create a new file to write data to (if that file
         has not already been created.) Set the self.__in_pict flag to true.
@@ -137,14 +138,14 @@ class Pict:
             return False
         return True
 
-    def __print_rtf_header(self):
+    def __print_rtf_header(self) -> None:
         """Print to pict file the necessary RTF data for the file to be
         recognized as an RTF file.
         """
         self.__write_pic_obj.write('{\\rtf1 \n{\\fonttbl\\f0\\null;} \n')
         self.__write_pic_obj.write('{\\colortbl\\red255\\green255\\blue255;} \n\\pard \n')
 
-    def process_pict(self):
+    def process_pict(self) -> None:
         self.__make_dir()
         with open_for_read(self.__file) as read_obj:
             with open_for_write(self.__write_to) as write_obj:

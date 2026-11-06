@@ -3,17 +3,21 @@
 
 import os
 import sys
+from typing import TYPE_CHECKING, cast
 
 from calibre.ebooks.conversion.plumber import Plumber
 from calibre.ebooks.epub import initialize_container
 from calibre.ebooks.oeb.polish.container import OEB_DOCS, OEB_STYLES, Container
 from calibre.ptempfile import TemporaryDirectory
-from calibre.utils.logging import default_log
+from calibre.utils.logging import Log, default_log
+
+if TYPE_CHECKING:
+    from calibre.ebooks.oeb.base import OEBBook
 
 IMPORTABLE = {'htm', 'xhtml', 'html', 'xhtm', 'docx'}
 
 
-def auto_fill_manifest(container):
+def auto_fill_manifest(container: Container) -> None:
     manifest_id_map = container.manifest_id_map
     manifest_name_map = {v: k for k, v in manifest_id_map.items()}
 
@@ -23,11 +27,12 @@ def auto_fill_manifest(container):
             gname = container.href_to_name(mitem.get('href'), container.opf_name)
             if gname != name:
                 raise ValueError('This should never happen (gname={!r}, name={!r}, href={!r})'.format(gname, name, mitem.get('href')))
-            manifest_name_map[name] = mitem.get('id')
-            manifest_id_map[mitem.get('id')] = name
+            item_id = cast('str', mitem.get('id'))  # generated items always have an id
+            manifest_name_map[name] = item_id
+            manifest_id_map[item_id] = name
 
 
-def import_book_as_epub(srcpath, destpath, log=default_log):
+def import_book_as_epub(srcpath: str, destpath: str, log: Log = default_log) -> None:
     if not destpath.lower().endswith('.epub'):
         raise ValueError(f'Can only import books into the EPUB format, not {os.path.basename(destpath)}')
     with TemporaryDirectory('eei') as tdir:
@@ -44,7 +49,7 @@ def import_book_as_epub(srcpath, destpath, log=default_log):
         if hasattr(pathtoopf, 'manifest'):
             from calibre.ebooks.oeb.iterator.book import write_oebbook
 
-            pathtoopf = write_oebbook(pathtoopf, tdir)
+            pathtoopf = write_oebbook(cast('OEBBook', pathtoopf), tdir)
 
         c = Container(tdir, pathtoopf, log)
         auto_fill_manifest(c)

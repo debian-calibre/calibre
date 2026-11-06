@@ -1,10 +1,15 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
-from tinycss.color3 import parse_color_string
+from typing import TYPE_CHECKING
+
+from tinycss.color4 import parse_color_string
+
+if TYPE_CHECKING:
+    import unittest
 
 
-def int_or_zero(raw):
+def int_or_zero(raw: str | float) -> int:
     try:
         return int(raw)
     except ValueError, TypeError, AttributeError:
@@ -14,24 +19,24 @@ def int_or_zero(raw):
 # convert_color() {{{
 
 
-def convert_color(value):
+def convert_color(value: str | None) -> str | None:
     if not value:
-        return
-    if value.lower() == 'currentcolor':
-        return 'auto'
+        return None
     val = parse_color_string(value)
-    if val is None:
-        return
-    if val.alpha < 0.01:
-        return
-    return f'{int(val.red * 255):02X}{int(val.green * 255):02X}{int(val.blue * 255):02X}'
+    if val == 'currentColor':
+        return 'auto'
+    if not isinstance(val, tuple) or val.alpha < 0.01:
+        return None
+    # Round rather than truncate as colors converted from other color spaces
+    # are not exact multiples of 1/255
+    return ''.join(f'{int(x * 255 + 0.5):02X}' for x in val[:3])
 
 
-def test_convert_color(return_tests=False):
+def test_convert_color(return_tests: bool = False) -> unittest.TestSuite | None:
     import unittest
 
     class TestColors(unittest.TestCase):
-        def test_color_conversion(self):
+        def test_color_conversion(self) -> None:
             ae = self.assertEqual
             cc = convert_color
             ae(None, cc(None))
@@ -39,6 +44,7 @@ def test_convert_color(return_tests=False):
             ae(None, cc('none'))
             ae(None, cc('#12j456'))
             ae('auto', cc('currentColor'))
+            ae('auto', cc(' currentColor '))
             ae('F0F8FF', cc('AliceBlue'))
             ae('000000', cc('black'))
             ae('FF0000', cc('red'))
@@ -47,6 +53,19 @@ def test_convert_color(return_tests=False):
             ae('12345D', cc('#12345d'))
             ae('FFFFFF', cc('rgb(255, 255, 255)'))
             ae('FF0000', cc('rgba(255, 0, 0, 23)'))
+            ae('1A334D', cc('rgb(10%, 20%, 30%)'))
+            ae('00FF00', cc('rgb(-51, 306, 0)'))
+            # CSS Color Level 4
+            ae('FF0000', cc('#ff000080'))
+            ae(None, cc('#ff000000'))
+            ae('FF0000', cc('rgb(255 0 0 / 50%)'))
+            ae('663399', cc('rebeccapurple'))
+            ae('40BF40', cc('hsl(120deg 50% 50%)'))
+            ae('33B333', cc('hwb(120 20% 30%)'))
+            ae('FFFFFF', cc('lab(100 0 0)'))
+            ae('FF0000', cc('oklch(0.628 0.2577 29.23)'))
+            ae('FF0000', cc('color(display-p3 0.9175 0.2003 0.1386)'))
+            ae(None, cc('rgb(var(--x))'))
 
     tests = unittest.defaultTestLoader.loadTestsFromTestCase(TestColors)
     if return_tests:

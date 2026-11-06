@@ -191,6 +191,55 @@ multiple devices and it will remember your last read position. If it does not
 you can force a sync by tapping in the top quarter and choosing
 :guilabel:`Sync`.
 
+Searching book contents in OPDS applications
+---------------------------------------------
+
+When full text indexing is enabled for a library, its OPDS catalog offers a
+catalog entry titled :guilabel:`Search book contents`. Open this entry and use
+the application's search control to find books by words and phrases inside
+them, using calibre's existing full text index. Each feed has a single search
+link, so clients do not have to choose between multiple search links. Results
+contain the normal book information and download links. A book is listed once
+even if more than one of its formats matches. Only books available to the
+current user are searched.
+
+The original search continues to search book metadata. Content search uses
+the same SQLite full text query syntax as calibre's full text search window.
+It searches the text indexed so far; books still waiting to be indexed will
+not appear yet. The content search entry is absent when indexing is disabled.
+Both OPDS 1 and OPDS 2 catalogs support content search, through the normal
+search URL with ``full_text=y`` added to its query parameters.
+
+
+Reading comics in OPDS applications
+------------------------------------
+
+Applications that support OPDS 2.0 and the `Readium Divina format
+<https://readium.org/webpub-manifest/profiles/divina>`_ can read CBZ comics one
+page at a time, without downloading the entire archive. Connect the application
+to the server's ``/opds`` catalog. OPDS 2.0 applications request the JSON catalog
+using ``Accept: application/opds+json``.
+
+Comic entries link to a Divina manifest. The server lists pages only when the
+application opens that manifest, using the same page order as calibre's comic
+conversion. Each page offers its original image format, including AVIF and
+JPEG XL, and alternate formats the server can produce. GIF pages, which may be
+animated, are only offered in their original format. The application chooses
+an image format it supports from those links. JPEG is offered as the default
+for AVIF and JPEG XL pages when conversion is available.
+
+For manga, a ``ComicInfo.xml`` file with ``Manga`` set to ``YesAndRightToLeft``
+tells the application to use right-to-left reading direction. The file can be
+in the root of the archive or in the folder containing the page images. Page
+images remain in their original order. The reading direction is only given in
+the comic manifest, not in OPDS feeds, as finding it requires opening the
+archive.
+
+The normal username/password and library restrictions apply to manifests and
+page images. Complete archive downloads remain available. This feature supports
+CBZ archives; CBR and CB7 comics can still be downloaded as complete files.
+
+
 Browser support
 ------------------
 
@@ -247,6 +296,44 @@ Once you are done, you can run the server as::
     calibre-server --userdb /srv/calibre/users.sqlite --enable-auth
 
 It will use the user accounts you created in the previous step.
+
+Syncing reading progress with KOReader
+-----------------------------------------
+
+The Content server can act as a progress sync server for the `KOReader
+<https://koreader.rocks>`_ e-book reader, so that devices running KOReader
+can sync your reading position in books with each other. In KOReader, go to
+:guilabel:`Tools->Progress sync->Custom sync server` and enter the address of
+the Content server followed by ``/kosync``, for example::
+
+    http://192.168.1.2:8080/kosync
+
+If you are `Using a URL prefix`_, include it before ``/kosync``.
+Then use :guilabel:`Login` with the username and password of a user account on
+the Content server. Accounts cannot be created from KOReader, they are managed
+by calibre as described above. Users that are only allowed read access cannot
+sync their reading positions. If user accounts are not enabled on the server,
+any username and password can be used, but reading positions can only be synced
+from devices that are allowed to make changes without authentication, see the
+:guilabel:`Allow un-authenticated local connections to make changes` and
+:guilabel:`Allow un-authenticated connections from specific IP addresses to make changes`
+options. Reading positions synced while user accounts are not enabled are kept
+separate from those of user accounts. The reading positions of each user are
+stored separately in the user database of the server.
+
+By default, KOReader identifies books by a checksum of the book file. The
+Content server can change the metadata embedded in books when they are
+downloaded, so copies of a book downloaded at different times can have
+different checksums. Once KOReader has synced with the server, it remembers the
+checksums of downloaded books and of the library files they were created from,
+so that all copies of the same format of a book share one reading position.
+Different formats of a book have separate reading positions, as positions in
+one format cannot be used in another. Copies downloaded before KOReader first
+synced with the server, or obtained other than by downloading them from the
+server, are not recognized. If reading positions do not sync for such copies,
+set :guilabel:`Document matching method` in the KOReader progress sync settings
+to :guilabel:`Filename` on all devices and keep the file names of books the
+same.
 
 
 Integrating the calibre Content server into other servers

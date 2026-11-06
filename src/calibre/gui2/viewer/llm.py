@@ -2,9 +2,8 @@
 # License: GPLv3 Copyright: 2025, Kovid Goyal <kovid at kovidgoyal.net> and Amir Tehrani
 
 import string
-from collections.abc import Iterator
 from functools import lru_cache
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from qt.core import QDialog, QUrl, QVBoxLayout, QWidget, pyqtSignal
 
@@ -17,6 +16,9 @@ from calibre.gui2.viewer.config import vprefs
 from calibre.gui2.viewer.highlights import HighlightColorCombo
 from calibre.utils.localization import _, ui_language_as_english
 from polyglot.binary import from_hex_unicode
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 
 def selected_text_for_prompt(selected_text: str) -> str:
@@ -53,6 +55,7 @@ def format_prompt_template(template: str, **kwargs: str) -> str:
 class Action(ActionData):
     @property
     def uses_selected_text(self) -> bool:
+        # ruff: ignore[reimplemented-builtin]
         for _x, fname, _x, _x in string.Formatter().parse(self.prompt_template):
             if fname == 'selected':
                 return True
@@ -99,7 +102,7 @@ def current_actions(include_disabled=False) -> Iterator[Action]:
 
 
 class LLMSettingsDialog(LLMSettingsDialogBase):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(title=_('AI Settings'), name='llm-settings-dialog', prefs=vprefs, parent=parent)
 
     def custom_tabs(self) -> Iterator[tuple[str, str, QWidget]]:
@@ -109,7 +112,7 @@ class LLMSettingsDialog(LLMSettingsDialogBase):
 class LLMPanel(ConverseWidget):
     add_note_requested = pyqtSignal(str, str)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.save_note_hostname = f'{self.hid}.save.calibre'
 
@@ -118,11 +121,11 @@ class LLMPanel(ConverseWidget):
         self.book_title = ''
         self.book_authors = ''
 
-    def add_buttons(self):
+    def add_buttons(self) -> None:
         self.add_button('save.png', _('&Save as note'), _('Save this conversation as a note on the current highlight')).clicked.connect(self.save_as_note)
         super().add_buttons()
 
-    def update_book_metadata(self, metadata):
+    def update_book_metadata(self, metadata) -> None:
         self.book_title = metadata.get('title', '')
         authors = metadata.get('authors', [])
         self.book_authors = authors_to_string(authors)
@@ -264,7 +267,7 @@ class LLMSettingsWidget(LLMActionsSettingsWidget):
 # }}}
 
 
-def develop(show_initial_messages: bool = False):
+def develop(show_initial_messages: bool = False) -> None:
     app = Application([])
     # return LLMSettingsDialog().exec()
     d = QDialog()

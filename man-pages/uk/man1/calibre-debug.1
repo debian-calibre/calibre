@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "жовтня 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "листопада 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -186,6 +186,11 @@ calibre\-debug [параметри]
 .TP
 .B \-\-un\-kepubify
 Перетворити вказаний файл KEPUB на EPUB без повного перетворення. Таке перетворення виконує драйвер Kobo при імпортуванні файлів з пристрою.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Перевірити усі файли у теці, експортованій calibre, без їхнього відновлення. Перевірку буде виконано за архівними частинами та контрольними сумами файлів. Повертає ненульовий стан, якщо буде виявлено помилку.
 .UNINDENT
 .INDENT 0.0
 .TP

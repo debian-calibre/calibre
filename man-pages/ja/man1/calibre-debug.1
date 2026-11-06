@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "10月 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "11月 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -40,9 +40,9 @@ calibre\-debug [options]
 .UNINDENT
 .UNINDENT
 .sp
-calibreのデバッグに役立つさまざまなコマンドラインインターフェース。オプションを指定しない場合、このコマンドは組み込みのPythonインタープリタを起動します。メインのcalibre GUI、calibre電子書籍ビューア、calibreエディタをデバッグモードで実行することもできます。
+calibreのデバッグに役立つさまざまなコマンドラインインタフェース。オプションを指定しない場合、このコマンドは組み込みのPythonインタープリタを起動します。メインのcalibre GUI、calibre電子書籍ビューア、calibreエディタをデバッグモードで実行することもできます。
 .sp
-また、フォントのサブセット化、Eブックのdiffツールなど、専用のコマンドラインツールがないcalibreのさまざまな部分へのインターフェースも含まれています。
+また、フォントのサブセット化、Eブックのdiffツールなど、専用のコマンドラインツールがないcalibreのさまざまな部分へのインタフェースも含まれています。
 :command:
 .nf
 \(ga
@@ -66,7 +66,7 @@ calibre\-debug\(gaをスクリプトのshebangとして使用することもで�
 .UNINDENT
 .sp
 スペースを含む引数を \fBcalibre\-debug\fP に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
-.SH [オプション]
+.SH [OPTIONS]
 .INDENT 0.0
 .TP
 .B \-\-add\-simple\-plugin
@@ -154,7 +154,7 @@ calibreのすべてのデータ（本、設定、プラグイン）をエクス�
 .INDENT 0.0
 .TP
 .B \-\-kepubify
-指定されたEPUBファイルを、完全な変換を行わずにKEPUBに変換します。これは、Koboドライバーがデバイスにファイルを送信する際に行う処理です。
+指定されたEPUBファイルを、完全な変換を行わずにKEPUBに変換します。これは、Koboドライバがデバイスにファイルを送信する際に行う処理です。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -195,6 +195,11 @@ DEBUGフラグを設定して実行しないでください
 .TP
 .B \-\-un\-kepubify
 指定されたKEPUBファイルを、フル変換を行わずにEPUBに変換します。これは、Koboドライバがデバイスからファイルをインポートする際に行う処理です。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+calibre がエクスポートしたフォルダ内のすべてのファイルを、復元せずに検証します。アーカイブの各部分とファイルのチェックサムを確認します。エラーがあった場合は 0 以外の終了ステータスを返します
 .UNINDENT
 .INDENT 0.0
 .TP

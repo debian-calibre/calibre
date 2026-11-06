@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import time
 from contextlib import closing
@@ -18,9 +16,9 @@ from calibre.utils.xml_parse import safe_html_fromstring
 class CacheUpdateThread(Thread, QObject):
     total_changed = pyqtSignal(int)
     update_progress = pyqtSignal(int)
-    update_details = pyqtSignal(type(''))
+    update_details = pyqtSignal(str)
 
-    def __init__(self, config, seralize_books_function, timeout):
+    def __init__(self, config, seralize_books_function, timeout) -> None:
         Thread.__init__(self)
         QObject.__init__(self)
 
@@ -30,10 +28,10 @@ class CacheUpdateThread(Thread, QObject):
         self.timeout = timeout
         self._run = True
 
-    def abort(self):
+    def abort(self) -> None:
         self._run = False
 
-    def run(self):
+    def run(self) -> None:
         url = 'https://www.mobileread.com/forums/ebooks.php?do=getlist&type=html'
 
         self.update_details.emit(_('Checking last download date.'))

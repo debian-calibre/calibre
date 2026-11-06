@@ -7,6 +7,10 @@ import hashlib
 import json
 import os
 import subprocess
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
 
 duplicates = {
     'character-set': ['languages'],
@@ -41,12 +45,13 @@ else:
 src_hashes = {}
 
 
-def iterfiles(only=()):
+def iterfiles(only: tuple[str, ...] = ()) -> Iterator[tuple[str, list[str]]]:
     for src in glob.glob(j(base, '*.svg')) + glob.glob(j(base, 'plugins/*.svg')):
         name = os.path.relpath(src, base).rpartition('.')[0]
         if only and name not in only:
             continue
-        src_hashes[name] = h = hashlib.sha1(open(src, 'rb').read()).hexdigest()
+        with open(src, 'rb') as f:
+            src_hashes[name] = h = hashlib.sha1(f.read()).hexdigest()
         if not only and h == hashes.get(name):
             continue
         output_names = [n for n in [name] + duplicates.get(name, []) if n not in skip]
@@ -55,7 +60,7 @@ def iterfiles(only=()):
             yield src, output_files
 
 
-def rsvg(src, size, dest):
+def rsvg(src: str, size: str, dest: str) -> None:
     cmd = ['rsvg-convert', '-d', '96', '-p', '96']
     if size != 'original':
         cmd += ['--width', size, '--height', size]
@@ -64,7 +69,7 @@ def rsvg(src, size, dest):
     subprocess.check_call(cmd + [dest, dest])
 
 
-def render(src, output_files):
+def render(src: str, output_files: list[str]) -> None:
     for dest in output_files:
         oname = os.path.basename(dest).rpartition('.')[0]
         size = sizes.get(oname, '128')
@@ -74,7 +79,7 @@ def render(src, output_files):
         hashes[name] = src_hashes[name]
 
 
-def main():
+def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument('only', nargs='*', default=[], help='Only render the specified icons')
     args = p.parse_args()

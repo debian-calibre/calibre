@@ -22,12 +22,12 @@ class FixLineEndings:
 
     def __init__(
         self,
-        bug_handler,
-        in_file=None,
-        copy=None,
-        run_level=1,
-        replace_illegals=1,
-    ):
+        bug_handler: type[Exception],
+        in_file: str | None = None,
+        copy: int | None = None,
+        run_level: int = 1,
+        replace_illegals: int = 1,
+    ) -> None:
         self.__file = in_file
         self.__bug_handler = bug_handler
         self.__copy = copy
@@ -35,7 +35,7 @@ class FixLineEndings:
         self.__write_to = better_mktemp()
         self.__replace_illegals = replace_illegals
 
-    def fix_endings(self):
+    def fix_endings(self) -> None:
         # read
         assert self.__file is not None
         with open(self.__file, 'rb') as read_obj:

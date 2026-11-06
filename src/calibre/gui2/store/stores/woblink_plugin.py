@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011-2019, Tomasz Długosz <tomek3d@gmail.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 16  # Needed for dynamic plugin loading
 
@@ -88,7 +86,7 @@ def search(query, max_results=10, timeout=60):
 
 
 class WoblinkStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         aff_root = 'https://www.a4b-tracking.com/pl/stat-click-text-link/16/58/'
         url = 'https://woblink.com/publication'
 
@@ -107,8 +105,7 @@ class WoblinkStore(BasicStoreConfig, StorePlugin):
             d.exec()
 
     def search(self, query, max_results=10, timeout=60):
-        for s in search(query, max_results, timeout):
-            yield s
+        yield from search(query, max_results, timeout)
 
 
 if __name__ == '__main__':

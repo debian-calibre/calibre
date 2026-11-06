@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, Alex Stanev <alex@stanev.org>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
@@ -63,7 +61,7 @@ def parse_book_page(doc, base_url, counter):
 
 
 class ChitankaStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         url = 'http://chitanka.info'
 
         if external or self.config.get('open_external', False):

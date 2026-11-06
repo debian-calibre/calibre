@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: RERBIN MA, 2024-2026\n"
 "Language-Team: Chinese (China) (http://app.transifex.com/calibre/calibre/language/zh_CN/)\n"
@@ -251,8 +251,9 @@ msgstr "字段“name”中所有值的冻结 ID 集。"
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
-"many fields)"
-msgstr "所有字段名称的冻结集（仅应用于多一和多对多字段）"
+"many fields). If book_ids is not None, only names used by the specified "
+"books are returned."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
@@ -294,6 +295,14 @@ msgstr "给定一个作者列表，返回作者的author_sort字符串，优先�
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "返回指定作者的作者排序名称。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid ""
+"Return a map of annotation id to book id for those of the specified "
+"annotation ids that exist. `ignore_removed` controls whether removed "
+"(deleted) annotations are also returned."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.book_storage_for_book:1
@@ -652,8 +661,10 @@ msgstr "获取名称数据。默认情况下，会返回所有book_ids的数据�
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
-"must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "返回id号到指定字段值的映射。字段必须是多-一或多-多字段，否则会引发ValueError。"
+"must be a many-one or many-many field, otherwise a ValueError is raised. If "
+"book_ids is not None, only items used by the specified books are returned. "
+"For the title field the ids are book ids."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -786,6 +797,13 @@ msgstr "导入先前导出的注释或任意 HTML 文件作为指定项目的注
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "使用来自后端的数据初始化此缓存。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_using_notes_resource:1
+msgid ""
+"Return the set of (field, item_id) pairs for all notes that use the resource"
+" with the specified hash"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
@@ -1086,6 +1104,21 @@ msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "使用 FTS 索引搜索笔记文本。 如果查询为空，则返回所有注释。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:1
+msgid ""
+"Return True if the specified search query, or any saved search it uses, "
+"contains a template search. The query is checked without being evaluated. "
+"Use this to stop untrusted users from storing search expressions, such as "
+"saved searches, containing templates, since stored expressions are later "
+"evaluated with templates allowed, for example, in Virtual libraries."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1

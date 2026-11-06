@@ -7,6 +7,7 @@ import os
 import time
 from compression import zlib
 from io import BytesIO
+from typing import TYPE_CHECKING
 
 from calibre.ebooks.metadata.epub import get_metadata
 from calibre.ebooks.metadata.opf2 import OPF
@@ -16,6 +17,9 @@ from calibre.utils.resources import get_image_path as I
 from calibre.utils.resources import get_path as P
 from calibre.utils.shared_file import share_open
 from polyglot.binary import as_base64_bytes, from_hex_unicode
+
+if TYPE_CHECKING:
+    from http.client import HTTPResponse
 
 
 def run_generated_cover_checks() -> list[str]:
@@ -35,12 +39,12 @@ def run_generated_cover_checks() -> list[str]:
 
 
 class ContentTest(LibraryBaseTest):
-    def test_static(self):  # {{{
+    def test_static(self) -> None:  # {{{
         "Test serving of static content"
         with self.create_server() as server:
             conn = server.connect()
 
-            def missing(url, body=b''):
+            def missing(url: str, body: bytes = b'') -> None:
                 conn.request('GET', url)
                 r = conn.getresponse()
                 self.ae(r.status, http.client.NOT_FOUND)
@@ -51,14 +55,14 @@ class ContentTest(LibraryBaseTest):
                 missing(f'/{prefix}/../out.html', b'Naughty, naughty!')
                 missing(f'/{prefix}/C:/out.html', b'Naughty, naughty!')
 
-            def test_response(r):
+            def test_response(r: HTTPResponse) -> None:
                 self.assertIn('max-age=', r.getheader('Cache-Control'))
                 self.assertIn('public', r.getheader('Cache-Control'))
                 self.assertIsNotNone(r.getheader('Expires'))
                 self.assertIsNotNone(r.getheader('ETag'))
                 self.assertIsNotNone(r.getheader('Content-Type'))
 
-            def test(src, url, sz=None):
+            def test(src: str, url: str, sz: int | None = None) -> None:
                 raw = P(src, data=True)
                 conn.request('GET', url)
                 r = conn.getresponse()
@@ -82,7 +86,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_generated_cover(self):
+    def test_generated_cover(self) -> None:
         "Test serving of auto generated covers"
         # Generating covers needs a QApplication, which tests must not create
         # in the test process, so run the checks in a worker process
@@ -92,7 +96,7 @@ class ContentTest(LibraryBaseTest):
         if errors:
             self.fail('\n'.join(errors))
 
-    def generated_cover_checks(self):
+    def generated_cover_checks(self) -> None:
         with self.create_server() as server:
             conn = server.connect()
             conn.request('GET', '/get/cover/3')  # book 3 has no cover
@@ -102,20 +106,20 @@ class ContentTest(LibraryBaseTest):
             self.ae(r.getheader('Content-Type'), 'image/jpeg')
             self.ae(identify(data)[0], 'jpeg')
 
-    def test_get(self):  # {{{
+    def test_get(self) -> None:  # {{{
         "Test /get"
         with self.create_server() as server:
             db = server.handler.router.ctx.library_broker.get(None)
             conn = server.connect()
 
-            def get(what, book_id, library_id=None, q=''):
+            def get(what: str, book_id: int | str, library_id: str | None = None, q: str = '') -> tuple[HTTPResponse, bytes]:
                 q = ('?' + q) if q else q
                 conn.request('GET', f'/get/{what}/{book_id}' + (('/' + library_id) if library_id else '') + q)
                 r = conn.getresponse()
                 return r, r.read()
 
             # Test various invalid parameters
-            def bad(*args):
+            def bad(*args: str | int) -> None:
                 r, data = get(*args)
                 self.ae(r.status, http.client.NOT_FOUND)
 
@@ -132,6 +136,24 @@ class ContentTest(LibraryBaseTest):
             r, data = get('fmt1', 1)
             self.ae(data, db.format(1, 'fmt1'))
             self.ae(r.getheader('Used-Cache'), 'yes')
+            # A User-Agent that is not valid UTF-8 must not cause a server error
+            conn.request('GET', f'/legacy/get/fmt1/1/{db.server_library_id}', headers={'User-Agent': b'Kindle/3\xff'})
+            r = conn.getresponse()
+            self.ae(r.status, http.client.OK), self.ae(r.read(), db.format(1, 'fmt1'))
+
+            # Test that scriptable formats served inline are sandboxed
+            db.add_format(1, 'HTML', BytesIO(b'<script>alert(1)</script>'), run_hooks=False)
+            for q in ('', 'content_disposition=inline'):
+                r, data = get('html', 1, q=q)
+                self.ae(r.status, http.client.OK)
+                self.assertTrue(r.getheader('Content-Type').startswith('text/html'))
+                self.ae(r.getheader('Content-Security-Policy'), 'sandbox allow-scripts allow-downloads')
+                self.ae(r.getheader('X-Content-Type-Options'), 'nosniff')
+            db.add_format(1, 'TXT', BytesIO(b'<script>alert(1)</script>'), run_hooks=False)
+            r, data = get('txt', 1, q='content_disposition=inline')
+            self.ae(r.status, http.client.OK)
+            self.assertIsNone(r.getheader('Content-Security-Policy'))
+            db.remove_formats({1: ('HTML', 'TXT')})
 
             # Test fetching of format with metadata update
             raw = P('quick_start/eng.epub', data=True)
@@ -170,7 +192,7 @@ class ContentTest(LibraryBaseTest):
                 c.DEBUG = orig
 
             # Test the serving of covers
-            def change_cover(count, book_id=2):
+            def change_cover(count: int, book_id: int = 2) -> None:
                 cpath = db.format_abspath(book_id, '__COVER_INTERNAL__')
                 db.set_cover({2: I('lt.png', data=True)})
                 t = time.time() + 1 + count
@@ -268,11 +290,19 @@ class ContentTest(LibraryBaseTest):
             r = conn.getresponse()
             self.ae(r.status, http.client.OK), self.ae(r.getheader('Content-Encoding'), 'gzip')
             raw = r.read()
-            self.ae(zlib.decompress(raw, 16 + zlib.MAX_WBITS), data)
+
+            # The pages field is filled in asynchronously by the background
+            # page counting thread, so it can change between requests
+            def without_pages(x: bytes) -> dict[str, object]:
+                ans = json.loads(x)
+                ans.pop('pages', None)
+                return ans
+
+            self.ae(without_pages(zlib.decompress(raw, 16 + zlib.MAX_WBITS)), without_pages(data))
 
     # }}}
 
-    def test_set_fields_languages(self):  # {{{
+    def test_set_fields_languages(self) -> None:  # {{{
         "Test /cdb/set-fields with a single language string"
         with self.create_server(auth=True, auth_mode='basic') as server:
             server.handler.ctx.user_manager.add_user('12', 'test')
@@ -300,7 +330,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_recipe_formats_forbidden(self):  # {{{
+    def test_recipe_formats_forbidden(self) -> None:  # {{{
         "Test that recipe formats cannot be added, converted or viewed remotely"
         from calibre.srv.utils import is_recipe_fmt
         from calibre.utils.serialize import MSGPACK_MIME, msgpack_dumps
@@ -316,7 +346,7 @@ class ContentTest(LibraryBaseTest):
             auth = {'Authorization': 'Basic ' + as_base64_bytes('12:test').decode()}
             conn = server.connect()
 
-            def request(path, body, content_type='application/json'):
+            def request(path: str, body: str | bytes, content_type: str = 'application/json') -> tuple[int, bytes]:
                 conn.request('POST', path, body=body, headers={'Content-Type': content_type, **auth})
                 r = conn.getresponse()
                 return r.status, r.read()
@@ -333,6 +363,12 @@ class ContentTest(LibraryBaseTest):
                 self.ae(status, http.client.OK, fmt)
                 self.assertIn('err', json.loads(raw), fmt)
                 self.assertNotIn(fmt.upper(), db.formats(1), fmt)
+
+            # A Content-Type that is not valid UTF-8 is a bad request, not a server error
+            conn.request('POST', '/cdb/cmd/list/0', body=b'x', headers={'Content-Type': b'application/json\xff', **auth})
+            r = conn.getresponse()
+            r.read()
+            self.ae(r.status, http.client.BAD_REQUEST)
 
             # Recipe formats that are already in the library must not be
             # converted or viewed by remote clients
@@ -356,11 +392,11 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_html_as_json(self):  # {{{
+    def test_html_as_json(self) -> None:  # {{{
         from calibre.ebooks.oeb.parse_utils import html5_parse
         from calibre.srv.render_book import html_as_json
 
-        def t(html, body_children, nsmap=('http://www.w3.org/1999/xhtml',)):
+        def t(html: str, body_children: list[dict], nsmap: tuple[str, ...] = ('http://www.w3.org/1999/xhtml',)) -> None:
             root = html5_parse(html)
             raw = html_as_json(root)
             # print(raw.decode('utf-8'))
@@ -384,7 +420,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_last_read_cache(self):  # {{{
+    def test_last_read_cache(self) -> None:  # {{{
         from calibre.srv.last_read import last_read_cache, path_cache
 
         path_cache.clear()

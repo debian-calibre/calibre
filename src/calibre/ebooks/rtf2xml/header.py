@@ -29,18 +29,18 @@ class Header:
 
     def __init__(
         self,
-        in_file,
-        bug_handler,
-        copy=None,
-        run_level=1,
-    ):
+        in_file: str,
+        bug_handler: type[Exception],
+        copy: int | None = None,
+        run_level: int = 1,
+    ) -> None:
         self.__file = in_file
         self.__bug_handler = bug_handler
         self.__copy = copy
         self.__write_to = better_mktemp()
         self.__found_a_header = False
 
-    def __in_header_func(self, line):
+    def __in_header_func(self, line: str) -> None:
         """
         Handle all tokens that are part of header
         """
@@ -51,7 +51,7 @@ class Header:
         else:
             self.__write_to_head_obj.write(line)
 
-    def __found_header(self, line):
+    def __found_header(self, line: str) -> None:
         """
         Found a header
         """
@@ -72,7 +72,7 @@ class Header:
             sys.stderr.write(f'module is header\nmethod is __found_header\nno dict entry\nline is {line}')
             self.__write_to_head_obj.write('mi<tg<open-att__<header-or-footer<type>none\n')
 
-    def __default_sep(self, line):
+    def __default_sep(self, line: str) -> None:
         """
         Handle all tokens that are not header tokens
         """
@@ -80,7 +80,7 @@ class Header:
             self.__found_header(line)
         self.__write_obj.write(line)
 
-    def __initiate_sep_values(self):
+    def __initiate_sep_values(self) -> None:
         """
         initiate counters for separate_footnotes method.
         """
@@ -101,7 +101,7 @@ class Header:
             'footer____': ('footer'),
         }
 
-    def separate_headers(self):
+    def separate_headers(self) -> None:
         """
         Separate all the footnotes in an RTF file and put them at the bottom,
         where they are easier to process.  Each time a footnote is found,
@@ -142,14 +142,14 @@ class Header:
         copy_obj.rename(self.__write_to, self.__file)
         os.remove(self.__write_to)
 
-    def update_info(self, file, copy):
+    def update_info(self, file: str, copy: int | None) -> None:
         """
         Unused method
         """
         self.__file = file
         self.__copy = copy
 
-    def __get_head_body_func(self, line):
+    def __get_head_body_func(self, line: str) -> None:
         """
         Process lines in main body and look for beginning of headers.
         """
@@ -159,7 +159,7 @@ class Header:
         else:
             self.__write_obj.write(line)
 
-    def __get_head_head_func(self, line):
+    def __get_head_head_func(self, line: str) -> None:
         """
         Copy headers and footers from bottom of file to a separate, temporary file.
         """
@@ -168,7 +168,7 @@ class Header:
         else:
             self.__write_to_head_obj.write(line)
 
-    def __get_headers(self):
+    def __get_headers(self) -> None:
         """
         Private method to remove footnotes from main file.  Read one line from
         the main file at a time. If the state is 'body', call on the private
@@ -186,7 +186,7 @@ class Header:
                         elif self.__state == 'head':
                             self.__get_head_head_func(line)
 
-    def __get_head_from_temp(self, num):
+    def __get_head_from_temp(self, num: str) -> str | None:
         """
         Private method for joining headers and footers to body. This method
         reads from the temporary file until the proper footnote marker is
@@ -204,7 +204,7 @@ class Header:
             elif line == look_for:
                 found_head = True
 
-    def __join_from_temp(self):
+    def __join_from_temp(self) -> None:
         """
         Private method for rejoining footnotes to body.  Read from the
         newly-created, temporary file that contains the body text but no
@@ -218,10 +218,13 @@ class Header:
         with open_for_read(self.__write_to) as read_obj:
             for line in read_obj:
                 if line[:16] == 'mi<mk<header-ind':
-                    line = self.__get_head_from_temp(line[17:-1])
+                    head = self.__get_head_from_temp(line[17:-1])
+                    # separate_headers() wrote a header for every marker
+                    assert head is not None
+                    line = head
                 self.__write_obj.write(line)
 
-    def join_headers(self):
+    def join_headers(self) -> None:
         """
         Join the footnotes from the bottom of the file and put them in their
         former places.  First, remove the footnotes from the bottom of the

@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 import re
 
@@ -18,7 +16,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
     negate: QCheckBox
     field: QComboBox
 
-    def __init__(self, parent):
+    def __init__(self, parent) -> None:
         QDialog.__init__(self, parent)
         self.setupUi(self)
         self.search_interface_label.setText(
@@ -37,7 +35,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
         self.tabWidget.currentChanged[int].connect(self.tab_changed)
         self.tab_changed(0)
 
-    def tab_changed(self, idx):
+    def tab_changed(self, idx) -> None:
         if idx == 1:
             btn = self.tab_2_button_box.button(QDialogButtonBox.StandardButton.Ok)
             assert btn is not None
@@ -47,16 +45,16 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
             assert btn is not None
             btn.setDefault(True)
 
-    def advanced_search_button_pushed(self):
+    def advanced_search_button_pushed(self) -> None:
         self.adv_search_used = True
         self.accept()
 
-    def clear_button_pushed(self):
+    def clear_button_pushed(self) -> None:
         self.title_box.setText('')
         self.author_box.setText('')
         self.format_box.setText('')
 
-    def clear_advanced(self):
+    def clear_advanced(self) -> None:
         self.all.setText('')
         self.phrase.setText('')
         self.any.setText('')
@@ -83,7 +81,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
             self.mc = '='
         else:
             self.mc = '~'
-        all, any, phrase, none = [type('')(x.text()) for x in (self.all, self.any, self.phrase, self.none)]
+        all, any, phrase, none = [str(x.text()) for x in (self.all, self.any, self.phrase, self.none)]
         all, any, none = list(map(self.tokens, (all, any, none)))
         phrase = phrase.strip()
         all = ' and '.join(all)
@@ -91,7 +89,7 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
         none = ' and not '.join(none)
         ans = ''
         if phrase:
-            ans += '"%s"' % phrase
+            ans += f'"{phrase}"'
         if all:
             ans += (' and ' if ans else '') + all
         if none:
@@ -101,13 +99,13 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
         return ans
 
     def token(self):
-        txt = type('')(self.text.text()).strip()
+        txt = str(self.text.text()).strip()
         if txt:
             if self.negate.isChecked():
                 txt = '!' + txt
-            tok = self.FIELDS[type('')(self.field.currentText())] + txt
+            tok = self.FIELDS[str(self.field.currentText())] + txt
             if re.search(r'\s', tok):
-                tok = '"%s"' % tok
+                tok = f'"{tok}"'
             return tok
 
     def box_search_string(self):
@@ -121,13 +119,13 @@ class AdvSearchBuilderDialog(QDialog, Ui_Dialog):
 
         ans = []
         self.box_last_values = {}
-        title = type('')(self.title_box.text()).strip()
+        title = str(self.title_box.text()).strip()
         if title:
             ans.append('title:"' + self.mc + title + '"')
-        author = type('')(self.author_box.text()).strip()
+        author = str(self.author_box.text()).strip()
         if author:
             ans.append('author:"' + self.mc + author + '"')
-        format = type('')(self.format_box.text()).strip()
+        format = str(self.format_box.text()).strip()
         if format:
             ans.append('format:"' + self.mc + format + '"')
         if ans:

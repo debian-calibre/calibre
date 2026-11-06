@@ -10,11 +10,13 @@ import threading
 import time
 import traceback
 import unittest
-from collections.abc import Sequence
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from calibre.constants import ismacos
 from calibre.web.automate.worker import make_request, start_server, start_worker
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
 
 
 def print(*a: object, **kw: Any) -> None:  # ruff: ignore[any-type]
@@ -128,8 +130,8 @@ def finalize(x: Sequence[str] | None = None) -> None:
 
 
 def worker(self: TestAutomateWorker) -> None:
-    tf = tempfile.NamedTemporaryFile(delete=False)
-    tf.close()
+    with tempfile.NamedTemporaryFile(delete=False) as tf:
+        pass
     for input_data in (None, [tf.name]):
         path, close = start_worker(
             'calibre.web.automate.test_worker:handler_for_test',

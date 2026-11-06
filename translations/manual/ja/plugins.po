@@ -5,13 +5,14 @@
 # Translators:
 # akihiko tanae (tanaeakihiko), 2025-2026
 # Yuka Kachi, 2022
+# Yuka Kachi, 2022
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
+"Last-Translator: Yuka Kachi, 2022\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -322,7 +323,7 @@ msgstr "返り値"
 msgid ""
 "A dictionary of the form ``{name: file_contents}``. Any names that were not "
 "found in the ZIP file will not be present in the dictionary."
-msgstr "`{name: file_contents}`` 形式の辞書。ZIPファイルで見つからなかった名前は、辞書に表示されません。"
+msgstr "``{name: file_contents}`` 形式の辞書。ZIPファイルで見つからなかった名前は、辞書に表示されません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:1
@@ -396,7 +397,7 @@ msgstr "特定のファイルタイプのセットに関連付けられている
 msgid ""
 "Set of file types for which this plugin should be run. Use '*' for all file "
 "types. For example: ``{'lit', 'mobi', 'prc'}``"
-msgstr "このプラグインを実行する必要があるファイルタイプのセット。すべてのファイルタイプに '*' を使用します。例:`` {'lit'、'mobi'、'prc'} ``"
+msgstr "このプラグインを実行する必要があるファイルタイプのセット。すべてのファイルタイプに '*' を使用します。例: ``{'lit', 'mobi', 'prc'}``"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.on_import:1
@@ -435,6 +436,13 @@ msgid ""
 "If True, this plugin is run after conversion on the final file produced by "
 "the conversion output plugin."
 msgstr "True のとき、このプラグインは、変換出力プラグインによって生成された最終ファイルで変換後に実行されます。"
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr "ファイルタイププラグインが実行される前の、元のファイルへのパス。:meth:`run` が呼び出される直前に設定されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
@@ -565,7 +573,7 @@ msgstr "一連のファイルタイプからの書誌の読み取りを実装す
 msgid ""
 "Set of file types for which this plugin should be run. For example: "
 "``set(['lit', 'mobi', 'prc'])``"
-msgstr "このプラグインを実行する必要があるファイルタイプのセット。例:`` set(['lit'、'mobi'、'prc']) ``"
+msgstr "このプラグインを実行する必要があるファイルタイプのセット。例: ``set(['lit', 'mobi', 'prc'])``"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:1
@@ -759,6 +767,13 @@ msgid ""
 " also waited for longer after the first result from any source arrives, "
 "since downloading with a browser is slow."
 msgstr "True に設定すると、このソースはすべてのメタデータダウンロードで共有される Camoufox ブラウザを使用します（詳細は :mod:`calibre.web.automate.metadata` を参照）。このブラウザは、メタデータのダウンロード前に起動されるため、ダウンロード開始までに準備が整います。また、ブラウザでのダウンロードは時間がかかるため、いずれかのソースから最初の結果が届いた後も、このようなソースに対してはより長く待機します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr "最後の identify() の実行にかかった秒数。:func:`calibre.ebooks.metadata.sources.identify.identify` によって設定されます"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -1062,7 +1077,7 @@ msgstr "InputFormatPlugins は、ドキュメントを HTML+OPF+CSS+その他に
 msgid ""
 "Set of file types for which this plugin should be run For example: "
 "``set(['azw', 'mobi', 'prc'])``"
-msgstr "このプラグインを実行する必要があるファイルタイプのセット。例:`` set(['azw'、'mobi'、'prc']) ``"
+msgstr "このプラグインを実行する必要があるファイルタイプのセット。例: ``set(['azw', 'mobi', 'prc'])``"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.is_image_collection:1
@@ -1471,7 +1486,7 @@ msgid ""
 "must implement :meth:`get_device_uid()` and "
 ":meth:`ignore_connected_device()` and :meth:`get_user_blacklisted_devices` "
 "and :meth:`set_user_blacklisted_devices`"
-msgstr "True に設定すると、calibre は、最初に検出されたときに、ユーザに calibre を使用してデバイスを管理するかどうかを尋ねます。これを True に設定する場合は、:meth:`get_device_uid()` と :meth:`ignore_connected_device()` と :meth:`get_user_blacklisted_devices`と :meth:`set_user_blacklisted_devices` を実装する必要があります"
+msgstr "True に設定すると、calibre は、最初に検出されたときに、ユーザに calibre を使用してデバイスを管理するかどうかを尋ねます。これを True に設定する場合は、:meth:`get_device_uid()` と :meth:`ignore_connected_device()` と :meth:`get_user_blacklisted_devices` と :meth:`set_user_blacklisted_devices` を実装する必要があります"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.user_feedback_after_callback:1
@@ -1481,7 +1496,7 @@ msgid ""
 "some callbacks are run (currently only upload_books). Be careful to not spam"
 " the user with too many messages. This variable is checked after *every* "
 "callback, so only set it when you really need to."
-msgstr "これを {'title':title, 'msg':msg, 'det_msg':detailed_msg} の形式の辞書に設定して、いくつかのコールバックが実行された後にユーザにメッセージをポップアップさせるようにします(現在は upload_books のみ)。あまりにも多くのメッセージでユーザをスパムしないように注意してください。この変数は*すべての*コールバックの後にチェックされるため、本当に必要な場合にのみ設定してください。"
+msgstr "これを {'title':title, 'msg':msg, 'det_msg':detailed_msg} の形式の辞書に設定して、いくつかのコールバックが実行された後にユーザにメッセージをポップアップさせるようにします(現在は upload_books のみ)。あまりにも多くのメッセージでユーザをスパムしないように注意してください。この変数は *すべての* コールバックの後にチェックされるため、本当に必要な場合にのみ設定してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_open_popup_message:1
@@ -1930,7 +1945,7 @@ msgstr ":meth:`upload_books` と同じ、:class:`Metadata` オブジェクトの
 msgid ""
 "A tuple containing the result of calls to (:meth:`books(oncard=None)`, "
 ":meth:`books(oncard='carda')`, :meth`books(oncard='cardb')`)."
-msgstr "(:meth:`books(oncard=None)`, :meth:`books(oncard='carda')`, :meth`books(oncard='cardb')`) への呼び出しの結果を含むタプル。"
+msgstr "(:meth:`books(oncard=None)`, :meth:`books(oncard='carda')`, :meth:`books(oncard='cardb')`) への呼び出しの結果を含むタプル。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.delete_books:1
@@ -1970,7 +1985,7 @@ msgstr "デバイスの ``path`` にあるファイルを読み取り、出力�
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_file:3
 msgid "file object like ``sys.stdout`` or the result of an :func:`open` call."
-msgstr "`` sys.stdout`` のようなファイルオブジェクトまたは :func:`open` 呼び出しの結果。"
+msgstr "``sys.stdout`` のようなファイルオブジェクトまたは :func:`open` 呼び出しの結果。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.config_widget:1
@@ -2142,7 +2157,7 @@ msgstr "プラグインの起動時にデバイスマネージャによって呼
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2155,8 +2170,9 @@ msgstr "このメソッドは、GUI スレッドで呼び出すことができ�
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "このメソッドは、プラグインを起動するために呼び出されます。プラグインはデバイス接続の受け入れを開始する必要がありますが、それは可能です。プラグインがすでに接続を受け入れている場合は、何もしません。"
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr "このメソッドは、プラグインを起動するために呼び出されます。プラグインは、その方法を問わず、デバイスからの接続の受け入れを開始する必要があります。プラグインがすでに接続を受け入れている場合は、何もしません。プラグインの起動に失敗した場合はエラーメッセージを、それ以外の場合は None を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2290,8 +2306,8 @@ msgstr "デバイスがこの本リストのコレクションをサポートし
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "本リストに本を追加します。目的は、デバイス内部の書誌を維持することです。本リストを同期する必要がある場合は True を返します"
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr "本を本リストに追加します。デバイス内部の書誌を維持するためのものです。本リストを同期する必要がある場合は、その本（真と評価される値）を返します"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2606,7 +2622,7 @@ msgid ""
 "If True, then this InterfaceAction will have the opportunity to interact "
 "with drag and drop events. See the methods, :meth:`accept_enter_event`, "
 ":meth`:accept_drag_move_event`, :meth:`drop_event` for details."
-msgstr "True のとき、この InterfaceAction はドラッグアンドドロップイベントと対話する機会があります。詳細については、メソッド :meth:`accept_enter_event`, :meth`:accept_drag_move_event`, :meth:`drop_event` を参照してください。"
+msgstr "True のとき、この InterfaceAction はドラッグアンドドロップイベントと対話する機会があります。詳細については、メソッド :meth:`accept_enter_event`, :meth:`accept_drag_move_event`, :meth:`drop_event` を参照してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.accept_drag_move_event:1
@@ -2687,7 +2703,7 @@ msgstr "作成されたアクションのトリガーされたシグナルに接
 msgid ""
 "The text displayed to the user when customizing the keyboard shortcuts for "
 "this action. By default it is set to the value of ``text``."
-msgstr "このアクションのキーボードショートカットをカスタマイズするときにユーザに表示されるテキスト。デフォルトでは `text`` の値に設定されています。"
+msgstr "このアクションのキーボードショートカットをカスタマイズするときにユーザに表示されるテキスト。デフォルトでは ``text`` の値に設定されています。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:25
@@ -2695,7 +2711,7 @@ msgid ""
 "Shortcuts for actions that don't always appear, or are library dependent, "
 "may disappear when other keyboard shortcuts are edited unless "
 "```persist_shortcut``` is set True."
-msgstr "`` `persist_shortcut``` が True に設定されていない限り、他のキーボードショートカットを編集すると、常に表示されるとは限らない、またはライブラリに依存するアクションのショートカットが表示されなくなる場合があります。"
+msgstr "``persist_shortcut`` が True に設定されていない限り、他のキーボードショートカットを編集すると、常に表示されるとは限らない、またはライブラリに依存するアクションのショートカットが表示されなくなる場合があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:12
@@ -2717,7 +2733,7 @@ msgstr "このプラグインを設定します。初期化中に 1 回だけ呼
 msgid ""
 "Called whenever the book list being displayed in calibre changes. Currently "
 "values for loc are: ``library, main, card and cardb``."
-msgstr "calibre に表示されている本リストが変更されるたびに呼び出されます。現在、loc の値は、``library, main, card and cardb``です。"
+msgstr "calibre に表示されている本リストが変更されるたびに呼び出されます。現在、loc の値は、``library, main, card and cardb`` です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.location_selected:4
@@ -2770,7 +2786,7 @@ msgid ""
 "Test it for validity with index.valid() and get the underlying TagTreeItem "
 "object with index.data(Qt.ItemDataRole.UserRole). Any action objects yielded"
 " by this method will be added to the context menu."
-msgstr "タグブラウザにコンテキストメニューを表示するときに呼び出されます。`` index`` は、右クリックされたタグブラウザアイテムを指す QModelIndex です。index.valid() を使用して有効性をテストし、index.data(Qt.ItemDataRole.UserRole) を使用して基になる TagTreeItem オブジェクトを取得します。このメソッドによって生成されたアクションオブジェクトはすべて、コンテキストメニューに追加されます。"
+msgstr "タグブラウザにコンテキストメニューを表示するときに呼び出されます。``index`` は、右クリックされたタグブラウザアイテムを指す QModelIndex です。index.valid() を使用して有効性をテストし、index.data(Qt.ItemDataRole.UserRole) を使用して基になる TagTreeItem オブジェクトを取得します。このメソッドによって生成されたアクションオブジェクトはすべて、コンテキストメニューに追加されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.shutting_down:1
@@ -2779,6 +2795,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "メインGUIがシャットダウン中の場合、プラグインごとに1回呼び出されます。使用済みのリソースを解放しますが、シャットダウンを長期間ブロックしないようにしてください。"
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr "実際のインタフェースアクションクラスのインポートパス（module:class の形式）"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

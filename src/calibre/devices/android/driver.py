@@ -2,11 +2,15 @@
 
 import io
 import os
+from typing import TYPE_CHECKING
 
 from calibre import fsync
 from calibre.devices.usbms.driver import USBMS
 from calibre.utils.localization import _
 from calibre.utils.resources import get_image_path as I
+
+if TYPE_CHECKING:
+    from calibre.ebooks.metadata.book.base import Metadata
 
 HTC_BCDS = [0x100, 0x0222, 0x0224, 0x0226, 0x227, 0x228, 0x229, 0x0231, 0x9999]
 
@@ -452,13 +456,13 @@ class ANDROID(USBMS):
 
     SUPPORTS_SUB_DIRS = True
 
-    def post_open_callback(self):
+    def post_open_callback(self) -> None:
         opts = self.settings()
         opts = opts.extra_customization
         if not opts:
             opts = [self.EBOOK_DIR_MAIN, '']
 
-        def strtolist(x):
+        def strtolist(x: str | list[str]) -> list[str]:
             if isinstance(x, (str, bytes)):
                 x = [y.strip() for y in x.split(',')]
             return x or []
@@ -467,25 +471,25 @@ class ANDROID(USBMS):
         self._android_main_ebook_dir = opts[0]
         self._android_card_ebook_dir = opts[1]
 
-    def get_main_ebook_dir(self, for_upload=False):
+    def get_main_ebook_dir(self, for_upload: bool = False) -> str | list[str]:
         dirs = self._android_main_ebook_dir
         if not for_upload:
 
-            def aldiko_tweak(x):
+            def aldiko_tweak(x: str) -> str:
                 return 'eBooks' if x == 'eBooks/import' else x
 
             dirs = list(map(aldiko_tweak, dirs))
         return dirs
 
-    def get_carda_ebook_dir(self, for_upload=False):
+    def get_carda_ebook_dir(self, for_upload: bool = False) -> str | list[str]:
         if not for_upload:
             return ''
         return self._android_card_ebook_dir
 
-    def get_cardb_ebook_dir(self, for_upload=False):
+    def get_cardb_ebook_dir(self, for_upload: bool = False) -> str | list[str]:
         return self.get_carda_ebook_dir()
 
-    def windows_sort_drives(self, drives):
+    def windows_sort_drives(self, drives: dict[str, str]) -> dict[str, str]:
         try:
             assert self.device_being_opened is not None
             vid, pid, bcd = self.device_being_opened[:3]
@@ -499,14 +503,14 @@ class ANDROID(USBMS):
         return drives
 
     @classmethod
-    def configure_for_kindle_app(cls):
+    def configure_for_kindle_app(cls) -> None:
         proxy = cls._configProxy()
         proxy['format_map'] = ['azw3', 'mobi', 'azw', 'azw1', 'azw4', 'pdf']
         proxy['use_subdirs'] = False
         proxy['extra_customization'] = [','.join(['kindle'] + cls.EBOOK_DIR_MAIN), '']
 
     @classmethod
-    def configure_for_generic_epub_app(cls):
+    def configure_for_generic_epub_app(cls) -> None:
         proxy = cls._configProxy()
         del proxy['format_map']
         del proxy['use_subdirs']
@@ -553,7 +557,7 @@ class WEBOS(USBMS):
     THUMBNAIL_HEIGHT = 160
     THUMBNAIL_WIDTH = 120
 
-    def upload_cover(self, path, filename, metadata, filepath):
+    def upload_cover(self, path: str, filename: str, metadata: Metadata, filepath: str) -> None:
 
         from PIL import Image, ImageDraw
 
@@ -561,7 +565,8 @@ class WEBOS(USBMS):
         if coverdata and coverdata[2]:
             cover = Image.open(io.BytesIO(coverdata[2]))
         else:
-            coverdata = open(I('library.png'), 'rb').read()
+            with open(I('library.png'), 'rb') as f:
+                coverdata = f.read()
 
             cover = Image.new('RGB', (120, 160), 'black')
             im = Image.open(io.BytesIO(coverdata))
@@ -571,8 +576,8 @@ class WEBOS(USBMS):
             cover.paste(im, ((120 - x) // 2, (160 - y) // 2))
 
             draw = ImageDraw.Draw(cover)
-            draw.text((1, 10), metadata.get('title', _('Unknown')).encode('ascii', 'ignore'))
-            draw.text((1, 140), metadata.get('authors', _('Unknown'))[0].encode('ascii', 'ignore'))
+            draw.text((1, 10), metadata.title.encode('ascii', 'ignore'))
+            draw.text((1, 140), metadata.authors[0].encode('ascii', 'ignore'))
 
         data = io.BytesIO()
         cover.save(data, 'JPEG')
@@ -586,7 +591,8 @@ class WEBOS(USBMS):
         if coverdata and coverdata[2]:
             cover = Image.open(io.BytesIO(coverdata[2]))
         else:
-            coverdata = open(I('library.png'), 'rb').read()
+            with open(I('library.png'), 'rb') as f:
+                coverdata = f.read()
 
             cover = Image.new('RGB', (52, 69), 'black')
             im = Image.open(io.BytesIO(coverdata))

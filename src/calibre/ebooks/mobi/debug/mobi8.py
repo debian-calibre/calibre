@@ -5,6 +5,7 @@ import os
 import struct
 import sys
 import textwrap
+from typing import IO, TYPE_CHECKING
 
 from calibre import CurrentDir
 from calibre.ebooks.mobi.debug import format_bytes
@@ -16,9 +17,14 @@ from calibre.ebooks.mobi.utils import RECORD_SIZE, decode_tbs, read_font_record
 from calibre.utils.imghdr import what
 from polyglot.builtins import print_to_binary_file
 
+if TYPE_CHECKING:
+    from calibre.ebooks.mobi.debug.headers import MOBIFile as HeadersMOBIFile
+    from calibre.ebooks.mobi.debug.headers import Record
+    from calibre.ebooks.mobi.debug.index import File as SkelFile
+
 
 class FDST:
-    def __init__(self, raw):
+    def __init__(self, raw: bytes) -> None:
         if raw[:4] != b'FDST':
             raise ValueError('KF8 does not have a valid FDST record')
         self.sec_off, self.num_sections = struct.unpack_from(b'>LL', raw, 4)
@@ -31,10 +37,10 @@ class FDST:
             raise ValueError(f'FDST record has trailing data: {format_bytes(rest)}')
         self.sections = tuple(zip(secs[::2], secs[1::2]))
 
-    def __str__(self):
+    def __str__(self) -> str:
         ans = ['FDST record']
 
-        def a(k, v):
+        def a(k: str, v: object) -> None:
             return ans.append(f'{k}: {v}')
 
         a('Offset to sections', self.sec_off)
@@ -47,12 +53,12 @@ class FDST:
 
 
 class File:
-    def __init__(self, skel, skeleton, text, first_aid, sections):
+    def __init__(self, skel: SkelFile, skeleton: bytes, text: bytes, first_aid: str, sections: list[bytes]) -> None:
         self.name = f'part{skel.file_number:04}'
         self.skeleton, self.text, self.first_aid = skeleton, text, first_aid
         self.sections = sections
 
-    def dump(self, ddir):
+    def dump(self, ddir: str) -> None:
         with open(os.path.join(ddir, self.name + '.html'), 'wb') as f:
             f.write(self.text)
         base = os.path.join(ddir, self.name + '-parts')
@@ -66,7 +72,7 @@ class File:
 
 
 class MOBIFile:
-    def __init__(self, mf):
+    def __init__(self, mf: HeadersMOBIFile) -> None:
         self.mf = mf
         h, h8 = mf.mobi_header, mf.mobi8_header
         first_text_record = 1
@@ -74,6 +80,7 @@ class MOBIFile:
         self.resource_ranges = [(h8.first_resource_record, h8.last_resource_record, h8.first_image_index)]
         if mf.kf8_type == 'joint':
             offset = h.exth.kf8_header_index
+            assert offset is not None  # joint files always have a KF8 header index
             self.resource_ranges.insert(0, (h.first_resource_record, h.last_resource_record, h.first_image_index))
 
         self.text_records = [
@@ -89,7 +96,7 @@ class MOBIFile:
         self.build_files()
         self.read_tbs()
 
-    def print_header(self, f=sys.stdout):
+    def print_header(self, f: IO[bytes] | IO[str] = sys.stdout) -> None:
         p = print_to_binary_file(f)
         p(str(self.mf.palmdb))
         p()
@@ -100,7 +107,7 @@ class MOBIFile:
         p()
         p(str(self.mf.mobi8_header))
 
-    def read_fdst(self):
+    def read_fdst(self) -> None:
         self.fdst = None
 
         if self.header.fdst_idx != NULL_INDEX:
@@ -109,13 +116,13 @@ class MOBIFile:
             if self.fdst.num_sections != self.header.fdst_count:
                 raise ValueError('KF8 Header contains invalid FDST count')
 
-    def read_indices(self):
+    def read_indices(self) -> None:
         self.skel_index = SKELIndex(self.header.skel_idx, self.mf.records, self.header.encoding)
         self.sect_index = SECTIndex(self.header.sect_idx, self.mf.records, self.header.encoding)
         self.ncx_index = NCXIndex(self.header.primary_index_record, self.mf.records, self.header.encoding)
         self.guide_index = GuideIndex(self.header.oth_idx, self.mf.records, self.header.encoding)
 
-    def build_files(self):
+    def build_files(self) -> None:
         text = self.raw_text
         self.files = []
         for skel in self.skel_index.records:
@@ -134,7 +141,7 @@ class MOBIFile:
 
             self.files.append(File(skel, skeleton, ftext, first_aid, sections))
 
-    def dump_flows(self, ddir):
+    def dump_flows(self, ddir: str) -> None:
         boundaries = [(0, len(self.raw_text))]
         if self.fdst is not None:
             boundaries = self.fdst.sections
@@ -144,7 +151,7 @@ class MOBIFile:
             with open(os.path.join(ddir, f'flow{i:04}.txt'), 'wb') as f:
                 f.write(raw)
 
-    def extract_resources(self, records):
+    def extract_resources(self, records: list[Record]) -> None:
         self.resource_map = []
         self.containers = []
         known_types = {
@@ -225,7 +232,7 @@ class MOBIFile:
 
             self.resource_map.append((f'{prefix}/{resource_index:06}{suffix}.{ext}', payload))
 
-    def read_tbs(self):
+    def read_tbs(self) -> None:
         from calibre.ebooks.mobi.writer8.tbs import (
             DOC,
             Entry,
@@ -239,7 +246,7 @@ class MOBIFile:
         entry_map = []
         for index in self.ncx_index:
             vals = list(index)[:-1] + [None, None, None, None]
-            entry_map.append(Entry(*(vals[:12])))
+            entry_map.append(Entry(*(vals[:12])))  # ty: ignore[invalid-argument-type] NCX index records match the fields of Entry
 
         indexing_data = collect_indexing_data(entry_map, list(map(len, self.text_records)))
         self.indexing_data = [
@@ -311,7 +318,7 @@ class MOBIFile:
             self.indexing_data.append('\n'.join(desc))
 
 
-def inspect_mobi(mobi_file, ddir):
+def inspect_mobi(mobi_file: HeadersMOBIFile, ddir: str) -> None:
     f = MOBIFile(mobi_file)
     with open(os.path.join(ddir, 'header.txt'), 'wb') as out:
         f.print_header(f=out)

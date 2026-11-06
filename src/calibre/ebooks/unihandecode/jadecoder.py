@@ -32,26 +32,26 @@ from calibre.ebooks.unihandecode.unidecoder import Unidecoder
 # pykakasi uses paths for its dictionaries rather than using the
 # Traversable API of importlib.resources so we have to hack around it, sigh.
 # https://codeberg.org/miurahr/pykakasi/pulls/174
-def dictdata(dbfile: str):
+def dictdata(dbfile: str) -> bytes:
     t = files('pykakasi')
     q = t.joinpath('data').joinpath(dbfile)
     return q.read_bytes()
 
 
-def jisyo_init(self, dictname):
+def jisyo_init(self: Jisyo, dictname: str) -> None:
     self._dict = pickle.loads(dictdata(dictname))
 
 
-def itaiji_init(self):
+def itaiji_init(self: Itaiji) -> None:
     if self._itaijidict is None:
-        with self._lock:
+        with self._lock:  # ty: ignore[unresolved-attribute] Borg pattern, _lock is in the shared __dict__
             if self._itaijidict is None:
                 self._itaijidict = pickle.loads(dictdata(Configurations.jisyo_itaiji))
 
 
-def kanwa_init(self):
+def kanwa_init(self: Kanwa) -> None:
     if self._jisyo_table is None:
-        with self._lock:
+        with self._lock:  # ty: ignore[unresolved-attribute] Borg pattern, _lock is in the shared __dict__
             if self._jisyo_table is None:
                 self._jisyo_table = pickle.loads(dictdata(Configurations.jisyo_kanwa))
 
@@ -62,7 +62,7 @@ Kanwa.__init__ = kanwa_init
 
 
 class Jadecoder(Unidecoder):
-    def __init__(self):
+    def __init__(self) -> None:
         self.codepoints = CODEPOINTS.copy()
         self.codepoints.update(JACODES)
 
@@ -80,7 +80,7 @@ class Jadecoder(Unidecoder):
             self.kakasi.setMode('C', True)  # capitalize, default: no capitalize
             self.conv = self.kakasi.getConverter()
 
-    def decode(self, text):
+    def decode(self, text: str) -> str:
         try:
             with warnings.catch_warnings():
                 warnings.simplefilter('ignore')

@@ -1,0 +1,425 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2026, S Y <softwaregames at protonmail.com>
+from __python__ import hash_literals
+
+from elementmaker import E
+from gettext import gettext as _, ngettext
+
+from modals import close_all_modals, create_modal_container
+from read_book.globals import ui_operations
+from read_book.search import SearchOverlay
+from read_book.shortcuts import create_shortcut_map
+from test_book_list_helpers import with_empty_session
+from testing import assert_equal, assert_false, assert_true, test
+
+
+def search_result(num, chapter=1):
+    return {
+        'result_num': num, 'toc_nodes': [chapter], 'spine_idx': chapter - 1,
+        'before': 'Before ', 'text': 'match ' + num, 'after': ' after',
+    }
+
+
+def with_search_overlay(proceed):
+    def run():
+        container = E.div(id=SearchOverlay.CONTAINER_ID, style='display: flex')
+        document.body.appendChild(container)
+        calls = {'selected': [], 'focused_reader': 0}
+
+        def show_search_result(result):
+            calls.selected.push(result.result_num)
+
+        def focus_iframe():
+            calls.focused_reader += 1
+
+        view = {
+            'keyboard_shortcut_map': create_shortcut_map(),
+            'discover_search_result': def (): pass;,
+            'show_search_result': show_search_result,
+        }
+        overlay = SearchOverlay(view)
+        overlay.toc_data = {'toc_id_map': {1: {'title': 'First chapter'}, 2: {'title': 'Second chapter'}}}
+        previous = ui_operations.focus_iframe
+        ui_operations.focus_iframe = focus_iframe
+        try:
+            proceed(overlay, calls)
+        finally:
+            ui_operations.focus_iframe = previous
+            container.remove()
+
+    with_empty_session(run)
+
+
+def keydown(target, key, **kw):
+    ev = new window.KeyboardEvent('keydown', Object.assign({'key': key, 'bubbles': True, 'cancelable': True}, kw))
+    target.dispatchEvent(ev)
+    return ev
+
+
+@test
+def book_search_chapters_are_buttons_with_expanded_state():
+    def run(overlay, calls):
+        overlay.result_received(search_result(1))
+        group = overlay.results_container.firstChild
+        button, results = group.children
+        assert_equal(button.tagName, 'BUTTON')
+        assert_equal(button.type, 'button')
+        assert_equal(button.textContent, '+\xa0First chapter')
+        assert_equal(button.getAttribute('aria-controls'), results.id)
+        assert_equal(button.getAttribute('aria-expanded'), 'true')
+        button.focus()
+        button.lastChild.click()
+        assert_true(group.classList.contains('collapsed'))
+        assert_equal(button.getAttribute('aria-expanded'), 'false')
+        overlay.result_received(search_result(2))
+        assert_equal(document.activeElement, button)
+        assert_equal(button.getAttribute('aria-expanded'), 'false')
+        button.click()
+        assert_false(group.classList.contains('collapsed'))
+        assert_equal(button.getAttribute('aria-expanded'), 'true')
+
+    with_search_overlay(run)
+
+
+@test
+def book_search_result_buttons_open_the_chosen_match_once():
+    def run(overlay, calls):
+        overlay.result_received(search_result(1))
+        overlay.result_received(search_result(2))
+        row = overlay.results_container.querySelector('[data-result-num="2"]')
+        button = row.firstChild
+        assert_equal(button.tagName, 'BUTTON')
+        assert_equal(button.type, 'button')
+        assert_equal(button.textContent, '…Before match 2 after…')
+        button.focus()
+        button.querySelector('strong').click()
+        assert_equal(calls.selected, [2])
+        assert_equal(calls.focused_reader, 1)
+        assert_false(overlay.is_visible)
+        assert_true(row.classList.contains('current'))
+
+    with_search_overlay(run)
+
+
+@test
+def book_search_streamed_matches_do_not_take_focus_or_reopen_hidden_search():
+    def run(overlay, calls):
+        overlay.show_wait()
+        overlay.result_received(search_result(1))
+        assert_equal(document.activeElement, overlay.bottom_container)
+        button = overlay.results_container.querySelector('li button')
+        button.focus()
+        overlay.result_received(search_result(2, 2))
+        assert_equal(document.activeElement, button)
+        overlay.hide()
+        other = E.button('Reader control')
+        document.body.appendChild(other)
+        try:
+            other.focus()
+            overlay.result_received(search_result(3))
+            assert_equal(document.activeElement, other)
+            assert_false(overlay.is_visible)
+            assert_equal(calls.selected, [])
+        finally:
+            other.remove()
+
+    with_search_overlay(run)
+
+
+@test
+def book_search_buttons_keep_native_activation_and_find_shortcuts():
+    def run(overlay, calls):
+        overlay.result_received(search_result(1))
+        overlay.result_received(search_result(2))
+        chapter = overlay.results_container.firstChild.firstChild
+        button = overlay.results_container.querySelector('li button')
+        seen = []
+
+        def listener(ev):
+            seen.push(ev.key)
+
+        document.body.addEventListener('keydown', listener)
+        try:
+            for control in [chapter, button]:
+                assert_false(keydown(control, 'Enter').defaultPrevented)
+                assert_false(keydown(control, ' ').defaultPrevented)
+            assert_equal(seen, [])
+            assert_equal(calls.selected, [])
+            assert_true(keydown(button, 'F3').defaultPrevented)
+            assert_equal(calls.selected, [1])
+            assert_true(keydown(button, 'F3', shiftKey=True).defaultPrevented)
+            assert_equal(calls.selected, [1, 2])
+            assert_true(keydown(overlay.bottom_container, 'Enter').defaultPrevented)
+            assert_equal(calls.selected, [1, 2, 1])
+        finally:
+            document.body.removeEventListener('keydown', listener)
+
+    with_search_overlay(run)
+
+
+def mouse_click(target):
+    target.dispatchEvent(new window.MouseEvent('click', {'bubbles': True, 'cancelable': True, 'detail': 1}))
+
+
+def result_button(overlay, num):
+    return overlay.results_container.querySelector(f'[data-result-num="{num}"] button')
+
+
+@test
+def book_search_shift_enter_still_finds_previous_match_from_a_button():
+    def run(overlay, calls):
+        for i in range(1, 4):
+            overlay.result_received(search_result(i))
+        chapter = overlay.results_container.firstChild.firstChild
+        assert_true(keydown(chapter, 'Enter', shiftKey=True).defaultPrevented)
+        assert_equal(calls.selected, [1])
+        button = result_button(overlay, 1)
+        button.focus()
+        assert_true(keydown(button, 'Enter', shiftKey=True).defaultPrevented)
+        assert_equal(calls.selected, [1, 3])
+        assert_equal(document.activeElement, result_button(overlay, 3))
+
+    with_search_overlay(run)
+
+
+@test
+def book_search_enter_on_results_pane_keeps_cycling_matches():
+    def run(overlay, calls):
+        overlay.show_wait()
+        for i in range(1, 4):
+            overlay.result_received(search_result(i))
+        pane = overlay.bottom_container
+        assert_equal(document.activeElement, pane)
+        for i in range(3):
+            assert_true(keydown(pane, 'Enter').defaultPrevented)
+            assert_equal(document.activeElement, pane)
+        assert_equal(calls.selected, [1, 2, 3])
+        assert_true(keydown(pane, 'Enter', shiftKey=True).defaultPrevented)
+        assert_equal(calls.selected, [1, 2, 3, 2])
+
+    with_search_overlay(run)
+
+
+@test
+def book_search_focus_follows_current_match_from_a_result_button():
+    def run(overlay, calls):
+        for i in range(1, 4):
+            overlay.result_received(search_result(i))
+        button = result_button(overlay, 3)
+        button.focus()
+        keydown(button, 'F3')
+        keydown(document.activeElement, 'F3')
+        assert_equal(calls.selected, [1, 2])
+        assert_equal(document.activeElement, result_button(overlay, 2))
+        assert_true(document.activeElement.closest('li').classList.contains('current'))
+
+    with_search_overlay(run)
+
+
+@test
+def book_search_mouse_toggle_of_chapter_leaves_focus_on_results_pane():
+    def run(overlay, calls):
+        overlay.result_received(search_result(1))
+        chapter = overlay.results_container.firstChild.firstChild
+        chapter.focus()
+        mouse_click(chapter.lastChild)
+        assert_equal(chapter.getAttribute('aria-expanded'), 'false')
+        assert_equal(document.activeElement, overlay.bottom_container)
+        assert_true(keydown(overlay.bottom_container, 'Enter').defaultPrevented)
+        assert_equal(calls.selected, [1])
+
+    with_search_overlay(run)
+
+
+def with_search_status(proceed):
+    def run(overlay, calls):
+        timers, requests = [], []
+        previous = window.setTimeout
+
+        def set_timeout(callback):
+            timers.push(callback)
+            return timers.length
+
+        def flush():
+            while timers.length:
+                timers.shift()()
+
+        def post_message(msg):
+            requests.push(msg)
+
+        def get_cfi(id, callback):
+            callback(id, {'cfi': '/start'})
+
+        def hide_loading():
+            pass
+
+        def search(text='test'):
+            overlay.queue_search({'text': text, 'mode': 'contains'}, {}, 'chapter')
+            return requests[-1].id
+
+        def message(id, type, result=None):
+            overlay.on_worker_message({'data': {'id': id, 'type': type, 'result': result}})
+
+        overlay._worker = {'postMessage': post_message}
+        overlay.view.currently_showing = {'bookpos': '/start'}
+        overlay.view.get_current_cfi = get_cfi
+        overlay.view.hide_loading = hide_loading
+        create_modal_container()
+        window.setTimeout = set_timeout
+        try:
+            proceed(overlay, search, message, flush)
+        finally:
+            window.setTimeout = previous
+            close_all_modals()
+
+    with_search_overlay(run)
+
+
+def matches_found(count):
+    return ngettext('{} match found', '{} matches found', count).format(count)
+
+
+@test
+def book_search_status_announces_completion_without_streaming_or_moving_focus():
+    def run(overlay, search, message, flush):
+        status = overlay.search_status
+        assert_equal(status.getAttribute('role'), 'status')
+        assert_equal(status.getAttribute('aria-atomic'), 'true')
+        assert_false(overlay.bottom_container.contains(status))
+        assert_equal(status.textContent, '')
+        id = search()
+        assert_equal(status.textContent, '')
+        flush()
+        assert_equal(status.textContent, _('Searching, please wait…'))
+        observer = new window.MutationObserver(def (): pass;)
+        observer.observe(status, {'childList': True, 'subtree': True, 'characterData': True})
+        try:
+            message(id, 'search_result', search_result(1))
+            button = result_button(overlay, 1)
+            button.focus()
+            message(id, 'search_result', search_result(2))
+            assert_equal(observer.takeRecords().length, 0)
+            message(id, 'search_complete')
+            flush()
+            assert_equal(status.textContent, matches_found(2))
+            assert_equal(document.activeElement, button)
+            observer.takeRecords()
+            overlay.set_search_status(matches_found(2))
+            flush()
+            assert_equal(observer.takeRecords().length, 0)
+            overlay.clear_results()
+            assert_equal(status.textContent, '')
+            assert_true(status.isConnected)
+        finally:
+            observer.disconnect()
+
+    with_search_status(run)
+
+
+@test
+def book_search_status_counts_one_match_and_no_matches_and_replaces_pending_updates():
+    def run(overlay, search, message, flush):
+        status = overlay.search_status
+        id = search()
+        message(id, 'search_result', search_result(1))
+        message(id, 'search_result', search_result(1))
+        message(id, 'search_complete')
+        flush()
+        assert_equal(status.textContent, matches_found(1))
+        id = search('no matches')
+        message(id, 'search_complete')
+        flush()
+        assert_equal(status.textContent, _('No matching results found'))
+        assert_equal(overlay.results_container.textContent, _('No matching results found'))
+
+    with_search_status(run)
+
+
+@test
+def book_search_status_ignores_stale_results_completion_and_errors():
+    def run(overlay, search, message, flush):
+        old = search('old')
+        message(old, 'search_result', search_result(1))
+        message(old, 'search_complete')
+        current = search('current')
+        message(old, 'search_result', search_result(99))
+        message(old, 'search_complete')
+        message(old, 'error')
+        flush()
+        assert_equal(overlay.search_status.textContent, _('Searching, please wait…'))
+        assert_equal(Object.keys(overlay.result_map).length, 0)
+        assert_equal(document.getElementById('modal-container').style.display, 'none')
+        message(current, 'search_result', search_result(1))
+        message(current, 'search_complete')
+        flush()
+        assert_equal(overlay.search_status.textContent, matches_found(1))
+
+    with_search_status(run)
+
+
+@test
+def book_search_status_cancels_updates_when_cleared_closed_or_detached():
+    def run(overlay, search, message, flush):
+        old = search()
+        overlay.set_text('')
+        overlay.run_search()
+        message(old, 'search_result', search_result(1))
+        message(old, 'search_complete')
+        flush()
+        assert_equal(overlay.search_status.textContent, '')
+        assert_equal(Object.keys(overlay.result_map).length, 0)
+        id = search()
+        flush()
+        overlay.hide()
+        message(id, 'search_result', search_result(1))
+        message(id, 'search_complete')
+        flush()
+        assert_equal(overlay.search_status.textContent, '')
+        overlay.show()
+        id = search()
+        message(id, 'search_complete')
+        overlay.hide()
+        overlay.show()
+        flush()
+        assert_equal(overlay.search_status.textContent, '')
+        search()
+        overlay.container.remove()
+        flush()
+        assert_equal(overlay.search_status.textContent, '')
+
+    with_search_status(run)
+
+
+@test
+def book_search_status_is_cleared_on_current_search_error():
+    def run(overlay, search, message, flush):
+        id = search()
+        flush()
+        overlay.on_worker_message({'data': {'id': id, 'type': 'error', 'code': 2, 'msg': 'Connection failed'}})
+        flush()
+        assert_equal(overlay.search_status.textContent, '')
+        assert_equal(overlay.search_in_flight.id, None)
+        assert_equal(document.getElementById('modal-container').style.display, 'flex')
+
+    with_search_status(run)
+
+
+@test
+def book_search_status_does_not_announce_automatic_initial_searches():
+    def run(overlay, search, message, flush):
+        old = search()
+        overlay.do_initial_search('match', 'match')
+        id = overlay.search_in_flight.id
+        message(old, 'error')
+        assert_equal(document.getElementById('modal-container').style.display, 'none')
+        message(id, 'search_result', search_result(1))
+        message(id, 'search_complete')
+        flush()
+        assert_equal(overlay.search_status.textContent, '')
+        overlay.do_initial_search('another match', 'another match')
+        search('manual search')
+        assert_equal(overlay.result_handler, None)
+        flush()
+        assert_equal(overlay.search_status.textContent, _('Searching, please wait…'))
+
+    with_search_status(run)

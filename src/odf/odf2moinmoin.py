@@ -22,10 +22,13 @@
 
 import xml.dom.minidom
 import zipfile
-from collections.abc import Callable
+from typing import TYPE_CHECKING
 
 from .elementtypes import empty_elements, inline_elements
 from .namespaces import nsdict
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 IGNORED_TAGS = [
     'draw:adraw:g',
@@ -383,10 +386,8 @@ class ODF2MoinMoin:
         styleName = listElement.getAttribute('text:style-name')
         props = self.listStyles.get(styleName, ListProperties())
 
-        i = 0
-        for item in listElement.childNodes:
+        for i, item in enumerate(listElement.childNodes, 1):
             buffer.append(' ' * indent)
-            i += 1
             if props.ordered:
                 number = str(i)
                 number = ' ' + number + '. '

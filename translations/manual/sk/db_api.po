@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Martin Sowa, 2026\n"
 "Language-Team: Slovak (http://app.transifex.com/calibre/calibre/language/sk/)\n"
@@ -249,8 +249,9 @@ msgstr "Nemenná množina id pre všetky hodnoty v poli ``name``."
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
-"many fields)"
-msgstr "Nemenná množina všetkých názvov polí (mala by sa používať iba pre polia typu many-one a many-many)"
+"many fields). If book_ids is not None, only names used by the specified "
+"books are returned."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
@@ -292,6 +293,14 @@ msgstr "Na základe zoznamu autorov vráti reťazec author_sort pre autorov, pri
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Vráti spôsoby triedenia pre zadaných autorov."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid ""
+"Return a map of annotation id to book id for those of the specified "
+"annotation ids that exist. `ignore_removed` controls whether removed "
+"(deleted) annotations are also returned."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.book_storage_for_book:1
@@ -650,8 +659,10 @@ msgstr "Získa dáta pre name. V predvolenom nastavení vráti dáta pre všetky
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
-"must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Vráti priradenie čísel id k hodnotám pre zadané pole. Pole musí byť typu many-one alebo many-many, inak sa vyvolá ValueError."
+"must be a many-one or many-many field, otherwise a ValueError is raised. If "
+"book_ids is not None, only items used by the specified books are returned. "
+"For the title field the ids are book ids."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -784,6 +795,13 @@ msgstr "Importuje predtým exportovanú poznámku alebo ľubovoľný súbor HTML
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "Inicializuje túto vyrovnávaciu pamäť údajmi z backendu."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_using_notes_resource:1
+msgid ""
+"Return the set of (field, item_id) pairs for all notes that use the resource"
+" with the specified hash"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
@@ -1084,6 +1102,21 @@ msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "Hľadať v texte poznámok pomocou indexu FTS. Ak je dopyt prázdny, vráti všetky poznámky."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:1
+msgid ""
+"Return True if the specified search query, or any saved search it uses, "
+"contains a template search. The query is checked without being evaluated. "
+"Use this to stop untrusted users from storing search expressions, such as "
+"saved searches, containing templates, since stored expressions are later "
+"evaluated with templates allowed, for example, in Virtual libraries."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1

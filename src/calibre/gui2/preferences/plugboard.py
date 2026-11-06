@@ -3,6 +3,7 @@
 
 import copy
 from collections import defaultdict
+from typing import cast
 
 from qt.core import QComboBox, QListWidgetItem, Qt
 
@@ -20,11 +21,11 @@ from calibre.utils.localization import _
 
 
 class ConfigWidget(ConfigWidgetBase, Ui_Form):
-    def genesis(self, gui):
+    def genesis(self, gui) -> None:
         self.gui = gui
         self.db = gui.library_view.model().db
 
-    def initialize(self):
+    def initialize(self) -> None:
         ConfigWidgetBase.initialize(self)
 
         self.current_plugboards = copy.deepcopy(self.db.prefs.get('plugboards', {}))
@@ -110,7 +111,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.refilling = False
         self.refill_all_boxes()
 
-    def clear_fields(self, edit_boxes=False, new_boxes=False):
+    def clear_fields(self, edit_boxes=False, new_boxes=False) -> None:
         self.ok_button.setEnabled(False)
         self.del_button.setEnabled(False)
         for w in self.source_widgets:
@@ -124,7 +125,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
             self.new_device.setCurrentIndex(0)
             self.new_format.setCurrentIndex(0)
 
-    def set_fields(self):
+    def set_fields(self) -> None:
         self.ok_button.setEnabled(True)
         self.del_button.setEnabled(True)
         for w in self.source_widgets:
@@ -132,12 +133,12 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         for w in self.dest_widgets:
             w.addItems(self.dest_fields)
 
-    def set_field(self, i, src, dst):
+    def set_field(self, i, src, dst) -> None:
         self.source_widgets[i].setText(src)
         idx = self.dest_fields.index(dst)
         self.dest_widgets[i].setCurrentIndex(idx)
 
-    def edit_device_changed(self, idx):
+    def edit_device_changed(self, idx) -> None:
         txt = self.edit_device.currentText()
         self.current_device = None
         if txt == '':
@@ -159,7 +160,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.ok_button.setEnabled(True)
         self.del_button.setEnabled(True)
 
-    def edit_format_changed(self, idx):
+    def edit_format_changed(self, idx) -> None:
         txt = self.edit_format.currentText()
         self.edit_device.setCurrentIndex(0)
         self.current_device = None
@@ -180,7 +181,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.edit_device.clear()
         self.edit_device.addItems(devices)
 
-    def check_if_writer_disabled(self, format_name):
+    def check_if_writer_disabled(self, format_name) -> None:
         if format_name in ['device_db', plugboard_any_format_value]:
             return
         show_message = True
@@ -195,7 +196,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 show=True,
             )
 
-    def new_device_changed(self, idx):
+    def new_device_changed(self, idx) -> None:
         txt = self.new_device.currentText()
         self.current_device = None
         if txt == '':
@@ -212,7 +213,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         # If we have a specific format/device combination, check if a more
         # general combination matches.
         if self.current_format != plugboard_any_format_value and self.current_device != plugboard_any_device_value:
-            if find_plugboard(self.current_device, self.current_format, self.current_plugboards):
+            if find_plugboard(self.current_device, cast('str', self.current_format), self.current_plugboards):
                 if not question_dialog(
                     self.gui,
                     _('Possibly override plugboard?'),
@@ -278,7 +279,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
 
         self.set_fields()
 
-    def new_format_changed(self, idx):
+    def new_format_changed(self, idx) -> None:
         txt = self.new_format.currentText()
         self.current_format = None
         self.current_device = None
@@ -290,7 +291,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         else:
             self.clear_fields(edit_boxes=False)
 
-    def ok_clicked(self):
+    def ok_clicked(self) -> None:
         pb = []
         comments_in_dests = False
         for i in range(len(self.source_widgets)):
@@ -339,7 +340,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.changed_signal.emit()
         self.refill_all_boxes()
 
-    def del_clicked(self):
+    def del_clicked(self) -> None:
         if self.current_format in self.current_plugboards:
             fpb = self.current_plugboards[self.current_format]
             if self.current_device in fpb:
@@ -349,7 +350,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.changed_signal.emit()
         self.refill_all_boxes()
 
-    def existing_pb_clicked(self, qitem):
+    def existing_pb_clicked(self, qitem) -> None:
         item = qitem.data(Qt.ItemDataRole.UserRole)
         if qitem.flags() & Qt.ItemFlag.ItemIsEnabled:
             self.edit_format.setCurrentIndex(self.edit_format.findText(item[0]))
@@ -357,7 +358,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         else:
             warning_dialog(self, '', _('The {0} device plugin is disabled.').format(item[1]), show=True)
 
-    def refill_all_boxes(self):
+    def refill_all_boxes(self) -> None:
         if self.refilling:
             return
         self.refilling = True
@@ -390,7 +391,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
                 self.existing_plugboards.addItem(item)
         self.refilling = False
 
-    def restore_defaults(self, *args):
+    def restore_defaults(self, *args) -> None:
         ConfigWidgetBase.restore_defaults(self)
         self.current_plugboards = {}
         self.refill_all_boxes()
@@ -400,7 +401,7 @@ class ConfigWidget(ConfigWidgetBase, Ui_Form):
         self.db.new_api.set_pref('plugboards', self.current_plugboards)
         return ConfigWidgetBase.commit(self)
 
-    def refresh_gui(self, gui):
+    def refresh_gui(self, gui) -> None:
         pass
 
 

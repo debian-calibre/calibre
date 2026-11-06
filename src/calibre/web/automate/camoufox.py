@@ -46,11 +46,10 @@ import tempfile
 import threading
 import time
 import unicodedata
-from collections.abc import AsyncGenerator, Callable, Iterable, Mapping, Sequence
 from contextlib import asynccontextmanager
 from functools import lru_cache
 from http import HTTPStatus
-from typing import Any, NamedTuple
+from typing import TYPE_CHECKING, Any, NamedTuple, Self
 
 from calibre.constants import cache_dir, ismacos, iswindows, sanitize_env_vars_in
 from calibre.utils.filenames import make_long_path_useable
@@ -66,6 +65,9 @@ from calibre.web.automate.download_deps import (
     lock_camoufox_install,
     use_camoufox,
 )
+
+if TYPE_CHECKING:
+    from collections.abc import AsyncGenerator, Callable, Iterable, Mapping, Sequence
 
 DEFAULT_TIMEOUT = 60.0  # seconds, for individual protocol commands
 # The browser answers an input event only once the page has actually seen it,
@@ -247,6 +249,23 @@ BASE_USER_PREFS: dict[str, Any] = {
     'app.update.auto': False,
     'extensions.update.enabled': False,
 }
+
+# Preferences that must be set before the browser starts, so they are written to
+# user.js in the profile rather than sent over the protocol, which only happens
+# after startup is complete.
+STARTUP_USER_PREFS: dict[str, Any] = {
+    # On Windows, Firefox creates a Private Browsing shortcut in the Start Menu
+    # at startup unless it thinks it has already done so. Since every launch
+    # uses a new profile, without this it would recreate the shortcut each time.
+    'browser.privacySegmentation.createdShortcut': True,
+}
+
+
+def write_user_js(profile_dir: str, prefs: Mapping[str, Any]) -> None:
+    lines = [f'user_pref({json.dumps(name)}, {json.dumps(value)});\n' for name, value in prefs.items()]
+    with open(os.path.join(profile_dir, 'user.js'), 'w', encoding='utf-8') as f:
+        f.write(''.join(lines))
+
 
 # Preferences that make the browser keep previously loaded pages and requests
 # around, at the cost of using more memory
@@ -3609,11 +3628,11 @@ class Browser:
     def __repr__(self) -> str:
         return f'<Camoufox Browser {self.version}{" (closed)" if self.closed else ""}>'
 
-    async def __aenter__(self) -> Browser:
+    async def __aenter__(self) -> Self:
         await self.launch()
         return self
 
-    async def __aexit__(self, *args: Any) -> None:  # ruff: ignore[any-type]
+    async def __aexit__(self, *args: object) -> None:
         await self.close()
 
     # Launching {{{
@@ -3680,6 +3699,7 @@ class Browser:
             )
             self.profile_dir = tempfile.mkdtemp(prefix='camoufox-profile-')
             log_path = os.path.join(self.profile_dir, 'browser-log.txt')
+            write_user_js(self.profile_dir, STARTUP_USER_PREFS)
             env = self.build_environment(resource_dir)
             self.connection.root_handler = self.handle_event
             self.connection.on_closed = self.connection_closed

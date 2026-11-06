@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from operator import attrgetter
 from typing import overload
@@ -20,7 +18,7 @@ class BooksModel(QAbstractItemModel):
 
     HEADERS = [_('Title'), _('Author(s)'), _('Format')]
 
-    def __init__(self, all_books):
+    def __init__(self, all_books) -> None:
         QAbstractItemModel.__init__(self)
         self.books = all_books
         self.all_books = all_books
@@ -36,7 +34,7 @@ class BooksModel(QAbstractItemModel):
         else:
             return None
 
-    def search(self, filter):
+    def search(self, filter) -> None:
         self.filter = filter.strip()
         if not self.filter:
             self.books = self.all_books
@@ -55,7 +53,7 @@ class BooksModel(QAbstractItemModel):
     @overload
     def parent(self, child: QModelIndex) -> QModelIndex: ...
     @overload
-    def parent(self) -> 'QObject | None': ...
+    def parent(self) -> QObject | None: ...
     def parent(self, child: QModelIndex = QModelIndex()):
         if not child.isValid() or child.internalId() == 0:
             return QModelIndex()
@@ -100,13 +98,13 @@ class BooksModel(QAbstractItemModel):
             text = result.formats
         return text
 
-    def sort(self, column, order: Qt.SortOrder = Qt.SortOrder.AscendingOrder, reset=True):
+    def sort(self, column, order: Qt.SortOrder = Qt.SortOrder.AscendingOrder, reset=True) -> None:
         self.sort_col = column
         self.sort_order = order
         if not self.books:
             return
         descending = order == Qt.SortOrder.DescendingOrder
-        self.books.sort(key=lambda x: sort_key(type('')(self.data_as_text(x, column))), reverse=descending)
+        self.books.sort(key=lambda x: sort_key(str(self.data_as_text(x, column))), reverse=descending)
         if reset:
             self.beginResetModel(), self.endResetModel()
 
@@ -121,7 +119,7 @@ class SearchFilter(SearchQueryParser):
         'title',
     ]
 
-    def __init__(self, all_books=None):
+    def __init__(self, all_books=None) -> None:
         if all_books is None:
             all_books = []
         SearchQueryParser.__init__(self, locations=self.USABLE_LOCATIONS)

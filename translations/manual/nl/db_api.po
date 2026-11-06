@@ -17,7 +17,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-05-24 03:34+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: W.P.M.E. Hofland <wpme.hofland@gmail.com>, 2015\n"
 "Language-Team: Dutch (http://app.transifex.com/calibre/calibre/language/nl/)\n"
@@ -257,8 +257,9 @@ msgstr "Bevroren set met ID's voor alle waarden in het veld ``naam``."
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
-"many fields)"
-msgstr "Bevroren set van alle veld namen (alleen gebruikt worden voor VEEL-EEN en VEEL-VEEL velden)"
+"many fields). If book_ids is not None, only names used by the specified "
+"books are returned."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
@@ -299,6 +300,23 @@ msgstr "Geef een lijst met auteurs, terugkeren naar auteur_sorteren string voor 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid ""
+"Return a map of annotation id to book id for those of the specified "
+"annotation ids that exist. `ignore_removed` controls whether removed "
+"(deleted) annotations are also returned."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_storage_for_book:1
+msgid ""
+"Return the per book storage (used for localStorage in the viewers) for the "
+"specified book_id, format, user_type and user or None if no storage exists. "
+"The storage is a dict of the form: {'timestamp': seconds since epoch, "
+"'data': {key: value}}."
 msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -649,8 +667,10 @@ msgstr "Haal gegevens op voor naam. Standaard worden gegevens voor alle book_ids
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
-"must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Geef een mapping terug van id-nummers naar waarden voor het opgegeven veld. Het veld moet een veel-één- of veel-veel-veld zijn, anders wordt er een ValueError gegenereerd."
+"must be a many-one or many-many field, otherwise a ValueError is raised. If "
+"book_ids is not None, only items used by the specified books are returned. "
+"For the title field the ids are book ids."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -785,6 +805,13 @@ msgid "Initialize this cache with data from the backend."
 msgstr "Initialiseer deze cache met gegevens uit de backend."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_using_notes_resource:1
+msgid ""
+"Return the set of (field, item_id) pairs for all notes that use the resource"
+" with the specified hash"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
 msgid ""
 "Return a dict of field to items that have associated notes for that field "
@@ -915,12 +942,30 @@ msgid ""
 msgstr "Geef de OPF-metadataback-up voor het boek terug als een bytestring of None als er geen back-up bestaat."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.refresh_format_sizes:1
+msgid ""
+"Update the database with the on-disk sizes of the specified format files. "
+"``size_map`` maps ``(book_id, fmt)`` to the size of the format file. Used to"
+" fix stored sizes that have gone stale because format files were changed "
+"outside of calibre. Returns the ids of the books whose stored sizes were "
+"changed."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
 msgid ""
 "Remove the books specified by the book_ids from the database and delete "
 "their format files. If ``permanent`` is False, then the format files are "
 "placed in the per-library trash directory."
 msgstr "Verwijder de boeken die zijn gespecificeerd door de book_ids uit de database en verwijder hun formaatbestanden. Als ``permanent`` False is, worden de formaatbestanden in de prullenbakmap per bibliotheek geplaatst."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.remove_books:5
+msgid ""
+"If the files of some books cannot be deleted or moved to the trash, those "
+"books are left unchanged and :class:`BooksNotRemoved` is raised after all "
+"the other books have been removed."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_extra_files:1
@@ -1067,6 +1112,21 @@ msgid ""
 msgstr "Doorzoek de tekst van notities met behulp van een FTS-index. Als de zoekopdracht leeg is, worden alle notities weergegeven."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:1
+msgid ""
+"Return True if the specified search query, or any saved search it uses, "
+"contains a template search. The query is checked without being evaluated. "
+"Use this to stop untrusted users from storing search expressions, such as "
+"saved searches, containing templates, since stored expressions are later "
+"evaluated with templates allowed, for example, in Virtual libraries."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1
 msgid ""
 "Set all annotations for the specified book_id, fmt, user_type and user."
@@ -1166,7 +1226,9 @@ msgstr "Stel het notitiedocument in. Als de doorzoekbare tekst verschilt van het
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_pages:1
-msgid "Set page count information for the specified book"
+msgid ""
+"Set page count information for the specified book. Does nothing if the book "
+"does not exist."
 msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
@@ -1222,6 +1284,15 @@ msgstr "Een eerder verwijderde notitie voor het opgegeven item weer terugzetten.
 #: calibre.db.cache.Cache.update_annotations:1
 msgid "Update annotations."
 msgstr "Annotaties bijwerken."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.update_book_storage_for_book:1
+msgid ""
+"Set the per book storage for the specified book_id, format, user_type and "
+"user, unless the existing storage is newer than entry. Returns the storage "
+"in effect after the update. Clear the storage by passing an entry with empty"
+" data."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.user_categories_for_books:1

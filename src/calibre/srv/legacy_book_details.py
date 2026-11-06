@@ -1,4 +1,5 @@
 from html import escape
+from typing import TYPE_CHECKING
 from urllib.parse import urlencode
 
 from calibre.ebooks.metadata import rating_to_stars
@@ -6,14 +7,21 @@ from calibre.library.comments import sanitize_comments_html
 from calibre.srv.content import book_filename
 from calibre.utils.date import dt_as_local, is_date_undefined, strftime
 
+if TYPE_CHECKING:
+    from datetime import datetime
 
-def safe_date(dt, fmt='%d %b %Y'):
+    from calibre.ebooks.metadata.book.base import Metadata
+    from calibre.srv.handler import Context
+    from calibre.srv.http_response import RequestData
+
+
+def safe_date(dt: datetime | None, fmt: str = '%d %b %Y') -> str:
     if not dt or is_date_undefined(dt):
         return ''
     return strftime(fmt, t=dt_as_local(dt).timetuple())
 
 
-def exact_match_query(field, value):
+def exact_match_query(field: str, value: str) -> str:
     # Same quoting rules as the tag browser, see search_expression_for_item() in search.pyj
     value = value.replace('"', r'\"')
     if value.startswith('.'):
@@ -21,12 +29,12 @@ def exact_match_query(field, value):
     return f'{field}:"={value}"'
 
 
-def search_link(ctx, library_id, text, query):
+def search_link(ctx: Context, library_id: str, text: str, query: str) -> str:
     url = ctx.url_for('/mobile') + '?' + urlencode({'library_id': library_id, 'search': query})
     return f'<a href="{escape(url)}">{escape(text)}</a>'
 
 
-def render_legacy_book_details(ctx, rd, mi, library_id):
+def render_legacy_book_details(ctx: Context, rd: RequestData, mi: Metadata, library_id: str) -> str:
     book_id = mi.id
 
     title = escape(mi.title or 'Unknown')
@@ -70,6 +78,7 @@ def render_legacy_book_details(ctx, rd, mi, library_id):
 
     # Series
     if series:
+        assert mi.series is not None  # series is only set when mi.series is not empty
         link = search_link(ctx, library_id, series, exact_match_query('series', mi.series))
         metadata_rows.append(f'<tr><td>Series</td><td>{link}</td></tr>')
 

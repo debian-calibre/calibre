@@ -5,19 +5,33 @@ import os
 from functools import partial
 from io import BytesIO
 from itertools import count
+from typing import TYPE_CHECKING
 from zipfile import ZIP_STORED, ZipFile
 
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ebooks.metadata.opf3 import CALIBRE_PREFIX
-from calibre.ebooks.oeb.base import EPUB_NS, OEB_DOCS, XHTML, barename, xml2text
+from calibre.ebooks.oeb.base import EPUB, EPUB_NS, OEB_DOCS, XHTML, barename, xml2text
 from calibre.ebooks.oeb.polish.container import get_container
 from calibre.ebooks.oeb.polish.cover import clean_opf, find_cover_image, find_cover_page, mark_as_cover, mark_as_titlepage
 from calibre.ebooks.oeb.polish.create import create_book
 from calibre.ebooks.oeb.polish.tests.base import BaseTest
-from calibre.ebooks.oeb.polish.toc import commit_nav_toc, get_landmarks, get_toc
+from calibre.ebooks.oeb.polish.toc import TOC, commit_nav_toc, get_landmarks, get_toc
 from calibre.ebooks.oeb.polish.toc import from_xpaths as toc_from_xpaths
 from calibre.ebooks.oeb.polish.upgrade import upgrade_book
 from calibre.ebooks.oeb.polish.utils import guess_type
+
+if TYPE_CHECKING:
+    import unittest
+    from collections.abc import Sequence
+
+    from lxml.etree import _Element
+
+    from calibre.ebooks.oeb.polish.check.base import BaseError
+    from calibre.ebooks.oeb.polish.check.parsing import DanglingIdReference
+    from calibre.ebooks.oeb.polish.container import Container
+
+#: A manifest entry for create_epub() of the form: (name, data, properties)
+type ManifestItem = tuple[str, bytes | str, str | None]
 
 OPF_TEMPLATE = f'''
 <package xmlns="http://www.idpf.org/2007/opf" version="{{ver}}" prefix="calibre: {CALIBRE_PREFIX}" unique-identifier="uid">
@@ -31,14 +45,20 @@ OPF_TEMPLATE = f'''
 </package>'''
 
 
-def create_manifest_item(name, data=b'', properties=None):
+def create_manifest_item(name: str, data: bytes | str = b'', properties: str | None = None) -> ManifestItem:
     return name, data, properties
 
 
 cmi = create_manifest_item
 
 
-def create_epub(manifest, spine=(), guide=(), meta_cover=None, ver=3):
+def create_epub(
+    manifest: Sequence[ManifestItem],
+    spine: Sequence[str] = (),
+    guide: Sequence[tuple[str, str, str]] = (),
+    meta_cover: str | None = None,
+    ver: int = 3,
+) -> BytesIO:
     mo = []
     for name, data, properties in manifest:
         mo.append('<item id="{}" href="{}" media-type="{}" {}/>'.format(name, name, guess_type(name), (f'properties="{properties}"' if properties else '')))
@@ -49,8 +69,8 @@ def create_epub(manifest, spine=(), guide=(), meta_cover=None, ver=3):
     if not spine:
         spine = [x[0] for x in manifest if guess_type(x[0]) in OEB_DOCS]
     spine = ''.join(f'<itemref idref="{name}"/>' for name in spine)
-    guide = ''.join(f'<reference href="{name}" type="{typ}" title="{title}"/>' for name, typ, title in guide)
-    opf = OPF_TEMPLATE.format(manifest=mo, ver=f'{ver}.0', metadata=metadata, spine=spine, guide=guide)
+    guide_xml = ''.join(f'<reference href="{name}" type="{typ}" title="{title}"/>' for name, typ, title in guide)
+    opf = OPF_TEMPLATE.format(manifest=mo, ver=f'{ver}.0', metadata=metadata, spine=spine, guide=guide_xml)
     buf = BytesIO()
     with ZipFile(buf, 'w', ZIP_STORED) as zf:
         zf.writestr(
@@ -75,15 +95,22 @@ counter = count()
 
 
 class Structure(BaseTest):
-    def create_epub(self, *args, **kw):
+    def create_epub(
+        self,
+        manifest: Sequence[ManifestItem],
+        spine: Sequence[str] = (),
+        guide: Sequence[tuple[str, str, str]] = (),
+        meta_cover: str | None = None,
+        ver: int = 3,
+    ) -> Container:
         n = next(counter)
         ep = os.path.join(self.tdir, str(n) + 'book.epub')
         with open(ep, 'wb') as f:
-            f.write(create_epub(*args, **kw).getvalue())
+            f.write(create_epub(manifest, spine, guide, meta_cover, ver).getvalue())
         c = get_container(ep, tdir=os.path.join(self.tdir, f'container{n}'), tweak_mode=True)
         return c
 
-    def test_toc_detection(self):
+    def test_toc_detection(self) -> None:
         ep = os.path.join(self.tdir, 'book.epub')
         create_book(Metadata('Test ToC'), ep)
         c = get_container(ep, tdir=os.path.join(self.tdir, 'container'), tweak_mode=True)
@@ -102,7 +129,7 @@ class Structure(BaseTest):
         self.assertTrue(len(toc))
         self.assertEqual(toc.as_dict['children'][0]['title'], 'EPUB 3 nav')
 
-        def tfx(linear, expected):
+        def tfx(linear: str, expected: str) -> None:
             items = [f'<t{x}>{x}</t{x}>' for x in linear]
             html = '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">'
             html += '<body>{}</body></html>'.format('\n'.join(items))
@@ -110,7 +137,7 @@ class Structure(BaseTest):
                 f.write(html.encode('utf-8'))
             toc = toc_from_xpaths(c, ['//h:t' + x for x in sorted(set(linear))])
 
-            def p(node):
+            def p(node: TOC) -> str:
                 ans = ''
                 if node.children:
                     ans += '['
@@ -126,7 +153,7 @@ class Structure(BaseTest):
         tfx('32123', '321[2[3]]')
         tfx('123123', '1[2[3]]1[2[3]]')
 
-    def test_nav_ids_preserved(self):
+    def test_nav_ids_preserved(self) -> None:
         # Other files can link to ids in the nav, they must survive
         # re-generation of the nav, see https://bugs.launchpad.net/bugs/2169441
         body = b'<html xmlns="http://www.w3.org/1999/xhtml"><body><p id="top">x</p></body></html>'
@@ -154,7 +181,7 @@ class Structure(BaseTest):
         commit_nav_toc(c, toc, landmarks=get_landmarks(c))
         root = c.parsed('nav.html')
 
-        def elem(eid):
+        def elem(eid: str) -> _Element:
             ans = root.xpath(f'//*[@id="{eid}"]')
             self.assertEqual(1, len(ans), eid)
             return ans[0]
@@ -198,7 +225,77 @@ class Structure(BaseTest):
         self.assertEqual(barename(elem('hd-toc').getparent().tag), 'nav')
         self.assertEqual(1, len(root.xpath('//*[@class="special"]')))
 
-    def test_guide_reference_without_type(self):
+    def test_landmarks_preserved_by_conversion(self) -> None:
+        # EPUB input must replace guide entries with the landmarks from the
+        # nav so that conversion to any output format uses them, see
+        # https://bugs.launchpad.net/bugs/2172176
+        from types import SimpleNamespace
+
+        from calibre import CurrentDir
+        from calibre.customize.ui import plugin_for_input_format
+        from calibre.ebooks.conversion.plumber import Plumber
+        from calibre.ebooks.metadata.opf2 import OPF
+        from calibre.ebooks.oeb.transforms.guide import CUSTOM_GUIDE_TYPE_PREFIX
+        from calibre.utils.logging import DevNull
+
+        body = '<html xmlns="http://www.w3.org/1999/xhtml"><body><h1 id="h">{}</h1><p>x</p></body></html>'
+        nav = (
+            b'<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><body>'
+            b'<nav epub:type="toc" id="toc"><ol><li><a href="a.html">A</a></li><li><a href="b.html">B</a></li></ol></nav>'
+            b'<nav epub:type="landmarks"><ol>'
+            b'<li><a epub:type="toc" href="#toc">Contents</a></li>'
+            b'<li><a epub:type="seriespage" href="b.html">Series</a></li>'
+            b'<li><a epub:type="bodymatter" href="c.html#h">Start</a></li>'
+            b'<li><a epub:type="index" href="missing.html">Index</a></li>'
+            b'<li><a epub:type="bodymatter" href="d.html">Duplicate</a></li>'
+            b'</ol></nav></body></html>'
+        )
+        epub = create_epub(
+            [*(cmi(f'{x}.html', body.format(x)) for x in 'abcd'), cmi('nav.html', nav, 'nav')],
+            spine=('a.html', 'b.html', 'c.html', 'd.html'),
+            guide=[('b.html', 'text', 'Old start'), ('d.html', 'index', 'Index'), ('a.html', 'other.chapter', 'Chapter')],
+        )
+        src = os.path.join(self.tdir, 'landmarks.epub')
+        with open(src, 'wb') as f:
+            f.write(epub.getvalue())
+
+        tdir = os.path.join(self.tdir, 'epub-input')
+        os.mkdir(tdir)
+        with CurrentDir(tdir), open(src, 'rb') as f:
+            opf = plugin_for_input_format('epub').convert(f, SimpleNamespace(), 'epub', DevNull(), {})
+            guide = {r.get('type'): (r.get('href'), r.get('title')) for r in OPF(opf, tdir).iterguide()}
+        self.assertEqual(
+            {
+                'toc': ('nav.html#toc', 'Contents'),
+                # Landmark types with no equivalent guide type use custom types
+                CUSTOM_GUIDE_TYPE_PREFIX + 'seriespage': ('b.html', 'Series'),
+                'text': ('c.html#h', 'Start'),
+                # Guide entries for types not in the landmarks are kept
+                'index': ('d.html', 'Index'),
+                'other.chapter': ('a.html', 'Chapter'),
+            },
+            guide,
+        )
+
+        # The landmarks survive conversion to EPUB 3
+        out = os.path.join(self.tdir, 'landmarks-out.epub')
+        plumber = Plumber(src, out, DevNull())
+        plumber.merge_ui_recommendations([('epub_version', '3', 3), ('no_default_epub_cover', True, 3)])
+        plumber.run()
+        c = get_container(out, tdir=os.path.join(self.tdir, 'landmarks-out'))
+        landmarks = [(e['type'], e['dest'], e['frag'], e['title']) for e in get_landmarks(c)]
+        self.assertEqual(
+            [
+                ('toc', 'nav.html', 'toc', 'Contents'),
+                ('seriespage', 'b.html', '', 'Series'),
+                ('bodymatter', 'c.html', 'h', 'Start'),
+                # Guide types not kept by conversion are dropped
+                ('index', 'd.html', '', 'Index'),
+            ],
+            landmarks,
+        )
+
+    def test_guide_reference_without_type(self) -> None:
         # Guide references with no type must not cause a crash, see
         # https://bugs.launchpad.net/bugs/2170400
         from calibre.ebooks.conversion.plumber import Plumber, create_oebbook
@@ -213,7 +310,36 @@ class Structure(BaseTest):
         oeb = create_oebbook(c.log, c.name_to_abspath(c.opf_name), plumber.opts)
         self.assertNotIn(None, oeb.guide)
 
-    def test_landmarks_detection(self):
+    def test_missing_attributes(self) -> None:
+        from calibre.ebooks.conversion.plumber import Plumber, create_oebbook
+
+        # Guide references without href are ignored
+        c = self.create_epub([cmi('a.html'), cmi('b.html')], guide=[('b.html', 'toc', 'Contents')], ver=2)
+        for ref in c.opf_xpath('//opf:guide/opf:reference'):
+            ref.attrib.pop('href')
+        self.assertEqual([], get_landmarks(c))
+        # Manifest items without id get a generated id
+        for item in c.opf_xpath('//opf:manifest/opf:item[@href="b.html"]'):
+            item.attrib.pop('id')
+        c.dirty(c.opf_name)
+        c.commit()
+        plumber = Plumber(c.name_to_abspath(c.opf_name), os.path.join(self.tdir, 'out.epub'), c.log)
+        plumber.setup_options()
+        oeb = create_oebbook(c.log, c.name_to_abspath(c.opf_name), plumber.opts)
+        self.assertNotIn(None, oeb.manifest.ids)
+        self.assertIn('b.html', oeb.manifest.hrefs)
+        # Empty page-list entries without title are ignored
+        nav = '''<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops"><body>
+        <nav epub:type="toc"><ol><li><a href="a.html">A</a></li></ol></nav>
+        <nav epub:type="page-list"><ol><li><a href="a.html#p1"></a></li><li><a href="a.html#p2">2</a></li></ol></nav></body></html>'''
+        c = self.create_epub([cmi('a.html'), cmi('nav.html', nav, 'nav')])
+        self.assertEqual(['2'], [x['pagenum'] for x in get_toc(c).page_list])
+        # Marking a file that is not in the spine as the titlepage does not move other files
+        mark_as_titlepage(c, 'nav.html')
+        mark_as_titlepage(c, 'missing.html')
+        self.assertEqual(['nav.html', 'a.html'], [name for name, is_linear in c.spine_names])
+
+    def test_landmarks_detection(self) -> None:
         c = self.create_epub([cmi('xxx.html'), cmi('a.html')], guide=[('xxx.html#moo', 'x', 'XXX'), ('a.html', '', 'YYY')], ver=2)
         self.assertEqual(2, c.opf_version_parsed.major)
         self.assertEqual(
@@ -241,7 +367,7 @@ class Structure(BaseTest):
             get_landmarks(c),
         )
 
-    def test_landmarks_are_kept_on_upgrade(self):
+    def test_landmarks_are_kept_on_upgrade(self) -> None:
         # Upgrading to EPUB 3 removes the guide, so its entries have to end
         # up in the landmarks nav of the upgraded book, see commit_nav_toc()
         body = b'<html xmlns="http://www.w3.org/1999/xhtml"><body><p>x</p></body></html>'
@@ -259,7 +385,7 @@ class Structure(BaseTest):
             get_landmarks(c),
         )
 
-    def test_epub3_covers(self):
+    def test_epub3_covers(self) -> None:
         # cover image
         ce = partial(self.create_epub, ver=3)
         c = ce([cmi('c.jpg')])
@@ -294,7 +420,7 @@ class Structure(BaseTest):
         for prop in 'cover-image calibre:title-page'.split():
             self.assertEqual([], list(c.manifest_items_with_property(prop)))
 
-    def test_epub2_covers(self):
+    def test_epub2_covers(self) -> None:
         # cover image
         ce = partial(self.create_epub, ver=2)
         c = ce([cmi('c.jpg')])
@@ -317,13 +443,57 @@ class Structure(BaseTest):
         self.assertEqual('a.html', find_cover_page(c))
         self.assertEqual('a.html', next(c.spine_names)[0])
 
-    def test_mark_sentences(self):
+    def test_cover_page_metadata(self) -> None:
+        from calibre.ebooks.oeb.polish.check.accessibility import MissingAltText, MissingLanguage, check_accessibility
+        from calibre.ebooks.oeb.polish.cover import set_cover
+        from calibre.ebooks.oeb.transforms.cover import CoverManager
+        from calibre.utils.resources import get_image_path
+
+        # The title of the book is the text alternative of the cover image and
+        # the language of the book is the language of the cover page
+        title = 'Tom & Jerry "<100%>"'
+        fill = CoverManager.fill_metadata
+        self.assertEqual(
+            fill('<html__lang__><img alt="__title__" src="%s"/></html>', title, 'de-AT') % 'x',
+            '<html xml:lang="de-AT"><img alt="Tom &amp; Jerry &quot;&lt;100%&gt;&quot;" src="x"/></html>',
+        )
+        self.assertEqual(fill('<html__lang__><title>__title__</title></html>', ' ', None), '<html><title>Cover</title></html>')
+
+        def cover_page(ver: int, no_svg: bool, lang: str | None) -> tuple[_Element, set[type[BaseError]]]:
+            c = self.create_epub([cmi('a.html', '<html xmlns="http://www.w3.org/1999/xhtml"><body><p>a</p></body></html>')], ver=ver)
+            metadata = c.opf_xpath('//opf:metadata')[0]
+            for tag, val in (('title', title), ('language', lang)):
+                if val:
+                    e = metadata.makeelement('{http://purl.org/dc/elements/1.1/}' + tag)
+                    e.text = val
+                    metadata.append(e)
+            c.dirty(c.opf_name)
+            set_cover(c, get_image_path('lt.png'), options={'no_svg': no_svg})
+            titlepage = find_cover_page(c)
+            problems = {type(e) for e in check_accessibility(c) if titlepage in {loc[0] for loc in e.all_locations or ((e.name,),)}}
+            return c.parsed(titlepage), problems
+
+        for ver, no_svg in ((2, False), (3, False), (2, True), (3, True)):
+            root, problems = cover_page(ver, no_svg, 'eng')
+            self.assertFalse(problems, (ver, no_svg))
+            self.assertEqual(root.xpath('//*[local-name()="title"]/text()'), [title] if no_svg else [title, title])
+            if no_svg:
+                self.assertEqual(root.xpath('//*[local-name()="img"]/@alt'), [title])
+            # The lang attribute is not valid in EPUB 2
+            self.assertEqual((root.get('{http://www.w3.org/XML/1998/namespace}lang'), root.get('lang')), ('en', 'en' if ver == 3 else None))
+        # Without a book language the cover page does not claim to be in English
+        root, problems = cover_page(3, False, None)
+        self.assertFalse(root.get('{http://www.w3.org/XML/1998/namespace}lang') or root.get('lang'))
+        self.assertEqual(problems, {MissingLanguage})
+        self.assertNotIn(MissingAltText, problems)
+
+    def test_mark_sentences(self) -> None:
         from html5_parser import parse
         from lxml import html
 
         from calibre.ebooks.oeb.polish.tts import id_prefix, mark_sentences_in_html, unmark_sentences_in_html
 
-        def normalize_markup(root):
+        def normalize_markup(root: _Element) -> str:
             actual = html.tostring(root, encoding='unicode')
             actual = actual[actual.find('<body') :]
             actual = actual[: actual.rfind('</body>')]
@@ -369,7 +539,7 @@ class Structure(BaseTest):
         sentences = mark_sentences_in_html(parse('<p lang="en">Hello, <span lang="fr">world!'))
         self.assertEqual(tuple(s.lang for s in sentences), ('eng', 'fra'))
 
-    def test_check_skipped_rules(self):
+    def test_check_skipped_rules(self) -> None:
         from calibre.ebooks.oeb.polish.check.css import CSSError, CSSParseError, stylelint_rules_from_skipped_rules
         from calibre.ebooks.oeb.polish.check.main import remove_skipped
         from calibre.ebooks.oeb.polish.check.parsing import DuplicateId, InvalidId, XMLParseError, check_ids
@@ -394,7 +564,7 @@ class Structure(BaseTest):
         self.assertFalse(any(e.can_be_skipped for e in parse_errors))
         self.assertEqual(remove_skipped(parse_errors, frozenset(e.rule_id for e in parse_errors)), parse_errors)
 
-    def test_invalid_id_fix(self):
+    def test_invalid_id_fix(self) -> None:
         from calibre.ebooks.oeb.polish.check.main import fix_errors
         from calibre.ebooks.oeb.polish.check.parsing import InvalidId, check_ids, make_valid_id
         from calibre.ebooks.oeb.polish.css import rename_ids_in_selector
@@ -413,7 +583,7 @@ class Structure(BaseTest):
         }.items():
             self.assertEqual(rename_ids_in_selector(selector, id_map), expected)
 
-        def html(body, head=''):
+        def html(body: str, head: str = '') -> str:
             return f'''<html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" href="style.css"/>{head}</head><body>{body}</body></html>'''
 
         c = self.create_epub([
@@ -450,11 +620,11 @@ class Structure(BaseTest):
         self.assertEqual(root.xpath('//*/@aria-describedby'), [nid])
         self.assertEqual(root.xpath('//*/@for'), [nid])
 
-    def test_dangling_id_reference(self):
+    def test_dangling_id_reference(self) -> None:
         from calibre.ebooks.oeb.polish.check.main import fix_errors
         from calibre.ebooks.oeb.polish.check.parsing import DanglingIdReference, check_ids
 
-        def html(body):
+        def html(body: str) -> str:
             return f'<html xmlns="http://www.w3.org/1999/xhtml"><head></head><body>{body}</body></html>'
 
         c = self.create_epub([
@@ -469,7 +639,7 @@ class Structure(BaseTest):
             cmi('b.html', html('<p id="x">b</p>')),
         ])
 
-        def dangling():
+        def dangling() -> dict[str, DanglingIdReference]:
             return {e.missing_id: e for e in check_ids(c) if isinstance(e, DanglingIdReference)}
 
         errors = dangling()
@@ -484,14 +654,515 @@ class Structure(BaseTest):
         self.assertEqual(root.xpath('//*/@headers'), ['c'])
         self.assertFalse(root.xpath('//*/@for'))
 
+    def test_epub_output_language(self) -> None:
+        from contextlib import redirect_stdout
+        from io import StringIO
+        from unittest.mock import patch
 
-def find_tests():
+        from calibre.ebooks.conversion.plugins.epub_output import EPUBOutput
+        from calibre.ebooks.metadata.opf2 import metadata_to_opf
+        from calibre.ebooks.oeb.base import XML, OEBBook
+        from calibre.ebooks.oeb.polish.tests.base import build_book
+        from calibre.utils.logging import DevNull
+        from calibre.utils.resources import get_image_path
+
+        def html_language(*langs: str, fallback: bool = False) -> str | None:
+            plugin = EPUBOutput(None)
+            plugin.oeb = OEBBook(DevNull())
+            for lang in langs:
+                plugin.oeb.metadata.add('language', lang).is_fallback = fallback
+            return plugin.html_language()
+
+        for langs, expected in (
+            (('fra',), 'fr'),
+            (('eng',), 'en'),
+            (('pt-BR',), 'pt-BR'),
+            (('pt_BR',), 'pt-BR'),
+            (('eng-US',), 'en-US'),
+            (('und', 'de'), 'de'),
+            (('mul',), None),
+            (('French',), None),
+            ((), None),
+        ):
+            self.assertEqual(html_language(*langs), expected, langs)
+        self.assertIsNone(html_language('fra', fallback=True))
+
+        def write(name: str, raw: str) -> str:
+            path = os.path.join(self.tdir, name)
+            with open(path, 'w') as f:
+                f.write(raw)
+            return path
+
+        html = write('index.html', '<html><body><p>one</p></body></html>')
+        de_html = write('de.html', '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de"><body><p>eins</p></body></html>')
+        rtf = write('index.rtf', r'{\rtf1 one}')
+        # The metadata from the library, as written by the GUI for conversion
+        with patch.dict(os.environ, {'CALIBRE_OVERRIDE_LANG': 'de'}):
+            library_opf = write('library.opf', metadata_to_opf(Metadata('T'), mark_fallback_language=True).decode('utf-8'))
+            # Metadata backups and other OPF files must not have the marker
+            self.assertNotIn(b'calibre:fallback_language', metadata_to_opf(Metadata('T')))
+        for src, ver, args, expected in (
+            (html, '2', ['--language=fra'], (None, 'fr')),
+            (html, '3', ['--language=fra'], ('fr', 'fr')),
+            (html, '3', ['--language=pt-BR'], ('pt-BR', 'pt-BR')),
+            (de_html, '3', ['--language=fra'], ('de', 'de')),
+            # The language guessed from the interface language must not be used
+            (html, '3', [], (None, None)),
+            (rtf, '3', [], (None, None)),
+            (html, '3', ['--read-metadata-from-opf', library_opf], (None, None)),
+        ):
+            with self.subTest(src=os.path.basename(src), ver=ver, args=args):
+                n = next(counter)
+                dest = os.path.join(self.tdir, f'{n}.epub')
+                # Specify a cover, as generating the default cover needs a QApplication
+                with patch.dict(os.environ, {'CALIBRE_OVERRIDE_LANG': 'de'}), redirect_stdout(StringIO()):
+                    build_book(src, dest, args=['--epub-version', ver, '--cover', get_image_path('lt.png'), *args])
+                c = get_container(dest, tdir=os.path.join(self.tdir, f'container{n}'), tweak_mode=True)
+                if '--language=' not in ''.join(args):
+                    self.assertEqual(c.opf_xpath('//dc:language/text()'), ['de'])
+                self.assertFalse(c.opf_xpath('//opf:meta[@name="calibre:fallback_language"]'))
+                langs = {}
+                for name, linear in c.spine_names:
+                    root = c.parsed(name)
+                    langs[name] = root.get('lang'), root.get(XML('lang'))
+                # The generated title page is in the language of the book
+                self.assertEqual(langs.pop('titlepage.xhtml'), ('fr', 'fr') if src == de_html else expected)
+                self.assertTrue(langs)
+                for name, val in langs.items():
+                    self.assertEqual(val, expected, name)
+
+        # The marker for the guessed language is only for conversion
+        from calibre.ebooks.metadata.cli import main as ebook_meta
+
+        opf = os.path.join(self.tdir, 'meta.opf')
+        with patch.dict(os.environ, {'CALIBRE_OVERRIDE_LANG': 'de'}), patch('calibre.ebooks.metadata.cli.prints'):
+            ebook_meta(['ebook-meta', rtf, '--to-opf', opf])
+        with open(opf, 'rb') as f:
+            raw = f.read()
+        self.assertIn(b'<dc:language>de</dc:language>', raw)
+        self.assertNotIn(b'calibre:fallback_language', raw)
+
+    def test_accessibility_checks(self) -> None:
+        from calibre.ebooks.oeb.polish.check.accessibility import (
+            ACCESSIBILITY_PROPERTIES,
+            MissingAccessibilityMetadata,
+            MissingAccessibilitySummary,
+            MissingAltText,
+            MissingLanguage,
+            SkippedHeadingLevel,
+            check_accessibility,
+        )
+        from calibre.ebooks.oeb.polish.check.main import fix_errors, run_checks
+
+        def html(body: str, lang: str = ' lang="en"') -> str:
+            return f'<html xmlns="http://www.w3.org/1999/xhtml"{lang}><head><title>t</title></head><body>{body}</body></html>'
+
+        def errors(c: Container) -> dict[type[BaseError], list[BaseError]]:
+            ans: dict[type[BaseError], list[BaseError]] = {}
+            for e in check_accessibility(c):
+                ans.setdefault(type(e), []).append(e)
+            return ans
+
+        c = self.create_epub([
+            cmi(
+                'a.html',
+                html(
+                    '<h1>a</h1>\n<h3>skipped</h3>\n<h4>ok</h4>\n<h2>ok</h2>\n<h5>skipped</h5>'
+                    '<img src="i.png"/>\n<img src="i.png" alt=""/><img src="i.png" role="presentation"/>\n<img src="i.png"/>',
+                    lang='',
+                ),
+            ),
+            cmi('b.html', html('<h2>b</h2><img src="i.png" alt="An image"/>')),
+            cmi('c.html', html('<p>c</p>', lang=' xml:lang="en"')),
+            cmi('d.html', html('<p>d</p>', lang='')),
+            cmi('i.png', b'\x89PNG\r\n\x1a\n'),
+        ])
+        found = errors(c)
+        self.assertEqual(set(found), {MissingAltText, SkippedHeadingLevel, MissingLanguage, MissingAccessibilityMetadata, MissingAccessibilitySummary})
+        alt = found[MissingAltText]
+        self.assertEqual([(e.name, [loc[1] for loc in e.all_locations]) for e in alt], [('a.html', [5, 7])])
+        self.assertEqual([[loc[1] for loc in e.all_locations] for e in found[SkippedHeadingLevel]], [[2, 5]])
+        lang = found[MissingLanguage][0]
+        self.assertEqual([loc[0] for loc in lang.all_locations], ['a.html', 'd.html'])
+        self.assertEqual((lang.name, lang.line), ('a.html', 1))
+        # Without a book language the missing language cannot be fixed
+        self.assertFalse(lang.INDIVIDUAL_FIX)
+        self.assertEqual(found[MissingAccessibilityMetadata][0].missing, list(ACCESSIBILITY_PROPERTIES))
+
+        # Only values that are actual languages are used, as BCP 47 tags
+        def set_book_language(*langs: str) -> str | None:
+            metadata = c.opf_xpath('//opf:metadata')[0]
+            for e in c.opf_xpath('//dc:language'):
+                e.getparent().remove(e)
+            for x in langs:
+                e = metadata.makeelement('{http://purl.org/dc/elements/1.1/}language')
+                e.text = x
+                metadata.append(e)
+            return errors(c)[MissingLanguage][0].lang
+
+        self.assertIsNone(set_book_language('English', 'und', 'zxx'))
+        self.assertEqual(set_book_language('eng'), 'en')
+        self.assertEqual(set_book_language('und', 'de-AT'), 'de-AT')
+
+        # Fix the language, accessibility metadata cannot be fixed automatically
+        found = errors(c)
+        self.assertTrue(found[MissingLanguage][0].INDIVIDUAL_FIX)
+        self.assertFalse(found[MissingAccessibilityMetadata][0].INDIVIDUAL_FIX)
+        self.assertTrue(fix_errors(c, [e for v in found.values() for e in v]))
+        for name in ('a.html', 'd.html'):
+            root = c.parsed(name)
+            self.assertEqual((root.get('lang'), root.get('{http://www.w3.org/XML/1998/namespace}lang')), ('de-AT', 'de-AT'))
+        self.assertEqual(c.parsed('b.html').get('{http://www.w3.org/XML/1998/namespace}lang'), None)
+        self.assertFalse(c.opf_xpath('//opf:meta[@property]'))
+        self.assertEqual(set(errors(c)), {MissingAltText, SkippedHeadingLevel, MissingAccessibilityMetadata, MissingAccessibilitySummary})
+
+        # Only missing properties are reported
+        c = self.create_epub([cmi('a.html', html('<p>a</p><img src="i.png" alt="x"/>')), cmi('i.png', b'\x89PNG\r\n\x1a\n')])
+        metadata = c.opf_xpath('//opf:metadata')[0]
+        for prop, val in (('schema:accessibilityHazard', 'none'), ('schema:accessibilitySummary', 'Accessible')):
+            meta = metadata.makeelement('{http://www.idpf.org/2007/opf}meta', property=prop)
+            meta.text = val
+            metadata.append(meta)
+        found = errors(c)
+        self.assertEqual(set(found), {MissingAccessibilityMetadata})
+        self.assertEqual(found[MissingAccessibilityMetadata][0].missing, ['schema:accessMode', 'schema:accessModeSufficient', 'schema:accessibilityFeature'])
+
+        # SVG images need a title or label, nested <svg> elements are part of the outer image
+        svgs = (
+            '<svg xmlns="http://www.w3.org/2000/svg"><image href="i.png"/></svg>\n'
+            '<svg xmlns="http://www.w3.org/2000/svg"><title>A circle</title><circle r="1"/></svg>\n'
+            '<svg xmlns="http://www.w3.org/2000/svg" aria-label="A circle"><circle r="1"/></svg>\n'
+            '<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><circle r="1"/></svg>\n'
+            '<svg xmlns="http://www.w3.org/2000/svg"><title> </title><svg><title>Inner</title></svg></svg>\n'
+            '<svg xmlns="http://www.w3.org/2000/svg"><title>Outer</title><svg><circle r="1"/></svg></svg>\n'
+            '<img src="i.png"/>'
+        )
+        c = self.create_epub([cmi('a.html', html(svgs))])
+        alt = errors(c)[MissingAltText]
+        self.assertEqual([[loc[1] for loc in e.all_locations] for e in alt], [[1, 5, 7]])
+
+        # The accessibility checks are opt-in
+        c = self.create_epub([cmi('a.html', html('<p>a</p>', lang=''))])
+        self.assertFalse({type(e) for e in run_checks(c)} & set(found))
+        self.assertIn(MissingLanguage, {type(e) for e in run_checks(c, accessibility=True)})
+
+        # EPUB 2 books do not use the EPUB 3 accessibility metadata
+        c = self.create_epub([cmi('a.html', html('<p>a</p>'))], ver=2)
+        self.assertFalse(errors(c))
+        # and the lang attribute is not valid in their XHTML 1.1
+        c = self.create_epub([cmi('a.html', html('<p>a</p>', lang=''))], ver=2)
+        set_book_language('en')
+        self.assertTrue(fix_errors(c, errors(c)[MissingLanguage]))
+        root = c.parsed('a.html')
+        self.assertEqual((root.get('lang'), root.get('{http://www.w3.org/XML/1998/namespace}lang')), (None, 'en'))
+
+    def test_aria_roles(self) -> None:
+        from calibre.ebooks.oeb.polish.check.accessibility import MissingRole, check_accessibility
+        from calibre.ebooks.oeb.polish.check.main import fix_errors
+
+        def html(body: str, body_type: str = '') -> str:
+            return (
+                '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" lang="en"><head><title>t</title></head>'
+                f'<body{body_type}>{body}</body></html>'
+            )
+
+        def missing(c: Container) -> dict[str, list[int | None]]:
+            return {e.name: [loc[1] for loc in e.all_locations] for e in check_accessibility(c) if isinstance(e, MissingRole)}
+
+        # Each line has an element whose role is checked, with the expected role
+        lines = (
+            ('<section epub:type="chapter"><h1>c</h1></section>', 'doc-chapter'),
+            ('<section epub:type="bodymatter chapter"><h1>c</h1></section>', 'doc-chapter'),
+            ('<div epub:type="z3998:poem epigraph">e</div>', 'doc-epigraph'),
+            ('<a href="#n" epub:type="noteref">1</a>', 'doc-noteref'),
+            ('<aside epub:type="footnote" id="n">n</aside>', 'doc-footnote'),
+            ('<footer epub:type="footnote">n</footer>', 'doc-footnote'),
+            ('<aside epub:type="dedication">d</aside>', 'doc-dedication'),
+            ('<section epub:type="epigraph">e</section>', 'doc-epigraph'),
+            ('<nav epub:type="page-list"><ol><li><a href="a.html">1</a></li></ol></nav>', 'doc-pagelist'),
+            ('<span epub:type="pagebreak" id="p1" title="1"/>', 'doc-pagebreak'),
+            ('<hr epub:type="pagebreak" title="2"/>', 'doc-pagebreak'),
+            ('<a id="p3" epub:type="pagebreak" title="3"/>', 'doc-pagebreak'),
+            ('<h2 epub:type="subtitle">s</h2>', 'doc-subtitle'),
+            ('<figure epub:type="pullquote">q</figure>', 'doc-pullquote'),
+            ('<nav epub:type="toc"><ol><li><a href="a.html">a</a></li></ol></nav>', 'doc-toc'),
+            # Existing roles are left alone
+            ('<p epub:type="footnote" role="note">n</p>', 'note'),
+            # Types with no role and roles not allowed on the element
+            ('<section epub:type="titlepage">t</section>', None),
+            ('<section epub:type="cover">t</section>', None),
+            ('<ol epub:type="endnotes"><li epub:type="endnote">e</li></ol>', None),
+            ('<a href="#p" epub:type="pagebreak">4</a>', None),
+            ('<figure epub:type="pullquote"><figcaption>c</figcaption></figure>', None),
+            ('<li epub:type="footnote">n</li>', None),
+            ('<header epub:type="footnote">n</header>', None),
+            ('<article epub:type="chapter">c</article>', None),
+        )
+        c = self.create_epub([cmi('a.html', html('\n'.join(x[0] for x in lines), ' epub:type="chapter"')), cmi('b.html', html('<p>b</p>'))])
+        self.assertEqual(missing(c), {'a.html': [i + 1 for i, x in enumerate(lines) if x[1] not in (None, 'note')]})
+        errors = [e for e in check_accessibility(c) if isinstance(e, MissingRole)]
+        self.assertTrue(errors[0].INDIVIDUAL_FIX)
+        self.assertTrue(fix_errors(c, errors))
+        root = c.parsed('a.html')
+        self.assertIsNone(root[1].get('role'))
+        self.assertEqual([elem.get('role') for elem in root[1]], [x[1] for x in lines])
+        self.assertFalse(missing(c))
+        self.assertFalse(errors[0](c))
+
+        # The role attribute is not valid in the XHTML 1.1 used by EPUB 2
+        c = self.create_epub([cmi('a.html', html('<section epub:type="chapter">c</section>'))], ver=2)
+        self.assertFalse(missing(c))
+
+        # The navs calibre creates have the roles, except for landmarks, which
+        # has none, and roles set by the author are kept, unless they remove
+        # the semantics of the nav
+
+        def navs(c: Container) -> tuple[str, dict[str | None, _Element]]:
+            name = next(iter(c.manifest_items_with_property('nav')))
+            all_navs = tuple(c.parsed(name).iterdescendants(XHTML('nav')))
+            ans = {nav.get(EPUB('type')): nav for nav in all_navs}
+            self.assertEqual(len(ans), len(all_navs), 'There are multiple navs of the same type')
+            return name, ans
+
+        toc = TOC()
+        toc.add('A', 'a.html')
+        toc.page_list = [{'dest': 'a.html', 'frag': None, 'pagenum': 1}]
+        c = self.create_epub([cmi('a.html', html('<p>a</p>'))])
+        commit_nav_toc(c, toc, landmarks=[{'dest': 'a.html', 'frag': None, 'type': 'bodymatter', 'title': 'Start'}])
+        name, nav_map = navs(c)
+        self.assertEqual({k: v.get('role') for k, v in nav_map.items()}, {'toc': 'doc-toc', 'page-list': 'doc-pagelist', 'landmarks': None})
+        self.assertFalse(missing(c))
+        nav_map['toc'].set('role', 'navigation')
+        c.dirty(name)
+        commit_nav_toc(c, toc)
+        name, nav_map = navs(c)
+        self.assertEqual(nav_map['toc'].get('role'), 'navigation')
+        nav_map['toc'].set('role', 'none')
+        c.dirty(name)
+        commit_nav_toc(c, toc)
+        self.assertEqual(navs(c)[1]['toc'].get('role'), 'doc-toc')
+
+    def test_accessibility_tool_language(self) -> None:
+        from calibre.ebooks.oeb.polish.accessibility import (
+            HTML_LANGUAGE_ALL,
+            HTML_LANGUAGE_MISSING,
+            AccessibilityChanges,
+            apply_accessibility_changes,
+            book_languages,
+            html_files_without_language,
+            set_book_languages,
+        )
+
+        def html(lang: str = '') -> str:
+            return f'<html xmlns="http://www.w3.org/1999/xhtml"{lang}><head/><body><p>x</p></body></html>'
+
+        c = self.create_epub([('a.html', html(), None), ('b.html', html(' lang="fr" xml:lang="fr"'), None)])
+        self.assertEqual(book_languages(c), [])
+        self.assertEqual(html_files_without_language(c), ['a.html'])
+        self.assertTrue(AccessibilityChanges().is_empty)
+        self.assertFalse(set_book_languages(c, []))
+        self.assertTrue(set_book_languages(c, ['eng', 'fra']))
+        self.assertEqual(c.opf_xpath('//dc:language/text()'), ['en', 'fr'])
+        self.assertEqual(book_languages(c), ['eng', 'fra'])
+        # Country codes are kept
+        c.opf_xpath('//dc:language')[0].text = 'en-GB'
+        self.assertTrue(set_book_languages(c, ['fra', 'eng']))
+        self.assertEqual(c.opf_xpath('//dc:language/text()'), ['fr', 'en-GB'])
+        # dc:language is required
+        self.assertTrue(set_book_languages(c, []))
+        self.assertEqual(c.opf_xpath('//dc:language/text()'), ['und'])
+        self.assertEqual(book_languages(c), [])
+
+        def langs(c: Container) -> list[tuple[str | None, str | None]]:
+            return [(c.parsed(n).get('lang'), c.parsed(n).get('{http://www.w3.org/XML/1998/namespace}lang')) for n in ('a.html', 'b.html')]
+
+        # Without a book language the HTML files cannot be set
+        self.assertFalse(apply_accessibility_changes(c, AccessibilityChanges(html_language=HTML_LANGUAGE_MISSING)))
+        self.assertTrue(apply_accessibility_changes(c, AccessibilityChanges(languages=['deu'], html_language=HTML_LANGUAGE_MISSING)))
+        self.assertEqual(langs(c), [('de', 'de'), ('fr', 'fr')])
+        self.assertTrue(apply_accessibility_changes(c, AccessibilityChanges(html_language=HTML_LANGUAGE_ALL)))
+        self.assertEqual(langs(c), [('de', 'de'), ('de', 'de')])
+        self.assertFalse(apply_accessibility_changes(c, AccessibilityChanges(languages=['deu'], html_language=HTML_LANGUAGE_ALL)))
+
+        # The lang attribute is not valid in the XHTML 1.1 used by EPUB 2
+        c = self.create_epub([('a.html', html(), None), ('b.html', html(' xml:lang="fr"'), None)], ver=2)
+        self.assertTrue(apply_accessibility_changes(c, AccessibilityChanges(languages=['eng'], html_language=HTML_LANGUAGE_MISSING)))
+        self.assertEqual(langs(c), [(None, 'en'), (None, 'fr')])
+
+    def test_accessibility_tool_alt_text(self) -> None:
+        from calibre.ebooks.oeb.polish.accessibility import image_uses, set_alt_text
+
+        a = (
+            '<html xmlns="http://www.w3.org/1999/xhtml"><head/><body>'
+            '<figure><img src="i.png"/><figcaption>A  caption</figcaption></figure>'
+            '<p>Some text <img src="i.png" alt=""/> more text</p>'
+            '<img src="missing.png" alt="old"/></body></html>'
+        )
+        b = '<html xmlns="http://www.w3.org/1999/xhtml"><head/><body><div><img src="i.png" alt=" keep  this "/></div></body></html>'
+        c = self.create_epub([('b.html', b, None), ('a.html', a, None), ('i.png', b'', None)], spine=('b.html', 'a.html'))
+        uses = image_uses(c)
+        self.assertEqual(
+            [(u.html_name, u.index, u.image_name, u.alt) for u in uses],
+            [
+                ('b.html', 0, 'i.png', ' keep  this '),
+                ('a.html', 0, 'i.png', None),
+                ('a.html', 1, 'i.png', ''),
+                ('a.html', 2, None, 'old'),
+            ],
+        )
+        self.assertEqual(uses[1].context, 'A caption')
+        self.assertEqual(uses[2].context, 'Some text more text')
+        self.assertEqual(uses[0].context, '')
+        changed = set_alt_text(c, {('a.html', 0): 'A picture', ('a.html', 1): '', ('a.html', 2): None})
+        self.assertEqual(changed, {'a.html'})
+        self.assertEqual([u.alt for u in image_uses(c)], [' keep  this ', 'A picture', '', None])
+        self.assertIn('a.html', c.dirtied)
+        self.assertNotIn('b.html', c.dirtied)
+
+    def test_accessibility_tool_svg_alt_text(self) -> None:
+        from calibre.ebooks.oeb.polish.accessibility import image_uses, set_alt_text
+        from calibre.ebooks.oeb.polish.check.accessibility import images_without_alt
+
+        svg = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"'
+        body = (
+            f'<p id="cap">Figure  1\n caption</p>'
+            f'{svg} id="s0" aria-hidden="true" aria-labelledby="cap"><title>Figure\n 1</title><circle r="1"/></svg>'
+            '<img src="i.png" alt="An img"/>'
+            f'{svg} id="s2" aria-label="Old"><title>Old</title><svg><title>Nested</title></svg></svg>'
+            f'{svg} id="s3">\n  <image xlink:href="i.png"/></svg>'
+            f'{svg} id="s4" aria-labelledby="missing"><circle r="1"/></svg>'
+            f'{svg} id="s5" role="presentation"><circle r="1"/></svg>'
+            f'{svg} id="s6"><title id="t6">Referenced</title><title>Other</title></svg>'
+            '\n<p aria-describedby="t6">x</p>'
+        )
+        a = f'<html xmlns="http://www.w3.org/1999/xhtml"><head/><body>{body}</body></html>'
+        c = self.create_epub([('a.html', a, None), ('i.png', b'', None)])
+
+        def svg_elem(sid: str) -> _Element:
+            return c.parsed('a.html').xpath(f'//*[@id="{sid}"]')[0]
+
+        def ids_without_alt() -> list[str | None]:
+            return [e.get('id') or e.get('src') for e in images_without_alt(c.parsed('a.html'))]
+
+        uses = image_uses(c)
+        # Nested <svg> elements are part of the outer image and <img> tags and
+        # <svg> images are numbered together, in document order
+        self.assertEqual(
+            [(u.index, u.is_svg, u.image_name, u.alt, u.label) for u in uses],
+            [
+                (0, True, None, '', 'Figure 1 caption'),
+                (1, False, 'i.png', 'An img', 'An img'),
+                (2, True, None, 'Old', 'Old'),
+                (3, True, 'i.png', None, None),
+                (4, True, None, None, None),
+                (5, True, None, '', None),
+                (6, True, None, 'Referenced', 'Referenced'),
+            ],
+        )
+        # Check book reports the same images as having no description, in
+        # particular aria-labelledby that refers to nothing is not a description
+        self.assertEqual(ids_without_alt(), ['s3', 's4'])
+        # The text of SVG images, such as their titles, is not text near the image
+        self.assertEqual(uses[0].context, 'Figure 1 caption x')
+
+        # Unchanged descriptions do not modify the file, even when they differ in whitespace
+        self.assertFalse(set_alt_text(c, {('a.html', 0): '', ('a.html', 2): ' Old ', ('a.html', 5): ''}))
+        self.assertNotIn('a.html', c.dirtied)
+
+        # Marking as not decorative with the existing description only removes
+        # aria-hidden, the referenced text and the title are not changed
+        self.assertEqual(set_alt_text(c, {('a.html', 0): 'Figure 1 caption'}), {'a.html'})
+        s0 = svg_elem('s0')
+        self.assertEqual((s0.get('aria-hidden'), s0.get('aria-labelledby')), (None, 'cap'))
+        self.assertEqual(s0[0].text, 'Figure\n 1')
+        # Changing it replaces the reference, leaving the referenced text alone
+        set_alt_text(c, {('a.html', 0): 'A  circle'})
+        s0 = svg_elem('s0')
+        self.assertEqual((s0.get('aria-labelledby'), s0.get('aria-label'), s0[0].text), (None, None, 'A circle'))
+        self.assertEqual(svg_elem('cap').text, 'Figure  1\n caption')
+        # Marking as decorative keeps the description
+        set_alt_text(c, {('a.html', 0): ''})
+        self.assertEqual((svg_elem('s0').get('aria-hidden'), svg_elem('s0')[0].text), ('true', 'A circle'))
+
+        # Both aria-label and the title, used as a tooltip, are changed, the nested <svg> is not
+        set_alt_text(c, {('a.html', 2): 'New'})
+        s2 = svg_elem('s2')
+        self.assertEqual((s2.get('aria-label'), s2[0].text, s2[1][0].text), ('New', 'New', 'Nested'))
+        # A title is added to SVG images without a description
+        set_alt_text(c, {('a.html', 3): 'Cover', ('a.html', 4): 'Shape', ('a.html', 5): 'Dot', ('a.html', 1): ''})
+        s3 = svg_elem('s3')
+        self.assertEqual((s3[0].tag.rpartition('}')[2], s3[0].text, s3.text, s3[0].tail), ('title', 'Cover', '\n  ', '\n  '))
+        self.assertEqual((svg_elem('s4').get('aria-labelledby'), svg_elem('s4')[0].text), (None, 'Shape'))
+        self.assertIsNone(svg_elem('s5').get('role'))
+        self.assertEqual(ids_without_alt(), [])
+        self.assertEqual([u.alt for u in image_uses(c)], ['', '', 'New', 'Cover', 'Shape', 'Dot', 'Referenced'])
+
+        # Removing a description keeps titles other elements may refer to
+        set_alt_text(c, {('a.html', 6): None, ('a.html', 2): None})
+        s6 = svg_elem('s6')
+        self.assertEqual([(t.get('id'), t.text) for t in s6], [('t6', None)])
+        self.assertEqual((svg_elem('s2').get('aria-label'), len(svg_elem('s2'))), (None, 1))
+        self.assertEqual(ids_without_alt(), ['s2', 's6'])
+
+    def test_accessibility_tool_metadata(self) -> None:
+        from calibre.ebooks.oeb.polish.accessibility import (
+            ABSENT,
+            ACCESS_MODE,
+            FEATURE,
+            HAZARD,
+            PRESENT,
+            SUMMARY,
+            UNKNOWN,
+            hazard_states,
+            hazard_values,
+            read_accessibility_metadata,
+            set_accessibility_metadata,
+        )
+
+        def states(flashing: str, motion: str, sound: str) -> dict[str, str]:
+            return {'flashing': flashing, 'motionSimulation': motion, 'sound': sound}
+
+        for values, expected in (
+            ([], states(UNKNOWN, UNKNOWN, UNKNOWN)),
+            (['unknown'], states(UNKNOWN, UNKNOWN, UNKNOWN)),
+            (['none'], states(ABSENT, ABSENT, ABSENT)),
+            (['noFlashingHazard', 'sound'], states(ABSENT, UNKNOWN, PRESENT)),
+        ):
+            self.assertEqual(hazard_states(values), expected)
+            self.assertEqual(hazard_states(hazard_values(expected)), expected)
+        self.assertEqual(hazard_values(states(ABSENT, ABSENT, ABSENT)), ['none'])
+        self.assertEqual(hazard_values(states(UNKNOWN, UNKNOWN, UNKNOWN)), ['unknown'])
+        self.assertEqual(hazard_values(states(PRESENT, ABSENT, UNKNOWN)), ['flashing', 'noMotionSimulationHazard'])
+
+        c = self.create_epub([('a.html', '<html xmlns="http://www.w3.org/1999/xhtml"><head/><body><p>x</p></body></html>', None)])
+        opf = c.open(c.opf_name, 'rb').read().decode()
+        md = read_accessibility_metadata(c)
+        self.assertFalse(any(md.values()))
+        self.assertTrue(set_accessibility_metadata(c, {ACCESS_MODE: ['textual'], FEATURE: ['tableOfContents', ' readingOrder '], SUMMARY: ['A  summary']}))
+        md = read_accessibility_metadata(c)
+        self.assertEqual(md[ACCESS_MODE], ['textual'])
+        self.assertEqual(md[FEATURE], ['tableOfContents', 'readingOrder'])
+        self.assertEqual(md[SUMMARY], ['A summary'])
+        self.assertIn(c.opf_name, c.dirtied)
+        c.commit_item(c.opf_name)
+        self.assertNotEqual(c.open(c.opf_name, 'rb').read().decode(), opf)
+        # Unchanged values do not modify the OPF and other properties are kept
+        self.assertFalse(set_accessibility_metadata(c, {ACCESS_MODE: ['textual']}))
+        self.assertTrue(set_accessibility_metadata(c, {ACCESS_MODE: ['textual', 'visual'], HAZARD: ['none'], FEATURE: []}))
+        md = read_accessibility_metadata(c)
+        self.assertEqual(md[ACCESS_MODE], ['textual', 'visual'])
+        self.assertEqual(md[HAZARD], ['none'])
+        self.assertEqual(md[FEATURE], [])
+        self.assertEqual(md[SUMMARY], ['A summary'])
+
+
+def find_tests() -> unittest.TestSuite:
     import unittest
 
     return unittest.defaultTestLoader.loadTestsFromTestCase(Structure)
 
 
-def run_tests():
+def run_tests() -> None:
     from calibre.utils.run_tests import run_tests
 
     run_tests(find_tests)

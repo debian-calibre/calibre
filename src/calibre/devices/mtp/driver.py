@@ -1,16 +1,13 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2012, Kovid Goyal <kovid at kovidgoyal.net>
 
-import builtins
-import datetime
 import json
 import os
 import posixpath
 import sys
 import traceback
-from collections.abc import Sequence
 from io import BytesIO
-from typing import TYPE_CHECKING, NamedTuple
+from typing import IO, TYPE_CHECKING, Literal, NamedTuple, cast, overload
 
 from calibre import prints
 from calibre.constants import iswindows, numeric_version
@@ -19,13 +16,30 @@ from calibre.devices.mtp.base import debug
 from calibre.devices.mtp.defaults import DeviceDefaults
 from calibre.devices.mtp.filesystem_cache import FileOrFolder, convert_timestamp
 from calibre.ptempfile import PersistentTemporaryDirectory, SpooledTemporaryFile
+from calibre.utils import StreamOrPath
 from calibre.utils.filenames import shorten_components_to
 from calibre.utils.icu import lower as icu_lower
 from calibre.utils.localization import _
 from polyglot.builtins import as_bytes
 
 if TYPE_CHECKING:
+    import builtins
+    import datetime
+    from collections.abc import Callable, Sequence
+
+    from qt.core import QWidget
+
+    from calibre.devices.interface import BookList as _BookList
+    from calibre.devices.interface import DeviceInformation, DriveInfo
+    from calibre.devices.kindle.driver import APNXOpts
+    from calibre.devices.mtp.books import BookList
+    from calibre.devices.mtp.filesystem_cache import ListEntry as FSListEntry
+    from calibre.devices.mtp.unix.driver import MTPCandidate
     from calibre.devices.mtp.windows.driver import MTP_DEVICE as BASE
+    from calibre.ebooks.metadata.book.base import Metadata
+    from calibre.gui2.device_drivers.mtp_config import MTPConfig
+    from calibre.utils.config import JSONConfig
+    from calibre.utils.config_base import OptionValues
 else:  # ruff: ignore[collapsible-else-if]
     if iswindows:
         from calibre.devices.mtp.windows.driver import MTP_DEVICE as BASE
@@ -35,7 +49,7 @@ DEFAULT_THUMBNAIL_HEIGHT = 320
 
 
 class MTPInvalidSendPathError(PathError):
-    def __init__(self, folder):
+    def __init__(self, folder: str) -> None:
         PathError.__init__(self, f'Trying to send to ignored folder: {folder}')
         self.folder = folder
 
@@ -61,18 +75,21 @@ class MTP_DEVICE(BASE):
     SLOW_DRIVEINFO = True
     ASK_TO_ALLOW_CONNECT = True
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: str | None, **kwargs: str | None) -> None:
         BASE.__init__(self, *args, **kwargs)
-        self.plugboards = self.plugboard_func = None
-        self._prefs = None
+        self.plugboards: dict[str, dict[str, object]] | None = None
+        self.plugboard_func: Callable[..., object] | None = None
+        self._prefs: JSONConfig | None = None
         self.device_defaults = DeviceDefaults()
-        self.current_device_defaults = {}
+        self.current_device_defaults: dict[str, object] = {}
         self.current_vid = self.current_pid = -1
-        self.calibre_file_paths = {'metadata': self.METADATA_CACHE, 'driveinfo': self.DRIVEINFO}
+        self.calibre_file_paths: dict[str, str | builtins.list[str]] = {'metadata': self.METADATA_CACHE, 'driveinfo': self.DRIVEINFO}
+        self.location_paths: dict[str | None, str] | None = None
+        self.driveinfo: DriveInfo = {}
         self.highlight_ignored_folders = False
 
     @property
-    def prefs(self):
+    def prefs(self) -> JSONConfig:
         from calibre.utils.config import JSONConfig
 
         if self._prefs is None:
@@ -101,7 +118,7 @@ class MTP_DEVICE(BASE):
     def is_kindle(self) -> bool:
         return self.current_vid == 0x1949
 
-    def is_folder_ignored(self, storage_or_storage_id, path, ignored_folders=None):
+    def is_folder_ignored(self, storage_or_storage_id: object, path: Sequence[str], ignored_folders: dict[str, builtins.list[str]] | None = None) -> bool:
         storage_id = str(getattr(storage_or_storage_id, 'object_id', storage_or_storage_id))
         lpath = tuple(icu_lower(name) for name in path)
         if self.is_kindle and lpath and lpath[-1].endswith('.sdr'):
@@ -157,7 +174,7 @@ class MTP_DEVICE(BASE):
                     return True
         return False
 
-    def configure_for_kindle_app(self):
+    def configure_for_kindle_app(self) -> None:
         proxy = self.prefs
         with proxy:
             proxy['format_map'] = ['azw3', 'mobi', 'azw', 'azw1', 'azw4', 'pdf']
@@ -169,12 +186,12 @@ class MTP_DEVICE(BASE):
                 orig.insert(0, folder)
             proxy['send_to'] = orig
 
-    def configure_for_generic_epub_app(self):
+    def configure_for_generic_epub_app(self) -> None:
         with self.prefs:
             for x in ('format_map', 'send_template', 'send_to'):
                 del self.prefs[x]
 
-    def open(self, connected_device, library_uuid):
+    def open(self, connected_device: object, library_uuid: str | None) -> None:
         from calibre.utils.date import isoformat, utcnow
 
         device = connected_device
@@ -187,8 +204,11 @@ class MTP_DEVICE(BASE):
             h[self.current_serial_num] = (self.current_friendly_name, isoformat(utcnow()))
             self.prefs['history'] = h
 
-        self.current_device_defaults, self.current_vid, self.current_pid = self.device_defaults(device, self)
-        self.calibre_file_paths = self.current_device_defaults.get('calibre_file_paths', {'metadata': self.METADATA_CACHE, 'driveinfo': self.DRIVEINFO})
+        self.current_device_defaults, self.current_vid, self.current_pid = self.device_defaults(cast('str | MTPCandidate', device), self)
+        self.calibre_file_paths = cast(
+            'dict[str, str | builtins.list[str]]',
+            self.current_device_defaults.get('calibre_file_paths', {'metadata': self.METADATA_CACHE, 'driveinfo': self.DRIVEINFO}),
+        )
         self.THUMBNAIL_HEIGHT = DEFAULT_THUMBNAIL_HEIGHT
         if self.is_kindle:
             self.THUMBNAIL_HEIGHT = 500  # see kindle/driver.py
@@ -199,7 +219,7 @@ class MTP_DEVICE(BASE):
 
                 traceback.print_exc()
 
-    def list(self, path, recurse=False):
+    def list(self, path: str, recurse: bool = False) -> builtins.list[tuple[str, FSListEntry | builtins.list[FSListEntry]]]:
         if path.startswith('/'):
             q = self._main_id
             path = path[1:]
@@ -218,10 +238,10 @@ class MTP_DEVICE(BASE):
                 return list(storage.list(recurse))
         return []
 
-    def get_device_uid(self):
+    def get_device_uid(self) -> str | None:
         return self.current_serial_num
 
-    def ignore_connected_device(self, uid):
+    def ignore_connected_device(self, uid: str) -> None:
         bl = self.prefs['blacklist']
         if uid not in bl:
             bl.append(uid)
@@ -229,7 +249,7 @@ class MTP_DEVICE(BASE):
         if self.is_mtp_device_connected:
             self.eject()
 
-    def find_calibre_file_path(self, storage, key) -> builtins.list[str]:
+    def find_calibre_file_path(self, storage: FileOrFolder, key: str) -> builtins.list[str]:
         paths = self.calibre_file_paths[key]
         if isinstance(paths, str):
             paths = (paths,)
@@ -244,20 +264,20 @@ class MTP_DEVICE(BASE):
                 return path
         return paths[0].split('/')
 
-    def put_calibre_file(self, storage, key, stream, size):
+    def put_calibre_file(self, storage: FileOrFolder, key: str, stream: IO[bytes], size: int) -> None:
         path = self.find_calibre_file_path(storage, key)
         parent = self.ensure_parent(storage, path)
         self.put_file(parent, path[-1], stream, size)
 
     # Device information {{{
-    def _update_drive_info(self, storage, location_code, name=None):
+    def _update_drive_info(self, storage: FileOrFolder, location_code: str, name: str | None = None) -> None:
         import uuid
 
         from calibre.utils.config import from_json, to_json
         from calibre.utils.date import isoformat, now
 
         f = storage.find_path(self.find_calibre_file_path(storage, 'driveinfo'))
-        dinfo = {}
+        dinfo: dict[str, object] = {}
         if f is not None:
             try:
                 stream = self.get_mtp_file(f)
@@ -281,36 +301,41 @@ class MTP_DEVICE(BASE):
         self.put_calibre_file(storage, 'driveinfo', BytesIO(raw), len(raw))
         self.driveinfo[location_code] = dinfo
 
-    def get_driveinfo(self):
+    def get_driveinfo(self) -> DriveInfo:
         if not self.driveinfo:
             self.driveinfo = {}
             for sid, location_code in ((self._main_id, 'main'), (self._carda_id, 'A'), (self._cardb_id, 'B')):
                 if sid is None:
                     continue
-                self._update_drive_info(self.filesystem_cache.storage(sid), location_code)
+                storage = self.filesystem_cache.storage(sid)
+                assert storage is not None
+                self._update_drive_info(storage, location_code)
         return self.driveinfo
 
-    def get_device_information(self, end_session=True):
+    def get_device_information(self, end_session: bool = True) -> DeviceInformation:
         self.report_progress(1.0, _('Get device information...'))
         dinfo = self.get_basic_device_information()
-        return tuple(list(dinfo) + [self.driveinfo])
+        # The device name and versions can be None if the device does not report them
+        return cast('DeviceInformation', tuple(list(dinfo) + [self.driveinfo]))
 
-    def card_prefix(self, end_session=True):
+    def card_prefix(self, end_session: bool = True) -> tuple[str | None, str | None]:
         return (self._carda_id, self._cardb_id)
 
-    def set_driveinfo_name(self, location_code, name):
+    def set_driveinfo_name(self, location_code: str, name: str) -> None:
         sid = {'main': self._main_id, 'A': self._carda_id, 'B': self._cardb_id}.get(location_code, None)
         if sid is None:
             return
-        self._update_drive_info(self.filesystem_cache.storage(sid), location_code, name=name)
+        storage = self.filesystem_cache.storage(sid)
+        assert storage is not None
+        self._update_drive_info(storage, location_code, name=name)
 
     # }}}
 
     # Get list of books from device, with metadata {{{
-    def filesystem_callback(self, msg):
+    def filesystem_callback(self, msg: str) -> None:
         self.report_progress(0, msg)
 
-    def books(self, oncard=None, end_session=True):
+    def books(self, oncard: str | None = None, end_session: bool = True) -> BookList:
         from calibre.devices.mtp.books import Book, BookList, JSONCodec
 
         self.report_progress(0, _('Listing files, this can take a while'))
@@ -330,6 +355,7 @@ class MTP_DEVICE(BASE):
         self.report_progress(0, _('Reading e-book metadata'))
         # Read the cache if it exists
         storage = self.filesystem_cache.storage(sid)
+        assert storage is not None
         cache = storage.find_path(self.find_calibre_file_path(storage, 'metadata'))
         if cache is not None:
             json_codec = JSONCodec()
@@ -381,7 +407,7 @@ class MTP_DEVICE(BASE):
         self.report_progress(1, _('Finished reading metadata from device'))
         return bl
 
-    def read_file_metadata(self, mtp_file):
+    def read_file_metadata(self, mtp_file: FileOrFolder) -> Metadata:
         from calibre.customize.ui import quick_metadata
         from calibre.ebooks.metadata.meta import get_metadata
 
@@ -390,7 +416,9 @@ class MTP_DEVICE(BASE):
             # locate the actual file containing KFX book metadata
             stream = BytesIO()
             try:
-                self.get_file_by_name(stream, mtp_file.parent, *(mtp_file.name[:-4] + '.sdr', 'assets', 'metadata.kfx'))
+                parent = mtp_file.parent
+                assert parent is not None
+                self.get_file_by_name(stream, parent, *(mtp_file.name[:-4] + '.sdr', 'assets', 'metadata.kfx'))
             except Exception:
                 pass  # expect failure for sideloaded books and personal documents
             else:
@@ -403,7 +431,7 @@ class MTP_DEVICE(BASE):
         with quick_metadata:
             return get_metadata(stream, stream_type=ext, force_read_metadata=True, pattern=self.build_template_regexp())
 
-    def write_metadata_cache(self, storage, bl):
+    def write_metadata_cache(self, storage: FileOrFolder, bl: BookList) -> None:
         from calibre.devices.mtp.books import JSONCodec
 
         if bl.storage_id != storage.storage_id:
@@ -417,35 +445,40 @@ class MTP_DEVICE(BASE):
         stream.seek(0)
         self.put_calibre_file(storage, 'metadata', stream, size)
 
-    def sync_booklists(self, booklists, end_session=True):
+    def sync_booklists(self, booklists: Sequence[_BookList | None], end_session: bool = True) -> None:
         debug('sync_booklists() called')
         for bl in booklists:
-            if getattr(bl, 'storage_id', None) is None:
+            storage_id = getattr(bl, 'storage_id', None)
+            if storage_id is None:
                 continue
-            storage = self.filesystem_cache.storage(bl.storage_id)
+            storage = self.filesystem_cache.storage(storage_id)
             if storage is None:
                 continue
-            self.write_metadata_cache(storage, bl)
+            # Only the booklists created by books() have a storage_id
+            self.write_metadata_cache(storage, cast('BookList', bl))
         debug('sync_booklists() ended')
 
     # }}}
 
     # Get files from the device {{{
-    def get_file(self, path, outfile, end_session=True):
+    def get_file(self, path: str, outfile: IO[bytes], end_session: bool = True) -> None:
         f = self.filesystem_cache.resolve_mtp_id_path(path)
         self.get_mtp_file(f, outfile)
 
-    def get_file_by_name(self, outfile, parent: FileOrFolder, *names: str) -> None:
+    def get_file_by_name(self, outfile: IO[bytes], parent: FileOrFolder, *names: str) -> None:
         'Get the file parent/ + "/".join(names) and put it into outfile. Works with files not cached in FilesystemCache.'
         self.get_mtp_file_by_name(parent, *names, stream=outfile)
 
     def list_folder_by_name(self, parent: FileOrFolder, *names: str) -> tuple[ListEntry, ...]:
         'List the contents of the folder parent/ + "/".join(names). Works with folders not cached in FilesystemCache.'
-        return tuple(ListEntry(x['name'], x['is_folder'], x['size'], convert_timestamp(x['modified'])) for x in self.list_mtp_folder_by_name(parent, *names))
+        return tuple(
+            ListEntry(cast('str', x['name']), cast('bool', x['is_folder']), cast('int', x['size']), convert_timestamp(x['modified']))
+            for x in self.list_mtp_folder_by_name(parent, *names)
+        )
 
-    def prepare_addable_books(self, paths):
+    def prepare_addable_books(self, paths: builtins.list[str]) -> builtins.list[str | tuple[str, Exception, str]]:
         tdir = PersistentTemporaryDirectory('_prepare_mtp')
-        ans = []
+        ans: builtins.list[str | tuple[str, Exception, str]] = []
         for path in paths:
             try:
                 f = self.filesystem_cache.resolve_mtp_id_path(path)
@@ -472,12 +505,14 @@ class MTP_DEVICE(BASE):
                             out_folder, out_file = os.path.split(out.name)
                             new_sdr_path = os.path.join(out_folder, out_file[:-4] + '.sdr')
                             os.mkdir(new_sdr_path)
-                            self.scan_sdr_for_kfx_files(f.parent, (f.name[:-4] + '.sdr', 'assets'), new_sdr_path)
+                            parent = f.parent
+                            assert parent is not None
+                            self.scan_sdr_for_kfx_files(parent, (f.name[:-4] + '.sdr', 'assets'), new_sdr_path)
                         except Exception:
                             traceback.print_exc()
         return ans
 
-    def scan_sdr_for_kfx_files(self, parent, folders, new_sdr_path):
+    def scan_sdr_for_kfx_files(self, parent: FileOrFolder, folders: tuple[str, ...], new_sdr_path: str) -> None:
         for ff in self.list_folder_by_name(parent, *folders):
             if ff.is_folder:
                 self.scan_sdr_for_kfx_files(parent, folders + (ff.name,), new_sdr_path)
@@ -490,11 +525,11 @@ class MTP_DEVICE(BASE):
 
     # Sending files to the device {{{
 
-    def set_plugboards(self, plugboards, pb_func):
+    def set_plugboards(self, plugboards: dict[str, dict[str, object]], pb_func: Callable[..., object]) -> None:
         self.plugboards = plugboards
         self.plugboard_func = pb_func
 
-    def create_upload_path(self, path, mdata, fname, routing):
+    def create_upload_path(self, path: str, mdata: Metadata, fname: str, routing: dict[str, str]) -> tuple[str, ...]:
         from calibre.devices.utils import create_upload_path
         from calibre.utils.filenames import ascii_filename as sanitize
 
@@ -514,12 +549,13 @@ class MTP_DEVICE(BASE):
         )
         return tuple(x for x in filepath.split('/'))
 
-    def prefix_for_location(self, on_card):
+    def prefix_for_location(self, on_card: str | None) -> str:
         if self.location_paths is None:
             self.location_paths = {}
             for sid, loc in ((self._main_id, None), (self._carda_id, 'carda'), (self._cardb_id, 'cardb')):
                 if sid is not None:
                     storage = self.filesystem_cache.storage(sid)
+                    assert storage is not None
                     prefixes = self.get_pref('send_to')
                     p = None
                     for path in prefixes:
@@ -533,7 +569,7 @@ class MTP_DEVICE(BASE):
 
         return self.location_paths[on_card]
 
-    def ensure_parent(self, storage, path):
+    def ensure_parent(self, storage: FileOrFolder, path: Sequence[str]) -> FileOrFolder:
         parent = storage
         pos = list(path)[:-1]
         while pos:
@@ -542,7 +578,14 @@ class MTP_DEVICE(BASE):
             parent = self.create_folder(parent, name)
         return parent
 
-    def upload_books(self, files, names, on_card=None, end_session=True, metadata=None):
+    def upload_books(
+        self,
+        files: Sequence[str],
+        names: Sequence[str],
+        on_card: str | None = None,
+        end_session: bool = True,
+        metadata: Sequence[Metadata] | None = None,
+    ) -> builtins.list[tuple[FileOrFolder, int]]:
         debug('upload_books() called')
         from calibre.devices.utils import sanity_check
 
@@ -551,32 +594,26 @@ class MTP_DEVICE(BASE):
         sid = {'carda': self._carda_id, 'cardb': self._cardb_id}.get(on_card, self._main_id)
         bl_idx = {'carda': 1, 'cardb': 2}.get(on_card, 0)
         storage = self.filesystem_cache.storage(sid)
+        assert storage is not None
 
-        ans = []
+        ans: builtins.list[tuple[FileOrFolder, int]] = []
         self.report_progress(0, _('Transferring books to device...'))
-        i, total = 0, len(files)
+        total = len(files)
 
         routing = dict(self.get_pref('rules'))
 
         assert metadata is not None
-        for infile, fname, mi in zip(files, names, metadata):
+        for i, (infile, fname, mi) in enumerate(zip(files, names, metadata), 1):
             path = self.create_upload_path(prefix, mi, fname, routing)
             if path and self.is_folder_ignored(storage, path):
                 raise MTPInvalidSendPathError('/'.join(path))
             parent = self.ensure_parent(storage, path)
-            if hasattr(infile, 'read'):
-                pos = infile.tell()
-                infile.seek(0, 2)
-                sz = infile.tell()
-                infile.seek(pos)
-                stream = infile
-                close = False
-            else:
-                sz = os.path.getsize(infile)
-                stream = open(infile, 'rb')
-                close = True
-            relpath = parent.mtp_relpath + (path[-1].lower(),)
-            try:
+            with StreamOrPath(infile, 'rb') as stream:
+                pos = stream.tell()
+                stream.seek(0, 2)
+                sz = stream.tell()
+                stream.seek(pos)
+                relpath = parent.mtp_relpath + (path[-1].lower(),)
                 mtp_file = self.put_file(parent, path[-1], stream, sz)
                 try:
                     self.upload_cover(parent, relpath, storage, mi, stream)
@@ -591,11 +628,7 @@ class MTP_DEVICE(BASE):
                     import traceback
 
                     traceback.print_exc()
-            finally:
-                if close:
-                    stream.close()
             ans.append((mtp_file, bl_idx))
-            i += 1
             self.report_progress(i / total, _('Transferred %s to device') % mi.title)
 
         self.report_progress(1, _('Transfer to device finished...'))
@@ -607,9 +640,9 @@ class MTP_DEVICE(BASE):
         parent_folder: FileOrFolder,
         relpath_of_ebook_on_device: Sequence[str],
         storage: FileOrFolder,
-        mi,
-        ebook_file_as_stream,
-    ):
+        mi: Metadata,
+        ebook_file_as_stream: IO[bytes],
+    ) -> None:
         if self.is_kindle:
             self.upload_kindle_thumbnail(parent_folder, relpath_of_ebook_on_device, storage, mi, ebook_file_as_stream)
 
@@ -620,9 +653,9 @@ class MTP_DEVICE(BASE):
         parent_folder: FileOrFolder,
         relpath_of_ebook_on_device: Sequence[str],
         storage: FileOrFolder,
-        mi,
-        ebook_file_as_stream,
-    ):
+        mi: Metadata,
+        ebook_file_as_stream: IO[bytes],
+    ) -> None:
         coverdata = getattr(mi, 'thumbnail', None)
         if not coverdata or not coverdata[2]:
             return
@@ -669,11 +702,11 @@ class MTP_DEVICE(BASE):
                     self.delete_file_or_folder(cache)
                 self.delete_file_or_folder(index)
 
-    def sync_kindle_thumbnails(self):
+    def sync_kindle_thumbnails(self) -> None:
         for storage in self.filesystem_cache.entries:
             self._sync_kindle_thumbnails(storage)
 
-    def _sync_kindle_thumbnails(self, storage):
+    def _sync_kindle_thumbnails(self, storage: FileOrFolder) -> None:
         system_thumbnails_dir = storage.find_path(('system', 'thumbnails'))
         amazon_cover_bug_cache_dir = storage.find_path(('amazon-cover-bug',))
         if system_thumbnails_dir is None or amazon_cover_bug_cache_dir is None:
@@ -694,7 +727,7 @@ class MTP_DEVICE(BASE):
 
     # }}}
 
-    def upload_apnx(self, path_of_book_on_device, storage, mi, filepath, apnx_opts):
+    def upload_apnx(self, path_of_book_on_device: Sequence[str], storage: FileOrFolder, mi: Metadata, filepath: str, apnx_opts: APNXOpts) -> None:
         debug('upload_apnx() called')
         name = path_of_book_on_device[-1].rpartition('.')[0]
         debug('Uploading APNX file for', path_of_book_on_device)
@@ -710,7 +743,9 @@ class MTP_DEVICE(BASE):
             cust_col_name = apnx_opts.custom_col_name
             if cust_col_name:
                 try:
-                    custom_page_count = int(mi.get(cust_col_name, 0))
+                    val = mi.get(cust_col_name, 0)
+                    assert isinstance(val, (int, float, str))  # failures are handled below
+                    custom_page_count = int(val)
                 except Exception:
                     pass
 
@@ -747,15 +782,16 @@ class MTP_DEVICE(BASE):
             os.remove(apnx_local_path)
         debug('upload_apnx() ended')
 
-    def add_books_to_metadata(self, locations, metadata, booklists):
+    def add_books_to_metadata(self, locations: Sequence[tuple[object, ...]], metadata: Sequence[Metadata], booklists: Sequence[_BookList]) -> None:
         mtp_files = locations
         debug('add_books_to_metadata() called')
         from calibre.devices.mtp.books import Book
 
-        i, total = 0, len(mtp_files)
+        total = len(mtp_files)
         self.report_progress(0, _('Adding books to device metadata listing...'))
-        for x, mi in zip(mtp_files, metadata):
-            mtp_file, bl_idx = x
+        for i, (x, mi) in enumerate(zip(mtp_files, metadata), 1):
+            # locations is the list returned by upload_books()
+            mtp_file, bl_idx = cast('tuple[FileOrFolder, int]', x)
             bl = booklists[bl_idx]
             book = Book(mtp_file.storage_id, '/'.join(mtp_file.mtp_relpath), other=mi)
             book = bl.add_book(book, replace_metadata=True)
@@ -763,7 +799,6 @@ class MTP_DEVICE(BASE):
                 book.size = mtp_file.size
                 book.datetime = mtp_file.last_modified.timetuple()
                 book.path = mtp_file.mtp_id_path
-            i += 1
             self.report_progress(i / total, _('Added %s') % mi.title)
 
         self.report_progress(1, _('Adding complete'))
@@ -772,15 +807,15 @@ class MTP_DEVICE(BASE):
     # }}}
 
     # Removing books from the device {{{
-    def recursive_delete(self, obj):
+    def recursive_delete(self, obj: FileOrFolder) -> None:
         parent = self.delete_file_or_folder(obj)
-        if parent.empty and parent.can_delete and not parent.is_system:
+        if parent is not None and parent.empty and parent.can_delete and not parent.is_system:
             try:
                 self.recursive_delete(parent)
             except Exception:
                 prints('Failed to delete parent: {}, ignoring'.format('/'.join(parent.full_path)))
 
-    def delete_books(self, paths, end_session=True):
+    def delete_books(self, paths: Sequence[str], end_session: bool = True) -> None:
         self.report_progress(0, _('Deleting books from device...'))
 
         for i, path in enumerate(paths):
@@ -789,11 +824,12 @@ class MTP_DEVICE(BASE):
             storage = f.storage
             self.recursive_delete(f)
             if self.is_kindle:
+                assert storage is not None
                 self.delete_kindle_cover_thumbnail_for(storage, fpath)
             self.report_progress((i + 1) / float(len(paths)), _('Deleted %s') % path)
         self.report_progress(1, _('All books deleted'))
 
-    def remove_books_from_metadata(self, paths, booklists):
+    def remove_books_from_metadata(self, paths: Sequence[str], booklists: Sequence[_BookList]) -> None:
         self.report_progress(0, _('Removing books from metadata'))
 
         class NextPath(Exception):
@@ -816,50 +852,62 @@ class MTP_DEVICE(BASE):
 
     # Settings {{{
 
-    def get_pref(self, key):
+    @overload
+    def get_pref(self, key: Literal['format_map', 'send_to']) -> builtins.list[str]: ...
+    @overload
+    def get_pref(self, key: Literal['send_template']) -> str: ...
+    @overload
+    def get_pref(self, key: Literal['rules']) -> builtins.list[tuple[str, str]]: ...
+    @overload
+    def get_pref(self, key: Literal['ignored_folders']) -> dict[str, builtins.list[str]]: ...
+    @overload
+    def get_pref(self, key: str) -> object: ...
+    def get_pref(self, key: str) -> object:
         """Get the setting named key. First looks for a device specific setting.
         If that is not found looks for a device default and if that is not
         found uses the global default."""
-        dd = self.current_device_defaults if self.is_mtp_device_connected else {}
+        dd: dict[str, object] = self.current_device_defaults if self.is_mtp_device_connected else {}
         dev_settings = self.prefs.get(f'device-{self.current_serial_num}', {})
         default_value = dd.get(key, self.prefs[key])
         return dev_settings.get(key, default_value)
 
-    def config_widget(self):
+    def config_widget(self) -> MTPConfig:
         from calibre.gui2.device_drivers.mtp_config import MTPConfig
 
         return MTPConfig(self, highlight_ignored_folders=self.highlight_ignored_folders)
 
-    def save_settings(self, config_widget):
-        config_widget.commit()
+    def save_settings(self, config_widget: QWidget) -> None:
+        cast('MTPConfig', config_widget).commit()
 
-    def settings(self):
-        class Opts:
-            def __init__(s):
+    def settings(self) -> OptionValues:
+        from calibre.utils.config_base import OptionValues
+
+        class Opts(OptionValues):
+            def __init__(s) -> None:
                 s.format_map = self.get_pref('format_map')
 
         return Opts()
 
     @property
-    def save_template(self):
+    def save_template(self) -> str:
         return self.get_pref('send_template')
 
-    def get_user_blacklisted_devices(self):
+    def get_user_blacklisted_devices(self) -> dict[str, str]:
         bl = frozenset(self.prefs['blacklist'])
-        ans = {}
+        ans: dict[str, str] = {}
         for dev, x in self.prefs['history'].items():
             name = x[0]
             if dev in bl:
                 ans[dev] = name
         return ans
 
-    def set_user_blacklisted_devices(self, devices):
+    def set_user_blacklisted_devices(self, devices: dict[str, str]) -> None:
         self.prefs['blacklist'] = list(devices)
 
     # }}}
 
 
-def main():
+def main() -> None:
     import io
     from pprint import pprint
 
@@ -890,6 +938,7 @@ def main():
         data = f.getvalue()
         print('Got', files[0].name, 'of size:', len(data))
         parent = parent.folder_named(docs)
+        assert parent is not None
         f.seek(0)
         destname = 'mtp-driver-test.' + files[0].name.rpartition('.')[2]
         m = dev.put_file(parent, destname, f, len(data))

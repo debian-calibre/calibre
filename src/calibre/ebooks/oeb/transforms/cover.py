@@ -2,20 +2,28 @@
 # License: GPLv3 Copyright: 2010, Kovid Goyal <kovid@kovidgoyal.net>
 
 import textwrap
+from typing import TYPE_CHECKING, cast
 
-from calibre import guess_type
+from calibre import guess_type, prepare_string_for_xml
 from calibre.utils.imghdr import identify
+from calibre.utils.localization import lang_as_bcp47
 from calibre.utils.xml_parse import safe_xml_fromstring
 from polyglot.urllib import unquote
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 
 class CoverManager:
     SVG_TEMPLATE = textwrap.dedent('''\
-        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+        <html xmlns="http://www.w3.org/1999/xhtml"__lang__>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 <meta name="calibre:cover" content="true" />
-                <title>Cover</title>
+                <title>__title__</title>
                 <style type="text/css" title="override_css">
                     @page {padding: 0pt; margin:0pt}
                     body { text-align: center; padding:0pt; margin: 0pt; }
@@ -27,6 +35,7 @@ class CoverManager:
                         xmlns:xlink="http://www.w3.org/1999/xlink"
                         width="100%%" height="100%%" viewBox="__viewbox__"
                         preserveAspectRatio="__ar__">
+                        <title>__title__</title>
                         <image width="__width__" height="__height__" xlink:href="%s"/>
                     </svg>
                 </div>
@@ -35,11 +44,11 @@ class CoverManager:
         ''')
 
     NONSVG_TEMPLATE = textwrap.dedent('''\
-        <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+        <html xmlns="http://www.w3.org/1999/xhtml"__lang__>
             <head>
                 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
                 <meta name="calibre:cover" content="true" />
-                <title>Cover</title>
+                <title>__title__</title>
                 <style type="text/css" title="override_css">
                     @page {padding: 0pt; margin:0pt}
                     body { text-align: center; padding:0pt; margin: 0pt }
@@ -49,13 +58,40 @@ class CoverManager:
             </head>
             <body>
                 <div>
-                    <img src="%s" alt="cover" __style__ />
+                    <img src="%s" alt="__title__" __style__ />
                 </div>
             </body>
         </html>
     ''')
 
-    def __init__(self, no_default_cover=False, no_svg_cover=False, preserve_aspect_ratio=False, fixed_size=None):
+    @staticmethod
+    def fill_metadata(template: str, title: str, lang: str | None) -> str:
+        # The title of the book is the text alternative of the cover image for
+        # screen readers, and the language of the book is the language of the
+        # page. The template is later used with %, so escape that too.
+        def escape(x: str) -> str:
+            return prepare_string_for_xml(x, True).replace('%', '%%')
+
+        template = template.replace('__title__', escape(title.strip() or 'Cover'))
+        return template.replace('__lang__', f' xml:lang="{escape(lang)}"' if lang else '')
+
+    @staticmethod
+    def book_language(oeb: OEBBook) -> str | None:
+        # The language of the book as a BCP 47 language tag, for use in the
+        # lang attributes of HTML files. A language guessed from the calibre
+        # interface language is not used, as it is likely to be wrong.
+        for lang in oeb.metadata.language:
+            if not lang.is_fallback and (ans := lang_as_bcp47(str(lang))):
+                return ans
+        return None
+
+    def __init__(
+        self,
+        no_default_cover: bool = False,
+        no_svg_cover: bool = False,
+        preserve_aspect_ratio: bool = False,
+        fixed_size: tuple[object, object] | None = None,
+    ) -> None:
         self.no_default_cover = no_default_cover
         self.no_svg_cover = no_svg_cover
         self.preserve_aspect_ratio = preserve_aspect_ratio
@@ -70,12 +106,12 @@ class CoverManager:
             style = f'style="height: {height}; width: {width}"'
         self.non_svg_template = self.NONSVG_TEMPLATE.replace('__style__', style)
 
-    def __call__(self, oeb, opts, log):
+    def __call__(self, oeb: OEBBook, opts: Values, log: Log) -> None:
         self.oeb = oeb
         self.log = log
         self.insert_cover()
 
-    def default_cover(self):
+    def default_cover(self) -> str | None:
         """
         Create a generic cover for books that don't have a cover
         """
@@ -88,15 +124,16 @@ class CoverManager:
         try:
             from calibre.ebooks.covers import create_cover
 
-            series = series_index = None
+            series: str | None = None
+            series_index: float | None = None
             if m.series:
                 try:
-                    series, series_index = str(m.series[0]), m.series_index[0]
-                except IndexError:
+                    series, series_index = str(m.series[0]), float(str(m.series_index[0]))
+                except IndexError, ValueError:
                     pass
             img_data = create_cover(title, authors, series, series_index)
             id, href = self.oeb.manifest.generate('cover', 'cover_image.jpg')
-            item = self.oeb.manifest.add(id, href, guess_type('t.jpg')[0], data=img_data)
+            item = self.oeb.manifest.add(id, href, cast('str', guess_type('t.jpg')[0]), data=img_data)
             m.clear('cover')
             m.add('cover', item.id)
 
@@ -105,19 +142,21 @@ class CoverManager:
             self.log.exception('Failed to generate default cover')
         return None
 
-    def inspect_cover(self, href):
+    def inspect_cover(self, href: str) -> tuple[int, int]:
         from calibre.ebooks.oeb.base import urlnormalize
 
         for x in self.oeb.manifest:
             if x.href == urlnormalize(href):
                 try:
                     raw = x.data
+                    # an image item, anything else made identify() raise, which is caught below
+                    assert isinstance(raw, (str, bytes))
                     return identify(raw)[1:]
                 except Exception:
                     self.log.exception('Failed to read cover image dimensions')
         return -1, -1
 
-    def insert_cover(self):
+    def insert_cover(self) -> None:
         from calibre.ebooks.oeb.base import urldefrag
 
         g, m = self.oeb.guide, self.oeb.manifest
@@ -141,9 +180,10 @@ class CoverManager:
 
             if href is not None:
                 templ = self.non_svg_template if self.no_svg_cover else self.svg_template
-                tp = templ % unquote(href)
+                title = str(self.oeb.metadata.title[0]) if self.oeb.metadata.title else ''
+                tp = self.fill_metadata(templ, title, self.book_language(self.oeb)) % unquote(href)
                 id, href = m.generate('titlepage', 'titlepage.xhtml')
-                item = m.add(id, href, guess_type('t.xhtml')[0], data=safe_xml_fromstring(tp))
+                item = m.add(id, href, cast('str', guess_type('t.xhtml')[0]), data=safe_xml_fromstring(tp))
         else:
             item = self.oeb.manifest.hrefs[urldefrag(self.oeb.guide['titlepage'].href)[0]]
         if item is not None:

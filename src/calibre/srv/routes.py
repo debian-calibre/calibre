@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
+import annotationlib
 import http.client
 import inspect
 import json as jsonlib
@@ -9,10 +10,10 @@ import re
 import sys
 import textwrap
 import time
-from collections.abc import Callable
+from collections.abc import Callable, Iterable, Iterator
 from dataclasses import dataclass
 from operator import attrgetter
-from typing import IO, TYPE_CHECKING, Any, Concatenate, Literal, Protocol
+from typing import TYPE_CHECKING, Concatenate, Literal, Protocol, Self, cast
 from urllib.parse import quote as urlquote
 
 from calibre.srv.errors import HTTPNotFound, HTTPSimpleResponse, RouteError
@@ -20,6 +21,7 @@ from calibre.srv.utils import http_date
 from calibre.utils.serialize import MSGPACK_MIME, json_dumps, msgpack_dumps
 
 if TYPE_CHECKING:
+    from calibre.srv.auth import AuthController
     from calibre.srv.handler import Context
     from calibre.srv.http_response import RequestData
 else:
@@ -29,13 +31,10 @@ default_methods = frozenset(('HEAD', 'GET'))
 
 
 class JSONEndpoint:
-    def loads(self, *a, **kw) -> Any:
-        return jsonlib.loads(*a, **kw)
+    loads = staticmethod(jsonlib.loads)
+    dumps = staticmethod(jsonlib.dumps)
 
-    def dumps(self, *a, **kw) -> str:
-        return jsonlib.dumps(*a, **kw)
-
-    def __call__(self, ctx: Context, rd: RequestData, endpoint: RouteFunction, output: Any):
+    def __call__(self, ctx: Context, rd: RequestData, endpoint: RouteFunction, output: object) -> object:
         rd.outheaders.set('Content-Type', 'application/json; charset=UTF-8', replace_all=True)
         if isinstance(output, bytes) or hasattr(output, 'fileno'):
             ans = output  # Assume output is already UTF-8 encoded json
@@ -47,7 +46,7 @@ class JSONEndpoint:
 json = JSONEndpoint()
 
 
-def msgpack(ctx, rd, endpoint, output):
+def msgpack(ctx: Context, rd: RequestData, endpoint: RouteFunction, output: object) -> object:
     rd.outheaders.set('Content-Type', MSGPACK_MIME, replace_all=True)
     if isinstance(output, bytes) or hasattr(output, 'fileno'):
         ans = output  # Assume output is already msgpack encoded
@@ -56,27 +55,29 @@ def msgpack(ctx, rd, endpoint, output):
     return ans
 
 
-def msgpack_or_json(ctx, rd, endpoint, output):
+def msgpack_or_json(ctx: Context, rd: RequestData, endpoint: RouteFunction, output: object) -> object:
     accept = rd.inheaders.get('Accept', all=True)
     func = msgpack if MSGPACK_MIME in accept else json
     return func(ctx, rd, endpoint, output)
 
 
-def route_key(route):
+def route_key(route: str) -> str:
     return route.partition('{')[0].rstrip('/')  # ]]]}}))
 
 
 class EndpointFunction(Protocol):
-    def __call__(self, ctx: Context, rd: RequestData, *path_segments: Any) -> Any: ...
+    def __call__(self, ctx: Context, rd: RequestData, *path_segments: object) -> object: ...
 
 
-PostProcessFunc = Callable[[Context, RequestData, 'RouteFunction', Any], bytes | str | IO[bytes]]
+# Converts the output of an endpoint, the result is passed to
+# HTTPConnection.finalize_output(), which accepts many kinds of output
+PostProcessFunc = Callable[[Context, RequestData, 'RouteFunction', object], object]
 
 
-class types_dict(dict):
+class types_dict(dict[str, type]):
     _hash_val: int
 
-    def __new__(cls, types: dict[str, type]) -> types_dict:
+    def __new__(cls, types: dict[str, type]) -> Self:
         ans = super().__new__(cls, types)
         ans._hash_val = hash(tuple(sorted(types.items())))
         return ans
@@ -87,7 +88,7 @@ class types_dict(dict):
 
 @dataclass(unsafe_hash=True)
 class RouteFunction:
-    f: Any
+    f: Callable[..., object]
     route: str
     route_key: str
     types: types_dict
@@ -103,13 +104,25 @@ class RouteFunction:
 
     @property
     def __name__(self) -> str:
-        return self.f.__name__
+        return self.f.__name__  # ty: ignore[unresolved-attribute]
 
-    def __call__(self, ctx: Context, rd: RequestData, *path_segments: Any) -> Any:
+    def __call__(self, ctx: Context, rd: RequestData, *path_segments: object) -> object:
         return self.f(ctx, rd, *path_segments)
 
 
-def endpoint[**P](
+def positional_args(f: Callable[..., object]) -> tuple[list[str], int]:
+    """Return the names of the positional arguments of f and how many of them
+    have default values. Equivalent to the args and defaults of
+    inspect.getfullargspec(), except that annotations are not evaluated, as
+    they can refer to names imported only when type checking."""
+    if inspect.ismethod(f):
+        f = f.__func__
+    sig = inspect.signature(f, follow_wrapped=False, annotation_format=annotationlib.Format.FORWARDREF)
+    params = [p for p in sig.parameters.values() if p.kind in (p.POSITIONAL_ONLY, p.POSITIONAL_OR_KEYWORD)]
+    return [p.name for p in params], sum(1 for p in params if p.default is not p.empty)
+
+
+def endpoint[**P, R](
     route: str,
     methods: frozenset[str] | set[str] | tuple[str, ...] = default_methods,
     types: dict[str, type] | None = None,
@@ -124,14 +137,15 @@ def endpoint[**P](
     # The HTTP code to be used when no error occurs. By default it is
     # 200 for GET and HEAD and 201 for POST
     ok_code: int | None = None,
-    postprocess: PostProcessFunc | None = None,
+    # Converts the output of the endpoint function
+    postprocess: Callable[[Context, RequestData, RouteFunction, R], object] | None = None,
     # Needs write access to the calibre database
     needs_db_write: bool = False,
-) -> Callable[[Callable[Concatenate[Context, RequestData, P], Any]], RouteFunction]:
+) -> Callable[[Callable[Concatenate[Context, RequestData, P], R]], RouteFunction]:
     from calibre.srv.handler import Context  # ruff: ignore[unused-import]
     from calibre.srv.http_response import RequestData  # ruff: ignore[unused-import]
 
-    def annotate[**P](f: Callable[Concatenate[Context, RequestData, P], Any]) -> RouteFunction:
+    def annotate[**P](f: Callable[Concatenate[Context, RequestData, P], R]) -> RouteFunction:
         r = route.rstrip('/') or '/'
         ans = RouteFunction(
             f,
@@ -142,17 +156,17 @@ def endpoint[**P](
             auth_required=auth_required,
             android_workaround=android_workaround,
             cache_control=cache_control,
-            postprocess=postprocess,
+            postprocess=cast('PostProcessFunc | None', postprocess),
             ok_code=ok_code,
             needs_db_write=needs_db_write,
         )
-        argspec = inspect.getfullargspec(f)
-        if len(argspec.args) < 2:
+        args = positional_args(f)[0]
+        if len(args) < 2:
             raise TypeError(f'The endpoint {r!r} must take at least two arguments')
         ans.__doc__ = (
             textwrap.dedent(f.__doc__ or '')
             + '\n\n'
-            + ((f':type {argspec.args[0]}: calibre.srv.handler.Context\n') + (f':type {argspec.args[1]}: calibre.srv.http_response.RequestData\n'))
+            + ((f':type {args[0]}: calibre.srv.handler.Context\n') + (f':type {args[1]}: calibre.srv.http_response.RequestData\n'))
         )
         return ans
 
@@ -160,9 +174,9 @@ def endpoint[**P](
 
 
 class Route:
-    var_pat = None
+    var_pat: re.Pattern[str] | None = None
 
-    def __init__(self, endpoint_: RouteFunction):
+    def __init__(self, endpoint_: RouteFunction) -> None:
         if self.var_pat is None:
             Route.var_pat = self.var_pat = re.compile(r'{(.+?)}')
         self.endpoint = endpoint_
@@ -170,13 +184,14 @@ class Route:
         if not self.endpoint.route.startswith('/'):
             raise RouteError(f'A route must start with /, {self.endpoint.route} does not')
         parts = list(filter(None, self.endpoint.route.split('/')))
-        matchers = self.matchers = []
-        self.defaults = {}
-        found_optional_part = False
-        self.soak_up_extra = False
-        self.type_checkers = self.endpoint.types.copy()
+        matchers: list[tuple[str | None, Literal[True] | Callable[[str], bool]]] = []
+        self.matchers = matchers
+        self.defaults: dict[str, object] = {}
+        found_optional_part: int | Literal[False] = False
+        self.soak_up_extra: str | Literal[False] = False
+        self.type_checkers: dict[str, type] = self.endpoint.types.copy()
 
-        def route_error(msg):
+        def route_error(msg: str) -> RouteError:
             return RouteError(f'{self.endpoint.route} is not valid: {msg}')
 
         for i, p in enumerate(parts):
@@ -212,32 +227,32 @@ class Route:
         self.names = [n for n, m in matchers if n is not None]
         self.all_names = frozenset(self.names)
         self.required_names = self.all_names - frozenset(self.defaults)
-        argspec = inspect.getfullargspec(self.endpoint.f)
-        if len(self.names) + 2 != len(argspec.args) - len(argspec.defaults or ()):
+        args, num_defaults = positional_args(self.endpoint.f)
+        if len(self.names) + 2 != len(args) - num_defaults:
             raise route_error(f'Function {self.endpoint.f} must take {len(self.names) + 2} non-default arguments')
-        if argspec.args[2 : len(self.names) + 2] != self.names:
+        if args[2 : len(self.names) + 2] != self.names:
             raise route_error("Function's argument names do not match the variable names in the route")
         if not frozenset(self.type_checkers).issubset(frozenset(self.names)):
             raise route_error(f'There exist type checkers that do not correspond to route variables: {set(self.type_checkers) - set(self.names)!r}')
         self.min_size = found_optional_part if found_optional_part is not False else len(matchers)
         self.max_size = sys.maxsize if self.soak_up_extra else len(matchers)
 
-    def matches(self, path):
+    def matches(self, path: tuple[str, ...]) -> Iterator[object] | Literal[False]:
         args_map = self.defaults.copy()
         num = 0
         for component, (name, matched) in zip(path, self.matchers):
             num += 1
             if matched is True:
-                args_map[name] = component
+                args_map[name] = component  # ty: ignore[invalid-assignment]
             elif not matched(component):
                 return False
         if self.soak_up_extra and num < len(path):
-            args_map[self.soak_up_extra] += '/' + '/'.join(path[num:])
+            args_map[self.soak_up_extra] += '/' + '/'.join(path[num:])  # ty: ignore[unsupported-operator]
             num = len(path)
         if num < len(path):
             return False
 
-        def check(tc, val):
+        def check(tc: type, val: object) -> object:
             try:
                 return tc(val)
             except Exception:
@@ -247,7 +262,7 @@ class Route:
             args_map[name] = check(tc, args_map[name])
         return (args_map[name] for name in self.names)
 
-    def url_for(self, **kwargs):
+    def url_for(self, **kwargs: object) -> str:
         names = frozenset(kwargs)
         not_spec = self.required_names - names
         if not_spec:
@@ -256,45 +271,51 @@ class Route:
         if unknown:
             raise RouteError('The variable(s) {} are not part of the route: {}'.format(','.join(unknown), self.endpoint.route))
 
-        def quoted(x):
+        def quoted(x: object) -> str:
             if not isinstance(x, (str, bytes)):
                 x = str(x)
             if isinstance(x, str):
                 x = x.encode('utf-8')
             return urlquote(x, '')
 
-        args = {k: '' for k in self.defaults}
+        args: dict[str, object] = {k: '' for k in self.defaults}
         args.update(kwargs)
         args = {k: quoted(v) for k, v in args.items()}
         assert self.var_pat is not None
         route = self.var_pat.sub(lambda m: '{{{}}}'.format(m.group(1).partition('=')[0].lstrip('+')), self.endpoint.route)
         return route.format(**args).rstrip('/')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.endpoint.route
 
     __unicode__ = __repr__ = __str__
 
 
 class Router:
-    def __init__(self, endpoints=None, ctx=None, url_prefix=None, auth_controller=None):
+    def __init__(
+        self,
+        endpoints: Iterable[object] | None = None,
+        ctx: Context | None = None,
+        url_prefix: str | None = None,
+        auth_controller: AuthController | None = None,
+    ) -> None:
         self.routes: dict[str, Route] = {}
         self.url_prefix = (url_prefix or '').rstrip('/')
-        self.strip_path = None
+        self.strip_path: tuple[str, ...] | None = None
         if self.url_prefix:
             if not self.url_prefix.startswith('/'):
                 self.url_prefix = '/' + self.url_prefix
             self.strip_path = tuple(self.url_prefix[1:].split('/'))
         self.ctx = ctx
         self.auth_controller = auth_controller
-        self.init_session = getattr(ctx, 'init_session', lambda ep, data: None)
-        self.finalize_session = getattr(ctx, 'finalize_session', lambda ep, data, output: None)
-        self.endpoints = set()
+        self.init_session: Callable[[RouteFunction, RequestData], object] = getattr(ctx, 'init_session', lambda ep, data: None)
+        self.finalize_session: Callable[[RouteFunction, RequestData, object], object] = getattr(ctx, 'finalize_session', lambda ep, data, output: None)
+        self.endpoints: set[RouteFunction] = set()
         if endpoints is not None:
             self.load_routes(endpoints)
             self.finalize()
 
-    def add(self, endpoint):
+    def add(self, endpoint: RouteFunction) -> None:
         if endpoint in self.endpoints:
             return
         key = endpoint.route_key
@@ -303,15 +324,15 @@ class Router:
         self.routes[key] = Route(endpoint)
         self.endpoints.add(endpoint)
 
-    def load_routes(self, items):
+    def load_routes(self, items: Iterable[object]) -> None:
         for item in items:
             if getattr(item, 'is_endpoint', False) is True:
-                self.add(item)
+                self.add(cast('RouteFunction', item))
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Route]:
         yield from self.routes.values()
 
-    def finalize(self):
+    def finalize(self) -> None:
         try:
             lsz = max(len(r.matchers) for r in self)
         except ValueError:
@@ -320,7 +341,7 @@ class Router:
         self.max_size_map = {sz: frozenset(r for r in self if r.max_size >= sz) for sz in range(lsz + 1)}
         self.soak_routes = sorted(frozenset(r for r in self if r.soak_up_extra), key=attrgetter('min_size'), reverse=True)
 
-    def find_route(self, path):
+    def find_route(self, path: tuple[str, ...]) -> tuple[RouteFunction, Iterator[object]]:
         if self.strip_path is not None and path[: len(self.strip_path)] == self.strip_path:
             path = path[len(self.strip_path) :]
         size = len(path)
@@ -337,8 +358,9 @@ class Router:
                     return route.endpoint, args
         raise HTTPNotFound()
 
-    def read_cookies(self, data):
-        data.cookies = c = {}
+    def read_cookies(self, data: RequestData) -> None:
+        c: dict[str, str] = {}
+        data.cookies = c
 
         for cval in data.inheaders.get('Cookie', all=True):
             if isinstance(cval, bytes):
@@ -352,7 +374,7 @@ class Router:
                         # need more sophisticated value parsing
                         c[k] = v.strip('"')
 
-    def dispatch(self, data):
+    def dispatch(self, data: RequestData) -> object:
         endpoint_, args = self.find_route(data.path)
         if data.method not in endpoint_.methods:
             raise HTTPSimpleResponse(http.client.METHOD_NOT_ALLOWED)
@@ -370,13 +392,14 @@ class Router:
             assert self.ctx is not None
             self.ctx.check_for_write_access(data)
             data.needs_db_write = True
-        ans = endpoint_(self.ctx, data, *args)
+        # ctx is None only for routers created without a context, in tests
+        ans = endpoint_(self.ctx, data, *args)  # ty: ignore[invalid-argument-type]
         self.finalize_session(endpoint_, data, ans)
         outheaders = data.outheaders
 
         pp = endpoint_.postprocess
         if pp is not None:
-            ans = pp(self.ctx, data, endpoint_, ans)
+            ans = pp(self.ctx, data, endpoint_, ans)  # ty: ignore[invalid-argument-type]
 
         cc = endpoint_.cache_control
         if cc is not False and 'Cache-Control' not in data.outheaders:
@@ -384,23 +407,24 @@ class Router:
                 outheaders['Expires'] = http_date(10000.0)  # A date in the past
                 outheaders['Cache-Control'] = 'no-cache, must-revalidate'
                 outheaders['Pragma'] = 'no-cache'
-            elif isinstance(cc, numbers.Number):
-                cc = int(60 * 60 * cc)
-                outheaders['Cache-Control'] = f'public, max-age={cc}'
-                if cc == 0:
-                    cc -= 100000
-                outheaders['Expires'] = http_date(cc + time.time())
-            else:
+            elif isinstance(cc, tuple):
                 ctype, max_age = cc
                 max_age = int(60 * 60 * max_age)
                 outheaders['Cache-Control'] = f'{ctype}, max-age={max_age}'
                 if max_age == 0:
                     max_age -= 100000
                 outheaders['Expires'] = http_date(max_age + time.time())
+            else:  # a number of hours
+                cc = int(60 * 60 * cc)
+                outheaders['Cache-Control'] = f'public, max-age={cc}'
+                if cc == 0:
+                    cc -= 100000
+                outheaders['Expires'] = http_date(cc + time.time())
         return ans
 
-    def url_for(self, route: str | None, **kwargs: Any) -> str:
+    def url_for(self, route: str | RouteFunction | None, **kwargs: object) -> str:
         if route is None:
             return self.url_prefix or '/'
-        route = getattr(route, 'route_key', route)
+        if isinstance(route, RouteFunction):
+            route = route.route_key
         return self.url_prefix + self.routes[route].url_for(**kwargs)

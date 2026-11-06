@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
+from typing import cast
+
 from qt.core import QDialog, QDialogButtonBox, QFormLayout, QIcon, QLabel, QLineEdit, QListWidget, QPlainTextEdit, Qt, QVBoxLayout
 
 from calibre import prepare_string_for_xml
@@ -12,7 +14,7 @@ from calibre.utils.icu import sort_key
 from calibre.utils.localization import _
 
 
-def commit_searches(searches):
+def commit_searches(searches) -> None:
     from calibre.gui2.ui import get_gui
 
     db = get_gui(fail_if_absent=True).current_db
@@ -20,7 +22,7 @@ def commit_searches(searches):
 
 
 class AddSavedSearch(Dialog):
-    def __init__(self, parent=None, search=None, commit_changes=True, label=None, validate=None):
+    def __init__(self, parent=None, search=None, commit_changes=True, label=None, validate=None) -> None:
         self.initial_search = search
         self.validate = validate
         self.label = label
@@ -34,7 +36,7 @@ class AddSavedSearch(Dialog):
             self.searches[name] = db.saved_search_lookup(name)
         self.search_names = {icu_lower(n): n for n in db.saved_search_names()}
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         self.l = l = QFormLayout(self)
         l.setFieldGrowthPolicy(QFormLayout.FieldGrowthPolicy.AllNonFixedFieldsGrow)
 
@@ -66,6 +68,8 @@ class AddSavedSearch(Dialog):
         name = self.sname.text().strip()
         if not name:
             return error_dialog(self, _('No search name'), _('You must specify a name for the Saved search'), show=True)
+        if '"' in name:
+            return error_dialog(self, _('Invalid search name'), _('Saved search names cannot contain " (quote) characters.'), show=True)
         expression = self.search.toPlainText().strip()
         if not expression:
             return error_dialog(
@@ -88,11 +92,11 @@ class AddSavedSearch(Dialog):
 
 
 class SavedSearchEditor(Dialog):
-    def __init__(self, parent, initial_search=None):
+    def __init__(self, parent, initial_search=None) -> None:
         self.initial_search = initial_search
         Dialog.__init__(self, _('Manage Saved searches'), 'manage-saved-searches', parent)
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         from calibre.gui2.ui import get_gui
 
         db = get_gui(fail_if_absent=True).current_db
@@ -148,12 +152,12 @@ class SavedSearchEditor(Dialog):
             return
         return Dialog.keyPressEvent(self, a0)
 
-    def populate_search_list(self):
+    def populate_search_list(self) -> None:
         self.slist.clear()
         for name in sorted(self.searches.keys(), key=sort_key):
             self.slist.addItem(name)
 
-    def add_search(self):
+    def add_search(self) -> None:
         d = AddSavedSearch(parent=self, commit_changes=False, validate=self.validate_add)
         if d.exec() != QDialog.DialogCode.Accepted:
             return
@@ -162,7 +166,7 @@ class SavedSearchEditor(Dialog):
         self.populate_search_list()
         self.select_search(name)
 
-    def del_search(self):
+    def del_search(self) -> None:
         n = self.current_search_name
         if n is not None:
             if not confirm(
@@ -174,7 +178,7 @@ class SavedSearchEditor(Dialog):
             self.slist.takeItem(self.slist.currentRow())
             del self.searches[n]
 
-    def edit_search(self):
+    def edit_search(self) -> None:
         n = self.current_search_name
         if not n:
             return
@@ -209,19 +213,19 @@ class SavedSearchEditor(Dialog):
         if icu_lower(name) in {icu_lower(n) for n in self.searches}:
             return self.duplicate_msg(name)
 
-    def select_search(self, name):
+    def select_search(self, name) -> None:
         items = self.slist.findItems(name, Qt.MatchFlag.MatchFixedString | Qt.MatchFlag.MatchCaseSensitive)
         if items:
             self.slist.setCurrentItem(items[0])
 
-    def current_index_changed(self, item):
+    def current_index_changed(self, item) -> None:
         n = self.current_search_name
         if n:
             t = self.searches[n]
         else:
             t = ''
-        self.desc.setText('<p><b>{}</b>: '.format(_('Search expression')) + prepare_string_for_xml(t))
+        self.desc.setText('<p><b>{}</b>: '.format(_('Search expression')) + prepare_string_for_xml(cast('str', t)))
 
-    def accept(self):
+    def accept(self) -> None:
         commit_searches(self.searches)
         Dialog.accept(self)

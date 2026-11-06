@@ -7,11 +7,15 @@ Read metadata from RAR archives
 
 import os
 from io import BytesIO
+from typing import IO, TYPE_CHECKING
 
 from calibre.utils.unrar import extract_member, names
 
+if TYPE_CHECKING:
+    from calibre.ebooks.metadata.book.base import Metadata
 
-def get_metadata(stream):
+
+def get_metadata(stream: IO[bytes]) -> Metadata:
     from calibre.ebooks.metadata.archive import is_comic
     from calibre.ebooks.metadata.meta import get_metadata
 
@@ -37,7 +41,10 @@ def get_metadata(stream):
                 'azw1',
                 'azw3',
             }:
-                name, data = extract_member(stream, match=None, name=f)
+                res = extract_member(stream, match=None, name=f)
+                if res is None:
+                    raise KeyError(f'There is no file named {f} in the archive')
+                name, data = res
                 stream = BytesIO(data)
                 stream.name = os.path.basename(name)
                 mi = get_metadata(stream, stream_type)

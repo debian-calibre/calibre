@@ -4,11 +4,12 @@
 # 
 # Translators:
 # akihiko tanae (tanaeakihiko), 2026
+# akihiko tanae (tanaeakihiko), 2026
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:50+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -30,11 +31,11 @@ msgid ""
 "tools that can be used to perform operations on the container. All the tools"
 " are in the form of module level functions in the various "
 "``calibre.ebooks.oeb.polish.*`` modules."
-msgstr "電子書籍編集ツールは、HTML +リソースファイルのコレクションとして書籍を表す :class:`calibre.ebooks.oeb.polish.container.Container` オブジェクトと、コンテナで操作を実行するために使用できるさまざまなツールで構成されています。すべてのツールは、さまざまな``calibre.ebooks.oeb.polish.*`` モジュールのモジュールレベルの関数の形式になっています。"
+msgstr "電子書籍編集ツールは、HTML +リソースファイルのコレクションとして書籍を表す :class:`calibre.ebooks.oeb.polish.container.Container` オブジェクトと、コンテナで操作を実行するために使用できるさまざまなツールで構成されています。すべてのツールは、さまざまな ``calibre.ebooks.oeb.polish.*`` モジュールのモジュールレベルの関数の形式になっています。"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:15
 msgid "You obtain a container object for a book at a path like this::"
-msgstr "次のようなパスで本のコンテナオブジェクトを取得します。"
+msgstr "次のようにして、パスにある本のコンテナオブジェクトを取得します::"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:20
 msgid ""
@@ -89,7 +90,7 @@ msgstr "href と名前を変換するときに、このクラスが提供する�
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.abspath_to_name:1
 msgid "Convert an absolute path to a canonical name relative to :attr:`root`"
-msgstr "絶対パスを :attr:`ルート` を基準とした正規名に変換します"
+msgstr "絶対パスを :attr:`root` を基準とした正規名に変換します"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:0
 msgid "Parameters"
@@ -336,12 +337,22 @@ msgid "The parsed OPF file"
 msgstr "解析された OPF ファイル"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_dir:1
+msgid "The absolute path to the folder containing the OPF file"
+msgstr "OPF ファイルを含むフォルダへの絶対パス"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_get_or_create:1
 msgid ""
 "Convenience method to either return the first XML element with the specified"
 " name or create it under the opf:package element and then return it, if it "
 "does not already exist."
 msgstr "指定した name の最初の XML 要素を返すか、まだ存在しなければ opf:package 要素の下に作成して、それを返す便利なメソッド。"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
+#: of calibre.ebooks.oeb.polish.container.Container.opf_name:1
+msgid "The canonical name of the OPF file"
+msgstr "OPF ファイルの正規名"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.opf_version:1
@@ -403,7 +414,7 @@ msgid ""
 "Remove the specified items (by canonical name) from the spine. If "
 "``remove_if_no_longer_in_spine`` is True, the items are also deleted from "
 "the book, not just from the spine."
-msgstr "指定された項目 (正規名) をスパインから削除します。`remove_if_no_longer_in_spine`` が True のとき、スパインからだけでなく、本からも項目が削除されます。"
+msgstr "指定された項目 (正規名) をスパインから削除します。``remove_if_no_longer_in_spine`` が True のとき、スパインからだけでなく、本からも項目が削除されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/container.pydocstring
 #: of calibre.ebooks.oeb.polish.container.Container.remove_from_xml:1
@@ -510,7 +521,7 @@ msgstr "コンテナ内のファイルへのリンクを置き換えます。コ
 msgid ""
 "A mapping of old canonical name to new canonical name. For example: "
 ":code:`{'images/old.png': 'images/new.png'}`"
-msgstr "古い正規名から新しい正規名へのマッピング。例: {'images/old.png': 'images/new.png'}"
+msgstr "古い正規名から新しい正規名へのマッピング。例: :code:`{'images/old.png': 'images/new.png'}`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/replace.pydocstring
 #: of calibre.ebooks.oeb.polish.replace.replace_links:4
@@ -580,7 +591,7 @@ msgstr "raw に文字列として表された CSS をきれいに印刷します
 msgid ""
 "Pretty print the XML represented as a string in raw. If ``name`` is the name"
 " of the OPF, extra OPF-specific prettying is performed."
-msgstr "raw に文字列として表されたXMLをきれいに印刷します。name が OPF の名前のとき、追加の OPF 固有の美化が実行されます。"
+msgstr "raw に文字列として表されたXMLをきれいに印刷します。``name`` が OPF の名前のとき、追加の OPF 固有の美化が実行されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/pretty.pydocstring
 #: of calibre.ebooks.oeb.polish.pretty.pretty_all:1
@@ -673,7 +684,7 @@ msgstr "マージするファイルのリスト"
 msgid ""
 "Which of the merged files is the *master* file, that is, the file that will "
 "remain after merging."
-msgstr "マージされたファイルのどれが*マスター*ファイルか。つまり、マージ後に残るファイルです。"
+msgstr "マージされたファイルのどれが *マスター* ファイルか。つまり、マージ後に残るファイルです。"
 
 #: ../../../__w/calibre/calibre/manual/polish.rst:85
 msgid "Managing covers"
@@ -707,7 +718,7 @@ msgid ""
 "covers in EPUB) **no_svg**: True or False  (Use an SVG cover wrapper in the "
 "EPUB titlepage) **existing**: True or False  (``cover_path`` refers to an "
 "existing image in the book)"
-msgstr "None、または表紙の設定方法を制御する辞書。辞書には次のエントリを含めることができます。**keep_aspect**: True または False (EPUBで表紙の縦横比を保持）**no_svg**: True または False (EPUB タイトルページで SVG 表紙ラッパーを使用）"
+msgstr "None、または表紙の設定方法を制御する辞書。辞書には次のエントリを含めることができます。**keep_aspect**: True または False (EPUBで表紙の縦横比を保持） **no_svg**: True または False (EPUB タイトルページで SVG 表紙ラッパーを使用） **existing**: True または False (``cover_path`` は本の中の既存の画像を指す）"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/oeb/polish/cover.pydocstring
 #: of calibre.ebooks.oeb.polish.cover.mark_as_cover:1
@@ -962,7 +973,7 @@ msgstr "このアクションのオプションの長めの説明。このショ
 msgid ""
 "Create a QAction that will be added to either the plugins toolbar or the "
 "plugins menu depending on ``for_toolbar``. For example::"
-msgstr "``for_toolbar`` に応じて、プラグインツールバーまたはプラグインメニューのいずれかに追加される QAction を作成します。例:"
+msgstr "``for_toolbar`` に応じて、プラグインツールバーまたはプラグインメニューのいずれかに追加される QAction を作成します。例::"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/plugin.pydocstring
 #: of calibre.gui2.tweak_book.plugin.Tool.create_action:19
@@ -1029,7 +1040,7 @@ msgstr "name で指定したファイルをエディタで開きます"
 msgid ""
 "The media type of the file, for example, ``'text/html'``. If not specified "
 "it is guessed from the file extension."
-msgstr "ファイルのメディアタイプ、たとえば `'text/html'` など。指定されていない場合は、ファイル拡張子から推測されます。"
+msgstr "ファイルのメディアタイプ、たとえば ``'text/html'`` など。指定されていない場合は、ファイル拡張子から推測されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/tweak_book/boss.pydocstring
 #: of calibre.gui2.tweak_book.boss.Boss.edit_file:4

@@ -2,9 +2,12 @@
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
 import ctypes
-from collections import namedtuple
 from contextlib import contextmanager
 from ctypes import windll, wintypes
+from typing import TYPE_CHECKING, NamedTuple
+
+if TYPE_CHECKING:
+    from collections.abc import Generator
 
 # Wraps (part of) the IPHelper API, useful to enumerate the network routes and
 # adapters on the local machine
@@ -18,7 +21,7 @@ class GUID(ctypes.Structure):
         ('data4', wintypes.BYTE * 8),
     ]
 
-    def __init__(self, l, w1, w2, b1, b2, b3, b4, b5, b6, b7, b8):
+    def __init__(self, l: int, w1: int, w2: int, b1: int, b2: int, b3: int, b4: int, b5: int, b6: int, b7: int, b8: int) -> None:
         self.data1 = l
         self.data2 = w1
         self.data3 = w2
@@ -255,7 +258,7 @@ Ws2_32 = windll.Ws2_32
 Ws2_32.inet_ntoa.restype = ctypes.c_char_p
 
 
-def _heap_alloc(heap, size):
+def _heap_alloc(heap: int | None, size: wintypes.ULONG) -> int:
     table_mem = HeapAlloc(heap, 0, ctypes.c_size_t(size.value))
     if not table_mem:
         raise MemoryError('Unable to allocate memory for the IP forward table')
@@ -263,7 +266,7 @@ def _heap_alloc(heap, size):
 
 
 @contextmanager
-def _get_forward_table():
+def _get_forward_table() -> Generator[ctypes._Pointer[Win32_MIB_IPFORWARDTABLE] | None]:
     heap = GetProcessHeap()
     size = wintypes.ULONG(0)
     p_forward_table = table_mem = None
@@ -292,7 +295,7 @@ def _get_forward_table():
 
 
 @contextmanager
-def _get_adapters():
+def _get_adapters() -> Generator[ctypes._Pointer[IP_ADAPTER_ADDRESSES] | None]:
     heap = GetProcessHeap()
     size = wintypes.ULONG(0)
     addresses = buf = None
@@ -320,10 +323,17 @@ def _get_adapters():
             addresses = None
 
 
-Adapter = namedtuple('Adapter', 'name if_index if_index6 friendly_name status transmit_speed receive_speed')
+class Adapter(NamedTuple):
+    name: str
+    if_index: bool
+    if_index6: bool
+    friendly_name: str
+    status: str
+    transmit_speed: int
+    receive_speed: int
 
 
-def adapters():
+def adapters() -> list[Adapter]:
     """A list of adapters on this machine"""
     ans = []
     smap = {1: 'up', 2: 'down', 3: 'testing', 4: 'unknown', 5: 'dormant', 6: 'not-present', 7: 'lower-layer-down'}
@@ -348,10 +358,16 @@ def adapters():
     return ans
 
 
-Route = namedtuple('Route', 'destination gateway netmask interface metric flags')
+class Route(NamedTuple):
+    destination: str
+    gateway: str
+    netmask: str
+    interface: str | None
+    metric: int
+    flags: int
 
 
-def routes():
+def routes() -> list[Route]:
     """A list of routes on this machine"""
     ans = []
     adapter_map = {a.if_index: a.name for a in adapters()}

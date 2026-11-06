@@ -6,7 +6,8 @@ import pprint
 import shutil
 import sys
 from functools import partial
-from typing import Any
+from optparse import Values
+from typing import IO, TYPE_CHECKING, Any, Protocol, cast
 
 from calibre import filesystem_encoding, get_types_map
 from calibre.constants import __version__
@@ -27,6 +28,22 @@ from calibre.ptempfile import PersistentTemporaryDirectory
 from calibre.utils.date import parse_date
 from calibre.utils.localization import _
 from calibre.utils.zipfile import ZipFile
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
+
+    from calibre.customize.conversion import ConversionOption, InputFormatPlugin, OutputFormatPlugin
+    from calibre.customize.profiles import InputProfile, OutputProfile
+    from calibre.ebooks.conversion.plugins.recipe_input import RecipeInput
+    from calibre.ebooks.metadata.book.base import Metadata
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.ebooks.oeb.reader import OEBReader
+    from calibre.utils.logging import Log
+
+
+class ProgressReporter(Protocol):
+    def __call__(self, fraction: float, msg: str = '', /) -> None: ...
+
 
 DEBUG_README = b'''
 This debug folder contains snapshots of the e-book as it passes through the
@@ -50,15 +67,23 @@ various stages of conversion. The stages are:
 '''
 
 
-def supported_input_formats():
+def supported_input_formats() -> set[str]:
     fmts = available_input_formats()
     for x in ('zip', 'rar', 'oebzip'):
         fmts.add(x)
     return fmts
 
 
-class OptionValues:
-    def __getattr__(self, name: str) -> Any:
+class OptionValues(Values):
+    # option values are set dynamically as attributes. Derives from
+    # optparse.Values so that it can be passed to conversion plugins, but
+    # unlike Values it is hashable and compares by identity.
+    __hash__ = object.__hash__
+
+    def __eq__(self, other: object) -> bool:
+        return self is other
+
+    def __getattr__(self, name: str) -> Any:  # ruff: ignore[any-type]
         raise AttributeError(name)
 
     def __setattr__(self, name: str, value: object) -> None:
@@ -66,11 +91,11 @@ class OptionValues:
 
 
 class CompositeProgressReporter:
-    def __init__(self, global_min, global_max, global_reporter):
+    def __init__(self, global_min: float, global_max: float, global_reporter: ProgressReporter) -> None:
         self.global_min, self.global_max = global_min, global_max
         self.global_reporter = global_reporter
 
-    def __call__(self, fraction, msg=''):
+    def __call__(self, fraction: float, msg: str = '') -> None:
         global_frac = self.global_min + fraction * (self.global_max - self.global_min)
         self.global_reporter(global_frac, msg)
 
@@ -103,17 +128,17 @@ class Plumber:
 
     def __init__(
         self,
-        input,
-        output,
-        log,
-        report_progress=DummyReporter(),
-        dummy=False,
-        merge_plugin_recs=True,
-        abort_after_input_dump=False,
-        override_input_metadata=False,
-        for_regex_wizard=False,
-        view_kepub=False,
-    ):
+        input: str | bytes,
+        output: str | bytes,
+        log: Log,
+        report_progress: ProgressReporter = DummyReporter(),
+        dummy: bool = False,
+        merge_plugin_recs: bool = True,
+        abort_after_input_dump: bool = False,
+        override_input_metadata: bool = False,
+        for_regex_wizard: bool = False,
+        view_kepub: bool = False,
+    ) -> None:
         """
         :param input: Path to input file.
         :param output: Path to output file/folder
@@ -929,14 +954,15 @@ class Plumber:
                 output_fmt = '.oeb'
             output_fmt = output_fmt[1:].lower()
 
-        self.input_plugin = plugin_for_input_format(input_fmt)
-        self.output_plugin = plugin_for_output_format(output_fmt)
+        input_plugin = plugin_for_input_format(input_fmt)
+        output_plugin = plugin_for_output_format(output_fmt)
 
-        if self.input_plugin is None:
+        if input_plugin is None:
             raise ValueError('No plugin to handle input format: ' + input_fmt)
 
-        if self.output_plugin is None:
+        if output_plugin is None:
             raise ValueError('No plugin to handle output format: ' + output_fmt)
+        self.input_plugin, self.output_plugin = input_plugin, output_plugin
 
         self.input_fmt = input_fmt
         self.output_fmt = output_fmt
@@ -969,26 +995,27 @@ class Plumber:
         if merge_plugin_recs:
             self.merge_plugin_recommendations()
 
-    def get_all_options(self):
+    def get_all_options(self) -> dict[ConversionOption, object]:
         ans = {}
         for group in (self.input_options, self.pipeline_options, self.output_options, self.all_format_options):
             for rec in group:
                 ans[rec.option] = rec.recommended_value
         return ans
 
-    def get_option_by_name(self, name):
+    def get_option_by_name(self, name: str) -> OptionRecommendation | None:
         for group in (self.input_options, self.pipeline_options, self.output_options, self.all_format_options):
             for rec in group:
                 if rec.option == name:
                     return rec
 
-    def get_option_help(self, name):
+    def get_option_help(self, name: str) -> str | None:
         rec = self.get_option_by_name(name)
         help = getattr(rec, 'help', None)
         if help is not None:
+            assert rec is not None  # help can only be non-None if rec is not None
             return help.replace('%default', str(rec.recommended_value))
 
-    def get_all_help(self):
+    def get_all_help(self) -> dict[str, str]:
         ans = {}
         for group in (self.input_options, self.pipeline_options, self.output_options, self.all_format_options):
             for rec in group:
@@ -997,25 +1024,25 @@ class Plumber:
                     ans[rec.option.name] = help
         return ans
 
-    def merge_plugin_recs(self, plugin):
+    def merge_plugin_recs(self, plugin: InputFormatPlugin | OutputFormatPlugin) -> None:
         for name, val, level in plugin.recommendations:
             rec = self.get_option_by_name(name)
             if rec is not None and rec.level <= level:
                 rec.recommended_value = val
                 rec.level = level
 
-    def merge_plugin_recommendations(self):
+    def merge_plugin_recommendations(self) -> None:
         for source in (self.input_plugin, self.output_plugin):
             self.merge_plugin_recs(source)
 
-    def merge_ui_recommendations(self, recommendations):
+    def merge_ui_recommendations(self, recommendations: Iterable[tuple[str, object, int]]) -> None:
         """
         Merge recommendations from the UI. As long as the UI recommendation
         level is >= the baseline recommended level, the UI value is used,
         *except* if the baseline has a recommendation level of `HIGH`.
         """
 
-        def eq(name, a, b):
+        def eq(name: str, a: object, b: object) -> bool:
             if name in {
                 'sr1_search',
                 'sr1_replace',
@@ -1042,7 +1069,7 @@ class Plumber:
                 if changed:
                     self.changed_options.add(rec)
 
-    def opts_to_mi(self, mi):
+    def opts_to_mi(self, mi: Metadata) -> None:
         from calibre.ebooks.metadata import string_to_authors
 
         for x in self.metadata_option_names:
@@ -1066,7 +1093,7 @@ class Plumber:
                         continue
                 setattr(mi, x, val)
 
-    def download_cover(self, url):
+    def download_cover(self, url: str) -> str:
         import io
 
         from PIL import Image
@@ -1084,7 +1111,7 @@ class Plumber:
         img.convert('RGB').save(pt.name)
         return pt.name
 
-    def read_user_metadata(self):
+    def read_user_metadata(self) -> None:
         """
         Read all metadata specified by the user. Command line options override
         metadata from a specified OPF file.
@@ -1098,6 +1125,9 @@ class Plumber:
             with open(self.opts.read_metadata_from_opf, 'rb') as stream:
                 opf = OPF(stream, os.path.dirname(self.opts.read_metadata_from_opf))
             mi = opf.to_book_metadata()
+            if opf.languages_are_fallback:
+                # Use the language of the book instead of a guess
+                mi.languages = []
         self.opts_to_mi(mi)
         if mi.cover:
             if mi.cover.startswith('http:') or mi.cover.startswith('https:'):
@@ -1110,7 +1140,7 @@ class Plumber:
             mi.cover = None
         self.user_metadata = mi
 
-    def setup_options(self):
+    def setup_options(self) -> None:
         """
         Setup the `self.opts` object.
         """
@@ -1119,7 +1149,7 @@ class Plumber:
             for rec in group:
                 setattr(self.opts, rec.option.name, rec.recommended_value)
 
-        def set_profile(profiles, which):
+        def set_profile(profiles: Callable[[], Iterable[InputProfile | OutputProfile]], which: str) -> None:
             attr = which + '_profile'
             sval = getattr(self.opts, attr)
             for x in profiles():
@@ -1155,22 +1185,22 @@ class Plumber:
             except Exception:
                 self.log.exception('Failed to get resolved conversion options')
 
-    def flush(self):
+    def flush(self) -> None:
         try:
             sys.stdout.flush()
             sys.stderr.flush()
         except Exception:
             pass
 
-    def dump_oeb(self, oeb, out_dir):
+    def dump_oeb(self, oeb: OEBBook, out_dir: str) -> None:
         from calibre.ebooks.oeb.writer import OEBWriter
 
         w = OEBWriter(pretty_print=self.opts.pretty_print)
         w(oeb, out_dir)
 
-    def dump_input(self, ret, output_dir):
+    def dump_input(self, ret: OEBBook | str | bytes | None, output_dir: str) -> None:
         out_dir = os.path.join(self.opts.debug_pipeline, 'input')
-        if isinstance(ret, (str, bytes)):
+        if ret is None or isinstance(ret, (str, bytes)):
             shutil.copytree(output_dir, out_dir)
         else:
             if not os.path.exists(out_dir):
@@ -1180,12 +1210,12 @@ class Plumber:
             zf = ZipFile(os.path.join(self.opts.debug_pipeline, 'periodical.downloaded_recipe'), 'w')
             zf.add_dir(out_dir)
             with self.input_plugin:
-                self.input_plugin.save_download(zf)
+                cast('RecipeInput', self.input_plugin).save_download(zf)
             zf.close()
 
         self.log.info('Input debug saved to:', out_dir)
 
-    def run(self):
+    def run(self) -> None:
         """
         Run the conversion pipeline
         """
@@ -1229,7 +1259,7 @@ class Plumber:
         accelerators = {}
 
         tdir = PersistentTemporaryDirectory('_plumber')
-        stream = self.input if self.input_fmt == 'recipe' else open(self.input, 'rb')
+        stream = self.input if self.input_fmt == 'recipe' else open(self.input, 'rb')  # ruff: ignore[open-file-with-context-handler]
         if self.input_fmt == 'recipe':
             self.opts.original_recipe_input_arg = self.original_input_arg
 
@@ -1242,6 +1272,7 @@ class Plumber:
             )
             from calibre.ebooks.azw4.reader import unwrap
 
+            assert not isinstance(stream, str)  # only recipe input uses a path rather than a stream
             unwrap(stream, self.output)
             self.ui_reporter(1.0)
             self.log(self.output_fmt.upper(), 'output written to', self.output)
@@ -1255,17 +1286,20 @@ class Plumber:
             self.input_plugin.for_viewer = True
         self.output_plugin.specialize_options(self.log, self.opts, self.input_fmt)
         with self.input_plugin:
-            self.oeb = self.input_plugin(stream, self.opts, self.input_fmt, self.log, accelerators, tdir)
+            ret = self.input_plugin(stream, self.opts, self.input_fmt, self.log, accelerators, tdir)
             if self.opts.debug_pipeline is not None:
-                self.dump_input(self.oeb, tdir)
+                self.dump_input(ret, tdir)
                 if self.abort_after_input_dump:
                     return
             if self.input_fmt in ('recipe', 'downloaded_recipe'):
                 self.opts_to_mi(self.user_metadata)
-            if not hasattr(self.oeb, 'manifest'):
+            if hasattr(ret, 'manifest'):
+                self.oeb = cast('OEBBook', ret)
+            else:
+                # The input plugin returned the path to an OPF file
                 self.oeb = create_oebbook(
                     self.log,
-                    self.oeb,
+                    cast('str | None', ret),
                     self.opts,
                     encoding=self.input_plugin.output_encoding,
                     for_regex_wizard=self.for_regex_wizard,
@@ -1285,6 +1319,7 @@ class Plumber:
 
         pr(0.0, _('Running transforms on e-book...'))
 
+        # dynamic attribute, not declared on OEBBook
         self.oeb.plumber_output_format = self.output_fmt or ''
 
         if self.opts.transform_html_rules:
@@ -1458,25 +1493,25 @@ class Plumber:
 
 # This has to be global as create_oebbook can be called from other locations
 # (for example in the html input plugin)
-regex_wizard_callback = None
+regex_wizard_callback: Callable[[str | None, str], object] | None = None
 
 
-def set_regex_wizard_callback(f):
+def set_regex_wizard_callback(f: Callable[[str | None, str], object] | None) -> None:
     global regex_wizard_callback
     regex_wizard_callback = f
 
 
 def create_oebbook(
-    log,
-    path_or_stream,
-    opts,
-    reader=None,
-    encoding='utf-8',
-    populate=True,
-    for_regex_wizard=False,
-    specialize=None,
-    removed_items=(),
-):
+    log: Log,
+    path_or_stream: str | IO[bytes] | None,
+    opts: Values | OptionValues,
+    reader: type[OEBReader] | None = None,
+    encoding: str | None = 'utf-8',
+    populate: bool = True,
+    for_regex_wizard: bool = False,
+    specialize: Callable[[OEBBook], OEBBook | None] | None = None,
+    removed_items: tuple[str, ...] = (),
+) -> OEBBook:
     """
     Create an OEBBook.
     """
@@ -1498,11 +1533,12 @@ def create_oebbook(
 
         reader = OEBReader
 
+    assert path_or_stream is not None  # only None when populate is False
     reader()(oeb, path_or_stream)
     return oeb
 
 
-def create_dummy_plumber(input_format, output_format):
+def create_dummy_plumber(input_format: str, output_format: str) -> Plumber:
     from calibre.utils.logging import Log
 
     input_format = input_format.lower()

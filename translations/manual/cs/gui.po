@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-06-24 05:21+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2026\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
@@ -59,7 +59,7 @@ msgid ""
 msgstr "Panel nástrojů akcí poskytuje vhodné zkratky k běžně používaným akcím. Pokud kliknete pravým tlačítkem myši na tlačítka, můžete provést varianty výchozí akce. Pamatujte, prosím, že panel nástrojů akcí bude vypadat mírně odlišně v závislosti na tom, zda máte k počítači připojenou čtečku e-knih."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:41
-#: ../../../__w/calibre/calibre/manual/gui.rst:916
+#: ../../../__w/calibre/calibre/manual/gui.rst:923
 msgid "Add books"
 msgstr "Přidat knihy"
 
@@ -299,7 +299,7 @@ msgid ""
 msgstr "**Vytvořit katalog knih ve vaší knihovně Calibre**: Umožňuje vám generovat kompletní výpis knih ve vaší knihovně, včetně všech metadat, v několika formátech, jako jsou XML, CSV, BiBTeX, EPUB a MOBI. Katalog bude obsahovat všechny knihy aktuálně zobrazené v zobrazení knihovny. To vám umožní použít funkce hledání pro omezení knihy, které mají být uloženy do katalogu. Navíc pokud vyberete více knih pomocí myši, budou do katalogu přidány pouze tyto knihy. Pokud generujete katalog ve formátu e-knihy, jako je EPUB, MOBI nebo AZW3, příště když připojíte svou čtečku e-knih, bude katalog automaticky odeslán do zařízení. Pro více informací o tom, jak katalogy fungují, si přečtěte :ref:`catalog_tut`."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:126
-#: ../../../__w/calibre/calibre/manual/gui.rst:946
+#: ../../../__w/calibre/calibre/manual/gui.rst:953
 msgid "View"
 msgstr "Zobrazit"
 
@@ -319,7 +319,7 @@ msgid "vi"
 msgstr "vi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:141
-#: ../../../__w/calibre/calibre/manual/gui.rst:922
+#: ../../../__w/calibre/calibre/manual/gui.rst:929
 msgid "Send to device"
 msgstr "Odeslat do zařízení"
 
@@ -547,7 +547,7 @@ msgid "dvi"
 msgstr "dvi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:213
-#: ../../../__w/calibre/calibre/manual/gui.rst:942
+#: ../../../__w/calibre/calibre/manual/gui.rst:949
 msgid "Save to disk"
 msgstr "Uložit na disk"
 
@@ -1213,7 +1213,7 @@ msgid ""
 "search box."
 msgstr "Pokročilé vyhledávací dotazy můžete snadno sestavit pomocí :guilabel:`Rozšířené hledání`, které otevřete kliknutím na tlačítko |sbi| vlevo od vyhledávacího pole."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:577
+#: ../../../__w/calibre/calibre/manual/gui.rst:584
 msgid "sbi"
 msgstr "sbi"
 
@@ -1241,24 +1241,29 @@ msgid ""
 "comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
 "1 Feb 2009. In a dd/mm/yyyy locale it is interpreted as 2 Jan 2009.  Some "
 "special date strings are available. The string ``today`` translates to "
-"today's date, whatever it is. The strings ``yesterday`` and ``thismonth`` "
-"(or the translated equivalent in the current language) also work. In "
-"addition, the string ``daysago`` (also translated) can be used to compare to"
-" a date some number of days ago. For example::"
-msgstr "Pokud je datum nejednoznačné, použije se pro porovnání dat aktuální národní prostředí. Například v národním prostředí mm/dd/yyyy se 2/1/2009 interpretuje jako 1. února 2009. V národním prostředí dd/mm/yyyy se interpretuje jako 2. ledna 2009. K dispozici jsou některé speciální řetězce data. Řetězec ``today`` se přeloží na dnešní datum, ať je jakékoli. Fungují také řetězce ``yesterday`` a ``thismonth`` (nebo přeložený ekvivalent v aktuálním jazyce). Kromě toho lze řetězec ``daysago`` (také přeložený) použít k porovnání s datem před určitým počtem dní. Například::"
+"today's date, whatever it is. The strings ``yesterday``, ``thismonth``, "
+"``lastmonth``, ``thisyear`` and ``lastyear`` (or the translated equivalent "
+"in the current language) also work. In addition, the strings ``daysago``, "
+"``monthsago`` and ``yearsago`` (also translated) can be used to compare to a"
+" date some number of days, months or years ago. Searches using "
+"``thismonth``, ``lastmonth`` and ``monthsago`` compare only the year and "
+"month, while those using ``thisyear``, ``lastyear`` and ``yearsago`` compare"
+" only the year. For example::"
+msgstr "Pokud je datum nejednoznačné, použije se pro porovnání dat aktuální národní prostředí. Například v národním prostředí mm/dd/yyyy se 2/1/2009 interpretuje jako 1. února 2009. V národním prostředí dd/mm/yyyy se interpretuje jako 2. ledna 2009. K dispozici jsou také speciální řetězce pro datum. Řetězec ``today`` vždy odpovídá aktuálnímu datu. Fungují také řetězce ``yesterday``, ``thismonth``, ``lastmonth``, ``thisyear`` a ``lastyear`` (nebo jejich přeložené ekvivalenty v aktuálním jazyce). Kromě toho lze řetězce ``daysago``, ``monthsago`` a ``yearsago`` (také přeložené) použít k porovnání s datem před určitým počtem dní, měsíců nebo let. Hledání pomocí výrazů ``thismonth``, ``lastmonth`` a ``monthsago`` porovnává pouze rok a měsíc, zatímco hledání pomocí výrazů ``thisyear``, ``lastyear`` a ``yearsago`` porovnává pouze rok. Například::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:476
+#: ../../../__w/calibre/calibre/manual/gui.rst:481
 msgid ""
 "To avoid potential problems with translated strings when using a non-English"
 " version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
-" and ``_daysago`` are always available. They are not translated."
-msgstr "Aby se zabránilo případným problémům s přeloženými řetězci při používání neanglické verze Calibre, jsou vždy dostupné řetězce ``_today``, ``_yesterday``, ``_thismonth`` a ``_daysago``. Ty nejsou přeložené."
+" ``_lastmonth``, ``_thisyear``, ``_lastyear``, ``_daysago``, ``_monthsago`` "
+"and ``_yearsago`` are always available. They are not translated."
+msgstr "Aby se předešlo případným problémům s přeloženými řetězci při používání neanglické verze calibre, jsou vždy k dispozici řetězce ``_today``, ``_yesterday``, ``_thismonth``, ``_lastmonth``, ``_thisyear``, ``_lastyear``, ``_daysago``, ``_monthsago`` a ``_yearsago``. Ty se nepřekládají."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:478
+#: ../../../__w/calibre/calibre/manual/gui.rst:485
 msgid "*Searching dates and numeric values with relational comparisons*"
 msgstr "*Vyhledávání dat a číselných hodnot pomocí relačních porovnání*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:480
+#: ../../../__w/calibre/calibre/manual/gui.rst:487
 msgid ""
 "Dates and numeric fields support the relational operators ``=`` (equals), "
 "``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
@@ -1267,21 +1272,21 @@ msgid ""
 "all books rated 3 or higher."
 msgstr "Data a číselná pole podporují relační operátory ``=`` (rovná se), ``>`` (větší než), ``>=`` (větší než nebo rovno), ``<`` (menší než), ``<=`` (menší než nebo rovno) a ``!=`` (není rovno). Pole hodnocení jsou považována za číselná. Například hledání ``rating:>=3`` nalezne všechny knihy s hodnocením 3 nebo vyšším."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:485
+#: ../../../__w/calibre/calibre/manual/gui.rst:492
 msgid ""
 "You can search for books that have a format of a certain size like this:"
 msgstr "Knihy, které mají formát určité velikosti, můžete hledat takto:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:487
+#: ../../../__w/calibre/calibre/manual/gui.rst:494
 msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
 msgstr "``size:>1.1M`` najde knihy s formátem větším než 1,1 MB"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:488
+#: ../../../__w/calibre/calibre/manual/gui.rst:495
 msgid ""
 "``size:<=1K``  will find books with a format smaller than or equal to 1KB"
 msgstr "``size:<=1K`` najde knihy s formátem menším nebo rovným 1 KB"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:490
+#: ../../../__w/calibre/calibre/manual/gui.rst:497
 msgid ""
 "You can search for the number of items in multiple-valued fields such as "
 "tags using the character ``#`` then using the same syntax as numeric fields."
@@ -1289,11 +1294,11 @@ msgid ""
 "find all books with exactly 10 tags use ``tags:#=10``."
 msgstr "Počet položek ve vícehodnotových polích, například ve štítcích, můžete hledat pomocí znaku ``#`` a následně stejné syntaxe jako u číselných polí. Například pro nalezení všech knih s více než 4 štítky použijte ``tags:#>4``. Pro nalezení všech knih s přesně 10 štítky použijte ``tags:#=10``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:492
+#: ../../../__w/calibre/calibre/manual/gui.rst:499
 msgid "*Series indices*"
 msgstr "*Indexy sérií*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:494
+#: ../../../__w/calibre/calibre/manual/gui.rst:501
 msgid ""
 "Series indices are searchable. For the standard series, the search name is "
 "``series_index``. For custom series columns, use the column search name "
@@ -1303,11 +1308,11 @@ msgid ""
 "relational operators described above."
 msgstr "Indexy sérií lze vyhledávat. Pro standardní sérii je vyhledávací název ``series_index``. Pro vlastní sloupce série použijte vyhledávací název sloupce následovaný _index. Například pro vyhledávání v indexech vlastního sloupce série s názvem ``#my_series`` byste použili vyhledávací název ``#my_series_index``. Indexy sérií jsou čísla, takže můžete použít relační operátory popsané výše."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:499
+#: ../../../__w/calibre/calibre/manual/gui.rst:506
 msgid "*Saved searches*"
 msgstr "*Uložená hledání*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:501
+#: ../../../__w/calibre/calibre/manual/gui.rst:508
 msgid ""
 "The special field ``search`` is used for :ref:`saved searches "
 "<saved_searches>`. If you save a search with the name \"My spouse's books\" "
@@ -1315,11 +1320,11 @@ msgid ""
 "the saved search. More about saving searches below."
 msgstr "Speciální pole ``search`` se používá pro :ref:`uložená hledání <saved_searches>`. Pokud uložíte hledání s názvem \"My spouse's books\", můžete do vyhledávacího panelu zadat ``search:\"My spouse's books\"`` a uložené hledání znovu použít. Více o ukládání hledání najdete níže."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:505
+#: ../../../__w/calibre/calibre/manual/gui.rst:512
 msgid "*Virtual libraries*"
 msgstr "*Virtuální knihovny*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:507
+#: ../../../__w/calibre/calibre/manual/gui.rst:514
 msgid ""
 "The special field ``vl`` is used to search for books in a Virtual library. "
 "For example, ``vl:Read`` will find all the books in the *Read* Virtual "
@@ -1329,41 +1334,41 @@ msgid ""
 "Virtual library name contains spaces then surround it with quotes."
 msgstr "Speciální pole ``vl`` se používá k vyhledávání knih ve virtuální knihovně. Například ``vl:Read`` najde všechny knihy ve virtuální knihovně *Read*. Hledání ``vl:Read and vl:\"Science Fiction\"`` najde všechny knihy, které jsou ve virtuálních knihovnách *Read* i *Science Fiction*. Hodnota následující za ``vl:`` musí být název virtuální knihovny. Pokud název virtuální knihovny obsahuje mezery, uzavřete ho do uvozovek."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:513
+#: ../../../__w/calibre/calibre/manual/gui.rst:520
 msgid "*Whether a field has a value*"
 msgstr "*Zda má pole hodnotu*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:515
+#: ../../../__w/calibre/calibre/manual/gui.rst:522
 msgid ""
 "You can search for the absence or presence of a value for a field using "
 "\"true\" and \"false\". For example:"
 msgstr "Nepřítomnost nebo přítomnost hodnoty v poli můžete hledat pomocí \"true\" a \"false\". Například:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:517
+#: ../../../__w/calibre/calibre/manual/gui.rst:524
 msgid "``cover:false`` finds all books without a cover"
 msgstr "``cover:false`` najde všechny knihy bez obálky"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:518
+#: ../../../__w/calibre/calibre/manual/gui.rst:525
 msgid "``series:true`` finds all books that are in a series"
 msgstr "``series:true`` najde všechny knihy, které jsou v sérii"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:519
+#: ../../../__w/calibre/calibre/manual/gui.rst:526
 msgid "``series:false`` finds all books that are not in a series"
 msgstr "``series:false`` najde všechny knihy, které nejsou v sérii"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:520
+#: ../../../__w/calibre/calibre/manual/gui.rst:527
 msgid "``comments:false`` finds all books with an empty comment"
 msgstr "``comments:false`` najde všechny knihy s prázdným komentářem"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:521
+#: ../../../__w/calibre/calibre/manual/gui.rst:528
 msgid "``formats:false`` finds all books with no book files (empty records)"
 msgstr "``formats:false`` najde všechny knihy bez souborů knih (prázdné záznamy)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:523
+#: ../../../__w/calibre/calibre/manual/gui.rst:530
 msgid "*Yes/no custom columns*"
 msgstr "*Vlastní sloupce Ano/Ne*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:525
+#: ../../../__w/calibre/calibre/manual/gui.rst:532
 msgid ""
 "Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
 "find all books with undefined values in the column. Searching for ``true`` "
@@ -1377,11 +1382,11 @@ msgid ""
 "``_empty`` are not translated."
 msgstr "Vyhledávání hodnot ``false``, ``empty`` nebo ``blank`` ve vlastních sloupcích Ano/Ne najde všechny knihy s nedefinovanými hodnotami ve sloupci. Vyhledávání hodnoty ``true`` najde všechny knihy, které ve sloupci nemají nedefinované hodnoty. Vyhledávání hodnoty ``yes`` nebo ``checked`` najde všechny knihy s hodnotou ``Yes`` ve sloupci. Vyhledávání hodnoty ``no`` nebo ``unchecked`` najde všechny knihy s hodnotou ``No`` ve sloupci. Pamatujte, že slova ``yes``, ``no``, ``blank``, ``empty``, ``checked`` a ``unchecked`` jsou přeložená; můžete použít buď odpovídající slovo v aktuálním jazyce, nebo anglické slovo. Slova ``true`` a ``false`` a speciální hodnoty ``_yes``, ``_no`` a ``_empty`` přeložené nejsou."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:530
+#: ../../../__w/calibre/calibre/manual/gui.rst:537
 msgid "*Identifiers*"
 msgstr "*Identifikátory*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:532
+#: ../../../__w/calibre/calibre/manual/gui.rst:539
 msgid ""
 "Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
 "identifier has the form ``type:value``, as in ``isbn:123456789``. The "
@@ -1390,60 +1395,60 @@ msgid ""
 "the :ref:`search kinds <search_kinds>`. Examples:"
 msgstr "Identifikátory (např. ISBN, DOI, LCCN atd.) používají rozšířenou syntaxi. Identifikátor má tvar ``type:value``, například ``isbn:123456789``. Rozšířená syntaxe umožňuje samostatně určit typ a hodnotu, které se mají vyhledat. Jak část dotazu s typem, tak část s hodnotou může používat kterýkoli z :ref:`druhů vyhledávání <search_kinds>`. Příklady:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:534
+#: ../../../__w/calibre/calibre/manual/gui.rst:541
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "``identifiers:true`` najde knihy s jakýmkoliv identifikátorem."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:535
+#: ../../../__w/calibre/calibre/manual/gui.rst:542
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "``identifiers:false`` najde knihy bez identifikátoru."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:536
+#: ../../../__w/calibre/calibre/manual/gui.rst:543
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr "``identifiers:123`` bude hledat knihy s jakýmkoliv typem majícím hodnotu obsahující `123`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:537
+#: ../../../__w/calibre/calibre/manual/gui.rst:544
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr "``identifiers:=123456789`` bude hledat knihy s jakýmkoliv typem majícím hodnotu rovnající se `123456789`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:538
+#: ../../../__w/calibre/calibre/manual/gui.rst:545
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to ISBN having any value"
 msgstr "``identifiers:=isbn:`` a ``identifiers:isbn:true`` najde knihy s typem rovnajícím se ISBN majícím jakoukoliv hodnotu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:539
+#: ../../../__w/calibre/calibre/manual/gui.rst:546
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to ISBN."
 msgstr "``identifiers:=isbn:false`` najde knihy s žádným typem rovnajícím se ISBN."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:540
+#: ../../../__w/calibre/calibre/manual/gui.rst:547
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
 " value containing `123`."
 msgstr "``identifiers:=isbn:123`` najde knihy s typem rovnajícím se ISBN majícím hodnotu obsahující `123`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:541
+#: ../../../__w/calibre/calibre/manual/gui.rst:548
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
 "having a value equal to `123456789`."
 msgstr "``identifiers:=isbn:=123456789`` najde knihy s typem rovnajícím se ISBN majícím hodnotu rovnající se `123456789`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:542
+#: ../../../__w/calibre/calibre/manual/gui.rst:549
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr "``identifiers:i:1`` najde knihy s typem obsahujícím `i` majícím hodnotu obsahující `1`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:544
+#: ../../../__w/calibre/calibre/manual/gui.rst:551
 msgid "*Categories visible in the Tag browser*"
 msgstr "*Kategorie viditelné v Prohlížeči štítků*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:546
+#: ../../../__w/calibre/calibre/manual/gui.rst:553
 msgid ""
 "The search ``in_tag_browser:true`` finds all books that are in categories "
 "(tags, authors, etc.) currently shown in the :guilabel:`Tag browser`. This "
@@ -1458,18 +1463,18 @@ msgid ""
 ":guilabel:`Show only books that have visible categories` entry."
 msgstr "Vyhledávání ``in_tag_browser:true`` najde všechny knihy, které jsou v kategoriích (štítky, autoři atd.) aktuálně zobrazených v části :guilabel:`Prohlížeč štítků`. To je užitečné, pokud nastavíte dvě předvolby :guilabel:`Předvolby->Vzhled a chování->Prohlížeč štítků->Skrýt prázdné kategorie` a :guilabel:`Najít zobrazí všechny odpovídající položky`. Když jsou tyto dvě předvolby nastavené, použití :guilabel:`Najít` v části :guilabel:`Prohlížeč štítků` zobrazí pouze kategorie obsahující položky odpovídající hledání :guilabel:`Najít`. Vyhledávání ``in_tag_browser:true`` pak navíc najde knihy s těmito kategoriemi nebo položkami. Toto vyhledávání můžete snadno spustit stisknutím kláves :kbd:`Ctrl+Alt+Shift+F` nebo kliknutím na tlačítko nastavení v části :guilabel:`Prohlížeč štítků` a zvolením položky :guilabel:`Zobrazit pouze knihy, které mají viditelné kategorie`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:558
+#: ../../../__w/calibre/calibre/manual/gui.rst:565
 msgid "*Search using templates*"
 msgstr "*Vyhledávání pomocí šablon*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:560
+#: ../../../__w/calibre/calibre/manual/gui.rst:567
 msgid ""
 "You can search using a template in :ref:`templatelangcalibre` instead of a "
 "metadata field. To do so you enter a template, a search type, and the value "
 "to search for. The syntax is::"
 msgstr "Pomocí šablony v :ref:`templatelangcalibre` můžete vyhledávat místo pole metadat. Zadáte šablonu, typ vyhledávání a hledanou hodnotu. Syntaxe je::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:564
+#: ../../../__w/calibre/calibre/manual/gui.rst:571
 msgid ""
 "The ``template`` is any valid calibre template language template. The "
 "``search type`` must be one of ``t`` (text search), ``d`` (date search), "
@@ -1479,30 +1484,30 @@ msgid ""
 "search string if there are spaces anywhere in it."
 msgstr "``template`` je libovolná platná šablona jazyka šablon calibre. ``search type`` musí být jedna z hodnot ``t`` (textové vyhledávání), ``d`` (vyhledávání podle data), ``n`` (číselné vyhledávání) nebo ``b`` (nastaveno/nenastaveno (logická hodnota)). ``value`` je libovolná hodnota a pro různé typy vyhledávání může používat :ref:`druhy vyhledávání <search_kinds>` popsané výše. Pokud jsou kdekoli ve vyhledávacím řetězci mezery, musíte celý vyhledávací řetězec uzavřít do uvozovek."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:566
+#: ../../../__w/calibre/calibre/manual/gui.rst:573
 msgid "Examples:"
 msgstr "Příklady:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:568
+#: ../../../__w/calibre/calibre/manual/gui.rst:575
 msgid ""
 "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
 "true when the ``kindle`` device is connected."
 msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- platí, když je připojeno zařízení ``kindle``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:569
+#: ../../../__w/calibre/calibre/manual/gui.rst:576
 msgid ""
 "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
 "finds books with EPUB files larger than 1 MB."
 msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- najde knihy se soubory EPUB většími než 1 MB."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:570
+#: ../../../__w/calibre/calibre/manual/gui.rst:577
 msgid ""
 "``template:\"program: select(formats_modtimes('iso'), "
 "'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
 "days ago."
 msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` -- najde knihy se soubory EPUB novějšími než datum před 10 dny."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:571
+#: ../../../__w/calibre/calibre/manual/gui.rst:578
 msgid ""
 "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
 "0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
@@ -1510,7 +1515,7 @@ msgid ""
 " (``'``) and double quotes (``\"``) when constructing the search expression."
 msgstr "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != 0#@#:n:1\"\"\"`` -- najde všechny knihy, které mají v štítcích název série. Tento příklad používá super-quote, protože šablona při sestavování vyhledávacího výrazu používá jednoduché uvozovky (``'``) i dvojité uvozovky (``\"``)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:573
+#: ../../../__w/calibre/calibre/manual/gui.rst:580
 msgid ""
 "You can build template search queries easily using the :guilabel:`Advanced "
 "search dialog` accessed by clicking the button |sbi|. You can test templates"
@@ -1520,19 +1525,19 @@ msgid ""
 ":guilabel:`Preferences->Shortcuts`."
 msgstr "Vyhledávací dotazy se šablonami můžete snadno sestavit pomocí :guilabel:`Dialogové okno Rozšířené hledání`, které otevřete kliknutím na tlačítko |sbi|. Šablony můžete testovat na konkrétních knihách pomocí nástroje calibre :guilabel:`Testovač šablon`, který lze přidat na panely nástrojů nebo do nabídek přes :guilabel:`Předvolby->Panely nástrojů a nabídky`. Lze mu také přiřadit klávesovou zkratku přes :guilabel:`Předvolby->Klávesové zkratky`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:575
+#: ../../../__w/calibre/calibre/manual/gui.rst:582
 msgid "*Advanced search dialog*"
 msgstr "*Dialogové okno Rozšířené hledání*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:583
+#: ../../../__w/calibre/calibre/manual/gui.rst:590
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ":guilabel:`Dialogové okno Rozšířené hledání`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:588
+#: ../../../__w/calibre/calibre/manual/gui.rst:595
 msgid "Saving searches"
 msgstr "Ukládání hledání"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:590
+#: ../../../__w/calibre/calibre/manual/gui.rst:597
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1542,18 +1547,18 @@ msgid ""
 "save the search."
 msgstr "Calibre vám umožňuje uložit často používané hledání pod speciálním názvem a pak znovu použít toto hledání pomocí jediného kliknutí. Abyste to udělali, vytvořte hledání buď zadáním do Panelu hledání, nebo pomocí Prohlížeče štítků. Potom zadejte název, který chcete dát hledání, do pole Uložená hledání vedle Panelu hledání. Klikněte na ikonu plus vedle pole uložených hledání pro uložení hledání."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:592
+#: ../../../__w/calibre/calibre/manual/gui.rst:599
 msgid ""
 "Now you can access your saved search in the Tag browser under "
 ":guilabel:`Saved searches`. A single click will allow you to reuse any "
 "arbitrarily complex search easily, without needing to re-create it."
 msgstr "Nyní můžete přistupovat ke svému uloženému hledání v Prohlížeči štítků pod :guilabel:`Uložená hledání`. Jedno kliknutím vám umožní snadno znovu použít jakékoliv libovolně složité hledání, aniž byste ho museli znovu vytvářet."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:595
+#: ../../../__w/calibre/calibre/manual/gui.rst:602
 msgid "Searching the full text of all books"
 msgstr "Fulltextové vyhledávání ve všech knihách"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:600
+#: ../../../__w/calibre/calibre/manual/gui.rst:607
 msgid ""
 "|ftsb| calibre can *optionally* index the full text of books in the library "
 "to allow for instant searching of words inside any book. To use this "
@@ -1561,11 +1566,11 @@ msgid ""
 " bar."
 msgstr "|ftsb| calibre může *volitelně* indexovat plný text knih v knihovně, aby bylo možné okamžitě vyhledávat slova uvnitř libovolné knihy. Tuto funkci použijete kliknutím na tlačítko :guilabel:`FT` na levém okraji panelu hledání."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:597
+#: ../../../__w/calibre/calibre/manual/gui.rst:604
 msgid "ftsb"
 msgstr "ftsb"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:604
+#: ../../../__w/calibre/calibre/manual/gui.rst:611
 msgid ""
 "Then, enable indexing for the current library. Once indexing is complete you"
 " can search all the text in the full library. When you add new books to the "
@@ -1578,18 +1583,18 @@ msgid ""
 "calibre :guilabel:`E-book viewer`."
 msgstr "Potom povolte indexování pro aktuální knihovnu. Jakmile bude indexování dokončeno, můžete vyhledávat v celém textu celé knihovny. Když do knihovny přidáte nové knihy, budou automaticky indexovány na pozadí. Toto vyhledávání umožňuje rychle najít všechny knihy, které obsahují určité slovo nebo kombinaci slov. Můžete dokonce hledat slova, která se vyskytují poblíž jiných slov, jak ukazují příklady ve vyskakovacím okně hledání. Pamatujte, že tento nástroj vyhledávání najde v konkrétní knize pouze jeden výskyt vyhledávacího dotazu, ne seznam všech výskytů. K tomu je lepší hledat uvnitř knihy pomocí prohlížeče :guilabel:`Prohlížeč e-knih` v calibre."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:613
+#: ../../../__w/calibre/calibre/manual/gui.rst:620
 msgid ""
 "You can re-index an individual book by right clicking on the :guilabel:`Book"
 " details panel` in calibre and choosing :guilabel:`Re-index this book for "
 "full text searching`."
 msgstr "Jednotlivou knihu můžete přeindexovat kliknutím pravým tlačítkem myši na :guilabel:`Panel podrobností o knize` v calibre a zvolením :guilabel:`Přeindexovat tuto knihu pro fulltextové vyhledávání`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:618
+#: ../../../__w/calibre/calibre/manual/gui.rst:625
 msgid "Virtual libraries"
 msgstr "Virtuální knihovny"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:620
+#: ../../../__w/calibre/calibre/manual/gui.rst:627
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1598,11 +1603,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr ":guilabel:`Virtuální knihovna` je způsob, jak předstírat, že vaše knihovna Calibre má pouze několik knih, namísto celé její kolekce. Je to vynikající způsob, jak rozdělit velkou kolekci knih na menší, snadno ovladatelné bloky. Abyste zjistili, jak vytvořit a používat Virtuální knihovny, podívejte se na kurz: :ref:`virtual_libraries`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:627
+#: ../../../__w/calibre/calibre/manual/gui.rst:634
 msgid "Temporarily marking books"
 msgstr "Dočasné označování knih"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:629
+#: ../../../__w/calibre/calibre/manual/gui.rst:636
 msgid ""
 "You can temporarily mark arbitrary sets of books. Marked books will have a "
 "pin on them and can be found with the search ``marked:true``. To mark a book"
@@ -1610,7 +1615,7 @@ msgid ""
 "add the :guilabel:`Mark books` button to the main toolbar."
 msgstr "Libovolné sady knih můžete dočasně označit. Označené knihy budou mít ikonu špendlíku a lze je najít vyhledáváním ``marked:true``. Knihu označíte stisknutím :kbd:`Ctrl+M`, případně přejděte do :guilabel:`Předvolby->Panely nástrojů a nabídky` a přidejte tlačítko :guilabel:`Označit knihy` na hlavní panel nástrojů."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:631
+#: ../../../__w/calibre/calibre/manual/gui.rst:638
 msgid ""
 "You can mark books with a specific text label by right clicking the "
 ":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
@@ -1618,11 +1623,11 @@ msgid ""
 "``marked:\"=the-text-you-entered\"``."
 msgstr "Knihy můžete označit konkrétním textovým popiskem kliknutím pravým tlačítkem na tlačítko :guilabel:`Označit knihy` a zvolením :guilabel:`Označit knihy textovým popiskem`. Knihy označené textovými popisky lze později najít pomocí vyhledávání ``marked:\"=text-který-jste-vložili\"``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:636
+#: ../../../__w/calibre/calibre/manual/gui.rst:643
 msgid "Guessing metadata from file names"
 msgstr "Odhadování metadat z názvů souborů"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:638
+#: ../../../__w/calibre/calibre/manual/gui.rst:645
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1630,7 +1635,7 @@ msgid ""
 " contents`."
 msgstr "Obyčejně Calibre čte metadata zevnitř souboru knihy. Může však být nakonfigurováno tak, aby nemísto toho četlo metadata z názvu souboru, a to pomocí :guilabel:`Předvolby->Import a export->Přidávání knih->Číst metadata z obsahu souboru`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:642
+#: ../../../__w/calibre/calibre/manual/gui.rst:649
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
@@ -1639,30 +1644,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr "Můžete také určit, jak jsou čtena metadata z názvu souboru pomocí regulárních výrazů (viz :doc:`regexp`). V oddílu konfiguračního dialogového okna :guilabel:`Přidávání knih` můžete zadat regulární výraz, který Calibre použije, aby se pokusilo odhadnout metadata z názvů souborů e-knih, které přidáte do knihovny. Výchozí regulární výraz je::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:650
+#: ../../../__w/calibre/calibre/manual/gui.rst:657
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "to znamená, že předpokládá, že všechny znaky až do první ``-`` jsou název knihy a následující znaky jsou autor knihy. Například název souboru::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:656
+#: ../../../__w/calibre/calibre/manual/gui.rst:663
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "bude interpretován, že má název: Foundation and Earth a autora: Isaac Asimov"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:659
+#: ../../../__w/calibre/calibre/manual/gui.rst:666
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "Pokud název souboru neobsahuje spojovník, výše uvedený regulární výraz selže."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:665
+#: ../../../__w/calibre/calibre/manual/gui.rst:672
 msgid "Book details"
 msgstr "Podrobnosti o knize"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:669
+#: ../../../__w/calibre/calibre/manual/gui.rst:676
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1672,51 +1677,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr "Podrobnosti o knize zobrazují obálku a všechna metadata pro aktuálně vybranou knihu. Mohou být skryty prostřednictvím tlačítka :guilabel:`Rozložení` v pravém dolním rohu hlavního okna Calibre. Na jména autorů zobrazená v panelu Podrobnosti o knize lze kliknout, ve výchozím nastavení vás přenesou na stránku autora na Wikipedii. Toto může být upraveno kliknutím pravým tlačítkem myši na jméno autora a výběrem Spravovat tohoto autora."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:676
+#: ../../../__w/calibre/calibre/manual/gui.rst:683
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "Amazon, WorldCat, etc. from where the metadata was downloaded."
 msgstr "Podobně, pokud stáhnete metadata pro knihu, panel Podrobností o knize vám automaticky zobrazí odkazy směřující na webové stránky pro knihu na Amazonu, WorldCatu atd., odkud byla metadata stažena."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:680
+#: ../../../__w/calibre/calibre/manual/gui.rst:687
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr "Můžete kliknout pravým tlačítkem myši na jednotlivé formáty e-knih v panelu Podrobnosti o knize k jejich odstranění, porovnání s jejich původními verzemi, uložení na disk, otevření v externím programu atd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:684
+#: ../../../__w/calibre/calibre/manual/gui.rst:691
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr "Obálku knihy můžete změnit jednoduše přetažením obrázku na panel Podrobnosti o knize. Pokud si přejete upravit obrázek obálky v externím programu, jednoduše na něj klikněte pravým tlačítkem myši a zvolte :guilabel:`Otevřít v programu`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:688
+#: ../../../__w/calibre/calibre/manual/gui.rst:695
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr "Můžete také přidat soubory e-knihy do aktuální knihy přetažením souborů na panel Podrobnosti o knize."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:691
+#: ../../../__w/calibre/calibre/manual/gui.rst:698
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr "Dvojité kliknutí na panel Podrobnosti o knize ji otevře v samostatném automaticky otevřeném okně."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:694
+#: ../../../__w/calibre/calibre/manual/gui.rst:701
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr "A nakonec můžete přesně přizpůsobit, jaké informace jsou zobrazeny v panelu Podrobnosti o knize pomocí :guilabel:`Předvolby->Rozhraní->Vzhled a chování->Podrobnosti o knize`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:704
+#: ../../../__w/calibre/calibre/manual/gui.rst:711
 msgid "Tag browser"
 msgstr "Prohlížeč štítků"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:708
+#: ../../../__w/calibre/calibre/manual/gui.rst:715
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1726,7 +1731,7 @@ msgid ""
 " series."
 msgstr "Prohlížeč štítků vám umožňuje snadno procházet vaši kolekci podle autora, štítků, série atd. Pokud kliknete na kteroukoliv položku v Prohlížeči štítků, například jméno autora Isaac Asimov, pak je seznam knih na pravé straně je omezen, aby zobrazoval knihy od tohoto autora. Můžete kliknout rovněž na názvy kategorií. Například kliknutí na \"Série\" zobrazí všechny knihy v kterékoliv sérii."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:710
+#: ../../../__w/calibre/calibre/manual/gui.rst:717
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1744,7 +1749,7 @@ msgid ""
 "learn how to construct basic search expressions."
 msgstr "První kliknutí na položku omezí seznam knih na ty, které obsahují nebo odpovídají položce. Jako pokračování výše uvedeného příkladu kliknutí na Isaaca Asimova zobrazí knihy od tohoto autora. Nové kliknutí na položku změní to, co je zobrazeno, v závislosti na tom, zda má položka podřízené položky (viz podkategorie a hierarchické položky níže). Jako pokračování příkladu s Isaacem Asimovem nové kliknutí na Isaaca Asimova omezí seznam knih na ty, které nejsou od Isaaca Asimova. Třetí kliknutí odebere omezení a zobrazí všechny knihy. Pokud podržíte klávesu Ctrl nebo :kbd:`Shift` a kliknete na více položek, pak jsou vytvořena omezení na základě více položek. Například byste mohli držet klávesu Ctrl a kliknout na štítky Historická a Evropa pro nalezení knih o dějinách Evropy. Prohlížeč štítků funguje sestavováním vyhledávacích výrazů, které jsou automaticky zadávány do panelu hledání. Dívání se na to, co Prohlížeč štítků generuje, je dobrý způsob zjištění, jak vytvořit základní vyhledávací výrazy."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:712
+#: ../../../__w/calibre/calibre/manual/gui.rst:719
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1753,7 +1758,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr "Položky v Prohlížeči štítků mají částečně barevné ikony. Množství barev závisí na průměrném hodnocení knih v dané kategorii. Takže například pokud knihy od Isaaca Asimova mají průměrně čtyři hvězdičky, bude ikona pro Isaaca Asimova v Prohlížeči štítků barevná ze 4/5. Můžete přejet myší nad ikonou, abyste viděli průměrné hodnocení."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:714
+#: ../../../__w/calibre/calibre/manual/gui.rst:721
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1772,38 +1777,38 @@ msgid ""
 "Favorites example above."
 msgstr "Položky na vnější úrovni v :guilabel:`Prohlížeči štítků`, jako jsou Autoři a Série, se nazývají kategorie. Můžete si vytvořit své vlastní kategorie, nazvané :guilabel:`Uživatelské kategorie`, které jsou užitečné pro organizování položek. Například můžete použít :guilabel:`Editor uživatelských kategorií` (vlevo pod :guilabel:`Prohlížečem štítků` klikněte na tlačítko :guilabel:`Konfigurovat` a zvolte :guilabel:`Spravovat autory, štítky atd.->Uživatelské kategorie`) pro vytvoření Uživatelské kategorie nazvané Oblíbení autoři, a pak umístit své oblíbené položky do kategorie. Uživatelské kategorie mohou mít podkategorie. Například Uživatelská kategorie   ``Oblíbené.Autoři`` je podkategorie ``Oblíbené``. Možná také máte ``Oblíbené.Série``, v takovém případě budou pod ``Oblíbené`` dvě podkategorie. Podkategorie mohou být vytvořeny kliknutím pravým tlačítkem myši na Uživatelskou kategorii, výběrem :guilabel:`Přidat podkategorii do...` a zadáním názvu podkategorie; nebo pomocí :guilabel:`Editoru uživatelských kategorií` zadáním názvů, jako výše uvedený příklad Oblíbené."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:716
+#: ../../../__w/calibre/calibre/manual/gui.rst:723
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr "V Uživatelských kategoriích můžete vyhledávat stejným způsobem jako ve vestavěných kategoriích kliknutím na ně. Při kliknutí kolují čtyři různá vyhledávání:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:717
+#: ../../../__w/calibre/calibre/manual/gui.rst:724
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "\"všechno odpovídající položce v kategorii\" označené jednoduchým zeleným znaménkem plus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:718
+#: ../../../__w/calibre/calibre/manual/gui.rst:725
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "\"všechno odpovídající položce v kategorii nebo jejím podkategoriím\" označené dvěma zelenými znaménky plus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:719
+#: ../../../__w/calibre/calibre/manual/gui.rst:726
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "\"všechno neodpovídající položce v kategorii\" označené jednoduchým červeným znaménkem minus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:720
+#: ../../../__w/calibre/calibre/manual/gui.rst:727
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "\"všechno neodpovídající položce v kategorii nebo jejím podkategoriím\" označené dvěma červenými znaménky minus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:722
+#: ../../../__w/calibre/calibre/manual/gui.rst:729
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1820,14 +1825,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr "Je také možné vytvářet hierarchie uvnitř některých textových kategorií, jako jsou štítky, série a vlastní sloupce. Tyto hierarchie se zobrazují s malým trojúhelníkem umožňujícím skrytí podpoložek. Pro použití hierarchií položek v kategorii musíte nejprve přejít do :guilabel:`Předvolby->Rozhraní->Vzhled a chování` a zadat názvy kategorií do pole \"Kategorie s hierarchickými položkami\". Jakmile to uděláte, položky v této kategorii, které obsahují tečky, se zobrazí pomocí malého trojúhelníku. Například předpokládejme, že vytvoříte vlastní sloupec nazvaný \"Žánr\" a označíte ho, že obsahuje hierarchické položky. Jakmile to uděláte, položky jako Mysteriózní.Thriller a Mysteriózní.Česky se zobrazí jako Mysteriózní s malým trojúhelníkem. Kliknutí na trojúhelník zobrazí Thriller a Česky jako podpoložky. Pro více informací se podívejte na :ref:`Správa podskupiny knih, například \"žánr\" <subgroups-tutorial>`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:724
+#: ../../../__w/calibre/calibre/manual/gui.rst:731
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr "Hierarchické položky (položky s podřízenými položkami) používají stejná čtyři ‚kliknutelná‘ vyhledávání jako Uživatelské kategorie. Položky, které nemají podřízené položky, používají dvě z vyhledávání: „všechno odpovídající“ a „všechno neodpovídající“."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:726
+#: ../../../__w/calibre/calibre/manual/gui.rst:733
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the "
@@ -1839,7 +1844,7 @@ msgid ""
 "History will add the tag History to the book's tags."
 msgstr "Položky v Prohlížeči štítků můžete přetahovat na Uživatelské kategorie pro jejich přidání do této kategorie. Pokud je zdrojem Uživatelská kategorie, podržení klávesy :kbd:`Shift` při přetažení přesune položku do nové kategorie. Můžete také přetahovat knihy ze seznamu knih na položky v Prohlížeči štítků; přetažení knihy na položku způsobí, že položka bude automaticky použita na přetaženou knihu. Například přetažení knihy na Isaaca Asimova nastaví autora této knihy na Isaaca Asimova. Její přetažení na štítek Historická přidá štítek Historická do štítků knihy."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:728
+#: ../../../__w/calibre/calibre/manual/gui.rst:735
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1849,7 +1854,7 @@ msgid ""
 "rename authors and control how their names are sorted."
 msgstr "Libovolnou položku v Prohlížeči štítků můžete snadno najít kliknutím na tlačítko hledání v pravém dolním rohu. Kromě toho můžete na libovolnou položku kliknout pravým tlačítkem a zvolit jednu z několika operací. Můžete ji například skrýt, přejmenovat nebo otevřít dialogové okno „Spravovat x“, které umožňuje spravovat položky daného druhu. Například dialogové okno :guilabel:`Spravovat autory` umožňuje přejmenovat autory a řídit, jak se jejich jména řadí."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:730
+#: ../../../__w/calibre/calibre/manual/gui.rst:737
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1858,7 +1863,7 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "Jak jsou položky v Prohlížeči štítků řazeny, můžete určit prostřednictvím tlačítka :guilabel:`Konfigurovat` vlevo pod Prohlížečem štítků. Můžete si zvolit seřazení podle názvu, průměrného hodnocení nebo oblíbenosti (oblíbenost je počet knih u položky ve vaší knihovně; například oblíbenost Isaaca Asimova je počet knih ve vaší knihovně od Isaaca Asimova)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:732
+#: ../../../__w/calibre/calibre/manual/gui.rst:739
 msgid ""
 "You can use your own icons for categories and values in categories. To "
 "change the icon for a category, right-click on the category (the outer-level"
@@ -1867,27 +1872,27 @@ msgid ""
 "its default choose `Restore (category name) default icon`."
 msgstr "Pro kategorie a hodnoty v kategoriích můžete používat vlastní ikony. Ikonu kategorie změníte kliknutím pravým tlačítkem na kategorii (položku nejvyšší úrovně) a zvolením `Změnit ikonu kategorie (název kategorie)`. Otevře se dialogové okno, ve kterém můžete vybrat obrázek použitý jako ikona. Ikonu obnovíte na výchozí zvolením `Obnovit výchozí ikonu kategorie (název kategorie)`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:735
+#: ../../../__w/calibre/calibre/manual/gui.rst:742
 msgid ""
 "To choose icons for values in categories, right-click on a value then choose"
 " `Manage icon for (value name)`. You will see a list of choices:"
 msgstr "Ikony hodnot v kategoriích zvolíte tak, že kliknete pravým tlačítkem na hodnotu a potom zvolíte `Spravovat ikonu pro (název hodnoty)`. Zobrazí se seznam voleb:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:737
+#: ../../../__w/calibre/calibre/manual/gui.rst:744
 msgid ""
 "`Choose an icon for this value but not its children`. A dialog will open "
 "where you choose an icon for the value. Children of that value will not "
 "inherit that icon."
 msgstr "`Vybrat ikonu pro tuto hodnotu, ale ne pro její podřízené položky`. Otevře se dialogové okno, ve kterém vyberete ikonu pro hodnotu. Podřízené položky této hodnoty tuto ikonu nezdědí."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:738
+#: ../../../__w/calibre/calibre/manual/gui.rst:745
 msgid ""
 "`Choose an icon for this value and its children`. A dialog will open where "
 "you choose an icon for the value. Any children that don't have their own "
 "specified icon will inherit this icon."
 msgstr "`Vybrat ikonu pro tuto hodnotu a její podřízené položky`. Otevře se dialogové okno, ve kterém vyberete ikonu pro hodnotu. Všechny podřízené položky, které nemají určenou vlastní ikonu, tuto ikonu zdědí."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:739
+#: ../../../__w/calibre/calibre/manual/gui.rst:746
 msgid ""
 "`Use the existing icon for this value but not its children`. This option is "
 "offered if the value already has an icon that is inherited by the value's "
@@ -1895,7 +1900,7 @@ msgid ""
 "children."
 msgstr "`Použít existující ikonu pro tuto hodnotu, ale ne pro její podřízené položky`. Tato volba je nabídnuta, pokud hodnota už má ikonu, kterou dědí její podřízené položky. Jejím výběrem se ikona použije pro hodnotu, ale ne pro její podřízené položky."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:740
+#: ../../../__w/calibre/calibre/manual/gui.rst:747
 msgid ""
 "`Use the existing icon for this value and its children`. This option is "
 "offered if the value already has an icon that is not inherited by the "
@@ -1903,50 +1908,50 @@ msgid ""
 " children."
 msgstr "`Použít existující ikonu pro tuto hodnotu a její podřízené položky`. Tato volba je nabídnuta, pokud hodnota už má ikonu, kterou její podřízené položky nedědí. Jejím výběrem se ikona použije pro hodnotu i její podřízené položky."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:741
+#: ../../../__w/calibre/calibre/manual/gui.rst:748
 msgid ""
 "`Use the default icon for this value`. This option is offered if the item "
 "has an icon. It removes the icon from the value and any children inheriting "
 "the icon. The default icon is what is specified below."
 msgstr "`Použít výchozí ikonu pro tuto hodnotu`. Tato volba je nabídnuta, pokud položka má ikonu. Odebere ikonu z hodnoty i ze všech podřízených položek, které ji dědí. Výchozí ikona je určena níže."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:742
+#: ../../../__w/calibre/calibre/manual/gui.rst:749
 msgid ""
 "`Reset all value icons to the default icon`. This option removes all item "
 "value icons for the category. It does not remove a template if one exists. "
 "There is no undo."
 msgstr "`Resetovat všechny ikony hodnot na výchozí ikonu`. Tato volba odebere všechny ikony hodnot položek pro danou kategorii. Neodebere šablonu, pokud existuje. Tuto akci nelze vrátit zpět."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:743
+#: ../../../__w/calibre/calibre/manual/gui.rst:750
 msgid ""
 "`Use/edit a template to choose the default value icon`. This option permits "
 "you to provide a calibre template that returns the name of an icon file to "
 "be used as a default icon. The template can use the following variables:"
 msgstr "`Použít/upravit šablonu pro výběr výchozí ikony hodnoty`. Tato volba umožňuje zadat šablonu calibre, která vrátí název souboru ikony, jenž se má použít jako výchozí ikona. Šablona může používat následující proměnné:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:745
+#: ../../../__w/calibre/calibre/manual/gui.rst:752
 msgid ""
 "``category``: the lookup name of the category, for example ``authors``, "
 "``series``, ``#mycolumn``."
 msgstr "``category``: název kategorie pro vyhledávání, například ``authors``, ``series``, ``#mycolumn``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:746
+#: ../../../__w/calibre/calibre/manual/gui.rst:753
 msgid "``value``: the value of the item within the category."
 msgstr "``value``: hodnota položky v kategorii."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:747
+#: ../../../__w/calibre/calibre/manual/gui.rst:754
 msgid ""
 "``count``: the number of books with this value. If the value is part of a "
 "hierarchy then the count includes the children."
 msgstr "``count``: počet knih s touto hodnotou. Pokud je hodnota součástí hierarchie, počet zahrnuje i podřízené položky."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:748
+#: ../../../__w/calibre/calibre/manual/gui.rst:755
 msgid ""
 "``avg_rating``: the average rating for books with this value. If the value "
 "is part of a hierarchy then the average includes the children."
 msgstr "``avg_rating``: průměrné hodnocení knih s touto hodnotou. Pokud je hodnota součástí hierarchie, průměr zahrnuje i podřízené položky."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:750
+#: ../../../__w/calibre/calibre/manual/gui.rst:757
 msgid ""
 "Book metadata such as title is not available. Template database functions "
 "such as :ref:`ff_book_count` and :ref:`ff_book_values` will work, but the "
@@ -1957,7 +1962,7 @@ msgid ""
 ":ref:`ff_virtual_libraries`."
 msgstr "Metadata knihy, například název, nejsou k dispozici. Databázové funkce šablon, například :ref:`ff_book_count` a :ref:`ff_book_values`, budou fungovat, ale výkon nemusí být přijatelný. Následující funkce šablon budou fungovat v grafickém rozhraní, ale nebudou fungovat na Serveru s obsahem: :ref:`ff_connected_device_name`, :ref:`ff_connected_device_uuid`, :ref:`ff_current_virtual_library_name`, :ref:`ff_is_marked` a :ref:`ff_virtual_libraries`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:752
+#: ../../../__w/calibre/calibre/manual/gui.rst:759
 msgid ""
 "In the GUI, Python templates have full access to the calibre database. In "
 "the content server, Python templates have access to new API (see `API "
@@ -1965,51 +1970,51 @@ msgid ""
 "ebook.com/db_api.html>`_) but not the old API (LibraryDatabase)."
 msgstr "V grafickém rozhraní mají šablony Pythonu plný přístup k databázi calibre. Na Serveru s obsahem mají šablony Pythonu přístup k novému API (viz `dokumentace API pro databázové rozhraní <https://manual.calibre-ebook.com/db_api.html>`_), ale ne ke starému API (LibraryDatabase)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:754
+#: ../../../__w/calibre/calibre/manual/gui.rst:761
 msgid ""
 "For example, this template specifies that any value in the clicked-on "
 "category beginning with `History` will have an icon named ``flower.png``::"
 msgstr "Tato šablona například určuje, že každá hodnota v kategorii, na kterou jste klikli, začínající na `History` bude mít ikonu s názvem ``flower.png``::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:759
+#: ../../../__w/calibre/calibre/manual/gui.rst:766
 msgid ""
 "If a template returns the empty string (``''``) then the category icon will "
 "be used. If the template returns a file name that doesn't exist then no icon"
 " is displayed."
 msgstr "Pokud šablona vrátí prázdný řetězec (``''``), použije se ikona kategorie. Pokud šablona vrátí název souboru, který neexistuje, nezobrazí se žádná ikona."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:762
+#: ../../../__w/calibre/calibre/manual/gui.rst:769
 msgid ""
 "`Use the category icon as the default`. This option specifies that the icon "
 "used for the category should be used for any value that doesn't otherwise "
 "have an icon. Selecting this option removes any template icon specification."
 msgstr "`Použít ikonu kategorie jako výchozí`. Tato volba určuje, že ikona použitá pro kategorii se má použít pro každou hodnotu, která jinak nemá ikonu. Výběrem této volby se odebere jakékoli určení ikony šablonou."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:765
+#: ../../../__w/calibre/calibre/manual/gui.rst:772
 msgid "The icon is chosen using the following hierarchy:"
 msgstr "Ikona se vybírá podle následující hierarchie:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:767
+#: ../../../__w/calibre/calibre/manual/gui.rst:774
 msgid "The icon specified for the value, if it exists."
 msgstr "Ikona určená pro hodnotu, pokud existuje."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:768
+#: ../../../__w/calibre/calibre/manual/gui.rst:775
 msgid ""
 "The icon specified for a parent node found by walking up the tree, if one "
 "exists."
 msgstr "Ikona určená pro nadřazený uzel nalezený postupem vzhůru stromem, pokud existuje."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:769
+#: ../../../__w/calibre/calibre/manual/gui.rst:776
 msgid ""
 "The icon from a template, if a template exists and it returns a non-empty "
 "string."
 msgstr "Ikona ze šablony, pokud šablona existuje a vrátí neprázdný řetězec."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:770
+#: ../../../__w/calibre/calibre/manual/gui.rst:777
 msgid "The default category icon, which always exists."
 msgstr "Výchozí ikona kategorie, která vždy existuje."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:772
+#: ../../../__w/calibre/calibre/manual/gui.rst:779
 msgid ""
 "Icons are per-user, not per-library, stored in the calibre configuration "
 "folder. Icons for item values are stored in the :file:`tb_icons` subfolder. "
@@ -2017,11 +2022,11 @@ msgid ""
 ":file:`tb_icons`."
 msgstr "Ikony jsou vázané na uživatele, ne na knihovnu, a jsou uložené v konfigurační složce calibre. Ikony hodnot položek jsou uložené v podsložce :file:`tb_icons`. Ikony používané šablonami jsou v podsložce :file:`template_icons` složky :file:`tb_icons`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:780
+#: ../../../__w/calibre/calibre/manual/gui.rst:787
 msgid "Cover grid"
 msgstr "Mřížka obálek"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:785
+#: ../../../__w/calibre/calibre/manual/gui.rst:792
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -2033,11 +2038,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr "Můžete nechat Calibre zobrazit mřížku obálek knih namísto seznamu knih, pokud dáváte přednost procházení své kolekce podle obálek. :guilabel:`Mřížka obálek` se aktivuje kliknutím na tlačítko :guilabel:`Rozložení` v pravém dolním rohu hlavního okna Calibre. Velikosti obálek a pozadí :guilabel:`Mřížky obálek` můžete přizpůsobit pomocí :guilabel:`Předvolby->Rozhraní->Vzhled a chování->Mřížka obálek`. Můžete dokonce nechat calibre zobrazit pod obálkami libovolné zadané pole, například název, autory, hodnocení nebo vlastní sloupec podle vlastního návrhu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:796
+#: ../../../__w/calibre/calibre/manual/gui.rst:803
 msgid "Bookshelf view"
 msgstr "Pohled na poličku"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:801
+#: ../../../__w/calibre/calibre/manual/gui.rst:808
 msgid ""
 "You can have calibre display your book collection in shelves, optionally "
 "grouped by authors/date/rating etc. The :guilabel:`Bookshelf view` is "
@@ -2047,11 +2052,11 @@ msgid ""
 "via :guilabel:`Preferences->Interface->Look & feel->Bookshelf`."
 msgstr "calibre může zobrazit vaši sbírku knih na policích, volitelně seskupenou podle autorů, data, hodnocení atd. :guilabel:`Pohled na poličku` se aktivuje kliknutím na tlačítko :guilabel:`Rozložení` v pravém dolním rohu hlavního okna calibre. Přes :guilabel:`Předvolby->Rozhraní->Vzhled a chování->Police` můžete přizpůsobit vše od pozadí přes text na hřbetech až po písma a další nastavení."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:810
+#: ../../../__w/calibre/calibre/manual/gui.rst:817
 msgid "Cover browser"
 msgstr "Prohlížeč obálek"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:815
+#: ../../../__w/calibre/calibre/manual/gui.rst:822
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in a single row. This is activated via the "
@@ -2061,11 +2066,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr "Kromě výše popsané :guilabel:`Mřížky obálek` může calibre zobrazovat obálky také v jednom řádku. Toto zobrazení se aktivuje tlačítkem :guilabel:`Rozložení` v pravém dolním rohu hlavního okna. V :guilabel:`Předvolby->Rozhraní->Vzhled a chování->Prohlížeč obálek` můžete změnit počet zobrazených obálek a dokonce nechat :guilabel:`Prohlížeč obálek` zobrazit v samostatném vyskakovacím okně."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:822
+#: ../../../__w/calibre/calibre/manual/gui.rst:829
 msgid "Adding notes for authors, series, etc."
 msgstr "Přidávání poznámek k autorům, sériím atd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:827
+#: ../../../__w/calibre/calibre/manual/gui.rst:834
 msgid ""
 "You can add notes for an author/series/tag/publisher/etc. to your calibre "
 "library. To do so right click on the author name in the :guilabel:`Tag "
@@ -2073,7 +2078,7 @@ msgid ""
 "choose :guilabel:`Create note` or :guilabel:`Edit note`."
 msgstr "Do knihovny calibre můžete přidávat poznámky k autorovi, sérii, štítku, vydavateli atd. Uděláte to tak, že kliknete pravým tlačítkem na jméno autora v části :guilabel:`Prohlížeč štítků` vlevo nebo v panelu :guilabel:`Podrobnosti o knize` vpravo a zvolíte :guilabel:`Vytvořit poznámku` nebo :guilabel:`Upravit poznámku`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:832
+#: ../../../__w/calibre/calibre/manual/gui.rst:839
 msgid ""
 "A simple popup window will allow you to enter your notes using basic "
 "formatting and supporting links and images. Once a note for an author is "
@@ -2081,18 +2086,18 @@ msgid ""
 "clicking the little pencil icon next to the author name."
 msgstr "Jednoduché vyskakovací okno vám umožní zadat poznámky se základním formátováním a s podporou odkazů a obrázků. Jakmile je poznámka k autorovi vytvořena, můžete ji snadno zobrazit z panelu :guilabel:`Podrobnosti o knize` kliknutím na malou ikonu tužky vedle jména autora."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:837
+#: ../../../__w/calibre/calibre/manual/gui.rst:844
 msgid ""
 "You can search through all the notes in your library using the "
 ":guilabel:`Browse notes` tool by pressing :kbd:`Ctrl+Shift+N` or adding it "
 "to the toolbar via :guilabel:`Preferences->Toolbars & menus`."
 msgstr "Ve všech poznámkách v knihovně můžete vyhledávat pomocí nástroje :guilabel:`Procházet poznámky`, který spustíte stisknutím :kbd:`Ctrl+Shift+N` nebo jeho přidáním na panel nástrojů přes :guilabel:`Předvolby->Panely nástrojů a nabídky`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:847
+#: ../../../__w/calibre/calibre/manual/gui.rst:854
 msgid "Quickview"
 msgstr "Rychlé zobrazení"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:849
+#: ../../../__w/calibre/calibre/manual/gui.rst:856
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -2107,53 +2112,53 @@ msgid ""
 "the left, and all the books by the selected author on the right."
 msgstr "Někdy chcete vybrat knihu a rychle získat seznam knih se stejnou hodnotou v některé kategorii (autoři, štítky, vydavatel, série atd.) jako aktuálně vybraná kniha, ale beze změny aktuálního zobrazení knihovny. K tomu slouží Rychlé zobrazení. Rychlé zobrazení otevře buď druhé okno, nebo panel v seznamu knih, který zobrazí seznam knih odpovídajících požadované hodnotě. Předpokládejme například, že chcete zobrazit seznam všech knih s jedním nebo více autory aktuálně vybrané knihy. Klikněte do buňky autora, která vás zajímá, a stiskněte klávesu Q, nebo klikněte na ikonu :guilabel:`Rychlé zobrazení` v části :guilabel:`Rozložení` okna calibre. Otevře se okno nebo panel se všemi autory této knihy vlevo a se všemi knihami vybraného autora vpravo."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:851
+#: ../../../__w/calibre/calibre/manual/gui.rst:858
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Některé příklady použití Rychlého zobrazení: rychlé ukázání, které další knihy:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:852
+#: ../../../__w/calibre/calibre/manual/gui.rst:859
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr "mají některé štítky použité u aktuálně vybrané knihy,"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:853
+#: ../../../__w/calibre/calibre/manual/gui.rst:860
 msgid "are in the same series as the current book"
 msgstr "jsou ve stejné sérii jako aktuální kniha,"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:854
+#: ../../../__w/calibre/calibre/manual/gui.rst:861
 msgid "have the same values in a custom column as the current book"
 msgstr "mají stejné hodnoty ve vlastním sloupci jako aktuální kniha,"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:855
+#: ../../../__w/calibre/calibre/manual/gui.rst:862
 msgid "are written by one of the same authors of the current book"
 msgstr "jsou napsány jedním ze stejných autorů aktuální knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:856
+#: ../../../__w/calibre/calibre/manual/gui.rst:863
 msgid "share values in a custom column"
 msgstr "sdílejí hodnoty ve vlastním sloupci"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:858
+#: ../../../__w/calibre/calibre/manual/gui.rst:865
 msgid "There are two choices for where the Quickview information appears:"
 msgstr "Existují dvě možnosti, kde se informace Rychlého zobrazení objeví:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:860
+#: ../../../__w/calibre/calibre/manual/gui.rst:867
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr "Může se otevřít „neukotveně“: nad oknem calibre a zůstane otevřené, dokud ho výslovně nezavřete."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:861
+#: ../../../__w/calibre/calibre/manual/gui.rst:868
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr "Může se otevřít „ukotveně“: jako panel v části seznamu knih hlavního okna calibre."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:863
+#: ../../../__w/calibre/calibre/manual/gui.rst:870
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr "Pomocí tlačítka „Ukotvit nebo zrušit ukotvení“ můžete měnit okno z ukotveného na neukotvené podle potřeby."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:865
+#: ../../../__w/calibre/calibre/manual/gui.rst:872
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -2166,21 +2171,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr "Panel Rychlé zobrazení můžete nechat trvale otevřený. V takovém případě sleduje pohyb v seznamu knih. Pokud například v zobrazení knihovny calibre kliknete u knihy na sloupec kategorie (štítky, série, vydavatel, autoři atd.), obsah okna Rychlé zobrazení se změní tak, aby v levém panelu zobrazil hodnoty v této kategorii pro vybranou knihu (například štítky této knihy). Vybere se první položka v tomto seznamu a Rychlé zobrazení zobrazí v pravém panelu všechny knihy ve vaší knihovně, které tuto hodnotu používají. Kliknutím na jinou hodnotu v levém panelu zobrazíte knihy s touto jinou hodnotou."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:867
+#: ../../../__w/calibre/calibre/manual/gui.rst:874
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr "Dvojitě klikněte na knihu v okně Rychlého zobrazení pro výběr této knihy v zobrazení knihovny. Tím se také změní položky zobrazené v okně Rychlého zobrazení (levý panel), aby se zobrazily položky v nově vybrané knize."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:869
+#: ../../../__w/calibre/calibre/manual/gui.rst:876
 msgid ""
 ":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
 " to open the edit metadata dialog on that book in the calibre window. The "
 "edited book will be Quickview'ed when you close the edit metadata dialog."
 msgstr "Dvojitě klikněte se stisknutou klávesou :kbd:`Shift-` nebo :kbd:`Ctrl-` na knihu v okně Rychlého zobrazení, chcete-li otevřít dialog úpravy metadat této knihy v okně calibre. Upravená kniha se zobrazí v Rychlém zobrazení po zavření dialogu úpravy metadat."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:871
+#: ../../../__w/calibre/calibre/manual/gui.rst:878
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -2189,47 +2194,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "Zda sloupec podporuje Rychlé zobrazení, zjistíte tak, že najedete myší na záhlaví sloupce a podíváte se na nápovědu k tomuto záhlaví. Můžete to zjistit také kliknutím pravým tlačítkem na záhlaví sloupce a kontrolou, zda se v nabídce zobrazuje volba „Rychlé zobrazení“. Pokud ano, její zvolení odpovídá stisknutí klávesy Q v aktuální buňce."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:873
+#: ../../../__w/calibre/calibre/manual/gui.rst:880
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr "Volby (v :guilabel:`Předvolby->Vzhled a chování->Rychlé zobrazení`):"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:875
+#: ../../../__w/calibre/calibre/manual/gui.rst:882
 msgid ""
 "Respect (or not) the current Virtual library. If checked then Quickview "
 "shows only books in the current Virtual library. Default: respect Virtual "
 "libraries"
 msgstr "Respektovat (nebo ne) aktuální Virtuální knihovnu. Pokud je zaškrtnuto, Rychlé zobrazení ukáže pouze knihy v aktuální Virtuální knihovně. Výchozí: respektovat Virtuální knihovny"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:876
+#: ../../../__w/calibre/calibre/manual/gui.rst:883
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr "Změňte obsah okna Rychlého zobrazení, když je změněn sloupec v seznamu knih pomocí kurzorových kláves. Výchozí: nesledovat změny prováděné kurzorovými klávesami"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:877
+#: ../../../__w/calibre/calibre/manual/gui.rst:884
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr "Změnit sloupec zobrazovaný v Rychlém zobrazení po dvojitém kliknutí v buňce v okně Rychlého zobrazení. Jinak se změní kniha, ale prozkoumávaný sloupec ne. Výchozí: změnit sloupec"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:878
+#: ../../../__w/calibre/calibre/manual/gui.rst:885
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr "Změnit sloupec, který je „rychle zobrazen“, na aktuální sloupec, když je v panelu Rychlého náhledu stisknuta klávesa Enter. Jinak se změní kniha, ale prozkoumávaný sloupec ne. Výchozí: změnit sloupec"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:879
+#: ../../../__w/calibre/calibre/manual/gui.rst:886
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr "Zvolte, které sloupce jsou zobrazeny v okně nebo panelu Rychlého zobrazení."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:888
+#: ../../../__w/calibre/calibre/manual/gui.rst:895
 msgid "Jobs"
 msgstr "Úlohy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:892
+#: ../../../__w/calibre/calibre/manual/gui.rst:899
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -2239,11 +2244,11 @@ msgid ""
 "have completed successfully."
 msgstr "Panel Úlohy zobrazuje počet aktuálně spuštěných úloh. Úlohy jsou úkoly, které běží v samostatném procesu. Zahrnují převody e-knih a komunikaci s vaším čtecím zařízením. Pro přístup k seznamu úloh můžete kliknout na panel úloh. Jakmile je úloha dokončena, můžete si prohlédnout podrobný protokol této úlohy dvojitým kliknutím na ni v seznamu. To je užitečné pro ladění úloh, které nemusely být úspěšně dokončeny."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:899
+#: ../../../__w/calibre/calibre/manual/gui.rst:906
 msgid "Keyboard shortcuts"
 msgstr "Klávesové zkratky"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:901
+#: ../../../__w/calibre/calibre/manual/gui.rst:908
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -2253,494 +2258,494 @@ msgid ""
 ":guilabel:`Preferences`."
 msgstr "calibre má několik klávesových zkratek, které vám šetří čas a pohyby myší. Tyto zkratky jsou aktivní v zobrazení seznamu knih (když neupravujete podrobnosti konkrétní knihy) a většina z nich ovlivňuje vybraný titul. Prohlížeč e-knih calibre :ref:`má vlastní zkratky <viewer_shortcuts>`, které lze přizpůsobit v :guilabel:`Předvolbách` prohlížeče."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:905
+#: ../../../__w/calibre/calibre/manual/gui.rst:912
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr "Poznámka: Klávesové zkratky Calibre nevyžadují modifikační klávesu (Command, Option, Control atd.), pokud není výslovně uvedeno jinak. Stačí pouze stisknout klávesu s písmenem, například E pro úpravu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:907
+#: ../../../__w/calibre/calibre/manual/gui.rst:914
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "Klávesové zkratky pro hlavní program Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:911
+#: ../../../__w/calibre/calibre/manual/gui.rst:918
 msgid "Keyboard shortcut"
 msgstr "Klávesová zkratka"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:912
+#: ../../../__w/calibre/calibre/manual/gui.rst:919
 msgid "Action"
 msgstr "Akce"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:913
+#: ../../../__w/calibre/calibre/manual/gui.rst:920
 msgid ":kbd:`F2 (Enter for macOS)`"
 msgstr ":kbd:`F2 (Enter pro macOS)`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:914
+#: ../../../__w/calibre/calibre/manual/gui.rst:921
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "Upravit metadata aktuálně vybraného pole v seznamu knih"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:915
+#: ../../../__w/calibre/calibre/manual/gui.rst:922
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:917
+#: ../../../__w/calibre/calibre/manual/gui.rst:924
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Shift+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:918
+#: ../../../__w/calibre/calibre/manual/gui.rst:925
 msgid "Add formats to the selected books"
 msgstr "Přidat formáty k vybraným knihám"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:919
+#: ../../../__w/calibre/calibre/manual/gui.rst:926
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:920
+#: ../../../__w/calibre/calibre/manual/gui.rst:927
 msgid "Convert selected books"
 msgstr "Převést vybrané knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:921
+#: ../../../__w/calibre/calibre/manual/gui.rst:928
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:923
+#: ../../../__w/calibre/calibre/manual/gui.rst:930
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Del`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:924
+#: ../../../__w/calibre/calibre/manual/gui.rst:931
 msgid "Remove selected books"
 msgstr "Odebrat vybrané knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:925
+#: ../../../__w/calibre/calibre/manual/gui.rst:932
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:926
+#: ../../../__w/calibre/calibre/manual/gui.rst:933
 msgid "Edit metadata of selected books"
 msgstr "Upravit metadata vybraných knih"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:927
+#: ../../../__w/calibre/calibre/manual/gui.rst:934
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:928
+#: ../../../__w/calibre/calibre/manual/gui.rst:935
 msgid "Get books"
 msgstr "Získat knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:929
+#: ../../../__w/calibre/calibre/manual/gui.rst:936
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:930
+#: ../../../__w/calibre/calibre/manual/gui.rst:937
 msgid "Show Book details"
 msgstr "Zobrazit Podrobnosti o knize"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:931
+#: ../../../__w/calibre/calibre/manual/gui.rst:938
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:932
+#: ../../../__w/calibre/calibre/manual/gui.rst:939
 msgid "Edit Table of Contents"
 msgstr "Upravit obsah"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:933
+#: ../../../__w/calibre/calibre/manual/gui.rst:940
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:934
+#: ../../../__w/calibre/calibre/manual/gui.rst:941
 msgid "Merge selected records"
 msgstr "Sloučit vybrané záznamy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:935
+#: ../../../__w/calibre/calibre/manual/gui.rst:942
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:936
+#: ../../../__w/calibre/calibre/manual/gui.rst:943
 msgid "Merge selected records, keeping originals"
 msgstr "Sloučit vybrané záznamy, ponechat originály"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:937
+#: ../../../__w/calibre/calibre/manual/gui.rst:944
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:938
+#: ../../../__w/calibre/calibre/manual/gui.rst:945
 msgid "Open containing folder"
 msgstr "Otevřít nadřazenou složku"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:939
+#: ../../../__w/calibre/calibre/manual/gui.rst:946
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:940
+#: ../../../__w/calibre/calibre/manual/gui.rst:947
 msgid "Polish books"
 msgstr "Vylepšit knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:941
+#: ../../../__w/calibre/calibre/manual/gui.rst:948
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:943
+#: ../../../__w/calibre/calibre/manual/gui.rst:950
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:944
+#: ../../../__w/calibre/calibre/manual/gui.rst:951
 msgid "Edit book"
 msgstr "Upravit knihu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:945
+#: ../../../__w/calibre/calibre/manual/gui.rst:952
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:947
+#: ../../../__w/calibre/calibre/manual/gui.rst:954
 msgid ":kbd:`Shift+V`"
 msgstr ":kbd:`Shift+V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:948
+#: ../../../__w/calibre/calibre/manual/gui.rst:955
 msgid "View last read book"
 msgstr "Zobrazit naposledy čtenou knihu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:949
+#: ../../../__w/calibre/calibre/manual/gui.rst:956
 msgid ":kbd:`Ctrl+Alt+A`"
 msgstr ":kbd:`Ctrl+Alt+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:950
+#: ../../../__w/calibre/calibre/manual/gui.rst:957
 msgid "Ask AI about the currently selected books"
 msgstr "Zeptat se AI na aktuálně vybrané knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:951
+#: ../../../__w/calibre/calibre/manual/gui.rst:958
 msgid ":kbd:`Alt+V/Cmd+V for macOS`"
 msgstr ":kbd:`Alt+V/Cmd+V pro macOS`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:952
+#: ../../../__w/calibre/calibre/manual/gui.rst:959
 msgid "View specific format"
 msgstr "Zobrazit konkrétní formát"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:953
+#: ../../../__w/calibre/calibre/manual/gui.rst:960
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Shift+J`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:954
+#: ../../../__w/calibre/calibre/manual/gui.rst:961
 msgid "Toggle jobs list"
 msgstr "Přepnout seznam úloh"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:955
+#: ../../../__w/calibre/calibre/manual/gui.rst:962
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Shift+B`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:956
+#: ../../../__w/calibre/calibre/manual/gui.rst:963
 msgid "Toggle Cover browser"
 msgstr "Přepnout Prohlížeč obálek"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:957
+#: ../../../__w/calibre/calibre/manual/gui.rst:964
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Shift+D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:958
+#: ../../../__w/calibre/calibre/manual/gui.rst:965
 msgid "Toggle Book details panel"
 msgstr "Přepnout panel Podrobnosti o knize"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:959
+#: ../../../__w/calibre/calibre/manual/gui.rst:966
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Shift+T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:960
+#: ../../../__w/calibre/calibre/manual/gui.rst:967
 msgid "Toggle Tag browser"
 msgstr "Přepnout Prohlížeč štítků"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:961
+#: ../../../__w/calibre/calibre/manual/gui.rst:968
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Shift+G`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:962
+#: ../../../__w/calibre/calibre/manual/gui.rst:969
 msgid "Toggle Cover grid"
 msgstr "Přepnout Mřížku obálek"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:963
+#: ../../../__w/calibre/calibre/manual/gui.rst:970
 msgid ":kbd:`Alt+Shift+H`"
 msgstr ":kbd:`Alt+Shift+H`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:964
+#: ../../../__w/calibre/calibre/manual/gui.rst:971
 msgid "Toggle Bookshelf"
 msgstr "Přepnout Pohled na poličku"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:965
+#: ../../../__w/calibre/calibre/manual/gui.rst:972
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:966
+#: ../../../__w/calibre/calibre/manual/gui.rst:973
 msgid "Show books by the same author as the current book"
 msgstr "Zobrazit knihy od stejného autora jako aktuální kniha"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:967
+#: ../../../__w/calibre/calibre/manual/gui.rst:974
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:968
+#: ../../../__w/calibre/calibre/manual/gui.rst:975
 msgid "Show books with the same tags as current book"
 msgstr "Zobrazit knihy se stejnými štítky jako aktuální kniha"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:969
+#: ../../../__w/calibre/calibre/manual/gui.rst:976
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:970
+#: ../../../__w/calibre/calibre/manual/gui.rst:977
 msgid "Show books by the same publisher as current book"
 msgstr "Zobrazit knihy od stejného vydavatele jako aktuální kniha"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:971
+#: ../../../__w/calibre/calibre/manual/gui.rst:978
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Shift+S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:972
+#: ../../../__w/calibre/calibre/manual/gui.rst:979
 msgid "Show books in the same series as current book"
 msgstr "Zobrazit knihy ze stejné série jako aktuální kniha"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:973
+#: ../../../__w/calibre/calibre/manual/gui.rst:980
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:974
+#: ../../../__w/calibre/calibre/manual/gui.rst:981
 msgid "Focus the Search bar"
 msgstr "Zaměřit Panel hledání"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:975
+#: ../../../__w/calibre/calibre/manual/gui.rst:982
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ":kbd:`Shift+Ctrl+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:976
+#: ../../../__w/calibre/calibre/manual/gui.rst:983
 msgid "Open the Advanced search dialog"
 msgstr "Otevřít dialogové okno Rozšířené hledání"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:977
+#: ../../../__w/calibre/calibre/manual/gui.rst:984
 msgid ":kbd:`Shift+Alt+F`"
 msgstr ":kbd:`Shift+Alt+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:978
+#: ../../../__w/calibre/calibre/manual/gui.rst:985
 msgid "Toggle the Search bar"
 msgstr "Přepnout Panel hledání"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:979
+#: ../../../__w/calibre/calibre/manual/gui.rst:986
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:980
+#: ../../../__w/calibre/calibre/manual/gui.rst:987
 msgid "Clear the current search"
 msgstr "Vymazat aktuální hledání"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:981
+#: ../../../__w/calibre/calibre/manual/gui.rst:988
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Shift+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:982
+#: ../../../__w/calibre/calibre/manual/gui.rst:989
 msgid "Focus the book list"
 msgstr "Zaměřit seznam knih"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:983
+#: ../../../__w/calibre/calibre/manual/gui.rst:990
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:984
+#: ../../../__w/calibre/calibre/manual/gui.rst:991
 msgid "Clear the Virtual library"
 msgstr "Vymazat Virtuální knihovnu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:985
+#: ../../../__w/calibre/calibre/manual/gui.rst:992
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:986
+#: ../../../__w/calibre/calibre/manual/gui.rst:993
 msgid "Clear the additional restriction"
 msgstr "Vymazat dodatečná omezení"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:987
+#: ../../../__w/calibre/calibre/manual/gui.rst:994
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:988
+#: ../../../__w/calibre/calibre/manual/gui.rst:995
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "Vytvořit dočasnou Virtuální knihovnu založenou na aktuálním hledání"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:989
+#: ../../../__w/calibre/calibre/manual/gui.rst:996
 msgid ":kbd:`Ctrl+Tab`"
 msgstr ":kbd:`Ctrl+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:990
+#: ../../../__w/calibre/calibre/manual/gui.rst:997
 msgid "Select the next Virtual library tab"
 msgstr "Vybrat další kartu Virtuální knihovny"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:991
+#: ../../../__w/calibre/calibre/manual/gui.rst:998
 msgid ":kbd:`Ctrl+Shift+Tab`"
 msgstr ":kbd:`Ctrl+Shift+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:992
+#: ../../../__w/calibre/calibre/manual/gui.rst:999
 msgid "Select the previous Virtual library tab"
 msgstr "Vybrat předchozí kartu Virtuální knihovny"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:993
+#: ../../../__w/calibre/calibre/manual/gui.rst:1000
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N nebo F3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:994
+#: ../../../__w/calibre/calibre/manual/gui.rst:1001
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "Najít další knihu, která odpovídá aktuálnímu hledání (funguje, pouze pokud je zapnuto zvýrazňování hledání v předvolbách hledání)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:995
+#: ../../../__w/calibre/calibre/manual/gui.rst:1002
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Shift+N nebo Shift+F3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:996
+#: ../../../__w/calibre/calibre/manual/gui.rst:1003
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "Najít předchozí knihu, která odpovídá aktuálnímu hledání (funguje, pouze pokud je zapnuto zvýrazňování hledání v předvolbách hledání)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:997
+#: ../../../__w/calibre/calibre/manual/gui.rst:1004
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:998
+#: ../../../__w/calibre/calibre/manual/gui.rst:1005
 msgid "Download metadata and covers"
 msgstr "Stáhnout metadata a obálky"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:999
+#: ../../../__w/calibre/calibre/manual/gui.rst:1006
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1000
+#: ../../../__w/calibre/calibre/manual/gui.rst:1007
 msgid "Restart calibre"
 msgstr "Restartovat Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1001
+#: ../../../__w/calibre/calibre/manual/gui.rst:1008
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Shift+R`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1002
+#: ../../../__w/calibre/calibre/manual/gui.rst:1009
 msgid "Restart calibre in debug mode"
 msgstr "Restartovat Calibre v režimu ladění"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1003
+#: ../../../__w/calibre/calibre/manual/gui.rst:1010
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Shift+Ctrl+E`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1004
+#: ../../../__w/calibre/calibre/manual/gui.rst:1011
 msgid "Add empty books to calibre"
 msgstr "Přidat prázdné knihy do Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1005
+#: ../../../__w/calibre/calibre/manual/gui.rst:1012
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1006
+#: ../../../__w/calibre/calibre/manual/gui.rst:1013
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "Přepnout stav označení nebo neoznačení pro vybrané knihy"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1007
+#: ../../../__w/calibre/calibre/manual/gui.rst:1014
 msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
 msgstr ":kbd:`Ctrl+/` nebo :kbd:`Ctrl+Alt+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1008
+#: ../../../__w/calibre/calibre/manual/gui.rst:1015
 msgid "Open the popup to search the full text of all books in the library"
 msgstr "Otevřít vyskakovací okno pro fulltextové vyhledávání ve všech knihách v knihovně"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1009
+#: ../../../__w/calibre/calibre/manual/gui.rst:1016
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1010
+#: ../../../__w/calibre/calibre/manual/gui.rst:1017
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "Otevřít automaticky otevírané Rychlé zobrazení pro zobrazení knih v souvisejících sériích, štítcích atd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1011
+#: ../../../__w/calibre/calibre/manual/gui.rst:1018
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Shift+Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1012
+#: ../../../__w/calibre/calibre/manual/gui.rst:1019
 msgid "Focus the opened Quick View panel"
 msgstr "Zaměřit na otevřený panel Rychlého zobrazení"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1013
+#: ../../../__w/calibre/calibre/manual/gui.rst:1020
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Shift+S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1014
+#: ../../../__w/calibre/calibre/manual/gui.rst:1021
 msgid "Perform a search in the Quick View panel"
 msgstr "Provést hledání v panelu Rychlého zobrazení"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1015
+#: ../../../__w/calibre/calibre/manual/gui.rst:1022
 msgid ":kbd:`F5`"
 msgstr ":kbd:`F5`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1016
+#: ../../../__w/calibre/calibre/manual/gui.rst:1023
 msgid "Re-apply the current sort"
 msgstr "Znovu použít aktuální řazení"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1017
+#: ../../../__w/calibre/calibre/manual/gui.rst:1024
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1018
+#: ../../../__w/calibre/calibre/manual/gui.rst:1025
 msgid "Quit calibre"
 msgstr "Ukončit Calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1019
+#: ../../../__w/calibre/calibre/manual/gui.rst:1026
 msgid ":kbd:`X`"
 msgstr ":kbd:`X`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1020
+#: ../../../__w/calibre/calibre/manual/gui.rst:1027
 msgid "Toggle auto scroll of the book list"
 msgstr "Přepnout automatické posouvání seznamu knih"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1021
+#: ../../../__w/calibre/calibre/manual/gui.rst:1028
 msgid ":kbd:`Ctrl+Alt+Shift+F`"
 msgstr ":kbd:`Ctrl+Alt+Shift+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1022
+#: ../../../__w/calibre/calibre/manual/gui.rst:1029
 msgid ""
 "Restrict the displayed books to only those books that are in a category "
 "currently displayed in the :guilabel:`Tag browser`"
 msgstr "Omezit zobrazené knihy pouze na ty, které jsou v kategorii aktuálně zobrazené v :guilabel:`Prohlížeči štítků`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1024
+#: ../../../__w/calibre/calibre/manual/gui.rst:1031
 msgid ":kbd:`B`"
 msgstr ":kbd:`B`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1025
+#: ../../../__w/calibre/calibre/manual/gui.rst:1032
 msgid ""
 "Browse annotations (highlights and bookmarks) made in the calibre E-book "
 "viewer for all books in the library"
 msgstr "Procházet anotace (zvýraznění a záložky) vytvořené v Prohlížeči e-knih calibre pro všechny knihy v knihovně"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1026
+#: ../../../__w/calibre/calibre/manual/gui.rst:1033
 msgid ":kbd:`Ctrl+Shift+N`"
 msgstr ":kbd:`Ctrl+Shift+N`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1027
+#: ../../../__w/calibre/calibre/manual/gui.rst:1034
 msgid "Browse notes associated with authors/series/tags/etc."
 msgstr "Procházet poznámky přidružené k autorům, sériím, štítkům atd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1028
+#: ../../../__w/calibre/calibre/manual/gui.rst:1035
 msgid ":kbd:`Alt+Shift+L`"
 msgstr ":kbd:`Alt+Shift+L`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1029
+#: ../../../__w/calibre/calibre/manual/gui.rst:1036
 msgid "Toggle the layout between wide and narrow views"
 msgstr "Přepnout rozložení mezi širokým a úzkým zobrazením"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1030
+#: ../../../__w/calibre/calibre/manual/gui.rst:1037
 msgid ":kbd:`Ctrl+Alt+P`"
 msgstr ":kbd:`Ctrl+Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1031
+#: ../../../__w/calibre/calibre/manual/gui.rst:1038
 msgid "Switch to previous library, if any"
 msgstr "Přepnout na předchozí knihovnu, pokud existuje"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1032
+#: ../../../__w/calibre/calibre/manual/gui.rst:1039
 msgid ":kbd:`Ctrl+Alt+Shift+P`"
 msgstr ":kbd:`Ctrl+Alt+Shift+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1033
+#: ../../../__w/calibre/calibre/manual/gui.rst:1040
 msgid "Switch to previous virtual library, if any"
 msgstr "Přepnout na předchozí virtuální knihovnu, pokud existuje"

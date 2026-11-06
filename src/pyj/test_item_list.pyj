@@ -4,8 +4,8 @@ from __python__ import hash_literals
 
 from elementmaker import E
 
-from book_list.item_list import create_item, create_item_list
-from testing import assert_true, test
+from book_list.item_list import create_item, create_item_list, create_side_action, focus_item_action_near
+from testing import assert_equal, assert_false, assert_true, test
 
 
 @test
@@ -19,3 +19,255 @@ def item_list_class_contract():
     assert_true(li.classList.contains('item-test-extra'))
     assert_true(li.firstChild.classList.contains('row-test-class'))
     assert_true(li.firstChild.classList.contains('row-test-extra'))
+
+
+@test
+def item_list_side_actions_are_named_buttons_and_do_not_activate_the_row():
+    calls = {'row': 0, 'action': 0}
+
+    def row_action():
+        calls.row += 1
+
+    def action(row, button):
+        calls.action += 1
+        assert_equal(row, button.closest('li'))
+
+    container = E.div()
+    document.body.appendChild(container)
+    create_item_list(container, [create_item('Title', action=row_action, side_actions=[
+        create_side_action('edit', action, 'Edit title'), create_side_action('trash', tooltip='Unavailable')
+    ])])
+    buttons = container.querySelectorAll('button.item-side-action')
+    assert_equal(buttons.length, 2)
+    assert_equal(buttons[0].type, 'button')
+    assert_equal(buttons[0].getAttribute('aria-label'), 'Edit title')
+    assert_equal(buttons[0].title, 'Edit title')
+    assert_equal(buttons[0].getAttribute('aria-disabled'), 'false')
+    assert_equal(buttons[1].getAttribute('aria-disabled'), 'true')
+    buttons[0].focus()
+    assert_equal(document.activeElement, buttons[0])
+    buttons[0].click()
+    assert_equal(calls, {'row': 0, 'action': 1})
+    buttons[0].querySelector('svg').dispatchEvent(new MouseEvent('click', {'bubbles': True}))
+    assert_equal(calls, {'row': 0, 'action': 2})
+    # Unavailable actions stay focusable and swallow clicks, including clicks on their icon
+    buttons[1].focus()
+    assert_equal(document.activeElement, buttons[1])
+    buttons[1].click()
+    buttons[1].querySelector('svg').dispatchEvent(new MouseEvent('click', {'bubbles': True}))
+    assert_equal(calls, {'row': 0, 'action': 2})
+    container.querySelector('.item-title').click()
+    assert_equal(calls, {'row': 1, 'action': 2})
+
+
+def build_test_list(container, titles, without_actions=None):
+    without_actions = without_actions or {}
+
+    def noop():
+        pass
+
+    create_item_list(container, [create_item(t, side_actions=[] if without_actions[t] else [
+        create_side_action('trash', noop, 'Delete ' + t), create_side_action('edit', noop, 'Edit ' + t)]) for t in titles])
+
+
+def focused_label():
+    return document.activeElement.getAttribute('aria-label')
+
+
+@test
+def item_list_focus_moves_to_the_nearest_side_action():
+    container, fallback = E.div(), E.button('Fallback')
+    document.body.append(container, fallback)
+    build_test_list(container, ['A', 'B', 'C'])
+    rows = container.querySelectorAll('li')
+    # Focus on a visible element is never stolen
+    fallback.focus()
+    assert_false(focus_item_action_near(container, 1, 1))
+    assert_equal(document.activeElement, fallback)
+    fallback.blur()
+    rows[1].style.display = 'none'
+    assert_true(focus_item_action_near(container, 1, 1, fallback))
+    assert_equal(focused_label(), 'Edit C')
+    # Focus on an element that has been hidden counts as lost
+    rows[2].style.display = 'none'
+    assert_true(focus_item_action_near(container, 2, 0, fallback))
+    assert_equal(focused_label(), 'Delete A')
+    rows[0].style.display = 'none'
+    assert_true(focus_item_action_near(container, 0, 0, fallback))
+    assert_equal(document.activeElement, fallback)
+
+
+@test
+def item_list_rebuild_keeps_focus_on_the_same_row():
+    container = E.div()
+    document.body.appendChild(container)
+    build_test_list(container, ['A', 'B', 'C'])
+    container.querySelectorAll('li')[1].querySelectorAll('button')[1].focus()
+    build_test_list(container, ['B', 'C'])
+    assert_equal(focused_label(), 'Edit B')
+    # The row lost its side actions, so focus moves to the next row
+    build_test_list(container, ['B', 'C'], {'B': True})
+    assert_equal(focused_label(), 'Edit C')
+    # The row has gone, so focus moves to the row now in its position
+    build_test_list(container, ['A', 'B'])
+    assert_equal(focused_label(), 'Edit B')
+
+
+def primary_key(target, type, key, **kw):
+    event = new window.KeyboardEvent(type, Object.assign({'key': key, 'bubbles': True, 'cancelable': True}, kw))
+    target.dispatchEvent(event)
+    return event
+
+
+def with_primary_actions(proceed):
+    calls = {'primary': [], 'side': []}
+    container = E.div()
+    document.body.appendChild(container)
+
+    def primary(event):
+        assert_equal(event.currentTarget.tagName, 'LI')
+        calls.primary.push(event.currentTarget.dataset.userData)
+
+    def side(row):
+        calls.side.push(row.dataset.userData)
+
+    def build(titles):
+        create_item_list(container, [create_item(title, action=primary, data=title, subtitle='About ' + title, side_actions=[
+            create_side_action('edit', side, 'Edit ' + title)]) for title in titles])
+
+    try:
+        build(['A', 'B', 'C'])
+        proceed(container, calls, build)
+    finally:
+        container.remove()
+
+
+@test
+def item_list_primary_actions_are_separate_named_controls():
+    def run(container, calls, build):
+        row = container.querySelector('li')
+        primary = row.querySelector('.item-primary-action')
+        side = row.querySelector('.item-side-action')
+        assert_equal(primary.getAttribute('role'), 'button')
+        assert_equal(primary.tabIndex, 0)
+        assert_equal(primary.textContent, 'A')
+        assert_equal(primary.tagName, 'SPAN')
+        assert_equal(document.getElementById(primary.getAttribute('aria-describedby')).textContent, 'About A')
+        assert_false(primary.contains(side))
+        primary.focus()
+        assert_equal(document.activeElement, primary)
+        primary.click()
+        assert_equal(calls, {'primary': ['A'], 'side': []})
+        side.click()
+        assert_equal(calls, {'primary': ['A'], 'side': ['A']})
+        row.firstChild.click()
+        assert_equal(calls.primary, ['A', 'A'])
+
+    with_primary_actions(run)
+
+
+@test
+def item_list_primary_space_activation_waits_for_release_and_is_cancelled_on_blur():
+    def run(container, calls, build):
+        actions = container.querySelectorAll('.item-primary-action')
+        first, second = actions[0], actions[1]
+        first.focus()
+        assert_true(primary_key(first, 'keydown', ' ').defaultPrevented)
+        primary_key(first, 'keydown', ' ', repeat=True)
+        assert_equal(calls.primary, [])
+        primary_key(first, 'keyup', ' ')
+        assert_equal(calls.primary, ['A'])
+        primary_key(first, 'keyup', ' ')
+        assert_equal(calls.primary, ['A'])
+        primary_key(first, 'keydown', ' ')
+        second.focus()
+        # A page without a focused view need not dispatch native focus events
+        first.dispatchEvent(new window.FocusEvent('blur'))
+        first.focus()
+        primary_key(first, 'keyup', ' ')
+        assert_equal(calls.primary, ['A'])
+        assert_false(primary_key(first, 'keydown', ' ', ctrlKey=True).defaultPrevented)
+        primary_key(first, 'keyup', ' ', ctrlKey=True)
+        assert_equal(calls.primary, ['A'])
+
+    with_primary_actions(run)
+
+
+@test
+def item_list_primary_enter_activates_on_press_without_modifiers():
+    def run(container, calls, build):
+        first = container.querySelector('.item-primary-action')
+        first.focus()
+        assert_true(primary_key(first, 'keydown', 'Enter').defaultPrevented)
+        assert_equal(calls.primary, ['A'])
+        primary_key(first, 'keyup', 'Enter')
+        assert_equal(calls.primary, ['A'])
+        for mod in ('ctrlKey', 'altKey', 'metaKey'):
+            kw = {}
+            kw[mod] = True
+            assert_false(primary_key(first, 'keydown', 'Enter', **kw).defaultPrevented)
+        assert_equal(calls.primary, ['A'])
+
+    with_primary_actions(run)
+
+
+@test
+def item_list_primary_focus_from_the_mouse_is_not_restored():
+    def run(container, calls, build):
+        second = container.querySelectorAll('.item-primary-action')[1]
+        second.dispatchEvent(new window.PointerEvent('pointerdown', {'bubbles': True}))
+        second.focus()
+        build(['A', 'B', 'C'])
+        assert_true(document.activeElement is document.body)
+        # Using the keyboard after a click makes the focus restorable again
+        second = container.querySelectorAll('.item-primary-action')[1]
+        second.dispatchEvent(new window.PointerEvent('pointerdown', {'bubbles': True}))
+        second.focus()
+        primary_key(second, 'keydown', 'Shift')
+        build(['A', 'B', 'C'])
+        assert_equal(document.activeElement.textContent, 'B')
+
+    with_primary_actions(run)
+
+
+@test
+def item_list_primary_focus_survives_reordering_and_removal():
+    def run(container, calls, build):
+        container.querySelectorAll('.item-primary-action')[1].focus()
+        build(['B', 'C'])
+        assert_equal(document.activeElement.textContent, 'B')
+        assert_true(document.activeElement.classList.contains('item-primary-action'))
+        build(['C'])
+        assert_equal(document.activeElement.textContent, 'C')
+        assert_true(document.activeElement.classList.contains('item-primary-action'))
+        assert_equal(calls.primary, [])
+
+    with_primary_actions(run)
+
+
+@test
+def item_list_preserves_custom_title_markup_and_non_action_rows():
+    container = E.div()
+    document.body.appendChild(container)
+    title = E.div(E.span('Custom title'), class_='custom-title')
+    calls = []
+
+    def activate(event):
+        calls.push(event.currentTarget.dataset.userData)
+
+    try:
+        create_item_list(container, [create_item(title, action=activate, data='custom'), create_item('Information only')])
+        assert_true(container.querySelector('.custom-title') is title)
+        assert_equal(title.getAttribute('role'), 'button')
+        title.focus()
+        primary_key(title, 'keydown', 'Enter')
+        primary_key(title, 'keyup', 'Enter')
+        assert_equal(calls, ['custom'])
+        primary_key(title, 'keydown', ' ')
+        primary_key(title, 'keyup', ' ')
+        assert_equal(calls, ['custom', 'custom'])
+        assert_equal(container.querySelectorAll('.item-primary-action').length, 1)
+        create_item_list(container, [create_item(E.div('Custom title'), action=activate, data='custom')])
+        assert_equal(document.activeElement.textContent, 'Custom title')
+    finally:
+        container.remove()

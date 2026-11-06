@@ -8,17 +8,35 @@ from compression import zlib
 from functools import partial
 from http.client import FORBIDDEN, METHOD_NOT_ALLOWED, NOT_FOUND, OK
 from io import BytesIO
+from typing import TYPE_CHECKING
 from urllib.parse import quote, urlencode
 
 from calibre.constants import config_dir
+from calibre.db.notes.connect import hash_data
 from calibre.ebooks.metadata.meta import get_metadata
 from calibre.srv.tests.base import LibraryBaseTest
 from calibre.utils.localization import _
 from calibre.utils.resources import get_image_path as I
 from polyglot.binary import as_base64_bytes
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Iterator, Mapping
+    from http.client import HTTPConnection, HTTPResponse
 
-def make_request(conn, url, headers=None, prefix='/ajax', username=None, password=None, method='GET', data=None):
+    # The body of a response: decoded JSON for successful JSON responses, raw bytes otherwise
+    type ResponseData = bytes | dict | list
+
+
+def make_request(
+    conn: HTTPConnection,
+    url: str,
+    headers: Mapping[str | bytes, str | bytes] | None = None,
+    prefix: str = '/ajax',
+    username: str | None = None,
+    password: str | None = None,
+    method: str = 'GET',
+    data: bytes | None = None,
+) -> tuple[HTTPResponse, ResponseData]:
     headers = dict(headers or {})
     if username and password:
         headers[b'Authorization'] = b'Basic ' + as_base64_bytes(username + ':' + password)
@@ -43,11 +61,11 @@ def gui_tag_browser_tags(library_path: str, folders_first_values: tuple[bool, ..
     class Prefs(dict):
         # Use the defaults for everything not set here, without changing the
         # preferences of the user running the tests
-        def __init__(self, fallback, **kw):
+        def __init__(self, fallback: Mapping[str, object], **kw: object) -> None:
             super().__init__(**kw)
             self.fallback = fallback
 
-        def __missing__(self, key):
+        def __missing__(self, key: str) -> object:
             return self.fallback[key]
 
     model.config = Prefs(config, sort_tags_by='name')
@@ -68,7 +86,7 @@ def gui_tag_browser_tags(library_path: str, folders_first_values: tuple[bool, ..
 
 
 class ContentTest(LibraryBaseTest):
-    def test_ajax_book(self):  # {{{
+    def test_ajax_book(self) -> None:  # {{{
         "Test /ajax/book"
         with self.create_server() as server:
             db = server.handler.router.ctx.library_broker.get(None)
@@ -92,7 +110,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_move_duplicate_to_library(self):  # {{{
+    def test_move_duplicate_to_library(self) -> None:  # {{{
         "Test that ignored duplicates are not removed when moving to another library"
         target_library_path = self.mkdtemp()
         self.create_db(target_library_path)
@@ -130,7 +148,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_fts_actions_change_only_the_requested_library(self):  # {{{
+    def test_fts_actions_change_only_the_requested_library(self) -> None:  # {{{
         other_library_path = self.mkdtemp()
         self.create_db(other_library_path)
         with self.create_server(libraries=(self.library_path, other_library_path), auth=True, auth_mode='basic') as server:
@@ -142,7 +160,7 @@ class ContentTest(LibraryBaseTest):
             other_db = ctx.library_broker.get(other_library_id)
             conn = server.connect()
 
-            def request(path, library_id=None, method='POST', data=None, **query):
+            def request(path: str, library_id: str | None = None, method: str = 'POST', data: bytes | None = None, **query: str) -> int:
                 if library_id is not None:
                     query['library_id'] = library_id
                 return make_request(conn, f'{path}?{urlencode(query)}', username='12', password='test', prefix='', method=method, data=data)[0].status
@@ -175,7 +193,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_data_file_paths_are_confined_to_book_dir(self):  # {{{
+    def test_data_file_paths_are_confined_to_book_dir(self) -> None:  # {{{
         with self.create_server(auth=True, auth_mode='basic') as server:
             server.handler.ctx.user_manager.add_user('12', 'test')
             db = server.handler.router.ctx.library_broker.get(None)
@@ -225,7 +243,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_tag_browser_folders_first(self):  # {{{
+    def test_tag_browser_folders_first(self) -> None:  # {{{
         "Test showing items that only contain sub-items first in the Tag browser"
         from calibre.utils.ipc.simple_worker import fork_job
 
@@ -236,7 +254,7 @@ class ContentTest(LibraryBaseTest):
             db.set_field('tags', {1: ['Zebra', '[X].a'], 2: ['[X].b', 'Alpha', 'Alpha.b'], 3: ['Yak.c']})
             conn = server.connect()
 
-            def server_tags(**query):
+            def server_tags(**query: str) -> list[tuple[str, list[str]]]:
                 query.update({'library_id': db.server_library_id, 'sort_tags_by': 'name'})
                 r, data = make_request(conn, '/interface-data/tag-browser?' + urlencode(query), prefix='')
                 self.ae(r.status, OK)
@@ -260,7 +278,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_ajax_categories(self):  # {{{
+    def test_ajax_categories(self) -> None:  # {{{
         "Test /ajax/categories and /ajax/search"
         with self.create_server() as server:
             db = server.handler.router.ctx.library_broker.get(None)
@@ -293,7 +311,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_interface_data_browse_fields(self):  # {{{
+    def test_interface_data_browse_fields(self) -> None:  # {{{
         "Test /interface-data browse field data"
         with self.create_server() as server:
             from calibre.gui2 import gprefs
@@ -382,7 +400,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_srv_restrictions(self):  # {{{
+    def test_srv_restrictions(self) -> None:  # {{{
         "Test that virtual lib. + search restriction works on all end points"
         with self.create_server(auth=True, auth_mode='basic') as server:
             db = server.handler.router.ctx.library_broker.get(None)
@@ -399,7 +417,7 @@ class ContentTest(LibraryBaseTest):
             server.handler.ctx.user_manager.add_user('inv', 'test', restriction={'library_restrictions': {os.path.basename(db.backend.library_path): '"1'}})
             conn = server.connect()
 
-            def url_for(path, **kw):
+            def url_for(path: str, **kw: object) -> str:
                 p, q = path.partition('?')[::2]
                 ans = server.handler.router.url_for(p, **kw)
                 if q:
@@ -408,7 +426,7 @@ class ContentTest(LibraryBaseTest):
 
             ae = self.assertEqual
 
-            def r(path, status=OK, method='GET'):
+            def r(path: str, status: int = OK, method: str = 'GET') -> ResponseData:
                 r, data = make_request(conn, path, username='12', password='test', prefix='', method=method)
                 ae(status, r.status)
                 if status == NOT_FOUND:
@@ -449,7 +467,7 @@ class ContentTest(LibraryBaseTest):
             r(url_for('/cdb/delete-books', book_ids='1'), status=METHOD_NOT_ALLOWED)
 
             # code.py
-            def sr(path, **k):
+            def sr(path: str, **k: object) -> set[int]:
                 return set(ok(url_for(path, **k))['search_result']['book_ids'])
 
             for q in 'books-init init get-books'.split():
@@ -470,13 +488,13 @@ class ContentTest(LibraryBaseTest):
 
             # fts.py
             def fake_fts_search(
-                query,
-                use_stemming=True,
-                return_text=True,
-                process_each_result=None,
-                restrict_to_book_ids=None,
-                **kwargs,
-            ):
+                query: str,
+                use_stemming: bool = True,
+                return_text: bool = True,
+                process_each_result: Callable[[dict[str, object]], object] | None = None,
+                restrict_to_book_ids: Iterable[int] | None = None,
+                **kwargs: object,
+            ) -> Iterator[object]:
                 candidate_ids = {1, 3} if restrict_to_book_ids is None else set(restrict_to_book_ids) & {1, 3}
                 for book_id in sorted(candidate_ids):
                     result = {'id': book_id, 'book_id': book_id, 'format': 'TXT', 'text': 'matching text'}
@@ -496,7 +514,105 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_book_storage(self):  # {{{
+    def test_srv_restrictions_notes_and_field_maps(self) -> None:  # {{{
+        "Test that notes, field maps and recently read books respect per library restrictions"
+        with self.create_server(auth=True, auth_mode='basic') as server:
+            ctx = server.handler.router.ctx
+            db = ctx.library_broker.get(None)
+            lid = db.server_library_id
+            lname = os.path.basename(db.backend.library_path)
+            ctx.user_manager.add_user('admin', 'test')
+            ctx.user_manager.add_user('12', 'test', restriction={'library_restrictions': {lname: 'id:1 or id:2'}})
+            ctx.user_manager.add_user('inv', 'test', restriction={'library_restrictions': {lname: '"1'}})
+            # Author "Unknown" is only used by book 3, "Author One" by books 1 and 2
+            hidden_author, visible_author = db.get_item_id('authors', 'Unknown'), db.get_item_id('authors', 'Author One')
+            assert hidden_author is not None and visible_author is not None
+            hidden_res = db.add_notes_resource(b'hidden resource', 'hidden.png')
+            visible_res = db.add_notes_resource(b'visible resource', 'visible.png')
+            shared_res = db.add_notes_resource(b'shared resource', 'shared.png')
+            db.set_notes_for('authors', hidden_author, 'hidden note', resource_hashes=(hidden_res, shared_res))
+            db.set_notes_for('authors', visible_author, 'visible note', resource_hashes=(visible_res, shared_res))
+            ae = self.assertEqual
+            ae(db.items_using_notes_resource(shared_res), {('authors', hidden_author), ('authors', visible_author)})
+            ae(db.items_using_notes_resource(hidden_res), {('authors', hidden_author)})
+            ae(db.items_using_notes_resource('xxh64:missing'), frozenset())
+            conn = server.connect()
+
+            def r(path: str, user: str = '12', status: int = OK, method: str = 'GET', data: bytes | None = None) -> ResponseData:
+                res, ans = make_request(conn, path, username=user, password='test', prefix='', method=method, data=data)
+                ae(status, res.status, f'{path} as {user}: {ans!r}')
+                return ans
+
+            def res_url(h: str) -> str:
+                scheme, digest = h.split(':', 1)
+                return f'/get-note-resource/{scheme}/{digest}/{lid}'
+
+            # Notes
+            ae(r(f'/get-note/authors/{visible_author}/{lid}'), b'visible note')
+            r(f'/get-note/authors/{hidden_author}/{lid}', status=NOT_FOUND)
+            r(f'/get-note/authors/999999/{lid}', status=NOT_FOUND)
+            ae(r(f'/get-note-from-item-val/authors/Author%20One/{lid}')['html'], 'visible note')
+            r(f'/get-note-from-item-val/authors/Unknown/{lid}', status=NOT_FOUND)
+            ae(r(f'/get-note/authors/{hidden_author}/{lid}', user='admin'), b'hidden note')
+            ae(r(f'/get-note/authors/{db.get_item_id("authors", "Author Two")}/{lid}', user='admin'), b'')
+            # Non-existent items and fields that do not support notes give 404 rather than a server error
+            for user in ('admin', '12'):
+                r(f'/get-note/authors/999999/{lid}', user=user, status=NOT_FOUND)
+                r(f'/get-note/title/1/{lid}', user=user, status=NOT_FOUND)
+                r(f'/get-note/nosuchfield/1/{lid}', user=user, status=NOT_FOUND)
+                r(f'/get-note-from-item-val/authors/No%20Such%20Author/{lid}', user=user, status=NOT_FOUND)
+                r(f'/get-note-from-item-val/title/Title%20One/{lid}', user=user, status=NOT_FOUND)
+                r(f'/get-note-from-item-val/nosuchfield/x/{lid}', user=user, status=NOT_FOUND)
+            r(f'/get-note/authors/{visible_author}/{lid}', user='inv', status=NOT_FOUND)
+            ae(r(res_url(visible_res)), b'visible resource')
+            ae(r(res_url(shared_res)), b'shared resource')
+            r(res_url(hidden_res), status=NOT_FOUND)
+            r(res_url(visible_res), user='inv', status=NOT_FOUND)
+            ae(r(res_url(hidden_res), user='admin'), b'hidden resource')
+            note = json.dumps({'html': 'changed', 'searchable_text': 'changed', 'images': {}}).encode()
+            for item_id in (hidden_author, visible_author):
+                r(f'/set-note/authors/{item_id}/{lid}', status=FORBIDDEN, method='POST', data=note)
+            ae(db.notes_for('authors', hidden_author), 'hidden note')
+            ae(db.notes_for('authors', visible_author), 'visible note')
+            r(f'/set-note/authors/{visible_author}/{lid}', user='admin', method='POST', data=note)
+            img_note = json.dumps({
+                'html': 'x',
+                'searchable_text': 'x',
+                'images': {'k': {'data': 'data:image/png;base64,eA==', 'filename': 'orphan.png'}},
+            }).encode()
+            for path in ('/set-note/authors/999999', '/set-note/title/1', '/set-note/nosuchfield/1'):
+                r(f'{path}/{lid}', user='admin', status=NOT_FOUND, method='POST', data=img_note)
+            # The image in the rejected requests must not have been added as an orphaned resource
+            self.assertIsNone(db.get_notes_resource(hash_data(b'x')))
+            ae(db.notes_for('authors', visible_author), 'changed')
+
+            # Field names and id maps
+            ae(r(f'/interface-data/field-names/authors?library_id={lid}'), ['Author One', 'Author Two'])
+            ae(r(f'/interface-data/field-names/authors?library_id={lid}', user='admin'), ['Author One', 'Author Two', 'Unknown'])
+            ae(r(f'/interface-data/field-names/formats?library_id={lid}'), sorted(db.all_field_names('formats', (1, 2))))
+            ae(r(f'/interface-data/field-names/authors?library_id={lid}', user='inv'), [])
+            ae(r(f'/interface-data/field-id-map/title?library_id={lid}'), {'1': 'Title Two', '2': 'Title One'})
+            ae(r(f'/interface-data/field-id-map/title?library_id={lid}', user='admin'), {'1': 'Title Two', '2': 'Title One', '3': 'Unknown'})
+            ae(set(r(f'/interface-data/field-id-map/authors?library_id={lid}').values()), {'Author One', 'Author Two'})
+            ae(r(f'/interface-data/field-id-map/authors?library_id={lid}', user='inv'), {})
+            r(f'/interface-data/field-names/title?library_id={lid}', status=NOT_FOUND)
+
+            # Recently read books are filtered by the current restriction
+            pos = b'{"device": "d", "cfi": "epubcfi(/2/4)", "pos_frac": 0.1}'
+            r(f'/book-set-last-read-position/{lid}/1/FMT1', method='POST', data=pos)
+
+            def recently_read() -> set[int]:
+                return {x['book_id'] for x in r('/interface-data/update')['recently_read_by_user']}
+
+            ae(recently_read(), {1})
+            ctx.user_manager.update_user_restrictions('12', {'library_restrictions': {lname: 'id:2'}})
+            ae(recently_read(), set())
+            ctx.user_manager.update_user_restrictions('12', {'library_restrictions': {lname: 'id:1 or id:2'}})
+            ae(recently_read(), {1})
+
+    # }}}
+
+    def test_book_storage(self) -> None:  # {{{
         "Test the per book storage endpoints"
         from http.client import BAD_REQUEST
 
@@ -513,6 +629,16 @@ class ContentTest(LibraryBaseTest):
             ae(r.status, FORBIDDEN)
             self.assertIsNone(db.book_storage_for_book(1, 'FMT1', user_type='web', user='*'))
 
+        with self.create_server(local_write=True) as server:
+            # Last read positions are not saved for anonymous users, even with write access
+            db = server.handler.router.ctx.library_broker.get(None)
+            lid = db.server_library_id
+            conn = server.connect()
+            pos = b'{"device": "d", "cfi": "epubcfi(/2/4)", "pos_frac": 0.1}'
+            r, data = make_request(conn, f'/book-set-last-read-position/{lid}/1/FMT1', prefix='', method='POST', data=pos)
+            ae(r.status, FORBIDDEN)
+            ae(db.get_last_read_positions(1, 'FMT1'), ())
+
         with self.create_server(auth=True, auth_mode='basic') as server:
             server.handler.ctx.user_manager.add_user('12', 'test')
             server.handler.ctx.user_manager.add_user('other', 'test')
@@ -521,12 +647,12 @@ class ContentTest(LibraryBaseTest):
             lid = db.server_library_id
             conn = server.connect()
 
-            def get(book_id=1, fmt='FMT1', username='12', status=OK):
+            def get(book_id: int = 1, fmt: str = 'FMT1', username: str = '12', status: int = OK) -> ResponseData | None:
                 r, data = make_request(conn, f'/book-get-storage/{lid}/{book_id}/{fmt}', prefix='', username=username, password='test')
                 ae(r.status, status)
                 return None if data == b'null' else data
 
-            def put(entry, book_id=1, fmt='FMT1', username='12', status=OK):
+            def put(entry: bytes | dict[str, object], book_id: int = 1, fmt: str = 'FMT1', username: str = '12', status: int = OK) -> ResponseData:
                 raw = entry if isinstance(entry, bytes) else json.dumps(entry).encode('utf-8')
                 r, data = make_request(conn, f'/book-set-storage/{lid}/{book_id}/{fmt}', prefix='', username=username, password='test', method='POST', data=raw)
                 ae(r.status, status)
@@ -560,7 +686,7 @@ class ContentTest(LibraryBaseTest):
 
     # }}}
 
-    def test_srv_add_book(self):  # {{{
+    def test_srv_add_book(self) -> None:  # {{{
         with self.create_server(auth=True, auth_mode='basic') as server:
             server.handler.ctx.user_manager.add_user('12', 'test')
             server.handler.ctx.user_manager.add_user('ro', 'test', readonly=True)
@@ -568,7 +694,15 @@ class ContentTest(LibraryBaseTest):
 
             ae = self.assertEqual
 
-            def a(filename, data=None, status=OK, method='POST', username='12', add_duplicates='n', job_id=1):
+            def a(
+                filename: str,
+                data: bytes | None = None,
+                status: int = OK,
+                method: str = 'POST',
+                username: str = '12',
+                add_duplicates: str = 'n',
+                job_id: int = 1,
+            ) -> ResponseData:
                 r, data = make_request(
                     conn,
                     '/cdb/add-book/{}/{}/{}'.format(job_id, add_duplicates, quote(filename.encode('utf-8'))),
@@ -581,7 +715,7 @@ class ContentTest(LibraryBaseTest):
                 ae(status, r.status)
                 return data
 
-            def d(book_ids, username='12', status=OK):
+            def d(book_ids: Iterable[int], username: str = '12', status: int = OK) -> ResponseData:
                 book_ids = ','.join(map(str, book_ids))
                 r, data = make_request(conn, f'/cdb/delete-books/{book_ids}', username=username, password='test', prefix='', method='POST')
                 ae(status, r.status)

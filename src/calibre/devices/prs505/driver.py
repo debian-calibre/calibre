@@ -7,6 +7,7 @@ Device driver for the SONY devices
 import os
 import re
 import time
+from typing import TYPE_CHECKING
 
 from calibre import __appname__, fsync, prints
 from calibre.devices.prs505 import CACHE_EXT, CACHE_THUMBNAIL, CACHE_XML, MEDIA_EXT, MEDIA_THUMBNAIL, MEDIA_XML
@@ -14,6 +15,14 @@ from calibre.devices.usbms.books import CollectionsBookList
 from calibre.devices.usbms.driver import USBMS
 from calibre.prints import debug_print
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Sequence
+
+    from calibre.devices.interface import BookList as _BookList
+    from calibre.devices.prs505.sony_cache import XMLCache
+    from calibre.devices.usbms.books import BookList
+    from calibre.ebooks.metadata.book.base import Metadata
 
 
 class PRS505(USBMS):
@@ -122,19 +131,20 @@ class PRS505(USBMS):
     OPT_SCAN_FROM_ROOT = 4
 
     plugboard = None
-    plugboard_func = None
+    plugboards: dict[str, dict[str, object]]
+    plugboard_func: Callable[..., object] | None = None
 
     THUMBNAIL_HEIGHT = 217
 
     MAX_PATH_LEN = 201  # 250 - (max(len(CACHE_THUMBNAIL), len(MEDIA_THUMBNAIL)) +
     # len('main_thumbnail.jpg') + 1)
 
-    def windows_filter_pnp_id(self, pnp_id):
+    def windows_filter_pnp_id(self, pnp_id: str) -> bool:
         return '_LAUNCHER' in pnp_id
 
-    def post_open_callback(self):
+    def post_open_callback(self) -> None:
 
-        def write_cache(prefix):
+        def write_cache(prefix: str) -> bool:
             try:
                 cachep = os.path.join(prefix, *(CACHE_XML.split('/')))
                 if not os.path.exists(cachep):
@@ -177,7 +187,7 @@ class PRS505(USBMS):
         self.WANTS_UPDATED_THUMBNAILS = self.settings().extra_customization[self.OPT_REFRESH_COVERS]
         self.SCAN_FROM_ROOT = self.settings().extra_customization[self.OPT_SCAN_FROM_ROOT]
 
-    def filename_callback(self, default, mi):
+    def filename_callback(self, default: str, mi: Metadata) -> str:
         if getattr(mi, 'application_id', None) is not None:
             base = default.rpartition('.')[0]
             suffix = f'_{mi.application_id}'
@@ -185,10 +195,12 @@ class PRS505(USBMS):
                 default = base + suffix + '.' + default.rpartition('.')[-1]
         return default
 
-    def initialize_XML_cache(self):
+    def initialize_XML_cache(self) -> XMLCache:
         from calibre.devices.prs505.sony_cache import XMLCache
 
-        paths, prefixes, ext_paths = {}, {}, {}
+        paths: dict[int, str] = {}
+        prefixes: dict[int, str] = {}
+        ext_paths: dict[int, str] = {}
         for prefix, path, ext_path, source_id in [
             ('main', MEDIA_XML, MEDIA_EXT, 0),
             ('card_a', CACHE_XML, CACHE_EXT, 1),
@@ -204,7 +216,7 @@ class PRS505(USBMS):
                     os.makedirs(d)
         return XMLCache(paths, ext_paths, prefixes, self.settings().use_author_sort)
 
-    def books(self, oncard=None, end_session=True):
+    def books(self, oncard: str | None = None, end_session: bool = True) -> BookList:
         debug_print('PRS505: starting fetching books for card', oncard)
         bl = USBMS.books(self, oncard=oncard, end_session=end_session)
         c = self.initialize_XML_cache()
@@ -212,14 +224,15 @@ class PRS505(USBMS):
         debug_print('PRS505: finished fetching books for card', oncard)
         return bl
 
-    def sync_booklists(self, booklists, end_session=True):
+    def sync_booklists(self, booklists: Sequence[_BookList | None], end_session: bool = True) -> None:
         debug_print('PRS505: started sync_booklists')
         c = self.initialize_XML_cache()
-        blists = {}
+        blists: dict[int, _BookList] = {}
         for i in c.paths:
             try:
-                if booklists[i] is not None:
-                    blists[i] = booklists[i]
+                bl = booklists[i]
+                if bl is not None:
+                    blists[i] = bl
             except IndexError:
                 pass
         opts = self.settings()
@@ -252,18 +265,18 @@ class PRS505(USBMS):
         USBMS.sync_booklists(self, booklists, end_session=end_session)
         debug_print('PRS505: finished sync_booklists')
 
-    def rebuild_collections(self, booklist, oncard):
+    def rebuild_collections(self, booklist: _BookList, oncard: str | None) -> None:
         debug_print('PRS505: started rebuild_collections on card', oncard)
         c = self.initialize_XML_cache()
         c.rebuild_collections(booklist, {'carda': 1, 'cardb': 2}.get(oncard, 0))
         c.write()
         debug_print('PRS505: finished rebuild_collections')
 
-    def set_plugboards(self, plugboards, pb_func):
+    def set_plugboards(self, plugboards: dict[str, dict[str, object]], pb_func: Callable[..., object]) -> None:
         self.plugboards = plugboards
         self.plugboard_func = pb_func
 
-    def upload_cover(self, path, filename, metadata, filepath):
+    def upload_cover(self, path: str, filename: str, metadata: Metadata, filepath: str) -> None:
         opts = self.settings()
         if not opts.extra_customization[self.OPT_UPLOAD_COVERS]:
             # Building thumbnails disabled
@@ -275,9 +288,13 @@ class PRS505(USBMS):
         except Exception:
             debug_print('FAILED to upload cover', filepath)
 
-    def _upload_cover(self, path, filename, metadata, filepath):
-        if metadata.thumbnail and metadata.thumbnail[-1]:
+    def _upload_cover(self, path: str, filename: str, metadata: Metadata, filepath: str) -> None:
+        thumbnail = metadata.thumbnail
+        # (width, height, data) or None, see update_thumbnail() in gui2/device.py
+        assert thumbnail is None or isinstance(thumbnail, tuple)
+        if thumbnail and thumbnail[-1]:
             path = path.replace('/', os.sep)
+            assert self._main_prefix is not None
             is_main = path.startswith(self._main_prefix)
             thumbnail_dir = MEDIA_THUMBNAIL if is_main else CACHE_THUMBNAIL
             prefix = None
@@ -299,5 +316,5 @@ class PRS505(USBMS):
                 os.makedirs(thumbnail_dir)
             cpath = os.path.join(thumbnail_dir, 'main_thumbnail.jpg')
             with open(cpath, 'wb') as f:
-                f.write(metadata.thumbnail[-1])
+                f.write(thumbnail[-1])
             debug_print(f'Cover uploaded to: {cpath!r}')

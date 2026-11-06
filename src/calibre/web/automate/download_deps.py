@@ -27,11 +27,10 @@ import sys
 import time
 import traceback
 import zipfile
-from collections.abc import Callable
 from functools import lru_cache
 from pathlib import Path
 from threading import Lock, Thread
-from typing import IO, Any, NamedTuple
+from typing import IO, TYPE_CHECKING, Any, NamedTuple, Self
 from urllib.request import OpenerDirector, ProxyHandler, Request, build_opener
 
 from calibre import get_proxies
@@ -39,6 +38,9 @@ from calibre.constants import __version__, bin_install_dir, ismacos, iswindows
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.lock import ExclusiveFile, unix_open
 from calibre.utils.safe_atexit import remove_dir
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 if iswindows:
     import msvcrt
@@ -250,7 +252,7 @@ def remove_version_if_unused(version_dir: str) -> bool:
         remove_dir(version_dir)
         return True
     try:
-        f = open(lock_path, 'rb')
+        f = open(lock_path, 'rb')  # ruff: ignore[open-file-with-context-handler]
     except FileNotFoundError:
         remove_dir(version_dir)
         return True
@@ -288,7 +290,7 @@ class VersionLock:
         if f is not None:
             f.close()
 
-    def __enter__(self) -> VersionLock:
+    def __enter__(self) -> Self:
         return self
 
     def __exit__(self, *args: object) -> None:

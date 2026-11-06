@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "října 23, 2026" "9.17.0" "calibre"
+.TH "CALIBREDB" "1" "listopadu 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -149,6 +149,18 @@ search
 fts_index
 .IP \(bu 2
 fts_search
+.IP \(bu 2
+notes
+.IP \(bu 2
+items
+.IP \(bu 2
+virtual_libraries
+.IP \(bu 2
+annotations
+.IP \(bu 2
+trash
+.IP \(bu 2
+data_files
 .UNINDENT
 .SH GLOBÁLNÍ VOLBY
 .INDENT 0.0
@@ -366,7 +378,7 @@ Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete pa
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Nepoužívat Koš
+Nepoužívat koš
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -669,14 +681,17 @@ Nahradit existující obálku při generování katalogu. Výchozí: \fB\(aq\fPF
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [options] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Spravovat uložená hledání umístěná v této databázi.
-Pokud se pokusíte přidat dotaz s názvem, který již existuje,
-bude nahrazen.
+Spravuje uložená hledání v této databázi. Pokud se pokusíte
+přidat dotaz s názvem, který již existuje, bude nahrazen.
+.sp
+Syntaxe pro výpis (výchozí akce):
+.sp
+calibredb \fBsaved_searches\fP list
 .sp
 Syntaxe pro přidání:
 .sp
@@ -779,14 +794,18 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Obnovit tuto databázi z metadat uložených v souborech OPF v každé
-složce knihovny Calibre. To je užitečné, pokud byl váš soubor
-metadata.db poškozen.
+Obnoví tuto databázi z metadat uložených v souborech OPF v jednotlivých
+složkách knihovny calibre. To je užitečné, pokud byl váš soubor metadata.db
+poškozen.
 .sp
-VAROVÁNÍ: Tento příkaz znovu úplně vygeneruje vaši databázi. Ztratíte
-všechna uložená hledání, uživatelské katalogy, zásuvné panely, uložená
-nastavení převodu pro knihu a vlastní předpisy. Obnovená metadata budou
-pouze tak přesná, jako to, co je nalezeno v souborech OPF.
+VAROVÁNÍ: Tento příkaz zcela znovu vytvoří vaši databázi. Ztratíte všechna
+uložená hledání, uživatelské kategorie, zásuvné panely, uložená nastavení
+převodu pro jednotlivé knihy a vlastní předpisy. Obnovená metadata budou
+pouze tak přesná jako údaje nalezené v souborech OPF.
+.sp
+Návratový kód je 0, pokud obnova proběhla úspěšně, 1, pokud zcela selhala,
+a 2, pokud byla databáze obnovena, ale některé knihy nebo jiná data se
+obnovit nepodařilo.
 .sp
 Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
 .INDENT 0.0
@@ -1049,6 +1068,339 @@ Formát, ve kterém vypisovat výsledky vyhledávání. Buď „text“ pro pros
 .TP
 .B \-\-restrict\-to
 Omezit vyhledávané knihy buď pomocí vyhledávacího výrazu, nebo identifikátorů. Například: ids:1,2,3 pro omezení podle identifikátorů nebo search:tag:foo pro omezení na knihy se značkou foo.
+.UNINDENT
+.SH NOTES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb notes [options] [list|search|show|set|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Spravuje poznámky připojené k položkám, jako jsou autoři, série, štítky
+a vydavatelé. FIELD je název vyhledávání pole, například authors, series,
+tags, publisher nebo #mycolumn. ITEM je název položky, například jméno
+autora. Při hledání položek se nerozlišují velká a malá písmena.
+.sp
+Vypíše položky, které mají poznámky, případně pouze položky v zadaném
+poli. Toto je výchozí akce:
+.sp
+calibredb \fBnotes\fP list [FIELD]
+.sp
+Prohledá text poznámek pomocí stejné syntaxe fulltextového vyhledávání
+SQLite jako nástroj Procházet poznámky v calibre. Pro každou shodu vypíše
+pole, název položky a úryvek. Volbou \-\-field omezíte hledání pouze na
+poznámky v určitém poli:
+.sp
+calibredb \fBnotes\fP search \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+.sp
+Vypíše poznámku k položce jako text ve formátu Markdown, nebo
+s přepínačem \-\-as\-html jako dokument HTML s vloženými obrázky, vhodný
+pro použití s akcí set:
+.sp
+calibredb \fBnotes\fP show FIELD ITEM
+.sp
+Nahradí poznámku k položce obsahem souboru HTML. Pro načtení HTML
+ze standardního vstupu použijte \-. Obrázky vložené pomocí adres URL se
+schématem data: a kódováním base64 se do poznámky přidají jak u místních,
+tak u vzdálených knihoven. Při použití místní knihovny a načítání ze souboru
+se přidají také obrázky odkazované cestami relativními k tomuto souboru:
+.sp
+calibredb \fBnotes\fP set FIELD ITEM FILE
+.sp
+Odstraní poznámku k položce:
+.sp
+calibredb \fBnotes\fP remove FIELD ITEM
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-as\-html
+Při zobrazení poznámky ji vypsat jako HTML místo textu ve formátu Markdown
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-field
+Při hledání poznámek omezit hledání na toto pole, například: authors, tags nebo #mycolumn
+.UNINDENT
+.SH ITEMS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb items [options] (rename|remove) FIELD ITEM ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Přejmenuje nebo odstraní položky, jako jsou autoři, štítky, série a vydavatelé, ve všech knihách, stejně jako akce Spravovat autory, štítky atd. v rozhraní calibre. FIELD je název vyhledávání pole, například authors, tags, series, publisher nebo #mycolumn. Při hledání položek se nerozlišují velká a malá písmena.
+.sp
+Přejmenuje položku. Pokud již existuje položka s názvem NEW_NAME, obě položky se sloučí. U polí s více hodnotami může NEW_NAME obsahovat více hodnot oddělených oddělovačem daného pole, například čárkou u štítků. Položka se pak nahradí všemi těmito hodnotami:
+.sp
+calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
+.sp
+Odstraní jednu nebo více položek ze všech knih. Autory nelze odstranit:
+.sp
+calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Upravovat pouze knihy odpovídající zadanému vyhledávacímu výrazu, například: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+.UNINDENT
+.SH VIRTUAL_LIBRARIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb virtual_libraries [options] [list|add|rename|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Spravuje virtuální knihovny této knihovny. Virtuální knihovna je hledání,
+při kterém se knihovna chová, jako by obsahovala pouze knihy, které mu
+odpovídají. Pro výpis nebo vyhledání knih ve virtuální knihovně použijte:
+calibredb search \(aqvl:\(dqname\(dq\(aq
+.sp
+Vypíše virtuální knihovny včetně jejich hledání a počtu knih. Toto je výchozí akce:
+.sp
+calibredb \fBvirtual_libraries\fP list
+.sp
+Vytvoří virtuální knihovnu z hledání:
+.sp
+calibredb \fBvirtual_libraries\fP add name search_expression
+.sp
+Přejmenuje virtuální knihovnu:
+.sp
+calibredb \fBvirtual_libraries\fP rename name new_name
+.sp
+Odebere virtuální knihovny; knihy v nich se nezmění:
+.sp
+calibredb \fBvirtual_libraries\fP remove name ...
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Vytvořit výstup ve formátu JSON, který je vhodnější pro strojové zpracování
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Při přidávání nahradit hledání existující virtuální knihovny se stejným názvem
+.UNINDENT
+.SH ANNOTATIONS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb annotations [options] [list|search|export|import|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Spravuje anotace knih, tedy zvýraznění a záložky vytvořené v Prohlížeči e\-knih
+calibre nebo synchronizované z jiných aplikací.
+.sp
+Vypíše anotace včetně jejich ID. Toto je výchozí akce:
+.sp
+calibredb \fBannotations\fP list
+.sp
+Prohledá zvýrazněný text, poznámky k anotacím a názvy záložek pomocí
+stejné syntaxe fulltextového vyhledávání SQLite jako nástroj Procházet anotace.
+Výsledky jsou seřazeny podle relevance a zahrnují ID anotací, názvy knih
+a odpovídající úryvky. Volbou \-\-search omezíte knihy, volbou \-\-type typ anotace,
+volbami \-\-user\-type a \-\-annotation\-user uživatele a volbou \-\-no\-stemming
+vyhledáte přesné slovní tvary. Volbou \-\-format json získáte pole JSON s výsledky
+včetně dat anotací a úryvků:
+.sp
+calibredb \fBannotations\fP search \(dqsearch expression\(dq
+.sp
+Exportuje anotace jako prostý text, Markdown nebo JSON, seskupené podle
+knih. JSON má stejnou podobu kolekce anotací calibre jako při exportu tlačítkem
+Exportovat v nástroji Procházet anotace:
+.sp
+calibredb \fBannotations\fP export
+.sp
+Importuje kolekci anotací calibre exportovanou jako JSON tímto příkazem nebo
+nástrojem Procházet anotace. Kolekce musí obsahovat anotace pouze z jedné
+knihy. BOOK_ID je ID cílové knihy, nikoli ID uložené v souboru. Importují se pouze
+anotace formátu FORMAT, anotace ostatních formátů se přeskočí. Formát FORMAT
+musí být v cílové knize k dispozici. Aby pozice odpovídaly, použijte stejné vydání knihy:
+.sp
+calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
+.sp
+Pro načtení ze standardního vstupu použijte místo FILE znak \-. Před importem se
+ověří celá kolekce. Anotace se sloučí se stávajícími podle pravidel prohlížeče:
+zvýraznění se přiřazují podle UUID a záložky podle názvu, přičemž přednost má
+novější časové razítko. Opakované importy nevytvářejí duplicity. Nesouvisející
+anotace a pozice čtení zůstávají zachovány.
+.sp
+Ve výchozím nastavení se anotace importují mezi anotace Prohlížeče e\-knih
+calibre. Chcete\-li je místo toho importovat mezi anotace uživatele Serveru
+s obsahem, použijte \-\-user\-type web \-\-annotation\-user USER. Exportované
+kolekce zaznamenávají uživatele, kterému anotace patří, a pokud kolekce
+obsahuje anotace více než jednoho uživatele, je odmítnuta. Při exportu použijte
+volby \-\-user\-type a \-\-annotation\-user, abyste exportovali anotace jediného
+uživatele.
+.sp
+Trvale odebere anotace se zadanými ID zobrazenými příkazem list:
+.sp
+calibredb \fBannotations\fP remove ID ...
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-annotation\-user
+Vypsat, prohledat nebo exportovat pouze anotace zadaného uživatele. Při importu určuje uživatele Serveru s obsahem, pro kterého se anotace importují; je vyžadován s volbou \fB\-\-user\-type\fP web. Může jít o libovolného uživatele, nejen o toho, který se používá k připojení ke vzdálené knihovně.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-format, \-f
+Formát exportu, jeden z následujících: text, markdown, json. Pro hledání text nebo json. Výchozí hodnota: text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-stemming
+Při hledání vyhledávat přesné slovní tvary namísto kmenů slov
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Vypsat, prohledat nebo exportovat pouze anotace knih odpovídajících zadanému vyhledávacímu dotazu pro knihy, například: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-type, \-t
+Vypsat, prohledat nebo exportovat pouze anotace zadaného typu, jednoho z následujících: highlight, bookmark
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-user\-type
+Vypsat, prohledat nebo exportovat pouze anotace zadaného typu uživatele. Při importu určuje typ uživatele, pro kterého se anotace importují: Prohlížeč e\-knih calibre (local) nebo uživatel Serveru s obsahem (web). Výchozí hodnota pro import je local.
+.UNINDENT
+.SH TRASH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb trash [options] (list|restore|delete|empty) [ids]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Spravuje knihy a formáty, které byly odebrány a přesunuty do koše. Položky v koši se po několika dnech automaticky trvale odstraní. ids je čárkami oddělený seznam ID knih stejně jako u příkazu remove, například: 23,34,57\-85 (při zadání rozsahu se poslední číslo rozsahu nezahrnuje).
+.sp
+Vypíše odebrané knihy a formáty, nejnověji odebrané jako první, včetně času odebrání v místním čase. Odebrané formáty knih, které už neexistují, jsou označeny jako neobnovitelné a lze je pouze odstranit. S volbou \-\-for\-machine jsou časy v UTC:
+.sp
+calibredb \fBtrash\fP list
+.sp
+Obnoví odebrané knihy, nebo s volbou \-\-formats odebrané formáty knih:
+.sp
+calibredb \fBtrash\fP restore ids
+.sp
+Trvale odstraní položky z koše:
+.sp
+calibredb \fBtrash\fP delete ids
+.sp
+Trvale odstraní vše z koše:
+.sp
+calibredb \fBtrash\fP empty
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Vytvořit výstup akce list ve formátu JSON, který je vhodnější pro strojové zpracování
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Pracovat s odebranými formáty zadaných knih namísto odebraných knih
+.UNINDENT
+.SH DATA_FILES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Spravuje dodatečné datové soubory přidružené ke knize v místních nebo
+vzdálených knihovnách. Názvy jsou relativní k datové složce knihy. Pro
+podsložky používejte /, přijímá se také . Soubory, jejichž názvy obsahují ,
+se vypisují, ale jinak je nelze spravovat. Tímto příkazem nelze přistupovat
+k formátům e\-knih, obálkám ani souboru metadata.opf. Vzdálené knihovny
+vyžadují účet s oprávněním k zápisu, stejně jako ostatní příkazy pro správu,
+a nepodporují účty s omezením hledání pro jednotlivé knihovny.
+.sp
+Vypíše názvy souborů, velikosti v bajtech a časy změny (v sekundách od
+unixové epochy). Pro výstup JSON použijte \-\-for\-machine:
+.sp
+calibredb \fBdata_files\fP list BOOK_ID
+.sp
+Přidá soubor pod jeho samotným názvem bez cesty; volbou \-\-name lze
+zadat název nebo podsložku. Stávající soubory se nenahrazují, pokud není
+zadána volba \-\-replace. Tato možnost je dostupná také prostřednictvím
+add_format \-\-as\-extra\-data\-file:
+.sp
+calibredb \fBdata_files\fP add BOOK_ID FILE
+.sp
+Uloží jeden datový soubor do cíle určeného volbou \-\-output na místním
+počítači. Stávající výstupní soubory se nenahrazují, pokud není zadána
+volba \-\-replace:
+.sp
+calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
+.sp
+Přejmenuje soubor. Stávající cíle se nenahrazují, pokud není nastavena
+volba \-\-replace:
+.sp
+calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
+.sp
+Přesune soubor do koše operačního systému. S volbou \-\-permanent jej
+místo toho trvale odstraní. U vzdálených knihoven se tato operace provádí
+na serveru:
+.sp
+calibredb \fBdata_files\fP remove BOOK_ID NAME
+.sp
+Složky, které po akcích rename a remove zůstanou prázdné, se odstraní.
+U vzdálených knihoven se každý soubor přenáší v jediném požadavku, takže
+velmi velké soubory vyžadují dostatek paměti na klientovi i na serveru
+a velikost odesílaných souborů je omezena maximální velikostí požadavku
+serveru.
+.sp
+Kdykoliv předáváte parametry pro calibredb, který mají mezery, uzavřete parametry uvozovkami. Například: „/some path/with spaces
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Vypsat seznam souborů jako JSON
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-name
+Název přidávaného souboru relativní k datové složce
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output
+Místní cíl pro akci get
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Trvale odstranit datový soubor místo přesunutí do koše
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Povolit nahrazování stávajících souborů při přidávání, získávání nebo přejmenování
 .UNINDENT
 .SH Author
 Kovid Goyal

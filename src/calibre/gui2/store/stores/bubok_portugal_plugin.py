@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2014, Rafael Vega <rafavega@gmail.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
@@ -24,7 +22,7 @@ except ImportError:
 
 
 class BubokPortugalStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         url = 'https://www.bubok.pt/tienda'
         if external or self.config.get('open_external', False):
             open_url(QUrl(url_slash_cleaner(detail_item or url)))
@@ -70,5 +68,5 @@ class BubokPortugalStore(BasicStoreConfig, StorePlugin):
                 s.cover_url = cover.strip()
                 yield s
 
-    def get_details(self, search_result, timeout=60):
+    def get_details(self, search_result, timeout=60) -> bool:
         return True

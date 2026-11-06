@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "Oktober 23, 2026" "9.17.0" "calibre"
+.TH "CALIBREDB" "1" "November 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -137,6 +137,18 @@ search
 fts_index
 .IP \(bu 2
 fts_search
+.IP \(bu 2
+notes
+.IP \(bu 2
+items
+.IP \(bu 2
+virtual_libraries
+.IP \(bu 2
+annotations
+.IP \(bu 2
+trash
+.IP \(bu 2
+data_files
 .UNINDENT
 .SH GLOBALE OPTIONEN
 .INDENT 0.0
@@ -147,7 +159,7 @@ Diesen Hilfetext anzeigen und beenden.
 .INDENT 0.0
 .TP
 .B \-\-library\-path, \-\-with\-library
-Path to the calibre library. Default is to use the path stored in the settings. You can also connect to a calibre Content server to perform actions on remote libraries. To do so use a URL of the form: \%<http://\:hostname:port/#\:library_id> for example, \%<http://\:localhost:8080/#\:mylibrary>\&. library_id is the library id of the library you want to connect to on the Content server. You can use the special library_id value of \- to get a list of library ids available on the server. For details on how to setup access via a Content server, see \%<https://\:manual\:.calibre-ebook\:.com/\:de/\:generated/\:de/\:calibredb\:.html>\&.
+Pfad zur calibre\-Bibliothek. Standardmäßig wird der in den Einstellungen gespeicherte Pfad verwendet.  Sie können sich auch mit einem calibre\-Inhaltsserver verbinden, um Aktionen auf entfernten Bibliotheken auszuführen. Verwenden Sie dazu eine URL der Form \%<http://\:hostname:port/#\:library_id>, beispielsweise \%<http://\:localhost:8080/#\:mylibrary>\&.  library_id ist die Kennung der Bibliothek, auf die Sie auf dem Inhaltsserver zugreifen möchten. Mit dem speziellen Wert \- für library_id können Sie eine Liste aller auf dem Server verfügbaren Bibliothekskennungen abrufen.  Weitere Informationen zur Einrichtung des Zugriffs über einen Inhaltsserver finden Sie unter \%<https://\:manual\:.calibre-ebook\:.com/\:de/\:generated/\:de/\:calibredb\:.html>\&.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -225,22 +237,22 @@ Zeichenfolge zur Unterscheidung der Felder. Die Voreinstellung ist ein Leerzeich
 .INDENT 0.0
 .TP
 .B \-\-sort\-by
-The field by which to sort the results. You can specify multiple fields by separating them with commas. Available fields: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuid Default: id. In addition to the builtin fields above, custom fields are also available as *field_name, for example, for a custom field #rating, use the name: *rating
+Das Feld, nach dem die Ergebnisse sortiert werden sollen. Sie können mehrere Felder angeben, indem Sie diese durch Kommas trennen.Verfügbare Felder: author_sort, authors, comments, cover, formats, identifiers, isbn, languages, last_modified, pubdate, publisher, rating, series, series_index, size, tags, template, timestamp, title, uuidStandardwert: id. Zusätzlich zu den oben aufgeführten integrierten Feldern stehen auch benutzerdefinierte Felder zur Verfügung. Diese werden mit *Feldname angegeben. Um beispielsweise nach dem benutzerdefinierten Feld #rating zu sortieren, verwenden Sie *rating.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template
-The template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Note that templates are ignored while connecting to a calibre server. Default: None
+Die Vorlage, die ausgeführt werden soll, wenn „template“ in der Feldliste enthalten ist. Beachten Sie, dass Vorlagen bei einer Verbindung zu einem calibre\-Server ignoriert werden. Standardwert: Keine.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_file, \-t
-Path to a file containing the template to run if \fB\(dq\fPtemplate\fB\(dq\fP is in the field list. Default: None
+Pfad zu einer Datei, die die auszuführende Vorlage enthält, wenn „template“ in der Feldliste enthalten ist. Standardwert: Keine.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-template_heading
-Heading for the template column. Default: template. This option is ignored if the option \fB\-\-for\-machine\fP is set
+Spaltenüberschrift für die Vorlagenspalte. Standardwert: template. Diese Option wird ignoriert, wenn die Option \fB\-\-for\-machine\fP gesetzt ist.
 .UNINDENT
 .SH ADD
 .INDENT 0.0
@@ -322,12 +334,12 @@ Optionen, um das Hinzufügen von Büchern aus Verzeichnissen zu steuern. Standar
 .INDENT 0.0
 .TP
 .B \-\-add
-A filename (glob) pattern, files matching this pattern will be added when scanning folders for files, even if they are not of a known e\-book file type. Can be specified multiple times for multiple patterns.
+Ein Dateinamenmuster (Glob\-Muster). Dateien, die diesem Muster entsprechen, werden beim Durchsuchen von Ordnern hinzugefügt, auch wenn sie keinem bekannten E\-Book\-Dateityp angehören. Diese Option kann mehrfach angegeben werden, um mehrere Muster festzulegen.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-A filename (glob) pattern, files matching this pattern will be ignored when scanning folders for files. Can be specified multiple times for multiple patterns. For example: *.pdf will ignore all PDF files
+Ein Dateinamenmuster (Glob\-Muster). Dateien, die diesem Muster entsprechen, werden beim Durchsuchen von Ordnern ignoriert. Diese Option kann mehrfach angegeben werden, um mehrere Muster festzulegen. Beispiel: *.pdf ignoriert alle PDF\-Dateien.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -356,7 +368,7 @@ Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Papierkorb nicht verwenden
+Do not use the trash bin
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -418,17 +430,14 @@ Metadaten in OPF\-Form (XML) drucken
 .INDENT 3.5
 .sp
 .EX
-calibredb set_metadata [options] book_id [/path/to/metadata.opf]
+calibredb set_metadata [Optionen] Buch\-ID [/pfad/zu/metadata.opf]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Set the metadata stored in the calibre database for the book identified by
-book_id from the OPF file metadata.opf. book_id is a book id number from the
-search command. You can get a quick feel for the OPF format by using the
-\-\-as\-opf switch to the show_metadata command. You can also set the metadata of
-individual fields with the \-\-field option. If you use the \-\-field option, there
-is no need to specify an OPF file.
+Legt die in der calibre\-Datenbank gespeicherten Metadaten für das durch die Buch\-ID angegebene Buch anhand der OPF\-Datei metadata.opf fest. Die Buch\-ID ist eine numerische Kennung, die Sie mit dem Befehl search ermitteln können. Einen schnellen Überblick über das OPF\-Format erhalten Sie, indem Sie den Befehl show_metadata mit der Option
+\-\-as\-opf ausführen.
+Mit der Option \-\-field können Sie auch die Metadaten einzelner Felder festlegen. Wenn Sie diese Option verwenden, müssen Sie keine OPF\-Datei angeben.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -446,15 +455,15 @@ Listet die Metadaten\-Feldnamen auf, die mit der \fB\-\-field\fP option (Feldopt
 .INDENT 3.5
 .sp
 .EX
-calibredb export [options] ids
+calibredb export [Optionen] IDs
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Export the books specified by ids (a comma separated list) to the filesystem.
-The \fBexport\fP operation saves all formats of the book, its cover and metadata (in
-an OPF file). Any extra data files associated with the book are also saved.
-You can get id numbers from the search command.
+Exportiert die durch IDs angegebenen Bücher (eine durch Kommas getrennte Liste) in das Dateisystem.
+Beim Export werden sämtliche Buchformate, das Buchcover und die Metadaten (in einer OPF\-Datei) gespeichert.
+Alle zusätzlichen Datendateien, die dem Buch zugeordnet sind, werden ebenfalls exportiert.
+Die Buch\-IDs können Sie mit dem Befehl search ermitteln.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -532,16 +541,16 @@ Pfade in Kleinbuchstaben umwandeln.
 .INDENT 3.5
 .sp
 .EX
-calibredb catalog /path/to/destination.(csv|epub|mobi|xml...) [options]
+calibredb catalog /pfad/zur/zieldatei.(csv|epub|mobi|xml...) [Optionen]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Export a \fBcatalog\fP in format specified by path/to/destination extension.
-Options control how entries are displayed in the generated \fBcatalog\fP output.
-Note that different \fBcatalog\fP formats support different sets of options. To
-see the different options, specify the name of the output file and then the
-\-\-help option.
+Exportiert einen Katalog in dem Format, das durch die /pfad/zur/zieldatei Dateiendung der Zieldatei festgelegt wird.
+.sp
+Die Optionen bestimmen, wie die Einträge im erzeugten Katalog dargestellt werden.
+.sp
+Beachten Sie, dass verschiedene Katalogformate unterschiedliche Optionen unterstützen. Um die verfügbaren Optionen anzuzeigen, geben Sie den Namen der Ausgabedatei und anschließend die Option \-\-help an.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -660,21 +669,26 @@ Ersetzen existierender Titelbilder während der Katalogerzeugung. Standard: \fB\
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [Optionen] (list|add|remove)
+calibredb saved_searches [options] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Verwalten der in der Calibre\-Datenbank gespeicherten Suchen.
-Falls Sie eine Suche hinzuzufügen, deren Name bereits existiert, so wird die bisherige ersetzt.
+Manage the saved searches stored in this database.
+If you try to add a query with a name that already exists, it will be
+replaced.
 .sp
-Syntax für Hinzufügen (\(dqadd\(dq):
+Syntax for listing, the default action:
 .sp
-calibredb \fBsaved_searches\fP add Suchenname Suchausdruck
+calibredb \fBsaved_searches\fP list
 .sp
-Syntax für Entfernen (\(dqremove\(dq):
+Syntax for adding:
 .sp
-calibredb \fBsaved_searches\fP remove Suchenname
+calibredb \fBsaved_searches\fP add search_name search_expression
+.sp
+Syntax for removing:
+.sp
+calibredb \fBsaved_searches\fP remove search_name
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
@@ -765,19 +779,19 @@ Wenn die Spalte mehrere Werte speichert, sollen die angegebenen Werte zu den bes
 .INDENT 3.5
 .sp
 .EX
-calibredb restore_database [options]
+calibredb restore_database [Optionen]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Stellt die Datenbank anhand der Metadaten wieder her, die in den OPF\-Dateien in den einzelnen Ordnern der calibre\-Bibliothek gespeichert sind.
+Dies ist hilfreich, wenn Ihre Datei metadata.db beschädigt wurde.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+WARNUNG: Dieser Befehl erstellt Ihre Datenbank vollständig neu.
+Dabei gehen alle gespeicherten Suchanfragen, Benutzerkategorien, Metadaten\-Schalttafeln, gespeicherten buchspezifischen Konvertierungseinstellungen und benutzerdefinierten Nachrichtenrezepte verloren.
+Die wiederhergestellten Metadaten sind nur so vollständig und korrekt wie die Angaben in den OPF\-Dateien.
+.sp
+Der Rückgabewert ist 0, wenn die Wiederherstellung erfolgreich war, 1, wenn sie vollständig fehlgeschlagen ist, und 2, wenn die Datenbank wiederhergestellt wurde, aber einige Bücher oder andere Daten nicht wiederhergestellt werden konnten.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -828,13 +842,13 @@ Die Volltextsuchdatenbank aufräumen. Dies kann sehr langsam und arbeitsspeicher
 .INDENT 3.5
 .sp
 .EX
-calibredb list_categories [options]
+calibredb list_categories [Optionen]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Produce a report of the category information in the database. The
-information is the equivalent of what is shown in the Tag browser.
+Erstellt einen Bericht über die in der Datenbank gespeicherten Kategorieinformationen.
+Die Informationen entsprechen denen, die in der Schlagwortverwaltung angezeigt werden.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -867,17 +881,14 @@ Maximale Breite einer einzelnen Zeile in der Ausgabe. In der Voreinstellung wird
 .INDENT 3.5
 .sp
 .EX
-calibredb backup_metadata [options]
+calibredb backup_metadata [Optionen]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Backup the metadata stored in the database into individual OPF files in each
-books folder. This normally happens automatically, but you can run this
-command to force re\-generation of the OPF files, with the \-\-all option.
+Sichert die in der Datenbank gespeicherten Metadaten als einzelne OPF\-Dateien im jeweiligen Buchordner. Dies geschieht normalerweise automatisch. Sie können diesen Befehl jedoch mit der Option \-\-all ausführen, um die OPF\-Dateien vollständig neu erzeugen zu lassen.
 .sp
-Note that there is normally no need to do this, as the OPF files are backed up
-automatically, every time metadata is changed.
+Beachten Sie, dass dies normalerweise nicht erforderlich ist, da die OPF\-Dateien bei jeder Änderung der Metadaten automatisch gesichert werden.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -930,17 +941,15 @@ Aktualisiert nur Metadaten in Dateien des angegebenen Formats. Wählen Sie die g
 .INDENT 3.5
 .sp
 .EX
-calibredb search [options] search expression
+calibredb search [Optionen] Suchausdruck
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Search the library for the specified \fBsearch\fP term, returning a comma separated
-list of book ids matching the \fBsearch\fP expression. The output format is useful
-to feed into other commands that accept a list of ids as input.
+Durchsucht die Bibliothek nach dem angegebenen Suchbegriff und gibt eine durch Kommas getrennte Liste der Buch\-IDs zurück, die dem Suchausdruck entsprechen. Dieses Ausgabeformat eignet sich zur Übergabe an andere Befehle, die eine Liste von IDs als Eingabe akzeptieren.
 .sp
-The \fBsearch\fP expression can be anything from calibre\(aqs powerful \fBsearch\fP query
-language, for example: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
+Der Suchausdruck kann die leistungsfähige Suchabfragesprache von calibre verwenden.
+Beispiel: calibredb \fBsearch\fP author:asimov \(aqtitle:\(dqi robot\(dq\(aq
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -953,30 +962,28 @@ Maximale Anzahl der anzuzeigenden Ergebnisse. Standard ist alle Ergebnisse.
 .INDENT 3.5
 .sp
 .EX
-calibredb fts_index [options] enable/disable/status/reindex
+calibredb fts_index [Optionen] enable/disable/status/reindex
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Control the Full text search indexing process.
+Steuert die Volltextsuchindizierung.
 .INDENT 0.0
 .TP
 .B enable
-Turns on FTS indexing for this library
+Aktiviert die Volltextindizierung für diese Bibliothek.
 .TP
 .B disable
-Turns off FTS indexing for this library
+Deaktiviert die Volltextindizierung für diese Bibliothek.
 .TP
 .B status
-Shows the current indexing status
-.TP
-.B reindex
-Can be used to re\-index either particular books or
-the entire library. To re\-index particular books
-specify the book ids as additional arguments after the
-reindex command. If no book ids are specified the
-entire library is re\-indexed.
+Zeigt den aktuellen Indizierungsstatus an.
 .UNINDENT
+.sp
+reindex
+Ermöglicht die erneute Indizierung einzelner Bücher oder der gesamten Bibliothek.
+Um einzelne Bücher neu zu indizieren, geben Sie deren Buch\-IDs als zusätzliche Argumente nach dem Befehl reindex an.
+Werden keine Buch\-IDs angegeben, wird die gesamte Bibliothek neu indiziert.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -994,48 +1001,387 @@ Warte bis alle Bücher indiziert sind, zeige Indizierungsprozess periodisch
 .INDENT 3.5
 .sp
 .EX
-calibredb fts_search [options] search expression
+calibredb fts_search [Optionen] Suchausdruck
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Do a full text search on the entire library or a subset of it.
+Führt eine Volltextsuche in der gesamten Bibliothek oder in einem Teil davon durch.
 .sp
 Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-Only match on exact words not related words. So correction will not match correcting.
+Nur nach exakt übereinstimmenden Wörtern suchen, nicht nach verwandten Wortformen. So wird beispielsweise bei der Suche nach „correction“ das Wort „correcting“ nicht gefunden.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-include\-snippets
-Include snippets of the text surrounding each match. Note that this makes searching much slower.
+Textausschnitte aus dem Umfeld jedes Treffers anzeigen. Beachten Sie, dass die Suche dadurch erheblich langsamer wird.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-indexing\-threshold
-How much of the library must be indexed before searching is allowed, as a percentage. Defaults to 90
+Wie viel Prozent der Bibliothek mindestens indiziert sein müssen, bevor die Suche zugelassen wird. Standardwert: 90.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-end\-marker
-The marker used to indicate the end of a matched word inside a snippet
+Die Markierung, die das Ende eines gefundenen Wortes innerhalb eines Textausschnitts kennzeichnet.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-match\-start\-marker
-The marker used to indicate the start of a matched word inside a snippet
+Die Markierung, die den Anfang eines gefundenen Wortes innerhalb eines Textausschnitts kennzeichnet.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output\-format
-The format to output the search results in. Either \fB\(dq\fPtext\fB\(dq\fP for plain text or \fB\(dq\fPjson\fB\(dq\fP for JSON output.
+Das Ausgabeformat der Suchergebnisse. Entweder \fB\(dq\fPtext\fB\(dq\fP für Klartext oder \fB\(dq\fPjson\fB\(dq\fP für die Ausgabe im JSON\-Format.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-restrict\-to
-Restrict the searched books, either using a search expression or ids. For example: ids:1,2,3 to restrict by ids or search:tag:foo to restrict to books having the tag foo.
+Beschränkt die zu durchsuchenden Bücher mithilfe eines Suchausdrucks oder anhand ihrer IDs. Beispiele: ids:1,2,3 beschränkt die Suche auf die angegebenen Buch\-IDs, während search:tag:foo nur Bücher mit dem Schlagwort foo durchsucht.
+.UNINDENT
+.SH NOTES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb notes [options] [list|search|show|set|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the \fBnotes\fP attached to items such as authors, series, tags and
+publishers. FIELD is the lookup name of the field, for example: authors,
+series, tags, publisher or #mycolumn. ITEM is the name of the item, for
+example the name of an author. Items are matched case insensitively.
+.sp
+List the items that have \fBnotes\fP, optionally only those in the specified field.
+This is the default action:
+.sp
+calibredb \fBnotes\fP list [FIELD]
+.sp
+Search the text of \fBnotes\fP using the same SQLite full text search syntax as
+the Browse \fBnotes\fP tool in calibre. Print the field, item name and an excerpt
+for each match. Use \-\-field to search only the \fBnotes\fP in a particular field:
+.sp
+calibredb \fBnotes\fP search \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+.sp
+Print the note for an item as Markdown formatted text, or with \-\-as\-html as
+an HTML document with any images embedded, suitable for use with set:
+.sp
+calibredb \fBnotes\fP show FIELD ITEM
+.sp
+Replace the note for an item with the contents of an HTML file. Use \- to
+read the HTML from standard input. Images embedded as base64\-encoded data:
+URLs are added to the note for both local and remote libraries. When using a
+local library and reading from a file, images referenced by paths relative to
+the file are added as well:
+.sp
+calibredb \fBnotes\fP set FIELD ITEM FILE
+.sp
+Remove the note for an item:
+.sp
+calibredb \fBnotes\fP remove FIELD ITEM
+.sp
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-html
+When showing a note, output it as HTML instead of Markdown formatted text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-field
+When searching notes, restrict the search to this field, for example: authors, tags or #mycolumn
+.UNINDENT
+.SH ITEMS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb items [options] (rename|remove) FIELD ITEM ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Rename or remove \fBitems\fP such as authors, tags, series and publishers in all
+books, the same as the Manage authors, tags, etc. actions in the calibre
+interface. FIELD is the lookup name of the field, for example: authors, tags,
+series, publisher or #mycolumn. Items are matched case insensitively.
+.sp
+Rename an item. If an item named NEW_NAME already exists, the two \fBitems\fP are
+merged. For fields that contain multiple values, NEW_NAME can contain more
+than one value, separated by the separator for the field, for example a comma
+for tags. The item is then replaced by all the values:
+.sp
+calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
+.sp
+Remove one or more \fBitems\fP from all books. Authors cannot be removed:
+.sp
+calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
+.sp
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Only change books that match the specified search expression, for example: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+.UNINDENT
+.SH VIRTUAL_LIBRARIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb virtual_libraries [options] [list|add|rename|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the Virtual libraries of this library. A Virtual library is a search
+that behaves as though the library contains only the books it matches. To list
+or search the books in a Virtual library, use: calibredb search \(aqvl:\(dqname\(dq\(aq
+.sp
+List the Virtual libraries, with their searches and number of books. This is the
+default action:
+.sp
+calibredb \fBvirtual_libraries\fP list
+.sp
+Create a Virtual library from a search:
+.sp
+calibredb \fBvirtual_libraries\fP add name search_expression
+.sp
+Rename a Virtual library:
+.sp
+calibredb \fBvirtual_libraries\fP rename name new_name
+.sp
+Remove Virtual libraries, the books in them are not changed:
+.sp
+calibredb \fBvirtual_libraries\fP remove name ...
+.sp
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generate output in JSON format, which is more suitable for machine parsing
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Replace the search of an existing Virtual library with the same name when adding
+.UNINDENT
+.SH ANNOTATIONS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb annotations [options] [list|search|export|import|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the \fBannotations\fP, that is the highlights and bookmarks, of books, as
+created in the calibre E\-book viewer or synced from other applications.
+.sp
+List the \fBannotations\fP, with their ids. This is the default action:
+.sp
+calibredb \fBannotations\fP list
+.sp
+Search highlighted text, annotation notes and bookmark titles using the same
+SQLite full text search syntax as the Browse \fBannotations\fP tool. Results are
+ordered by relevance and include annotation ids, book titles and matching
+excerpts. Use \-\-search to restrict the books, \-\-type to restrict the annotation
+type, \-\-user\-type and \-\-annotation\-user to restrict the user, \-\-no\-stemming to
+match exact word forms, or \-\-format json for a JSON array of results including
+the annotation data and excerpts:
+.sp
+calibredb \fBannotations\fP search \(dqsearch expression\(dq
+.sp
+Export the \fBannotations\fP as plain text, Markdown or JSON, grouped by book. The
+JSON is the same calibre annotation collection as created by the Export
+button in the Browse \fBannotations\fP tool:
+.sp
+calibredb \fBannotations\fP export
+.sp
+Import a calibre annotation collection exported as JSON by this command or
+the Browse \fBannotations\fP tool. The collection must contain \fBannotations\fP from
+only one book. BOOK_ID is the destination book id, not the id stored in the
+file. Only the \fBannotations\fP of the format FORMAT are imported, \fBannotations\fP of
+other formats are skipped. FORMAT must exist in the destination book. Use the
+same edition of the book so positions match:
+.sp
+calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
+.sp
+Use \- for FILE to read from standard input. The entire collection is
+validated before importing. Annotations are merged with existing ones using
+the viewer\(aqs rules: highlights are matched by UUID and bookmarks by title,
+and the newer timestamp wins. Repeated imports do not create duplicates.
+Unrelated \fBannotations\fP and reading positions are preserved.
+.sp
+By default \fBannotations\fP are imported into those of the calibre E\-book viewer.
+Use \-\-user\-type web \-\-annotation\-user USER to import them into those of a
+Content server user instead. Exported collections record the user the
+\fBannotations\fP belong to, and if a collection contains \fBannotations\fP of more than
+one user, it is rejected. Use the \-\-user\-type and \-\-annotation\-user
+options when exporting, to export the \fBannotations\fP of a single user.
+.sp
+Permanently remove the \fBannotations\fP with the specified ids, as shown by list:
+.sp
+calibredb \fBannotations\fP remove ID ...
+.sp
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-annotation\-user
+Only list, search or export the annotations of the specified user. For import, the Content server user to import the annotations for, required with \fB\-\-user\-type\fP web. Note that this can be any user, not just the one used to connect to a remote library.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-format, \-f
+The export format, one of: text, markdown, json. For search, text or json. Default is: text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-stemming
+For search, match exact word forms instead of word stems
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Only list, search or export the annotations of books matching the specified book search query, for example: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-type, \-t
+Only list, search or export annotations of the specified type, one of: highlight, bookmark
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-user\-type
+Only list, search or export the annotations of the specified type of user. For import, the type of user to import the annotations for, the calibre E\-book viewer (local) or a Content server user (web). Default for import is local.
+.UNINDENT
+.SH TRASH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb trash [options] (list|restore|delete|empty) [ids]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the books and formats that have been removed and placed in the \fBtrash\fP bin.
+Entries in the \fBtrash\fP bin are permanently deleted automatically after some days.
+ids is a comma separated list of book ids, as for the remove command, for
+example: 23,34,57\-85 (when specifying a range, the last number in the range is
+not included).
+.sp
+List the removed books and formats, most recently removed first, with the
+times they were removed in local time. Removed formats of books that no longer
+exist are marked as not restorable, they can only be deleted. With
+\-\-for\-machine, the times are in UTC:
+.sp
+calibredb \fBtrash\fP list
+.sp
+Restore removed books, or with \-\-formats, the removed formats of books:
+.sp
+calibredb \fBtrash\fP restore ids
+.sp
+Permanently delete entries from the \fBtrash\fP bin:
+.sp
+calibredb \fBtrash\fP delete ids
+.sp
+Permanently delete everything in the \fBtrash\fP bin:
+.sp
+calibredb \fBtrash\fP empty
+.sp
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generate output for the list action in JSON format, which is more suitable for machine parsing
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Act on the removed formats of the specified books, instead of on removed books
+.UNINDENT
+.SH DATA_FILES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the extra data files associated with a book, in local or remote libraries.
+Names are relative to the book\(aqs data directory. Use / for subdirectories,
+is also accepted. Files whose names contain a are listed, but cannot
+otherwise be managed.
+E\-book formats, covers and metadata.opf cannot be accessed with this command.
+Remote libraries require an account with write access, as for other management
+commands, and do not support accounts with per\-library search restrictions.
+.sp
+List file names, sizes in bytes and modification times (seconds since the Unix
+epoch). Use \-\-for\-machine for JSON output:
+.sp
+calibredb \fBdata_files\fP list BOOK_ID
+.sp
+Add a file, using its basename, or \-\-name to specify a name or subdirectory.
+Existing files are not replaced unless \-\-replace is specified. This is also
+available through add_format \-\-as\-extra\-data\-file:
+.sp
+calibredb \fBdata_files\fP add BOOK_ID FILE
+.sp
+Save one data file to \-\-output on the local machine. Existing output files
+are not replaced unless \-\-replace is specified:
+.sp
+calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
+.sp
+Rename a file. Existing destinations are not replaced unless \-\-replace is set:
+.sp
+calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
+.sp
+Remove a file to the operating system\(aqs recycle bin. With \-\-permanent, delete
+it permanently instead. For remote libraries this happens on the server:
+.sp
+calibredb \fBdata_files\fP remove BOOK_ID NAME
+.sp
+Directories left empty by rename and remove are deleted. With remote
+libraries, each file is transferred in a single request, so very large files
+need enough memory on both the client and the server, and uploads are limited
+by the maximum request size of the server.
+.sp
+Wann immer Sie Argumente mit Leerzeichen an calibredb weitergeben, müssen diese Argumente in Anführungsstriche gesetzt werden. Zum Beispiel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Output the list of files as JSON
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-name
+Name to use for the added file, relative to the data directory
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output
+Local destination for the get action
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Permanently delete the data file instead of using the recycle bin
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Allow replacing existing files when adding, getting or renaming
 .UNINDENT
 .SH Author
 Kovid Goyal

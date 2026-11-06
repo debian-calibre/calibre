@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2012, Alex Stanev <alex@stanev.org>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
@@ -24,7 +22,7 @@ except ImportError:
 class BiblioStore(BasicStoreConfig, StorePlugin):
     web_url = 'https://biblio.bg'
 
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         if external or self.config.get('open_external', False):
             open_url(detail_item)
         else:
@@ -41,10 +39,10 @@ class BiblioStore(BasicStoreConfig, StorePlugin):
             return
 
         # do keyword search
-        url = '{}/книги?query={}&search_by=0'.format(self.web_url, quote_plus(query))
+        url = f'{self.web_url}/книги?query={quote_plus(query)}&search_by=0'
         yield from self._do_search(url, max_results, timeout)
 
-    def get_details(self, search_result, timeout=60):
+    def get_details(self, search_result, timeout=60) -> bool:
         br = browser()
         with closing(br.open(search_result.detail_item, timeout=timeout)) as nf:
             idata = safe_html_fromstring(nf.read())

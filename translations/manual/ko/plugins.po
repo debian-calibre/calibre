@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-08 13:52+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2025\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
@@ -437,6 +437,13 @@ msgid ""
 msgstr "True이면 변환 출력 플러그인이 생성한 최종 파일에 대해 변환 후 이 플러그인이 실행됩니다."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -749,6 +756,23 @@ msgid ""
 "of which have ISBNs and some of which do not, the results without ISBNs will"
 " be ignored"
 msgstr "True로 설정되어 있고, 이 소스가 어떤 질의에 대해 여러 결과를 반환하는데 일부에는 ISBN이 있고 일부에는 ISBN이 없다면, ISBN이 없는 결과는 무시됩니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.uses_camoufox_worker:1
+msgid ""
+"If set to True this source uses the Camoufox browser shared by all metadata "
+"downloads, see :mod:`calibre.web.automate.metadata`, which is then started "
+"before metadata is downloaded, so that it is ready in time. Such sources are"
+" also waited for longer after the first result from any source arrives, "
+"since downloading with a browser is slow."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -1392,6 +1416,16 @@ msgstr "장치의 책 경로에 사용하는 경로 구분자입니다."
 #: calibre.devices.interface.DevicePlugin.icon:1
 msgid "Icon for this device"
 msgstr "이 장치의 아이콘입니다."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.type:1
+msgid "Alias for field number 0"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.value:1
+msgid "Alias for field number 1"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.OPEN_FEEDBACK_MESSAGE:1
@@ -2122,7 +2156,7 @@ msgstr "장치 관리자가 플러그인을 시작할 때 호출됩니다. 이 �
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2135,8 +2169,9 @@ msgstr "이 메서드는 GUI 스레드에서 호출될 수 있습니다. 따라�
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "플러그인을 시작하기 위해 호출됩니다. 플러그인은 자신이 사용하는 방식으로 장치 연결을 받기 시작해야 합니다. 이미 연결을 받고 있다면 아무것도 하지 마십시오."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2270,8 +2305,8 @@ msgstr "장치가 이 책 목록에 대한 컬렉션을 지원하면 True를 반
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "책을 booklist 에 추가합니다. 목적은 장치 내부 메타데이터를 유지하는 것입니다. booklists 를 동기화해야 한다면 True를 반환하십시오."
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2759,6 +2794,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "메인 GUI 가 종료되는 과정에 있을 때 플러그인마다 한 번 호출됩니다. 사용한 리소스를 해제하되, 종료를 오래 막지 않도록 하십시오."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

@@ -6,20 +6,27 @@ import time
 import unittest
 from contextlib import closing
 from io import BytesIO
+from threading import Event
+from typing import TYPE_CHECKING, Never, Self
 
 from calibre.constants import iswindows
 from calibre.db.errors import BooksNotRemoved
 from calibre.db.tests.base import BaseTest
 from calibre.ptempfile import TemporaryDirectory
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable
 
-def read(x, mode='r'):
+    from calibre.db.cache import Cache
+
+
+def read(x: str, mode: str = 'r') -> str | bytes:
     with open(x, mode) as f:
         return f.read()
 
 
 class FilesystemTest(BaseTest):
-    def get_filesystem_data(self, cache, book_id):
+    def get_filesystem_data(self, cache: Cache, book_id: int) -> dict[str, bytes]:
         fmts = cache.field_for('formats', book_id)
         ans = {}
         for fmt in fmts:
@@ -31,7 +38,7 @@ class FilesystemTest(BaseTest):
             ans['cover'] = buf.getvalue()
         return ans
 
-    def test_metadata_move(self):
+    def test_metadata_move(self) -> None:
         "Test the moving of files when title/author change"
         cl = self.cloned_library
         cache = self.init_cache(cl)
@@ -73,7 +80,7 @@ class FilesystemTest(BaseTest):
 
         initial_side_data = {}
 
-        def init_cache():
+        def init_cache() -> None:
             nonlocal cache, initial_side_data
             cache = self.init_cache(self.cloned_library)
             bookdir = os.path.dirname(cache.format_abspath(1, '__COVER_INTERNAL__'))
@@ -84,14 +91,14 @@ class FilesystemTest(BaseTest):
                 f.write('a.fmt1')
             initial_side_data = side_data()
 
-        def side_data(book_id=1):
+        def side_data(book_id: int = 1) -> dict[str, str | bytes]:
             bookdir = os.path.dirname(cache.format_abspath(book_id, '__COVER_INTERNAL__'))
             return {
                 'a.side': read(os.path.join(bookdir, 'a.side')),
                 'a.fmt1': read(os.path.join(bookdir, 'subdir', 'a.fmt1')),
             }
 
-        def check_that_filesystem_and_db_entries_match(book_id):
+        def check_that_filesystem_and_db_entries_match(book_id: int) -> None:
             bookdir = os.path.dirname(cache.format_abspath(book_id, '__COVER_INTERNAL__'))
             if iswindows:
                 from calibre_extensions import winutil
@@ -150,12 +157,12 @@ class FilesystemTest(BaseTest):
             if x.is_dir():
                 self.assertTrue(os.listdir(x.path))
 
-    def test_rename_of_extra_files(self):
+    def test_rename_of_extra_files(self) -> None:
         cl = self.cloned_library
         cache = self.init_cache(cl)
         cache.add_extra_files(1, {'a': BytesIO(b'aaa'), 'b': BytesIO(b'bbb')})
 
-        def relpaths():
+        def relpaths() -> set[str]:
             return {e.relpath for e in cache.list_extra_files(1)}
 
         self.assertEqual(relpaths(), {'a', 'b'})
@@ -166,7 +173,7 @@ class FilesystemTest(BaseTest):
         self.assertEqual(cache.rename_extra_files(1, {'B': 'data/c'}), set())
         self.assertEqual(cache.rename_extra_files(1, {'B': 'data/c'}, replace=True), {'B'})
 
-    def test_extra_file_paths_are_confined_to_book_dir(self):
+    def test_extra_file_paths_are_confined_to_book_dir(self) -> None:
         cl = self.cloned_library
         cache = self.init_cache(cl)
         bookdir = os.path.dirname(cache.format_abspath(1, 'FMT1'))
@@ -190,7 +197,7 @@ class FilesystemTest(BaseTest):
         self.assertEqual(cache.rename_extra_files(1, {'safe': bad_relpath}), set())
         self.assertEqual(read(victim, 'rb'), b'outside')
 
-        def listed(pattern):
+        def listed(pattern: str) -> set[str]:
             return {e.relpath for e in cache.list_extra_files(1, use_cache=False, pattern=pattern)}
 
         self.assertEqual(listed('data/**/*'), {'data/inside'})
@@ -208,7 +215,7 @@ class FilesystemTest(BaseTest):
         self.assertEqual(read(victim, 'rb'), b'outside')
 
     @unittest.skipUnless(iswindows, 'Windows only')
-    def test_windows_atomic_move(self):
+    def test_windows_atomic_move(self) -> None:
         "Test book file open in another process when changing metadata"
         cl = self.cloned_library
         cache = self.init_cache(cl)
@@ -242,7 +249,7 @@ class FilesystemTest(BaseTest):
             self.assertEqual(raw, read(os.path.join(tdir2, 'a'), 'rb'))
             self.assertEqual(raw, read(os.path.join(tdir2, 'b'), 'rb'))
 
-    def test_library_move(self):
+    def test_library_move(self) -> None:
         "Test moving of library"
         from calibre.ptempfile import TemporaryDirectory
 
@@ -264,7 +271,7 @@ class FilesystemTest(BaseTest):
             self.assertFalse(os.path.exists(odir))
             os.mkdir(odir)  # needed otherwise tearDown() fails
 
-    def test_long_filenames(self):
+    def test_long_filenames(self) -> None:
         "Test long file names"
         cache = self.init_cache()
         cache.set_field('title', {1: 'a' * 10000})
@@ -274,14 +281,14 @@ class FilesystemTest(BaseTest):
         fpath = cache.format_abspath(1, cache.formats(1)[0])
         self.assertLessEqual(len(fpath), len(cache.backend.library_path) + cache.backend.PATH_LIMIT * 4)
 
-    def test_reserved_names(self):
+    def test_reserved_names(self) -> None:
         "Test that folders are not created with a windows reserve name"
         cache = self.init_cache()
         cache.set_field('authors', {1: 'con'})
         p = cache.field_for('path', 1).replace(os.sep, '/').split('/')
         self.assertNotIn('con', p)
 
-    def test_fname_change(self):
+    def test_fname_change(self) -> None:
         "Test the changing of the filename but not the folder name"
         cache = self.init_cache()
         title = 'a' * 30 + 'bbb'
@@ -293,12 +300,12 @@ class FilesystemTest(BaseTest):
         fpath = cache.format_abspath(3, 'TXT')
         self.assertEqual(sorted([os.path.basename(fpath)]), sorted(os.listdir(os.path.dirname(fpath))))
 
-    def test_export_import(self):
+    def test_export_import(self) -> None:
         from calibre.db.cache import import_library
         from calibre.utils.exim import Exporter, Importer
 
-        with TemporaryDirectory('export_lib') as tdir:
-            for part_size in (8, 1, 1024):
+        for part_size in (8, 1, 1024):
+            with TemporaryDirectory('export_lib') as tdir:
                 exporter = Exporter(tdir, part_size=part_size + Exporter.tail_size())
                 files = {
                     'a': b'a' * 7,
@@ -331,6 +338,7 @@ class FilesystemTest(BaseTest):
                 cache.export_library('l', exporter)
                 exporter.commit()
                 importer = Importer(tdir)
+                self.assertFalse(importer.verify())
                 ic = import_library('l', importer, idir)
                 self.assertFalse(importer.corrupted_files)
                 self.assertEqual(cache.all_book_ids(), ic.all_book_ids())
@@ -342,6 +350,19 @@ class FilesystemTest(BaseTest):
                 bookdir = os.path.dirname(ic.format_abspath(1, '__COVER_INTERNAL__'))
                 self.assertEqual('exf', read(os.path.join(bookdir, 'exf')))
                 self.assertEqual('recurse', read(os.path.join(bookdir, 'sub', 'recurse')))
+                ic.close()
+        # Aborting while importing books returns None
+        with TemporaryDirectory('export_lib') as tdir, TemporaryDirectory('import_lib') as idir:
+            exporter = Exporter(tdir)
+            cache.export_library('l', exporter)
+            exporter.commit()
+            abort = Event()
+
+            def progress(name: str, i: int, total: int) -> None:
+                if name not in ('metadata.db', 'full-text-search.db'):
+                    abort.set()  # abort after the first book is imported
+
+            self.assertIsNone(import_library('l', Importer(tdir), idir, progress=progress, abort=abort))
         r1 = cache.add_notes_resource(b'res1', 'res.jpg', mtime=time.time() - 113)
         r2 = cache.add_notes_resource(b'res2', 'res.jpg', mtime=time.time() - 1115)
         cache.set_notes_for('authors', 2, 'some notes', resource_hashes=(r1, r2))
@@ -360,6 +381,7 @@ class FilesystemTest(BaseTest):
             cache.export_library('l', exporter)
             exporter.commit()
             importer = Importer(tdir)
+            self.assertFalse(importer.verify())
             ic = import_library('l', importer, idir)
             self.assertFalse(importer.corrupted_files)
             self.assertEqual(ic.fts_search('exim')[0]['id'], 1)
@@ -372,7 +394,7 @@ class FilesystemTest(BaseTest):
             self.assertEqual(a, b)
             self.assertLess(abs(at - bt), 2)
 
-    def test_backup_database_retries_transient_ioerror(self):
+    def test_backup_database_retries_transient_ioerror(self) -> None:
         import apsw
 
         cache = self.init_cache()
@@ -381,21 +403,21 @@ class FilesystemTest(BaseTest):
         orig_connection = apsw.Connection
 
         class FlakyBackup:
-            def __init__(self, real):
+            def __init__(self, real: apsw.Backup) -> None:
                 self.real = real
 
-            def __enter__(self):
+            def __enter__(self) -> Self:
                 self.real.__enter__()
                 return self
 
-            def __exit__(self, *a):
+            def __exit__(self, *a: object) -> bool:
                 return self.real.__exit__(*a)
 
             @property
-            def done(self):
+            def done(self) -> bool:
                 return self.real.done
 
-            def step(self, npages):
+            def step(self, npages: int) -> bool:
                 step_calls['count'] += 1
                 if step_calls['count'] == 1:
                     e = apsw.IOError('not an error')
@@ -404,7 +426,7 @@ class FilesystemTest(BaseTest):
                 return self.real.step(npages)
 
         class FlakyConnection(orig_connection):
-            def backup(self, *a, **kw):
+            def backup(self, *a: object, **kw: object) -> FlakyBackup:
                 return FlakyBackup(super().backup(*a, **kw))
 
         with TemporaryDirectory('backup_db') as tdir:
@@ -420,14 +442,14 @@ class FilesystemTest(BaseTest):
 
         # A non-transient I/O error must not be retried
         class FatalBackup(FlakyBackup):
-            def step(self, npages):
+            def step(self, npages: int) -> Never:
                 step_calls['count'] += 1
                 e = apsw.IOError('disk I/O error')
                 e.extendedresult = apsw.SQLITE_IOERR_WRITE
                 raise e
 
         class FatalConnection(orig_connection):
-            def backup(self, *a, **kw):
+            def backup(self, *a: object, **kw: object) -> FatalBackup:
                 return FatalBackup(super().backup(*a, **kw))
 
         with TemporaryDirectory('backup_db') as tdir:
@@ -440,7 +462,7 @@ class FilesystemTest(BaseTest):
                 apsw.Connection = orig_connection
             self.assertEqual(step_calls['count'], 1)
 
-    def test_backup_database_unlockable_destination(self):
+    def test_backup_database_unlockable_destination(self) -> None:
         import apsw
 
         cache = self.init_cache()
@@ -455,20 +477,21 @@ class FilesystemTest(BaseTest):
                 self.assertRaises(apsw.BusyError, backend._backup_database, path, 'main', busy_timeout=0.2)
                 locker.cursor().execute('ROLLBACK')
 
-    def test_find_books_in_directory(self):
+    def test_find_books_in_directory(self) -> None:
         from calibre.db.adding import compile_rule, find_books_in_directory
 
-        def strip(files):
+        def strip(files: Iterable[str]) -> frozenset[str]:
             return frozenset({os.path.basename(x) for x in files})
 
-        def q(one, two):
+        def q(one: Iterable[Iterable[str]], two: Iterable[Iterable[str]]) -> None:
             one, two = {strip(a) for a in one}, {strip(b) for b in two}
             self.assertEqual(one, two)
 
-        def r(action='ignore', match_type='startswith', query=''):
+        def r(action: str = 'ignore', match_type: str = 'startswith', query: str = '') -> dict[str, str]:
             return {'action': action, 'match_type': match_type, 'query': query}
 
-        def c(*rules):
+        def c(*rules: dict[str, str]) -> tuple[tuple[Callable[[str], bool], bool], ...]:
+
             return tuple(map(compile_rule, rules))
 
         files = ['added.epub', 'ignored.md', 'non-book.other']

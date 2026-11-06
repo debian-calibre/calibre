@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-25 10:21+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -68,7 +68,7 @@ msgid ""
 "tags)` builtin function. This will change titles that look like: ``<h1>some "
 "titLE</h1>`` to ``<h1>Some Title</h1>``. It will work even if there are "
 "other HTML tags inside the heading tags."
-msgstr "関数を使用するには、組み込み関数 :guilabel:`タイトルケーステキスト (タグを無視)` を選択してください。これにより、 ``<h1>some title</h1>`` のようなタイトルが ``<h1>Some Title</h1>`` に変更されます。見出しタグ内に他のHTMLタグが含まれていても機能します。"
+msgstr "関数を使用するには、組み込み関数 :guilabel:`タイトルケーステキスト (タグを無視)` を選択してください。これにより、``<h1>some titLE</h1>`` のようなタイトルが ``<h1>Some Title</h1>`` に変更されます。見出しタグ内に他のHTMLタグが含まれていても機能します。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:40
 msgid "Your first custom function - smartening hyphens"
@@ -249,7 +249,7 @@ msgid ""
 "match. If no replacements are to be done, it should return ``match.group()``"
 " which is the original string. The various arguments to the ``replace()`` "
 "function are documented below."
-msgstr "検索/置換が実行されると、マッチが見つかるたびに ``replace()`` 関数が呼び出され、そのマッチに対する置換文字列が返されます。置換が行われない場合には、もとの文字列である `match.group()`` を返します。``replace()`` の引数については下で説明します。"
+msgstr "検索/置換が実行されると、マッチが見つかるたびに ``replace()`` 関数が呼び出され、この関数はそのマッチに対する置換文字列を返す必要があります。置換を行わない場合は、もとの文字列である ``match.group()`` を返してください。``replace()`` の引数については下で説明します。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:239
 msgid "The ``match`` argument"
@@ -273,11 +273,11 @@ msgid ""
 "The ``number`` argument is the number of the current match. When you run "
 ":guilabel:`Replace All`, every successive match will cause ``replace()`` to "
 "be called with an increasing number. The first match has number 1."
-msgstr "引数 ``number`` は現在のマッチの番号です。:guilabel:`すべて置換`を実行すると、マッチが成功するたびに連番とともに ``replace()`` が呼び出されます。最初のマッチの番号は 1 です。"
+msgstr "引数 ``number`` は現在のマッチの番号です。:guilabel:`すべて置換` を実行すると、マッチが成功するたびに連番とともに ``replace()`` が呼び出されます。最初のマッチの番号は 1 です。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:255
 msgid "The ``file_name`` argument"
-msgstr "引数 `file_name``"
+msgstr "引数 ``file_name``"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:257
 msgid ""
@@ -310,7 +310,7 @@ msgid ""
 "current book. Its most useful method is ``dictionaries.recognized(word)`` "
 "which will return ``True`` if the passed in word is recognized by the "
 "dictionary for the current book's language."
-msgstr "現在の本のスペルチェックに使われた辞書のコレクションを表します。その最も便利なメソッドは `dictionaries.recognized(word)`` で、渡された単語が現在の本の言語用の辞書で認識さたら `True`` を返します。"
+msgstr "現在の本のスペルチェックに使われた辞書のコレクションを表します。その最も便利なメソッドは ``dictionaries.recognized(word)`` で、渡された単語が現在の本の言語用の辞書で認識されたら ``True`` を返します。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:279
 msgid "The ``data`` argument"
@@ -322,7 +322,7 @@ msgid ""
 "every successive match will cause ``replace()`` to be called with the same "
 "``dictionary`` as data. You can thus use it to store arbitrary data between "
 "invocations of ``replace()`` during a :guilabel:`Replace all` operation."
-msgstr "これは単純なPythonの ``辞書`` です。:guilabel:`Replace all`を実行すると、連続する一致ごとに、データと同じ ``辞書`` を使って ``replace()`` が呼び出されます。そのため、:guilabel:`Replace all` 実行中に ``replace()`` の呼び出しの間で、任意のデータを保存するために使用できます。"
+msgstr "これは単純なPythonの ``dictionary`` (辞書) です。:guilabel:`すべて置換` を実行すると、マッチするたびに同じ ``dictionary`` を data として ``replace()`` が呼び出されます。そのため、:guilabel:`すべて置換` の実行中に ``replace()`` の呼び出しの間で、任意のデータを保存するために使用できます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:288
 msgid "The ``functions`` argument"

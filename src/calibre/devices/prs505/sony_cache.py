@@ -4,6 +4,7 @@
 import os
 import time
 from datetime import date
+from typing import TYPE_CHECKING
 
 from calibre import fsync, guess_type, prints
 from calibre.constants import DEBUG, preferred_encoding
@@ -13,6 +14,14 @@ from calibre.ebooks.metadata import authors_to_sort_string, authors_to_string, t
 from calibre.prints import debug_print
 from calibre.utils.localization import _
 from polyglot.binary import from_base64_bytes
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Sequence
+
+    from lxml.etree import _Element
+
+    from calibre.devices.interface import BookList
+    from calibre.ebooks.metadata.book.base import Metadata
 
 '''
 cacheExt.xml
@@ -58,15 +67,14 @@ INVERSE_DAY_MAP = dict(zip(DAY_MAP.values(), DAY_MAP.keys()))
 INVERSE_MONTH_MAP = dict(zip(MONTH_MAP.values(), MONTH_MAP.keys()))
 
 
-def strptime(src):
-    src = src.strip()
-    src = src.split()
-    src[0] = str(DAY_MAP[src[0][:-1]]) + ','
-    src[2] = str(MONTH_MAP[src[2]])
-    return time.strptime(' '.join(src), '%w, %d %m %Y %H:%M:%S %Z')
+def strptime(src: str) -> time.struct_time:
+    parts = src.strip().split()
+    parts[0] = str(DAY_MAP[parts[0][:-1]]) + ','
+    parts[2] = str(MONTH_MAP[parts[2]])
+    return time.strptime(' '.join(parts), '%w, %d %m %Y %H:%M:%S %Z')
 
 
-def strftime(epoch, zone=time.localtime):
+def strftime(epoch: float | time.struct_time, zone: Callable[..., time.struct_time] = time.localtime) -> str:
     try:
         src = time.strftime('%w, %d %m %Y %H:%M:%S GMT', zone(epoch)).split()
     except Exception:
@@ -77,7 +85,7 @@ def strftime(epoch, zone=time.localtime):
     return ' '.join(src)
 
 
-def uuid():
+def uuid() -> str:
     from uuid import uuid4
 
     return str(uuid4()).replace('-', '', 1).upper()
@@ -87,7 +95,7 @@ def uuid():
 
 
 class XMLCache:
-    def __init__(self, paths, ext_paths, prefixes, use_author_sort):
+    def __init__(self, paths: dict[int, str], ext_paths: dict[int, str], prefixes: dict[int, str], use_author_sort: bool) -> None:
         from calibre.utils.xml_parse import safe_xml_fromstring
 
         if DEBUG:
@@ -97,7 +105,7 @@ class XMLCache:
         self.use_author_sort = use_author_sort
 
         # Parse XML files {{{
-        self.roots = {}
+        self.roots: dict[int, _Element] = {}
         for source_id, path in paths.items():
             if source_id == 0:
                 if not os.path.exists(path):
@@ -114,7 +122,8 @@ class XMLCache:
             if self.roots[source_id] is None:
                 raise Exception(f'The SONY database at {path!r} is corrupted. Try  disconnecting and reconnecting your reader.')
 
-        self.ext_paths, self.ext_roots = {}, {}
+        self.ext_paths: dict[int, str] = {}
+        self.ext_roots: dict[int, _Element] = {}
         for source_id, path in ext_paths.items():
             if not os.path.exists(path):
                 try:
@@ -136,7 +145,7 @@ class XMLCache:
         recs = self.roots[0].xpath('//*[local-name()="records"]')
         if not recs:
             raise DeviceError('The SONY XML database is corrupted (no <records>). Try disconnecting an reconnecting your reader.')
-        self.record_roots = {}
+        self.record_roots: dict[int, _Element] = {}
         self.record_roots.update(self.roots)
         self.record_roots[0] = recs[0]
 
@@ -144,10 +153,10 @@ class XMLCache:
         debug_print('Done building XMLCache...')
 
     # Playlist management {{{
-    def purge_broken_playlist_items(self, root):
+    def purge_broken_playlist_items(self, root: _Element) -> None:
         id_map = self.build_id_map(root)
         for pl in root.xpath('//*[local-name()="playlist"]'):
-            seen = set()
+            seen: set[str] = set()
             for item in list(pl):
                 id_ = item.get('id', None)
                 if id_ is None or id_ in seen or id_map.get(id_, None) is None:
@@ -170,7 +179,7 @@ class XMLCache:
                     continue
                 seen.add(id_)
 
-    def prune_empty_playlists(self):
+    def prune_empty_playlists(self) -> None:
         for i, root in self.record_roots.items():
             self.purge_broken_playlist_items(root)
             for playlist in root.xpath('//*[local-name()="playlist"]'):
@@ -179,9 +188,9 @@ class XMLCache:
                         debug_print('Removing playlist id:', playlist.get('id', None), playlist.get('title', None))
                     playlist.getparent().remove(playlist)
 
-    def ensure_unique_playlist_titles(self):
+    def ensure_unique_playlist_titles(self) -> None:
         for i, root in self.record_roots.items():
-            seen = set()
+            seen: set[str] = set()
             for playlist in root.xpath('//*[local-name()="playlist"]'):
                 title = playlist.get('title', None)
                 if title is None:
@@ -197,7 +206,7 @@ class XMLCache:
                 else:
                     seen.add(title)
 
-    def build_id_playlist_map(self, bl_index):
+    def build_id_playlist_map(self, bl_index: int) -> dict[str, list[str]]:
         """
         Return a map of the collections in books: {lpaths: [collection names]}
         """
@@ -207,9 +216,9 @@ class XMLCache:
         debug_print('after cleaning playlists')
         root = self.record_roots[bl_index]
         if root is None:
-            return
+            return {}
         id_map = self.build_id_map(root)
-        playlist_map = {}
+        playlist_map: dict[str, list[str]] = {}
         # foreach playlist, get the lpaths for the ids in it, then add to dict
         for playlist in root.xpath('//*[local-name()="playlist"]'):
             name = playlist.get('title')
@@ -236,16 +245,16 @@ class XMLCache:
         debug_print('Finish build_id_playlist_map. Found', len(playlist_map))
         return playlist_map
 
-    def reset_existing_playlists_map(self):
+    def reset_existing_playlists_map(self) -> None:
         """
         Call this method before calling get_or_create_playlist in the context of
         a given job. Call it again after deleting any playlists. The current
         implementation adds all new playlists before deleting any, so that
         constraint is respected.
         """
-        self._playlist_to_playlist_id_map = {}
+        self._playlist_to_playlist_id_map: dict[int, dict[str, _Element]] = {}
 
-    def get_or_create_playlist(self, bl_idx, title):
+    def get_or_create_playlist(self, bl_idx: int, title: str) -> _Element:
         # maintain a private map of playlists to their ids. Don't check if it
         # exists, because reset_existing_playlist_map must be called before it
         # is used to ensure that deleted playlists are taken into account
@@ -270,11 +279,11 @@ class XMLCache:
 
     # }}}
 
-    def fix_ids(self):  # {{{
+    def fix_ids(self) -> None:  # {{{
         debug_print('Running fix_ids()')
 
-        def ensure_numeric_ids(root):
-            idmap = {}
+        def ensure_numeric_ids(root: _Element) -> dict[str, str]:
+            idmap: dict[str, str] = {}
             for x in root.xpath('child::*[@id]'):
                 id_ = x.get('id')
                 try:
@@ -288,7 +297,7 @@ class XMLCache:
                 debug_print(list(idmap.keys()))
             return idmap
 
-        def remap_playlist_references(root, idmap):
+        def remap_playlist_references(root: _Element, idmap: dict[str, str]) -> None:
             for playlist in root.xpath('//*[local-name()="playlist"]'):
                 for item in playlist.xpath('descendant::*[@id and local-name()="item"]'):
                     id_ = item.get('id')
@@ -297,12 +306,12 @@ class XMLCache:
                         if DEBUG:
                             debug_print(f'Remapping id {id_} to {idmap[id_]}')
 
-        def ensure_media_xml_base_ids(root):
+        def ensure_media_xml_base_ids(root: _Element) -> None:
             for num, tag in enumerate(('library', 'watchSpecial')):
                 for x in root.xpath(f'//*[local-name()="{tag}"]'):
                     x.set('id', str(num))
 
-        def rebase_ids(root, base, sourceid, pl_sourceid):
+        def rebase_ids(root: _Element, base: int, sourceid: int, pl_sourceid: int) -> dict[str, str]:
             "Rebase all ids and also make them consecutive"
             for item in root.xpath('//*[@sourceid]'):
                 sid = pl_sourceid if item.tag.endswith('playlist') else sourceid
@@ -311,7 +320,7 @@ class XMLCache:
             # record root (that way playlist/itemnodes are unaffected
             items = root.xpath('child::*[@id]')
             items.sort(key=lambda x: int(x.get('id')))
-            idmap = {}
+            idmap: dict[str, str] = {}
             for i, item in enumerate(items):
                 old = int(item.get('id'))
                 new = base + i
@@ -352,7 +361,7 @@ class XMLCache:
     # }}}
 
     # Update JSON from XML {{{
-    def update_booklist(self, bl, bl_index):
+    def update_booklist(self, bl: BookList, bl_index: int) -> None:
         if bl_index not in self.record_roots:
             return
         debug_print('Updating JSON cache:', bl_index)
@@ -378,7 +387,7 @@ class XMLCache:
     # }}}
 
     # Update XML from JSON {{{
-    def update(self, booklists, collections_attributes, plugboard):
+    def update(self, booklists: dict[int, BookList], collections_attributes: Sequence[str], plugboard: object) -> None:
         debug_print('Starting update', collections_attributes)
         use_tz_var = False
         for i, booklist in booklists.items():
@@ -386,7 +395,7 @@ class XMLCache:
             debug_print('Updating XML Cache:', i)
             root = self.record_roots[i]
             lpath_map = self.build_lpath_map(root)
-            ext_root = self.ext_roots[i] if i in self.ext_roots else None
+            ext_root = self.ext_roots.get(i, None)
             ext_lpath_map = None
             if ext_root is not None:
                 ext_lpath_map = self.build_lpath_map(ext_root)
@@ -432,16 +441,18 @@ class XMLCache:
         self.fix_ids()
         debug_print('Finished update')
 
-    def is_sony_periodical(self, book):
+    def is_sony_periodical(self, book: Metadata) -> bool:
         if _('News') not in book.tags:
             return False
+        assert book.lpath is not None  # device books always have an lpath
         if not book.lpath.lower().endswith('.epub'):
             return False
+        assert book.pubdate is not None
         if book.pubdate.date() < date(2010, 10, 17):
             return False
         return True
 
-    def periodicalize_book(self, book, record):
+    def periodicalize_book(self, book: Metadata, record: _Element) -> None:
         if not self.is_sony_periodical(book):
             return
         record.set('conformsTo', 'http://xmlns.sony.net/e-book/prs/periodicals/1.0/newspaper/1.0')
@@ -465,19 +476,20 @@ class XMLCache:
         record.set('periodicalName', name)
 
         try:
+            assert book.pubdate is not None  # checked in is_sony_periodical()
             pubdate = strftime(book.pubdate.utctimetuple(), zone=lambda x: x)
             record.set('publicationDate', pubdate)
         except Exception:
             pass
 
-    def rebuild_collections(self, booklist, bl_index):
+    def rebuild_collections(self, booklist: BookList, bl_index: int) -> None:
         if bl_index not in self.record_roots:
             return
         root = self.record_roots[bl_index]
         self.update_playlists(bl_index, root, booklist, [])
         self.fix_ids()
 
-    def update_playlists(self, bl_index, root, booklist, collections_attributes):
+    def update_playlists(self, bl_index: int, root: _Element, booklist: BookList, collections_attributes: Sequence[str]) -> None:
         debug_print('Starting update_playlists', collections_attributes, bl_index)
         self.reset_existing_playlists_map()
         collections = booklist.get_collections(collections_attributes)
@@ -494,17 +506,17 @@ class XMLCache:
             for rec in records:
                 if rec.get('id', None) is None:
                     rec.set('id', str(self.max_id(root) + 1))
-            ids = [x.get('id', None) for x in records]
+            ids_or_none = [x.get('id', None) for x in records]
             # Given that we set the ids, there shouldn't be any None's. But
             # better to be safe...
-            if None in ids:
+            if None in ids_or_none:
                 debug_print('WARNING: Some <text> elements do not have ids')
-                ids = [x for x in ids if x is not None]
+            ids = [x for x in ids_or_none if x is not None]
 
             playlist = self.get_or_create_playlist(bl_index, category)
             # Get the books currently in the playlist. We will need them to be
             # sure to put back any books that were manually added.
-            playlist_ids = []
+            playlist_ids: list[str] = []
             for item in playlist:
                 id_ = item.get('id', None)
                 if id_ is not None:
@@ -542,7 +554,7 @@ class XMLCache:
                     playlist.remove(item)
         debug_print('Finishing update_playlists')
 
-    def create_text_record(self, root, bl_id, lpath):
+    def create_text_record(self, root: _Element, bl_id: int, lpath: str) -> _Element:
         namespace = self.namespaces[bl_id]
         id_ = self.max_id(root) + 1
         attrib = {
@@ -558,7 +570,7 @@ class XMLCache:
         root.append(ans)
         return ans
 
-    def create_ext_text_record(self, root, bl_id, lpath, thumbnail):
+    def create_ext_text_record(self, root: _Element, bl_id: int, lpath: str, thumbnail: tuple[int, int, bytes] | None) -> _Element:
         namespace = root.nsmap[None]
         attrib = {'path': lpath}
         ans = root.makeelement(f'{{{namespace}}}text', attrib=attrib, nsmap=root.nsmap)
@@ -580,7 +592,9 @@ class XMLCache:
             t.tail = '\n\t'
         return ans
 
-    def update_text_record(self, record, book, path, bl_index, gtz_count, ltz_count, use_tz_var):
+    def update_text_record(
+        self, record: _Element, book: Metadata, path: str, bl_index: int, gtz_count: int, ltz_count: int, use_tz_var: bool
+    ) -> tuple[int, int, bool]:
         """
         Update the Sony database from the book. This is done if the timestamp in
         the db differs from the timestamp on the file.
@@ -607,13 +621,13 @@ class XMLCache:
             timestamp = time.time()
         rec_date = record.get('date', None)
 
-        def clean(x):
+        def clean(x: str | bytes) -> str:
             if isinstance(x, bytes):
                 x = x.decode(preferred_encoding, 'replace')
             x.replace('\0', '')
             return x
 
-        def record_set(k, v):
+        def record_set(k: str, v: str | bytes) -> None:
             try:
                 record.set(k, clean(v))
             except Exception:
@@ -677,7 +691,7 @@ class XMLCache:
     # }}}
 
     # Writing the XML files {{{
-    def cleanup_whitespace(self, bl_index):
+    def cleanup_whitespace(self, bl_index: int) -> None:
         root = self.record_roots[bl_index]
         level = 2 if bl_index == 0 else 1
         if len(root) > 0:
@@ -691,16 +705,16 @@ class XMLCache:
                     next(child.iterchildren(reversed=True)).tail = '\n' + '\t' * level
             next(root.iterchildren(reversed=True)).tail = '\n' + '\t' * (level - 1)
 
-    def move_playlists_to_bottom(self):
+    def move_playlists_to_bottom(self) -> None:
         for root in self.record_roots.values():
-            seen = []
+            seen: list[_Element] = []
             for pl in root.xpath('//*[local-name()="playlist"]'):
                 pl.getparent().remove(pl)
                 seen.append(pl)
             for pl in seen:
                 root.append(pl)
 
-    def write(self):
+    def write(self) -> None:
         from lxml import etree
 
         for i, path in self.paths.items():
@@ -726,24 +740,24 @@ class XMLCache:
 
     # Utility methods {{{
 
-    def build_lpath_map(self, root):
-        m = {}
+    def build_lpath_map(self, root: _Element) -> dict[str, _Element]:
+        m: dict[str, _Element] = {}
         for bk in root.xpath('//*[local-name()="text"]'):
             m[bk.get('path')] = bk
         return m
 
-    def build_id_map(self, root):
-        m = {}
+    def build_id_map(self, root: _Element) -> dict[str, _Element]:
+        m: dict[str, _Element] = {}
         for bk in root.xpath('//*[local-name()="text"]'):
             m[bk.get('id')] = bk
         return m
 
-    def book_by_lpath(self, lpath, root):
+    def book_by_lpath(self, lpath: str, root: _Element) -> _Element | None:
         matches = root.xpath(f'//*[local-name()="text" and @path="{lpath}"]')
         if matches:
             return matches[0]
 
-    def max_id(self, root):
+    def max_id(self, root: _Element) -> int:
         ans = -1
         for x in root.xpath('//*[@id]'):
             id_ = x.get('id')
@@ -754,12 +768,12 @@ class XMLCache:
                 continue
         return ans
 
-    def detect_namespaces(self):
-        self.nsmaps = {}
+    def detect_namespaces(self) -> None:
+        self.nsmaps: dict[int, dict[str | None, str]] = {}
         for i, root in self.roots.items():
             self.nsmaps[i] = root.nsmap
 
-        self.namespaces = {}
+        self.namespaces: dict[int, str | None] = {}
         for i in self.roots:
             for c in ('library', 'text', 'image', 'playlist', 'thumbnail', 'watchSpecial'):
                 matches = self.record_roots[i].xpath(f'//*[local-name()="{c}"]')

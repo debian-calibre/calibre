@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "oktober 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "november 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -158,7 +158,7 @@ Output van de paden de nodig zijn voor de installatie van de calibre omgeving
 .INDENT 0.0
 .TP
 .B \-\-run\-plugin, \-r
-Voer een plugin uit die een opdrachtregelinterface biedt. Bijvoorbeeld: calibre\-debug \-r \fB\(dq\fPPlugin naam\fB\(dq\fP \fB\-\-\fP bestand1 \fB\-\-optie1\fP Alles na de \fB\-\-\fP wordt als argumenten doorgegeven aan de plugin.
+Voer een plug\-in uit die een opdrachtregelinterface biedt. Bijvoorbeeld: calibre\-debug \-r \fB\(dq\fPPlug\-in naam\fB\(dq\fP \fB\-\-\fP bestand1 \fB\-\-optie1\fP Alles na de \fB\-\-\fP wordt als argumenten doorgegeven aan de plug\-in.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -189,6 +189,11 @@ Test binaire modules in build
 .TP
 .B \-\-un\-kepubify
 Converteer het opgegeven KEPUB\-bestand naar EPUB zonder een volledige conversie uit te voeren. Dit is wat het Kobo stuurprogramma doet bij het importeren van bestanden van het apparaat.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Verify every file in a folder exported by calibre, without restoring it. Checks archive parts and file checksums. Returns a nonzero exit status on error
 .UNINDENT
 .INDENT 0.0
 .TP

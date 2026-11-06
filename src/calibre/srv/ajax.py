@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
 
+from collections.abc import Iterable, Mapping
 from functools import partial
 from itertools import cycle
+from typing import TYPE_CHECKING, cast
 
 from calibre import force_unicode
 from calibre.db.view import sanitize_sort_field_name
@@ -19,14 +21,38 @@ from calibre.utils.date import isoformat, timestampfromdt
 from calibre.utils.icu import numeric_sort_key as sort_key
 from calibre.utils.localization import _
 
+if TYPE_CHECKING:
+    import datetime
+    from typing import NotRequired, TypedDict
 
-def ensure_val(x, *allowed):
+    from calibre.db.cache import Cache
+    from calibre.ebooks.metadata.book.base import FieldMetadataDict
+    from calibre.srv.handler import Context
+    from calibre.srv.http_response import RequestData
+    from calibre.srv.utils import MultiDict
+
+    class SearchResult(TypedDict):
+        total_num: int
+        sort_order: str
+        num_books_without_search: int
+        offset: int
+        num: int
+        sort: str
+        base_url: str
+        query: str | None
+        library_id: str
+        book_ids: list[int]
+        vl: str
+        bad_restriction: NotRequired[str]
+
+
+def ensure_val(x: str | None, *allowed: str) -> str:
     if x not in allowed:
         x = allowed[0]
     return x
 
 
-def get_pagination(query, num=100, offset=0):
+def get_pagination(query: MultiDict[str], num: int = 100, offset: int = 0) -> tuple[int, int]:
     try:
         num = int(query.get('num', num))
     except Exception:
@@ -38,7 +64,7 @@ def get_pagination(query, num=100, offset=0):
     return num, offset
 
 
-def category_icon(category, meta):  # {{{
+def category_icon(category: str, meta: FieldMetadataDict) -> str:  # {{{
     if category in category_icon_map:
         icon = category_icon_map[category]
     elif meta['is_custom']:
@@ -55,12 +81,22 @@ def category_icon(category, meta):  # {{{
 # Book metadata {{{
 
 
-def book_to_json(ctx, rd, db, book_id, get_category_urls=True, device_compatible=False, device_for_template=None):
+def book_to_json(
+    ctx: Context,
+    rd: RequestData,
+    db: Cache,
+    book_id: int,
+    get_category_urls: bool = True,
+    device_compatible: bool = False,
+    device_for_template: str | None = None,
+) -> tuple[dict, datetime.datetime]:
     mi = db.get_metadata(book_id, get_cover=False)
     codec = JsonCodec(db.field_metadata)
     if not device_compatible:
         try:
-            mi.rating = mi.rating / 2.0
+            rating = mi.rating
+            assert rating is not None  # None is handled below
+            mi.rating = rating / 2.0
         except Exception:
             mi.rating = 0.0
     data = codec.encode_book_metadata(mi)
@@ -72,7 +108,9 @@ def book_to_json(ctx, rd, db, book_id, get_category_urls=True, device_compatible
     data['thumbnail'] = get(what='thumb')
 
     if not device_compatible:
-        mi.format_metadata = {k.lower(): dict(v) for k, v in mi.format_metadata.items()}
+        format_metadata = mi.format_metadata
+        assert isinstance(format_metadata, Mapping)  # set by Cache.get_metadata()
+        mi.format_metadata = {k.lower(): dict(v) for k, v in format_metadata.items()}
         for v in mi.format_metadata.values():
             mtime = v.get('mtime', None)
             if mtime is not None:
@@ -103,6 +141,7 @@ def book_to_json(ctx, rd, db, book_id, get_category_urls=True, device_compatible
                     categories = mi.get(key) or []
                     if isinstance(categories, (str, bytes)):
                         categories = [categories]
+                    assert isinstance(categories, Iterable)  # the values of category fields are lists, strings or dicts
                     category_urls[key] = dbtags = {}
                     for category in categories:
                         for tag in all_cats.get(key, ()):
@@ -115,7 +154,7 @@ def book_to_json(ctx, rd, db, book_id, get_category_urls=True, device_compatible
                                 )
                                 break
     else:
-        series = data.get('series', None) or ''
+        series = cast('str | None', data.get('series', None)) or ''  # series is encoded as a string
         if series:
             tsorder = tweaks['save_template_title_series_sorting']
             series = title_sort(series, order=tsorder)
@@ -128,16 +167,17 @@ def book_to_json(ctx, rd, db, book_id, get_category_urls=True, device_compatible
             from calibre.utils.filenames import ascii_filename as sanitize
 
             for device_class in device_plugins():
-                if device_class.__class__.__name__ == device_for_template:
-                    template = device_class.save_template()
+                if device_class.__class__.__name__ == device_for_template and (save_template := getattr(device_class, 'save_template', None)) is not None:
+                    template = save_template()
                     data['_filename_'] = create_upload_path(mi, str(book_id), template, sanitize, path_type=posixpath)
                     break
 
+    assert mi.last_modified is not None  # Cache.get_metadata() always sets it
     return data, mi.last_modified
 
 
 @endpoint('/ajax/book/{book_id}/{library_id=None}', postprocess=json)
-def book(ctx, rd, book_id, library_id):
+def book(ctx: Context, rd: RequestData, book_id: str | int | None, library_id: str | None) -> dict:
     """
     Return the metadata of the book as a JSON dictionary.
 
@@ -152,7 +192,8 @@ def book(ctx, rd, book_id, library_id):
     db = get_db(ctx, rd, library_id)
     with db.safe_read_lock:
         id_is_uuid = rd.query.get('id_is_uuid', 'false')
-        oid = book_id
+        # book_id arrives from the route as a str
+        oid = book_id = cast('str', book_id)
         if id_is_uuid == 'true':
             book_id = db.lookup_by_uuid(book_id)
         else:
@@ -182,7 +223,7 @@ def book(ctx, rd, book_id, library_id):
 
 
 @endpoint('/ajax/books/{library_id=None}', postprocess=json)
-def books(ctx, rd, library_id):
+def books(ctx: Context, rd: RequestData, library_id: str | None) -> dict[int | None, dict | None]:
     """
     Return the metadata for the books as a JSON dictionary.
 
@@ -242,7 +283,7 @@ def books(ctx, rd, library_id):
 
 
 @endpoint('/ajax/categories/{library_id=None}', postprocess=json)
-def categories(ctx, rd, library_id):
+def categories(ctx: Context, rd: RequestData, library_id: str | None) -> list[dict[str, object]]:
     """
     Return the list of top-level categories as a list of dictionaries. Each
     dictionary is of the form::
@@ -261,8 +302,9 @@ def categories(ctx, rd, library_id):
         category_meta = db.field_metadata
         library_id = db.server_library_id
 
-        def getter(x):
-            return category_meta[x]['name']
+        def getter(x: str) -> str:
+            # categories always have a name
+            return cast('str', category_meta[x]['name'])
 
         displayed_custom_fields = custom_fields_to_display(db)
 
@@ -296,11 +338,11 @@ def categories(ctx, rd, library_id):
             c['url'] = ctx.url_for(globals()['category'], encoded_name=encode_name(c['url']), library_id=library_id)
             c['icon'] = ctx.url_for(get_icon, which=c['icon'])
 
-        return ans
+        return cast('list[dict[str, object]]', ans)
 
 
 @endpoint('/ajax/category/{encoded_name}/{library_id=None}', postprocess=json)
-def category(ctx, rd, encoded_name, library_id):
+def category(ctx: Context, rd: RequestData, encoded_name: str, library_id: str | None) -> dict[str, object]:
     """
     Return a dictionary describing the category specified by name. The
 
@@ -358,7 +400,7 @@ def category(ctx, rd, encoded_name, library_id):
         if dname in ('newest', 'allbooks'):
             sort, sort_order = 'timestamp', 'desc'
             rd.query['sort'], rd.query['sort_order'] = sort, sort_order
-            return books_in(ctx, rd, encoded_name, encode_name('0'), library_id)
+            return cast('dict[str, object]', books_in(ctx, rd, encoded_name, encode_name('0'), library_id))
 
         fm = db.field_metadata
         categories = ctx.get_categories(rd, db)
@@ -372,7 +414,7 @@ def category(ctx, rd, encoded_name, library_id):
             raise HTTPNotFound(f'Category {toplevel!r} not found')
 
         # Find items and sub categories
-        subcategories = []
+        subcategories: list[dict] = []
         meta = fm[toplevel]
         item_names = {}
         children = set()
@@ -464,7 +506,7 @@ def category(ctx, rd, encoded_name, library_id):
 
 
 @endpoint('/ajax/books_in/{encoded_category}/{encoded_item}/{library_id=None}', postprocess=json)
-def books_in(ctx, rd, encoded_category, encoded_item, library_id):
+def books_in(ctx: Context, rd: RequestData, encoded_category: str, encoded_item: str, library_id: str | None) -> dict[str, object]:
     """
     Return the books (as list of ids) present in the specified category.
 
@@ -533,7 +575,7 @@ def books_in(ctx, rd, encoded_category, encoded_item, library_id):
 # Search {{{
 
 
-def search_result(ctx, rd, db, query, num, offset, sort, sort_order, vl=''):
+def search_result(ctx: Context, rd: RequestData, db: Cache, query: str | None, num: int, offset: int, sort: str, sort_order: str, vl: str = '') -> SearchResult:
     from calibre.db.search import TemplatesNotAllowed
 
     multisort = [
@@ -552,7 +594,7 @@ def search_result(ctx, rd, db, query, num, offset, sort, sort_order, vl=''):
     total_num = len(ids)
     ids = ids[offset : offset + num]
     num_books = db.number_of_books_in_virtual_library(vl) if query else total_num
-    ans = {
+    ans: SearchResult = {
         'total_num': total_num,
         'sort_order': sort_order,
         'num_books_without_search': num_books,
@@ -571,7 +613,7 @@ def search_result(ctx, rd, db, query, num, offset, sort, sort_order, vl=''):
 
 
 @endpoint('/ajax/search/{library_id=None}', postprocess=json)
-def search(ctx, rd, library_id):
+def search(ctx: Context, rd: RequestData, library_id: str | None) -> SearchResult:
     """
     Return the books matching the specified search query.
     The returned object is a dict with the field book_ids which
@@ -601,7 +643,7 @@ def search(ctx, rd, library_id):
 
 
 @endpoint('/ajax/library-info', postprocess=json)
-def library_info(ctx, rd):
+def library_info(ctx: Context, rd: RequestData) -> dict[str, object]:
     "Return info about available libraries"
     library_map, default_library = ctx.library_info(rd)
     return {'library_map': library_map, 'default_library': default_library}

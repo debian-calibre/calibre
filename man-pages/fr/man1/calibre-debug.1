@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "octobre 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "novembre 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -91,7 +91,7 @@ Exécuter l\fB\(aq\fPoutil calibre diff. Par exemple: calibre\-debug \fB\-\-diff
 .INDENT 0.0
 .TP
 .B \-\-edit\-book
-Lancez l’Éditeur de livre calibre en mode débogage. Comme avec \-g, utilisez \fB\-\-\fP pour passer des arguments de ligne de commande.
+Lancez l\fB\(aq\fPÉditeur de livre calibre en mode débogage. Comme avec \-g, utilisez \fB\-\-\fP pour passer des arguments de ligne de commande.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -182,6 +182,11 @@ Tester les modules binaires en construction
 .TP
 .B \-\-un\-kepubify
 Convertit le fichier KEPUB spécifié en EPUB sans effectuer une conversion complète. C\fB\(aq\fPest ce que fait le pilote Kobo lorsqu\fB\(aq\fPil importe des fichiers depuis le périphérique.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Vérifie tous les fichiers d\fB\(aq\fPun dossier exporté par Calibre, sans le restaurer. Vérifie les parties de l\fB\(aq\fParchive et les sommes de contrôle des fichiers. Retourne un code de sortie différent de zéro en cas d\fB\(aq\fPerreur.
 .UNINDENT
 .INDENT 0.0
 .TP

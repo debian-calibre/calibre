@@ -4,12 +4,16 @@
 import os
 from queue import Queue
 from threading import Thread
+from typing import TYPE_CHECKING
 
 from calibre import detect_ncpus
 from calibre.utils.img import encode_jpeg, optimize_jpeg
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
-def compress_worker(input_queue, output_queue, jpeg_quality):
+
+def compress_worker(input_queue: Queue[tuple[int, str] | None], output_queue: Queue[tuple[int, int | str]], jpeg_quality: int) -> None:
     while True:
         task = input_queue.get()
         if task is None:
@@ -34,11 +38,11 @@ def compress_worker(input_queue, output_queue, jpeg_quality):
             output_queue.put((book_id, sz))
 
 
-def compress_covers(path_map, jpeg_quality, progress_callback):
-    input_queue = Queue()
-    output_queue = Queue()
+def compress_covers(path_map: dict[int, tuple[str, int]], jpeg_quality: int, progress_callback: Callable[[int, int, int | str], object]) -> None:
+    input_queue: Queue[tuple[int, str] | None] = Queue()
+    output_queue: Queue[tuple[int, int | str]] = Queue()
     num_workers = detect_ncpus()
-    sz_map = {}
+    sz_map: dict[int, int] = {}
     for book_id, (path, sz) in path_map.items():
         input_queue.put((book_id, path))
         sz_map[book_id] = sz

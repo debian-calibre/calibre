@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, Roman Mukhin <ramses_ru at hotmail.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 2  # Needed for dynamic plugin loading
 
@@ -26,7 +24,7 @@ class LitResStore(BasicStoreConfig, StorePlugin):
     shop_url = 'http://www.litres.ru'
     # http://robot.litres.ru/pages/biblio_book/?art=174405
 
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
 
         aff_id = '?' + _get_affiliate_id()
 
@@ -50,7 +48,7 @@ class LitResStore(BasicStoreConfig, StorePlugin):
 
         counter = max_results
         br = browser()
-        br.addheaders.append(['Accept-Encoding', 'gzip'])
+        br.addheaders.append(['Accept-Encoding', 'gzip'])  # ty: ignore[invalid-argument-type]
 
         with closing(br.open(search_url, timeout=timeout)) as r:
             ungzipResponse(r, br)
@@ -65,12 +63,12 @@ class LitResStore(BasicStoreConfig, StorePlugin):
                 try:
                     sRes = self.create_search_result(data)
                 except Exception as e:
-                    prints('ERROR: cannot parse search result #%s: %s' % (max_results - counter + 1, e))
+                    prints(f'ERROR: cannot parse search result #{max_results - counter + 1}: {e}')
                     continue
                 yield sRes
 
-    def get_details(self, search_result, timeout=60):
-        pass
+    def get_details(self, search_result, timeout=60) -> bool:
+        return False
 
     def create_search_result(self, data):
         xp_template = 'normalize-space(@{0})'
@@ -81,7 +79,7 @@ class LitResStore(BasicStoreConfig, StorePlugin):
         sRes.title = data.xpath('string(.//title-info/book-title/text()|.//publish-info/book-name/text())')
         # aut = concat('.//title-info/author/first-name', ' ')
         authors = data.xpath('.//title-info/author/first-name/text()|.//title-info/author/middle-name/text()|.//title-info/author/last-name/text()')
-        sRes.author = ' '.join(map(type(''), authors))
+        sRes.author = ' '.join(map(str, authors))
         sRes.price = data.xpath(xp_template.format('price'))
         # cover vs cover_preview
         sRes.cover_url = data.xpath(xp_template.format('cover_preview'))
@@ -102,14 +100,14 @@ def format_price_in_RUR(price):
     """
     if price and re.match(r'^\d*?\.\d*?$', price):
         try:
-            price = '{:,.2F} \u20bd'.format(float(price))  # \u20bd => руб.
+            price = f'{float(price):,.2F} \u20bd'  # \u20bd => руб.
             price = price.replace(',', ' ').replace('.', ',', 1)
         except Exception:
             pass
     return price
 
 
-def ungzipResponse(r, b):
+def ungzipResponse(r, b) -> None:
     headers = r.info()
     if headers.get('Content-Encoding', '') == 'gzip':
         try:

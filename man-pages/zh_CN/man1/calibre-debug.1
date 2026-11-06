@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "十月 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "十一月 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -187,6 +187,11 @@ Clear the calibre cache folder and delete the downloaded Camoufox browser and br
 .TP
 .B \-\-un\-kepubify
 将指定的EPUB文件转换为KEPUB，但不进行完全转换。这是Kobo驱动程序从设备导入文件时执行的操作。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Verify every file in a folder exported by calibre, without restoring it. Checks archive parts and file checksums. Returns a nonzero exit status on error
 .UNINDENT
 .INDENT 0.0
 .TP

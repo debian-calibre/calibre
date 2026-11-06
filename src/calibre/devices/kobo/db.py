@@ -5,11 +5,15 @@ import os
 import shutil
 from contextlib import closing, suppress
 from threading import RLock
+from typing import TYPE_CHECKING
 
 import apsw
 
 from calibre.prints import debug_print
 from calibre.ptempfile import PersistentTemporaryFile, TemporaryDirectory
+
+if TYPE_CHECKING:
+    from types import TracebackType
 
 # Any plugins not running in the device thread must acquire this lock before
 # trying to access the Kobo database.
@@ -17,7 +21,7 @@ kobo_db_lock = RLock()
 INJECT_9P_ERROR = False
 
 
-def row_factory(cursor: apsw.Cursor, row):
+def row_factory(cursor: apsw.Cursor, row: apsw.SQLiteValues) -> dict[str, apsw.SQLiteValue]:
     return {k[0]: row[i] for i, k in enumerate(cursor.getdescription())}
 
 
@@ -25,7 +29,7 @@ def wal_path(path: str) -> str:
     return path + '-wal'
 
 
-def copy_db(conn: apsw.Connection, dest_path: str):
+def copy_db(conn: apsw.Connection, dest_path: str) -> None:
     with suppress(AttributeError):  # need a new enough version of apsw
         conn.cache_flush()
     # checkpoint all WAL transactions into the main db file and truncate WAL file to zero
@@ -46,7 +50,7 @@ def copy_db(conn: apsw.Connection, dest_path: str):
 
 
 class Database:
-    def __init__(self, path_on_device: str):
+    def __init__(self, path_on_device: str) -> None:
         self.path_on_device = self.dbpath = path_on_device
         self.dbversion = 0
 
@@ -89,7 +93,7 @@ class Database:
             self.conn.setrowtrace(row_factory)
         return self.conn.__enter__()
 
-    def __exit__(self, exc_type, exc_value, tb) -> bool | None:
+    def __exit__(self, exc_type: type[BaseException] | None, exc_value: BaseException | None, tb: TracebackType | None) -> bool:
         try:
             with closing(self.conn):
                 suppress_exception = self.conn.__exit__(exc_type, exc_value, tb)

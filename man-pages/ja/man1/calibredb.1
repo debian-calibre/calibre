@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "10月 23, 2026" "9.17.0" "calibre"
+.TH "CALIBREDB" "1" "11月 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -40,7 +40,7 @@ calibredb command [options] [arguments]
 .UNINDENT
 .UNINDENT
 .sp
-\fBcalibredb\fP は calibreデータベース用のコマンドラインインターフェースです。これにはいくつかのサブコマンドがあり、それらについては以下で説明します。
+\fBcalibredb\fP は calibreデータベース用のコマンドラインインタフェースです。これにはいくつかのサブコマンドがあり、それらについては以下で説明します。
 .sp
 \fBcalibredb\fP を使用すると、パスで指定された calibreデータベース、またはローカルマシンやインターネット上で動作している calibre の コンテンツサーバ を操作できます。calibre の コンテンツサーバ は、\fBcalibre\-server\fP プログラムを使用するか、calibre のメインプログラムで 接続/共有  →  コンテンツサーバを起動 をクリックすることで起動できます。\fBcalibredb\fP は calibre ライブラリを変更できるため、事前にサーバー側で認証を設定する必要があります。その方法には以下の2通りがあります。
 .INDENT 0.0
@@ -106,6 +106,18 @@ search
 fts_index
 .IP \(bu 2
 fts_search
+.IP \(bu 2
+notes
+.IP \(bu 2
+items
+.IP \(bu 2
+virtual_libraries
+.IP \(bu 2
+annotations
+.IP \(bu 2
+trash
+.IP \(bu 2
+data_files
 .UNINDENT
 .SH グローバルオプション
 .INDENT 0.0
@@ -126,7 +138,7 @@ calibreコンテンツサーバ接続用パスワード。標準入力からパ�
 .INDENT 0.0
 .TP
 .B \-\-timeout
-ネットワーク経由でキャリバーライブラリに接続するときのタイムアウト。秒単位。デフォルトは2分です。
+ネットワーク経由でcalibreライブラリに接続するときのタイムアウト。秒単位。デフォルトは2分です。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -291,12 +303,12 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-add
-ファイル名（glob）パターン。このパターンに一致するファイルは、既知の電子書籍ファイルタイプでなくても、フォルダーでファイルをスキャンするときに追加されます。複数のパターンに対して複数回指定できます。
+ファイル名（glob）パターン。このパターンに一致するファイルは、既知の電子書籍ファイルタイプでなくても、フォルダでファイルをスキャンするときに追加されます。複数のパターンに対して複数回指定できます。
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-ignore
-ファイル名（glob）パターン。このパターンに一致するファイルは、フォルダーでファイルをスキャンするときに無視されます。複数のパターンに対して複数回指定できます。例：*。pdfはすべてのPDFファイルを無視します
+ファイル名（glob）パターン。このパターンに一致するファイルは、フォルダでファイルをスキャンするときに無視されます。複数のパターンに対して複数回指定できます。例：*。pdfはすべてのPDFファイルを無視します
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -324,7 +336,7 @@ idsに指定された本をデータベースから削除。idsには数字を�
 .INDENT 0.0
 .TP
 .B \-\-permanent
-リサイクルゴミ箱は使用しないでください
+ゴミ箱を使用しない
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -385,7 +397,7 @@ OPF 形式 (XML) で書誌を表示
 .INDENT 3.5
 .sp
 .EX
-calibredb set_metadata [オプション] book_id [/path/to/metadata.opf]
+calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .EE
 .UNINDENT
 .UNINDENT
@@ -410,7 +422,7 @@ show_metadataコマンドに\-\-as\-opfオプションを使用すると、OPF�
 .INDENT 3.5
 .sp
 .EX
-calibredb export [オプション] ids
+calibredb export [options] ids
 .EE
 .UNINDENT
 .UNINDENT
@@ -626,13 +638,17 @@ GUIカタログビルダーで作成された名前付きプリセットを使�
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [options] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-データベースに格納された保存済み検索の管理。
-既存の名称で検索条件を保存しようとした場合には、上書きされます。
+このデータベースに保存されている保存済み検索を管理します。
+すでに存在する名前でクエリを追加しようとすると、置き換えられます。
+.sp
+一覧表示 (既定のアクション) の構文:
+.sp
+calibredb \fBsaved_searches\fP list
 .sp
 追加の構文:
 .sp
@@ -735,10 +751,13 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-calibreライブラリの各ディレクトリに保存されている OPF ファイルから書誌を読み取り、データベースを復元します。
-これはmetadata.dbファイルが壊れてしまった時に有用です。
+calibreライブラリの各フォルダにあるOPFファイルに保存されているメタデータから、このデータベースを復元します。これは、metadata.dbファイルが破損してしまった場合に役立ちます。
 .sp
-注意: このコマンドを実行すると、データベースを完全に再生成します。すべての保存済み検索、ユーザカテゴリ、書誌プラグボード、書誌ごとの変換設定、カスタムレシピは失われます。復元される書誌は、OPFファイルの内容と同等となります。
+警告: このコマンドを実行すると、データベースが完全に再生成されます。
+保存済みの検索、ユーザーカテゴリ、プラグボード、本ごとの変換設定、およびカスタムレシピがすべて失われます。復元されたメタデータの正確さは、OPFファイルに含まれる情報に依存します。
+.sp
+復元が成功した場合は終了ステータスが0、完全に失敗した場合は1、
+データベースは復元されたものの、一部の本やその他のデータを復元できなかった場合は2となります。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -950,7 +969,7 @@ calibredb fts_index [options] enable/disable/status/reindex
 .INDENT 3.5
 .sp
 .EX
-calibredb fts_search [オプション] 検索式
+calibredb fts_search [options] search expression
 .EE
 .UNINDENT
 .UNINDENT
@@ -992,6 +1011,287 @@ calibredb fts_search [オプション] 検索式
 .TP
 .B \-\-restrict\-to
 検索式またはIDを使用して、検索対象の本を絞り込むことができます。例えば、ids:1,2,3 と指定するとIDで絞り込み、search:tag:foo と指定するとタグfooを持つ本に絞り込みます。
+.UNINDENT
+.SH NOTES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb notes [options] [list|search|show|set|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+著者、シリーズ、タグ、発行者などの項目に付けられたノートを管理します。FIELD はフィールドのルックアップ名で、例えば authors、series、tags、publisher、#mycolumn などです。ITEM は項目の名前で、例えば著者の名前です。項目は大文字と小文字を区別せずに照合されます。
+.sp
+ノートがある項目を一覧表示します。指定したフィールドの項目だけに絞ることもできます。これが既定のアクションです:
+.sp
+calibredb \fBnotes\fP list [FIELD]
+.sp
+calibre の「ノートをブラウズ」ツールと同じ SQLite 全文検索の構文を使用して、ノートのテキストを検索します。一致したそれぞれについて、フィールド、項目名、抜粋を表示します。特定のフィールドのノートだけを検索するには \-\-field を使用します:
+.sp
+calibredb \fBnotes\fP search \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+.sp
+項目のノートを Markdown 形式のテキストで表示します。\-\-as\-html を指定すると、画像を埋め込んだ HTML 文書として表示し、そのまま set で使用できます:
+.sp
+calibredb \fBnotes\fP show FIELD ITEM
+.sp
+項目のノートを HTML ファイルの内容で置き換えます。標準入力から HTML を読み込むには \- を使用します。base64 でエンコードされた data: URL として埋め込まれた画像は、ローカルとリモートのどちらのライブラリでもノートに追加されます。ローカルライブラリを使用してファイルから読み込む場合は、ファイルからの相対パスで参照されている画像も追加されます:
+.sp
+calibredb \fBnotes\fP set FIELD ITEM FILE
+.sp
+項目のノートを削除します:
+.sp
+calibredb \fBnotes\fP remove FIELD ITEM
+.sp
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-html
+ノートを表示する際は、Markdown形式のテキストではなくHTMLとして出力してください。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-field
+ノートの検索時に、検索をこのフィールドに限定します。例: authors、tags、#mycolumn
+.UNINDENT
+.SH ITEMS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb items [options] (rename|remove) FIELD ITEM ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+すべての本に含まれる著者名、タグ、シリーズ、発行者などの項目を、名前変更または削除します。これは、calibreインタフェースにおける「著者名、タグなどの管理」操作と同様の機能です。FIELDには、対象となるフィールドの識別名（例: authors、tags、series、publisher、または #mycolumn）を指定します。項目の照合は、大文字と小文字を区別せずに行われます。
+.sp
+項目名を変更します。変更後の名前（NEW_NAME）がすでに存在する場合、その2つの項目は統合されます。複数の値を持つフィールドの場合、NEW_NAMEに複数の値を指定することも可能です。その際は、各フィールドで定められた区切り文字（タグの場合はカンマなど）で値を区切ります。指定した項目は、それらのすべての値に置き換えられます。
+.sp
+calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
+.sp
+すべての本から1つ以上の項目を削除します。著者名
+は削除できません。
+.sp
+calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
+.sp
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+指定した検索式に一致する本のみを変更します。例: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+.UNINDENT
+.SH VIRTUAL_LIBRARIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb virtual_libraries [options] [list|add|rename|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+このライブラリの仮想ライブラリを管理します。仮想ライブラリとは、ライブラリにそれに一致する本だけが含まれているかのように動作する検索です。仮想ライブラリ内の本を一覧表示または検索するには、calibredb search \(aqvl:\(dqname\(dq\(aq を使用します。
+.sp
+仮想ライブラリを、その検索と本の数とともに一覧表示します。これが既定のアクションです:
+.sp
+calibredb \fBvirtual_libraries\fP list
+.sp
+検索から仮想ライブラリを作成します:
+.sp
+calibredb \fBvirtual_libraries\fP add name search_expression
+.sp
+仮想ライブラリの名前を変更します:
+.sp
+calibredb \fBvirtual_libraries\fP rename name new_name
+.sp
+仮想ライブラリを削除します。その中の本は変更されません:
+.sp
+calibredb \fBvirtual_libraries\fP remove name ...
+.sp
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+機械での解析に適した JSON 形式で出力を生成する
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+追加の際に、同じ名前の既存の仮想ライブラリの検索を置き換える
+.UNINDENT
+.SH ANNOTATIONS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb annotations [options] [list|search|export|import|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+本の注釈 (calibre 電子書籍ビューアで作成された、または他のアプリケーションから同期されたハイライトとブックマーク) を管理します。
+.sp
+注釈をIDとともに一覧表示します。これが既定のアクションです:
+.sp
+calibredb \fBannotations\fP list
+.sp
+「注釈を見る」ツールと同じ SQLite 全文検索の構文を使用して、ハイライトされたテキスト、注釈のメモ、ブックマークのタイトルを検索します。結果は関連度順に並べられ、注釈のID、本のタイトル、一致した抜粋が含まれます。本を絞り込むには \-\-search、注釈の種類を絞り込むには \-\-type、ユーザーを絞り込むには \-\-user\-type と \-\-annotation\-user、語形どおりに一致させるには \-\-no\-stemming を使用します。\-\-format json を指定すると、注釈データと抜粋を含む結果を JSON 配列で出力します:
+.sp
+calibredb \fBannotations\fP search \(dqsearch expression\(dq
+.sp
+注釈を本ごとにまとめて、プレーンテキスト、Markdown、JSON のいずれかでエクスポートします。JSON は「注釈を見る」ツールのエクスポートボタンで作成されるものと同じ calibre の注釈コレクションです:
+.sp
+calibredb \fBannotations\fP export
+.sp
+このコマンドまたは「注釈を見る」ツールで JSON としてエクスポートされた calibre の注釈コレクションをインポートします。コレクションには1冊の本の注釈だけが含まれている必要があります。BOOK_ID はインポート先の本のIDで、ファイルに保存されているIDではありません。FORMAT 形式の注釈だけがインポートされ、他の形式の注釈はスキップされます。FORMAT はインポート先の本に存在している必要があります。位置が一致するように、同じ版の本を使用してください:
+.sp
+calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
+.sp
+FILE に \- を指定すると標準入力から読み込みます。インポートの前にコレクション全体が検証されます。注釈はビューアと同じ規則で既存の注釈と統合されます。ハイライトは UUID で、ブックマークはタイトルで照合され、タイムスタンプが新しいほうが優先されます。繰り返しインポートしても重複は作成されません。関係のない注釈と読書位置は保持されます。
+.sp
+既定では、注釈は calibre 電子書籍ビューアの注釈としてインポートされます。代わりにコンテンツサーバーのユーザーの注釈としてインポートするには、\-\-user\-type web \-\-annotation\-user USER を使用します。エクスポートされたコレクションには注釈が属するユーザーが記録されており、複数のユーザーの注釈を含むコレクションは拒否されます。1人のユーザーの注釈をエクスポートするには、エクスポート時に \-\-user\-type と \-\-annotation\-user オプションを使用してください。
+.sp
+指定したID (list で表示されるもの) の注釈を完全に削除します:
+.sp
+calibredb \fBannotations\fP remove ID ...
+.sp
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-annotation\-user
+指定したユーザーの注釈だけを一覧表示、検索、エクスポートします。インポートの場合は、注釈をインポートするコンテンツサーバーのユーザーで、\fB\-\-user\-type\fP web と併せて指定する必要があります。リモートライブラリへの接続に使用するユーザーに限らず、任意のユーザーを指定できます。
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-format, \-f
+エクスポート形式。次のいずれか: text, markdown, json。検索の場合は text または json です。既定値: text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-stemming
+検索時に、語幹ではなく語形どおりに一致させる
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+指定した本の検索クエリに一致する本の注釈だけを一覧表示、検索、エクスポートします。例: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-type, \-t
+指定した種類の注釈だけを一覧表示、検索、エクスポートします。次のいずれか: highlight, bookmark
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-user\-type
+指定した種類のユーザーの注釈だけを一覧表示、検索、エクスポートします。インポートの場合は、注釈をインポートするユーザーの種類で、calibre 電子書籍ビューア (local) またはコンテンツサーバーのユーザー (web) です。インポートの既定値は local です。
+.UNINDENT
+.SH TRASH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb trash [options] (list|restore|delete|empty) [ids]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+削除されてゴミ箱に入れられた本と形式を管理します。
+ゴミ箱のエントリは、数日後に自動的に完全に削除されます。
+ids は remove コマンドと同様に、本のIDをカンマ区切りで指定したものです。例: 23,34,57\-85 (範囲で指定した場合、範囲の終端は含まれません)。
+.sp
+削除された本と形式を、削除日時 (ローカル時刻) とともに、最近削除されたものから順に一覧表示します。すでに存在しない本の削除された形式は復元不可として表示され、削除することしかできません。\-\-for\-machine を指定すると、日時は UTC になります:
+.sp
+calibredb \fBtrash\fP list
+.sp
+削除された本を復元します。\-\-formats を指定すると、本の削除された形式を復元します:
+.sp
+calibredb \fBtrash\fP restore ids
+.sp
+ゴミ箱からエントリを完全に削除します:
+.sp
+calibredb \fBtrash\fP delete ids
+.sp
+ゴミ箱の中身をすべて完全に削除します:
+.sp
+calibredb \fBtrash\fP empty
+.sp
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+list アクションの出力を、機械での解析に適した JSON 形式で生成する
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+削除された本ではなく、指定した本の削除された形式を対象にする
+.UNINDENT
+.SH DATA_FILES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+ローカルまたはリモートのライブラリで、本に関連付けられた追加のデータファイルを管理します。
+名前は本のデータディレクトリからの相対パスです。サブディレクトリには / を使用します (も使用できます)。名前に を含むファイルは一覧には表示されますが、それ以外の操作はできません。
+電子書籍の形式、表紙、metadata.opf にはこのコマンドではアクセスできません。
+リモートライブラリでは、他の管理コマンドと同様に書き込み権限のあるアカウントが必要です。また、ライブラリごとの検索制限があるアカウントはサポートされていません。
+.sp
+ファイル名、サイズ (バイト)、更新日時 (Unix エポックからの秒数) を一覧表示します。JSON で出力するには \-\-for\-machine を使用します:
+.sp
+calibredb \fBdata_files\fP list BOOK_ID
+.sp
+ファイルをそのベース名で追加します。名前やサブディレクトリを指定するには \-\-name を使用します。\-\-replace を指定しない限り、既存のファイルは置き換えられません。これは add_format \-\-as\-extra\-data\-file でも行えます:
+.sp
+calibredb \fBdata_files\fP add BOOK_ID FILE
+.sp
+データファイルを1つ、ローカルマシンの \-\-output に保存します。\-\-replace を指定しない限り、既存の出力ファイルは置き換えられません:
+.sp
+calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
+.sp
+ファイルの名前を変更します。\-\-replace を指定しない限り、既存の変更先は置き換えられません:
+.sp
+calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
+.sp
+ファイルをオペレーティングシステムのゴミ箱に移動します。\-\-permanent を指定すると、代わりに完全に削除します。リモートライブラリの場合、これはサーバー上で行われます:
+.sp
+calibredb \fBdata_files\fP remove BOOK_ID NAME
+.sp
+rename と remove によって空になったディレクトリは削除されます。リモートライブラリでは各ファイルが1回のリクエストで転送されるため、非常に大きなファイルにはクライアントとサーバーの両方に十分なメモリが必要です。また、アップロードはサーバーの最大リクエストサイズによって制限されます。
+.sp
+スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+ファイルの一覧を JSON で出力する
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-name
+追加するファイルに使用する名前 (データディレクトリからの相対パス)
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output
+get アクションのローカルの保存先
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-permanent
+ゴミ箱を使用せずにデータファイルを完全に削除する
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+追加、取得、名前の変更の際に既存のファイルの置き換えを許可する
 .UNINDENT
 .SH Author
 Kovid Goyal

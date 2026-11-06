@@ -5,10 +5,22 @@ Transform OEB content into plain text
 """
 
 import re
+from typing import TYPE_CHECKING
 
 from lxml import etree
 
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    import unittest
+    from collections.abc import Iterable
+    from optparse import Values
+
+    from lxml.etree import _Element
+
+    from calibre.ebooks.oeb.base import TOC, Manifest, OEBBook
+    from calibre.ebooks.oeb.stylizer import Stylizer
+    from calibre.utils.logging import Log
 
 BLOCK_TAGS = [
     'div',
@@ -43,10 +55,10 @@ SPACE_TAGS = [
 
 
 class TXTMLizer:
-    def __init__(self, log):
+    def __init__(self, log: Log) -> None:
         self.log = log
 
-    def extract_content(self, oeb_book, opts):
+    def extract_content(self, oeb_book: OEBBook, opts: Values) -> str:
         self.log.info('Converting XHTML to TXT...')
         self.oeb_book = oeb_book
         self.opts = opts
@@ -58,7 +70,7 @@ class TXTMLizer:
 
         return self.mlize_spine()
 
-    def mlize_spine(self):
+    def mlize_spine(self) -> str:
         from calibre.ebooks.oeb.base import XHTML
         from calibre.ebooks.oeb.stylizer import Stylizer
         from calibre.utils.xml_parse import safe_xml_fromstring
@@ -67,14 +79,18 @@ class TXTMLizer:
         output.append(self.get_toc())
         for item in self.oeb_book.spine:
             self.log.debug(f'Converting {item.href} to TXT...')
-            for x in item.data.iterdescendants(etree.Comment):
+            root = item.data
+            assert isinstance(root, etree._Element)  # spine items are parsed (X)HTML documents
+            for x in root.iterdescendants(etree.Comment):
                 if x.text and '--' in x.text:
                     x.text = x.text.replace('--', '__')
-            content = etree.tostring(item.data, encoding='unicode')
+            content = etree.tostring(root, encoding='unicode')
             content = self.remove_newlines(content)
             content = safe_xml_fromstring(content)
             stylizer = Stylizer(content, item.href, self.oeb_book, self.opts, self.opts.output_profile)
-            output += self.dump_text(content.find(XHTML('body')), stylizer, item)
+            body = content.find(XHTML('body'))
+            assert body is not None  # spine items always have a body, see parse_html()
+            output += self.dump_text(body, stylizer, item)
             output += '\n\n\n\n\n\n'
         output = ''.join(output)
         output = '\n'.join(l.rstrip() for l in output.splitlines())
@@ -82,7 +98,7 @@ class TXTMLizer:
 
         return output
 
-    def remove_newlines(self, text):
+    def remove_newlines(self, text: str) -> str:
         self.log.debug('\tRemove newlines for processing...')
         text = text.replace('\r\n', ' ')
         text = text.replace('\n', ' ')
@@ -92,7 +108,7 @@ class TXTMLizer:
 
         return text
 
-    def get_toc(self):
+    def get_toc(self) -> str:
         toc = ['']
         if getattr(self.opts, 'inline_toc', None):
             self.log.debug('Generating table of contents...')
@@ -108,7 +124,7 @@ class TXTMLizer:
                 toc.append(f'* {item}\n\n')
         return ''.join(toc)
 
-    def create_flat_toc(self, nodes):
+    def create_flat_toc(self, nodes: Iterable[TOC]) -> None:
         """
         Turns a hierarchical list of TOC href's into a flat list.
         """
@@ -117,7 +133,7 @@ class TXTMLizer:
             self.toc_ids.append(item.href)
             self.create_flat_toc(item.nodes)
 
-    def cleanup_text(self, text):
+    def cleanup_text(self, text: str) -> str:
         self.log.debug('\tClean up text...')
         # Replace bad characters.
         text = text.replace('\xa0', ' ')
@@ -190,7 +206,23 @@ class TXTMLizer:
 
         return text
 
-    def dump_text(self, elem, stylizer, page):
+    def is_block(self, elem: _Element, stylizer: Stylizer) -> bool:
+        from calibre.ebooks.oeb.base import XHTML_NS, barename, namespace
+
+        if not isinstance(elem.tag, str) or namespace(elem.tag) != XHTML_NS:
+            return False
+        return barename(elem.tag) in BLOCK_TAGS or stylizer.style(elem)['display'] in BLOCK_STYLES
+
+    def needs_block_separator(self, text: list[str]) -> bool:
+        # True if the text output so far ends with non-whitespace content
+        # that is not already terminated by a newline
+        for chunk in reversed(text):
+            stripped = chunk.rstrip(' \t')
+            if stripped:
+                return not stripped.endswith('\n')
+        return False
+
+    def dump_text(self, elem: _Element, stylizer: Stylizer, page: Manifest.Item) -> list[str]:
         """
         @elem: The element in the etree that we are working on.
         @stylizer: The style information attached to the element.
@@ -198,9 +230,9 @@ class TXTMLizer:
         """
         from calibre.ebooks.oeb.base import XHTML_NS, barename, namespace
 
-        if not isinstance(elem.tag, (str, bytes)) or namespace(elem.tag) != XHTML_NS:
+        if not isinstance(elem.tag, str) or namespace(elem.tag) != XHTML_NS:
             p = elem.getparent()
-            if p is not None and isinstance(p.tag, (str, bytes)) and namespace(p.tag) == XHTML_NS and elem.tail:
+            if p is not None and isinstance(p.tag, str) and namespace(p.tag) == XHTML_NS and elem.tail:
                 return [elem.tail]
             return ['']
 
@@ -252,6 +284,10 @@ class TXTMLizer:
 
         # Recurse down into tags within the tag we are in.
         for item in elem:
+            if self.is_block(item, stylizer) and self.needs_block_separator(text):
+                # A block nested after inline content, for example:
+                # <li>foo<ul><li>bar</li></ul></li> must start on a new line
+                text.append('\n\n')
             text += self.dump_text(item, stylizer, page)
 
         if in_block:
@@ -266,3 +302,31 @@ class TXTMLizer:
             text.append(elem.tail)
 
         return text
+
+
+def find_tests() -> unittest.TestSuite:
+    import unittest
+    from pathlib import Path
+    from tempfile import TemporaryDirectory
+
+    from calibre.ebooks.conversion.plumber import Plumber
+    from calibre.utils.logging import DevNull
+
+    def convert(html: str, *recommendations: tuple[str, object, int]) -> str:
+        with TemporaryDirectory() as tdir:
+            src, dest = Path(tdir) / 'input.html', Path(tdir) / 'output.txt'
+            src.write_text(html, encoding='utf-8')
+            plumber = Plumber(str(src), str(dest), DevNull())
+            plumber.merge_ui_recommendations(list(recommendations))
+            plumber.run()
+            return dest.read_text(encoding='utf-8')
+
+    class TXTOutputTest(unittest.TestCase):
+        def test_txt_nested_block_after_text(self) -> None:
+            html = '<html><body><ul><li>foo<ul><li>bar</li></ul></li><li>baz</li></ul><div>x<span>y</span><div>z</div></div></body></html>'
+            lines = [l for l in convert(html).splitlines() if l.strip()]
+            self.assertEqual(lines, ['foo', 'bar', 'baz', 'xy', 'z'])
+            lines = [l.strip() for l in convert(html, ('remove_paragraph_spacing', True, 3)).splitlines() if l.strip()]
+            self.assertEqual(lines, ['foo', 'bar', 'baz', 'xy', 'z'])
+
+    return unittest.defaultTestLoader.loadTestsFromTestCase(TXTOutputTest)

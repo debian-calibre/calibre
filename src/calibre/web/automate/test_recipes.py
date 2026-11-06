@@ -12,6 +12,7 @@ import threading
 import unittest
 from collections import Counter
 from http.cookies import SimpleCookie
+from typing import TYPE_CHECKING
 from unittest.mock import patch
 from urllib.error import URLError
 from urllib.parse import parse_qs, urlparse
@@ -22,8 +23,10 @@ from calibre.web.automate import browser as browser_module
 from calibre.web.automate import recipes
 from calibre.web.automate.bot_check import retry_bot_checks
 from calibre.web.automate.browser import Warmup
-from calibre.web.automate.download_deps import Install
 from calibre.web.automate.test_camoufox import TEST_MAX_MOVE_TIME, TEST_TYPING_WPM, installed_camoufox
+
+if TYPE_CHECKING:
+    from calibre.web.automate.download_deps import Install
 
 ARTICLE_PAGE = '''<!DOCTYPE html><html><head><title>An Article</title>
 <link rel="stylesheet" type="text/css" href="style.css">
@@ -388,6 +391,14 @@ class TestRecipeFillField(unittest.TestCase):
             async def value(self) -> str:
                 return self.page.value
 
+            async def fill(self, value: str) -> None:
+                page = self.page
+                page.attempts += 1
+                if page.attempts <= page.failures:
+                    page.value = value[:1]
+                    raise page.failure('a keydown was not acknowledged')
+                page.value = value
+
             async def dispose(self) -> None:
                 pass
 
@@ -395,12 +406,8 @@ class TestRecipeFillField(unittest.TestCase):
             def __init__(self, failure: type[Exception], failures: int) -> None:
                 self.value, self.failure, self.failures, self.attempts = '', failure, failures, 0
 
-            async def fill(self, selector: str, value: str, timeout: float) -> None:  # ruff: ignore[async-function-with-timeout]
-                self.attempts += 1
-                if self.attempts <= self.failures:
-                    self.value = value[:1]
-                    raise self.failure('a keydown was not acknowledged')
-                self.value = value
+            async def wait_for_selector(self, selector: str, timeout: float, visible: bool) -> FakeElement:  # ruff: ignore[async-function-with-timeout]
+                return FakeElement(self)
 
             async def find(self, selector: str) -> FakeElement:
                 return FakeElement(self)
@@ -669,9 +676,14 @@ class TestRecipeBrowser(unittest.TestCase):
             br.submit_form(self.server.base + 'login.html', {'#no-such-field': 'x'}, submit='#go', timeout=1)
         self.assertIn('timed out', str(ctx.exception))
         # Something that cannot be typed into, and an error that does not give
-        # away what was being typed, which is usually a password
+        # away what was being typed, which is usually a password. Giving up on
+        # the field is bounded by the number of attempts at typing into it, not
+        # by the timeout, so the timeout is generous: if loading the page uses
+        # all of it, as it can on a slow, busy machine, the field is never even
+        # looked for and the error is that of a timed out form instead.
+        br.open(self.server.base + 'login-rerender.html').close()
         with self.assertRaises(URLError) as ctx:
-            br.submit_form(self.server.base + 'login-rerender.html', {'#not-a-field': LOGIN_PASSWORD}, submit='#go', timeout=10)
+            br.submit_form(self.server.base + 'login-rerender.html', {'#not-a-field': LOGIN_PASSWORD}, submit='#go', timeout=60)
         self.assertIn('could not type into #not-a-field', str(ctx.exception))
         self.assertNotIn(LOGIN_PASSWORD, str(ctx.exception))
         with self.assertRaises(URLError) as ctx:

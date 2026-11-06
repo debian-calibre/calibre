@@ -194,9 +194,8 @@ class OpenDocument:
         if not filename:
             return xml.getvalue()
         else:
-            f = open(filename, 'wb')
-            f.write(xml.getvalue())
-            f.close()
+            with open(filename, 'wb') as f:
+                f.write(xml.getvalue())
 
     def xml(self):
         """Generates the full document as an XML file
@@ -410,10 +409,8 @@ class OpenDocument:
         # if hasPictures:
         #     self.manifest.addElement(manifest.FileEntry(fullpath=f"{folder}Pictures/", mediatype=""))
         # Look in subobjects
-        subobjectnum = 1
-        for subobject in object.childobjects:
-            self._savePictures(subobject, f'{folder}Object {subobjectnum}/')
-            subobjectnum += 1
+        for num, subobject in enumerate(object.childobjects, 1):
+            self._savePictures(subobject, f'{folder}Object {num}/')
 
     def __replaceGenerator(self):
         """Section 3.1.1: The application MUST NOT export the original identifier
@@ -527,10 +524,8 @@ class OpenDocument:
             self._z.writestr(zi, object.metaxml())
 
         # Write subobjects
-        subobjectnum = 1
-        for subobject in object.childobjects:
-            self._saveXmlObjects(subobject, f'{folder}Object {subobjectnum}/')
-            subobjectnum += 1
+        for num, subobject in enumerate(object.childobjects, 1):
+            self._saveXmlObjects(subobject, f'{folder}Object {num}/')
 
     # Document's DOM methods
     def createElement(self, element):
