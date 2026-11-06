@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: un_pogaz, 2026\n"
 "Language-Team: French (http://app.transifex.com/calibre/calibre/language/fr/)\n"
@@ -443,6 +443,13 @@ msgid ""
 msgstr "Si True, cette extension est exécutée après conversion sur le fichier final produit par l'extension de conversion de sortie."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr "Chemin d'accès au fichier d'origine, avant l'exécution de tout plugin de type de fichier. Définit juste avant l'appel de :meth:`run`."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -765,6 +772,13 @@ msgid ""
 " also waited for longer after the first result from any source arrives, "
 "since downloading with a browser is slow."
 msgstr "Si cette option est définie sur True, cette source utilise le navigateur Camoufox commun à tous les téléchargements de métadonnées, voir :mod:`calibre.web.automate.metadata`, qui est alors lancé avant le téléchargement des métadonnées, afin qu'il soit prêt à temps. Pour de tels sources, il faut attendre plus longtemps que les premiers résultats arrive, en comparaison d'une autre source, car le téléchargement via un navigateur est lent."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr "Nombre de secondes nécessaires à la dernière exécution de la fonction identify(), défini par :func:`calibre.ebooks.metadata.sources.identify.identify`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -2148,7 +2162,7 @@ msgstr "Appelée par le gestionnaire de périphérique au lancement des extensio
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2161,8 +2175,9 @@ msgstr "Cette méthode peut être appelée dans le fil GUI. Un pilote qui implé
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "Cette méthode est appelée au lancement de l'extension. Cette extension devrait commencer à accepter des connexions de périphériques qu'importe la manière dont ils le font. Si l'extension accepte déjà les connexions, alors ne fait rien."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr "Cette méthode est appelée au lancement de l'extension. Cette extension devrait commencer à accepter des connexions de périphériques qu'importe la manière dont ils le font. Si l'extension accepte déjà les connexions, alors ne fait rien. Retourne un message d'erreur si le lancement du plugin a échoué, sinon None."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2296,8 +2311,8 @@ msgstr "Renvoie True si le périphérique supporte les collections de livre pour
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "Ajoute le livre dans la liste de livre. L'idée est de maintenir les métadonnées interne du périphérique. Renvoie True si la liste de livre doit être synchronisée."
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr "Ajoute le livre dans la liste de livre. L'idée est de maintenir les métadonnées interne du périphérique. Retourne le livre (une valeur vraie) si la liste de livre doit être synchronisée."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2785,6 +2800,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "Appelée une fois par extension lorsque le GUI principal est en train de s'éteindre. Relâche toute les ressources utilisée, mais essaye de ne pas bloquer l’arrêt pour un longue période."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr "Chemin d'importation de la classe d'action de l'interface en question sous la forme module:class"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

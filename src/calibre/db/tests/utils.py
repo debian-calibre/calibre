@@ -11,16 +11,16 @@ from calibre.db.utils import ThumbnailCache
 
 
 class UtilsTest(BaseTest):
-    def setUp(self):
+    def setUp(self) -> None:
         self.tdir = tempfile.mkdtemp(prefix='db_test_')
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         shutil.rmtree(self.tdir)
 
-    def init_tc(self, name='1', max_size=1):
+    def init_tc(self, name: str = '1', max_size: float = 1) -> ThumbnailCache:
         return ThumbnailCache(name=name, location=self.tdir, max_size=max_size, test_mode=True)
 
-    def basic_fill(self, c, num=5):
+    def basic_fill(self, c: ThumbnailCache, num: int = 5) -> int:
         total = 0
         for i in range(1, num + 1):
             sz = i * 1000
@@ -28,7 +28,91 @@ class UtilsTest(BaseTest):
             total += sz
         return total
 
-    def test_thumbnail_cache(self):  # {{{
+    def test_thumbnail_cache_invalidate_before_load(self) -> None:
+        c = self.init_tc()
+        self.basic_fill(c)
+        c.set_group_id('other')
+        self.basic_fill(c)
+        c.shutdown()
+
+        # Simulate a record left behind by an older version of calibre that
+        # did not terminate records with a newline
+        invalidate_path = os.path.join(self.tdir, '1', 'invalidate')
+        with open(invalidate_path, 'wb') as f:
+            f.write(b'group 4')
+        c = self.init_tc()
+        c.invalidate((1, 2))
+        c.invalidate(())
+        c.invalidate((3,))
+        c.set_group_id('other')
+        c.invalidate((1,))
+        with open(invalidate_path, 'rb') as f:
+            self.assertEqual(f.read(), b'group 4\ngroup 1\ngroup 2\n\ngroup 3\n\nother 1\n', 'invalidate loaded the index')
+
+        for group, invalidated in (('group', (1, 2, 3, 4)), ('other', (1,))):
+            c.set_group_id(group)
+            for book_id in range(1, 6):
+                with self.subTest(group=group, book_id=book_id):
+                    if book_id in invalidated:
+                        self.assertEqual(c[book_id], (None, None))
+                    else:
+                        self.assertEqual(c[book_id], ((f'{book_id}' * (book_id * 1000)).encode('ascii'), book_id))
+        self.assertFalse(os.path.exists(invalidate_path))
+        self.assertEqual(len(c), 5)
+        self.assertEqual(c.current_size, 19000)
+
+    def test_thumbnail_cache_use_after_shutdown(self) -> None:
+        # Cover renderers can still be using the cache after it is shutdown,
+        # this must neither fail nor resurrect the cache
+        c = self.init_tc()
+        self.basic_fill(c)
+        order = tuple(c.items)
+        c.shutdown()
+        order_path = os.path.join(self.tdir, '1', 'order')
+        with open(order_path, 'rb') as f:
+            saved_order = f.read()
+        self.assertEqual(c[1], (None, None))
+        c.insert(6, 6, b'x' * 100)
+        self.assertNotIn(1, c)
+        self.assertEqual(len(c), 0)
+        self.assertEqual(c.current_size, 0)
+        c.empty()
+        c.invalidate((2,))
+        c.shutdown()
+        self.assertFalse(hasattr(c, 'items'), 'index loaded after shutdown')
+        with open(order_path, 'rb') as f:
+            self.assertEqual(saved_order, f.read(), 'order changed after shutdown')
+
+        # Invalidations made after shutdown are applied on the next load
+        c = self.init_tc()
+        self.assertEqual(c[2], (None, None))
+        self.assertEqual(tuple(k for k in order if k[1] != 2), tuple(c.items))
+        self.assertEqual(len(c), 4)
+        self.assertNotIn(6, c)
+
+        # Concurrent use from another thread while shutting down
+        from threading import Event, Thread
+
+        stop, errors = Event(), []
+
+        def worker() -> None:
+            try:
+                while not stop.is_set():
+                    c[3]
+                    c.insert(7, 7, b'y' * 100)
+            except Exception as e:
+                errors.append(e)
+
+        t = Thread(target=worker, daemon=True)
+        t.start()
+        c.shutdown()
+        stop.set()
+        t.join(5)
+        self.assertFalse(t.is_alive())
+        self.assertEqual(errors, [])
+        self.assertFalse(hasattr(c, 'items'), 'index loaded after shutdown')
+
+    def test_thumbnail_cache(self) -> None:  # {{{
         "Test the operation of the thumbnail cache"
         c = self.init_tc()
         self.assertFalse(hasattr(c, 'total_size'), 'index read on initialization')

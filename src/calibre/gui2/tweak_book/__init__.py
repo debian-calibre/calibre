@@ -18,6 +18,7 @@ d['editor_line_wrap'] = True
 d['editor_tab_stop_width'] = 2
 d['editor_cursor_width'] = 1
 d['editor_show_char_under_cursor'] = True
+d['editor_css_color_preview'] = 'underline'
 d['replace_entities_as_typed'] = True
 d['preview_refresh_time'] = 2
 d['choose_tweak_fmt'] = True
@@ -128,6 +129,7 @@ d['check_external_link_anchors'] = True
 d['remove_ncx'] = True
 d['html_transform_scope'] = 'current'
 d['check_book_skipped_rules'] = {}
+d['check_book_accessibility'] = False
 del d
 
 ucase_map = {l: string.ascii_uppercase[i] for i, l in enumerate(string.ascii_lowercase)}
@@ -144,13 +146,13 @@ def current_container():
     return _current_container
 
 
-def set_current_container(container):
+def set_current_container(container) -> None:
     global _current_container
     _current_container = container
 
 
 class NonReplaceDict(dict):
-    def __setitem__(self, k, v):
+    def __setitem__(self, k, v) -> None:
         if k in self:
             raise ValueError(f'The key {k} is already present')
         dict.__setitem__(self, k, v)
@@ -176,7 +178,7 @@ def editor_name(editor):
             return n
 
 
-def set_book_locale(lang):
+def set_book_locale(lang) -> None:
     dictionaries.initialize()
     try:
         dictionaries.default_locale = parse_lang_code(lang)
@@ -189,7 +191,7 @@ def set_book_locale(lang):
     refresh_spell_check_status()
 
 
-def verify_link(url, name=None):
+def verify_link(url, name=None) -> bool | None:
     if _current_container is None or name is None:
         return None
     try:
@@ -205,7 +207,7 @@ def verify_link(url, name=None):
     return False
 
 
-def update_mark_text_action(ed=None):
+def update_mark_text_action(ed=None) -> None:
     has_mark = False
     if ed is not None and ed.has_line_numbers:
         has_mark = bool(ed.selected_text) or not ed.has_marked_text

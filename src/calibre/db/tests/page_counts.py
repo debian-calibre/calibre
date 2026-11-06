@@ -15,21 +15,21 @@ is_ci = os.environ.get('CI', '').lower() == 'true'
 class PageCountTest(BaseTest):
     ae = BaseTest.assertEqual
 
-    def test_page_count_in_db(self):
+    def test_page_count_in_db(self) -> None:
         test_page_count_in_db(self)
 
-    def test_page_count_refreshes_file_sizes(self):
+    def test_page_count_refreshes_file_sizes(self) -> None:
         test_page_count_refreshes_file_sizes(self)
 
-    def test_page_count_deleted_book(self):
+    def test_page_count_deleted_book(self) -> None:
         test_page_count_deleted_book(self)
 
-    def test_page_count(self):
+    def test_page_count(self) -> None:
         from calibre.library.page_count import test_page_count
 
         test_page_count(self)
 
-    def test_line_counting(self):
+    def test_line_counting(self) -> None:
         from calibre.library.page_count import test_line_counting
 
         test_line_counting(self)
@@ -44,7 +44,7 @@ def test_page_count_in_db(self: BaseTest) -> None:
     db = self.init_cache()
 
     # test schema upgrade marked all books as needing scan
-    def status():
+    def status() -> set[tuple[int, int]]:
         return set(db.backend.execute('SELECT pages,needs_scan FROM books_pages_link'))
 
     self.ae(status(), {(0, 1)})
@@ -59,7 +59,7 @@ def test_page_count_in_db(self: BaseTest) -> None:
     self.ae(db.field_for('pages', 1), -1)
 
     # test that adding a format queues
-    def add_format(fmt, data):
+    def add_format(fmt: str, data: bytes) -> None:
         db.maintain_page_counts.tick_event.clear()
         db.add_format(1, fmt, io.BytesIO(data), replace=True)
         db.maintain_page_counts.tick_event.wait()

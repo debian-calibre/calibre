@@ -18,7 +18,7 @@ def gui_convert(
     abort_after_input_dump=False,
     log=None,
     override_input_metadata=False,
-):
+) -> None:
     recommendations = list(recommendations)
     recommendations.append(('verbose', 2, OptionRecommendation.HIGH))
     if log is None:
@@ -44,7 +44,7 @@ def gui_convert_recipe(
     abort_after_input_dump=False,
     log=None,
     override_input_metadata=False,
-):
+) -> None:
     os.environ['CALIBRE_RECIPE_URN'] = input
     gui_convert(
         'from-gui.recipe',
@@ -57,7 +57,7 @@ def gui_convert_recipe(
     )
 
 
-def gui_convert_override(input, output, recommendations, notification=DummyReporter(), abort_after_input_dump=False, log=None):
+def gui_convert_override(input, output, recommendations, notification=DummyReporter(), abort_after_input_dump=False, log=None) -> None:
     gui_convert(
         input,
         output,
@@ -121,6 +121,8 @@ def gui_catalog(
         # Fetch and run the plugin for fmt
         # Returns 0 if successful, 1 if no catalog built
         plugin = plugin_for_catalog_format(fmt)
+        if plugin is None:
+            raise ValueError(f'No catalog plugin available for the format: {fmt}')
         return plugin.run(out_file_name, opts, db, notification=notification)
     finally:
         db.close()

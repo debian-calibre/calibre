@@ -2,9 +2,16 @@
 
 import os
 from io import BytesIO
+from typing import IO, TYPE_CHECKING
 
 from calibre.customize.conversion import InputFormatPlugin
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 
 class DJVUInput(InputFormatPlugin):
@@ -14,7 +21,7 @@ class DJVUInput(InputFormatPlugin):
     file_types = {'djvu', 'djv'}
     commit_name = 'djvu_input'
 
-    def convert(self, stream, options, file_ext, log, accelerators):
+    def convert(self, stream: IO[bytes], options: Values, file_ext: str, log: Log, accelerators: dict[str, str]) -> OEBBook:
         from calibre.ebooks.txt.processor import convert_basic
 
         stdout = BytesIO()
@@ -33,6 +40,7 @@ class DJVUInput(InputFormatPlugin):
         from calibre.customize.ui import plugin_for_input_format
 
         html_input = plugin_for_input_format('html')
+        assert html_input is not None
         for opt in html_input.options:
             setattr(options, opt.option.name, opt.recommended_value)
         options.input_encoding = 'utf-8'
@@ -49,6 +57,7 @@ class DJVUInput(InputFormatPlugin):
         # Generate oeb from html conversion.
         with open(htmlfile, 'rb') as f:
             oeb = html_input.convert(f, options, 'html', log, {})
+            assert oeb is not None and not isinstance(oeb, str)  # HTML input returns an OEBBook
         options.debug_pipeline = odi
         os.remove(htmlfile)
 

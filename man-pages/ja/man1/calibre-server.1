@@ -28,14 +28,14 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-SERVER" "1" "10月 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-SERVER" "1" "11月 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-server \- calibre-server
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibre\-server [オプション] [ライブラリフォルダへのパス...]
+calibre\-server [options] [path to library folder...]
 .EE
 .UNINDENT
 .UNINDENT
@@ -46,7 +46,7 @@ calibreのコンテンツサーバを開始。コンテンツサーバはcalibre
 すべてのライブラリが対象となります。
 .sp
 スペースを含む引数を \fBcalibre\-server\fP に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
-.SH [オプション]
+.SH [OPTIONS]
 .INDENT 0.0
 .TP
 .B \-\-access\-log
@@ -150,7 +150,7 @@ BonJour経由でOPDSフィードを公開する.    BonJourサービス経由で
 .INDENT 0.0
 .TP
 .B \-\-listen\-on
-接続を待ち受けするインタフェース.   デフォルトでは、利用可能なすべての IPv6 および IPv4 インターフェースでリッスンします。これを変更することで、たとえば \fB\(dq\fP127.0.0.1\fB\(dq\fP に指定してローカルマシンからの IPv4 接続のみをリッスンしたり、 \fB\(dq\fP0.0.0.0\fB\(dq\fP に指定してすべてのIPv4 着信接続をリッスンしたりできます。
+接続を待ち受けするインタフェース.   デフォルトでは、利用可能なすべての IPv6 および IPv4 インタフェースでリッスンします。これを変更することで、たとえば \fB\(dq\fP127.0.0.1\fB\(dq\fP に指定してローカルマシンからの IPv4 接続のみをリッスンしたり、 \fB\(dq\fP0.0.0.0\fB\(dq\fP に指定してすべてのIPv4 着信接続をリッスンしたりできます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -240,7 +240,7 @@ SSL プライベートキーファイルへのパス.
 .INDENT 0.0
 .TP
 .B \-\-trusted\-ips
-指定したIPからの非認証接続での変更を許可.      通常、認証を有効にしない場合にはサーバは読み取り専用モードで動作し、匿名ユーザがキャリバーライブラリに変更を加えることを許可しません。このオプションを使用すると、指定した IP アドレスから接続しているすべてのユーザに変更を許可します。TRUSTED_IP はアドレスまたはネットワークをカンマ区切りで指定します。認証なし実行しているサーバ上で calibredb を使用して calibre ライブラリに変更を加えたい場合に使える機能です。このオプションを有効にした場合には、指定した IP アドレスから接続するユーザは誰でもライブラリに変更を加えることができることに注意してください。
+指定したIPからの非認証接続での変更を許可.      通常、認証を有効にしない場合にはサーバは読み取り専用モードで動作し、匿名ユーザがcalibreライブラリに変更を加えることを許可しません。このオプションを使用すると、指定した IP アドレスから接続しているすべてのユーザに変更を許可します。TRUSTED_IP はアドレスまたはネットワークをカンマ区切りで指定します。認証なし実行しているサーバ上で calibredb を使用して calibre ライブラリに変更を加えたい場合に使える機能です。このオプションを有効にした場合には、指定した IP アドレスから接続するユーザは誰でもライブラリに変更を加えることができることに注意してください。
 .UNINDENT
 .INDENT 0.0
 .TP

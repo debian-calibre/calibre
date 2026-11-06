@@ -1,6 +1,7 @@
 # License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
 import re
+from typing import IO
 
 from polyglot.builtins import int_to_byte
 
@@ -15,16 +16,16 @@ class TCRCompressor:
     value 81 which corresponds to the string in the code list at position 81.
     '''
 
-    def _reset(self):
+    def _reset(self) -> None:
         # List of indexes in the codes list that are empty and can hold new codes
-        self.unused_codes = set()
+        self.unused_codes: set[int] = set()
         self.coded_txt = b''
         # Generate initial codes from text.
         # The index of the list will be the code that represents the characters at that location
         # in the list
-        self.codes = []
+        self.codes: list[bytes] = []
 
-    def _combine_codes(self):
+    def _combine_codes(self) -> None:
         """
         Combine two codes that always appear in pair into a single code.
         The intent is to create more unused codes.
@@ -41,7 +42,7 @@ class TCRCompressor:
             self.coded_txt = self.coded_txt.replace(code, code[0:1])
             self.codes[code[0]] = b'%s%s' % (self.codes[code[0]], self.codes[code[1]])
 
-    def _free_unused_codes(self):
+    def _free_unused_codes(self) -> None:
         """
         Look for codes that do no not appear in the coded text and add them to
         the list of free codes.
@@ -51,7 +52,7 @@ class TCRCompressor:
                 if int_to_byte(i) not in self.coded_txt:
                     self.unused_codes.add(i)
 
-    def _new_codes(self):
+    def _new_codes(self) -> list[bytes]:
         """
         Create new codes from codes that occur in pairs often.
         """
@@ -69,7 +70,7 @@ class TCRCompressor:
 
         return possible_new_codes
 
-    def compress(self, txt):
+    def compress(self, txt: bytes) -> bytes:
         self._reset()
 
         self.codes = list(set(re.findall(rb'(?ms).', txt)))
@@ -113,7 +114,7 @@ class TCRCompressor:
         return b'!!8-Bit!!' + b''.join(code_dict) + self.coded_txt
 
 
-def decompress(stream):
+def decompress(stream: IO[bytes]) -> bytes:
     txt = []
     stream.seek(0)
     if stream.read(9) != b'!!8-Bit!!':
@@ -134,6 +135,6 @@ def decompress(stream):
     return b''.join(txt)
 
 
-def compress(txt):
+def compress(txt: bytes) -> bytes:
     t = TCRCompressor()
     return t.compress(txt)

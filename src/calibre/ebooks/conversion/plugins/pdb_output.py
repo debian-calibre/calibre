@@ -1,10 +1,17 @@
 # License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
-import os
+from typing import TYPE_CHECKING
 
-from calibre.customize.conversion import OptionRecommendation, OutputFormatPlugin
+from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation, OutputFormatPlugin
 from calibre.ebooks.pdb import ALL_FORMAT_WRITERS, PDBError, get_writer
+from calibre.utils import StreamOrPath
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 
 class PDBOutput(OutputFormatPlugin):
@@ -37,31 +44,22 @@ class PDBOutput(OutputFormatPlugin):
         ),
     }
 
-    def convert(self, oeb_book, output, input_plugin, opts, log):
-        output_path = output
-        close = False
-        if not hasattr(output_path, 'write'):
-            close = True
-            if not os.path.exists(os.path.dirname(output_path)) and os.path.dirname(output_path):
-                os.makedirs(os.path.dirname(output_path))
-            out_stream = open(output_path, 'wb')
-        else:
-            out_stream = output_path
+    def convert(self, oeb_book: OEBBook, output: str, input_plugin: InputFormatPlugin, opts: Values, log: Log) -> None:
+        with StreamOrPath(output, 'wb', makedirs=True) as out_stream:
+            Writer = get_writer(opts.format)
+            if Writer is None:
+                raise PDBError(f'No writer available for format {opts.format}.')
+            opts.max_line_length = 0
+            opts.force_max_line_length = False
+            if opts.format == 'ereader':
+                # eReader only supports raster images
+                from calibre.ebooks.oeb.transforms.rasterize import SVGRasterizer, Unavailable
 
-        Writer = get_writer(opts.format)
-
-        if Writer is None:
-            raise PDBError(f'No writer available for format {format}.')
-
-        opts.max_line_length = 0
-        opts.force_max_line_length = False
-
-        writer = Writer(opts, log)
-
-        out_stream.seek(0)
-        out_stream.truncate()
-
-        writer.write_content(oeb_book, out_stream, oeb_book.metadata)
-
-        if close:
-            out_stream.close()
+                try:
+                    SVGRasterizer()(oeb_book, opts)
+                except Unavailable:
+                    log.warn('SVG rasterizer unavailable, SVG will not be converted')
+            writer = Writer(opts, log)
+            out_stream.seek(0)
+            out_stream.truncate()
+            writer.write_content(oeb_book, out_stream, oeb_book.metadata)

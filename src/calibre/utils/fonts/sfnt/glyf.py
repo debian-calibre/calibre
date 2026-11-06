@@ -3,8 +3,12 @@
 
 from collections import OrderedDict
 from struct import unpack_from
+from typing import TYPE_CHECKING, Literal, overload
 
 from calibre.utils.fonts.sfnt import UnknownTable
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Mapping
 
 ARG_1_AND_2_ARE_WORDS = 0x0001  # if set args are words otherwise they are bytes
 ARGS_ARE_XY_VALUES = 0x0002  # if set args are xy values, otherwise they are points
@@ -22,23 +26,23 @@ UNSCALED_COMPONENT_OFFSET = 0x1000  # composite designed not to have the compone
 
 
 class SimpleGlyph:
-    def __init__(self, num_of_countours, raw):
+    def __init__(self, num_of_countours: int, raw: bytes) -> None:
         self.num_of_countours = num_of_countours
         self.raw = raw
         # The list of glyph indices referred to by this glyph, will always be
         # empty for a simple glyph and not empty for a composite glyph
-        self.glyph_indices = []
+        self.glyph_indices: list[int] = []
         self.is_composite = False
 
-    def __len__(self):
+    def __len__(self) -> int:
         return len(self.raw)
 
-    def __call__(self):
+    def __call__(self) -> bytes:
         return self.raw
 
 
 class CompositeGlyph(SimpleGlyph):
-    def __init__(self, num_of_countours, raw):
+    def __init__(self, num_of_countours: int, raw: bytes) -> None:
         super().__init__(num_of_countours, raw)
         self.is_composite = True
 
@@ -61,7 +65,13 @@ class CompositeGlyph(SimpleGlyph):
 
 
 class GlyfTable(UnknownTable):
-    def glyph_data(self, offset, length, as_raw=False):
+    @overload
+    def glyph_data(self, offset: int, length: int, as_raw: Literal[False] = False) -> SimpleGlyph: ...
+    @overload
+    def glyph_data(self, offset: int, length: int, as_raw: Literal[True]) -> bytes: ...
+    @overload
+    def glyph_data(self, offset: int, length: int, as_raw: bool) -> SimpleGlyph | bytes: ...
+    def glyph_data(self, offset: int, length: int, as_raw: bool = False) -> SimpleGlyph | bytes:
         raw = self.raw[offset : offset + length]
         if as_raw:
             return raw
@@ -70,7 +80,7 @@ class GlyfTable(UnknownTable):
             return SimpleGlyph(num_of_countours, raw)
         return CompositeGlyph(num_of_countours, raw)
 
-    def update(self, sorted_glyph_map):
+    def update(self, sorted_glyph_map: Mapping[int, Callable[[], bytes]]) -> OrderedDict[int, tuple[int, int]]:
         ans = OrderedDict()
         offset = 0
         block = []

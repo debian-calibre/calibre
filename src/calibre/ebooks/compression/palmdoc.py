@@ -3,19 +3,23 @@
 
 import io
 from struct import pack
+from typing import TYPE_CHECKING
 
 from calibre_extensions import cPalmdoc
 
+if TYPE_CHECKING:
+    import unittest
 
-def decompress_doc(data):
+
+def decompress_doc(data: bytes) -> bytes:
     return cPalmdoc.decompress(data)
 
 
-def compress_doc(data):
+def compress_doc(data: bytes) -> bytes:
     return cPalmdoc.compress(data) if data else b''
 
 
-def py_compress_doc(data):
+def py_compress_doc(data: bytes) -> bytes:
     out = io.BytesIO()
     i = 0
     ldata = len(data)
@@ -66,16 +70,16 @@ def py_compress_doc(data):
     return out.getvalue()
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import unittest
 
     class Test(unittest.TestCase):
-        def check(self, data):
+        def check(self, data: bytes) -> None:
             x = compress_doc(data)
             self.assertEqual(py_compress_doc(data), x, f'len(data)={len(data)}')
             self.assertEqual(decompress_doc(x), data)
 
-        def test_palmdoc_compression(self):
+        def test_palmdoc_compression(self) -> None:
             for test in [
                 b'abc\x03\x04\x05\x06ms',  # Test binary writing
                 b'a b c \xfed ',  # Test encoding of spaces
@@ -85,7 +89,7 @@ def find_tests():
             ]:
                 self.check(test)
 
-        def test_palmdoc_compression_matches_reference(self):
+        def test_palmdoc_compression_matches_reference(self) -> None:
             # The match finder in the C implementation must find the same
             # matches as the simple search in py_compress_doc, in particular
             # for repeated data and for repeats near the maximum distance.
@@ -104,7 +108,7 @@ def find_tests():
             self.check(b'abcdefghij' * 50)
             self.check(b'\0' * 500)
 
-        def test_palmdoc_compression_edge_cases(self):
+        def test_palmdoc_compression_edge_cases(self) -> None:
             self.assertEqual(cPalmdoc.compress(b''), b'')
             self.assertEqual(compress_doc(b''), b'')
             for size in range(1, 25):  # around the 10 byte margins at either end
@@ -115,7 +119,7 @@ def find_tests():
             self.check(bytes(range(1, 9)) * 3 + bytes(range(0x80, 0x100)) + b'end')
             self.check(b'abc\x01' + b'\x80' * 20 + b'abc\x01' + b'\x80' * 20)
 
-        def test_palmdoc_space_and_char_at_end(self):
+        def test_palmdoc_space_and_char_at_end(self) -> None:
             # A space followed by a character in 0x40-0x7F is packed into a
             # single byte, also when that character is the last byte of the input
             for test, expected in [

@@ -1,13 +1,21 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
-from contextlib import closing
+from concurrent.futures import ThreadPoolExecutor
 from functools import partial
-from multiprocessing.pool import ThreadPool
+from typing import TYPE_CHECKING
 
 from calibre import detect_ncpus as cpu_count
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Sequence
+
+    from calibre.ebooks.oeb.polish.container import Container
+
 DEBUG, INFO, WARN, ERROR, CRITICAL = range(5)
+
+#: A location of an error of the form: (name, lnum, col)
+type ErrorLocation = tuple[str, int | None, int | None]
 
 
 class BaseError:
@@ -22,11 +30,16 @@ class BaseError:
     current_location_index: int | None = None
     is_parsing_error = False
 
-    def __init__(self, msg, name, line=None, col=None):
+    def __init__(self, msg: str, name: str, line: int | None = None, col: int | None = None) -> None:
         self.msg, self.line, self.col = msg, line, col
         self.name = name
         # A list with entries of the form: (name, lnum, col)
-        self.all_locations = None
+        self.all_locations: list[ErrorLocation] | None = None
+
+    if TYPE_CHECKING:
+        # Errors that have INDIVIDUAL_FIX set implement this to fix the error,
+        # returning False if nothing was changed
+        def __call__(self, container: Container) -> bool | None: ...
 
     @property
     def rule_id(self) -> str:
@@ -41,13 +54,13 @@ class BaseError:
     def can_be_skipped(self) -> bool:
         return not self.is_parsing_error
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.__class__.__name__}:{self.name} ({self.line}, {self.col}):{self.msg}'
 
     __repr__ = __str__
 
 
-def worker(func, args):
+def worker[T](func: Callable[..., T], args: Sequence[object]) -> tuple[T | None, str | None]:
     try:
         result = func(*args)
         tb = None
@@ -59,13 +72,15 @@ def worker(func, args):
     return result, tb
 
 
-def run_checkers(func, args_list):
-    num = cpu_count()
-    pool = ThreadPool(num)
-    ans = []
-    with closing(pool):
+def run_checkers[T](func: Callable[..., Iterable[T]], args_list: Iterable[Sequence[object]]) -> list[T]:
+    # Use concurrent.futures rather than multiprocessing.pool.ThreadPool as the
+    # latter needs the multiprocessing resource tracker process for its
+    # semaphores, which breaks if that process is not running
+    ans: list[T] = []
+    with ThreadPoolExecutor(max_workers=cpu_count()) as pool:
         for result, tb in pool.map(partial(worker, func), args_list):
             if tb is not None:
                 raise Exception(f'Failed to run worker: \n{tb}')
+            assert result is not None  # tb is None so result is the return value of func
             ans.extend(result)
     return ans

@@ -5,6 +5,7 @@ Generates and writes an APNX page mapping file.
 """
 
 import struct
+from typing import TYPE_CHECKING
 
 from calibre import fsync, prints
 from calibre.constants import DEBUG
@@ -12,13 +13,15 @@ from calibre.devices.kindle.apnx_page_generator.generators.accurate_page_generat
 from calibre.devices.kindle.apnx_page_generator.generators.exact_page_generator import ExactPageGenerator
 from calibre.devices.kindle.apnx_page_generator.generators.fast_page_generator import FastPageGenerator
 from calibre.devices.kindle.apnx_page_generator.generators.pagebreak_page_generator import PagebreakPageGenerator
-from calibre.devices.kindle.apnx_page_generator.i_page_generator import IPageGenerator
-from calibre.devices.kindle.apnx_page_generator.pages import Pages
 from calibre.ebooks.mobi.reader.headers import MetadataHeader
 from calibre.ebooks.pdb.header import PdbHeaderReader
 from calibre.utils.localization import _
 from calibre.utils.logging import default_log
 from polyglot.builtins import as_bytes, as_unicode
+
+if TYPE_CHECKING:
+    from calibre.devices.kindle.apnx_page_generator.i_page_generator import IPageGenerator
+    from calibre.devices.kindle.apnx_page_generator.pages import Pages
 
 
 class APNXBuilder:
@@ -35,7 +38,7 @@ class APNXBuilder:
         # ExactPageGenerator.instance.name(): ExactPageGenerator.instance,
     }
 
-    def write_apnx(self, mobi_file_path: str, apnx_path: str, method: str | None = None, page_count: int = 0):
+    def write_apnx(self, mobi_file_path: str, apnx_path: str, method: str | None = None, page_count: int = 0) -> None:
         """
         If you want a fixed number of pages (such as from a custom column) then
         pass in a value to page_count, otherwise a count will be estimated
@@ -62,7 +65,7 @@ class APNXBuilder:
             fsync(apnxf)
 
     @staticmethod
-    def get_apnx_meta(mobi_file_path) -> dict[str, str]:
+    def get_apnx_meta(mobi_file_path: str) -> dict[str, str]:
         import uuid
 
         apnx_meta = {
@@ -96,7 +99,7 @@ class APNXBuilder:
         return apnx_meta
 
     @staticmethod
-    def generate_apnx(pages: Pages, apnx_meta) -> bytes:
+    def generate_apnx(pages: Pages, apnx_meta: dict[str, str]) -> bytes:
         apnx = b''
 
         if DEBUG:

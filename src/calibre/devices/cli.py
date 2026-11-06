@@ -11,13 +11,19 @@ import os
 import sys
 import time
 from optparse import OptionParser
+from typing import TYPE_CHECKING
 
 from calibre import __appname__, __version__, fsync, human_readable, prints
 from calibre.customize.ui import device_plugins
 from calibre.devices.errors import ArgumentError, DeviceError, DeviceLocked
 from calibre.devices.scanner import DeviceScanner
+from calibre.devices.usbms.cli import CLI
 from calibre.utils.config import device_prefs
 from polyglot.io import PolyglotStringIO
+
+if TYPE_CHECKING:
+    from calibre.devices.interface import DevicePlugin
+    from calibre.devices.usbms.cli import File
 
 MINIMUM_COL_WIDTH = 12  # : Minimum width of columns in ls output
 
@@ -25,7 +31,7 @@ MINIMUM_COL_WIDTH = 12  # : Minimum width of columns in ls output
 class FileFormatter:
     term = None
 
-    def __init__(self, file):
+    def __init__(self, file: File) -> None:
         self.is_dir = file.is_dir
         self.is_readonly = file.is_readonly
         self.size = file.size
@@ -35,7 +41,7 @@ class FileFormatter:
         self.path = file.path
 
     @property
-    def mode_string(self):
+    def mode_string(self) -> str:
         """The mode string for this file. There are only two modes read-only and read-write"""
         mode, x = '-', '-'
         if self.is_dir:
@@ -47,7 +53,7 @@ class FileFormatter:
         return mode
 
     @property
-    def isdir_name(self):
+    def isdir_name(self) -> str:
         """Return self.name + '/' if self is a directory"""
         name = self.name
         if self.is_dir:
@@ -55,7 +61,7 @@ class FileFormatter:
         return name
 
     @property
-    def name_in_color(self):
+    def name_in_color(self) -> str:
         """The name in ANSI text. Directories are blue, ebooks are green"""
         cname = self.name
         blue, green, normal = '', '', ''
@@ -70,22 +76,22 @@ class FileFormatter:
         return cname
 
     @property
-    def human_readable_size(self):
+    def human_readable_size(self) -> str:
         """File size in human readable form"""
         return human_readable(self.size)
 
     @property
-    def modification_time(self):
+    def modification_time(self) -> str:
         """Last modified time in the Linux ls -l format"""
         return time.strftime('%Y-%m-%d %H:%M', time.localtime(self.wtime))
 
     @property
-    def creation_time(self):
+    def creation_time(self) -> str:
         """Last modified time in the Linux ls -l format"""
         return time.strftime('%Y-%m-%d %H:%M', time.localtime(self.ctime))
 
 
-def info(dev):
+def info(dev: DevicePlugin) -> None:
     info = dev.get_device_information()
     print('Device name:     ', info[0])
     print('Device version:  ', info[1])
@@ -93,8 +99,8 @@ def info(dev):
     print('Mime type:       ', info[3])
 
 
-def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
-    def col_split(l, cols):  # split list l into columns
+def ls(dev: CLI, path: str, recurse: bool = False, human_readable_size: bool = False, ll: bool = False, cols: int = 0) -> str:
+    def col_split(l: list[str], cols: int) -> list[list[str]]:  # split list l into columns
         rows = len(l) // cols
         if len(l) % cols:
             rows += 1
@@ -103,14 +109,14 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
             m.append(l[i::rows])
         return m
 
-    def row_widths(table):  # Calculate widths for each column in the row-wise table
+    def row_widths(table: list[list[str]]) -> list[int]:  # Calculate widths for each column in the row-wise table
         tcols = len(table[0])
         rowwidths = [0 for i in range(tcols)]
         for row in table:
             c = 0
             for item in row:
                 rowwidths[c] = max(rowwidths[c], len(item))
-                c += 1
+                c += 1  # ruff: ignore[enumerate-for-loop]
         return rowwidths
 
     output = PolyglotStringIO()
@@ -169,7 +175,7 @@ def ls(dev, path, recurse=False, human_readable_size=False, ll=False, cols=0):
     return listing
 
 
-def shutdown_plugins():
+def shutdown_plugins() -> None:
     for d in device_plugins():
         try:
             d.shutdown()
@@ -177,7 +183,7 @@ def shutdown_plugins():
             pass
 
 
-def main():
+def main() -> int:
     from calibre.utils.terminal import geometry
 
     cols = geometry()[0]
@@ -276,6 +282,7 @@ def main():
             if len(args) != 1:
                 parser.print_help()
                 sys.exit(1)
+            assert isinstance(dev, CLI), 'This device does not support the mkdir command'
             dev.mkdir(args[0])
         elif command == 'ls':
             parser = OptionParser(usage='usage: %prog ls [options] path\nList files on the device\n\npath must begin with / or card:/')
@@ -306,6 +313,7 @@ def main():
             if len(args) != 1:
                 parser.print_help()
                 return 1
+            assert isinstance(dev, CLI), 'This device does not support the ls command'
             print(
                 ls(dev, args[0], recurse=options.recurse, ll=options.ll, human_readable_size=options.hrs, cols=cols),
                 end=' ',
@@ -341,7 +349,7 @@ def main():
                 if os.path.isdir(outfile):
                     outfile = os.path.join(outfile, path[path.rfind('/') + 1 :])
                 try:
-                    outfile = open(outfile, 'wb')
+                    outfile = open(outfile, 'wb')  # ruff: ignore[open-file-with-context-handler]
                 except OSError as e:
                     print(e, file=sys.stderr)
                     parser.print_help()
@@ -351,11 +359,12 @@ def main():
                 outfile.close()
             elif args[1].startswith('dev:'):
                 try:
-                    infile = open(args[0], 'rb')
+                    infile = open(args[0], 'rb')  # ruff: ignore[open-file-with-context-handler]
                 except OSError as e:
                     print(e, file=sys.stderr)
                     parser.print_help()
                     return 1
+                assert isinstance(dev, CLI), 'This device does not support copying files to it'
                 dev.put_file(infile, args[1][4:], replace_file=options.force)
                 infile.close()
             else:
@@ -374,7 +383,7 @@ def main():
                 path = args[0][:-1]
             else:
                 path = args[0]
-            outfile = sys.stdout
+            outfile = sys.stdout.buffer
             dev.get_file(path, outfile)
         elif command == 'rm':
             parser = OptionParser(
@@ -386,6 +395,7 @@ def main():
             if len(args) != 1:
                 parser.print_help()
                 return 1
+            assert isinstance(dev, CLI), 'This device does not support the rm command'
             dev.rm(args[0])
         elif command == 'touch':
             parser = OptionParser(
@@ -396,6 +406,7 @@ def main():
             if len(args) != 1:
                 parser.print_help()
                 return 1
+            assert isinstance(dev, CLI), 'This device does not support the touch command'
             dev.touch(args[0])
         elif command == 'test_file':
             parser = OptionParser(usage=('usage: %prog test_file path\nOpen device, copy file specified by path to device and then eject device.'))
@@ -406,13 +417,14 @@ def main():
             path = args[0]
             from calibre.ebooks.metadata.meta import get_metadata
 
-            mi = get_metadata(open(path, 'rb'), path.rpartition('.')[-1].lower())
+            with open(path, 'rb') as f:
+                mi = get_metadata(f, path.rpartition('.')[-1].lower())
             print(dev.upload_books([args[0]], [os.path.basename(args[0])], end_session=False, metadata=[mi]))
             dev.eject()
         else:
             parser.print_help()
-            if getattr(dev, 'handle', False):
-                dev.close()
+            if getattr(dev, 'handle', False) and (close := getattr(dev, 'close', None)) is not None:
+                close()
             return 1
     except DeviceLocked:
         print('The device is locked. Use the --unlock option', file=sys.stderr)

@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
-from collections import defaultdict, namedtuple
+from collections import defaultdict
 from operator import itemgetter
+from typing import NamedTuple
 
 from lxml import etree
 from qt.core import QCheckBox, QDialog, QDialogButtonBox, QFormLayout, QHBoxLayout, QIcon, QLabel, QLineEdit, QSpinBox, Qt, QToolButton
@@ -12,7 +13,10 @@ from calibre.utils.icu import sort_key
 from calibre.utils.localization import _
 from calibre.utils.xml_parse import safe_xml_fromstring
 
-Group = namedtuple('Group', 'title feeds')
+
+class Group(NamedTuple):
+    title: str
+    feeds: tuple[str, ...]
 
 
 def uniq(vals, kmap=lambda x: x):
@@ -47,7 +51,7 @@ def import_opml(raw, preserve_groups=True):
 
 
 class ImportOPML(QDialog):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         QDialog.__init__(self, parent=parent)
         self.l = l = QFormLayout(self)
         self.setLayout(l)
@@ -117,7 +121,7 @@ class ImportOPML(QDialog):
     def replace_existing(self):
         return self._replace_existing.isChecked()
 
-    def choose_file(self):
+    def choose_file(self) -> None:
         opml_files = choose_files(
             self,
             'opml-select-dialog',
@@ -145,7 +149,9 @@ class ImportOPML(QDialog):
 if __name__ == '__main__':
     import sys
 
-    for group in import_opml(open(sys.argv[-1], 'rb').read()):
+    with open(sys.argv[-1], 'rb') as f:
+        raw = f.read()
+    for group in import_opml(raw):
         print(group.title)
         for title, url in group.feeds:
             print(f'\t{title} - {url}')

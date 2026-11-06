@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Serbian (Latin) (http://app.transifex.com/calibre/calibre/language/sr@latin/)\n"
@@ -56,7 +56,7 @@ msgid ""
 msgstr "Traka sa alatkama za akcije pruža praktične prečice do često korišćenih akcija. Ako kliknete desnim tasterom miša na dugmad, možete izvršiti varijacije podrazumevane akcije. Imajte na umu da će traka sa alatkama za akcije izgledati malo drugačije u zavisnosti od toga da li imate čitač e-knjiga priključen na vaš računar."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:41
-#: ../../../__w/calibre/calibre/manual/gui.rst:916
+#: ../../../__w/calibre/calibre/manual/gui.rst:923
 msgid "Add books"
 msgstr "Dodaj knjige"
 
@@ -296,7 +296,7 @@ msgid ""
 msgstr "**Napravi katalog knjiga iz calibre biblioteke**: Omogućava vam da generišete kompletan spisak knjiga u vašoj biblioteci, uključujući sve metapodatke, u nekoliko formata kao što su XML, CSV, BiBTeX, EPUB i MOBI. Katalog će sadržati sve knjige koje se trenutno prikazuju u pregledu biblioteke. Ovo vam omogućava da koristite funkcije pretrage da ograničite knjige koje će biti katalogizovane. Pored toga, ako izaberete više knjiga pomoću miša, samo te knjige će biti dodate u katalog. Ako generišete katalog u formatu e-knjige kao što su EPUB, MOBI ili AZW3, sledeći put kada povežete vaš čitač e-knjiga, katalog će automatski biti poslat na uređaj. Za više informacija o tome kako katalozi funkcionišu, pročitajte :ref:`catalog_tut`."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:126
-#: ../../../__w/calibre/calibre/manual/gui.rst:946
+#: ../../../__w/calibre/calibre/manual/gui.rst:953
 msgid "View"
 msgstr "Prikaz"
 
@@ -316,7 +316,7 @@ msgid "vi"
 msgstr "vi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:141
-#: ../../../__w/calibre/calibre/manual/gui.rst:922
+#: ../../../__w/calibre/calibre/manual/gui.rst:929
 msgid "Send to device"
 msgstr "Pošalji na uređaj"
 
@@ -544,7 +544,7 @@ msgid "dvi"
 msgstr "dvi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:213
-#: ../../../__w/calibre/calibre/manual/gui.rst:942
+#: ../../../__w/calibre/calibre/manual/gui.rst:949
 msgid "Save to disk"
 msgstr "Sačuvaj na disku"
 
@@ -1210,7 +1210,7 @@ msgid ""
 "search box."
 msgstr "Možete lako kreirati napredne upite za pretragu koristeći :guilabel:`Dijalog za naprednu pretragu` kojem se pristupa klikom na dugme |sbi| sa leve strane polja za pretragu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:577
+#: ../../../__w/calibre/calibre/manual/gui.rst:584
 msgid "sbi"
 msgstr "sbi"
 
@@ -1238,24 +1238,29 @@ msgid ""
 "comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
 "1 Feb 2009. In a dd/mm/yyyy locale it is interpreted as 2 Jan 2009.  Some "
 "special date strings are available. The string ``today`` translates to "
-"today's date, whatever it is. The strings ``yesterday`` and ``thismonth`` "
-"(or the translated equivalent in the current language) also work. In "
-"addition, the string ``daysago`` (also translated) can be used to compare to"
-" a date some number of days ago. For example::"
-msgstr "Ako je datum dvosmislen, za poređenje datuma se koristi trenutni lokalitet. Na primer, u lokalitetu mm/dd/yyyy 2/1/2009 se tumači kao 1. feb 2009. U lokalitetu dd/mm/yyyy se tumači kao 2. jan 2009. Dostupni su neki posebni stringovi za datume. String ``today`` se prevodi u današnji datum, koji god da je. Stringovi ``yesterday`` i ``thismonth`` (ili prevedeni ekvivalent na trenutnom jeziku) takođe rade. Pored toga, string ``daysago`` (takođe preveden) može se koristiti za poređenje sa datumom pre određenog broja dana. Na primer::"
+"today's date, whatever it is. The strings ``yesterday``, ``thismonth``, "
+"``lastmonth``, ``thisyear`` and ``lastyear`` (or the translated equivalent "
+"in the current language) also work. In addition, the strings ``daysago``, "
+"``monthsago`` and ``yearsago`` (also translated) can be used to compare to a"
+" date some number of days, months or years ago. Searches using "
+"``thismonth``, ``lastmonth`` and ``monthsago`` compare only the year and "
+"month, while those using ``thisyear``, ``lastyear`` and ``yearsago`` compare"
+" only the year. For example::"
+msgstr "Ako je datum dvosmislen, za poređenje datuma koriste se trenutna regionalna podešavanja. Na primer, uz regionalni format mm/dd/yyyy, 2/1/2009 tumači se kao 1. februar 2009. Uz format dd/mm/yyyy tumači se kao 2. januar 2009. Dostupni su i posebni izrazi za datume. Izraz ``today`` predstavlja današnji datum, koji god da je. Izrazi ``yesterday``, ``thismonth``, ``lastmonth``, ``thisyear`` i ``lastyear`` (ili njihovi prevodi na trenutni jezik) takođe rade. Pored toga, izrazi ``daysago``, ``monthsago`` i ``yearsago`` (takođe prevedeni) mogu se koristiti za poređenje sa datumom pre određenog broja dana, meseci ili godina. Pretrage koje koriste ``thismonth``, ``lastmonth`` i ``monthsago`` porede samo godinu i mesec, dok one koje koriste ``thisyear``, ``lastyear`` i ``yearsago`` porede samo godinu. Na primer::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:476
+#: ../../../__w/calibre/calibre/manual/gui.rst:481
 msgid ""
 "To avoid potential problems with translated strings when using a non-English"
 " version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
-" and ``_daysago`` are always available. They are not translated."
-msgstr "Da bi se izbegli potencijalni problemi sa prevedenim stringovima kada se koristi verzija calibre-a koja nije na engleskom, stringovi ``_today``, ``_yesterday``, ``_thismonth`` i ``_daysago`` su uvek dostupni. Oni se ne prevode."
+" ``_lastmonth``, ``_thisyear``, ``_lastyear``, ``_daysago``, ``_monthsago`` "
+"and ``_yearsago`` are always available. They are not translated."
+msgstr "Da bi se izbegli mogući problemi sa prevedenim izrazima pri korišćenju verzije calibre-a koja nije na engleskom, izrazi ``_today``, ``_yesterday``, ``_thismonth``, ``_lastmonth``, ``_thisyear``, ``_lastyear``, ``_daysago``, ``_monthsago`` i ``_yearsago`` uvek su dostupni. Oni se ne prevode."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:478
+#: ../../../__w/calibre/calibre/manual/gui.rst:485
 msgid "*Searching dates and numeric values with relational comparisons*"
 msgstr "*Pretraga datuma i numeričkih vrednosti sa relacionim poređenjima*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:480
+#: ../../../__w/calibre/calibre/manual/gui.rst:487
 msgid ""
 "Dates and numeric fields support the relational operators ``=`` (equals), "
 "``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
@@ -1264,21 +1269,21 @@ msgid ""
 "all books rated 3 or higher."
 msgstr "Datumi i numerička polja podržavaju relacione operatore ``=`` (jednako), ``>`` (veće od), ``>=`` (veće ili jednako), ``<`` (manje od), ``<=`` (manje ili jednako), i ``!=`` (nije jednako). Polja za ocenu se smatraju numeričkim. Na primer, pretraga ``rating:>=3`` će pronaći sve knjige ocenjene sa 3 ili više."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:485
+#: ../../../__w/calibre/calibre/manual/gui.rst:492
 msgid ""
 "You can search for books that have a format of a certain size like this:"
 msgstr "Možete pretraživati knjige koje imaju format određene veličine ovako:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:487
+#: ../../../__w/calibre/calibre/manual/gui.rst:494
 msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
 msgstr "``size:>1.1M`` će pronaći knjige sa formatom većim od 1.1MB"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:488
+#: ../../../__w/calibre/calibre/manual/gui.rst:495
 msgid ""
 "``size:<=1K``  will find books with a format smaller than or equal to 1KB"
 msgstr "``size:<=1K`` će pronaći knjige sa formatom manjim ili jednakim 1KB"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:490
+#: ../../../__w/calibre/calibre/manual/gui.rst:497
 msgid ""
 "You can search for the number of items in multiple-valued fields such as "
 "tags using the character ``#`` then using the same syntax as numeric fields."
@@ -1286,11 +1291,11 @@ msgid ""
 "find all books with exactly 10 tags use ``tags:#=10``."
 msgstr "Možete pretraživati broj stavki u poljima sa više vrednosti kao što su oznake koristeći karakter ``#`` a zatim koristeći istu sintaksu kao za numerička polja. Na primer, da biste pronašli sve knjige sa više od 4 oznake koristite ``tags:#>4``. Da biste pronašli sve knjige sa tačno 10 oznaka koristite ``tags:#=10``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:492
+#: ../../../__w/calibre/calibre/manual/gui.rst:499
 msgid "*Series indices*"
 msgstr "*Indeksi serija*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:494
+#: ../../../__w/calibre/calibre/manual/gui.rst:501
 msgid ""
 "Series indices are searchable. For the standard series, the search name is "
 "``series_index``. For custom series columns, use the column search name "
@@ -1300,11 +1305,11 @@ msgid ""
 "relational operators described above."
 msgstr "Indeksi serija se mogu pretraživati. Za standardne serije, ime pretrage je ``series_index``. Za prilagođene kolone serija, koristite ime pretrage kolone praćeno sa _index. Na primer, da biste pretražili indekse za prilagođenu kolonu serije nazvanu ``#my_series``, koristili biste ime pretrage ``#my_series_index``. Indeksi serija su brojevi, tako da možete koristiti relacione operatore opisane iznad."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:499
+#: ../../../__w/calibre/calibre/manual/gui.rst:506
 msgid "*Saved searches*"
 msgstr "*Sačuvane pretrage*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:501
+#: ../../../__w/calibre/calibre/manual/gui.rst:508
 msgid ""
 "The special field ``search`` is used for :ref:`saved searches "
 "<saved_searches>`. If you save a search with the name \"My spouse's books\" "
@@ -1312,11 +1317,11 @@ msgid ""
 "the saved search. More about saving searches below."
 msgstr "Posebno polje ``search`` koristi se za :ref:`sačuvane pretrage <saved_searches>`. Ako sačuvate pretragu pod imenom \"My spouse's books\", možete uneti ``search:\"My spouse's books\"`` u polje za pretragu da biste je ponovo upotrebili. Više o čuvanju pretraga pročitajte u nastavku."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:505
+#: ../../../__w/calibre/calibre/manual/gui.rst:512
 msgid "*Virtual libraries*"
 msgstr "*Virtuelne biblioteke*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:507
+#: ../../../__w/calibre/calibre/manual/gui.rst:514
 msgid ""
 "The special field ``vl`` is used to search for books in a Virtual library. "
 "For example, ``vl:Read`` will find all the books in the *Read* Virtual "
@@ -1326,41 +1331,41 @@ msgid ""
 "Virtual library name contains spaces then surround it with quotes."
 msgstr "Specijalno polje ``vl`` se koristi za pretragu knjiga u Virtuelnoj biblioteci. Na primer, ``vl:Read`` će pronaći sve knjige u *Read* Virtuelnoj biblioteci. Pretraga ``vl:Read and vl:\"Science Fiction\"`` će pronaći sve knjige koje su u obe virtuelne biblioteke, *Read* i *Science Fiction*. Vrednost koja sledi nakon ``vl:`` mora biti ime Virtuelne biblioteke. Ako ime Virtuelne biblioteke sadrži razmake, stavite ga pod navodnike."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:513
+#: ../../../__w/calibre/calibre/manual/gui.rst:520
 msgid "*Whether a field has a value*"
 msgstr "*Da li polje ima vrednost*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:515
+#: ../../../__w/calibre/calibre/manual/gui.rst:522
 msgid ""
 "You can search for the absence or presence of a value for a field using "
 "\"true\" and \"false\". For example:"
 msgstr "Možete pretraživati odsustvo ili prisustvo vrednosti za polje koristeći \"true\" i \"false\". Na primer:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:517
+#: ../../../__w/calibre/calibre/manual/gui.rst:524
 msgid "``cover:false`` finds all books without a cover"
 msgstr "``cover:false`` pronalazi sve knjige bez korica"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:518
+#: ../../../__w/calibre/calibre/manual/gui.rst:525
 msgid "``series:true`` finds all books that are in a series"
 msgstr "``series:true`` pronalazi sve knjige koje su u seriji"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:519
+#: ../../../__w/calibre/calibre/manual/gui.rst:526
 msgid "``series:false`` finds all books that are not in a series"
 msgstr "``series:false`` pronalazi sve knjige koje nisu u seriji"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:520
+#: ../../../__w/calibre/calibre/manual/gui.rst:527
 msgid "``comments:false`` finds all books with an empty comment"
 msgstr "``comments:false`` pronalazi sve knjige sa praznim komentarom"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:521
+#: ../../../__w/calibre/calibre/manual/gui.rst:528
 msgid "``formats:false`` finds all books with no book files (empty records)"
 msgstr "``formats:false`` pronalazi sve knjige bez fajlova knjiga (prazni zapisi)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:523
+#: ../../../__w/calibre/calibre/manual/gui.rst:530
 msgid "*Yes/no custom columns*"
 msgstr "*Da/ne prilagođene kolone*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:525
+#: ../../../__w/calibre/calibre/manual/gui.rst:532
 msgid ""
 "Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
 "find all books with undefined values in the column. Searching for ``true`` "
@@ -1374,11 +1379,11 @@ msgid ""
 "``_empty`` are not translated."
 msgstr "Pretragom prilagođene kolone Da/ne pomoću ``false``, ``empty`` ili ``blank`` pronalaze se knjige bez definisane vrednosti u toj koloni. Pretragom pomoću ``true`` pronalaze se knjige sa definisanom vrednošću. ``yes`` ili ``checked`` pronalazi knjige sa vrednošću ``Yes``, a ``no`` ili ``unchecked`` knjige sa vrednošću ``No``. Reči ``yes``, ``no``, ``blank``, ``empty``, ``checked`` i ``unchecked`` se prevode; možete koristiti njihov srpski ili engleski oblik. Reči ``true`` i ``false`` i posebne vrednosti ``_yes``, ``_no`` i ``_empty`` ne prevode se."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:530
+#: ../../../__w/calibre/calibre/manual/gui.rst:537
 msgid "*Identifiers*"
 msgstr "*Identifikatori*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:532
+#: ../../../__w/calibre/calibre/manual/gui.rst:539
 msgid ""
 "Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
 "identifier has the form ``type:value``, as in ``isbn:123456789``. The "
@@ -1387,60 +1392,60 @@ msgid ""
 "the :ref:`search kinds <search_kinds>`. Examples:"
 msgstr "Identifikatori (npr. ISBN, DOI i LCCN) koriste proširenu sintaksu. Identifikator ima oblik ``type:value``, kao u ``isbn:123456789``. Proširena sintaksa omogućava da zasebno odredite tip i vrednost za pretragu. Za oba dela upita možete koristiti bilo koju od :ref:`vrsta pretrage <search_kinds>`. Primeri:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:534
+#: ../../../__w/calibre/calibre/manual/gui.rst:541
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "``identifiers:true`` će pronaći knjige sa bilo kojim identifikatorom."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:535
+#: ../../../__w/calibre/calibre/manual/gui.rst:542
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "``identifiers:false`` će pronaći knjige bez identifikatora."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:536
+#: ../../../__w/calibre/calibre/manual/gui.rst:543
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr "``identifiers:123`` će tražiti knjige sa bilo kojim tipom koji ima vrednost koja sadrži `123`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:537
+#: ../../../__w/calibre/calibre/manual/gui.rst:544
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr "``identifiers:=123456789`` će tražiti knjige sa bilo kojim tipom koji ima vrednost jednaku `123456789`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:538
+#: ../../../__w/calibre/calibre/manual/gui.rst:545
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to ISBN having any value"
 msgstr "``identifiers:=isbn:`` i ``identifiers:isbn:true`` će naći knjige sa tipom jednakim ISBN koje imaju bilo koju vrednost"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:539
+#: ../../../__w/calibre/calibre/manual/gui.rst:546
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to ISBN."
 msgstr "``identifiers:=isbn:false`` će naći knjige koje nemaju tip jednak ISBN."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:540
+#: ../../../__w/calibre/calibre/manual/gui.rst:547
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
 " value containing `123`."
 msgstr "``identifiers:=isbn:123`` će naći knjige sa tipom jednakim ISBN koje imaju vrednost koja sadrži `123`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:541
+#: ../../../__w/calibre/calibre/manual/gui.rst:548
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
 "having a value equal to `123456789`."
 msgstr "``identifiers:=isbn:=123456789`` će naći knjige sa tipom jednakim ISBN koje imaju vrednost jednaku `123456789`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:542
+#: ../../../__w/calibre/calibre/manual/gui.rst:549
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr "``identifiers:i:1`` će naći knjige sa tipom koji sadrži `i` i ima vrednost koja sadrži `1`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:544
+#: ../../../__w/calibre/calibre/manual/gui.rst:551
 msgid "*Categories visible in the Tag browser*"
 msgstr "*Kategorije vidljive u Pregledaču oznaka*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:546
+#: ../../../__w/calibre/calibre/manual/gui.rst:553
 msgid ""
 "The search ``in_tag_browser:true`` finds all books that are in categories "
 "(tags, authors, etc.) currently shown in the :guilabel:`Tag browser`. This "
@@ -1455,18 +1460,18 @@ msgid ""
 ":guilabel:`Show only books that have visible categories` entry."
 msgstr "Pretraga ``in_tag_browser:true`` pronalazi sve knjige koje su u kategorijama (oznake, autori, itd.) trenutno prikazanim u :guilabel:`Pregledaču oznaka`. Ovo je korisno ako postavite dve opcije :guilabel:`Podešavanja->Izgled i osećaj->Pregledač oznaka->Sakrij prazne kategorije` i :guilabel:`Pronađi prikazuje sve stavke koje se podudaraju`. Sa te dve postavljene opcije, obavljanje :guilabel:`Pronađi` u :guilabel:`Pregledaču oznaka` prikazuje samo kategorije koje sadrže stavke koje se podudaraju sa :guilabel:`Pronađi`. Zatim, pretraga ``in_tag_browser:true`` dodatno pronalazi knjige sa ovim kategorijama / stavkama. Ovu pretragu možete lako pokrenuti pritiskom na taster :kbd:`Ctrl+Alt+Shift+F` ili klikom na dugme za konfiguraciju u :guilabel:`Pregledaču oznaka` i biranjem stavke :guilabel:`Prikaži samo knjige koje imaju vidljive kategorije`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:558
+#: ../../../__w/calibre/calibre/manual/gui.rst:565
 msgid "*Search using templates*"
 msgstr "*Pretraga pomoću šablona*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:560
+#: ../../../__w/calibre/calibre/manual/gui.rst:567
 msgid ""
 "You can search using a template in :ref:`templatelangcalibre` instead of a "
 "metadata field. To do so you enter a template, a search type, and the value "
 "to search for. The syntax is::"
 msgstr "Možete pretraživati pomoću šablona u :ref:`templatelangcalibre` umesto polja metapodataka. Da biste to uradili, unesite šablon, tip pretrage i vrednost koju tražite. Sintaksa je::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:564
+#: ../../../__w/calibre/calibre/manual/gui.rst:571
 msgid ""
 "The ``template`` is any valid calibre template language template. The "
 "``search type`` must be one of ``t`` (text search), ``d`` (date search), "
@@ -1476,30 +1481,30 @@ msgid ""
 "search string if there are spaces anywhere in it."
 msgstr "``template`` je bilo koji važeći šablon jezika šablona calibre. ``search type`` mora biti jedno od ``t`` (tekstualna pretraga), ``d`` (pretraga datuma), ``n`` (numerička pretraga) ili ``b`` (postavljeno/nije postavljeno (logičko)). ``value`` je šta god želite i može koristiti :ref:`vrste pretrage <search_kinds>` opisane iznad za različite tipove pretrage. Morate staviti pod navodnike ceo niz za pretragu ako u njemu ima razmaka."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:566
+#: ../../../__w/calibre/calibre/manual/gui.rst:573
 msgid "Examples:"
 msgstr "Primeri:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:568
+#: ../../../__w/calibre/calibre/manual/gui.rst:575
 msgid ""
 "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
 "true when the ``kindle`` device is connected."
 msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- je tačno kada je povezan uređaj ``kindle``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:569
+#: ../../../__w/calibre/calibre/manual/gui.rst:576
 msgid ""
 "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
 "finds books with EPUB files larger than 1 MB."
 msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- pronalazi knjige sa EPUB datotekama većim od 1 MB."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:570
+#: ../../../__w/calibre/calibre/manual/gui.rst:577
 msgid ""
 "``template:\"program: select(formats_modtimes('iso'), "
 "'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
 "days ago."
 msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` -- pronalazi knjige sa EPUB datotekama novijim od 10 dana."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:571
+#: ../../../__w/calibre/calibre/manual/gui.rst:578
 msgid ""
 "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
 "0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
@@ -1507,7 +1512,7 @@ msgid ""
 " (``'``) and double quotes (``\"``) when constructing the search expression."
 msgstr "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != 0#@#:n:1\"\"\"`` -- pronalazi sve knjige koje sadrže ime serije u oznakama. Ovaj primer koristi super-citiranje jer šablon koristi i jednostruke (``'``) i dvostruke navodnike (``\"``) prilikom konstruisanja izraza za pretragu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:573
+#: ../../../__w/calibre/calibre/manual/gui.rst:580
 msgid ""
 "You can build template search queries easily using the :guilabel:`Advanced "
 "search dialog` accessed by clicking the button |sbi|. You can test templates"
@@ -1517,19 +1522,19 @@ msgid ""
 ":guilabel:`Preferences->Shortcuts`."
 msgstr "Možete lako praviti upite za pretragu šablona koristeći :guilabel:`Dijalog za naprednu pretragu` kojem se pristupa klikom na dugme |sbi|. Možete testirati šablone na određenim knjigama koristeći calibre :guilabel:`Provera šablona`, koji se može dodati na trake sa alatkama ili menije preko :guilabel:`Podešavanja → Trake sa alatkama i meniji`. Takođe mu se može dodeliti prečica na tastaturi preko :guilabel:`Podešavanja → Prečice`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:575
+#: ../../../__w/calibre/calibre/manual/gui.rst:582
 msgid "*Advanced search dialog*"
 msgstr "*Dijalog za naprednu pretragu*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:583
+#: ../../../__w/calibre/calibre/manual/gui.rst:590
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ":guilabel:`Dijalog za naprednu pretragu`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:588
+#: ../../../__w/calibre/calibre/manual/gui.rst:595
 msgid "Saving searches"
 msgstr "Čuvanje pretraga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:590
+#: ../../../__w/calibre/calibre/manual/gui.rst:597
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1539,18 +1544,18 @@ msgid ""
 "save the search."
 msgstr "calibre vam omogućava da sačuvate često korišćenu pretragu pod posebnim imenom i zatim je ponovo upotrebite jednim klikom. Da biste to uradili, kreirajte svoju pretragu bilo kucanjem u traku za pretragu ili korišćenjem Pregledača oznaka. Zatim ukucajte ime koje želite da date pretrazi u polje Sačuvane pretrage pored trake za pretragu. Kliknite na ikonu plus pored polja za sačuvane pretrage da biste sačuvali pretragu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:592
+#: ../../../__w/calibre/calibre/manual/gui.rst:599
 msgid ""
 "Now you can access your saved search in the Tag browser under "
 ":guilabel:`Saved searches`. A single click will allow you to reuse any "
 "arbitrarily complex search easily, without needing to re-create it."
 msgstr "Sada možete pristupiti svojoj sačuvanoj pretrazi u Pregledaču oznaka pod :guilabel:`Sačuvane pretrage`. Jedan klik će vam omogućiti da lako ponovo upotrebite bilo koju proizvoljno složenu pretragu, bez potrebe da je ponovo kreirate."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:595
+#: ../../../__w/calibre/calibre/manual/gui.rst:602
 msgid "Searching the full text of all books"
 msgstr "Pretraga celog teksta svih knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:600
+#: ../../../__w/calibre/calibre/manual/gui.rst:607
 msgid ""
 "|ftsb| calibre can *optionally* index the full text of books in the library "
 "to allow for instant searching of words inside any book. To use this "
@@ -1558,11 +1563,11 @@ msgid ""
 " bar."
 msgstr "|ftsb| calibre može po želji da indeksira pun tekst knjiga u biblioteci kako bi omogućio trenutnu pretragu reči unutar bilo koje knjige. Da biste koristili ovu funkcionalnost, kliknite na dugme :guilabel:`FT` na levoj ivici trake za pretragu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:597
+#: ../../../__w/calibre/calibre/manual/gui.rst:604
 msgid "ftsb"
 msgstr "ftsb"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:604
+#: ../../../__w/calibre/calibre/manual/gui.rst:611
 msgid ""
 "Then, enable indexing for the current library. Once indexing is complete you"
 " can search all the text in the full library. When you add new books to the "
@@ -1575,18 +1580,18 @@ msgid ""
 "calibre :guilabel:`E-book viewer`."
 msgstr "Zatim, omogućite indeksiranje za trenutnu biblioteku. Kada se indeksiranje završi, možete pretraživati sav tekst u celoj biblioteci. Kada dodate nove knjige u biblioteku, one će automatski biti indeksirane u pozadini. Ova pretraga vam omogućava da brzo pronađete sve knjige koje sadrže reč ili kombinaciju reči. Možete čak pretraživati reči koje se nalaze blizu drugih reči, kao što je prikazano u primerima u iskačućem prozoru za pretragu. Imajte na umu da će ovaj alat za pretragu pronaći samo jedno pojavljivanje upita za pretragu u određenoj knjizi, a ne izlistati svako pojavljivanje; za to je najbolje pretraživati unutar knjige koristeći calibre :guilabel:`Čitač e-knjiga`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:613
+#: ../../../__w/calibre/calibre/manual/gui.rst:620
 msgid ""
 "You can re-index an individual book by right clicking on the :guilabel:`Book"
 " details panel` in calibre and choosing :guilabel:`Re-index this book for "
 "full text searching`."
 msgstr "Možete ponovo indeksirati pojedinačnu knjigu desnim klikom na :guilabel:`Panel sa detaljima o knjizi` u calibre-u i odabirom :guilabel:`Ponovo indeksiraj knjigu za pretragu celog teksta`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:618
+#: ../../../__w/calibre/calibre/manual/gui.rst:625
 msgid "Virtual libraries"
 msgstr "Virtuelne biblioteke"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:620
+#: ../../../__w/calibre/calibre/manual/gui.rst:627
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1595,11 +1600,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr ":guilabel:`Virtuelna biblioteka` omogućava da prikažete samo deo knjiga iz svoje calibre biblioteke. Ovo je odličan način da podelite svoju veliku kolekciju knjiga na manje, upravljive delove. Da biste naučili kako da kreirate i koristite virtuelne biblioteke, pogledajte tutorijal: :ref:`virtual_libraries`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:627
+#: ../../../__w/calibre/calibre/manual/gui.rst:634
 msgid "Temporarily marking books"
 msgstr "Privremeno označavanje knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:629
+#: ../../../__w/calibre/calibre/manual/gui.rst:636
 msgid ""
 "You can temporarily mark arbitrary sets of books. Marked books will have a "
 "pin on them and can be found with the search ``marked:true``. To mark a book"
@@ -1607,7 +1612,7 @@ msgid ""
 "add the :guilabel:`Mark books` button to the main toolbar."
 msgstr "Možete privremeno označiti proizvoljne skupove knjiga. Označene knjige biće označene ikonom pribadače i mogu se pronaći pretragom ``marked:true``. Da biste označili knjigu, pritisnite :kbd:`Ctrl+M` ili idite na :guilabel:`Podešavanja → Trake sa alatkama i meniji` i dodajte dugme :guilabel:`Označi knjige` na glavnu traku sa alatkama."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:631
+#: ../../../__w/calibre/calibre/manual/gui.rst:638
 msgid ""
 "You can mark books with a specific text label by right clicking the "
 ":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
@@ -1615,11 +1620,11 @@ msgid ""
 "``marked:\"=the-text-you-entered\"``."
 msgstr "Možete označiti knjige određenom tekstualnom oznakom desnim klikom na dugme :guilabel:`Označi knjige` i odabirom :guilabel:`Označi knjige tekstualnom oznakom`. Knjige označene tekstualnim oznakama mogu se kasnije pronaći koristeći pretragu ``marked:\"=the-text-you-entered\"``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:636
+#: ../../../__w/calibre/calibre/manual/gui.rst:643
 msgid "Guessing metadata from file names"
 msgstr "Pogađanje metapodataka iz imena fajlova"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:638
+#: ../../../__w/calibre/calibre/manual/gui.rst:645
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1627,7 +1632,7 @@ msgid ""
 " contents`."
 msgstr "Normalno, calibre čita metapodatke iz samog fajla knjige. Međutim, može se podesiti da umesto toga čita metapodatke iz imena fajla, preko :guilabel:`Podešavanja->Uvoz/izvoz->Dodavanje knjiga->Čitaj metapodatke iz sadržaja fajla`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:642
+#: ../../../__w/calibre/calibre/manual/gui.rst:649
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
@@ -1636,30 +1641,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr "Takođe možete kontrolisati kako se metapodaci čitaju iz imena fajla koristeći regularne izraze (pogledajte :doc:`regexp`). U sekciji :guilabel:`Dodavanje knjiga` u dijalogu za konfiguraciju, možete navesti regularni izraz koji će calibre koristiti da pokuša da pogodi metapodatke iz imena fajlova e-knjiga koje dodajete u biblioteku. Podrazumevani regularni izraz je::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:650
+#: ../../../__w/calibre/calibre/manual/gui.rst:657
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "to jest, pretpostavlja da su svi karakteri do prvog ``-`` naslov knjige, a naredni karakteri autor knjige. Na primer, ime fajla::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:656
+#: ../../../__w/calibre/calibre/manual/gui.rst:663
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "biće protumačeno tako da ima naslov: Foundation and Earth i autora: Isaac Asimov"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:659
+#: ../../../__w/calibre/calibre/manual/gui.rst:666
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "Ako ime fajla ne sadrži crticu, gornji regularni izraz neće uspeti."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:665
+#: ../../../__w/calibre/calibre/manual/gui.rst:672
 msgid "Book details"
 msgstr "Detalji o knjizi"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:669
+#: ../../../__w/calibre/calibre/manual/gui.rst:676
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1669,51 +1674,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr "Prikaz detalja o knjizi prikazuje korice i sve metapodatke za trenutno izabranu knjigu. Može se sakriti preko dugmeta :guilabel:`Raspored` u donjem desnom uglu glavnog calibre prozora. Imena autora prikazana u panelu sa detaljima o knjizi se mogu kliknuti, podrazumevano će vas odvesti na Wikipedia stranicu za autora. Ovo se može prilagoditi desnim klikom na ime autora i izborom Upravljaj ovim autorom."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:676
+#: ../../../__w/calibre/calibre/manual/gui.rst:683
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "Amazon, WorldCat, etc. from where the metadata was downloaded."
 msgstr "Slično tome, ako preuzmete metapodatke za knjigu, panel sa detaljima o knjizi će vam automatski prikazati linkove koji vode do veb stranica za knjigu na Amazonu, WorldCat-u, itd. odakle su metapodaci preuzeti."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:680
+#: ../../../__w/calibre/calibre/manual/gui.rst:687
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr "Možete kliknuti desnim tasterom miša na pojedinačne formate e-knjiga u panelu sa detaljima o knjizi da biste ih izbrisali, uporedili sa njihovim originalnim verzijama, sačuvali na disk, otvorili u eksternom programu itd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:684
+#: ../../../__w/calibre/calibre/manual/gui.rst:691
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr "Možete promeniti korice knjige jednostavnim prevlačenjem i puštanjem slike na panel sa detaljima o knjizi. Ako želite da uredite sliku korica u eksternom programu, jednostavno kliknite desnim tasterom miša na nju i izaberite :guilabel:`Otvori pomoću`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:688
+#: ../../../__w/calibre/calibre/manual/gui.rst:695
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr "Takođe možete dodati fajlove e-knjiga trenutnoj knjizi prevlačenjem i puštanjem fajlova na panel sa detaljima o knjizi."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:691
+#: ../../../__w/calibre/calibre/manual/gui.rst:698
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr "Dvostruki klik na panel sa detaljima o knjizi otvoriće ga u zasebnom iskačućem prozoru."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:694
+#: ../../../__w/calibre/calibre/manual/gui.rst:701
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr "Na kraju, možete tačno prilagoditi koje informacije se prikazuju u panelu sa detaljima o knjizi preko :guilabel:`Podešavanja → Interfejs → Izgled → Detalji o knjizi`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:704
+#: ../../../__w/calibre/calibre/manual/gui.rst:711
 msgid "Tag browser"
 msgstr "Pregledač oznaka"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:708
+#: ../../../__w/calibre/calibre/manual/gui.rst:715
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1723,7 +1728,7 @@ msgid ""
 " series."
 msgstr "Pregledač oznaka vam omogućava da lako pregledate svoju kolekciju po autoru/oznakama/serijalima/itd. Ako kliknete na bilo koju stavku u pregledaču oznaka, na primer ime autora Isaac Asimov, onda je lista knjiga sa desne strane ograničena na prikazivanje knjiga tog autora. Možete kliknuti i na imena kategorija. Na primer, klikom na \"Series\" prikazaće se sve knjige u bilo kom serijalu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:710
+#: ../../../__w/calibre/calibre/manual/gui.rst:717
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1741,7 +1746,7 @@ msgid ""
 "learn how to construct basic search expressions."
 msgstr "Prvi klik na stavku će ograničiti listu knjiga na one koje sadrže ili se podudaraju sa stavkom. Nastavljajući gornji primer, klik na Isaac Asimov će prikazati knjige tog autora. Ponovni klik na stavku će promeniti ono što je prikazano, u zavisnosti od toga da li stavka ima podređene elemente (pogledajte potkategorije i hijerarhijske stavke ispod). Nastavljajući primer sa Isaac Asimov, ponovni klik na Isaac Asimov će ograničiti listu knjiga na one koje nije napisao Isaac Asimov. Treći klik će ukloniti ograničenje, prikazujući sve knjige. Ako držite pritisnute tastere :kbd:`Ctrl` ili :kbd:`Shift` i kliknete na više stavki, onda se kreiraju ograničenja na osnovu više stavki. Na primer, mogli biste da držite :kbd:`Ctrl` i kliknete na oznake History i Europe da biste pronašli knjige o evropskoj istoriji. Pregledač oznaka funkcioniše tako što konstruiše izraze za pretragu koji se automatski unose u traku za pretragu. Gledanje onoga što pregledač oznaka generiše je dobar način da naučite kako da konstruišete osnovne izraze za pretragu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:712
+#: ../../../__w/calibre/calibre/manual/gui.rst:719
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1750,7 +1755,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr "Stavke u pregledaču oznaka imaju delimično obojene ikone. Količina boje zavisi od prosečne ocene knjiga u toj kategoriji. Tako na primer, ako knjige autora Isaac Asimov imaju prosek od četiri zvezdice, ikona za Isaac Asimov u pregledaču oznaka biće obojena 4/5. Možete preći mišem preko ikone da biste videli prosečnu ocenu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:714
+#: ../../../__w/calibre/calibre/manual/gui.rst:721
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1769,38 +1774,38 @@ msgid ""
 "Favorites example above."
 msgstr "Stavke spoljnog nivoa u :guilabel:`Pregledač oznaka`-u, kao što su Autori i Serije, nazivaju se kategorije. Možete kreirati sopstvene kategorije, nazvane :guilabel:`Korisničke kategorije`, koje su korisne za organizovanje stavki. Na primer, možete koristiti :guilabel:`Uređivač korisničkih kategorija` (kliknite na dugme :guilabel:`Podesi` u donjem levom uglu :guilabel:`Pregledač oznaka`-a i izaberite :guilabel:`Upravljaj autorima, oznakama itd. → Korisničke kategorije`) da kreirate korisničku kategoriju pod nazivom ``Favorite Authors``, a zatim stavite stavke za vaše omiljene u tu kategoriju. Korisničke kategorije mogu imati potkategorije. Na primer, korisnička kategorija ``Favorites.Authors`` je potkategorija od ``Favorites``. Takođe možete imati ``Favorites.Series``, u kom slučaju će postojati dve potkategorije pod ``Favorites``. Potkategorije se mogu kreirati desnim klikom na korisničku kategoriju, biranjem :guilabel:`Dodaj potkategoriju u...` i unosom imena potkategorije; ili korišćenjem :guilabel:`Uređivač korisničkih kategorija`-a unosom imena kao u primeru Favorites iznad."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:716
+#: ../../../__w/calibre/calibre/manual/gui.rst:723
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr "Možete pretraživati korisničke kategorije na isti način kao i ugrađene kategorije, klikom na njih. Postoje četiri različite pretrage koje se smenjuju klikom:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:717
+#: ../../../__w/calibre/calibre/manual/gui.rst:724
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "\"sve što se podudara sa stavkom u kategoriji\" označeno jednim zelenim znakom plus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:718
+#: ../../../__w/calibre/calibre/manual/gui.rst:725
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "\"sve što se podudara sa stavkom u kategoriji ili njenim potkategorijama\" označeno sa dva zelena znaka plus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:719
+#: ../../../__w/calibre/calibre/manual/gui.rst:726
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "\"sve što se ne podudara sa stavkom u kategoriji\" prikazano jednim crvenim znakom minus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:720
+#: ../../../__w/calibre/calibre/manual/gui.rst:727
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "\"sve što se ne podudara sa stavkom u kategoriji ili njenim potkategorijama\" prikazano sa dva crvena znaka minus."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:722
+#: ../../../__w/calibre/calibre/manual/gui.rst:729
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1817,14 +1822,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr "Takođe je moguće kreirati hijerarhije unutar nekih tekstualnih kategorija kao što su oznake, serije i prilagođene kolone. Ove hijerarhije se prikazuju sa malim trouglom, omogućavajući da se podstavke sakriju. Da biste koristili hijerarhije stavki u kategoriji, prvo morate otići na :guilabel:`Podešavanja → Interfejs → Izgled` i uneti ime(na) kategorije u polje \"Categories with hierarchical items\". Kada se to uradi, stavke u toj kategoriji koje sadrže tačke biće prikazane pomoću malog trougla. Na primer, pretpostavimo da kreirate prilagođenu kolonu pod nazivom \"Genre\" i naznačite da sadrži hijerarhijske stavke. Kada to završite, stavke kao što su Mystery.Thriller i Mystery.English će se prikazati kao Mystery sa malim trouglom pored. Klikom na trougao prikazaće se Thriller i English kao podstavke. Pogledajte :ref:`Managing subgroups of books, for example \"genre\" <subgroups-tutorial>` za više informacija."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:724
+#: ../../../__w/calibre/calibre/manual/gui.rst:731
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr "Hijerarhijske stavke (stavke sa podređenim elementima) koriste iste četiri pretrage na klik kao i korisničke kategorije. Stavke koje nemaju podređene elemente koriste dve pretrage: \"sve što se podudara\" i \"sve što se ne podudara\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:726
+#: ../../../__w/calibre/calibre/manual/gui.rst:733
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the "
@@ -1836,7 +1841,7 @@ msgid ""
 "History will add the tag History to the book's tags."
 msgstr "Možete da prevlačite i puštate stavke u Pregledaču oznaka na Korisničke kategorije da biste ih dodali u tu kategoriju. Ako je izvor Korisnička kategorija, držanje tastera :kbd:`Shift` tokom prevlačenja će premestiti stavku u novu kategoriju. Takođe možete prevlačiti i puštati knjige sa liste knjiga na stavke u Pregledaču oznaka; puštanje knjige na stavku uzrokuje da se ta stavka automatski primeni na puštene knjige. Na primer, prevlačenje knjige na Isaac Asimov će postaviti autora te knjige na Isaac Asimov. Puštanje na oznaku History će dodati oznaku History u oznake knjige."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:728
+#: ../../../__w/calibre/calibre/manual/gui.rst:735
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1846,7 +1851,7 @@ msgid ""
 "rename authors and control how their names are sorted."
 msgstr "Možete lako pronaći bilo koju stavku u Pregledaču oznaka klikom na dugme za pretragu u donjem desnom uglu. Pored toga, možete kliknuti desnim tasterom miša na bilo koju stavku i izabrati jednu od nekoliko operacija. Neki primeri su sakrivanje, preimenovanje ili otvaranje dijaloga \"Upravljaj x\" koji vam omogućava da upravljate stavkama te vrste. Na primer, dijalog :guilabel:`Upravljaj autorima` vam omogućava da preimenujete autore i kontrolišete kako se njihova imena sortiraju."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:730
+#: ../../../__w/calibre/calibre/manual/gui.rst:737
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1855,7 +1860,7 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "Možete kontrolisati kako se stavke sortiraju u Pregledaču oznaka preko dugmeta :guilabel:`Podesi` u donjem levom uglu Pregledača oznaka. Možete izabrati sortiranje po imenu, prosečnoj oceni ili popularnosti (popularnost je broj knjiga sa stavkom u vašoj biblioteci; na primer, popularnost Isaac Asimov je broj knjiga u vašoj biblioteci od Isaac Asimov)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:732
+#: ../../../__w/calibre/calibre/manual/gui.rst:739
 msgid ""
 "You can use your own icons for categories and values in categories. To "
 "change the icon for a category, right-click on the category (the outer-level"
@@ -1864,27 +1869,27 @@ msgid ""
 "its default choose `Restore (category name) default icon`."
 msgstr "Možete koristiti sopstvene ikone za kategorije i vrednosti u kategorijama. Da biste promenili ikonu za kategoriju, kliknite desnim tasterom miša na kategoriju (stavka spoljnog nivoa) i izaberite `Promeni ikonu kategorije (ime kategorije)`. Otvoriće se dijalog u kojem možete izabrati sliku koja će se koristiti kao ikona. Da biste vratili ikonu na podrazumevanu, izaberite `Vrati podrazumevanu ikonu (ime kategorije)`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:735
+#: ../../../__w/calibre/calibre/manual/gui.rst:742
 msgid ""
 "To choose icons for values in categories, right-click on a value then choose"
 " `Manage icon for (value name)`. You will see a list of choices:"
 msgstr "Da biste izabrali ikone za vrednosti u kategorijama, kliknite desnim tasterom miša na vrednost, a zatim izaberite `Upravljaj ikonom za (ime vrednosti)`. Videćete listu izbora:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:737
+#: ../../../__w/calibre/calibre/manual/gui.rst:744
 msgid ""
 "`Choose an icon for this value but not its children`. A dialog will open "
 "where you choose an icon for the value. Children of that value will not "
 "inherit that icon."
 msgstr "`Izaberi ikonu za ovu vrednost, ali ne i za njenu decu`. Otvoriće se dijalog u kojem birate ikonu za vrednost. Deca te vrednosti neće naslediti tu ikonu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:738
+#: ../../../__w/calibre/calibre/manual/gui.rst:745
 msgid ""
 "`Choose an icon for this value and its children`. A dialog will open where "
 "you choose an icon for the value. Any children that don't have their own "
 "specified icon will inherit this icon."
 msgstr "`Izaberi ikonu za ovu vrednost i njenu decu`. Otvoriće se dijalog u kojem birate ikonu za vrednost. Sva deca koja nemaju svoju navedenu ikonu će naslediti ovu ikonu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:739
+#: ../../../__w/calibre/calibre/manual/gui.rst:746
 msgid ""
 "`Use the existing icon for this value but not its children`. This option is "
 "offered if the value already has an icon that is inherited by the value's "
@@ -1892,7 +1897,7 @@ msgid ""
 "children."
 msgstr "`Koristi postojeću ikonu za ovu vrednost, ali ne i za njenu decu`. Ova opcija se nudi ako vrednost već ima ikonu koju nasleđuju deca vrednosti. Njenim izborom ikona će se primeniti na vrednost, ali ne i na njenu decu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:740
+#: ../../../__w/calibre/calibre/manual/gui.rst:747
 msgid ""
 "`Use the existing icon for this value and its children`. This option is "
 "offered if the value already has an icon that is not inherited by the "
@@ -1900,50 +1905,50 @@ msgid ""
 " children."
 msgstr "`Koristi postojeću ikonu za ovu vrednost i njenu decu`. Ova opcija se nudi ako vrednost već ima ikonu koju ne nasleđuju deca te vrednosti. Njenim izborom ikona će se primeniti na vrednost i njenu decu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:741
+#: ../../../__w/calibre/calibre/manual/gui.rst:748
 msgid ""
 "`Use the default icon for this value`. This option is offered if the item "
 "has an icon. It removes the icon from the value and any children inheriting "
 "the icon. The default icon is what is specified below."
 msgstr "`Koristi podrazumevanu ikonu za ovu vrednost`. Ova opcija se nudi ako stavka ima ikonu. Ona uklanja ikonu sa vrednosti i sve dece koja nasleđuju ikonu. Podrazumevana ikona je ono što je navedeno ispod."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:742
+#: ../../../__w/calibre/calibre/manual/gui.rst:749
 msgid ""
 "`Reset all value icons to the default icon`. This option removes all item "
 "value icons for the category. It does not remove a template if one exists. "
 "There is no undo."
 msgstr "`Resetuj sve ikone vrednosti na podrazumevanu ikonu`. Ova opcija uklanja sve ikone vrednosti stavki za kategoriju. Ne uklanja šablon ako on postoji. Nema opoziva."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:743
+#: ../../../__w/calibre/calibre/manual/gui.rst:750
 msgid ""
 "`Use/edit a template to choose the default value icon`. This option permits "
 "you to provide a calibre template that returns the name of an icon file to "
 "be used as a default icon. The template can use the following variables:"
 msgstr "`Koristi/uredi šablon za izbor podrazumevane ikone vrednosti`. Ova opcija vam omogućava da obezbedite calibre šablon koji vraća ime datoteke ikone koja će se koristiti kao podrazumevana ikona. Šablon može koristiti sledeće promenljive:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:745
+#: ../../../__w/calibre/calibre/manual/gui.rst:752
 msgid ""
 "``category``: the lookup name of the category, for example ``authors``, "
 "``series``, ``#mycolumn``."
 msgstr "``category``: ime pretrage kategorije, na primer ``authors``, ``series``, ``#mycolumn``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:746
+#: ../../../__w/calibre/calibre/manual/gui.rst:753
 msgid "``value``: the value of the item within the category."
 msgstr "``value``: vrednost stavke unutar kategorije."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:747
+#: ../../../__w/calibre/calibre/manual/gui.rst:754
 msgid ""
 "``count``: the number of books with this value. If the value is part of a "
 "hierarchy then the count includes the children."
 msgstr "``count``: broj knjiga sa ovom vrednošću. Ako je vrednost deo hijerarhije, onda broj uključuje i decu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:748
+#: ../../../__w/calibre/calibre/manual/gui.rst:755
 msgid ""
 "``avg_rating``: the average rating for books with this value. If the value "
 "is part of a hierarchy then the average includes the children."
 msgstr "``avg_rating``: prosečna ocena za knjige sa ovom vrednošću. Ako je vrednost deo hijerarhije, onda prosek uključuje i decu."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:750
+#: ../../../__w/calibre/calibre/manual/gui.rst:757
 msgid ""
 "Book metadata such as title is not available. Template database functions "
 "such as :ref:`ff_book_count` and :ref:`ff_book_values` will work, but the "
@@ -1954,7 +1959,7 @@ msgid ""
 ":ref:`ff_virtual_libraries`."
 msgstr "Metapodaci knjige kao što je naslov nisu dostupni. Funkcije baze podataka šablona kao što su :ref:`ff_book_count` i :ref:`ff_book_values` će raditi, ali performanse možda neće biti prihvatljive. Sledeće funkcije šablona će raditi u GUI-ju, ali neće raditi na serveru sadržaja: :ref:`ff_connected_device_name`, :ref:`ff_connected_device_uuid`, :ref:`ff_current_virtual_library_name`, :ref:`ff_is_marked` i :ref:`ff_virtual_libraries`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:752
+#: ../../../__w/calibre/calibre/manual/gui.rst:759
 msgid ""
 "In the GUI, Python templates have full access to the calibre database. In "
 "the content server, Python templates have access to new API (see `API "
@@ -1962,51 +1967,51 @@ msgid ""
 "ebook.com/db_api.html>`_) but not the old API (LibraryDatabase)."
 msgstr "U GUI-ju, Python šabloni imaju pun pristup calibre bazi podataka. Na serveru sadržaja, Python šabloni imaju pristup novom API-ju (pogledajte `API dokumentaciju za interfejs baze podataka <https://manual.calibre-ebook.com/db_api.html>`_), ali ne i starom API-ju (LibraryDatabase)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:754
+#: ../../../__w/calibre/calibre/manual/gui.rst:761
 msgid ""
 "For example, this template specifies that any value in the clicked-on "
 "category beginning with `History` will have an icon named ``flower.png``::"
 msgstr "Na primer, ovaj šablon određuje da će svaka vrednost u kliknutoj kategoriji koja počinje sa `History` imati ikonu pod nazivom ``flower.png``::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:759
+#: ../../../__w/calibre/calibre/manual/gui.rst:766
 msgid ""
 "If a template returns the empty string (``''``) then the category icon will "
 "be used. If the template returns a file name that doesn't exist then no icon"
 " is displayed."
 msgstr "Ako šablon vrati prazan string (``''``), onda će se koristiti ikona kategorije. Ako šablon vrati ime datoteke koja ne postoji, ikona se neće prikazati."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:762
+#: ../../../__w/calibre/calibre/manual/gui.rst:769
 msgid ""
 "`Use the category icon as the default`. This option specifies that the icon "
 "used for the category should be used for any value that doesn't otherwise "
 "have an icon. Selecting this option removes any template icon specification."
 msgstr "`Koristi ikonu kategorije kao podrazumevanu`. Ova opcija određuje da ikona koja se koristi za kategoriju treba da se koristi za svaku vrednost koja inače nema ikonu. Izborom ove opcije uklanja se svaka specifikacija ikone šablona."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:765
+#: ../../../__w/calibre/calibre/manual/gui.rst:772
 msgid "The icon is chosen using the following hierarchy:"
 msgstr "Ikona se bira koristeći sledeću hijerarhiju:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:767
+#: ../../../__w/calibre/calibre/manual/gui.rst:774
 msgid "The icon specified for the value, if it exists."
 msgstr "Ikona navedena za vrednost, ako postoji."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:768
+#: ../../../__w/calibre/calibre/manual/gui.rst:775
 msgid ""
 "The icon specified for a parent node found by walking up the tree, if one "
 "exists."
 msgstr "Ikona navedena za roditeljski čvor pronađena penjanjem uz stablo, ako postoji."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:769
+#: ../../../__w/calibre/calibre/manual/gui.rst:776
 msgid ""
 "The icon from a template, if a template exists and it returns a non-empty "
 "string."
 msgstr "Ikona iz šablona, ako šablon postoji i vraća neprazan string."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:770
+#: ../../../__w/calibre/calibre/manual/gui.rst:777
 msgid "The default category icon, which always exists."
 msgstr "Podrazumevana ikona kategorije, koja uvek postoji."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:772
+#: ../../../__w/calibre/calibre/manual/gui.rst:779
 msgid ""
 "Icons are per-user, not per-library, stored in the calibre configuration "
 "folder. Icons for item values are stored in the :file:`tb_icons` subfolder. "
@@ -2014,11 +2019,11 @@ msgid ""
 ":file:`tb_icons`."
 msgstr "Ikone su po korisniku, a ne po biblioteci, i čuvaju se u fascikli za konfiguraciju calibre-a. Ikone za vrednosti stavki se čuvaju u podfascikli :file:`tb_icons`. Ikone koje koriste šabloni nalaze se u podfascikli :file:`template_icons` unutar :file:`tb_icons`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:780
+#: ../../../__w/calibre/calibre/manual/gui.rst:787
 msgid "Cover grid"
 msgstr "Mreža korica"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:785
+#: ../../../__w/calibre/calibre/manual/gui.rst:792
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -2030,11 +2035,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr "Možete podesiti da calibre prikazuje mrežu korica knjiga umesto liste knjiga, ako više volite da pregledate svoju kolekciju po koricama. :guilabel:`Mreža korica` se aktivira klikom na dugme :guilabel:`Raspored` u donjem desnom uglu glavnog prozora calibre-a. Možete prilagoditi veličine korica i pozadinu :guilabel:`Mreže korica` preko :guilabel:`Podešavanja->Interfejs->Izgled i osećaj->Mreža korica`. Možete čak podesiti da calibre prikazuje bilo koje navedeno polje ispod korica, kao što su naslov, autori, ocena ili prilagođena kolona koju ste sami osmislili."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:796
+#: ../../../__w/calibre/calibre/manual/gui.rst:803
 msgid "Bookshelf view"
 msgstr "Prikaz police za knjige"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:801
+#: ../../../__w/calibre/calibre/manual/gui.rst:808
 msgid ""
 "You can have calibre display your book collection in shelves, optionally "
 "grouped by authors/date/rating etc. The :guilabel:`Bookshelf view` is "
@@ -2044,11 +2049,11 @@ msgid ""
 "via :guilabel:`Preferences->Interface->Look & feel->Bookshelf`."
 msgstr "Možete podesiti da calibre prikazuje vašu kolekciju knjiga na policama, po želji grupisanu po autorima/datumu/oceni itd. :guilabel:`Prikaz police za knjige` se aktivira klikom na dugme :guilabel:`Raspored` u donjem desnom uglu glavnog prozora calibre-a. Možete prilagoditi sve u vezi sa prikazom, od pozadine, do teksta na hrbatima, fontova, itd. preko :guilabel:`Podešavanja->Interfejs->Izgled i osećaj->Polica za knjige`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:810
+#: ../../../__w/calibre/calibre/manual/gui.rst:817
 msgid "Cover browser"
 msgstr "Pregledač naslovnih strana"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:815
+#: ../../../__w/calibre/calibre/manual/gui.rst:822
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in a single row. This is activated via the "
@@ -2058,11 +2063,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr "Pored :guilabel:`Mreže korica` opisane iznad, možete takođe podesiti da calibre prikazuje korice u jednom redu. Ovo se aktivira preko dugmeta :guilabel:`Raspored` u donjem desnom uglu glavnog prozora. U :guilabel:`Podešavanja->Interfejs->Izgled i osećaj->Pregledač korica` možete promeniti broj prikazanih korica, pa čak i podesiti da se :guilabel:`Pregledač korica` prikazuje u zasebnom iskačućem prozoru."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:822
+#: ../../../__w/calibre/calibre/manual/gui.rst:829
 msgid "Adding notes for authors, series, etc."
 msgstr "Dodavanje beleški za autore, serije, itd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:827
+#: ../../../__w/calibre/calibre/manual/gui.rst:834
 msgid ""
 "You can add notes for an author/series/tag/publisher/etc. to your calibre "
 "library. To do so right click on the author name in the :guilabel:`Tag "
@@ -2070,7 +2075,7 @@ msgid ""
 "choose :guilabel:`Create note` or :guilabel:`Edit note`."
 msgstr "Možete dodati beleške za autora/seriju/oznaku/izdavača/itd. u vašu calibre biblioteku. Da biste to uradili, kliknite desnim tasterom miša na ime autora u :guilabel:`Pregledaču oznaka` sa leve strane ili na panelu :guilabel:`Detalji o knjizi` sa desne strane i izaberite :guilabel:`Kreiraj belešku` ili :guilabel:`Uredi belešku`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:832
+#: ../../../__w/calibre/calibre/manual/gui.rst:839
 msgid ""
 "A simple popup window will allow you to enter your notes using basic "
 "formatting and supporting links and images. Once a note for an author is "
@@ -2078,18 +2083,18 @@ msgid ""
 "clicking the little pencil icon next to the author name."
 msgstr "Jednostavan iskačući prozor će vam omogućiti da unesete svoje beleške koristeći osnovno formatiranje i podržavajući veze i slike. Kada se kreira beleška za autora, može se lako pregledati iz panela :guilabel:`Detalji o knjizi` klikom na malu ikonu olovke pored imena autora."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:837
+#: ../../../__w/calibre/calibre/manual/gui.rst:844
 msgid ""
 "You can search through all the notes in your library using the "
 ":guilabel:`Browse notes` tool by pressing :kbd:`Ctrl+Shift+N` or adding it "
 "to the toolbar via :guilabel:`Preferences->Toolbars & menus`."
 msgstr "Možete pretraživati sve beleške u vašoj biblioteci koristeći alatku :guilabel:`Pregledaj beleške` pritiskom na :kbd:`Ctrl+Shift+N` ili dodavanjem na traku sa alatkama preko :guilabel:`Podešavanja->Trake sa alatkama i meniji`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:847
+#: ../../../__w/calibre/calibre/manual/gui.rst:854
 msgid "Quickview"
 msgstr "Brzi prikaz"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:849
+#: ../../../__w/calibre/calibre/manual/gui.rst:856
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -2104,53 +2109,53 @@ msgid ""
 "the left, and all the books by the selected author on the right."
 msgstr "Ponekad želite da izaberete knjigu i brzo dobijete listu knjiga sa istom vrednošću u nekoj kategoriji (autori, oznake, izdavač, serija, itd.) kao trenutno izabrana knjiga, ali bez promene trenutnog prikaza biblioteke. To možete uraditi pomoću Brzog prikaza. Brzi prikaz otvara ili drugi prozor ili panel u listi knjiga koji prikazuje listu knjiga koje odgovaraju vrednosti od interesa. Na primer, pretpostavimo da želite da vidite listu svih knjiga sa jednim ili više autora trenutno izabrane knjige. Kliknite u ćeliju autora koja vas zanima i pritisnite taster 'Q' ili kliknite na ikonu :guilabel:`Brzi prikaz` u odeljku :guilabel:`Raspored` prozora calibre. Otvoriće se prozor ili panel sa svim autorima za tu knjigu sa leve strane, i svim knjigama izabranog autora sa desne strane."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:851
+#: ../../../__w/calibre/calibre/manual/gui.rst:858
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Primeri upotrebe Brzog prikaza: brzo proverite koje druge knjige:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:852
+#: ../../../__w/calibre/calibre/manual/gui.rst:859
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr "imaju neku oznaku(e) primenjenu na trenutno izabranu knjigu,"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:853
+#: ../../../__w/calibre/calibre/manual/gui.rst:860
 msgid "are in the same series as the current book"
 msgstr "su u istoj seriji kao trenutna knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:854
+#: ../../../__w/calibre/calibre/manual/gui.rst:861
 msgid "have the same values in a custom column as the current book"
 msgstr "imaju iste vrednosti u prilagođenoj koloni kao trenutna knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:855
+#: ../../../__w/calibre/calibre/manual/gui.rst:862
 msgid "are written by one of the same authors of the current book"
 msgstr "su napisane od strane jednog od istih autora trenutne knjige"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:856
+#: ../../../__w/calibre/calibre/manual/gui.rst:863
 msgid "share values in a custom column"
 msgstr "deli vrednosti u prilagođenoj koloni"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:858
+#: ../../../__w/calibre/calibre/manual/gui.rst:865
 msgid "There are two choices for where the Quickview information appears:"
 msgstr "Informacije Brzog prikaza mogu se prikazati na dva mesta:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:860
+#: ../../../__w/calibre/calibre/manual/gui.rst:867
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr "Može se otvoriti \"otkačeno\": preko calibre prozora i ostaće otvoreno dok ga sami ne zatvorite."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:861
+#: ../../../__w/calibre/calibre/manual/gui.rst:868
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr "Može se otvoriti \"zakačeno\": kao panel u delu liste knjiga glavnog calibre prozora."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:863
+#: ../../../__w/calibre/calibre/manual/gui.rst:870
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr "Možete premeštati prozor iz zakačenog u otkačeno stanje po želji koristeći dugme \"Zakači/Otkači\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:865
+#: ../../../__w/calibre/calibre/manual/gui.rst:872
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -2163,21 +2168,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr "Panel Brzog prikaza može ostati trajno otvoren, u kom slučaju prati pomeranja na listi knjiga. Na primer, ako kliknete u prikazu calibre biblioteke na kolonu kategorije (oznake, serije, izdavač, autori, itd.) za neku knjigu, sadržaj prozora Brzog prikaza će se promeniti da vam u levom panelu prikaže vrednosti u toj kategoriji za izabranu knjigu (npr. oznake za tu knjigu). Prva stavka na toj listi će biti izabrana, a Brzi prikaz će vam u desnom panelu prikazati sve knjige u vašoj biblioteci koje koriste tu vrednost. Kliknite na drugu vrednost u levom panelu da vidite knjige sa tom drugom vrednošću."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:867
+#: ../../../__w/calibre/calibre/manual/gui.rst:874
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr "Dvaput kliknite na knjigu u prozoru Brzog prikaza da izaberete tu knjigu u prikazu biblioteke. Ovo će takođe promeniti prikaz stavki u prozoru Brzog prikaza (levi panel) da prikaže stavke u novoizabranoj knjizi."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:869
+#: ../../../__w/calibre/calibre/manual/gui.rst:876
 msgid ""
 ":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
 " to open the edit metadata dialog on that book in the calibre window. The "
 "edited book will be Quickview'ed when you close the edit metadata dialog."
 msgstr ":kbd:`Shift-` ili :kbd:`Ctrl-` dvostruki klik na knjigu u prozoru Brzog prikaza otvara dijalog za uređivanje metapodataka za tu knjigu u calibre prozoru. Uređena knjiga će biti prikazana u Brzom prikazu kada zatvorite dijalog za uređivanje metapodataka."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:871
+#: ../../../__w/calibre/calibre/manual/gui.rst:878
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -2186,47 +2191,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "Možete videti da li kolona može biti prikazana u Brzom prikazu tako što ćete preći mišem preko naslova kolone i pogledati opis alatke za taj naslov. Takođe možete znati tako što ćete kliknuti desnim tasterom miša na naslov kolone da vidite da li je opcija \"Brzi prikaz\" prikazana u meniju, u kom slučaju je biranje te opcije Brzog prikaza ekvivalentno pritiskanju 'Q' u trenutnoj ćeliji."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:873
+#: ../../../__w/calibre/calibre/manual/gui.rst:880
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr "Opcije (u :guilabel:`Podešavanja->Izgled i osećaj->Brzi prikaz`):"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:875
+#: ../../../__w/calibre/calibre/manual/gui.rst:882
 msgid ""
 "Respect (or not) the current Virtual library. If checked then Quickview "
 "shows only books in the current Virtual library. Default: respect Virtual "
 "libraries"
 msgstr "Poštuj (ili ne) trenutnu Virtuelnu biblioteku. Ako je označeno, Brzi prikaz prikazuje samo knjige u trenutnoj Virtuelnoj biblioteci. Podrazumevano: poštuj Virtuelne biblioteke"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:876
+#: ../../../__w/calibre/calibre/manual/gui.rst:883
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr "Promeni sadržaj prozora Brzog prikaza kada se kolona promeni na listi knjiga pomoću tastera sa strelicama. Podrazumevano: ne prati promene napravljene tasterima sa strelicama"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:877
+#: ../../../__w/calibre/calibre/manual/gui.rst:884
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr "Promeni kolonu koja se \"brzo pregleda\" kada se dvaput klikne na ćeliju u prozoru Brzog prikaza. U suprotnom se knjiga menja, ali kolona koja se ispituje ne. Podrazumevano: promeni kolonu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:878
+#: ../../../__w/calibre/calibre/manual/gui.rst:885
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr "Promeni kolonu koja se \"brzo pregleda\" u trenutnu kolonu kada se pritisne taster Enter u panelu Brzog prikaza. U suprotnom se knjiga menja, ali kolona koja se ispituje ne. Podrazumevano: promeni kolonu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:879
+#: ../../../__w/calibre/calibre/manual/gui.rst:886
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr "Izaberite koje kolone se prikazuju u prozoru/panelu Brzog prikaza."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:888
+#: ../../../__w/calibre/calibre/manual/gui.rst:895
 msgid "Jobs"
 msgstr "Poslovi"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:892
+#: ../../../__w/calibre/calibre/manual/gui.rst:899
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -2236,11 +2241,11 @@ msgid ""
 "have completed successfully."
 msgstr "Panel poslova prikazuje broj trenutno pokrenutih poslova. Poslovi su zadaci koji se izvršavaju u zasebnom procesu. Oni uključuju konvertovanje e-knjiga i komunikaciju sa vašim uređajem za čitanje. Možete kliknuti na panel poslova da biste pristupili listi poslova. Kada se posao završi, možete videti detaljan dnevnik tog posla dvostrukim klikom na njega u listi. Ovo je korisno za otklanjanje grešaka u poslovima koji se možda nisu uspešno završili."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:899
+#: ../../../__w/calibre/calibre/manual/gui.rst:906
 msgid "Keyboard shortcuts"
 msgstr "Prečice na tastaturi"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:901
+#: ../../../__w/calibre/calibre/manual/gui.rst:908
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -2250,494 +2255,494 @@ msgid ""
 ":guilabel:`Preferences`."
 msgstr "calibre ima nekoliko prečica na tastaturi koje vam štede vreme i pokrete mišem. Ove prečice su aktivne u prikazu liste knjiga (kada ne uređujete detalje određene knjige), i većina njih utiče na naslov koji ste izabrali. calibre E-book viewer :ref:`ima svoje prečice <viewer_shortcuts>` koje se mogu prilagoditi u :guilabel:`Podešavanja` pregledača."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:905
+#: ../../../__w/calibre/calibre/manual/gui.rst:912
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr "Napomena: calibre prečice na tastaturi ne zahtevaju modifikatorski taster (Command, Option, Control, itd.), osim ako nije posebno naznačeno. Potrebno je samo da pritisnete taster sa slovom, npr. E za uređivanje."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:907
+#: ../../../__w/calibre/calibre/manual/gui.rst:914
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "Prečice na tastaturi za glavni calibre program"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:911
+#: ../../../__w/calibre/calibre/manual/gui.rst:918
 msgid "Keyboard shortcut"
 msgstr "Prečica na tastaturi"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:912
+#: ../../../__w/calibre/calibre/manual/gui.rst:919
 msgid "Action"
 msgstr "Akcija"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:913
+#: ../../../__w/calibre/calibre/manual/gui.rst:920
 msgid ":kbd:`F2 (Enter for macOS)`"
 msgstr ":kbd:`F2 (Enter za macOS)`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:914
+#: ../../../__w/calibre/calibre/manual/gui.rst:921
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "Uredite metapodatke trenutno izabranog polja u listi knjiga."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:915
+#: ../../../__w/calibre/calibre/manual/gui.rst:922
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:917
+#: ../../../__w/calibre/calibre/manual/gui.rst:924
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Shift+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:918
+#: ../../../__w/calibre/calibre/manual/gui.rst:925
 msgid "Add formats to the selected books"
 msgstr "Dodaj formate izabranim knjigama"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:919
+#: ../../../__w/calibre/calibre/manual/gui.rst:926
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:920
+#: ../../../__w/calibre/calibre/manual/gui.rst:927
 msgid "Convert selected books"
 msgstr "Pretvori izabrane knjige"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:921
+#: ../../../__w/calibre/calibre/manual/gui.rst:928
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:923
+#: ../../../__w/calibre/calibre/manual/gui.rst:930
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Del`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:924
+#: ../../../__w/calibre/calibre/manual/gui.rst:931
 msgid "Remove selected books"
 msgstr "Ukloni izabrane knjige"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:925
+#: ../../../__w/calibre/calibre/manual/gui.rst:932
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:926
+#: ../../../__w/calibre/calibre/manual/gui.rst:933
 msgid "Edit metadata of selected books"
 msgstr "Uredi metapodatke izabranih knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:927
+#: ../../../__w/calibre/calibre/manual/gui.rst:934
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:928
+#: ../../../__w/calibre/calibre/manual/gui.rst:935
 msgid "Get books"
 msgstr "Preuzmi knjige"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:929
+#: ../../../__w/calibre/calibre/manual/gui.rst:936
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:930
+#: ../../../__w/calibre/calibre/manual/gui.rst:937
 msgid "Show Book details"
 msgstr "Prikaži detalje o knjizi"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:931
+#: ../../../__w/calibre/calibre/manual/gui.rst:938
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:932
+#: ../../../__w/calibre/calibre/manual/gui.rst:939
 msgid "Edit Table of Contents"
 msgstr "Uredi sadržaj"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:933
+#: ../../../__w/calibre/calibre/manual/gui.rst:940
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:934
+#: ../../../__w/calibre/calibre/manual/gui.rst:941
 msgid "Merge selected records"
 msgstr "Spoji izabrane zapise"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:935
+#: ../../../__w/calibre/calibre/manual/gui.rst:942
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:936
+#: ../../../__w/calibre/calibre/manual/gui.rst:943
 msgid "Merge selected records, keeping originals"
 msgstr "Spoji izabrane zapise, zadržavajući originale"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:937
+#: ../../../__w/calibre/calibre/manual/gui.rst:944
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:938
+#: ../../../__w/calibre/calibre/manual/gui.rst:945
 msgid "Open containing folder"
 msgstr "Otvori fasciklu koja sadrži knjigu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:939
+#: ../../../__w/calibre/calibre/manual/gui.rst:946
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:940
+#: ../../../__w/calibre/calibre/manual/gui.rst:947
 msgid "Polish books"
 msgstr "Ulepšavanje knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:941
+#: ../../../__w/calibre/calibre/manual/gui.rst:948
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:943
+#: ../../../__w/calibre/calibre/manual/gui.rst:950
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:944
+#: ../../../__w/calibre/calibre/manual/gui.rst:951
 msgid "Edit book"
 msgstr "Uredi knjigu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:945
+#: ../../../__w/calibre/calibre/manual/gui.rst:952
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:947
+#: ../../../__w/calibre/calibre/manual/gui.rst:954
 msgid ":kbd:`Shift+V`"
 msgstr ":kbd:`Shift+V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:948
+#: ../../../__w/calibre/calibre/manual/gui.rst:955
 msgid "View last read book"
 msgstr "Prikaži poslednju čitanu knjigu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:949
+#: ../../../__w/calibre/calibre/manual/gui.rst:956
 msgid ":kbd:`Ctrl+Alt+A`"
 msgstr ":kbd:`Ctrl+Alt+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:950
+#: ../../../__w/calibre/calibre/manual/gui.rst:957
 msgid "Ask AI about the currently selected books"
 msgstr "Pitaj AI o trenutno izabranim knjigama"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:951
+#: ../../../__w/calibre/calibre/manual/gui.rst:958
 msgid ":kbd:`Alt+V/Cmd+V for macOS`"
 msgstr ":kbd:`Alt+V/Cmd+V za macOS`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:952
+#: ../../../__w/calibre/calibre/manual/gui.rst:959
 msgid "View specific format"
 msgstr "Prikaži određeni format"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:953
+#: ../../../__w/calibre/calibre/manual/gui.rst:960
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Shift+J`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:954
+#: ../../../__w/calibre/calibre/manual/gui.rst:961
 msgid "Toggle jobs list"
 msgstr "Uključi/isključi listu poslova"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:955
+#: ../../../__w/calibre/calibre/manual/gui.rst:962
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Shift+B`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:956
+#: ../../../__w/calibre/calibre/manual/gui.rst:963
 msgid "Toggle Cover browser"
 msgstr "Uključi/isključi pregledač korica"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:957
+#: ../../../__w/calibre/calibre/manual/gui.rst:964
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Shift+D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:958
+#: ../../../__w/calibre/calibre/manual/gui.rst:965
 msgid "Toggle Book details panel"
 msgstr "Uključi/isključi panel sa detaljima o knjizi"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:959
+#: ../../../__w/calibre/calibre/manual/gui.rst:966
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Shift+T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:960
+#: ../../../__w/calibre/calibre/manual/gui.rst:967
 msgid "Toggle Tag browser"
 msgstr "Uključi/isključi pregledač oznaka"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:961
+#: ../../../__w/calibre/calibre/manual/gui.rst:968
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Shift+G`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:962
+#: ../../../__w/calibre/calibre/manual/gui.rst:969
 msgid "Toggle Cover grid"
 msgstr "Uključi/isključi mrežu korica"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:963
+#: ../../../__w/calibre/calibre/manual/gui.rst:970
 msgid ":kbd:`Alt+Shift+H`"
 msgstr ":kbd:`Alt+Shift+H`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:964
+#: ../../../__w/calibre/calibre/manual/gui.rst:971
 msgid "Toggle Bookshelf"
 msgstr "Uključi/isključi policu sa knjigama"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:965
+#: ../../../__w/calibre/calibre/manual/gui.rst:972
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:966
+#: ../../../__w/calibre/calibre/manual/gui.rst:973
 msgid "Show books by the same author as the current book"
 msgstr "Prikaži knjige istog autora kao trenutna knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:967
+#: ../../../__w/calibre/calibre/manual/gui.rst:974
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:968
+#: ../../../__w/calibre/calibre/manual/gui.rst:975
 msgid "Show books with the same tags as current book"
 msgstr "Prikaži knjige sa istim oznakama kao trenutna knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:969
+#: ../../../__w/calibre/calibre/manual/gui.rst:976
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:970
+#: ../../../__w/calibre/calibre/manual/gui.rst:977
 msgid "Show books by the same publisher as current book"
 msgstr "Prikaži knjige istog izdavača kao trenutna knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:971
+#: ../../../__w/calibre/calibre/manual/gui.rst:978
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Shift+S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:972
+#: ../../../__w/calibre/calibre/manual/gui.rst:979
 msgid "Show books in the same series as current book"
 msgstr "Prikaži knjige u istom serijalu kao trenutna knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:973
+#: ../../../__w/calibre/calibre/manual/gui.rst:980
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:974
+#: ../../../__w/calibre/calibre/manual/gui.rst:981
 msgid "Focus the Search bar"
 msgstr "Fokusiraj traku za pretragu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:975
+#: ../../../__w/calibre/calibre/manual/gui.rst:982
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ":kbd:`Shift+Ctrl+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:976
+#: ../../../__w/calibre/calibre/manual/gui.rst:983
 msgid "Open the Advanced search dialog"
 msgstr "Otvori dijalog za naprednu pretragu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:977
+#: ../../../__w/calibre/calibre/manual/gui.rst:984
 msgid ":kbd:`Shift+Alt+F`"
 msgstr ":kbd:`Shift+Alt+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:978
+#: ../../../__w/calibre/calibre/manual/gui.rst:985
 msgid "Toggle the Search bar"
 msgstr "Uključi/isključi traku za pretragu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:979
+#: ../../../__w/calibre/calibre/manual/gui.rst:986
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:980
+#: ../../../__w/calibre/calibre/manual/gui.rst:987
 msgid "Clear the current search"
 msgstr "Obriši trenutnu pretragu"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:981
+#: ../../../__w/calibre/calibre/manual/gui.rst:988
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Shift+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:982
+#: ../../../__w/calibre/calibre/manual/gui.rst:989
 msgid "Focus the book list"
 msgstr "Fokusiraj listu knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:983
+#: ../../../__w/calibre/calibre/manual/gui.rst:990
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:984
+#: ../../../__w/calibre/calibre/manual/gui.rst:991
 msgid "Clear the Virtual library"
 msgstr "Očisti virtuelnu biblioteku"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:985
+#: ../../../__w/calibre/calibre/manual/gui.rst:992
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:986
+#: ../../../__w/calibre/calibre/manual/gui.rst:993
 msgid "Clear the additional restriction"
 msgstr "Očisti dodatno ograničenje"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:987
+#: ../../../__w/calibre/calibre/manual/gui.rst:994
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:988
+#: ../../../__w/calibre/calibre/manual/gui.rst:995
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "Napravi privremenu virtuelnu biblioteku na osnovu trenutne pretrage"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:989
+#: ../../../__w/calibre/calibre/manual/gui.rst:996
 msgid ":kbd:`Ctrl+Tab`"
 msgstr ":kbd:`Ctrl+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:990
+#: ../../../__w/calibre/calibre/manual/gui.rst:997
 msgid "Select the next Virtual library tab"
 msgstr "Izaberi sledeću karticu virtuelne biblioteke"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:991
+#: ../../../__w/calibre/calibre/manual/gui.rst:998
 msgid ":kbd:`Ctrl+Shift+Tab`"
 msgstr ":kbd:`Ctrl+Shift+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:992
+#: ../../../__w/calibre/calibre/manual/gui.rst:999
 msgid "Select the previous Virtual library tab"
 msgstr "Izaberi prethodnu karticu virtuelne biblioteke"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:993
+#: ../../../__w/calibre/calibre/manual/gui.rst:1000
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N or F3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:994
+#: ../../../__w/calibre/calibre/manual/gui.rst:1001
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "Pronađi sledeću knjigu koja se poklapa sa trenutnom pretragom (radi samo ako je isticanje pretrage uključeno u postavkama pretrage)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:995
+#: ../../../__w/calibre/calibre/manual/gui.rst:1002
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Shift+N ili Shift+F3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:996
+#: ../../../__w/calibre/calibre/manual/gui.rst:1003
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "Pronađi prethodnu knjigu koja se poklapa sa trenutnom pretragom (radi samo ako je isticanje pretrage uključeno u postavkama pretrage)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:997
+#: ../../../__w/calibre/calibre/manual/gui.rst:1004
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:998
+#: ../../../__w/calibre/calibre/manual/gui.rst:1005
 msgid "Download metadata and covers"
 msgstr "Preuzmi metapodatke i korice"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:999
+#: ../../../__w/calibre/calibre/manual/gui.rst:1006
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1000
+#: ../../../__w/calibre/calibre/manual/gui.rst:1007
 msgid "Restart calibre"
 msgstr "Ponovo pokreni calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1001
+#: ../../../__w/calibre/calibre/manual/gui.rst:1008
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Shift+R`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1002
+#: ../../../__w/calibre/calibre/manual/gui.rst:1009
 msgid "Restart calibre in debug mode"
 msgstr "Ponovo pokreni calibre u režimu za otklanjanje grešaka"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1003
+#: ../../../__w/calibre/calibre/manual/gui.rst:1010
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Shift+Ctrl+E`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1004
+#: ../../../__w/calibre/calibre/manual/gui.rst:1011
 msgid "Add empty books to calibre"
 msgstr "Dodaj prazne knjige u calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1005
+#: ../../../__w/calibre/calibre/manual/gui.rst:1012
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1006
+#: ../../../__w/calibre/calibre/manual/gui.rst:1013
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "Prebaci status označeno/neoznačeno na izabranim knjigama"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1007
+#: ../../../__w/calibre/calibre/manual/gui.rst:1014
 msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
 msgstr ":kbd:`Ctrl+/` ili :kbd:`Ctrl+Alt+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1008
+#: ../../../__w/calibre/calibre/manual/gui.rst:1015
 msgid "Open the popup to search the full text of all books in the library"
 msgstr "Otvori iskačući prozor za pretragu celog teksta svih knjiga u biblioteci"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1009
+#: ../../../__w/calibre/calibre/manual/gui.rst:1016
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1010
+#: ../../../__w/calibre/calibre/manual/gui.rst:1017
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "Otvori iskačući prozor Brzog prikaza za pregled knjiga u srodnim serijalima/oznakama/itd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1011
+#: ../../../__w/calibre/calibre/manual/gui.rst:1018
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Shift+Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1012
+#: ../../../__w/calibre/calibre/manual/gui.rst:1019
 msgid "Focus the opened Quick View panel"
 msgstr "Fokusiraj otvoreni panel za brzi prikaz"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1013
+#: ../../../__w/calibre/calibre/manual/gui.rst:1020
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Shift+S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1014
+#: ../../../__w/calibre/calibre/manual/gui.rst:1021
 msgid "Perform a search in the Quick View panel"
 msgstr "Izvrši pretragu u panelu za brzi prikaz"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1015
+#: ../../../__w/calibre/calibre/manual/gui.rst:1022
 msgid ":kbd:`F5`"
 msgstr ":kbd:`F5`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1016
+#: ../../../__w/calibre/calibre/manual/gui.rst:1023
 msgid "Re-apply the current sort"
 msgstr "Ponovo primeni trenutno sortiranje"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1017
+#: ../../../__w/calibre/calibre/manual/gui.rst:1024
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1018
+#: ../../../__w/calibre/calibre/manual/gui.rst:1025
 msgid "Quit calibre"
 msgstr "Zatvori calibre"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1019
+#: ../../../__w/calibre/calibre/manual/gui.rst:1026
 msgid ":kbd:`X`"
 msgstr ":kbd:`X`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1020
+#: ../../../__w/calibre/calibre/manual/gui.rst:1027
 msgid "Toggle auto scroll of the book list"
 msgstr "Uključi/isključi automatsko pomeranje liste knjiga"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1021
+#: ../../../__w/calibre/calibre/manual/gui.rst:1028
 msgid ":kbd:`Ctrl+Alt+Shift+F`"
 msgstr ":kbd:`Ctrl+Alt+Shift+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1022
+#: ../../../__w/calibre/calibre/manual/gui.rst:1029
 msgid ""
 "Restrict the displayed books to only those books that are in a category "
 "currently displayed in the :guilabel:`Tag browser`"
 msgstr "Ograniči prikazane knjige samo na one knjige koje su u kategoriji trenutno prikazanoj u :guilabel:`Pregledaču oznaka`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1024
+#: ../../../__w/calibre/calibre/manual/gui.rst:1031
 msgid ":kbd:`B`"
 msgstr ":kbd:`B`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1025
+#: ../../../__w/calibre/calibre/manual/gui.rst:1032
 msgid ""
 "Browse annotations (highlights and bookmarks) made in the calibre E-book "
 "viewer for all books in the library"
 msgstr "Pregledaj beleške (isticanja i obeleživače) napravljene u calibre E-book pregledaču za sve knjige u biblioteci"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1026
+#: ../../../__w/calibre/calibre/manual/gui.rst:1033
 msgid ":kbd:`Ctrl+Shift+N`"
 msgstr ":kbd:`Ctrl+Shift+N`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1027
+#: ../../../__w/calibre/calibre/manual/gui.rst:1034
 msgid "Browse notes associated with authors/series/tags/etc."
 msgstr "Pregledaj beleške povezane sa autorima/serijama/oznakama/itd."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1028
+#: ../../../__w/calibre/calibre/manual/gui.rst:1035
 msgid ":kbd:`Alt+Shift+L`"
 msgstr ":kbd:`Alt+Shift+L`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1029
+#: ../../../__w/calibre/calibre/manual/gui.rst:1036
 msgid "Toggle the layout between wide and narrow views"
 msgstr "Prebaci raspored između širokog i uskog prikaza"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1030
+#: ../../../__w/calibre/calibre/manual/gui.rst:1037
 msgid ":kbd:`Ctrl+Alt+P`"
 msgstr ":kbd:`Ctrl+Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1031
+#: ../../../__w/calibre/calibre/manual/gui.rst:1038
 msgid "Switch to previous library, if any"
 msgstr "Prebaci na prethodnu biblioteku, ako postoji"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1032
+#: ../../../__w/calibre/calibre/manual/gui.rst:1039
 msgid ":kbd:`Ctrl+Alt+Shift+P`"
 msgstr ":kbd:`Ctrl+Alt+Shift+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1033
+#: ../../../__w/calibre/calibre/manual/gui.rst:1040
 msgid "Switch to previous virtual library, if any"
 msgstr "Prebaci na prethodnu virtuelnu biblioteku, ako postoji"

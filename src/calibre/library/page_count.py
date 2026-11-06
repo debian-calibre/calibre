@@ -9,6 +9,7 @@ from contextlib import closing, suppress
 from math import ceil
 from multiprocessing import Pipe
 from operator import itemgetter
+from typing import TYPE_CHECKING, Self
 
 from lxml import etree
 
@@ -25,6 +26,12 @@ from calibre.utils.cleantext import clean_xml_chars
 from calibre.utils.ipc import eintr_retry_call
 from calibre.utils.logging import DevNull
 from calibre_extensions.speedup import barename, get_num_of_significant_chars
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+    from unittest import TestCase
+
+    from lxml.etree import _Element
 
 if iswindows:
     from multiprocessing.connection import PipeConnection as Connection
@@ -54,7 +61,7 @@ def count_pages_pdf(pathtoebook: str) -> int:
     return 0
 
 
-def fname_ok_cb(fname):
+def fname_ok_cb(fname: str) -> bool:
     from calibre.ebooks.metadata.archive import fname_ok
     from calibre.libunzip import comic_exts
 
@@ -142,7 +149,7 @@ def get_page_count(root: etree.Element) -> int:
     return max(1, ceil(get_line_count(root) / LINES_PER_PAGE))
 
 
-def calculate_number_of_workers(names, in_process_container, max_workers):
+def calculate_number_of_workers(names: Sequence[str], in_process_container: ContainerBase, max_workers: int) -> int:
     num_workers = min(detect_ncpus(), len(names))
     if max_workers:
         num_workers = min(num_workers, max_workers)
@@ -157,7 +164,7 @@ def decode(data: bytes) -> str:
     return html
 
 
-def parse_xhtml(path: str):
+def parse_xhtml(path: str) -> _Element:
     with open(path, 'rb') as f:
         data = f.read()
     return parse(data, log=DevNull(), decoder=decode, force_html5_parse=False)
@@ -218,7 +225,7 @@ def count_pages(pathtoebook: str, executor: Executor | None = None) -> int:
 class Server:
     ALGORITHM = 4
 
-    def __init__(self, max_jobs_per_worker: int = 2048):
+    def __init__(self, max_jobs_per_worker: int = 2048) -> None:
         self.worker: subprocess.Popen | None = None
         self.tasks_run_by_worker = 0
         self.max_jobs_per_worker = max_jobs_per_worker
@@ -263,10 +270,10 @@ class Server:
             self.shutdown_worker()
             raise
 
-    def __enter__(self) -> Server:
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *a) -> None:
+    def __exit__(self, *a: object) -> None:
         self.shutdown_worker()
 
 
@@ -295,11 +302,11 @@ def worker_main(pipe_fd: int) -> None:
         serve_requests(pipe)
 
 
-def test_line_counting(self):
+def test_line_counting(self: TestCase) -> None:
     line = 'a ' * CHARS_PER_LINE
     h1_line = 'h ' * head_map['h1'][0]
 
-    def t(doc: str, expected: int):
+    def t(doc: str, expected: int) -> None:
         root = parse(doc)
         self.assertEqual(expected, get_line_count(root), doc)
 
@@ -315,7 +322,7 @@ def test_line_counting(self):
     self.assertEqual(count_char(r[1][0]), 1000)
 
 
-def test_page_count(self) -> None:
+def test_page_count(self: TestCase) -> None:
     from calibre.utils.resources import get_path as P
 
     test_line_counting(self)
@@ -331,7 +338,7 @@ def test_page_count(self) -> None:
             self.assertIsInstance(res, int, f'Counting pages for {x} failed with result: {res}')
 
 
-def develop():
+def develop() -> None:
     import time
 
     paths = sys.argv[1:]

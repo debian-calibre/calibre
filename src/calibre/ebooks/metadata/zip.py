@@ -1,13 +1,18 @@
 # License: GPLv3 Copyright: 2008, Kovid Goyal <kovid at kovidgoyal.net>
 
 import os
+from typing import IO, TYPE_CHECKING
 
 from calibre import CurrentDir
 from calibre.ptempfile import TemporaryDirectory
+from calibre.utils import StreamOrPath
 from calibre.utils.zipfile import ZipFile
 
+if TYPE_CHECKING:
+    from calibre.ebooks.metadata.book.base import Metadata
 
-def get_metadata(stream):
+
+def get_metadata(stream: IO[bytes]) -> Metadata:
     from calibre.ebooks.metadata.archive import is_comic
     from calibre.ebooks.metadata.meta import get_metadata
 
@@ -40,7 +45,8 @@ def get_metadata(stream):
                 with TemporaryDirectory() as tdir:
                     with CurrentDir(tdir):
                         path = zf.extract(f)
-                        mi = get_metadata(open(path, 'rb'), stream_type)
+                        with open(path, 'rb') as f:
+                            mi = get_metadata(f, stream_type)
                         if stream_type == 'opf' and mi.application_id is None:
                             try:
                                 # zip archive opf files without an application_id were assumed not to have a cover
@@ -55,21 +61,18 @@ def get_metadata(stream):
     raise ValueError('No ebook found in ZIP archive ({})'.format(os.path.basename(getattr(stream, 'name', '') or '<stream>')))
 
 
-def zip_opf_metadata(opfpath, zf):
+def zip_opf_metadata(opfpath: str, zf: ZipFile) -> Metadata:
     from calibre.ebooks.metadata.opf2 import OPF
 
-    if hasattr(opfpath, 'read'):
-        f = opfpath
+    with StreamOrPath(opfpath, 'rb') as f:
         opfpath = getattr(f, 'name', os.getcwd())
-    else:
-        f = open(opfpath, 'rb')
-    opf = OPF(f, os.path.dirname(opfpath))
+        opf = OPF(f, os.path.dirname(opfpath))
     mi = opf.to_book_metadata()
     # This is broken, in that it only works for
     # when both the OPF file and the cover file are in the root of the
     # zip file and the cover is an actual raster image, but I don't care
     # enough to make it more robust
-    if getattr(mi, 'cover', None):
+    if mi.cover:
         covername = os.path.basename(mi.cover)
         mi.cover = None
         names = zf.namelist()

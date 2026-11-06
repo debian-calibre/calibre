@@ -7,14 +7,21 @@ import shutil
 import sys
 import time
 from io import BytesIO, StringIO
+from typing import TYPE_CHECKING
 from unittest.mock import patch
 from zipfile import ZipFile
 
 from calibre.db.fts.text import html_to_text
 from calibre.db.tests.base import BaseTest
 
+if TYPE_CHECKING:
+    import unittest
 
-def print(*args, **kwargs):
+    from calibre.db.cache import Cache
+    from calibre.db.fts.connect import FTS
+
+
+def print(*args: object, **kwargs: object) -> None:
     kwargs['file'] = sys.__stdout__
     builtins.print(*args, **kwargs)
 
@@ -22,7 +29,7 @@ def print(*args, **kwargs):
 class FTSAPITest(BaseTest):
     ae = BaseTest.assertEqual
 
-    def setUp(self):
+    def setUp(self) -> None:
         super().setUp()
         from calibre.db.cache import Cache
         from calibre_extensions.sqlite_extension import set_ui_language
@@ -32,7 +39,7 @@ class FTSAPITest(BaseTest):
         set_ui_language('en')
         self.libraries_to_close = []
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         [c.close() for c in self.libraries_to_close]
         super().tearDown()
         from calibre.db.cache import Cache
@@ -41,7 +48,7 @@ class FTSAPITest(BaseTest):
         Cache.fts_indexing_sleep_time = self.orig_sleep_time
         set_ui_language('en')
 
-    def new_library(self):
+    def new_library(self) -> Cache:
         if os.path.exists(self.library_path):
             try:
                 shutil.rmtree(self.library_path)
@@ -54,13 +61,13 @@ class FTSAPITest(BaseTest):
         self.libraries_to_close.append(ans)
         return ans
 
-    def wait_for_fts_to_finish(self, fts, timeout=30):
+    def wait_for_fts_to_finish(self, fts: FTS, timeout: float = 30) -> None:
         import apsw
 
         if fts.pool.initialized:
             st = time.monotonic()
 
-            def all_currently_dirty():
+            def all_currently_dirty() -> list[tuple[int, str]] | bool:
                 try:
                     return fts.all_currently_dirty()
                 except apsw.ThreadingViolationError:
@@ -69,10 +76,10 @@ class FTSAPITest(BaseTest):
             while all_currently_dirty() and time.monotonic() - st < timeout:
                 fts.pool.supervisor_thread.join(0.01)
 
-    def text_records(self, fts):
+    def text_records(self, fts: FTS) -> tuple[dict[str, object], ...]:
         return fts.get_connection().get_dict('SELECT * FROM fts_db.books_text')
 
-    def make_txtz(self, txt, **extra):
+    def make_txtz(self, txt: bytes, **extra: str | bytes) -> BytesIO:
         buf = BytesIO()
         with ZipFile(buf, mode='w') as zf:
             zf.writestr('index.txt', txt)
@@ -81,7 +88,7 @@ class FTSAPITest(BaseTest):
         buf.seek(0)
         return buf
 
-    def test_fts_pool(self):
+    def test_fts_pool(self) -> None:
         cache = self.new_library()
         fts = cache.enable_fts()
         self.wait_for_fts_to_finish(fts)
@@ -89,10 +96,10 @@ class FTSAPITest(BaseTest):
         cache.add_format(1, 'TXT', BytesIO(b'a test text'))
         self.wait_for_fts_to_finish(fts)
 
-        def q(rec, **kw):
+        def q(rec: dict[str, object], **kw: object) -> None:
             self.ae({x: rec[x] for x in kw}, kw)
 
-        def check(**kw):
+        def check(**kw: object) -> None:
             tr = self.text_records(fts)
             self.ae(len(tr), 1)
             q(tr[0], **kw)
@@ -140,7 +147,7 @@ class FTSAPITest(BaseTest):
         for w in workers:
             self.assertFalse(w.is_alive())
 
-    def test_fts_search(self):
+    def test_fts_search(self) -> None:
         cache = self.new_library()
         fts = cache.enable_fts()
         self.wait_for_fts_to_finish(fts)
@@ -172,7 +179,7 @@ class FTSAPITest(BaseTest):
         self.ae({x['id'] for x in cache.fts_search('help')}, {2})
         cache.close()
 
-    def test_fts_triggers(self):
+    def test_fts_triggers(self) -> None:
         cache = self.init_cache()
         # the cache fts jobs will clear dirtied flag so disable it
         cache.queue_next_fts_job = lambda *a: None
@@ -206,7 +213,7 @@ class FTSAPITest(BaseTest):
         cache.reindex_fts_book(2)
         self.ae(fts.all_currently_dirty(), [(2, 'ADDED')])
 
-    def test_fts_indexing_progress(self):
+    def test_fts_indexing_progress(self) -> None:
         cache = self.init_cache()
         self.libraries_to_close.append(cache)
         # the cache fts jobs will index formats, changing the numbers, so disable it
@@ -218,7 +225,7 @@ class FTSAPITest(BaseTest):
         cache.remove_books((1,))
         self.ae(cache.fts_indexing_progress()[:2], (0, 0))
 
-    def test_fts_to_text(self):
+    def test_fts_to_text(self) -> None:
         from calibre.ebooks.oeb.polish.parsing import parse
 
         html = '''
@@ -232,13 +239,14 @@ class FTSAPITest(BaseTest):
         self.ae(tuple(html_to_text(root)), ('first_para\n\nsecond_para\n\nsome italic text\n\nnested\n\nblocks',))
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
+
     import unittest
 
     return unittest.defaultTestLoader.loadTestsFromTestCase(FTSAPITest)
 
 
-def run_tests():
+def run_tests() -> None:
     from calibre.utils.run_tests import run_tests
 
     run_tests(find_tests)

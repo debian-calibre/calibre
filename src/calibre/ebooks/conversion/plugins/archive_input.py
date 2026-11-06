@@ -1,8 +1,13 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2026, Hassan Raza <raihassanraza10 at gmail.com>
 
+from typing import TYPE_CHECKING
 
-def path_in_archive_root(root, path):
+if TYPE_CHECKING:
+    import unittest
+
+
+def path_in_archive_root(root: str, path: str) -> str | None:
     "Resolve a path from archive metadata, returning None if it leaves root."
     import os
 
@@ -18,23 +23,23 @@ def path_in_archive_root(root, path):
             pass
 
 
-def archive_file_data(root, path):
-    path = path_in_archive_root(root, path)
-    if path is not None:
+def archive_file_data(root: str, path: str) -> tuple[str, bytes] | None:
+    resolved = path_in_archive_root(root, path)
+    if resolved is not None:
         import os
 
-        if os.path.isfile(path):
-            with open(path, 'rb') as f:
-                return os.path.basename(path), f.read()
+        if os.path.isfile(resolved):
+            with open(resolved, 'rb') as f:
+                return os.path.basename(resolved), f.read()
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import os
     import tempfile
     import unittest
 
     class ArchiveInputTest(unittest.TestCase):
-        def test_archive_file_data(self):
+        def test_archive_file_data(self) -> None:
             with tempfile.TemporaryDirectory() as tdir:
                 root = os.path.abspath(tdir)
                 os.mkdir(os.path.join(root, 'images'))

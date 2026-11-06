@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -56,7 +56,7 @@ msgid ""
 msgstr "செயல்கள் கருவிப்பட்டி பொதுவாகப் பயன்படுத்தப்படும் செயல்களுக்கு வசதியான குறுக்குவழிகளை வழங்குகிறது. நீங்கள் பொத்தான்களை வலது சொடுக்கு செய்தால், இயல்புநிலை செயலில் மாறுபாடுகளைச் செய்யலாம். உங்கள் கணினியுடன் மின் புத்தக வாசகர் இணைக்கப்பட்டுள்ளதா என்பதைப் பொறுத்து செயல்கள் கருவிப்பட்டி சற்று வித்தியாசமாக இருக்கும் என்பதை நினைவில் கொள்க."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:41
-#: ../../../__w/calibre/calibre/manual/gui.rst:916
+#: ../../../__w/calibre/calibre/manual/gui.rst:923
 msgid "Add books"
 msgstr "புத்தகங்களைச் சேர்க்கவும்"
 
@@ -100,7 +100,7 @@ msgid ""
 "**Add multiple books from archive (ZIP/RAR/7z)**: Allows you to add multiple"
 " e-books that are stored inside the selected archive files. It is a "
 "convenient shortcut that avoids having to first unzip the archive and then "
-"add the books via one of the above two options."
+"add the books via add books from folders."
 msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:54
@@ -296,7 +296,7 @@ msgid ""
 msgstr ". தற்போது நூலகக் காட்சியில் காண்பிக்கும் அனைத்து புத்தகங்களும் பட்டியலில் இருக்கும். பட்டியலிடப்பட வேண்டிய புத்தகங்களை மட்டுப்படுத்த தேடல் அம்சங்களைப் பயன்படுத்த இது உங்களை அனுமதிக்கிறது. கூடுதலாக, நீங்கள் சுட்டியைப் பயன்படுத்தி பல புத்தகங்களைத் தேர்ந்தெடுத்தால், அந்த புத்தகங்கள் மட்டுமே பட்டியலில் சேர்க்கப்படும். epub, mobi அல்லது azw3 போன்ற மின் புத்தக வடிவத்தில் நீங்கள் பட்டியலை உருவாக்கினால், அடுத்த முறை உங்கள் மின் புத்தக வாசகரை இணைக்கும்போது அட்டவணை தானாகவே சாதனத்திற்கு அனுப்பப்படும். பட்டியல்கள் எவ்வாறு செயல்படுகின்றன என்பது பற்றிய கூடுதல் தகவலுக்கு, படிக்க: குறிப்பு: `பட்டியல்_டட்`."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:126
-#: ../../../__w/calibre/calibre/manual/gui.rst:946
+#: ../../../__w/calibre/calibre/manual/gui.rst:953
 msgid "View"
 msgstr "பார்வை"
 
@@ -316,7 +316,7 @@ msgid "vi"
 msgstr "vi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:141
-#: ../../../__w/calibre/calibre/manual/gui.rst:922
+#: ../../../__w/calibre/calibre/manual/gui.rst:929
 msgid "Send to device"
 msgstr "சாதனத்திற்கு அனுப்பவும்"
 
@@ -544,7 +544,7 @@ msgid "dvi"
 msgstr "டி.வி.ஐ."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:213
-#: ../../../__w/calibre/calibre/manual/gui.rst:942
+#: ../../../__w/calibre/calibre/manual/gui.rst:949
 msgid "Save to disk"
 msgstr "வட்டில் சேமிக்கவும்"
 
@@ -1210,7 +1210,7 @@ msgid ""
 "search box."
 msgstr "மேம்பட்ட தேடல் வினவல்களை நீங்கள் எளிதாகப் பயன்படுத்தலாம்: கிலாபெல்: `மேம்பட்ட தேடல் உரையாடல்` பொத்தானைக் சொடுக்கு செய்வதன் மூலம் அணுகலாம் | எச்பிஐ | தேடல் பெட்டியின் இடதுபுறத்தில்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:577
+#: ../../../__w/calibre/calibre/manual/gui.rst:584
 msgid "sbi"
 msgstr "எச்பிஐ"
 
@@ -1238,24 +1238,29 @@ msgid ""
 "comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
 "1 Feb 2009. In a dd/mm/yyyy locale it is interpreted as 2 Jan 2009.  Some "
 "special date strings are available. The string ``today`` translates to "
-"today's date, whatever it is. The strings ``yesterday`` and ``thismonth`` "
-"(or the translated equivalent in the current language) also work. In "
-"addition, the string ``daysago`` (also translated) can be used to compare to"
-" a date some number of days ago. For example::"
-msgstr "தேதி தெளிவற்றதாக இருந்தால், தற்போதைய இடம் தேதி ஒப்பீட்டுக்கு பயன்படுத்தப்படுகிறது. எடுத்துக்காட்டாக, ஒரு mm/dd/yyyy லோகேலில் 2/1/2009 1 பிப்ரவரி 2009 என விளக்கப்பட்டுள்ளது. ஒரு dd/mm/yyyy locale இல் இது 2 சனவரி 2009 என விளக்கப்பட்டுள்ளது. சில சிறப்பு தேதி சரங்கள் கிடைக்கின்றன. சரம் `` இன்று`` இன்றைய தேதிக்கு மொழிபெயர்க்கிறது, அது எதுவாக இருந்தாலும். சரங்களும் `` நேற்று`` மற்றும் `` இந்தமொன்ட்`` (அல்லது தற்போதைய மொழியில் மொழிபெயர்க்கப்பட்ட சமமானவை) வேலை செய்கின்றன. கூடுதலாக, சில நாட்களுக்கு முன்பு ஒரு தேதியுடன் ஒப்பிட்டுப் பார்க்க `` டேச்சாகோ`` (மேலும் மொழிபெயர்க்கப்பட்ட) சரம் பயன்படுத்தப்படலாம். உதாரணத்திற்கு::"
+"today's date, whatever it is. The strings ``yesterday``, ``thismonth``, "
+"``lastmonth``, ``thisyear`` and ``lastyear`` (or the translated equivalent "
+"in the current language) also work. In addition, the strings ``daysago``, "
+"``monthsago`` and ``yearsago`` (also translated) can be used to compare to a"
+" date some number of days, months or years ago. Searches using "
+"``thismonth``, ``lastmonth`` and ``monthsago`` compare only the year and "
+"month, while those using ``thisyear``, ``lastyear`` and ``yearsago`` compare"
+" only the year. For example::"
+msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:476
+#: ../../../__w/calibre/calibre/manual/gui.rst:481
 msgid ""
 "To avoid potential problems with translated strings when using a non-English"
 " version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
-" and ``_daysago`` are always available. They are not translated."
-msgstr "மொழிபெயர்க்கப்பட்ட சரங்களுடன் சாத்தியமான சிக்கல்களைத் தவிர்ப்பதற்கு, ஆங்கிலம் அல்லாத பதிப்பைப் பயன்படுத்தும் போது, `` _ டோடே``, `` _yesterday``, `` _thismanth``, மற்றும் `` _daysago`` ஆகியவற்றை எப்போதும் கிடைக்கும். அவை மொழிபெயர்க்கப்படவில்லை."
+" ``_lastmonth``, ``_thisyear``, ``_lastyear``, ``_daysago``, ``_monthsago`` "
+"and ``_yearsago`` are always available. They are not translated."
+msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:478
+#: ../../../__w/calibre/calibre/manual/gui.rst:485
 msgid "*Searching dates and numeric values with relational comparisons*"
 msgstr "*தொடர்புடைய ஒப்பீடுகளுடன் தேதிகள் மற்றும் எண் மதிப்புகளைத் தேடுவது*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:480
+#: ../../../__w/calibre/calibre/manual/gui.rst:487
 msgid ""
 "Dates and numeric fields support the relational operators ``=`` (equals), "
 "``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
@@ -1264,21 +1269,21 @@ msgid ""
 "all books rated 3 or higher."
 msgstr "தேதிகள் மற்றும் எண் புலங்கள் தொடர்புடைய ஆபரேட்டர்களை ஆதரிக்கின்றன `` = `` (சமம்), ``> `` (விட அதிகமாக), ``> = `` (விட அதிகமாகவோ அல்லது சமமாகவோ), `` <`` (குறைவாக) , `` <= `` (குறைவாகவோ அல்லது சமமாகவோ), மற்றும் ``! = `` (சமமாக இல்லை). மதிப்பீட்டு புலங்கள் எண் என்று கருதப்படுகின்றன. எடுத்துக்காட்டாக, தேடல் `` மதிப்பீடு:> = 3`` 3 அல்லது அதற்கு மேற்பட்ட மதிப்பிடப்பட்ட அனைத்து புத்தகங்களையும் கண்டுபிடிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:485
+#: ../../../__w/calibre/calibre/manual/gui.rst:492
 msgid ""
 "You can search for books that have a format of a certain size like this:"
 msgstr "இது போன்ற ஒரு குறிப்பிட்ட அளவிலான வடிவத்தைக் கொண்ட புத்தகங்களை நீங்கள் தேடலாம்:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:487
+#: ../../../__w/calibre/calibre/manual/gui.rst:494
 msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
 msgstr "`` அளவு:> 1.1 மீ`` 1.1mb ஐ விட பெரிய வடிவத்துடன் புத்தகங்களைக் கண்டுபிடிக்கும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:488
+#: ../../../__w/calibre/calibre/manual/gui.rst:495
 msgid ""
 "``size:<=1K``  will find books with a format smaller than or equal to 1KB"
 msgstr "`` அளவு: <= 1k`` 1kb ஐ விட சிறிய அல்லது சமமான வடிவத்துடன் புத்தகங்களைக் கண்டுபிடிக்கும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:490
+#: ../../../__w/calibre/calibre/manual/gui.rst:497
 msgid ""
 "You can search for the number of items in multiple-valued fields such as "
 "tags using the character ``#`` then using the same syntax as numeric fields."
@@ -1286,11 +1291,11 @@ msgid ""
 "find all books with exactly 10 tags use ``tags:#=10``."
 msgstr "``#`` என்ற எழுத்துக்களைப் பயன்படுத்தும் குறிச்சொற்கள் போன்ற பல மதிப்புள்ள புலங்களில் உள்ள பொருட்களின் எண்ணிக்கையை நீங்கள் தேடலாம், பின்னர் அதே தொடரியல் எண் புலங்களைப் பயன்படுத்தலாம். எடுத்துக்காட்டாக, 4 க்கும் மேற்பட்ட குறிச்சொற்களைக் கொண்ட அனைத்து புத்தகங்களையும் கண்டுபிடிக்க `` குறிச்சொற்கள்:#> 4``. சரியாக 10 குறிச்சொற்களைக் கொண்ட அனைத்து புத்தகங்களையும் கண்டுபிடிக்க `` குறிச்சொற்கள்:#= 10``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:492
+#: ../../../__w/calibre/calibre/manual/gui.rst:499
 msgid "*Series indices*"
 msgstr "*தொடர் குறியீடுகள்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:494
+#: ../../../__w/calibre/calibre/manual/gui.rst:501
 msgid ""
 "Series indices are searchable. For the standard series, the search name is "
 "``series_index``. For custom series columns, use the column search name "
@@ -1300,11 +1305,11 @@ msgid ""
 "relational operators described above."
 msgstr "தொடர் குறியீடுகள் தேடக்கூடியவை. நிலையான தொடருக்கு, தேடல் பெயர் `` sitery_index``. தனிப்பயன் தொடர் நெடுவரிசைகளுக்கு, _index ஐத் தொடர்ந்து நெடுவரிசை தேடல் பெயரைப் பயன்படுத்தவும். எடுத்துக்காட்டாக, ``##my_series`` என்ற தனிப்பயன் தொடர் நெடுவரிசைக்கான குறியீடுகளைத் தேட, நீங்கள் தேடல் பெயரை ``#my_series_index`` ஐப் பயன்படுத்துவீர்கள். தொடர் குறியீடுகள் எண்கள், எனவே மேலே விவரிக்கப்பட்ட தொடர்புடைய ஆபரேட்டர்களைப் பயன்படுத்தலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:499
+#: ../../../__w/calibre/calibre/manual/gui.rst:506
 msgid "*Saved searches*"
 msgstr "*சேமித்த தேடல்கள்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:501
+#: ../../../__w/calibre/calibre/manual/gui.rst:508
 msgid ""
 "The special field ``search`` is used for :ref:`saved searches "
 "<saved_searches>`. If you save a search with the name \"My spouse's books\" "
@@ -1312,11 +1317,11 @@ msgid ""
 "the saved search. More about saving searches below."
 msgstr "சிறப்பு புலம் `` தேடல்`` இதைப் பயன்படுத்துகிறது: ref: `சேமித்த தேடல்கள் <சேவ்_சால்செச்>`. \"எனது மனைவியின் புத்தகங்கள்\" என்ற பெயருடன் ஒரு தேடலை நீங்கள் சேமித்தால், சேமித்த தேடலை மீண்டும் பயன்படுத்த தேடல் பட்டியில் `` தேடல்: \"எனது மனைவியின் புத்தகங்களை\" `` தேடலாம். கீழே உள்ள தேடல்களைச் சேமிப்பது பற்றி மேலும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:505
+#: ../../../__w/calibre/calibre/manual/gui.rst:512
 msgid "*Virtual libraries*"
 msgstr "*மெய்நிகர் நூலகங்கள்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:507
+#: ../../../__w/calibre/calibre/manual/gui.rst:514
 msgid ""
 "The special field ``vl`` is used to search for books in a Virtual library. "
 "For example, ``vl:Read`` will find all the books in the *Read* Virtual "
@@ -1326,41 +1331,41 @@ msgid ""
 "Virtual library name contains spaces then surround it with quotes."
 msgstr "மெய்நிகர் நூலகத்தில் புத்தகங்களைத் தேட சிறப்பு புலம் `` vl`` பயன்படுத்தப்படுகிறது. எடுத்துக்காட்டாக, `` vl: read`` அனைத்து புத்தகங்களையும் * read * மெய்நிகர் நூலகத்தில் காணலாம். தேடல் `` வி.எல்: வாசிப்பு மற்றும் வி.எல்: \"அறிவியல் புனைகதை\" `` * வாசிப்பு * மற்றும் * அறிவியல் புனைகதை * மெய்நிகர் நூலகங்கள் இரண்டிலும் உள்ள அனைத்து புத்தகங்களையும் கண்டுபிடிக்கும். பின்வரும் மதிப்பு `` வி.எல்: `` ஒரு மெய்நிகர் நூலகத்தின் பெயராக இருக்க வேண்டும். மெய்நிகர் நூலகப் பெயர் இடைவெளிகளைக் கொண்டிருந்தால், அதை மேற்கோள்களுடன் சூழ்ந்து கொள்ளுங்கள்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:513
+#: ../../../__w/calibre/calibre/manual/gui.rst:520
 msgid "*Whether a field has a value*"
 msgstr "*ஒரு புலத்திற்கு மதிப்பு இருக்கிறதா*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:515
+#: ../../../__w/calibre/calibre/manual/gui.rst:522
 msgid ""
 "You can search for the absence or presence of a value for a field using "
 "\"true\" and \"false\". For example:"
 msgstr "\"உண்மை\" மற்றும் \"பொய்\" ஆகியவற்றைப் பயன்படுத்தி ஒரு புலத்திற்கான மதிப்பு இல்லாத அல்லது இருப்பை நீங்கள் தேடலாம். உதாரணத்திற்கு:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:517
+#: ../../../__w/calibre/calibre/manual/gui.rst:524
 msgid "``cover:false`` finds all books without a cover"
 msgstr "`` கவர்: தவறு`` அனைத்து புத்தகங்களையும் ஒரு கவர் இல்லாமல் கண்டுபிடிக்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:518
+#: ../../../__w/calibre/calibre/manual/gui.rst:525
 msgid "``series:true`` finds all books that are in a series"
 msgstr "`` தொடர்: உண்மை`` ஒரு தொடரில் உள்ள அனைத்து புத்தகங்களையும் கண்டுபிடிக்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:519
+#: ../../../__w/calibre/calibre/manual/gui.rst:526
 msgid "``series:false`` finds all books that are not in a series"
 msgstr "`` தொடர்: false`` ஒரு தொடரில் இல்லாத அனைத்து புத்தகங்களையும் கண்டுபிடிக்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:520
+#: ../../../__w/calibre/calibre/manual/gui.rst:527
 msgid "``comments:false`` finds all books with an empty comment"
 msgstr "`` கருத்துரைகள்: false`` அனைத்து புத்தகங்களையும் வெற்று கருத்துடன் காண்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:521
+#: ../../../__w/calibre/calibre/manual/gui.rst:528
 msgid "``formats:false`` finds all books with no book files (empty records)"
 msgstr "`` வடிவங்கள்: false`` புத்தகக் கோப்புகள் இல்லாத அனைத்து புத்தகங்களையும் (வெற்று பதிவுகள்) காண்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:523
+#: ../../../__w/calibre/calibre/manual/gui.rst:530
 msgid "*Yes/no custom columns*"
 msgstr "*ஆம்/தனிப்பயன் நெடுவரிசைகள் இல்லை*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:525
+#: ../../../__w/calibre/calibre/manual/gui.rst:532
 msgid ""
 "Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
 "find all books with undefined values in the column. Searching for ``true`` "
@@ -1374,11 +1379,11 @@ msgid ""
 "``_empty`` are not translated."
 msgstr "`` தவறு`, `` வெற்று``, அல்லது `` வெற்று`` ஆகியவற்றிற்கான ஆம்/இல்லை தனிப்பயன் நெடுவரிசைகளைத் தேடுவது நெடுவரிசையில் வரையறுக்கப்படாத மதிப்புகளுடன் அனைத்து புத்தகங்களையும் கண்டுபிடிக்கும். `` உண்மை`` தேடுவது நெடுவரிசையில் வரையறுக்கப்படாத மதிப்புகள் இல்லாத அனைத்து புத்தகங்களையும் கண்டுபிடிக்கும். `` ஆம்`` அல்லது `` சரிபார்க்கப்பட்ட`` ஐத் தேடுவது நெடுவரிசையில் `` ஆம்`` உடன் அனைத்து புத்தகங்களையும் கண்டுபிடிக்கும். `` no`` அல்லது `` சரிபார்க்கப்படாதவர்` தேடுவது நெடுவரிசையில் `` இல்லை`` கொண்ட அனைத்து புத்தகங்களையும் கண்டுபிடிக்கும். `` ஆம்``, `இல்லை``,` `வெற்று``,` `வெற்று``,` சரிபார்க்கப்பட்டது`` மற்றும் `` சரிபார்க்கப்படாத`` என்ற சொற்கள் மொழிபெயர்க்கப்பட்டுள்ளன என்பதை நினைவில் கொள்க; தற்போதைய மொழியின் சமமான சொல் அல்லது ஆங்கில வார்த்தையை நீங்கள் பயன்படுத்தலாம். `` உண்மை`` மற்றும் `` தவறு`` மற்றும் சிறப்பு மதிப்புகள் `` _yes``, `_no``, மற்றும்` _empty`` ஆகியவற்றை மொழிபெயர்க்கப்படவில்லை."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:530
+#: ../../../__w/calibre/calibre/manual/gui.rst:537
 msgid "*Identifiers*"
 msgstr "*அடையாளங்காட்டிகள்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:532
+#: ../../../__w/calibre/calibre/manual/gui.rst:539
 msgid ""
 "Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
 "identifier has the form ``type:value``, as in ``isbn:123456789``. The "
@@ -1387,60 +1392,60 @@ msgid ""
 "the :ref:`search kinds <search_kinds>`. Examples:"
 msgstr "அடையாளங்காட்டிகள் (எ.கா., ஐ.எச்.பி.என், டோய், எல்.சி.சி.என், முதலியன) நீட்டிக்கப்பட்ட தொடரியல் பயன்படுத்தவும். ஒரு அடையாளங்காட்டிக்கு `` isbn: 123456789`` போன்ற `` வகை: மதிப்பு`` வடிவத்தைக் கொண்டுள்ளது. விரிவாக்கப்பட்ட தொடரியல் தேட வேண்டிய வகை மற்றும் மதிப்பை சுயாதீனமாக குறிப்பிட உங்களை அனுமதிக்கிறது. வினவலின் வகை மற்றும் மதிப்பு பாகங்கள் இரண்டையும் பயன்படுத்தலாம்: ref: `தேடல் வகைகள் <தேடல்_கிண்ட்ச்>`. எடுத்துக்காட்டுகள்:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:534
+#: ../../../__w/calibre/calibre/manual/gui.rst:541
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "`` அடையாளங்காட்டிகள்: உண்மை` `எந்த அடையாளங்காட்டியுடனும் புத்தகங்களைக் கண்டுபிடிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:535
+#: ../../../__w/calibre/calibre/manual/gui.rst:542
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "`` அடையாளங்காட்டிகள்: தவறான`` அடையாளங்காட்டி இல்லாத புத்தகங்களைக் கண்டுபிடிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:536
+#: ../../../__w/calibre/calibre/manual/gui.rst:543
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr "`` அடையாளங்காட்டிகள்: 123`` `123` கொண்ட மதிப்பைக் கொண்ட எந்த வகையிலும் புத்தகங்களைத் தேடுவார்கள்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:537
+#: ../../../__w/calibre/calibre/manual/gui.rst:544
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr "`` அடையாளங்காட்டிகள்: = 123456789`` `123456789` க்கு சமமான மதிப்பைக் கொண்ட எந்த வகையுடனும் புத்தகங்களைத் தேடுவார்கள்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:538
+#: ../../../__w/calibre/calibre/manual/gui.rst:545
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to ISBN having any value"
 msgstr "`` அடையாளங்காட்டிகள்: = ஐ.எச்.பி.என்: `` மற்றும் `` அடையாளங்காட்டிகள்: ஐ.எச்.பி.என்: உண்மை`` ஐ.எச்.பி.என் -க்கு சமமான வகையுடன் புத்தகங்களைக் கண்டுபிடிப்பார்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:539
+#: ../../../__w/calibre/calibre/manual/gui.rst:546
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to ISBN."
 msgstr "`` அடையாளங்காட்டிகள்: = isbn: false`` isbn க்கு சமமான வகை இல்லாத புத்தகங்களைக் கண்டுபிடிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:540
+#: ../../../__w/calibre/calibre/manual/gui.rst:547
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
 " value containing `123`."
 msgstr "`` அடையாளங்காட்டிகள்: = ஐ.எச்.பி.என்: 123`` ஐ.எச்.பி.என் -க்கு சமமான வகைகளைக் கொண்ட புத்தகங்களை `123` கொண்ட மதிப்பைக் கண்டுபிடிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:541
+#: ../../../__w/calibre/calibre/manual/gui.rst:548
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
 "having a value equal to `123456789`."
 msgstr "`` அடையாளங்காட்டிகள்: = ஐ.எச்.பி.என்: = 123456789`` `123456789` க்கு சமமான மதிப்பைக் கொண்ட ஐ.எச்.பி.என் -க்கு சமமான வகைகளைக் கொண்ட புத்தகங்களைக் கண்டுபிடிப்பார்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:542
+#: ../../../__w/calibre/calibre/manual/gui.rst:549
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr "`` அடையாளங்காட்டிகள்: நான்: 1`` ஒரு `1` கொண்ட ஒரு மதிப்பைக் கொண்ட ஒரு வகையுடன் புத்தகங்களைக் கண்டுபிடிப்பேன்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:544
+#: ../../../__w/calibre/calibre/manual/gui.rst:551
 msgid "*Categories visible in the Tag browser*"
 msgstr "*குறிச்சொல் உலாவியில் தெரியும் வகைகள்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:546
+#: ../../../__w/calibre/calibre/manual/gui.rst:553
 msgid ""
 "The search ``in_tag_browser:true`` finds all books that are in categories "
 "(tags, authors, etc.) currently shown in the :guilabel:`Tag browser`. This "
@@ -1455,18 +1460,18 @@ msgid ""
 ":guilabel:`Show only books that have visible categories` entry."
 msgstr "தேடல் `` in_tag_browser: உண்மை` `வகைகளில் உள்ள அனைத்து புத்தகங்களையும் (குறிச்சொற்கள், ஆசிரியர்கள் போன்றவை) தற்போது காட்டப்பட்டுள்ளது: கிலாபெல்:` குறிச்சொல் உலாவி`. நீங்கள் இரண்டு விருப்பங்களையும் அமைத்தால் இது பயனுள்ளதாக இருக்கும்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> பார் & ஃபீல்-> குறிச்சொல் உலாவி-> வெற்று வகைகளை மறைக்கவும்: கிலாபெல்:` பொருந்தக்கூடிய அனைத்து பொருட்களையும் கண்டுபிடி. அந்த இரண்டு விருப்பங்களும் அமைக்கப்பட்டால், ஒரு: கிலாபெல்: `கண்டுபிடி` இல்: கிலாபெல்:` குறிச்சொல் உலாவி` பொருந்தக்கூடிய பொருட்களைக் கொண்ட வகைகளை மட்டுமே காட்டுகிறது: கிலாபெல்: `கண்டுபிடி`. பின்னர், தேடல் `` in_tag_browser: உண்மை`` கூடுதலாக இந்த வகைகள் / உருப்படிகளுடன் புத்தகங்களைக் காண்கிறது. விசையை அழுத்துவதன் மூலம் இந்த தேடலை நீங்கள் எளிதாக இயக்கலாம்: kbd: `ctrl+alt+shift+f` அல்லது உள்ளமைவு பொத்தானைக் சொடுக்கு செய்க: கிலாபெல்:` குறிச்சொல் உலாவி` `நுழைவு."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:558
+#: ../../../__w/calibre/calibre/manual/gui.rst:565
 msgid "*Search using templates*"
 msgstr "*வார்ப்புருக்களைப் பயன்படுத்தி தேடுங்கள்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:560
+#: ../../../__w/calibre/calibre/manual/gui.rst:567
 msgid ""
 "You can search using a template in :ref:`templatelangcalibre` instead of a "
 "metadata field. To do so you enter a template, a search type, and the value "
 "to search for. The syntax is::"
 msgstr "நீங்கள் ஒரு வார்ப்புருவைப் பயன்படுத்தி தேடலாம்: குறிப்பு: `டெம்ப்ளேடெலாங்காலிப்ரே` ஒரு மேனிலை தரவு புலத்திற்கு பதிலாக. அவ்வாறு செய்ய நீங்கள் ஒரு வார்ப்புரு, தேடல் வகை மற்றும் தேட வேண்டிய மதிப்பு ஆகியவற்றை உள்ளிடவும். தொடரியல் ::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:564
+#: ../../../__w/calibre/calibre/manual/gui.rst:571
 msgid ""
 "The ``template`` is any valid calibre template language template. The "
 "``search type`` must be one of ``t`` (text search), ``d`` (date search), "
@@ -1476,30 +1481,30 @@ msgid ""
 "search string if there are spaces anywhere in it."
 msgstr "`` வார்ப்புரு`` என்பது சரியான காலிபர் வார்ப்புரு மொழி வார்ப்புரு. `` தேடல் வகை`` `` t`` (உரை தேடல்), `` d`` (தேதி தேடல்), `` n`` (எண் தேடல்), அல்லது `` b`` (அமைக்கவும்/ அமைக்கப்படவில்லை (பூலியன்)). `` மதிப்பு`` என்பது நீங்கள் விரும்பியதே, மேலும் இதைப் பயன்படுத்தலாம்: ref: `தேடல் வகைகள் <chear_kinds>` பல்வேறு தேடல் வகைகளுக்கு மேலே விவரிக்கப்பட்டுள்ளது. எங்கும் இடங்கள் இருந்தால் முழு தேடல் சரத்தையும் நீங்கள் மேற்கோள் காட்ட வேண்டும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:566
+#: ../../../__w/calibre/calibre/manual/gui.rst:573
 msgid "Examples:"
 msgstr "எடுத்துக்காட்டுகள்:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:568
+#: ../../../__w/calibre/calibre/manual/gui.rst:575
 msgid ""
 "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
 "true when the ``kindle`` device is connected."
 msgstr "`` வார்ப்புரு: \"நிரல்: இணைக்கப்பட்ட_டெவிச்_பேம் ('பிரதான')#@#: டி: கின்டெல்\" `` - `` கின்டெல்`` சாதனம் இணைக்கப்படும்போது உண்மை."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:569
+#: ../../../__w/calibre/calibre/manual/gui.rst:576
 msgid ""
 "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
 "finds books with EPUB files larger than 1 MB."
 msgstr "`` வார்ப்புரு: \"நிரல்: தேர்ந்தெடுக்கவும் (formats_sizes (), 'epub')#@#: n:> 1000000\" `` - 1 எம்பியை விட பெரிய எபப் கோப்புகளுடன் புத்தகங்களைக் காண்கிறது."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:570
+#: ../../../__w/calibre/calibre/manual/gui.rst:577
 msgid ""
 "``template:\"program: select(formats_modtimes('iso'), "
 "'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
 "days ago."
 msgstr "`` வார்ப்புரு: \"நிரல்: தேர்ந்தெடுக்கவும் (formats_modtimes ('iso'), 'epub')#@#: d:> 10daysago\" `` - 10 நாட்களுக்கு முன்பு இருந்ததை விட புதிய எபப் கோப்புகளுடன் புத்தகங்களைக் காண்கிறது."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:571
+#: ../../../__w/calibre/calibre/manual/gui.rst:578
 msgid ""
 "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
 "0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
@@ -1507,7 +1512,7 @@ msgid ""
 " (``'``) and double quotes (``\"``) when constructing the search expression."
 msgstr "`` வார்ப்புரு: \"\" \"நிரல்: book_count ('குறிச்சொற்கள்:^\"' & $ தொடர் & '\"', 0)! குறிச்சொற்களில் பெயர். இந்த எடுத்துக்காட்டு சூப்பர் மேற்கோளைப் பயன்படுத்துகிறது, ஏனெனில் தேடல் வெளிப்பாட்டை உருவாக்கும் போது வார்ப்புரு ஒற்றை மேற்கோள்கள் (`` '``) மற்றும் இரட்டை மேற்கோள்கள் (`` \"`) இரண்டையும் பயன்படுத்துகிறது."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:573
+#: ../../../__w/calibre/calibre/manual/gui.rst:580
 msgid ""
 "You can build template search queries easily using the :guilabel:`Advanced "
 "search dialog` accessed by clicking the button |sbi|. You can test templates"
@@ -1517,19 +1522,19 @@ msgid ""
 ":guilabel:`Preferences->Shortcuts`."
 msgstr "நீங்கள் வார்ப்புரு தேடல் வினவல்களை எளிதாகப் பயன்படுத்தலாம்: கிலாபெல்: `மேம்பட்ட தேடல் உரையாடல்` பொத்தானைக் சொடுக்கு செய்வதன் மூலம் அணுகலாம் | எச்பிஐ |. காலிபரைப் பயன்படுத்தி குறிப்பிட்ட புத்தகங்களில் வார்ப்புருக்களை நீங்கள் சோதிக்கலாம்: கிலாபெல்: `வார்ப்புரு சோதனையாளர்`, இது கருவிப்பட்டிகள் அல்லது மெனுக்களில் சேர்க்கப்படலாம்: கிலாபெல்:` விருப்பத்தேர்வுகள்-> கருவிப்பட்டிகள் & மெனுக்கள்`. இதை ஒரு விசைப்பலகை குறுக்குவழியாக ஒதுக்கலாம்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> குறுக்குவழிகள்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:575
+#: ../../../__w/calibre/calibre/manual/gui.rst:582
 msgid "*Advanced search dialog*"
 msgstr "*மேம்பட்ட தேடல் உரையாடல்*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:583
+#: ../../../__w/calibre/calibre/manual/gui.rst:590
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ": கிலாபெல்: `மேம்பட்ட தேடல் உரையாடல்`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:588
+#: ../../../__w/calibre/calibre/manual/gui.rst:595
 msgid "Saving searches"
 msgstr "தேடல்களைச் சேமிக்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:590
+#: ../../../__w/calibre/calibre/manual/gui.rst:597
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1539,18 +1544,18 @@ msgid ""
 "save the search."
 msgstr "அடிக்கடி பயன்படுத்தப்படும் தேடலை ஒரு சிறப்புப் பெயரில் சேமிக்க காலிபர் உங்களை அனுமதிக்கிறது, பின்னர் அந்த தேடலை ஒரே கிளிக்கில் மீண்டும் பயன்படுத்தவும். இதைச் செய்ய, உங்கள் தேடலை தேடல் பட்டியில் தட்டச்சு செய்வதன் மூலமோ அல்லது குறிச்சொல் உலாவியைப் பயன்படுத்துவதன் மூலமோ உருவாக்கவும். தேடல் பட்டியில் அடுத்த சேமிக்கப்பட்ட தேடல் பெட்டியில் தேடலுக்கு நீங்கள் கொடுக்க விரும்பும் பெயரைத் தட்டச்சு செய்க. தேடலைச் சேமிக்க சேமித்த தேடல் பெட்டியின் அடுத்த பிளச் ஐகானைக் சொடுக்கு செய்க."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:592
+#: ../../../__w/calibre/calibre/manual/gui.rst:599
 msgid ""
 "Now you can access your saved search in the Tag browser under "
 ":guilabel:`Saved searches`. A single click will allow you to reuse any "
 "arbitrarily complex search easily, without needing to re-create it."
 msgstr "இப்போது நீங்கள் சேமித்த தேடலை குறிச்சொல் உலாவியில் அணுகலாம்: கிலாபெல்: `சேமித்த தேடல்கள்`. ஒற்றை கிளிக்கில் எந்தவொரு தன்னிச்சையாக சிக்கலான தேடலையும் மீண்டும் உருவாக்கத் தேவையில்லாமல் எளிதாக மீண்டும் பயன்படுத்த உங்களை அனுமதிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:595
+#: ../../../__w/calibre/calibre/manual/gui.rst:602
 msgid "Searching the full text of all books"
 msgstr "எல்லா புத்தகங்களின் முழு உரையையும் தேடுகிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:600
+#: ../../../__w/calibre/calibre/manual/gui.rst:607
 msgid ""
 "|ftsb| calibre can *optionally* index the full text of books in the library "
 "to allow for instant searching of words inside any book. To use this "
@@ -1558,11 +1563,11 @@ msgid ""
 " bar."
 msgstr "| ftsb | எந்தவொரு புத்தகத்திலும் உள்ள சொற்களை உடனடியாகத் தேட அனுமதிக்க நூலகத்தில் உள்ள புத்தகங்களின் முழு உரையையும் காலிபர் * விருப்பமாக * குறியிட முடியும். இந்த செயல்பாட்டைப் பயன்படுத்த: தேடல் பட்டியின் இடது விளிம்பில் `ft` பொத்தானைக் சொடுக்கு செய்க."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:597
+#: ../../../__w/calibre/calibre/manual/gui.rst:604
 msgid "ftsb"
 msgstr "ftsb"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:604
+#: ../../../__w/calibre/calibre/manual/gui.rst:611
 msgid ""
 "Then, enable indexing for the current library. Once indexing is complete you"
 " can search all the text in the full library. When you add new books to the "
@@ -1575,18 +1580,18 @@ msgid ""
 "calibre :guilabel:`E-book viewer`."
 msgstr "பின்னர், தற்போதைய நூலகத்திற்கான குறியீட்டை இயக்கவும். குறியீட்டு முறை முடிந்ததும் நீங்கள் முழு நூலகத்திலும் அனைத்து உரையையும் தேடலாம். நீங்கள் புதிய புத்தகங்களை நூலகத்தில் சேர்க்கும்போது, அவை தானாகவே பின்னணியில் குறியிடப்படும். இந்த தேடல் ஒரு சொல் அல்லது சொற்களின் கலவையைக் கொண்ட அனைத்து புத்தகங்களையும் விரைவாகக் கண்டுபிடிக்க உங்களை அனுமதிக்கிறது. தேடல் பாப்அப் சாளரத்தில் எடுத்துக்காட்டுகளில் காட்டப்பட்டுள்ளபடி, வேறு வார்த்தைகளுக்கு அருகில் நிகழும் சொற்களைக் கூட நீங்கள் தேடலாம். இந்த தேடல் கருவி ஒரு குறிப்பிட்ட புத்தகத்தில் தேடல் வினவலின் ஒரு நிகழ்வை மட்டுமே கண்டுபிடிக்கும் என்பதை நினைவில் கொள்க, ஒவ்வொரு நிகழ்வையும் பட்டியலிடவில்லை, அதற்காக காலிபரைப் பயன்படுத்தி புத்தகத்திற்குள் தேடுவது நல்லது: கிலாபெல்: `மின் புத்தக பார்வையாளர்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:613
+#: ../../../__w/calibre/calibre/manual/gui.rst:620
 msgid ""
 "You can re-index an individual book by right clicking on the :guilabel:`Book"
 " details panel` in calibre and choosing :guilabel:`Re-index this book for "
 "full text searching`."
 msgstr "நீங்கள் ஒரு தனிப்பட்ட புத்தகத்தை மீண்டும் குறியீடாக்குவதன் மூலம் மீண்டும் குறியிடலாம்: கிலாபெல்: `புத்தக விவரங்கள் குழு` காலிபரில் மற்றும் தேர்வு: கிலாபெல்:` இந்த புத்தகத்தை முழு உரை தேடலுக்காக மீண்டும் குறியிடவும்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:618
+#: ../../../__w/calibre/calibre/manual/gui.rst:625
 msgid "Virtual libraries"
 msgstr "மெய்நிகர் நூலகங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:620
+#: ../../../__w/calibre/calibre/manual/gui.rst:627
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1595,11 +1600,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr "ப: கிலாபெல்: `மெய்நிகர் நூலகம்` என்பது உங்கள் காலிபர் நூலகத்தின் முழு சேகரிப்புக்கு பதிலாக சில புத்தகங்கள் மட்டுமே இருப்பதாக நடிப்பதற்கான ஒரு வழியாகும். உங்கள் பெரிய புத்தகங்களின் தொகுப்பை சிறிய, நிர்வகிக்கக்கூடிய துகள்களாக பிரிக்க இது ஒரு சிறந்த வழியாகும். மெய்நிகர் நூலகங்களை எவ்வாறு உருவாக்குவது மற்றும் பயன்படுத்துவது என்பதை அறிய, டுடோரியலைப் பார்க்கவும் :: குறிப்பு: `மெய்நிகர்_லிபரரிச்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:627
+#: ../../../__w/calibre/calibre/manual/gui.rst:634
 msgid "Temporarily marking books"
 msgstr "தற்காலிகமாக புத்தகங்களைக் குறிக்கும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:629
+#: ../../../__w/calibre/calibre/manual/gui.rst:636
 msgid ""
 "You can temporarily mark arbitrary sets of books. Marked books will have a "
 "pin on them and can be found with the search ``marked:true``. To mark a book"
@@ -1607,7 +1612,7 @@ msgid ""
 "add the :guilabel:`Mark books` button to the main toolbar."
 msgstr "நீங்கள் தற்காலிகமாக தன்னிச்சையான புத்தகங்களை குறிக்கலாம். குறிக்கப்பட்ட புத்தகங்கள் அவற்றில் ஒரு முள் இருக்கும், மேலும் `` குறிக்கப்பட்டவை: உண்மை`` தேடலுடன் காணலாம். ஒரு புத்தகத்தைக் குறிக்க: kbd: `ctrl+m` அல்லது அதற்குச் செல்லுங்கள்: கிலாபெல்:` விருப்பத்தேர்வுகள்-> கருவிப்பட்டிகள் & மெனுக்கள்` மற்றும் சேர்க்கவும்: கிலாபெல்: `புத்தகங்களை குறிக்கவும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:631
+#: ../../../__w/calibre/calibre/manual/gui.rst:638
 msgid ""
 "You can mark books with a specific text label by right clicking the "
 ":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
@@ -1615,11 +1620,11 @@ msgid ""
 "``marked:\"=the-text-you-entered\"``."
 msgstr "வலது சொடுக்கு செய்வதன் மூலம் ஒரு குறிப்பிட்ட உரை லேபிளைக் கொண்டு புத்தகங்களைக் குறிக்கலாம்: கிலாபெல்: `புத்தகங்களை குறிக்கவும் பொத்தானைக் குறிக்கவும், தேர்ந்தெடுப்பது: கிலாபெல்:` உரை லேபிளுடன் புத்தகங்களைக் குறிக்கவும்`. உரை லேபிள்களுடன் குறிக்கப்பட்ட புத்தகங்களை பின்னர் தேடல் `` குறிக்கப்பட்டுள்ளது: \"= the-text-you-you-உள்ளிட்ட\" ``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:636
+#: ../../../__w/calibre/calibre/manual/gui.rst:643
 msgid "Guessing metadata from file names"
 msgstr "கோப்பு பெயர்களிலிருந்து மெட்டாடேட்டாவை யூகிக்கிறது"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:638
+#: ../../../__w/calibre/calibre/manual/gui.rst:645
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1627,7 +1632,7 @@ msgid ""
 " contents`."
 msgstr "பொதுவாக, காலிபர் புத்தகக் கோப்பின் உள்ளே இருந்து மெட்டாடேட்டாவைப் படிக்கிறார். இருப்பினும், அதற்கு பதிலாக கோப்பு பெயரிலிருந்து மெட்டாடேட்டாவைப் படிக்க கட்டமைக்க முடியும், வழியாக: கிலாபெல்: `விருப்பத்தேர்வுகள்-> இறக்குமதி/ஏற்றுமதி-> புத்தகங்களைச் சேர்ப்பது-> கோப்பு உள்ளடக்கங்களிலிருந்து மெட்டாடேட்டாவைப் படியுங்கள்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:642
+#: ../../../__w/calibre/calibre/manual/gui.rst:649
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
@@ -1636,30 +1641,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr "வழக்கமான வெளிப்பாடுகளைப் பயன்படுத்தி கோப்பு பெயரில் இருந்து மேனிலை தரவு எவ்வாறு படிக்கப்படுகிறது என்பதையும் நீங்கள் கட்டுப்படுத்தலாம் (பார்க்க: டாக்: `regexp`). இல்: கிலாபெல்: `புத்தகங்களைச் சேர்ப்பது` உள்ளமைவு உரையாடலின் பிரிவு, நீங்கள் நூலகத்தில் சேர்க்கும் மின் புத்தகக் கோப்புகளின் பெயர்களிலிருந்து மெட்டாடேட்டாவை முயற்சிக்கவும் யூகிக்கவும் காலிபர் பயன்படுத்தும் வழக்கமான வெளிப்பாட்டைக் குறிப்பிடலாம். இயல்புநிலை வழக்கமான வெளிப்பாடு ::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:650
+#: ../../../__w/calibre/calibre/manual/gui.rst:657
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "அதாவது, முதல் `` -`` வரையிலான அனைத்து எழுத்துக்களும் புத்தகத்தின் தலைப்பு என்றும், அடுத்தடுத்த கதாபாத்திரங்கள் புத்தகத்தின் ஆசிரியர் என்றும் கருதுகிறது. உதாரணமாக, கோப்பு பெயர் ::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:656
+#: ../../../__w/calibre/calibre/manual/gui.rst:663
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "அறக்கட்டளை மற்றும் பூமி மற்றும் ஆசிரியர்: ஐசக் அசிமோவ்: தலைப்பு வேண்டும் என்று பொருள் கொள்ளப்படும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:659
+#: ../../../__w/calibre/calibre/manual/gui.rst:666
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "கோப்பு பெயரில் ஐபன் இல்லை என்றால், மேலே உள்ள வழக்கமான வெளிப்பாடு தோல்வியடையும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:665
+#: ../../../__w/calibre/calibre/manual/gui.rst:672
 msgid "Book details"
 msgstr "புத்தக விவரங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:669
+#: ../../../__w/calibre/calibre/manual/gui.rst:676
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1669,51 +1674,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr "புத்தக விவரங்கள் காட்சி தற்போது தேர்ந்தெடுக்கப்பட்ட புத்தகத்திற்கான கவர் மற்றும் அனைத்து மெட்டாடேட்டாவையும் காட்டுகிறது. முதன்மையான காலிபர் சாளரத்தின் கீழ் வலது மூலையில் உள்ள `தளவமைப்பு` பொத்தான் வழியாக இதை மறைக்க முடியும். புத்தக விவரங்கள் குழுவில் காட்டப்பட்டுள்ள ஆசிரியர் பெயர்கள் சொடுக்கு செய்யக்கூடியவை, அவை இயல்பாகவே உங்களை ஆசிரியருக்கான விக்கிபீடியா பக்கத்திற்கு அழைத்துச் செல்லும். ஆசிரியரின் பெயரை வலது சொடுக்கு செய்து இந்த எழுத்தாளரை நிர்வகிப்பதன் மூலம் இதைத் தனிப்பயனாக்கலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:676
+#: ../../../__w/calibre/calibre/manual/gui.rst:683
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "Amazon, WorldCat, etc. from where the metadata was downloaded."
 msgstr "இதேபோல், நீங்கள் புத்தகத்திற்கான மெட்டாடேட்டாவை பதிவிறக்கம் செய்தால், அமேசான், வேர்ல்ட் கேட் போன்ற புத்தகங்களுக்கான வலைப்பக்கங்களை சுட்டிக்காட்டும் இணைப்புகளை புத்தக விவரங்கள் குழு தானாகவே காண்பிக்கும். மேனிலை தரவு பதிவிறக்கம் செய்யப்பட்ட இடத்திலிருந்து."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:680
+#: ../../../__w/calibre/calibre/manual/gui.rst:687
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr "அவற்றை நீக்க, அவற்றை அவற்றின் அசல் பதிப்புகளுடன் ஒப்பிட்டு, அவற்றை வட்டில் சேமிக்கவும், வெளிப்புற நிரலுடன் திறக்கவும் புத்தக விவரங்கள் குழுவில் தனிப்பட்ட மின் புத்தக வடிவங்களை நீங்கள் வலது சொடுக்கு செய்யலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:684
+#: ../../../__w/calibre/calibre/manual/gui.rst:691
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr "புத்தகத்தின் அட்டையை மாற்றலாம் மற்றும் புத்தக விவரங்கள் குழுவில் ஒரு படத்தை இழுத்து விடலாம். வெளிப்புற நிரலில் கவர் படத்தைத் திருத்த விரும்பினால், அதை வலது சொடுக்கு செய்து தேர்வுசெய்க: கிலாபெல்: `உடன் திறக்கவும்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:688
+#: ../../../__w/calibre/calibre/manual/gui.rst:695
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr "தற்போதைய புத்தகத்தில் மின் புத்தகக் கோப்புகளை இழுத்து கோப்புகளை புத்தக விவரங்கள் குழுவில் கைவிடுவதன் மூலம் சேர்க்கலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:691
+#: ../../../__w/calibre/calibre/manual/gui.rst:698
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr "புத்தக விவரங்கள் குழு அதை ஒரு தனி பாப்அப் சாளரத்தில் திறக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:694
+#: ../../../__w/calibre/calibre/manual/gui.rst:701
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr "இறுதியாக, புத்தக விவரங்கள் குழுவில் என்ன செய்தி காண்பிக்கப்படுகிறது என்பதை நீங்கள் தனிப்பயனாக்கலாம்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> இடைமுகம்-> தோற்றம் & உணர்வு-> புத்தக விவரங்கள்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:704
+#: ../../../__w/calibre/calibre/manual/gui.rst:711
 msgid "Tag browser"
 msgstr "குறிச்சொல் உலாவி"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:708
+#: ../../../__w/calibre/calibre/manual/gui.rst:715
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1723,7 +1728,7 @@ msgid ""
 " series."
 msgstr "குறிச்சொல் உலாவி உங்கள் தொகுப்பை ஆசிரியர்/குறிச்சொற்கள்/தொடர்/போன்றவற்றால் எளிதாக உலாவ அனுமதிக்கிறது. குறிச்சொல் உலாவியில் உள்ள எந்தவொரு பொருளையும் நீங்கள் சொடுக்கு செய்தால், எடுத்துக்காட்டாக, ஆசிரியர் ஐசக் அசிமோவ் என்ற எழுத்தாளர் பெயரிடுகிறார், பின்னர் வலதுபுறத்தில் உள்ள புத்தகங்களின் பட்டியல் அந்த எழுத்தாளரின் புத்தகங்களைக் காண்பிப்பதற்கு கட்டுப்படுத்தப்பட்டுள்ளது. நீங்கள் வகை பெயர்களைக் சொடுக்கு செய்யலாம். எடுத்துக்காட்டாக, \"தொடர்\" என்பதைக் சொடுக்கு செய்தால் எந்தவொரு தொடரிலும் உள்ள எல்லா புத்தகங்களையும் உங்களுக்குக் காண்பிக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:710
+#: ../../../__w/calibre/calibre/manual/gui.rst:717
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1741,7 +1746,7 @@ msgid ""
 "learn how to construct basic search expressions."
 msgstr "ஒரு உருப்படியின் முதல் சொடுக்கு புத்தகங்களின் பட்டியலை உருப்படியைக் கொண்டிருக்கும் அல்லது பொருந்தக்கூடியவற்றுடன் கட்டுப்படுத்தும். மேற்கண்ட உதாரணத்தைத் தொடர்ந்து, ஐசக் அசிமோவைக் சொடுக்கு செய்தால் அந்த எழுத்தாளரின் புத்தகங்கள் காண்பிக்கப்படும். உருப்படியில் குழந்தைகளைக் கொண்டிருக்கிறதா என்பதைப் பொறுத்து உருப்படியை மீண்டும் சொடுக்கு செய்வது காட்டப்பட்டதை மாற்றும் (கீழே உள்ள துணை வகைகள் மற்றும் படிநிலை உருப்படிகளைப் பார்க்கவும்). ஐசக் அசிமோவ் உதாரணத்தைத் தொடர்ந்தால், ஐசக் அசிமோவ் மீது மீண்டும் சொடுக்கு செய்வது ஐசக் அசிமோவ் அல்லாதவர்களுக்கு புத்தகங்களின் பட்டியலை கட்டுப்படுத்தும். மூன்றாவது சொடுக்கு அனைத்து புத்தகங்களையும் காண்பிக்கும் கட்டுப்பாட்டை அகற்றும். நீங்கள் கீழே வைத்திருந்தால்: kbd: `ctrl` அல்லது: kbd:` shift` விசைகள் மற்றும் பல உருப்படிகளைக் சொடுக்கு செய்தால், பல உருப்படிகளின் அடிப்படையில் கட்டுப்பாடுகள் உருவாக்கப்படுகின்றன. எடுத்துக்காட்டாக நீங்கள் நடத்தலாம்: kbd: `ctrl` மற்றும் ஐரோப்பிய வரலாறு குறித்த புத்தகங்களைக் கண்டுபிடிப்பதற்காக வரலாறு மற்றும் ஐரோப்பா குறிச்சொற்களைக் சொடுக்கு செய்க. தேடல் பட்டியில் தானாக உள்ளிடப்படும் தேடல் வெளிப்பாடுகளை உருவாக்குவதன் மூலம் குறிச்சொல் உலாவி செயல்படுகிறது. குறிச்சொல் உலாவி எதை உருவாக்குகிறது என்பதைப் பார்ப்பது அடிப்படை தேடல் வெளிப்பாடுகளை எவ்வாறு உருவாக்குவது என்பதை அறிய ஒரு சிறந்த வழியாகும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:712
+#: ../../../__w/calibre/calibre/manual/gui.rst:719
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1750,7 +1755,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr "குறிச்சொல் உலாவியில் உள்ள உருப்படிகள் அவற்றின் ஐகான்களை ஓரளவு வண்ணத்தில் கொண்டுள்ளன. வண்ணத்தின் அளவு அந்த வகையில் புத்தகங்களின் சராசரி மதிப்பீட்டைப் பொறுத்தது. எனவே எடுத்துக்காட்டாக, ஐசக் அசிமோவின் புத்தகங்கள் சராசரியாக நான்கு நட்சத்திரங்களைக் கொண்டிருந்தால், டேக் உலாவியில் ஐசக் அசிமோவுக்கான படவுரு 4/5 வது வண்ணமாக இருக்கும். சராசரி மதிப்பீட்டைக் காண உங்கள் சுட்டியை ஐகானின் மீது வட்டமிடலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:714
+#: ../../../__w/calibre/calibre/manual/gui.rst:721
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1769,38 +1774,38 @@ msgid ""
 "Favorites example above."
 msgstr "ஆசிரியர்கள் மற்றும் தொடர் போன்ற `குறிச்சொல் உலாவி` இல் உள்ள வெளிப்புற அளவிலான உருப்படிகள் வகைகள் என்று அழைக்கப்படுகின்றன. உங்கள் சொந்த வகைகளை நீங்கள் உருவாக்கலாம்: கிலாபெல்: `பயனர் வகைகள்`, அவை உருப்படிகளை ஒழுங்கமைக்க பயனுள்ளதாக இருக்கும். எடுத்துக்காட்டாக, நீங்கள் பயன்படுத்தலாம்: கிலாபெல்: `பயனர் வகை எடிட்டர்` (கிளிக் செய்க: கிலாபெல்:` கிலாபெல்: `குறிச்சொல் உலாவியை குறிச்சொல் மற்றும் தேர்வு: கிலாபெல்:` ஆசிரியர்கள், குறிச்சொற்களை நிர்வகிக்கவும் முதலியன-> பயனர் வகைகள்`) `` பிடித்த ஆசிரியர்கள்`` எனப்படும் பயனர் வகையை உருவாக்க, உங்களுக்கு பிடித்தவைகளுக்கான உருப்படிகளை வகைக்குள் வைக்கவும். பயனர் வகைகளில் துணை வகைகள் இருக்கலாம். எடுத்துக்காட்டாக, பயனர் வகை `` பிடித்தவை. ஆசிரியர்கள்`` என்பது `` பிடித்தவை`` இன் துணை வகை. உங்களிடம் `` பிடித்தவை. ஒரு பயனர் பிரிவில் வலது சொடுக்கு செய்வதன் மூலம் துணை வகைகளை உருவாக்கலாம், தேர்வுசெய்க: கிலாபெல்: `துணை வகையைச் சேர்க்கவும் ...` மற்றும் துணை வகை பெயரை உள்ளிடவும்; அல்லது பயன்படுத்துவதன் மூலம்: கிலாபெல்: `பயனர் வகை எடிட்டர்` மேலே உள்ள பிடித்தவை போன்ற பெயர்களை உள்ளிடுவதன் மூலம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:716
+#: ../../../__w/calibre/calibre/manual/gui.rst:723
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr "பயனர் வகைகளை உள்ளமைக்கப்பட்ட வகைகளைப் போலவே, அவற்றைக் சொடுக்கு செய்வதன் மூலம் தேடலாம். சொடுக்கு செய்வதன் மூலம் நான்கு வெவ்வேறு தேடல்கள் சுழற்சி செய்கின்றன:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:717
+#: ../../../__w/calibre/calibre/manual/gui.rst:724
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "ஒற்றை பச்சை மற்றும் அடையாளத்தால் சுட்டிக்காட்டப்பட்ட \"பிரிவில் ஒரு பொருளுடன் பொருந்தக்கூடிய அனைத்தும்\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:718
+#: ../../../__w/calibre/calibre/manual/gui.rst:725
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "\"பிரிவில் ஒரு பொருளுடன் பொருந்தக்கூடிய அனைத்தும் அல்லது அதன் துணை வகைகள்\" இரண்டு பச்சை மற்றும் அறிகுறிகளால் சுட்டிக்காட்டப்படுகின்றன."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:719
+#: ../../../__w/calibre/calibre/manual/gui.rst:726
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "ஒற்றை சிவப்பு கழித்தல் அடையாளத்தால் காட்டப்பட்ட \"பிரிவில் ஒரு பொருளுடன் பொருந்தாத அனைத்தும்\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:720
+#: ../../../__w/calibre/calibre/manual/gui.rst:727
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "இரண்டு சிவப்பு கழித்தல் அறிகுறிகளால் காட்டப்பட்ட \"பிரிவில் உள்ள ஒரு பொருளுடன் அல்லது அதன் துணை வகைகள் பொருந்தவில்லை\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:722
+#: ../../../__w/calibre/calibre/manual/gui.rst:729
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1817,14 +1822,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr "குறிச்சொற்கள், தொடர் மற்றும் தனிப்பயன் நெடுவரிசைகள் போன்ற சில உரை வகைகளுக்குள் படிநிலைகளை உருவாக்கவும் முடியும். இந்த படிநிலைகள் சிறிய முக்கோணத்துடன் காட்டுகின்றன, துணை உருப்படிகளை மறைக்க அனுமதிக்கின்றன. ஒரு பிரிவில் உள்ள பொருட்களின் படிநிலைகளைப் பயன்படுத்த, நீங்கள் முதலில் செல்ல வேண்டும்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> இடைமுகம்-> தோற்றம் & உணருங்கள்` மற்றும்\" படிநிலை உருப்படிகளுடன் வகைகள் \"புலத்தில் வகை பெயரை (களை) உள்ளிடவும். இது முடிந்ததும், சிறிய முக்கோணத்தைப் பயன்படுத்தி காலங்களைக் கொண்ட அந்த வகையில் உருப்படிகள் காண்பிக்கப்படும். எடுத்துக்காட்டாக, நீங்கள் \"வகை\" என்று அழைக்கப்படும் தனிப்பயன் நெடுவரிசையை உருவாக்கி, அதில் படிநிலை உருப்படிகளைக் கொண்டிருப்பதைக் குறிக்கவும். முடிந்ததும், மர்மம். த்ரில்லர் மற்றும் மர்மம். முக்கோணத்தில் சொடுக்கு செய்தால் த்ரில்லர் மற்றும் ஆங்கிலம் துணை உருப்படிகளாகக் காண்பிக்கப்படும். காண்க: குறிப்பு: `புத்தகங்களின் துணைக்குழுக்களை நிர்வகித்தல், எடுத்துக்காட்டாக\" வகை \"<துணைக்குழுக்கள்-டுடோரியல்>` மேலும் தகவலுக்கு."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:724
+#: ../../../__w/calibre/calibre/manual/gui.rst:731
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr "படிநிலை உருப்படிகள் (குழந்தைகளுடன் உருப்படிகள்) அதே நான்கு 'கிளிக்-ஆன்' தேடல்களை பயனர் வகைகளாகப் பயன்படுத்துகின்றன. குழந்தைகள் இல்லாத உருப்படிகள் இரண்டு தேடல்களைப் பயன்படுத்துகின்றன: \"எல்லாம் பொருந்தும்\" மற்றும் \"எல்லாம் பொருந்தவில்லை\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:726
+#: ../../../__w/calibre/calibre/manual/gui.rst:733
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the "
@@ -1836,7 +1841,7 @@ msgid ""
 "History will add the tag History to the book's tags."
 msgstr "குறிச்சொல் உலாவியில் உள்ள உருப்படிகளை பயனர் வகைகளில் இழுத்து விடலாம். மூலமானது ஒரு பயனர் வகையாக இருந்தால்,: kbd: `shift` விசையை இழுத்துச் செல்லும்போது உருப்படியை புதிய வகைக்கு நகர்த்தும். குறிச்சொல் உலாவியில் உள்ள உருப்படிகளில் புத்தக பட்டியலிலிருந்து புத்தகங்களை இழுத்து விடலாம்; ஒரு பொருளின் புத்தகத்தை கைவிடுவது அந்த உருப்படியை தானாகவே கைவிடப்பட்ட புத்தகங்களுக்கு பயன்படுத்துகிறது. எடுத்துக்காட்டாக, ஒரு புத்தகத்தை ஐசக் அசிமோவ் மீது இழுப்பது அந்த புத்தகத்தின் ஆசிரியரை ஐசக் அசிமோவுக்கு அமைக்கும். குறிச்சொல் வரலாற்றில் அதை கைவிடுவது குறிச்சொல் வரலாற்றை புத்தகத்தின் குறிச்சொற்களில் சேர்க்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:728
+#: ../../../__w/calibre/calibre/manual/gui.rst:735
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1846,7 +1851,7 @@ msgid ""
 "rename authors and control how their names are sorted."
 msgstr "கீழ்-வலது மூலையில் உள்ள தேடல் பொத்தானைக் சொடுக்கு செய்வதன் மூலம் குறிச்சொல் உலாவியில் உள்ள எந்த உருப்படியையும் நீங்கள் எளிதாகக் காணலாம். கூடுதலாக, நீங்கள் எந்த உருப்படியையும் வலது சொடுக்கு செய்து பல செயல்பாடுகளில் ஒன்றைத் தேர்வு செய்யலாம். சில எடுத்துக்காட்டுகள் அதை மறைக்க, மறுபெயரிடுவது அல்லது \"ஃச் நிர்வகி\" உரையாடலைத் திறக்க வேண்டும், இது அந்த வகையான பொருட்களை நிர்வகிக்க உங்களை அனுமதிக்கிறது. எடுத்துக்காட்டாக, தி: கிலாபெல்: `ஆசிரியர்களை நிர்வகி` உரையாடல் ஆசிரியர்களை மறுபெயரிடவும், அவர்களின் பெயர்கள் எவ்வாறு வரிசைப்படுத்தப்படுகின்றன என்பதைக் கட்டுப்படுத்தவும் உங்களை அனுமதிக்கிறது."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:730
+#: ../../../__w/calibre/calibre/manual/gui.rst:737
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1855,7 +1860,7 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "குறிச்சொல் உலாவியில் உருப்படிகள் எவ்வாறு வரிசைப்படுத்தப்படுகின்றன என்பதை நீங்கள் கட்டுப்படுத்தலாம்: கிலாபெல்: குறிச்சொல் உலாவியின் கீழ்-இடதுபுறத்தில் `உள்ளமைக்கவும்` பொத்தானை உள்ளமைக்கவும். பெயர், சராசரி மதிப்பீடு அல்லது புகழ் மூலம் வரிசைப்படுத்த நீங்கள் தேர்வு செய்யலாம் (புகழ் என்பது உங்கள் நூலகத்தில் உள்ள ஒரு பொருளைக் கொண்ட புத்தகங்களின் எண்ணிக்கை; எடுத்துக்காட்டாக, ஐசக் அசிமோவின் புகழ் என்பது ஐசக் அசிமோவின் உங்கள் நூலகத்தில் உள்ள புத்தகங்களின் எண்ணிக்கை)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:732
+#: ../../../__w/calibre/calibre/manual/gui.rst:739
 msgid ""
 "You can use your own icons for categories and values in categories. To "
 "change the icon for a category, right-click on the category (the outer-level"
@@ -1864,27 +1869,27 @@ msgid ""
 "its default choose `Restore (category name) default icon`."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:735
+#: ../../../__w/calibre/calibre/manual/gui.rst:742
 msgid ""
 "To choose icons for values in categories, right-click on a value then choose"
 " `Manage icon for (value name)`. You will see a list of choices:"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:737
+#: ../../../__w/calibre/calibre/manual/gui.rst:744
 msgid ""
 "`Choose an icon for this value but not its children`. A dialog will open "
 "where you choose an icon for the value. Children of that value will not "
 "inherit that icon."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:738
+#: ../../../__w/calibre/calibre/manual/gui.rst:745
 msgid ""
 "`Choose an icon for this value and its children`. A dialog will open where "
 "you choose an icon for the value. Any children that don't have their own "
 "specified icon will inherit this icon."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:739
+#: ../../../__w/calibre/calibre/manual/gui.rst:746
 msgid ""
 "`Use the existing icon for this value but not its children`. This option is "
 "offered if the value already has an icon that is inherited by the value's "
@@ -1892,7 +1897,7 @@ msgid ""
 "children."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:740
+#: ../../../__w/calibre/calibre/manual/gui.rst:747
 msgid ""
 "`Use the existing icon for this value and its children`. This option is "
 "offered if the value already has an icon that is not inherited by the "
@@ -1900,50 +1905,50 @@ msgid ""
 " children."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:741
+#: ../../../__w/calibre/calibre/manual/gui.rst:748
 msgid ""
 "`Use the default icon for this value`. This option is offered if the item "
 "has an icon. It removes the icon from the value and any children inheriting "
 "the icon. The default icon is what is specified below."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:742
+#: ../../../__w/calibre/calibre/manual/gui.rst:749
 msgid ""
 "`Reset all value icons to the default icon`. This option removes all item "
 "value icons for the category. It does not remove a template if one exists. "
 "There is no undo."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:743
+#: ../../../__w/calibre/calibre/manual/gui.rst:750
 msgid ""
 "`Use/edit a template to choose the default value icon`. This option permits "
 "you to provide a calibre template that returns the name of an icon file to "
 "be used as a default icon. The template can use the following variables:"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:745
+#: ../../../__w/calibre/calibre/manual/gui.rst:752
 msgid ""
 "``category``: the lookup name of the category, for example ``authors``, "
 "``series``, ``#mycolumn``."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:746
+#: ../../../__w/calibre/calibre/manual/gui.rst:753
 msgid "``value``: the value of the item within the category."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:747
+#: ../../../__w/calibre/calibre/manual/gui.rst:754
 msgid ""
 "``count``: the number of books with this value. If the value is part of a "
 "hierarchy then the count includes the children."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:748
+#: ../../../__w/calibre/calibre/manual/gui.rst:755
 msgid ""
 "``avg_rating``: the average rating for books with this value. If the value "
 "is part of a hierarchy then the average includes the children."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:750
+#: ../../../__w/calibre/calibre/manual/gui.rst:757
 msgid ""
 "Book metadata such as title is not available. Template database functions "
 "such as :ref:`ff_book_count` and :ref:`ff_book_values` will work, but the "
@@ -1954,7 +1959,7 @@ msgid ""
 ":ref:`ff_virtual_libraries`."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:752
+#: ../../../__w/calibre/calibre/manual/gui.rst:759
 msgid ""
 "In the GUI, Python templates have full access to the calibre database. In "
 "the content server, Python templates have access to new API (see `API "
@@ -1962,51 +1967,51 @@ msgid ""
 "ebook.com/db_api.html>`_) but not the old API (LibraryDatabase)."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:754
+#: ../../../__w/calibre/calibre/manual/gui.rst:761
 msgid ""
 "For example, this template specifies that any value in the clicked-on "
 "category beginning with `History` will have an icon named ``flower.png``::"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:759
+#: ../../../__w/calibre/calibre/manual/gui.rst:766
 msgid ""
 "If a template returns the empty string (``''``) then the category icon will "
 "be used. If the template returns a file name that doesn't exist then no icon"
 " is displayed."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:762
+#: ../../../__w/calibre/calibre/manual/gui.rst:769
 msgid ""
 "`Use the category icon as the default`. This option specifies that the icon "
 "used for the category should be used for any value that doesn't otherwise "
 "have an icon. Selecting this option removes any template icon specification."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:765
+#: ../../../__w/calibre/calibre/manual/gui.rst:772
 msgid "The icon is chosen using the following hierarchy:"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:767
+#: ../../../__w/calibre/calibre/manual/gui.rst:774
 msgid "The icon specified for the value, if it exists."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:768
+#: ../../../__w/calibre/calibre/manual/gui.rst:775
 msgid ""
 "The icon specified for a parent node found by walking up the tree, if one "
 "exists."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:769
+#: ../../../__w/calibre/calibre/manual/gui.rst:776
 msgid ""
 "The icon from a template, if a template exists and it returns a non-empty "
 "string."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:770
+#: ../../../__w/calibre/calibre/manual/gui.rst:777
 msgid "The default category icon, which always exists."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:772
+#: ../../../__w/calibre/calibre/manual/gui.rst:779
 msgid ""
 "Icons are per-user, not per-library, stored in the calibre configuration "
 "folder. Icons for item values are stored in the :file:`tb_icons` subfolder. "
@@ -2014,11 +2019,11 @@ msgid ""
 ":file:`tb_icons`."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:780
+#: ../../../__w/calibre/calibre/manual/gui.rst:787
 msgid "Cover grid"
 msgstr "கவர் கட்டம்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:785
+#: ../../../__w/calibre/calibre/manual/gui.rst:792
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -2030,11 +2035,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr "உங்கள் சேகரிப்பை அட்டைகளால் உலாவ விரும்பினால், புத்தகங்களின் பட்டியலுக்கு பதிலாக புத்தக அட்டைகளின் கட்டத்தை நீங்கள் காண்பிக்க முடியும். தி: கிலாபெல்: `கவர் கிரிட்` என்பதைக் சொடுக்கு செய்வதன் மூலம் செயல்படுத்தப்படுகிறது: கிலாபெல்: முதன்மையான காலிபர் சாளரத்தின் கீழ் வலது மூலையில்` தளவமைப்பு` பொத்தானை. கவர் அளவுகள் மற்றும் பின்னணியை நீங்கள் தனிப்பயனாக்கலாம்: கிலாபெல்: `கவர் கிரிட்` வழியாக: கிலாபெல்:` விருப்பத்தேர்வுகள்-> இடைமுகம்-> தோற்றம் & உணர்வு-> கவர் கட்டம்`. தலைப்பு அல்லது ஆசிரியர்கள் அல்லது மதிப்பீடு அல்லது உங்கள் சொந்த திட்டத்தின் தனிப்பயன் நெடுவரிசை போன்ற அட்டைகளின் கீழ் எந்தவொரு குறிப்பிட்ட புலத்தையும் நீங்கள் காட்டலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:796
+#: ../../../__w/calibre/calibre/manual/gui.rst:803
 msgid "Bookshelf view"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:801
+#: ../../../__w/calibre/calibre/manual/gui.rst:808
 msgid ""
 "You can have calibre display your book collection in shelves, optionally "
 "grouped by authors/date/rating etc. The :guilabel:`Bookshelf view` is "
@@ -2044,11 +2049,11 @@ msgid ""
 "via :guilabel:`Preferences->Interface->Look & feel->Bookshelf`."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:810
+#: ../../../__w/calibre/calibre/manual/gui.rst:817
 msgid "Cover browser"
 msgstr "உலாவியை மூடு"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:815
+#: ../../../__w/calibre/calibre/manual/gui.rst:822
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in a single row. This is activated via the "
@@ -2058,11 +2063,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:822
+#: ../../../__w/calibre/calibre/manual/gui.rst:829
 msgid "Adding notes for authors, series, etc."
 msgstr "ஆசிரியர்கள், தொடர் போன்றவற்றிற்கான குறிப்புகளைச் சேர்ப்பது."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:827
+#: ../../../__w/calibre/calibre/manual/gui.rst:834
 msgid ""
 "You can add notes for an author/series/tag/publisher/etc. to your calibre "
 "library. To do so right click on the author name in the :guilabel:`Tag "
@@ -2070,7 +2075,7 @@ msgid ""
 "choose :guilabel:`Create note` or :guilabel:`Edit note`."
 msgstr "நீங்கள் ஒரு ஆசிரியர்/தொடர்/குறிச்சொல்/வெளியீட்டாளர்/போன்றவற்றிற்கான குறிப்புகளைச் சேர்க்கலாம். உங்கள் காலிபர் நூலகத்திற்கு. அவ்வாறு செய்ய: கிலாபெல்: `இடதுபுறத்தில்` குறிச்சொல் உலாவி` அல்லது வலதுபுறத்தில் `புத்தக விவரங்கள்` என்ற குழு: கிலாபெல்:` குறிப்பை உருவாக்கவும் அல்லது: கிலாபெல்: ` `."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:832
+#: ../../../__w/calibre/calibre/manual/gui.rst:839
 msgid ""
 "A simple popup window will allow you to enter your notes using basic "
 "formatting and supporting links and images. Once a note for an author is "
@@ -2078,18 +2083,18 @@ msgid ""
 "clicking the little pencil icon next to the author name."
 msgstr "ஒரு எளிய பாப்அப் சாளரம் அடிப்படை வடிவமைப்பு மற்றும் துணை இணைப்புகள் மற்றும் படங்களைப் பயன்படுத்தி உங்கள் குறிப்புகளை உள்ளிட அனுமதிக்கும். ஒரு எழுத்தாளருக்கான குறிப்பு உருவாக்கப்பட்டவுடன், அதை எழுத்தாளரின் பெயருக்கு அடுத்ததாக சிறிய பென்சில் ஐகானைக் சொடுக்கு செய்வதன் மூலம்: கிலாபெல்: `புத்தக விவரங்கள்` பேனலில் இருந்து எளிதாகக் காணலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:837
+#: ../../../__w/calibre/calibre/manual/gui.rst:844
 msgid ""
 "You can search through all the notes in your library using the "
 ":guilabel:`Browse notes` tool by pressing :kbd:`Ctrl+Shift+N` or adding it "
 "to the toolbar via :guilabel:`Preferences->Toolbars & menus`."
 msgstr "உங்கள் நூலகத்தில் உள்ள அனைத்து குறிப்புகளையும் நீங்கள் தேடலாம்: கிலாபெல்: `குறிப்புகளை உலாவுக 'கருவியை அழுத்துவதன் மூலம்: kbd:` ctrl+shift+n` அல்லது கருவிப்பட்டியில் சேர்ப்பது வழியாக: கிலாபெல்: `விருப்பத்தேர்வுகள்-> கருவிப்பட்டிகள் & மெனுச்` ."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:847
+#: ../../../__w/calibre/calibre/manual/gui.rst:854
 msgid "Quickview"
 msgstr "குவிக்வியூ"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:849
+#: ../../../__w/calibre/calibre/manual/gui.rst:856
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -2104,53 +2109,53 @@ msgid ""
 "the left, and all the books by the selected author on the right."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:851
+#: ../../../__w/calibre/calibre/manual/gui.rst:858
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "சில எடுத்துக்காட்டு குவிக்வியூ பயன்பாடுகள்: மற்ற புத்தகங்களை விரைவாகப் பார்ப்பது:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:852
+#: ../../../__w/calibre/calibre/manual/gui.rst:859
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr "தற்போது தேர்ந்தெடுக்கப்பட்ட புத்தகத்திற்கு சில குறிச்சொல் (கள்) பயன்படுத்தப்பட்டுள்ளன,"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:853
+#: ../../../__w/calibre/calibre/manual/gui.rst:860
 msgid "are in the same series as the current book"
 msgstr "தற்போதைய புத்தகத்தின் அதே தொடரில் உள்ளன"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:854
+#: ../../../__w/calibre/calibre/manual/gui.rst:861
 msgid "have the same values in a custom column as the current book"
 msgstr "தற்போதைய புத்தகத்தின் தனிப்பயன் நெடுவரிசையில் அதே மதிப்புகளைக் கொண்டிருங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:855
+#: ../../../__w/calibre/calibre/manual/gui.rst:862
 msgid "are written by one of the same authors of the current book"
 msgstr "தற்போதைய புத்தகத்தின் அதே ஆசிரியர்களில் ஒருவரால் எழுதப்பட்டவை"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:856
+#: ../../../__w/calibre/calibre/manual/gui.rst:863
 msgid "share values in a custom column"
 msgstr "தனிப்பயன் நெடுவரிசையில் மதிப்புகளைப் பகிரவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:858
+#: ../../../__w/calibre/calibre/manual/gui.rst:865
 msgid "There are two choices for where the Quickview information appears:"
 msgstr "குவிக்வியூ தகவல்கள் தோன்றும் இடத்திற்கு இரண்டு தேர்வுகள் உள்ளன:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:860
+#: ../../../__w/calibre/calibre/manual/gui.rst:867
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr "இது \"திறக்கப்படாதது\" என்பதைத் திறக்கலாம்: காலிபர் சாளரத்தின் மேல் மற்றும் நீங்கள் அதை வெளிப்படையாக மூடும் வரை திறந்திருக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:861
+#: ../../../__w/calibre/calibre/manual/gui.rst:868
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr "இது \"நறுக்கப்பட்ட\" என்பதைத் திறக்க முடியும்: காலிபர் முதன்மையான சாளரத்தின் புத்தக பட்டியல் பிரிவில் ஒரு குழுவாக."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:863
+#: ../../../__w/calibre/calibre/manual/gui.rst:870
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr "\"கப்பல்துறை/திறமை\" பொத்தானைப் பயன்படுத்தி விரும்பியபடி சாளரத்தை நறுக்கப்பட்டதிலிருந்து திறக்கலாம்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:865
+#: ../../../__w/calibre/calibre/manual/gui.rst:872
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -2163,21 +2168,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:867
+#: ../../../__w/calibre/calibre/manual/gui.rst:874
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr "குயிக்வியூ சாளரத்தில் ஒரு புத்தகத்தில் இருமுறை சொடுக்கு செய்யவும். நூலகக் காட்சியில் அந்த புத்தகத்தைத் தேர்ந்தெடுக்க. இது புதிதாக தேர்ந்தெடுக்கப்பட்ட புத்தகத்தில் உள்ள உருப்படிகளைக் காண்பிப்பதற்காக குவிக்வியூ சாளரத்தில் (இடது கை குழு) உருப்படிகளின் காட்சியை மாற்றும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:869
+#: ../../../__w/calibre/calibre/manual/gui.rst:876
 msgid ""
 ":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
 " to open the edit metadata dialog on that book in the calibre window. The "
 "edited book will be Quickview'ed when you close the edit metadata dialog."
 msgstr ". நீங்கள் திருத்து மேனிலை தரவு உரையாடலை மூடும்போது திருத்தப்பட்ட நூல் குவிக்வியூட் செய்யப்படும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:871
+#: ../../../__w/calibre/calibre/manual/gui.rst:878
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -2186,47 +2191,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:873
+#: ../../../__w/calibre/calibre/manual/gui.rst:880
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr "விருப்பங்கள் (இல்: கிலாபெல்: `விருப்பத்தேர்வுகள்-> பார் & ஃபீல்-> குவிக்வியூ`):"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:875
+#: ../../../__w/calibre/calibre/manual/gui.rst:882
 msgid ""
 "Respect (or not) the current Virtual library. If checked then Quickview "
 "shows only books in the current Virtual library. Default: respect Virtual "
 "libraries"
 msgstr "தற்போதைய மெய்நிகர் நூலகத்தை மதிக்கவும் (அல்லது இல்லை). சரிபார்க்கப்பட்டால், குவிக்வியூ தற்போதைய மெய்நிகர் நூலகத்தில் புத்தகங்களை மட்டுமே காட்டுகிறது. இயல்புநிலை: மெய்நிகர் நூலகங்களை மதிக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:876
+#: ../../../__w/calibre/calibre/manual/gui.rst:883
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr "குவிக்வியூ சாளர உள்ளடக்கங்களை மாற்றவும் கர்சர் விசைகளைப் பயன்படுத்தி புத்தக பட்டியலில் நெடுவரிசை மாற்றப்படும்போது. இயல்புநிலை: கர்சர் விசைகளுடன் செய்யப்பட்ட மாற்றங்களைப் பின்பற்ற வேண்டாம்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:877
+#: ../../../__w/calibre/calibre/manual/gui.rst:884
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr "குவிக்வியூ சாளரத்தில் ஒரு செல் இருமுறை சொடுக்கு செய்யப்படும்போது \"குவிக்வியூட்\" ஆக இருக்கும் நெடுவரிசையை மாற்றவும். இல்லையெனில் நூல் மாற்றப்பட்டுள்ளது, ஆனால் ஆய்வு செய்யப்படும் நெடுவரிசை இல்லை. இயல்புநிலை: நெடுவரிசையை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:878
+#: ../../../__w/calibre/calibre/manual/gui.rst:885
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr "குவிக்வியூ பேனலில் திரும்பும் விசை அழுத்தும் போது தற்போதைய நெடுவரிசைக்கு \"quickview'eed\" ஆக மாற்றவும். இல்லையெனில் நூல் மாற்றப்பட்டுள்ளது, ஆனால் ஆய்வு செய்யப்படும் நெடுவரிசை இல்லை. இயல்புநிலை: நெடுவரிசையை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:879
+#: ../../../__w/calibre/calibre/manual/gui.rst:886
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr "குவிக்வியூ சாளரம்/பேனலில் எந்த நெடுவரிசைகள் காட்டப்பட்டுள்ளன என்பதைத் தேர்வுசெய்க."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:888
+#: ../../../__w/calibre/calibre/manual/gui.rst:895
 msgid "Jobs"
 msgstr "வேலைகள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:892
+#: ../../../__w/calibre/calibre/manual/gui.rst:899
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -2236,11 +2241,11 @@ msgid ""
 "have completed successfully."
 msgstr "தற்போது இயங்கும் வேலைகளின் எண்ணிக்கையை வேலைகள் குழு காட்டுகிறது. வேலைகள் என்பது ஒரு தனி செயல்பாட்டில் இயங்கும் பணிகள். அவற்றில் மின் புத்தகங்களை மாற்றுவது மற்றும் உங்கள் வாசகர் சாதனத்துடன் பேசுவது ஆகியவை அடங்கும். வேலைகளின் பட்டியலை அணுக நீங்கள் வேலைகள் குழுவில் சொடுக்கு செய்யலாம். ஒரு வேலை முடிந்ததும், அந்த வேலையிலிருந்து ஒரு விரிவான பதிவை பட்டியலில் இருமுறை சொடுக்கு செய்வதன் மூலம் காணலாம். வெற்றிகரமாக முடிக்காத வேலைகளை பிழைத்திருத்துவதற்கு இது பயனுள்ளதாக இருக்கும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:899
+#: ../../../__w/calibre/calibre/manual/gui.rst:906
 msgid "Keyboard shortcuts"
 msgstr "விசைப்பலகை குறுக்குவழிகள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:901
+#: ../../../__w/calibre/calibre/manual/gui.rst:908
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -2250,494 +2255,494 @@ msgid ""
 ":guilabel:`Preferences`."
 msgstr "உங்கள் நேரத்தையும் சுட்டி இயக்கத்தையும் மிச்சப்படுத்த காலிபர் பல விசைப்பலகை குறுக்குவழிகளைக் கொண்டுள்ளது. இந்த குறுக்குவழிகள் புத்தக பட்டியல் பார்வையில் செயலில் உள்ளன (நீங்கள் ஒரு குறிப்பிட்ட புத்தகத்தின் விவரங்களைத் திருத்தாதபோது), அவற்றில் பெரும்பாலானவை நீங்கள் தேர்ந்தெடுத்த தலைப்பை பாதிக்கின்றன. காலிபர் மின்-புத்தக பார்வையாளர்: ref: `அதன் சொந்த குறுக்குவழிகள் <viewer_shortcuts>` பார்வையாளரில் தனிப்பயனாக்கப்படலாம்: கிலாபெல்: `விருப்பத்தேர்வுகள்`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:905
+#: ../../../__w/calibre/calibre/manual/gui.rst:912
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr "குறிப்பு: காலிபர் விசைப்பலகை குறுக்குவழிகளுக்கு குறிப்பாக குறிப்பிடப்படாவிட்டால், மாற்றியமைக்கும் விசை (கட்டளை, விருப்பம், கட்டுப்பாடு போன்றவை) தேவையில்லை. நீங்கள் கடிதம் விசையை மட்டுமே அழுத்த வேண்டும், எ.கா. e திருத்த."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:907
+#: ../../../__w/calibre/calibre/manual/gui.rst:914
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "முக்கிய காலிபர் திட்டத்திற்கான விசைப்பலகை குறுக்குவழிகள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:911
+#: ../../../__w/calibre/calibre/manual/gui.rst:918
 msgid "Keyboard shortcut"
 msgstr "விசைப்பலகை குறுக்குவழி"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:912
+#: ../../../__w/calibre/calibre/manual/gui.rst:919
 msgid "Action"
 msgstr "செயல்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:913
+#: ../../../__w/calibre/calibre/manual/gui.rst:920
 msgid ":kbd:`F2 (Enter for macOS)`"
 msgstr ": kbd: `f2 (macos க்கு உள்ளிடவும்)`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:914
+#: ../../../__w/calibre/calibre/manual/gui.rst:921
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "தற்போது தேர்ந்தெடுக்கப்பட்ட துறையின் மெட்டாடேட்டாவை புத்தக பட்டியலில் திருத்தவும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:915
+#: ../../../__w/calibre/calibre/manual/gui.rst:922
 msgid ":kbd:`A`"
 msgstr ": kbd: `a`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:917
+#: ../../../__w/calibre/calibre/manual/gui.rst:924
 msgid ":kbd:`Shift+A`"
 msgstr ": kbd: `shift+a`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:918
+#: ../../../__w/calibre/calibre/manual/gui.rst:925
 msgid "Add formats to the selected books"
 msgstr "தேர்ந்தெடுக்கப்பட்ட புத்தகங்களில் வடிவங்களைச் சேர்க்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:919
+#: ../../../__w/calibre/calibre/manual/gui.rst:926
 msgid ":kbd:`C`"
 msgstr ": kbd: `c`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:920
+#: ../../../__w/calibre/calibre/manual/gui.rst:927
 msgid "Convert selected books"
 msgstr "தேர்ந்தெடுக்கப்பட்ட புத்தகங்களை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:921
+#: ../../../__w/calibre/calibre/manual/gui.rst:928
 msgid ":kbd:`D`"
 msgstr ": kbd: `d`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:923
+#: ../../../__w/calibre/calibre/manual/gui.rst:930
 msgid ":kbd:`Del`"
 msgstr ": kbd: `டெல்`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:924
+#: ../../../__w/calibre/calibre/manual/gui.rst:931
 msgid "Remove selected books"
 msgstr "தேர்ந்தெடுக்கப்பட்ட புத்தகங்களை அகற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:925
+#: ../../../__w/calibre/calibre/manual/gui.rst:932
 msgid ":kbd:`E`"
 msgstr ": kbd: `e`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:926
+#: ../../../__w/calibre/calibre/manual/gui.rst:933
 msgid "Edit metadata of selected books"
 msgstr "தேர்ந்தெடுக்கப்பட்ட புத்தகங்களின் மெட்டாடேட்டாவைத் திருத்தவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:927
+#: ../../../__w/calibre/calibre/manual/gui.rst:934
 msgid ":kbd:`G`"
 msgstr ": kbd: `g`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:928
+#: ../../../__w/calibre/calibre/manual/gui.rst:935
 msgid "Get books"
 msgstr "புத்தகங்களைப் பெறுங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:929
+#: ../../../__w/calibre/calibre/manual/gui.rst:936
 msgid ":kbd:`I`"
 msgstr ": kbd: `நான்`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:930
+#: ../../../__w/calibre/calibre/manual/gui.rst:937
 msgid "Show Book details"
 msgstr "புத்தக விவரங்களைக் காட்டு"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:931
+#: ../../../__w/calibre/calibre/manual/gui.rst:938
 msgid ":kbd:`K`"
 msgstr ": kbd: `k`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:932
+#: ../../../__w/calibre/calibre/manual/gui.rst:939
 msgid "Edit Table of Contents"
 msgstr "உள்ளடக்க அட்டவணையைத் திருத்தவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:933
+#: ../../../__w/calibre/calibre/manual/gui.rst:940
 msgid ":kbd:`M`"
 msgstr ": kbd: `m`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:934
+#: ../../../__w/calibre/calibre/manual/gui.rst:941
 msgid "Merge selected records"
 msgstr "தேர்ந்தெடுக்கப்பட்ட பதிவுகளை ஒன்றிணைக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:935
+#: ../../../__w/calibre/calibre/manual/gui.rst:942
 msgid ":kbd:`Alt+M`"
 msgstr ": kbd: `alt+m`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:936
+#: ../../../__w/calibre/calibre/manual/gui.rst:943
 msgid "Merge selected records, keeping originals"
 msgstr "தேர்ந்தெடுக்கப்பட்ட பதிவுகளை ஒன்றிணைத்து, அசல் வைத்திருங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:937
+#: ../../../__w/calibre/calibre/manual/gui.rst:944
 msgid ":kbd:`O`"
 msgstr ": kbd: `o`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:938
+#: ../../../__w/calibre/calibre/manual/gui.rst:945
 msgid "Open containing folder"
 msgstr "கோப்புறை கொண்ட திறந்த"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:939
+#: ../../../__w/calibre/calibre/manual/gui.rst:946
 msgid ":kbd:`P`"
 msgstr ": kbd: `p`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:940
+#: ../../../__w/calibre/calibre/manual/gui.rst:947
 msgid "Polish books"
 msgstr "போலந்து புத்தகங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:941
+#: ../../../__w/calibre/calibre/manual/gui.rst:948
 msgid ":kbd:`S`"
 msgstr ": kbd: `s`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:943
+#: ../../../__w/calibre/calibre/manual/gui.rst:950
 msgid ":kbd:`T`"
 msgstr ": kbd: `t`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:944
+#: ../../../__w/calibre/calibre/manual/gui.rst:951
 msgid "Edit book"
 msgstr "புத்தகத்தைத் திருத்து"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:945
+#: ../../../__w/calibre/calibre/manual/gui.rst:952
 msgid ":kbd:`V`"
 msgstr ": kbd: `v`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:947
+#: ../../../__w/calibre/calibre/manual/gui.rst:954
 msgid ":kbd:`Shift+V`"
 msgstr ": kbd: `shift+v`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:948
+#: ../../../__w/calibre/calibre/manual/gui.rst:955
 msgid "View last read book"
 msgstr "கடைசி வாசிப்பு புத்தகத்தைக் காண்க"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:949
+#: ../../../__w/calibre/calibre/manual/gui.rst:956
 msgid ":kbd:`Ctrl+Alt+A`"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:950
+#: ../../../__w/calibre/calibre/manual/gui.rst:957
 msgid "Ask AI about the currently selected books"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:951
+#: ../../../__w/calibre/calibre/manual/gui.rst:958
 msgid ":kbd:`Alt+V/Cmd+V for macOS`"
 msgstr ": kbd: `alt+v/cmd+v macos`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:952
+#: ../../../__w/calibre/calibre/manual/gui.rst:959
 msgid "View specific format"
 msgstr "குறிப்பிட்ட வடிவமைப்பைக் காண்க"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:953
+#: ../../../__w/calibre/calibre/manual/gui.rst:960
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ": kbd: `alt+shift+j`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:954
+#: ../../../__w/calibre/calibre/manual/gui.rst:961
 msgid "Toggle jobs list"
 msgstr "வேலைகள் பட்டியலை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:955
+#: ../../../__w/calibre/calibre/manual/gui.rst:962
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ": kbd: `alt+shift+b`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:956
+#: ../../../__w/calibre/calibre/manual/gui.rst:963
 msgid "Toggle Cover browser"
 msgstr "கவர் உலாவியை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:957
+#: ../../../__w/calibre/calibre/manual/gui.rst:964
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ": kbd: `alt+shift+d`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:958
+#: ../../../__w/calibre/calibre/manual/gui.rst:965
 msgid "Toggle Book details panel"
 msgstr "புத்தக விவரங்கள் குழுவை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:959
+#: ../../../__w/calibre/calibre/manual/gui.rst:966
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ": kbd: `alt+shift+t`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:960
+#: ../../../__w/calibre/calibre/manual/gui.rst:967
 msgid "Toggle Tag browser"
 msgstr "குறிச்சொல் உலாவியை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:961
+#: ../../../__w/calibre/calibre/manual/gui.rst:968
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ": kbd: `alt+shift+g`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:962
+#: ../../../__w/calibre/calibre/manual/gui.rst:969
 msgid "Toggle Cover grid"
 msgstr "கவர் கட்டத்தை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:963
+#: ../../../__w/calibre/calibre/manual/gui.rst:970
 msgid ":kbd:`Alt+Shift+H`"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:964
+#: ../../../__w/calibre/calibre/manual/gui.rst:971
 msgid "Toggle Bookshelf"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:965
+#: ../../../__w/calibre/calibre/manual/gui.rst:972
 msgid ":kbd:`Alt+A`"
 msgstr ": kbd: `alt+a`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:966
+#: ../../../__w/calibre/calibre/manual/gui.rst:973
 msgid "Show books by the same author as the current book"
 msgstr "தற்போதைய புத்தகத்தின் அதே எழுத்தாளரின் புத்தகங்களைக் காட்டு"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:967
+#: ../../../__w/calibre/calibre/manual/gui.rst:974
 msgid ":kbd:`Alt+T`"
 msgstr ": kbd: `alt+t`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:968
+#: ../../../__w/calibre/calibre/manual/gui.rst:975
 msgid "Show books with the same tags as current book"
 msgstr "தற்போதைய புத்தகத்தின் அதே குறிச்சொற்களைக் கொண்ட புத்தகங்களைக் காட்டு"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:969
+#: ../../../__w/calibre/calibre/manual/gui.rst:976
 msgid ":kbd:`Alt+P`"
 msgstr ": kbd: `alt+p`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:970
+#: ../../../__w/calibre/calibre/manual/gui.rst:977
 msgid "Show books by the same publisher as current book"
 msgstr "தற்போதைய புத்தகத்தின் அதே வெளியீட்டாளரின் புத்தகங்களைக் காட்டு"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:971
+#: ../../../__w/calibre/calibre/manual/gui.rst:978
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ": kbd: `alt+shift+s`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:972
+#: ../../../__w/calibre/calibre/manual/gui.rst:979
 msgid "Show books in the same series as current book"
 msgstr "தற்போதைய புத்தகத்தின் அதே தொடரில் புத்தகங்களைக் காட்டு"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:973
+#: ../../../__w/calibre/calibre/manual/gui.rst:980
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ": kbd: `/, ctrl+f`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:974
+#: ../../../__w/calibre/calibre/manual/gui.rst:981
 msgid "Focus the Search bar"
 msgstr "தேடல் பட்டியில் கவனம் செலுத்துங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:975
+#: ../../../__w/calibre/calibre/manual/gui.rst:982
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ": kbd: `shift+ctrl+f`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:976
+#: ../../../__w/calibre/calibre/manual/gui.rst:983
 msgid "Open the Advanced search dialog"
 msgstr "மேம்பட்ட தேடல் உரையாடலைத் திறக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:977
+#: ../../../__w/calibre/calibre/manual/gui.rst:984
 msgid ":kbd:`Shift+Alt+F`"
 msgstr ": kbd: `shift+alt+f`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:978
+#: ../../../__w/calibre/calibre/manual/gui.rst:985
 msgid "Toggle the Search bar"
 msgstr "தேடல் பட்டியை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:979
+#: ../../../__w/calibre/calibre/manual/gui.rst:986
 msgid ":kbd:`Esc`"
 msgstr ": kbd: `esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:980
+#: ../../../__w/calibre/calibre/manual/gui.rst:987
 msgid "Clear the current search"
 msgstr "தற்போதைய தேடலை அழிக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:981
+#: ../../../__w/calibre/calibre/manual/gui.rst:988
 msgid ":kbd:`Shift+Esc`"
 msgstr ": kbd: `shift+esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:982
+#: ../../../__w/calibre/calibre/manual/gui.rst:989
 msgid "Focus the book list"
 msgstr "புத்தக பட்டியலில் கவனம் செலுத்துங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:983
+#: ../../../__w/calibre/calibre/manual/gui.rst:990
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ": kbd: `ctrl+esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:984
+#: ../../../__w/calibre/calibre/manual/gui.rst:991
 msgid "Clear the Virtual library"
 msgstr "மெய்நிகர் நூலகத்தை அழிக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:985
+#: ../../../__w/calibre/calibre/manual/gui.rst:992
 msgid ":kbd:`Alt+Esc`"
 msgstr ": kbd: `alt+esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:986
+#: ../../../__w/calibre/calibre/manual/gui.rst:993
 msgid "Clear the additional restriction"
 msgstr "கூடுதல் கட்டுப்பாட்டை அழிக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:987
+#: ../../../__w/calibre/calibre/manual/gui.rst:994
 msgid ":kbd:`Ctrl+*`"
 msgstr ": kbd: `ctrl+*`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:988
+#: ../../../__w/calibre/calibre/manual/gui.rst:995
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "தற்போதைய தேடலின் அடிப்படையில் தற்காலிக மெய்நிகர் நூலகத்தை உருவாக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:989
+#: ../../../__w/calibre/calibre/manual/gui.rst:996
 msgid ":kbd:`Ctrl+Tab`"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:990
+#: ../../../__w/calibre/calibre/manual/gui.rst:997
 msgid "Select the next Virtual library tab"
 msgstr "அடுத்த மெய்நிகர் நூலக தாவலைத் தேர்ந்தெடுக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:991
+#: ../../../__w/calibre/calibre/manual/gui.rst:998
 msgid ":kbd:`Ctrl+Shift+Tab`"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:992
+#: ../../../__w/calibre/calibre/manual/gui.rst:999
 msgid "Select the previous Virtual library tab"
 msgstr "முந்தைய மெய்நிகர் நூலக தாவலைத் தேர்ந்தெடுக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:993
+#: ../../../__w/calibre/calibre/manual/gui.rst:1000
 msgid ":kbd:`N or F3`"
 msgstr ": kbd: `n அல்லது f3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:994
+#: ../../../__w/calibre/calibre/manual/gui.rst:1001
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "தற்போதைய தேடலுடன் பொருந்தக்கூடிய அடுத்த புத்தகத்தைக் கண்டறியவும் (தேடல் முன்னிலைப்படுத்தல் தேடல் விருப்பங்களில் இயக்கப்பட்டால் மட்டுமே செயல்படும்)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:995
+#: ../../../__w/calibre/calibre/manual/gui.rst:1002
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ": kbd: `சிப்ட்+என் அல்லது சிப்ட்+எஃப் 3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:996
+#: ../../../__w/calibre/calibre/manual/gui.rst:1003
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "தற்போதைய தேடலுடன் பொருந்தக்கூடிய முந்தைய புத்தகத்தைக் கண்டறியவும் (தேடல் முன்னிலைப்படுத்தல் தேடல் விருப்பங்களில் இயக்கப்பட்டால் மட்டுமே செயல்படும்)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:997
+#: ../../../__w/calibre/calibre/manual/gui.rst:1004
 msgid ":kbd:`Ctrl+D`"
 msgstr ": kbd: `ctrl+d`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:998
+#: ../../../__w/calibre/calibre/manual/gui.rst:1005
 msgid "Download metadata and covers"
 msgstr "மேனிலை தரவு மற்றும் கவர்களைப் பதிவிறக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:999
+#: ../../../__w/calibre/calibre/manual/gui.rst:1006
 msgid ":kbd:`Ctrl+R`"
 msgstr ": kbd: `ctrl+r`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1000
+#: ../../../__w/calibre/calibre/manual/gui.rst:1007
 msgid "Restart calibre"
 msgstr "காலிபரை மறுதொடக்கம் செய்யுங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1001
+#: ../../../__w/calibre/calibre/manual/gui.rst:1008
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ": kbd: `ctrl+shift+r`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1002
+#: ../../../__w/calibre/calibre/manual/gui.rst:1009
 msgid "Restart calibre in debug mode"
 msgstr "பிழைத்திருத்த பயன்முறையில் காலிபரை மறுதொடக்கம் செய்யுங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1003
+#: ../../../__w/calibre/calibre/manual/gui.rst:1010
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ": kbd: `shift+ctrl+e`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1004
+#: ../../../__w/calibre/calibre/manual/gui.rst:1011
 msgid "Add empty books to calibre"
 msgstr "காலிபரில் வெற்று புத்தகங்களைச் சேர்க்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1005
+#: ../../../__w/calibre/calibre/manual/gui.rst:1012
 msgid ":kbd:`Ctrl+M`"
 msgstr ": kbd: `ctrl+m`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1006
+#: ../../../__w/calibre/calibre/manual/gui.rst:1013
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "தேர்ந்தெடுக்கப்பட்ட புத்தகங்களில் குறி/குறிக்கப்படாத நிலையை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1007
+#: ../../../__w/calibre/calibre/manual/gui.rst:1014
 msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
 msgstr ": kbd: `ctrl+/` or: kbd: `ctrl+alt+f`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1008
+#: ../../../__w/calibre/calibre/manual/gui.rst:1015
 msgid "Open the popup to search the full text of all books in the library"
 msgstr "நூலகத்தில் உள்ள அனைத்து புத்தகங்களின் முழு உரையையும் தேட பாப்அப்பைத் திறக்கவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1009
+#: ../../../__w/calibre/calibre/manual/gui.rst:1016
 msgid ":kbd:`Q`"
 msgstr ": kbd: `q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1010
+#: ../../../__w/calibre/calibre/manual/gui.rst:1017
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "தொடர்புடைய தொடர்/குறிச்சொற்கள்/போன்றவற்றில் புத்தகங்களைப் பார்ப்பதற்கு விரைவான பார்வை பாப்அப்பைத் திறக்கவும்."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1011
+#: ../../../__w/calibre/calibre/manual/gui.rst:1018
 msgid ":kbd:`Shift+Q`"
 msgstr ": kbd: `shift+q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1012
+#: ../../../__w/calibre/calibre/manual/gui.rst:1019
 msgid "Focus the opened Quick View panel"
 msgstr "திறந்த விரைவான பார்வைக் குழுவில் கவனம் செலுத்துங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1013
+#: ../../../__w/calibre/calibre/manual/gui.rst:1020
 msgid ":kbd:`Shift+S`"
 msgstr ": kbd: `shift+s`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1014
+#: ../../../__w/calibre/calibre/manual/gui.rst:1021
 msgid "Perform a search in the Quick View panel"
 msgstr "விரைவான பார்வைக் குழுவில் ஒரு தேடலைச் செய்யுங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1015
+#: ../../../__w/calibre/calibre/manual/gui.rst:1022
 msgid ":kbd:`F5`"
 msgstr ": kbd: `f5`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1016
+#: ../../../__w/calibre/calibre/manual/gui.rst:1023
 msgid "Re-apply the current sort"
 msgstr "தற்போதைய வகையை மீண்டும் பயன்படுத்துங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1017
+#: ../../../__w/calibre/calibre/manual/gui.rst:1024
 msgid ":kbd:`Ctrl+Q`"
 msgstr ": kbd: `ctrl+q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1018
+#: ../../../__w/calibre/calibre/manual/gui.rst:1025
 msgid "Quit calibre"
 msgstr "காலிபர் வெளியேறுங்கள்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1019
+#: ../../../__w/calibre/calibre/manual/gui.rst:1026
 msgid ":kbd:`X`"
 msgstr ": kbd: `x`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1020
+#: ../../../__w/calibre/calibre/manual/gui.rst:1027
 msgid "Toggle auto scroll of the book list"
 msgstr "புத்தக பட்டியலின் ஆட்டோ ச்க்ரோலை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1021
+#: ../../../__w/calibre/calibre/manual/gui.rst:1028
 msgid ":kbd:`Ctrl+Alt+Shift+F`"
 msgstr ": kbd: `ctrl+alt+shift+f`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1022
+#: ../../../__w/calibre/calibre/manual/gui.rst:1029
 msgid ""
 "Restrict the displayed books to only those books that are in a category "
 "currently displayed in the :guilabel:`Tag browser`"
 msgstr "காட்சிப்படுத்தப்பட்ட புத்தகங்களுக்கு மட்டுமே காட்டப்படும் புத்தகங்களை கட்டுப்படுத்தவும்: கிலாபெல்: `குறிச்சொல் உலாவி`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1024
+#: ../../../__w/calibre/calibre/manual/gui.rst:1031
 msgid ":kbd:`B`"
 msgstr ": kbd: `b`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1025
+#: ../../../__w/calibre/calibre/manual/gui.rst:1032
 msgid ""
 "Browse annotations (highlights and bookmarks) made in the calibre E-book "
 "viewer for all books in the library"
 msgstr "நூலகத்தில் உள்ள அனைத்து புத்தகங்களுக்கும் காலிபர் மின் புத்தக பார்வையாளரில் தயாரிக்கப்பட்ட சிறுகுறிப்புகள் (சிறப்பம்சங்கள் மற்றும் புக்மார்க்குகள்)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1026
+#: ../../../__w/calibre/calibre/manual/gui.rst:1033
 msgid ":kbd:`Ctrl+Shift+N`"
 msgstr ": kbd: `ctrl+shift+n`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1027
+#: ../../../__w/calibre/calibre/manual/gui.rst:1034
 msgid "Browse notes associated with authors/series/tags/etc."
 msgstr "ஆசிரியர்கள்/தொடர்/குறிச்சொற்கள்/போன்றவற்றுடன் தொடர்புடைய குறிப்புகளை உலாவுக."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1028
+#: ../../../__w/calibre/calibre/manual/gui.rst:1035
 msgid ":kbd:`Alt+Shift+L`"
 msgstr ": kbd: `alt+shift+l`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1029
+#: ../../../__w/calibre/calibre/manual/gui.rst:1036
 msgid "Toggle the layout between wide and narrow views"
 msgstr "பரந்த மற்றும் குறுகிய பார்வைகளுக்கு இடையில் தளவமைப்பை மாற்றவும்"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1030
+#: ../../../__w/calibre/calibre/manual/gui.rst:1037
 msgid ":kbd:`Ctrl+Alt+P`"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1031
+#: ../../../__w/calibre/calibre/manual/gui.rst:1038
 msgid "Switch to previous library, if any"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1032
+#: ../../../__w/calibre/calibre/manual/gui.rst:1039
 msgid ":kbd:`Ctrl+Alt+Shift+P`"
 msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1033
+#: ../../../__w/calibre/calibre/manual/gui.rst:1040
 msgid "Switch to previous virtual library, if any"
 msgstr ""

@@ -4,13 +4,17 @@
 import errno
 import os
 from functools import lru_cache
+from typing import TYPE_CHECKING
 
 from calibre.constants import filesystem_encoding, get_windows_username, islinux, iswindows
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 VADDRESS = None
 
 
-def eintr_retry_call(func, *args, **kwargs):
+def eintr_retry_call[**P, R](func: Callable[P, R], *args: P.args, **kwargs: P.kwargs) -> R:
     while True:
         try:
             return func(*args, **kwargs)
@@ -21,7 +25,7 @@ def eintr_retry_call(func, *args, **kwargs):
 
 
 @lru_cache
-def socket_address(which):
+def socket_address(which: str) -> str:
     from calibre import force_unicode
     from calibre.utils.filenames import ascii_filename
 
@@ -45,13 +49,13 @@ def socket_address(which):
     return ans
 
 
-def gui_socket_address():
+def gui_socket_address() -> str:
     return socket_address('GUI' if iswindows else 'gui')
 
 
-def viewer_socket_address():
+def viewer_socket_address() -> str:
     return socket_address('Viewer' if iswindows else 'viewer')
 
 
-def cyoa_socket_address():
+def cyoa_socket_address() -> str:
     return socket_address('CYOA' if iswindows else 'cyoa')

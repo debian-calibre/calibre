@@ -1,0 +1,522 @@
+# vim:fileencoding=utf-8
+# License: GPL v3 Copyright: 2026, Kovid Goyal <kovid at kovidgoyal.net>
+from __python__ import hash_literals
+
+from elementmaker import E
+from gettext import gettext as _
+
+from book_list.item_list import is_visible
+from dom import get_widget_css
+from modals import close_all_modals, create_modal_container
+from read_book.globals import ui_operations
+from read_book.highlights import all_selected_entries, create_highlights_panel, find_next, find_previous, get_container
+from test_book_list_helpers import with_empty_session
+from testing import assert_equal, assert_false, assert_true, test
+
+
+def with_highlights(proceed):
+    def run():
+        document.head.appendChild(E.style(get_widget_css()))
+        parent = E.div()
+        document.body.appendChild(parent)
+        calls = {'actions': [], 'notes': [], 'notes_saved': True}
+
+        def highlight_action(uuid, action):
+            calls.actions.push([uuid, action])
+
+        highlights = [
+            {'uuid': 'first', 'highlighted_text': 'Match first', 'notes': 'First note', 'toc_family_titles': ['Chapter one']},
+            {'uuid': 'second', 'highlighted_text': 'Match second', 'notes': '', 'toc_family_titles': ['Chapter one']},
+            {'uuid': 'third', 'highlighted_text': 'Match third', 'notes': '', 'toc_family_titles': ['Chapter two']},
+        ]
+
+        def set_notes(uuid, text):
+            calls.notes.push([uuid, text])
+            return calls.notes_saved
+
+        view = {'highlight_action': highlight_action, 'set_notes_for_highlight': set_notes}
+        manager = {'view': view, 'all_highlights': def (): return highlights;}
+        create_modal_container()
+        try:
+            create_highlights_panel(manager, def (): pass;, {'metadata': {}}, parent, def (action): action(view);)
+            proceed(get_container(), calls)
+        finally:
+            close_all_modals()
+
+    with_empty_session(run)
+
+
+def entry(container, uuid):
+    return container.querySelector(f'.highlight[data-uuid="{uuid}"]')
+
+
+def toggle(row):
+    return row.querySelector('.title > button')
+
+
+def answer_question(yes):
+    buttons = document.querySelectorAll('#modal-container .button-box a')
+    buttons[1 if yes else 0].click()
+
+
+def action_button(row, label):
+    for button in row.querySelectorAll('.actions a'):
+        if button.textContent.trim() is label:
+            return button
+
+
+def click_remove_action(row):
+    toggle(row).click()
+    button = action_button(row, 'Remove highlight')
+    button.focus()
+    button.click()
+    return button
+
+
+@test
+def highlight_entries_are_named_disclosures_with_selectable_text():
+    def run(container):
+        first, second = entry(container, 'first'), entry(container, 'second')
+        button, checkbox = toggle(first), first.querySelector('input[type=checkbox]')
+        assert_equal(button.type, 'button')
+        assert_equal(button.getAttribute('aria-expanded'), 'false')
+        label = document.getElementById(button.getAttribute('aria-labelledby'))
+        assert_equal(label.textContent, 'Match first')
+        assert_equal(checkbox.getAttribute('aria-labelledby'), label.id)
+        # The text is not inside the button so that it can still be selected
+        assert_false(button.contains(label))
+        for id in button.getAttribute('aria-controls').split(' '):
+            assert_true(first.contains(document.getElementById(id)))
+        assert_false(is_visible(first.querySelector('.actions')))
+
+        button.click()
+        assert_equal(button.getAttribute('aria-expanded'), 'true')
+        assert_true(is_visible(first.querySelector('.actions')))
+        assert_true(is_visible(first.querySelector('.notes')))
+        toggle(second).click()
+        assert_equal(button.getAttribute('aria-expanded'), 'false')
+        assert_false(first.classList.contains('current'))
+        toggle(second).click()
+        assert_false(second.classList.contains('current'))
+        assert_equal(toggle(second).getAttribute('aria-expanded'), 'false')
+        # Clicking the text still opens the entry, as before
+        label.click()
+        assert_equal(button.getAttribute('aria-expanded'), 'true')
+
+    with_highlights(run)
+
+
+@test
+def highlight_chapters_are_disclosures_and_search_opens_the_matching_chapter():
+    def run(container):
+        group = container.querySelector('.toc-group')
+        heading = group.querySelector('h3 > button')
+        assert_equal(heading.type, 'button')
+        assert_true(document.getElementById(heading.getAttribute('aria-controls')) is group.lastChild)
+        heading.click()
+        assert_equal(heading.getAttribute('aria-expanded'), 'false')
+        assert_false(is_visible(entry(container, 'first')))
+
+        next_button, prev_button = container.querySelectorAll('a.calibre-icon-button')
+        for b in (next_button, prev_button):
+            assert_equal(b.getAttribute('role'), 'button')
+            assert_true(b.getAttribute('aria-label'))
+            assert_true(b.hasAttribute('href'))
+        container.querySelector('input[type=search]').value = 'Match'
+        # A single click must advance by exactly one match
+        next_button.click()
+        assert_equal(container.querySelector('.highlight.current').dataset.uuid, 'first')
+        assert_equal(heading.getAttribute('aria-expanded'), 'true')
+        assert_true(is_visible(entry(container, 'first')))
+        next_button.click()
+        assert_equal(container.querySelector('.highlight.current').dataset.uuid, 'second')
+        assert_equal(container.querySelectorAll('.highlight.current').length, 1)
+        assert_equal(toggle(entry(container, 'first')).getAttribute('aria-expanded'), 'false')
+        prev_button.click()
+        assert_equal(container.querySelector('.highlight.current').dataset.uuid, 'first')
+
+    with_highlights(run)
+
+
+@test
+def highlight_deletion_moves_focus_to_a_neighbor_without_opening_it():
+    def run(container, calls):
+        button = click_remove_action(entry(container, 'first'))
+        answer_question(False)
+        assert_true(document.activeElement is button)
+        assert_equal(calls.actions, [])
+
+        click_remove_action(entry(container, 'first'))
+        answer_question(True)
+        assert_equal(calls.actions, [['first', 'delete']])
+        assert_false(entry(container, 'first'))
+        second = entry(container, 'second')
+        assert_true(document.activeElement is toggle(second))
+        assert_false(second.classList.contains('current'))
+
+        # Removing the last highlight of a chapter removes the chapter and
+        # focuses the preceding highlight
+        click_remove_action(entry(container, 'third'))
+        answer_question(True)
+        assert_equal(container.querySelectorAll('.toc-group').length, 1)
+        assert_true(document.activeElement is toggle(second))
+
+        click_remove_action(second)
+        answer_question(True)
+        assert_equal(container.querySelectorAll('.highlight').length, 0)
+        assert_true(document.activeElement is container.querySelector('input[type=search]'))
+
+    with_highlights(run)
+
+
+@test
+def highlight_bulk_deletion_clears_the_selection_and_keeps_focus_in_the_panel():
+    def run(container, calls):
+        entry(container, 'first').querySelector('input').click()
+        entry(container, 'third').querySelector('input').click()
+        all_button, remove_button = list(container.querySelectorAll('.sel-button'))[1:]
+        assert_true(is_visible(remove_button))
+        remove_button.focus()
+        remove_button.click()
+        answer_question(True)
+        assert_equal(calls.actions, [['first', 'delete'], ['third', 'delete']])
+        assert_equal(all_selected_entries().length, 0)
+        assert_false(is_visible(remove_button))
+        second = entry(container, 'second')
+        assert_true(document.activeElement is toggle(second))
+        assert_false(second.classList.contains('current'))
+        second.querySelector('input').click()
+        all_button.click()
+        selected = all_selected_entries()
+        assert_equal(selected.length, 1)
+        assert_true(selected[0] is second)
+
+    with_highlights(run)
+
+
+@test
+def highlight_deletion_does_not_steal_focus_moved_elsewhere():
+    def run(container):
+        click_remove_action(entry(container, 'first'))
+        other = E.button('Other control')
+        document.body.appendChild(other)
+        other.focus()
+        answer_question(True)
+        assert_true(document.activeElement is other)
+        container.querySelector('input[type=search]').value = 'Match'
+        container.querySelector('a.calibre-icon-button').click()
+        assert_equal(container.querySelector('.highlight.current').dataset.uuid, 'second')
+
+    with_highlights(run)
+
+
+def open_notes(row):
+    if not row.classList.contains('current'):
+        toggle(row).click()
+    action_button(row, 'Edit notes').click()
+    return document.querySelector('#modal-container textarea')
+
+
+def finish_notes(text, ok=True):
+    document.querySelector('#modal-container textarea').value = text
+    answer_question(ok)
+
+
+@test
+def highlight_notes_editor_reopens_with_the_latest_saved_text():
+    def run(container, calls):
+        row = entry(container, 'first')
+        assert_equal(open_notes(row).value, 'First note')
+        text = 'Updated note: café 日本語\nSecond line'
+        finish_notes(text)
+        assert_equal(open_notes(row).value, text)
+        finish_notes('Final note')
+        assert_equal(open_notes(row).value, 'Final note')
+        assert_equal(row.dataset.notes, 'Final note')
+        assert_equal(row.querySelector('.notes').textContent, 'Final note')
+        assert_equal(calls.notes, [['first', text], ['first', 'Final note']])
+
+    with_highlights(run)
+
+
+@test
+def highlight_notes_cancellation_and_clearing_keep_editor_and_search_text_in_sync():
+    def run(container, calls):
+        row = entry(container, 'first')
+        open_notes(row)
+        finish_notes('Saved note')
+        assert_equal(open_notes(row).value, 'Saved note')
+        finish_notes('Unsaved note', False)
+        assert_equal(row.dataset.notes, 'Saved note')
+        assert_equal(row.querySelector('.notes').textContent, 'Saved note')
+        assert_equal(calls.notes, [['first', 'Saved note']])
+        assert_equal(open_notes(row).value, 'Saved note')
+        finish_notes('')
+        assert_equal(row.dataset.notes, '')
+        assert_equal(row.querySelector('.notes').textContent, '')
+        assert_equal(open_notes(row).value, '')
+        assert_equal(calls.notes, [['first', 'Saved note'], ['first', '']])
+
+    with_highlights(run)
+
+
+@test
+def highlight_search_uses_edited_notes_and_stops_matching_removed_text():
+    def run(container, calls):
+        row = entry(container, 'first')
+        search = container.querySelector('input[type=search]')
+        open_notes(row)
+        finish_notes('New searchable phrase')
+        # Start from a different entry so that the search has to move to the
+        # edited one rather than wrapping around to the current entry
+        toggle(entry(container, 'second')).click()
+        assert_true(container.querySelector('.highlight.current') is not row)
+        search.value = 'searchable phrase'
+        assert_true(find_next())
+        assert_true(container.querySelector('.highlight.current') is row)
+        assert_false(document.querySelector('#modal-container textarea'))
+        search.value = 'First note'
+        assert_false(find_next())
+        # Dismiss the "No matches" warning before editing again
+        close_all_modals()
+        open_notes(row)
+        finish_notes('')
+        search.value = 'searchable phrase'
+        assert_false(find_next())
+        assert_equal(calls.notes, [['first', 'New searchable phrase'], ['first', '']])
+
+    with_highlights(run)
+
+
+@test
+def highlight_notes_are_unchanged_when_saving_fails():
+    def run(container, calls):
+        row = entry(container, 'first')
+        calls.notes_saved = False
+        open_notes(row)
+        finish_notes('Lost note')
+        assert_equal(calls.notes, [['first', 'Lost note']])
+        assert_equal(row.dataset.notes, 'First note')
+        assert_equal(row.querySelector('.notes').textContent, 'First note')
+        close_all_modals()
+        assert_equal(open_notes(row).value, 'First note')
+
+    with_highlights(run)
+
+
+@test
+def highlight_notes_links_stay_clickable_after_editing():
+    def run(container, calls):
+        opened = []
+        previous = ui_operations.open_url
+        ui_operations.open_url = def (url):
+            opened.push(url)
+        try:
+            row = entry(container, 'first')
+            open_notes(row)
+            finish_notes('See https://calibre-ebook.com for details')
+            link = row.querySelector('.notes a')
+            assert_true(link)
+            assert_equal(link.textContent, 'https://calibre-ebook.com')
+            link.click()
+            assert_equal(opened, ['https://calibre-ebook.com'])
+        finally:
+            ui_operations.open_url = previous
+
+    with_highlights(run)
+
+
+def with_highlight_search_status(proceed):
+    def run(container, calls):
+        pending = []
+        previous = window.setTimeout
+
+        def set_timeout(callback):
+            pending.push(callback)
+            return pending.length
+
+        def flush():
+            while pending.length:
+                pending.shift()()
+
+        status = container.querySelector('[data-component=highlight-search-status]')
+        search = container.querySelector('input[type=search]')
+        window.setTimeout = set_timeout
+        try:
+            proceed(container, status, search, flush)
+        finally:
+            window.setTimeout = previous
+
+    with_highlights(run)
+
+
+def match_status(index, total):
+    return _('Match {0} of {1}').format(index, total)
+
+
+@test
+def highlight_search_announces_match_positions_without_moving_focus():
+    def run(container, status, search, flush):
+        assert_equal(status.getAttribute('role'), 'status')
+        assert_equal(status.getAttribute('aria-atomic'), 'true')
+        assert_equal(status.textContent, '')
+        search.value = 'Match'
+        search.focus()
+        next_button, prev_button = container.querySelectorAll('a.calibre-icon-button')
+        next_button.click()
+        assert_equal(status.textContent, '')
+        flush()
+        assert_equal(status.textContent, match_status(1, 3))
+        assert_equal(document.activeElement, search)
+        next_button.click()
+        flush()
+        assert_equal(status.textContent, match_status(2, 3))
+        prev_button.click()
+        flush()
+        assert_equal(status.textContent, match_status(1, 3))
+        assert_true(find_previous())
+        flush()
+        assert_equal(status.textContent, match_status(3, 3))
+        assert_true(find_next())
+        flush()
+        assert_equal(status.textContent, match_status(1, 3))
+        assert_equal(document.activeElement, search)
+        assert_true(container.contains(status))
+
+    with_highlight_search_status(run)
+
+
+@test
+def highlight_search_status_counts_notes_matches_and_keeps_existing_warnings():
+    def run(container, status, search, flush):
+        search.value = 'First note'
+        assert_true(find_next())
+        flush()
+        assert_equal(status.textContent, match_status(1, 1))
+        assert_true(find_next())
+        flush()
+        assert_equal(status.textContent, '')
+        assert_equal(document.getElementById('modal-container').style.display, 'flex')
+        close_all_modals()
+        search.value = 'not present'
+        assert_false(find_next())
+        flush()
+        assert_equal(status.textContent, '')
+        assert_equal(document.getElementById('modal-container').style.display, 'flex')
+        close_all_modals()
+        search.value = ''
+        assert_false(find_next())
+        flush()
+        assert_equal(status.textContent, '')
+        assert_equal(document.getElementById('modal-container').style.display, 'none')
+
+    with_highlight_search_status(run)
+
+
+@test
+def highlight_search_status_coalesces_navigation_and_cancels_changed_queries():
+    def run(container, status, search, flush):
+        search.value = 'Match'
+        find_next()
+        find_next()
+        observer = new window.MutationObserver(def (): pass;)
+        observer.observe(status, {'childList': True, 'subtree': True, 'characterData': True})
+        try:
+            flush()
+            assert_equal(status.textContent, match_status(2, 3))
+            assert_equal(observer.takeRecords().length, 1)
+        finally:
+            observer.disconnect()
+        search.value = 'new query'
+        search.dispatchEvent(new Event('input', {'bubbles': True}))
+        assert_equal(status.textContent, '')
+        search.value = 'Match'
+        find_next()
+        search.value = 'changed before the update'
+        flush()
+        assert_equal(status.textContent, '')
+        search.value = 'Match'
+        find_next()
+        search.value = ''
+        search.dispatchEvent(new Event('input', {'bubbles': True}))
+        flush()
+        assert_equal(status.textContent, '')
+
+    with_highlight_search_status(run)
+
+
+@test
+def highlight_search_status_does_not_announce_under_dialogs_or_for_hidden_panels():
+    def run(container, status, search, flush):
+        search.value = 'Match'
+        find_next()
+        entry(container, 'first').querySelectorAll('.actions a')[1].click()
+        flush()
+        assert_equal(status.textContent, '')
+        close_all_modals()
+        find_next()
+        container.style.display = 'none'
+        flush()
+        assert_equal(status.textContent, '')
+        container.style.display = 'block'
+        find_next()
+        container.remove()
+        flush()
+        assert_equal(status.textContent, '')
+
+    with_highlight_search_status(run)
+
+
+@test
+def highlight_search_status_is_cancelled_by_selection_changes_and_deletion():
+    def run(container, status, search, flush):
+        search.value = 'Match'
+        find_next()
+        toggle(entry(container, 'third')).click()
+        flush()
+        assert_equal(status.textContent, '')
+        find_next()
+        flush()
+        assert_equal(status.textContent, match_status(1, 3))
+        entry(container, 'first').querySelectorAll('.actions a')[2].click()
+        answer_question(True)
+        flush()
+        assert_equal(status.textContent, '')
+        assert_true(status.isConnected)
+        find_next()
+        flush()
+        assert_equal(status.textContent, match_status(1, 2))
+
+    with_highlight_search_status(run)
+
+
+@test
+def highlight_search_status_is_cleared_when_history_replaces_the_query():
+    def run(container, status, search, flush):
+        search.value = 'Match'
+        assert_true(find_next())
+        flush()
+        assert_equal(status.textContent, match_status(1, 3))
+        # A change event for the query that was announced, for example when
+        # the search box loses focus, keeps the status
+        search.dispatchEvent(new Event('change', {'bubbles': True}))
+        assert_equal(status.textContent, match_status(1, 3))
+        # Picking a different query from the search history fires change
+        search.value = 'First note'
+        search.dispatchEvent(new Event('change', {'bubbles': True}))
+        assert_equal(status.textContent, '')
+
+    with_highlight_search_status(run)
+
+
+@test
+def highlight_search_without_a_current_entry_starts_from_either_end():
+    def run(container, status, search, flush):
+        assert_false(container.querySelector('.highlight.current'))
+        search.value = 'Match'
+        assert_true(find_previous())
+        flush()
+        assert_equal(status.textContent, match_status(3, 3))
+        assert_equal(container.querySelector('.highlight.current').dataset.uuid, 'third')
+
+    with_highlight_search_status(run)

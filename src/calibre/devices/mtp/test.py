@@ -4,6 +4,7 @@
 import gc
 import io
 import unittest
+from typing import TYPE_CHECKING, cast
 
 from calibre.constants import islinux, iswindows
 from calibre.devices.mtp.driver import MTP_DEVICE
@@ -11,13 +12,18 @@ from calibre.devices.scanner import DeviceScanner
 from calibre.utils.icu import lower
 from calibre.utils.stop_gc import stop_gc
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from calibre.devices.mtp.filesystem_cache import FileOrFolder, MTPEntry, ObjectId
+
 
 class ProgressCallback:
-    def __init__(self):
+    def __init__(self) -> None:
         self.count = 0
         self.end_called = False
 
-    def __call__(self, pos, total):
+    def __call__(self, pos: int, total: int) -> None:
         if pos == total:
             self.end_called = True
         self.count += 1
@@ -25,7 +31,7 @@ class ProgressCallback:
 
 class TestDeviceInteraction(unittest.TestCase):
     @classmethod
-    def setUpClass(cls):
+    def setUpClass(cls) -> None:
         cls.dev = cls.storage = None
         cls.dev = MTP_DEVICE(None)
         cls.dev.startup()
@@ -42,27 +48,27 @@ class TestDeviceInteraction(unittest.TestCase):
         cls.storage = cls.dev.filesystem_cache.entries[0]
 
     @classmethod
-    def tearDownClass(cls):
+    def tearDownClass(cls) -> None:
         if cls.dev is not None:
             cls.dev.shutdown()
             cls.dev = None
 
-    def setUp(self):
+    def setUp(self) -> None:
         self.cleanup = []
 
-    def tearDown(self):
+    def tearDown(self) -> None:
         dev = self.dev
         assert dev is not None
         for obj in reversed(self.cleanup):
             dev.delete_file_or_folder(obj)
 
-    def check_setup(self):
+    def check_setup(self) -> None:
         if self.dev is None:
             self.skipTest('No MTP device detected')
         if self.storage is None:
             self.skipTest('The connected device does not have enough free space')
 
-    def test_folder_operations(self):
+    def test_folder_operations(self) -> None:
         """Test the creation of folders, duplicate folders and sub folders"""
         self.check_setup()
         dev = self.dev
@@ -102,7 +108,7 @@ class TestDeviceInteraction(unittest.TestCase):
             with self.assertRaises(ValueError):
                 dev.create_folder(root_file[0], 'sub-folder')
 
-    def test_file_transfer(self):
+    def test_file_transfer(self) -> None:
         """Test transferring files to and from the device"""
         self.check_setup()
         dev = self.dev
@@ -168,7 +174,7 @@ class TestDeviceInteraction(unittest.TestCase):
         dev.get_mtp_file(f, raw2)
         self.assertEqual(raw.getvalue(), raw2.getvalue())
 
-    def measure_memory_usage(self, repetitions, func, *args, **kwargs):
+    def measure_memory_usage[**P](self, repetitions: int, func: Callable[P, object], *args: P.args, **kwargs: P.kwargs) -> float:
         from calibre.utils.mem import memory
 
         with stop_gc:
@@ -180,7 +186,7 @@ class TestDeviceInteraction(unittest.TestCase):
             end_mem = memory()
         return end_mem - start_mem
 
-    def check_memory(self, once, many, msg, factor=2):
+    def check_memory(self, once: float, many: float, msg: str, factor: float = 2) -> None:
         msg += f' for once: {once:g} for many: {many:g}'
         if once > 0:
             self.assertTrue(many <= once * factor, msg=msg)
@@ -188,7 +194,7 @@ class TestDeviceInteraction(unittest.TestCase):
             self.assertTrue(many <= 0.01, msg=msg)
 
     @unittest.skipUnless(iswindows or islinux, 'Can only test for leaks on windows and linux')
-    def test_memory_leaks(self):
+    def test_memory_leaks(self) -> None:
         """Test for memory leaks in the C module"""
         self.check_setup()
         dev = self.dev
@@ -209,7 +215,7 @@ class TestDeviceInteraction(unittest.TestCase):
         raw.seek(0)
         name = 'zzz-test-file.txt'
 
-        def send_file(storage, name, raw, size):
+        def send_file(storage: FileOrFolder, name: str, raw: io.BytesIO, size: int) -> None:
             raw.seek(0)
             pc = ProgressCallback()
             f = dev.put_file(storage, name, raw, size, callback=pc)
@@ -221,7 +227,7 @@ class TestDeviceInteraction(unittest.TestCase):
 
         self.check_memory(used_once, used_many, 'Memory consumption during put_file:')
 
-        def get_file(f):
+        def get_file(f: FileOrFolder) -> None:
             raw = io.BytesIO()
             pc = ProgressCallback()
             dev.get_mtp_file(f, raw, callback=pc)
@@ -230,26 +236,29 @@ class TestDeviceInteraction(unittest.TestCase):
             del pc
 
         f = storage.file_named(name)
+        assert f is not None
         used_once = self.measure_memory_usage(1, get_file, f)
         used_many = self.measure_memory_usage(20, get_file, f)
         self.check_memory(used_once, used_many, 'Memory consumption during get_file:')
 
         # Test get_filesystem
         assert dev.dev is not None
-        used_by_one = self.measure_memory_usage(1, dev.dev.get_filesystem, storage.object_id, lambda x, l: True)
+        # The type of storage ids depends on the platform specific driver
+        get_filesystem = cast('Callable[[ObjectId, Callable[[MTPEntry, int], bool]], object]', dev.dev.get_filesystem)
+        used_by_one = self.measure_memory_usage(1, get_filesystem, storage.object_id, lambda x, l: True)
 
-        used_by_many = self.measure_memory_usage(5, dev.dev.get_filesystem, storage.object_id, lambda x, l: True)
+        used_by_many = self.measure_memory_usage(5, get_filesystem, storage.object_id, lambda x, l: True)
 
         self.check_memory(used_by_one, used_by_many, 'Memory consumption during get_filesystem')
 
 
-def tests():
+def tests() -> unittest.TestSuite:
     tl = unittest.TestLoader()
     # return tl.loadTestsFromName('test.TestDeviceInteraction.test_memory_leaks')
     return tl.loadTestsFromTestCase(TestDeviceInteraction)
 
 
-def run():
+def run() -> None:
     unittest.TextTestRunner(verbosity=2).run(tests())
 
 

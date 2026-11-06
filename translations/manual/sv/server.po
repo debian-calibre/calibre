@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Merarom <merarom@yahoo.es>, 2014,2017\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -294,7 +294,7 @@ msgid ""
 "operate. You can both tap and swipe to turn pages. Swiping up/down skips "
 "between chapters. Tapping the top quarter of the screen gets you the "
 "detailed controls and viewer preferences."
-msgstr "Du kan läsa vilken bok som helst i ditt calibre-bibliotek genom att helt enkelt trycka på den och sedan trycka på :guilabel:`Läsa`-knappen. Bokvisaren är mycket enkel att använda. Du kan både trycka och svepa för att vända sidor. Genom att svepa upp/ned hoppar du mellan kapitel. Genom att trycka på den övre fjärdedelen av skärmen får du detaljerade kontroller och visarinställningar."
+msgstr "Du kan läsa vilken bok som helst i ditt calibre-bibliotek genom att helt enkelt trycka på den och sedan trycka på :guilabel:`Läs`-knappen. Bokvisaren är mycket enkel att använda. Du kan både trycka och svepa för att vända sidor. Genom att svepa upp/ned hoppar du mellan kapitel. Genom att trycka på den övre fjärdedelen av skärmen får du detaljerade kontroller och visarinställningar."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:189
 msgid ""
@@ -305,10 +305,78 @@ msgid ""
 msgstr "Om du låter innehållsservern vara igång kan du öppna samma bok på flera enheter, och servern kommer ihåg din senaste läsposition. Om den inte gör det kan du tvinga fram en synkronisering genom att trycka på den översta fjärdedelen av skärmen och välja :guilabel:`Synkronisera`."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:195
+msgid "Searching book contents in OPDS applications"
+msgstr "Söka i böckers innehåll i OPDS-program"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:197
+msgid ""
+"When full text indexing is enabled for a library, its OPDS catalog offers a "
+"catalog entry titled :guilabel:`Search book contents`. Open this entry and "
+"use the application's search control to find books by words and phrases "
+"inside them, using calibre's existing full text index. Each feed has a "
+"single search link, so clients do not have to choose between multiple search"
+" links. Results contain the normal book information and download links. A "
+"book is listed once even if more than one of its formats matches. Only books"
+" available to the current user are searched."
+msgstr "När fulltextindexering är aktiverad för ett bibliotek innehåller dess OPDS-katalog en katalogpost med namnet :guilabel:`Sök i böckernas innehåll`. Öppna posten och använd programmets sökfunktion för att hitta böcker utifrån ord och fraser i dem, med hjälp av calibres befintliga fulltextindex. Varje flöde har en enda söklänk, så klienterna behöver inte välja mellan flera söklänkar. Resultaten innehåller den vanliga bokinformationen och hämtningslänkar. En bok visas bara en gång även om fler än ett av dess format matchar. Endast böcker som är tillgängliga för den aktuella användaren genomsöks."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:206
+msgid ""
+"The original search continues to search book metadata. Content search uses "
+"the same SQLite full text query syntax as calibre's full text search window."
+" It searches the text indexed so far; books still waiting to be indexed will"
+" not appear yet. The content search entry is absent when indexing is "
+"disabled. Both OPDS 1 and OPDS 2 catalogs support content search, through "
+"the normal search URL with ``full_text=y`` added to its query parameters."
+msgstr "Den ursprungliga sökningen fortsätter att söka i böckernas metadata. Innehållssökningen använder samma SQLite-syntax för fulltextsökfrågor som calibres fulltextsökningsfönster. Den söker i den text som hittills har indexerats. Böcker som fortfarande väntar på indexering visas ännu inte. Posten för innehållssökning saknas när indexering är inaktiverad. Både OPDS 1- och OPDS 2-kataloger stöder innehållssökning via den vanliga sök-URL:en med ``full_text=y`` tillagt bland frågeparametrarna."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:215
+msgid "Reading comics in OPDS applications"
+msgstr "Läsa serier i OPDS-program"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:217
+msgid ""
+"Applications that support OPDS 2.0 and the `Readium Divina format "
+"<https://readium.org/webpub-manifest/profiles/divina>`_ can read CBZ comics "
+"one page at a time, without downloading the entire archive. Connect the "
+"application to the server's ``/opds`` catalog. OPDS 2.0 applications request"
+" the JSON catalog using ``Accept: application/opds+json``."
+msgstr "Program som stöder OPDS 2.0 och `formatet Readium Divina <https://readium.org/webpub-manifest/profiles/divina>`_ kan läsa CBZ-serier en sida i taget utan att hämta hela arkivet. Anslut programmet till serverns ``/opds``-katalog. OPDS 2.0-program begär JSON-katalogen med ``Accept: application/opds+json``."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:223
+msgid ""
+"Comic entries link to a Divina manifest. The server lists pages only when "
+"the application opens that manifest, using the same page order as calibre's "
+"comic conversion. Each page offers its original image format, including AVIF"
+" and JPEG XL, and alternate formats the server can produce. GIF pages, which"
+" may be animated, are only offered in their original format. The application"
+" chooses an image format it supports from those links. JPEG is offered as "
+"the default for AVIF and JPEG XL pages when conversion is available."
+msgstr "Serieposter länkar till ett Divina-manifest. Servern listar sidor först när programmet öppnar manifestet, i samma sidordning som calibres seriekonvertering använder. För varje sida erbjuds dess ursprungliga bildformat, inklusive AVIF och JPEG XL, samt alternativa format som servern kan skapa. GIF-sidor, som kan vara animerade, erbjuds endast i sitt ursprungliga format. Programmet väljer ett bildformat som det stöder från dessa länkar. JPEG erbjuds som standard för AVIF- och JPEG XL-sidor när konvertering är tillgänglig."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:231
+msgid ""
+"For manga, a ``ComicInfo.xml`` file with ``Manga`` set to "
+"``YesAndRightToLeft`` tells the application to use right-to-left reading "
+"direction. The file can be in the root of the archive or in the folder "
+"containing the page images. Page images remain in their original order. The "
+"reading direction is only given in the comic manifest, not in OPDS feeds, as"
+" finding it requires opening the archive."
+msgstr "För manga anger en ``ComicInfo.xml``-fil med ``Manga`` inställt på ``YesAndRightToLeft`` att programmet ska använda läsriktning från höger till vänster. Filen kan ligga i arkivets rot eller i mappen som innehåller sidbilderna. Sidbilderna behåller sin ursprungliga ordning. Läsriktningen anges endast i seriemanifestet, inte i OPDS-flöden, eftersom arkivet måste öppnas för att hitta den."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:238
+msgid ""
+"The normal username/password and library restrictions apply to manifests and"
+" page images. Complete archive downloads remain available. This feature "
+"supports CBZ archives; CBR and CB7 comics can still be downloaded as "
+"complete files."
+msgstr "De vanliga kraven på användarnamn/lösenord och begränsningarna för biblioteksåtkomst gäller även för manifest och sidbilder. Kompletta arkiv kan fortfarande hämtas. Funktionen stöder CBZ-arkiv. CBR- och CB7-serier kan fortfarande hämtas som kompletta filer."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:244
 msgid "Browser support"
 msgstr "Webbläsarstöd"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:197
+#: ../../../__w/calibre/calibre/manual/server.rst:246
 msgid ""
 "The new calibre server makes lots of use of advanced HTML 5 and CSS 3 "
 "features. As such it requires an up-to-date browser to use. It has been "
@@ -316,7 +384,7 @@ msgid ""
 " desktop."
 msgstr "Servern använder avancerade funktioner i HTML 5 och CSS 3 och kräver därför en modern webbläsare. Den har testats med Chrome på Android, Safari på iOS samt Chrome och Firefox på datorer."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:201
+#: ../../../__w/calibre/calibre/manual/server.rst:250
 msgid ""
 "The server is careful to use functionality that has either been already "
 "standardised or is on the standards track. As such if it does not currently "
@@ -324,14 +392,14 @@ msgid ""
 "caught up."
 msgstr "Servern använder funktioner som redan har standardiserats eller håller på att standardiseras. Om den inte fungerar i din favoritwebbläsare i dag kommer den därför sannolikt att fungera när webbläsaren har hunnit ikapp."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:206
+#: ../../../__w/calibre/calibre/manual/server.rst:255
 msgid ""
 "If you are using a particularly old or limited browser or you don't like to "
 "run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` "
 "to the server address."
 msgstr "Om du använder en särskilt gammal eller begränsad webbläsare eller om du inte gillar att köra JavaScript kan du använda *mobil*-vyn genom att helt enkelt lägga till ``/mobile`` i serveradressen."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:211
+#: ../../../__w/calibre/calibre/manual/server.rst:260
 msgid ""
 "On iOS, Apple allows only a single browser engine, so Firefox, Chrome and "
 "Safari are all actually the same browser under the hood. The new server "
@@ -339,11 +407,11 @@ msgid ""
 "tested with Chrome version 58 and newer."
 msgstr "På iOS tillåter Apple endast en enda webbläsarmotor, så Firefox, Chrome och Safari är alla faktiskt samma webbläsare under huven. Det nya servergränssnittet kräver iOS 10.3.2 eller nyare. På Android har servern testats med Chrome-version 58 och nyare."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:217
+#: ../../../__w/calibre/calibre/manual/server.rst:266
 msgid "Enabling offline support"
 msgstr "Aktivera stöd för offlineläge"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:219
+#: ../../../__w/calibre/calibre/manual/server.rst:268
 msgid ""
 "The server has full support for offline mode, you can open a book and once "
 "it is loaded, continue reading it offline. However, typical browsers require"
@@ -353,17 +421,17 @@ msgid ""
 "offline mode."
 msgstr "Servern har fullt stöd för offlineläge. Du kan öppna en bok och fortsätta läsa den utan anslutning när den har lästs in. Vanliga webbläsare kräver dock HTTPS för att aktivera offlineläget via service workers. :ref:`Konfigurera därför HTTPS-stöd <cs_https_mode>` enligt beskrivningen ovan. Längst ned på startsidan visas offlinelägets status."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:226
+#: ../../../__w/calibre/calibre/manual/server.rst:275
 msgid ""
 "Alternately, you can open a book and keep the browser tab open. As long as "
 "the tab stays open you can continue reading the book, even when offline."
 msgstr "Alternativt kan du öppna en bok och låta webbläsarfliken vara öppen. Så länge fliken är öppen kan du fortsätta läsa boken, även när du är i frånkopplat läge."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:230
+#: ../../../__w/calibre/calibre/manual/server.rst:279
 msgid "Managing user accounts from the command-line only"
 msgstr "Hantera användarkonton endast från kommandoraden"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:232
+#: ../../../__w/calibre/calibre/manual/server.rst:281
 msgid ""
 "The calibre program has a nice section in :guilabel:`Preferences` to allow "
 "you to manage user accounts for the server. However, if you want to run the "
@@ -372,28 +440,75 @@ msgid ""
 "line."
 msgstr "calibre har ett avsnitt i :guilabel:`Inställningar` där du kan hantera serverns användarkonton. Om du kör den fristående servern och inte kan köra calibres huvudprogram på samma dator eller användarkonto kan du även hantera användarna enbart från kommandoraden."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:237
+#: ../../../__w/calibre/calibre/manual/server.rst:286
 msgid ""
 "You can manage user accounts using the ``--manage-users`` option to the "
 "standalone ``calibre-server`` program. Suppose you want to store the user "
 "database in the folder ``/srv/calibre``, then you create it by running::"
 msgstr "Du kan hantera användarkonton med flaggan ``--manage-users`` till det fristående programmet ``calibre-server``. Antag att du vill lagra användardatabasen i mappen ``/srv/calibre``, då skapar du den genom att köra::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:244
+#: ../../../__w/calibre/calibre/manual/server.rst:293
 msgid ""
 "Just follow the prompts to create user accounts, set their permissions, etc."
 " Once you are done, you can run the server as::"
 msgstr "Följ bara anvisningarna för att skapa användarkonton, ange deras behörigheter etc. När du är klar kan du köra servern som::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:249
+#: ../../../__w/calibre/calibre/manual/server.rst:298
 msgid "It will use the user accounts you created in the previous step."
 msgstr "Servern använder de användarkonton du skapade i föregående steg."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:253
+#: ../../../__w/calibre/calibre/manual/server.rst:301
+msgid "Syncing reading progress with KOReader"
+msgstr "Synkronisera läsposition med KOReader"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:303
+msgid ""
+"The Content server can act as a progress sync server for the `KOReader "
+"<https://koreader.rocks>`_ e-book reader, so that devices running KOReader "
+"can sync your reading position in books with each other. In KOReader, go to "
+":guilabel:`Tools->Progress sync->Custom sync server` and enter the address "
+"of the Content server followed by ``/kosync``, for example::"
+msgstr "Innehållsservern kan fungera som en server för synkronisering av läspositioner åt e-bokläsaren `KOReader <https://koreader.rocks>`_, så att enheter med KOReader kan synkronisera din läsposition i böcker med varandra. I KOReader går du till :guilabel:`Verktyg->Framstegssynkronisering->Anpassad synkroniseringsserver` och anger innehållsserverns adress följd av ``/kosync``, till exempel::"
+
+#: ../../../__w/calibre/calibre/manual/server.rst:311
+msgid ""
+"If you are `Using a URL prefix`_, include it before ``/kosync``. Then use "
+":guilabel:`Login` with the username and password of a user account on the "
+"Content server. Accounts cannot be created from KOReader, they are managed "
+"by calibre as described above. Users that are only allowed read access "
+"cannot sync their reading positions. If user accounts are not enabled on the"
+" server, any username and password can be used, but reading positions can "
+"only be synced from devices that are allowed to make changes without "
+"authentication, see the :guilabel:`Allow un-authenticated local connections "
+"to make changes` and :guilabel:`Allow un-authenticated connections from "
+"specific IP addresses to make changes` options. Reading positions synced "
+"while user accounts are not enabled are kept separate from those of user "
+"accounts. The reading positions of each user are stored separately in the "
+"user database of the server."
+msgstr "Om du använder ett URL-prefix (se `Använda ett URL-prefix`_), ska det anges före ``/kosync``. Välj sedan :guilabel:`Logga in` och ange användarnamnet och lösenordet för ett användarkonto på innehållsservern. Konton kan inte skapas från KOReader, utan hanteras av calibre enligt beskrivningen ovan. Användare som endast har läsbehörighet kan inte synkronisera sina läspositioner. Om användarkonton inte är aktiverade på servern kan valfritt användarnamn och lösenord användas, men läspositioner kan bara synkroniseras från enheter som får göra ändringar utan autentisering. Se alternativen :guilabel:`Tillåt icke-autentiserade lokala anslutningar att göra ändringar` och :guilabel:`Tillåt icke-autentiserade anslutningar från specifika IP-adresser att göra ändringar`. Läspositioner som synkroniseras när användarkonton inte är aktiverade hålls åtskilda från användarkontonas läspositioner. Varje användares läspositioner lagras separat i serverns användardatabas."
+
+#: ../../../__w/calibre/calibre/manual/server.rst:324
+msgid ""
+"By default, KOReader identifies books by a checksum of the book file. The "
+"Content server can change the metadata embedded in books when they are "
+"downloaded, so copies of a book downloaded at different times can have "
+"different checksums. Once KOReader has synced with the server, it remembers "
+"the checksums of downloaded books and of the library files they were created"
+" from, so that all copies of the same format of a book share one reading "
+"position. Different formats of a book have separate reading positions, as "
+"positions in one format cannot be used in another. Copies downloaded before "
+"KOReader first synced with the server, or obtained other than by downloading"
+" them from the server, are not recognized. If reading positions do not sync "
+"for such copies, set :guilabel:`Document matching method` in the KOReader "
+"progress sync settings to :guilabel:`Filename` on all devices and keep the "
+"file names of books the same."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/manual/server.rst:340
 msgid "Integrating the calibre Content server into other servers"
 msgstr "Integrera calibre-innehållsservern med andra servrar"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:255
+#: ../../../__w/calibre/calibre/manual/server.rst:342
 msgid ""
 "Here, we will show you how to integrate the calibre Content server into "
 "another server. The most common reason for this is to make use of SSL or to "
@@ -402,7 +517,7 @@ msgid ""
 "server."
 msgstr "Här visar vi hur calibres innehållsserver kan integreras med en annan server. Vanliga skäl är att använda SSL eller göra calibre-biblioteket till en del av en större webbplats. Grundmetoden är att köra calibre-servern och konfigurera huvudservern som omvänd proxy."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:260
+#: ../../../__w/calibre/calibre/manual/server.rst:347
 msgid ""
 "A reverse proxy is when your normal server accepts incoming requests and "
 "passes them onto the calibre server. It then reads the response from the "
@@ -411,36 +526,36 @@ msgid ""
 "with your main server."
 msgstr "En omvänd proxy innebär att den vanliga servern tar emot förfrågningar och skickar dem vidare till calibre-servern. Den läser sedan svaret och vidarebefordrar det till klienten. Därmed kan calibre-servern köras som vanligt utan någon tät integration med huvudservern."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:267
+#: ../../../__w/calibre/calibre/manual/server.rst:354
 msgid "Using a full virtual host"
 msgstr "Använda en fullständig virtuell värd"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:269
+#: ../../../__w/calibre/calibre/manual/server.rst:356
 msgid ""
 "The simplest configuration is to dedicate a full virtual host to the calibre"
 " server. In this case, run the calibre server as::"
 msgstr "Den enklaste konfigurationen är att ägna en fullständig virtuell värd till calibre-servern. Kör i så fall calibre-servern som::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:274
+#: ../../../__w/calibre/calibre/manual/server.rst:361
 msgid ""
 "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr "Ställ nu in den virtuella värden på din huvudserver, till exempel för nginx::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:289
+#: ../../../__w/calibre/calibre/manual/server.rst:376
 msgid "Or, for Apache::"
 msgstr "Eller för Apache::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:304
+#: ../../../__w/calibre/calibre/manual/server.rst:391
 msgid "Using a URL prefix"
 msgstr "Använda ett URL-prefix"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:306
+#: ../../../__w/calibre/calibre/manual/server.rst:393
 msgid ""
 "If you do not want to dedicate a full virtual host to calibre, you can have "
 "it use a URL prefix. Start the calibre server as::"
 msgstr "Om du inte vill ägna en fullständig virtuell värd till calibre kan du låta den använda ett URL-prefix. Starta calibre-servern som::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:311
+#: ../../../__w/calibre/calibre/manual/server.rst:398
 msgid ""
 "The key parameter here is ``--url-prefix /calibre``. This causes the Content"
 " server to serve all URLs prefixed by ``/calibre``. To see this in action, "
@@ -448,17 +563,17 @@ msgid ""
 "normal Content server website, but now it will run under ``/calibre``."
 msgstr "Nyckelparametern är ``--url-prefix /calibre``. Den gör att innehållsservern betjänar alla URL:er med prefixet ``/calibre``. Besök ``http://localhost:8080/calibre`` i webbläsaren för att prova. Den vanliga webbplatsen för innehållsservern visas nu under ``/calibre``."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:313
+#: ../../../__w/calibre/calibre/manual/server.rst:400
 msgid "With nginx, the required configuration is::"
 msgstr "För nginx krävs följande konfiguration::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:330
+#: ../../../__w/calibre/calibre/manual/server.rst:417
 msgid ""
 "For Apache, first enable the proxy modules in Apache, by adding the "
 "following to :file:`httpd.conf`::"
 msgstr "För Apache, aktivera först proxymodulerna i Apache genom att lägga till följande i :file:`httpd.conf`::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:335
+#: ../../../__w/calibre/calibre/manual/server.rst:422
 msgid ""
 "The exact technique for enabling the proxy modules will vary depending on "
 "your Apache installation. Once you have the proxy modules enabled, add the "
@@ -466,7 +581,7 @@ msgid ""
 "the conf file for the virtual host in question)::"
 msgstr "Den exakta tekniken för att aktivera proxymoduler varierar beroende på din Apache-installation. När du aktiverar proxymodulerna, lägg till följande regler i :file:`httpd.conf` (eller om du använder virtuella värdar till conf-filen för den virtuella värden i fråga)::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:342
+#: ../../../__w/calibre/calibre/manual/server.rst:429
 msgid ""
 "That's all, you will now be able to access the calibre Content server under "
 "the ``/calibre`` URL in your main server. The above rules pass all requests "
@@ -475,7 +590,7 @@ msgid ""
 "transparently."
 msgstr "Nu kan calibres innehållsserver nås via URL:en ``/calibre`` på huvudservern. Reglerna ovan skickar alla förfrågningar under ``/calibre`` till calibre-servern på port 8080. Tack vare alternativet ``--url-prefix`` hanterar calibre-servern dem utan ytterligare anpassning."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:347
+#: ../../../__w/calibre/calibre/manual/server.rst:434
 msgid ""
 "When using a reverse proxy, you should tell the calibre Content server to "
 "only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the "
@@ -483,7 +598,7 @@ msgid ""
 "from the reverse proxy."
 msgstr "När du använder en omvänd proxy bör calibres innehållsserver endast lyssna på localhost. Använd ``--listen-on 127.0.0.1``. Servern tar då bara emot anslutningar från samma dator, det vill säga från den omvända proxyn."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:354
+#: ../../../__w/calibre/calibre/manual/server.rst:441
 msgid ""
 "If you have set up SSL for your main server, you should tell the calibre "
 "server to use basic authentication instead of digest authentication, as it "
@@ -491,11 +606,11 @@ msgid ""
 "server``."
 msgstr "Om du har konfigurerat SSL för din huvudserver bör du ange att calibre-servern ska använda grundläggande autentisering i stället för digest-autentisering, eftersom det är snabbare. För att göra det, skicka flaggan ``--auth-mode=basic`` till ``calibre-server``."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:363
+#: ../../../__w/calibre/calibre/manual/server.rst:450
 msgid "Creating a service for the calibre server on a modern Linux system"
 msgstr "Skapa en tjänst för calibre-servern på ett modernt Linux-system"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:365
+#: ../../../__w/calibre/calibre/manual/server.rst:452
 msgid ""
 "You can easily create a service to run calibre at boot on a modern (`systemd"
 " <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system."
@@ -503,7 +618,7 @@ msgid ""
 "the contents shown below::"
 msgstr "Du kan enkelt skapa en tjänst som startar calibre vid uppstart i ett modernt Linux-system som använder `systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_. Skapa filen ``/etc/systemd/system/calibre-server.service`` med följande innehåll::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:384
+#: ../../../__w/calibre/calibre/manual/server.rst:471
 msgid ""
 "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you "
 "want the server to run as. This should be the same user and group that own "
@@ -513,25 +628,25 @@ msgid ""
 "needed. See the help for the ``calibre-server`` command."
 msgstr "Ändra ``mylinuxuser`` och ``mylinuxgroup`` till vilken användare och grupp du vill att servern ska köras som. Detta bör vara samma användare och grupp som äger filerna i biblioteksmappen för calibre. Observera att det i allmänhet inte är en bra idé att köra servern som root. Ändra också sökvägen till biblioteksmappen för calibre så att den passar ditt system. Du kan lägga till flera bibliotek om det behövs. Se hjälpen för kommandot ``calibre-server``."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:391
+#: ../../../__w/calibre/calibre/manual/server.rst:478
 msgid "Now run::"
 msgstr "Kör nu::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:395
+#: ../../../__w/calibre/calibre/manual/server.rst:482
 msgid "to start the server. Check its status with::"
 msgstr "för att starta servern. Kontrollera dess status med::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:399
+#: ../../../__w/calibre/calibre/manual/server.rst:486
 msgid "To make it start at boot, run::"
 msgstr "För att den ska starta vid uppstart, kör::"
 
-#: ../../../__w/calibre/calibre/manual/server.rst:405
+#: ../../../__w/calibre/calibre/manual/server.rst:492
 msgid ""
 "The calibre server *does not* need a running X server, but it does need the "
 "X libraries installed as some components it uses link against them."
 msgstr "calibre-servern *behöver inte* en X-server som körs, men X-biblioteken måste vara installerade eftersom vissa komponenter som servern använder är länkade mot dem."
 
-#: ../../../__w/calibre/calibre/manual/server.rst:410
+#: ../../../__w/calibre/calibre/manual/server.rst:497
 msgid ""
 "The calibre server also supports systemd socket activation, so you can use "
 "that, if needed, as well."

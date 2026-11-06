@@ -4,17 +4,22 @@
 import datetime
 import os
 import time
-from collections import namedtuple
+from typing import TYPE_CHECKING, cast
 
 from calibre import strftime
 from calibre.customize import CatalogPlugin
 from calibre.customize.conversion import DummyReporter, OptionRecommendation
 from calibre.library import current_library_name
-from calibre.library.catalogs import AuthorSortMismatchException, EmptyCatalogException
+from calibre.library.catalogs import AuthorSortMismatchException, EmptyCatalogException, Option
 from calibre.ptempfile import PersistentTemporaryFile
 from calibre.utils.localization import _, calibre_langcode_to_name, canonicalize_lang, get_lang
 
-Option = namedtuple('Option', 'option, default, dest, action, help')
+if TYPE_CHECKING:
+    from collections.abc import Callable, Collection
+    from optparse import Values
+
+    from calibre.db.legacy import LibraryDatabase
+    from calibre.ebooks.conversion.plumber import ProgressReporter
 
 
 class EPUB_MOBI(CatalogPlugin):
@@ -215,7 +220,14 @@ class EPUB_MOBI(CatalogPlugin):
     ]
     # }}}
 
-    def run(self, path_to_output, opts, db, ids=None, notification=DummyReporter()):
+    def run(
+        self,
+        path_to_output: str,
+        opts: Values,
+        db: LibraryDatabase,
+        ids: Collection[int] | None = None,
+        notification: Callable[[float, str], object] | None = DummyReporter(),
+    ) -> int | list[str]:
         from calibre.library.catalogs.epub_mobi_builder import CatalogBuilder
         from calibre.utils.config import JSONConfig
         from calibre.utils.logging import default_log as log
@@ -458,6 +470,8 @@ class EPUB_MOBI(CatalogPlugin):
             log.info(f' Begin catalog source generation ({datetime.timedelta(seconds=int(time.time() - opts.start_time))!s})')
 
         # Launch the Catalog builder
+        if notification is None:
+            notification = DummyReporter()
         catalog = CatalogBuilder(db, opts, self, report_progress=notification)
 
         try:
@@ -497,9 +511,9 @@ class EPUB_MOBI(CatalogPlugin):
             existing_cover = False
             try:
                 search_text = 'title:"{}" author:{}'.format(opts.catalog_title.replace('"', '\\"'), 'calibre')
-                matches = db.search(search_text, return_matches=True, sort_results=False)
+                matches = db.data.search(search_text, return_matches=True, sort_results=False)
                 if matches:
-                    cpath = db.cover(matches[0], index_is_id=True, as_path=True)
+                    cpath = cast('str | None', db.cover(matches[0], index_is_id=True, as_path=True))
                     if cpath and os.path.exists(cpath):
                         existing_cover = True
             except Exception:
@@ -528,7 +542,7 @@ class EPUB_MOBI(CatalogPlugin):
                 os.path.join(catalog.catalog_path, opts.basename + '.opf'),
                 path_to_output,
                 log,
-                report_progress=notification,
+                report_progress=cast('ProgressReporter', notification),
                 abort_after_input_dump=False,
             )
             plumber.merge_ui_recommendations(recommendations)

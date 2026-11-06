@@ -5,6 +5,7 @@ import os
 import subprocess
 import sys
 import time
+from typing import TYPE_CHECKING
 
 from calibre.constants import isfrozen, ismacos, iswindows
 from calibre.ptempfile import PersistentTemporaryFile, base_dir
@@ -13,9 +14,12 @@ from calibre.utils.serialize import msgpack_dumps
 from polyglot.binary import as_hex_unicode
 from polyglot.builtins import environ_item
 
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
 if iswindows:
     try:
-        windows_null_file = open(os.devnull, 'wb')
+        windows_null_file = open(os.devnull, 'wb')  # ruff: ignore[open-file-with-context-handler]
     except Exception:
         raise RuntimeError(
             'NUL file missing in windows. This indicates a'
@@ -24,29 +28,29 @@ if iswindows:
         )
 
 
-def renice(niceness):
+def renice(niceness: int) -> None:
     try:
         os.nice(niceness)
     except Exception:
         pass
 
 
-def macos_viewer_bundle_path():
+def macos_viewer_bundle_path() -> str:
     base = os.path.dirname(getattr(sys, 'executables_location'))
     return os.path.join(base, 'ebook-viewer.app/Contents/MacOS/')
 
 
-def macos_edit_book_bundle_path():
+def macos_edit_book_bundle_path() -> str:
     base = os.path.dirname(getattr(sys, 'executables_location'))
     return os.path.join(base, 'ebook-viewer.app/Contents/ebook-edit.app/Contents/MacOS/')
 
 
-def macos_headless_bundle_path():
+def macos_headless_bundle_path() -> str:
     base = os.path.dirname(getattr(sys, 'executables_location'))
     return os.path.join(base, 'ebook-viewer.app/Contents/ebook-edit.app/Contents/headless.app/Contents/MacOS/')
 
 
-def exe_path(exe_name):
+def exe_path(exe_name: str) -> str | list[str]:
     if hasattr(sys, 'running_from_setup'):
         return [sys.executable, os.path.join(sys.setup_dir, 'run-calibre-worker.py')]
     if getattr(sys, 'run_local', False):
@@ -67,7 +71,7 @@ def exe_path(exe_name):
     return e
 
 
-def headless_exe_path(exe_name='calibre-parallel'):
+def headless_exe_path(exe_name: str = 'calibre-parallel') -> str | list[str]:
     if ismacos and not hasattr(sys, 'running_from_setup'):
         return os.path.join(macos_headless_bundle_path(), exe_name)
     return exe_path(exe_name)
@@ -97,11 +101,11 @@ class Worker:
     exe_name = 'calibre-parallel'
 
     @property
-    def executable(self):
+    def executable(self) -> str | list[str]:
         return headless_exe_path(self.exe_name)
 
     @property
-    def gui_executable(self):
+    def gui_executable(self) -> str | list[str]:
         if ismacos and not hasattr(sys, 'running_from_setup'):
             if self.job_name == 'ebook-viewer':
                 return os.path.join(macos_viewer_bundle_path(), self.exe_name)
@@ -113,7 +117,7 @@ class Worker:
         return self.executable
 
     @property
-    def env(self):
+    def env(self) -> dict[str, str]:
         env = os.environ.copy()
         env['CALIBRE_WORKER'] = environ_item('1')
         td = as_hex_unicode(msgpack_dumps(base_dir()))
@@ -122,29 +126,29 @@ class Worker:
         return env
 
     @property
-    def is_alive(self):
+    def is_alive(self) -> bool:
         return hasattr(self, 'child') and self.child.poll() is None
 
     @property
-    def returncode(self):
+    def returncode(self) -> int | None:
         if not hasattr(self, 'child'):
             return None
         self.child.poll()
         return self.child.returncode
 
     @property
-    def pid(self):
+    def pid(self) -> int | None:
         if not hasattr(self, 'child'):
             return None
         return getattr(self.child, 'pid', None)
 
-    def close_log_file(self):
+    def close_log_file(self) -> None:
         try:
             self._file.close()
         except Exception:
             pass
 
-    def kill(self):
+    def kill(self) -> None:
         self.close_log_file()
         try:
             if self.is_alive:
@@ -161,12 +165,12 @@ class Worker:
         except Exception:
             pass
 
-    def __init__(self, env=None, gui=False, job_name=None):
+    def __init__(self, env: dict[str, str] | None = None, gui: bool = False, job_name: str | None = None) -> None:
         self.gui = gui
         self.job_name = job_name
         self._env = (env or {}).copy()
 
-    def __call__(self, redirect_output=True, cwd=None, priority=None, pass_fds=()):
+    def __call__(self, redirect_output: bool = True, cwd: str | None = None, priority: str | None = None, pass_fds: Sequence[int] = ()) -> str | None:
         """
         If redirect_output is True, output from the child is redirected
         to a file on disk and this method returns the path to that file.

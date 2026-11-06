@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Andrei Stepanov, 2026\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -443,6 +443,13 @@ msgid ""
 msgstr "Если True, этот плагин запускается после конвертации в финальный файл, созданный плагином вывода конвертации."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -765,6 +772,13 @@ msgid ""
 " also waited for longer after the first result from any source arrives, "
 "since downloading with a browser is slow."
 msgstr "Если установлено значение True, этот источник использует браузер Camoufox, общий для всех загрузок метаданных (см. :mod:`calibre.web.automate.metadata`), который затем запускается до загрузки метаданных, чтобы успеть подготовиться. Для таких источников также дольше ждут после поступления первого результата от любого источника, поскольку загрузка через браузер выполняется медленно."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -2148,7 +2162,7 @@ msgstr "Вызывается диспетчером устройств при з
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2161,8 +2175,9 @@ msgstr "Этот метод можно вызвать в потоке графи
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "Этот метод вызывается для запуска плагина. Плагин должен начать принимать подключения устройств, если он это делает. Если плагин уже принимает соединения, ничего не делайте."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2296,8 +2311,8 @@ msgstr "Вернуть True, если устройство поддержива�
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "Добавить книгу в список книг. Намерение состоит в том, чтобы поддерживать любые внутренние метаданные устройства. Вернуть True, если необходимо синхронизировать списки книг"
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2785,6 +2800,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "Вызывается один раз для каждого плагина, когда основной графический интерфейс находится в процессе завершения работы. Освободите все используемые ресурсы, но постарайтесь не блокировать выключение на длительные периоды времени."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

@@ -6,6 +6,7 @@ import os
 import re
 import sys
 from itertools import chain
+from typing import IO, TYPE_CHECKING, cast
 
 from calibre import setup_cli_handlers
 from calibre.ebooks.lrf.meta import LRFMetaFile
@@ -13,6 +14,11 @@ from calibre.ebooks.lrf.objects import BookAttr, Font, PageTree, StyleObject, Te
 from calibre.utils.config import OptionParser
 from calibre.utils.filenames import ascii_filename
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from calibre.ebooks.lrf.objects import ImageStream, LRFObject
 
 
 class LRFDocument(LRFMetaFile):
@@ -37,16 +43,16 @@ class LRFDocument(LRFMetaFile):
         width: int
         height: int
 
-    def __init__(self, stream):
+    def __init__(self, stream: IO[bytes]) -> None:
         LRFMetaFile.__init__(self, stream)
         self.scramble_key = self.xor_key
-        self.page_trees = []
-        self.font_map = {}
-        self.image_map = {}
-        self.toc = ''
+        self.page_trees: list[PageTree] = []
+        self.font_map: dict[str, Font] = {}
+        self.image_map: dict[int, ImageStream] = {}
+        self.toc: str | TOCObject = ''
         self.keep_parsing = True
 
-    def parse(self):
+    def parse(self) -> None:
         self._parse_objects()
         self.metadata = LRFDocument.temp()
         for a in (
@@ -70,8 +76,8 @@ class LRFDocument(LRFMetaFile):
         for a in ('dpi', 'width', 'height'):
             setattr(self.device_info, a, getattr(self, a))
 
-    def _parse_objects(self):
-        self.objects = {}
+    def _parse_objects(self) -> None:
+        self.objects: dict[int, LRFObject] = {}
         self._file.seek(self.object_index_offset)
         obj_array = array.array('I', self._file.read(4 * 4 * self.number_of_objects))
         if ord(array.array('i', [1]).tobytes()[0:1]) == 0:  # big-endian
@@ -85,9 +91,9 @@ class LRFDocument(LRFMetaFile):
             if not self.keep_parsing:
                 break
             if hasattr(obj, 'initialize'):
-                obj.initialize()
+                obj.initialize()  # ty: ignore[call-non-callable] hasattr() narrowing types it as object
 
-    def _parse_object(self, objid, objoff, objsize):
+    def _parse_object(self, objid: int, objoff: int, objsize: int) -> None:
         obj = get_object(self, self._file, objid, objoff, objsize, self.scramble_key)
         self.objects[objid] = obj
         if isinstance(obj, PageTree):
@@ -95,21 +101,21 @@ class LRFDocument(LRFMetaFile):
         elif isinstance(obj, TOCObject):
             self.toc = obj
         elif isinstance(obj, BookAttr):
-            self.ruby_tags = {}
+            self.ruby_tags: dict[str, object] = {}
             for h in ruby_tags.values():
                 attr = h[0]
                 if isinstance(attr, str) and hasattr(obj, attr):
                     self.ruby_tags[attr] = getattr(obj, attr)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[PageTree]:
         yield from self.page_trees
 
-    def write_files(self):
+    def write_files(self) -> None:
         for obj in chain(self.image_map.values(), self.font_map.values()):
             with open(obj.file, 'wb') as f:
-                f.write(obj.stream)
+                f.write(cast('bytes', obj.stream))  # the stream has been read
 
-    def to_xml(self, write_files=True):
+    def to_xml(self, write_files: bool = True) -> str:
         bookinfo = '<BookInformation>\n<Info version="1.1">\n<BookInfo>\n'
         bookinfo += f'<Title reading="{self.metadata.title_reading}">{self.metadata.title}</Title>\n'
         bookinfo += f'<Author reading="{self.metadata.author_reading}">{self.metadata.author}</Author>\n'
@@ -166,7 +172,7 @@ class LRFDocument(LRFMetaFile):
         return '<BBeBXylog version="1.0">\n' + bookinfo + pages + styles + objects + '</BBeBXylog>'
 
 
-def option_parser():
+def option_parser() -> OptionParser:
     parser = OptionParser(usage=_('%prog book.lrf\nConvert an LRF file into an LRS (XML UTF-8 encoded) file'))
     parser.add_option('--output', '-o', default=None, help=_('Output LRS file'), dest='out')
     parser.add_option(
@@ -180,7 +186,7 @@ def option_parser():
     return parser
 
 
-def main(args=sys.argv, logger=None):
+def main(args: list[str] = sys.argv, logger: logging.Logger | None = None) -> int:
     parser = option_parser()
     opts, args = parser.parse_args(args)
     if logger is None:
@@ -193,13 +199,14 @@ def main(args=sys.argv, logger=None):
     if opts.out is None:
         opts.out = os.path.join(os.path.dirname(args[1]), os.path.splitext(os.path.basename(args[1]))[0] + '.lrs')
     logger.info(_('Parsing LRF...'))
-    d = LRFDocument(open(args[1], 'rb'))
-    d.parse()
-    logger.info(_('Creating XML...'))
-    with open(os.path.abspath(os.path.expanduser(opts.out)), 'w', encoding='utf-8') as f:
-        f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
-        f.write(d.to_xml(write_files=opts.output_resources))
-    logger.info(_('LRS written to ') + opts.out)
+    with open(args[1], 'rb') as r:
+        d = LRFDocument(r)
+        d.parse()
+        logger.info(_('Creating XML...'))
+        with open(os.path.abspath(os.path.expanduser(opts.out)), 'w', encoding='utf-8') as f:
+            f.write('<?xml version="1.0" encoding="UTF-8"?>\n')
+            f.write(d.to_xml(write_files=opts.output_resources))
+        logger.info(_('LRS written to ') + opts.out)
     return 0
 
 

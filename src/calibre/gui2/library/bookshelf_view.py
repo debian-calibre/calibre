@@ -8,14 +8,13 @@ import math
 import random
 import struct
 import weakref
-from collections.abc import Callable, Iterable, Iterator
 from contextlib import suppress
 from functools import lru_cache, partial
 from operator import attrgetter
 from queue import LifoQueue, ShutDown
 from threading import Event, RLock, Thread, current_thread
 from time import monotonic
-from typing import NamedTuple
+from typing import TYPE_CHECKING, NamedTuple
 
 from qt.core import (
     QAbstractItemView,
@@ -65,7 +64,6 @@ from qt.core import (
 from xxhash import xxh3_64_intdigest
 
 from calibre import fit_image
-from calibre.db.cache import Cache
 from calibre.ebooks.metadata import authors_to_string, rating_to_stars
 from calibre.gui2 import config, gprefs, qapplication_or_fail, resolve_bookshelf_color
 from calibre.gui2.library.alternate_views import (
@@ -80,7 +78,6 @@ from calibre.gui2.library.alternate_views import (
     setup_dnd_interface,
 )
 from calibre.gui2.library.caches import CoverThumbnailCache, Thumbnailer
-from calibre.gui2.library.models import BooksModel
 from calibre.gui2.momentum_scroll import MomentumScrollMixin
 from calibre.gui2.palette import dark_palette, light_palette
 from calibre.utils.formatter import TEMPLATE_ERROR
@@ -91,6 +88,12 @@ from calibre.utils.localization import _, lang_map
 from calibre.utils.resources import get_image_path as I
 from calibre_extensions.imageops import dominant_color
 from calibre_extensions.progress_indicator import contrast_ratio, utf16_slice
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Iterator
+
+    from calibre.db.cache import Cache
+    from calibre.gui2.library.models import BooksModel
 
 # }}}
 
@@ -357,7 +360,7 @@ class RenderCase:
     light_theme: WoodTheme
     theme: WoodTheme
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.last_rendered_shelf_at = QRect(0, 0, 0, 0), False
         self.last_rendered_background_at = QRect(0, 0, 0, 0), False, False, {}
         self.last_rendered_divider_at = QRect(0, 0, 0, 0), False, 0, QColor()
@@ -491,7 +494,7 @@ class RenderCase:
         self.shelf_cache[instance] = p = QPixmap.fromImage(ans)
         return p
 
-    def draw_shelf_body(self, painter, rect):
+    def draw_shelf_body(self, painter, rect) -> None:
         # Base wood gradient
         wood_gradient = QLinearGradient(0, rect.top(), 0, rect.bottom())
         wood_gradient.setColorAt(0.0, self.theme.wood_top)  # Lighter top
@@ -501,7 +504,7 @@ class RenderCase:
 
         painter.fillRect(rect, wood_gradient)
 
-    def draw_wood_grain(self, painter, rect, grain_lines, alpha_multiplier: float = 1.0):
+    def draw_wood_grain(self, painter, rect, grain_lines, alpha_multiplier: float = 1.0) -> None:
         painter.save()
         painter.setClipRect(rect)
 
@@ -531,7 +534,7 @@ class RenderCase:
                 painter.drawLine(int(points[j][0]), int(points[j][1]), int(points[j + 1][0]), int(points[j + 1][1]))
         painter.restore()
 
-    def draw_knots(self, painter: QPainter, rect: QRect, count: int = 3, seed: int = 123):
+    def draw_knots(self, painter: QPainter, rect: QRect, count: int = 3, seed: int = 123) -> None:
         painter.save()
         painter.setClipRect(rect)
         r = random.Random(seed)
@@ -551,7 +554,7 @@ class RenderCase:
             painter.drawEllipse(knot_x - knot_size, knot_y - knot_size // 2, knot_size * 2, knot_size)
         painter.restore()
 
-    def draw_top_highlight(self, painter, rect):
+    def draw_top_highlight(self, painter, rect) -> None:
         highlight_gradient = QLinearGradient(0, rect.top(), 0, rect.top() + 8)
         highlight_gradient.setColorAt(0.0, self.theme.highlight_color)
         highlight_gradient.setColorAt(0.5, color_with_alpha(self.theme.highlight_color, self.theme.highlight_color.alpha() // 3))
@@ -559,7 +562,7 @@ class RenderCase:
         highlight_rect = QRect(rect.x(), rect.y(), rect.width(), 8)
         painter.fillRect(highlight_rect, highlight_gradient)
 
-    def draw_bottom_edge(self, painter, rect):
+    def draw_bottom_edge(self, painter, rect) -> None:
         shadow_gradient = QLinearGradient(0, rect.bottom() - 6, 0, rect.bottom())
         shadow_gradient.setColorAt(0.0, color_with_alpha(self.theme.shadow_color, 0))
         shadow_gradient.setColorAt(0.7, self.theme.shadow_color)
@@ -567,7 +570,7 @@ class RenderCase:
         shadow_rect = QRect(rect.x(), rect.bottom() - 6, rect.width(), 6)
         painter.fillRect(shadow_rect, shadow_gradient)
 
-    def draw_front_bevel(self, painter, rect):
+    def draw_front_bevel(self, painter, rect) -> None:
         # Top chamfer line
         chamfer_pen = QPen(self.theme.bevel_light)
         chamfer_pen.setWidth(1)
@@ -579,7 +582,7 @@ class RenderCase:
         painter.setPen(chamfer_pen)
         painter.drawLine(rect.left(), rect.bottom() - 2, rect.right(), rect.bottom() - 2)
 
-    def draw_edges(self, painter, rect):
+    def draw_edges(self, painter, rect) -> None:
         # Darker edge outline
         edge_pen = QPen(self.theme.edge_color)
         edge_pen.setWidth(1)
@@ -857,7 +860,7 @@ class CaseItem:
     items: list[ShelfItem] | None = None
     expanded_item: ShelfItem | None = None
 
-    def __init__(self, y: int = 0, height: int = 0, is_shelf: bool = False, idx: int = 0):
+    def __init__(self, y: int = 0, height: int = 0, is_shelf: bool = False, idx: int = 0) -> None:
         self.start_y = y
         self.height = height
         self.idx = idx
@@ -993,7 +996,7 @@ def get_grouped_iterator(db: Cache, book_ids_iter: Iterable[int], field_name: st
     fm = db.field_metadata
     sort_key = numeric_sort_key
     get_books_in_group: Callable[[int], set[int]] | Callable[[tuple[int, int]], set[int]] = lambda group: db.books_for_field(field_name, group)  # ruff: ignore[lambda-assignment]
-    get_field_id_map: Callable[[], dict[int | tuple[int, int], str | tuple[int, int] | int]] = lambda: db.get_id_map(field_name)  # ruff: ignore[lambda-assignment]
+    get_field_id_map: Callable[[], dict[int | tuple[int, int], str | tuple[int, int] | int]] = lambda: db.get_id_map(field_name)  # ruff: ignore[lambda-assignment]  # ty: ignore[invalid-assignment]
     sort_map = {book_id: i for i, book_id in enumerate(book_ids_iter)}
     all_book_ids = frozenset(sort_map)
     ungrouped_name = all_groupings().get(field_name, _('Unknown'))
@@ -1015,7 +1018,7 @@ def get_grouped_iterator(db: Cache, book_ids_iter: Iterable[int], field_name: st
                     return au
 
             sort_key = {au: gas(aid, au) for aid, au in field_id_map.items()}.__getitem__
-            get_field_id_map = lambda: field_id_map  # ruff: ignore[lambda-assignment]
+            get_field_id_map = lambda: field_id_map  # ruff: ignore[lambda-assignment]  # ty: ignore[invalid-assignment]
             del gas
         case 'languages':
             lm = lang_map()
@@ -1044,11 +1047,11 @@ def get_grouped_iterator(db: Cache, book_ids_iter: Iterable[int], field_name: st
     field_id_map = get_field_id_map()
     yield '', len(field_id_map)
     seen = set()
-    for group in sorted(field_id_map, key=lambda fid: sort_key(field_id_map[fid])):
+    for group in sorted(field_id_map, key=lambda fid: sort_key(field_id_map[fid])):  # ty: ignore[invalid-argument-type]
         books_in_group = (get_books_in_group(group) & all_book_ids) - seen  # type: ignore
         if books_in_group:
             seen |= books_in_group
-            yield formatter(field_id_map[group]), sorted(books_in_group, key=sort_map.__getitem__)
+            yield formatter(field_id_map[group]), sorted(books_in_group, key=sort_map.__getitem__)  # ty: ignore[invalid-argument-type] formatter matches the field's id map values
     if ungrouped_name and (leftover := all_book_ids - seen):
         yield ungrouped_name, sorted(leftover, key=sort_map.__getitem__)
 
@@ -1083,12 +1086,12 @@ def get_spine_width(
     match spine_size_template:
         case '{pages}' | 'pages':
             pages = db.field_for('pages', book_id, 0)
-            if pages > 0:
-                ans = linear(width_from_pages(pages))
+            if pages > 0:  # ty: ignore[unsupported-operator]
+                ans = linear(width_from_pages(pages))  # ty: ignore[invalid-argument-type]
             else:
-                ans = linear(width_from_size(db.field_for('size', book_id, 0)))
+                ans = linear(width_from_size(db.field_for('size', book_id, 0)))  # ty: ignore[invalid-argument-type]
         case '{size}' | 'size':
-            ans = linear(width_from_size(db.field_for('size', book_id, 0)))
+            ans = linear(width_from_size(db.field_for('size', book_id, 0)))  # ty: ignore[invalid-argument-type]
         case '{random}' | 'random':
             # range: 0.25-0.75
             ans = linear((25 + (random_from_id(book_id, limit=51))) / 100)
@@ -1101,7 +1104,7 @@ def get_spine_width(
             if ans < 0:
                 with suppress(Exception):
                     mi = db.get_proxy_metadata(book_id)
-                    rslt = mi.formatter.safe_format(spine_size_template, mi, 'template error', mi, template_cache=template_cache)
+                    rslt = mi.formatter.safe_format(spine_size_template, mi, 'template error', mi, template_cache=template_cache)  # ty: ignore[invalid-argument-type]
                     ans = linear(float(rslt))
     if ans <= 0:
         ans = lc.default_spine_width
@@ -1128,7 +1131,7 @@ class BookCase(QObject):
     shelf_added = pyqtSignal(object, object)
     num_of_groups_changed = pyqtSignal()
 
-    def __init__(self, parent: QObject | None = None):
+    def __init__(self, parent: QObject | None = None) -> None:
         super().__init__(parent)
         self.worker: Thread | None = None
         self.row_to_book_id: tuple[int, ...] = ()
@@ -1145,7 +1148,7 @@ class BookCase(QObject):
         self.payload: LayoutPayload | None = None
         self.invalidate()
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         self.current_invalidate_event.set()
         self.current_invalidate_event = Event()
         with suppress(TypeError):
@@ -1158,7 +1161,7 @@ class BookCase(QObject):
             if current_thread().is_alive() and w.is_alive():
                 w.join()
 
-    def clear_spine_width_cache(self):
+    def clear_spine_width_cache(self) -> None:
         self.spine_width_cache = {}
 
     def shelf_with_ypos(self, y: int) -> CaseItem | None:
@@ -1433,7 +1436,7 @@ class BookCase(QObject):
 class ExpandedCover(QObject):  # {{{
     updated = pyqtSignal()
 
-    def __init__(self, parent: BookshelfView):
+    def __init__(self, parent: BookshelfView) -> None:
         super().__init__(parent)
         self._opacity = 0
         self._size = QSize()
@@ -1593,7 +1596,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
     EMBLEM_SIZE = 24
     EMBLEM_MARGIN = 2
 
-    def __init__(self, gui):
+    def __init__(self, gui) -> None:
         super().__init__(gui)
         self.first_painted_at = 0
         self.auto_scroll = True
@@ -1699,7 +1702,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
 
     # Templates rendering methods
 
-    def init_template(self, db):
+    def init_template(self, db) -> None:
         """Initialize templates and database settings."""
         if not db:
             return
@@ -1730,13 +1733,13 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             return ''
         match template:
             case '{title}':
-                return db.field_for('title', book_id)
+                return db.field_for('title', book_id)  # ty: ignore[invalid-return-type]
             case '{author_sort}':
-                return db.field_for('author_sort', book_id)
+                return db.field_for('author_sort', book_id)  # ty: ignore[invalid-return-type]
             case '{author}' | '{authors}':
                 return authors_to_string(db.field_for('authors', book_id))
             case '{sort}' | '{title_sort}':
-                return db.field_for('sort', book_id)
+                return db.field_for('sort', book_id)  # ty: ignore[invalid-return-type]
         mi = db.get_proxy_metadata(book_id)
         rslt = mi.formatter.safe_format(template, mi, TEMPLATE_ERROR, mi, column_name=column_name, template_cache=m.bookshelf_template_cache)
         return rslt or ''
@@ -1767,7 +1770,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
                 return icon_name
         return ''
 
-    def refresh_settings(self):
+    def refresh_settings(self) -> None:
         """Refresh the gui and render settings."""
         self.template_inited = False
         s = gprefs['bookshelf_font']
@@ -1791,7 +1794,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             self.update_ram_cache_size()
         self.invalidate(clear_spine_width_cache=True)
 
-    def palette_changed(self):
+    def palette_changed(self) -> None:
         self.setPalette(dark_palette() if is_dark_theme() else light_palette())
         self.theme = ColorTheme.dark_theme() if is_dark_theme() else ColorTheme.light_theme()
         if gprefs['bookshelf_use_custom_colors']:
@@ -1808,7 +1811,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             return self.gui.bookshelf_view_button.is_visible
         return False
 
-    def shutdown(self):
+    def shutdown(self) -> None:
         self.resize_debounce_timer.stop()
         self.pages_count_update_check_timer.stop()
         self.cover_cache.shutdown()
@@ -1842,15 +1845,15 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         """Return the selection model (required for AlternateViews integration)."""
         return self._selection_model
 
-    def model_data_changed(self, top_left, bottom_right, roles):
+    def model_data_changed(self, top_left, bottom_right, roles) -> None:
         """Handle model data changes."""
         self.update_viewport()
 
-    def model_rows_changed(self, parent, first, last):
+    def model_rows_changed(self, parent, first, last) -> None:
         """Handle model row changes."""
         self.invalidate(set_of_books_changed=True)
 
-    def model_reset(self):
+    def model_reset(self) -> None:
         """Handle model reset."""
         self.invalidate(set_of_books_changed=True)
 
@@ -1887,7 +1890,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             self.layout_constraints = self.layout_constraints._replace(width=new_width)
             self.invalidate()
 
-    def update_scrollbar_ranges(self):
+    def update_scrollbar_ranges(self) -> None:
         """Update scrollbar ranges based on the current shelf layouts."""
         total_height = self.bookcase.max_possible_height
         vp = self.viewport()
@@ -1929,13 +1932,13 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         self.update_scrollbar_ranges()
         self.update_viewport()
 
-    def check_for_pages_update(self):
+    def check_for_pages_update(self) -> None:
         # If there are a lot of books with pages yet to be counted, re-layout
         # once all have been counted
         if self.bookcase.num_of_books_that_need_pages_counted > 10 and self.bookcase.using_page_counts:
             self.pages_count_update_check_timer.start()
 
-    def check_pages_count_update(self):
+    def check_pages_count_update(self) -> None:
         if db := self.dbref():
             num_of_books_that_need_pages_counted = db.new_api.num_of_books_that_need_pages_counted()
             if num_of_books_that_need_pages_counted:
@@ -1972,7 +1975,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         lc = self.layout_constraints
         return max(1, math.ceil(viewport_height / lc.step_height))
 
-    def update_ram_cache_size(self):
+    def update_ram_cache_size(self) -> None:
         if hasattr(self, 'cover_cache'):
             lc = self.layout_constraints
             books_per_shelf = self.get_available_width() / lc.min_spine_width
@@ -1981,14 +1984,14 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
 
     # Paint and Drawing methods
 
-    def shown(self):
+    def shown(self) -> None:
         """Called when this view becomes active."""
         if db := self.dbref():
             db.queue_pages_scan()
         QPixmapCache.setCacheLimit(max(QPixmapCache.cacheLimit(), 20 * 1024))
         self.bookcase.ensure_layouting_is_current()
 
-    def update_viewport(self):
+    def update_viewport(self) -> None:
         """Update viewport only if the bookshelf view is visible."""
         if not self.view_is_visible():
             return
@@ -2238,7 +2241,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
                 second_line = fm.elidedText(second_line, Qt.TextElideMode.ElideRight, width)
         return first_line, second_line, font, fm, False
 
-    def draw_inline_divider(self, painter: QPainter, divider: ShelfItem, scroll_y: int):
+    def draw_inline_divider(self, painter: QPainter, divider: ShelfItem, scroll_y: int) -> None:
         """Draw an inline group divider with it group name write vertically and a gradient line."""
         lc = self.layout_constraints
         rect = divider.rect(lc).translated(0, -scroll_y)
@@ -2247,7 +2250,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         theme = self.theme
         assert theme is not None
 
-        def draw_rounded_divider(corner_radius: int, offset: int):
+        def draw_rounded_divider(corner_radius: int, offset: int) -> None:
             p = self.case_renderer.divider_as_pixmap(rect.width(), rect.height(), theme.divider_background_color, corner_radius, offset)
             painter.drawPixmap(rect.adjusted(0, -offset, 0, 0), p)
 
@@ -2321,7 +2324,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         is_selected: bool,
         is_current: bool,
         should_draw_emblems: bool,
-    ):
+    ) -> None:
         lc = self.layout_constraints
         spine_rect = spine.rect(lc).translated(0, -scroll_y)
         thumbnail = self.cover_cache.thumbnail_as_pixmap(spine.book_id)
@@ -2368,7 +2371,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             return theme.selected_color
         return QColor()
 
-    def draw_spine_background(self, painter: QPainter, rect: QRect, spine_color: QColor):
+    def draw_spine_background(self, painter: QPainter, rect: QRect, spine_color: QColor) -> None:
         """Draw spine background with gradient (darker edges, lighter center)."""
         painter.save()
         painter.setOpacity(1.0)
@@ -2532,20 +2535,20 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         sm = self.selectionModel()
         sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows)
 
-    def selectAll(self):
+    def selectAll(self) -> None:
         m = self.model()
         assert m is not None
         sm = self.selectionModel()
         sel = QItemSelection(m.index(0, 0), m.index(m.rowCount(QModelIndex()) - 1, 0))
         sm.select(sel, QItemSelectionModel.SelectionFlag.ClearAndSelect | QItemSelectionModel.SelectionFlag.Rows)
 
-    def set_current_row(self, row):
+    def set_current_row(self, row) -> None:
         sm = self.selectionModel()
         m = self.model()
         assert m is not None
         sm.setCurrentIndex(m.index(row, 0), QItemSelectionModel.SelectionFlag.NoUpdate)
 
-    def set_database(self, newdb, stage=0):
+    def set_database(self, newdb, stage=0) -> None:
         if stage == 0:
             self.grouping_mode = newdb.new_api.pref('bookshelf_grouping_mode', '')
 
@@ -2554,7 +2557,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             self.cover_cache.set_database(newdb)
             self.invalidate(set_of_books_changed=True, clear_spine_width_cache=True)
 
-    def set_context_menu(self, menu: QMenu):
+    def set_context_menu(self, menu: QMenu) -> None:
         self.context_menu = menu
 
     def populate_group_by_menu(self, grouping_menu: QMenu) -> None:
@@ -2573,12 +2576,12 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         for k, name in iter_all_groups(fm):
             add(k, name)
 
-    def contextMenuEvent(self, a0):
+    def contextMenuEvent(self, a0) -> None:
         if self.context_menu:
             self.context_menu.popup(a0.globalPos())
             a0.accept()
 
-    def set_grouping_mode(self, mode: str):
+    def set_grouping_mode(self, mode: str) -> None:
         """Set the grouping mode and refresh display."""
         if mode != self.grouping_mode:
             self.grouping_mode = mode
@@ -2622,7 +2625,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
         if not self.bookcase.layout_finished and self.auto_scroll:
             self.scroll_to_current_after_layout = True
 
-    def marked_changed(self, old_marked: set[int], current_marked: set[int]):
+    def marked_changed(self, old_marked: set[int], current_marked: set[int]) -> None:
         # Refresh display if marked books changed
         self.update_viewport()
 
@@ -2749,7 +2752,7 @@ class BookshelfView(MomentumScrollMixin, QAbstractScrollArea):
             return selection_for_rows(m, self.bookcase.visual_selection_between(a.row(), b.row()))
         return QItemSelection()
 
-    def handle_mouse_move_event(self, ev: QMouseEvent):
+    def handle_mouse_move_event(self, ev: QMouseEvent) -> None:
         ev.accept()
         if ev.buttons() & Qt.MouseButton.LeftButton:
             handle_selection_drag(

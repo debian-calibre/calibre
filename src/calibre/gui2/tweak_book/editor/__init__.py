@@ -49,6 +49,7 @@ LINK_PROPERTY = SPELL_LOCALE_PROPERTY + 1
 TAG_NAME_PROPERTY = LINK_PROPERTY + 1
 CSS_PROPERTY = TAG_NAME_PROPERTY + 1
 CLASS_ATTRIBUTE_PROPERTY = CSS_PROPERTY + 1
+COLOR_PROPERTY = CLASS_ATTRIBUTE_PROPERTY + 1
 
 
 def syntax_text_char_format(*args):
@@ -60,7 +61,7 @@ def syntax_text_char_format(*args):
 class StoreLocale:
     __slots__ = ('enabled',)
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.enabled = False
 
     def __enter__(self):

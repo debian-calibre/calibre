@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 from calibre.utils.localization import _
 
@@ -44,7 +42,8 @@ def search_google(query, max_results=10, timeout=60, write_html_to=None):
         doc = parse_html(raw)
         if write_html_to is not None:
             praw = html.tostring(doc, encoding='utf-8')
-            open(write_html_to, 'wb').write(praw)
+            with open(write_html_to, 'wb') as f:
+                f.write(praw)
         for data in doc.xpath('//div[@id="rso"]/div'):
             if counter <= 0:
                 break
@@ -77,9 +76,9 @@ def search_google(query, max_results=10, timeout=60, write_html_to=None):
 
 
 class GoogleBooksStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         url = 'https://books.google.com/books'
-        if True or external or self.config.get('open_external', False):
+        if True or external or self.config.get('open_external', False):  # ruff: ignore[expr-or-true]
             open_url(QUrl(url_slash_cleaner(detail_item or url)))
         else:
             d = WebStoreDialog(self.gui, url, parent, detail_item)
@@ -88,10 +87,9 @@ class GoogleBooksStore(BasicStoreConfig, StorePlugin):
             d.exec()
 
     def search(self, query, max_results=10, timeout=60):
-        for result in search_google(query, max_results=max_results, timeout=timeout):
-            yield result
+        yield from search_google(query, max_results=max_results, timeout=timeout)
 
-    def get_details(self, search_result, timeout=60):
+    def get_details(self, search_result, timeout=60) -> bool:
         br = browser()
         with closing(br.open(search_result.detail_item, timeout=timeout)) as nf:
             doc = parse_html(nf.read())

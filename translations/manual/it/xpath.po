@@ -4,17 +4,18 @@
 # 
 # Translators:
 # Cinzia De Paola <depaola.cinzia@gmail.com>, 2015
+# Giuseppe Bertone <giuseppe.bertone@proton.me>, 2026
 # Lehti <lehti@live.it>, 2014
 # demetrio <mendem@tiscali.it>, 2020
 # Michele Galimberti <galimbertimichele@gmail.com>, 2021
-# Vincenzo Reale <vinx.reale@gmail.com>, 2014
+# Vincenzo Reale <smart2128vr@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-02-17 16:44+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
-"Last-Translator: Michele Galimberti <galimbertimichele@gmail.com>, 2021\n"
+"Last-Translator: Giuseppe Bertone <giuseppe.bertone@proton.me>, 2026\n"
 "Language-Team: Italian (http://app.transifex.com/calibre/calibre/language/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -73,7 +74,7 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr "Questo troverà solo ``<p>A very short e-book to demonstrate the use of XPath.</p>`` nel :ref:`sample_ebook`, ma nessuno degli altri tag ``<p>``. Il prefisso ``h:`` negli esempi precedenti è richiesto per trovare i tag XHTML. Ciò è necessario perché, internamente, calibre rappresenta tutti i contenuti come XHTML. In XHTML i tag hanno un *namespace* e ``h:`` è il prefisso di namespace per i tag HTML."
+msgstr "Questo troverà solo ``<p>A very short e-book to demonstrate the use of XPath.</p>`` nel :ref:`sample_ebook`, ma nessuno degli altri tag ``<p>``. Il prefisso ``h:`` negli esempi precedenti è richiesto per trovare i tag XHTML. Questo è necessario perché, internamente, calibre rappresenta tutti i contenuti come XHTML. In XHTML i tag hanno un *namespace* e ``h:`` è il prefisso di namespace per i tag HTML."
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
@@ -82,7 +83,7 @@ msgid ""
 "a test that is used to select tags. Tests can be arbitrarily powerful and as"
 " this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr ""
+msgstr "Supponiamo ora di voler selezionare sia i tag ``<h1>`` che i tag ``<h2>`` tags. Per farlo, ci serve un costrutto XPath chiamato *predicato*. Un :dfn:`predicate` è, in sostanza, un test utilizzato per selezionare dei tag. Tali test possono essere estremamente versatili e, nel corso di questa guida, ne vedremo esempi sempre più avanzati. Un predicato si crea racchiudendo l'espressione di test tra parentesi quadre::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
@@ -113,56 +114,68 @@ msgid ""
 "matching on attribute values."
 msgstr "Qui, l'operatore ``@`` si riferisce agli attributi del tag. È possibile utilizzare alcune delle `funzioni incorporate di XPath` per eseguire una corrispondenza più sofisticata sui valori degli attributi."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:76
+#: ../../../__w/calibre/calibre/manual/xpath.rst:75
+msgid ""
+"When XPath expressions are used for conversion options such as chapter "
+"detection or the start reading at position, they are evaluated against the "
+"*input* document, before calibre flattens the CSS. CSS flattening rewrites "
+"class names, so the class names you see in the converted output (things like"
+" ``calibre1``) do not exist yet when your expression runs. Copy class names "
+"from the input document, not from the converted book. If in doubt, match on "
+"tag names and text content instead, as these are not changed by the "
+"conversion."
+msgstr "Quando le espressioni XPath vengono utilizzate per opzioni di conversione come il rilevamento dei capitoli o l'impostazione del punto di inizio della lettura, esse vengono valutate rispetto al documento di *input*, prima che calibre esegua l'appiattimento (flattening) del CSS. L'appiattimento del CSS comporta la riscrittura dei nomi delle classi; pertanto, i nomi delle classi che si riscontrano nell'output convertito (come, ad esempio, ``calibre1``) non esistono ancora nel momento in cui l'espressione viene eseguita. È necessario utilizzare i nomi delle classi presenti nel documento di input, non quelli del libro convertito. In caso di dubbi, è preferibile basarsi sui nomi dei tag o sul contenuto testuale, poiché tali elementi non vengono modificati durante il processo di conversione."
+
+#: ../../../__w/calibre/calibre/manual/xpath.rst:86
 msgid "Selecting by tag content"
 msgstr "Selezione per contenuto del tag"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:78
+#: ../../../__w/calibre/calibre/manual/xpath.rst:88
 msgid ""
 "Using XPath, you can even select tags based on the text they contain. The "
 "best way to do this is to use the power of *regular expressions* via the "
 "built-in function :term:`re:test()`::"
 msgstr "Usando XPath, puoi persino selezionare i tag in base al testo che contengono. Il modo migliore per farlo è usare la potenza delle *espressioni regolari* tramite la funzione integrata :term:`re: test()`::"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:84
+#: ../../../__w/calibre/calibre/manual/xpath.rst:94
 msgid ""
 "Here the ``.`` operator refers to the contents of the tag, just as the ``@``"
 " operator referred to its attributes."
 msgstr "Qui l'operatore ``.`` si riferisce al contenuto del tag, proprio come l'operatore ``@`` si riferiva ai suoi attributi."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:90
+#: ../../../__w/calibre/calibre/manual/xpath.rst:100
 msgid "Sample e-book"
 msgstr "Libro di esempio"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:96
+#: ../../../__w/calibre/calibre/manual/xpath.rst:106
 msgid "XPath built-in functions"
 msgstr "Funzioni interne di XPath"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:99
+#: ../../../__w/calibre/calibre/manual/xpath.rst:109
 msgid "name()"
 msgstr "name()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:101
+#: ../../../__w/calibre/calibre/manual/xpath.rst:111
 msgid "The name of the current tag."
 msgstr "Il nome del tag attuale"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:102
+#: ../../../__w/calibre/calibre/manual/xpath.rst:112
 msgid "contains()"
 msgstr "contains()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:104
+#: ../../../__w/calibre/calibre/manual/xpath.rst:114
 msgid "``contains(s1, s2)`` returns `true` if s1 contains s2."
 msgstr "``contains(s1, s2)`` restituisce `true` se s1 contiene s2."
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:105
+#: ../../../__w/calibre/calibre/manual/xpath.rst:115
 msgid "re:test()"
 msgstr "re:test()"
 
-#: ../../../__w/calibre/calibre/manual/xpath.rst:107
+#: ../../../__w/calibre/calibre/manual/xpath.rst:117
 msgid ""
 "``re:test(src, pattern, flags)`` returns `true` if the string `src` matches "
 "the regular expression `pattern`. A particularly useful flag is ``i``, it "
 "makes matching case insensitive. A good primer on the syntax for regular "
 "expressions can be found at `regexp syntax "
 "<https://docs.python.org/library/re.html>`_"
-msgstr "```re:test(src, pattern, flags)`` restituisce `true` se la stringa `src` corrisponde all'espressione regolare `pattern`. Un flag particolarmente utile è ``i``, che non considera la differenza MAIUSCOLE/minuscole. Un primo aiuto sulla sintassi per le espressioni regolari è disponibile in `sintassi delle regexp<https://docs.python.org/2.7/library/re.html>` _"
+msgstr "```re:test(src, pattern, flags)`` restituisce `true` se la stringa `src` corrisponde all'espressione regolare `pattern`. Un flag particolarmente utile è ``i``, che non considera la differenza MAIUSCOLE/minuscole. Un primo aiuto sulla sintassi per le espressioni regolari è disponibile in `sintassi delle regexp<https://docs.python.org/library/re.html>` _"

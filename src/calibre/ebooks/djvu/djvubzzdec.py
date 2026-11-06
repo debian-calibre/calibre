@@ -66,6 +66,11 @@ original_copyright_notice = '''
 // $Name: release_3_5_23 $
 '''
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
 MAXBLOCK = 4096
 FREQMAX = 4
 CTXIDS = 3
@@ -77,10 +82,10 @@ MAXLEN = 1024**2
 class BZZDecoderError(Exception):
     """This exception is raised when BZZDecode runs into trouble"""
 
-    def __init__(self, msg):
+    def __init__(self, msg: str) -> None:
         self.msg = msg
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'BZZDecoderError: {self.msg}'
 
 
@@ -608,7 +613,7 @@ xmtf = (
 
 
 class BZZDecoder:
-    def __init__(self, infile, outfile):
+    def __init__(self, infile: bytes | bytearray, outfile: bytearray) -> None:
         self.instream = infile
         self.inptr = 0
         self.outf = outfile
@@ -654,7 +659,7 @@ class BZZDecoder:
         if self.code >= 0x8000:
             self.fence = 0x7FFF
 
-    def convert(self, sz):
+    def convert(self, sz: int) -> int:
         if self.ieof:
             return 0
         copied = 0
@@ -679,7 +684,7 @@ class BZZDecoder:
             # offset += bytes; // for tell()
         return copied
 
-    def preload(self):
+    def preload(self) -> None:
         while self.scount <= 24:
             if not self.read_byte():
                 self.byte = 0xFF
@@ -689,14 +694,14 @@ class BZZDecoder:
             self.bufint = (self.bufint << 8) | self.byte
             self.scount += 8
 
-    def newtable(self, table):
+    def newtable(self, table: Sequence[tuple[int, int, int, int]]) -> None:
         for i in range(256):
             self.p[i] = table[i][0]
             self.m[i] = table[i][1]
             self.up[i] = table[i][2]
             self.dn[i] = table[i][3]
 
-    def decode(self):
+    def decode(self) -> int:
         outbuf = self.outbuf
         # Decode block size
         self.xsize = self.decode_raw(24)
@@ -718,10 +723,10 @@ class BZZDecoder:
         mtfno = 3
         markerpos = -1
 
-        def zc(i):
+        def zc(i: int) -> int:
             return self.zpcodec_decode(self.ctx, i)
 
-        def dc(i, bits):
+        def dc(i: int, bits: int) -> int:
             return self.decode_binary(self.ctx, i, bits)
 
         for i in range(self.xsize):
@@ -824,7 +829,7 @@ class BZZDecoder:
             raise BZZDecoderError('BiteStream.corrupt')
         return self.xsize
 
-    def decode_raw(self, bits):
+    def decode_raw(self, bits: int) -> int:
         n = 1
         m = 1 << bits
         while n < m:
@@ -832,7 +837,7 @@ class BZZDecoder:
             n = (n << 1) | b
         return n - m
 
-    def decode_binary(self, ctx, index, bits):
+    def decode_binary(self, ctx: list[int], index: int, bits: int) -> int:
         n = 1
         m = 1 << bits
         while n < m:
@@ -840,10 +845,10 @@ class BZZDecoder:
             n = (n << 1) | b
         return n - m
 
-    def zpcodec_decoder(self):
+    def zpcodec_decoder(self) -> int:
         return self.decode_sub_simple(0, 0x8000 + (self.a >> 1))
 
-    def decode_sub_simple(self, mps, z):
+    def decode_sub_simple(self, mps: int, z: int) -> int:
         # Test MPS/LPS
         if z > self.code:
             # LPS branch
@@ -879,7 +884,7 @@ class BZZDecoder:
             result = mps
         return result
 
-    def decode_sub(self, ctx, index, z):
+    def decode_sub(self, ctx: list[int], index: int, z: int) -> int:
         # Save bit
         bit = ctx[index] & 1
         # Avoid interval reversion
@@ -921,7 +926,7 @@ class BZZDecoder:
                 self.fence = 0x7FFF
             return bit
 
-    def zpcodec_decode(self, ctx, index):
+    def zpcodec_decode(self, ctx: list[int], index: int) -> int:
         z = self.a + self.p[ctx[index]]
         if z <= self.fence:
             self.a = z
@@ -930,7 +935,7 @@ class BZZDecoder:
             res = self.decode_sub(ctx, index, z)
         return res
 
-    def read_byte(self):
+    def read_byte(self) -> bool | None:
         try:
             self.byte = self.instream[self.inptr]
             self.inptr += 1
@@ -938,7 +943,7 @@ class BZZDecoder:
         except IndexError:
             return False
 
-    def ffz(self):
+    def ffz(self) -> int:
         x = self.a
         if x >= 0xFF00:
             return self.ffzt[x & 0xFF] + 8
@@ -947,7 +952,7 @@ class BZZDecoder:
 
 
 # for testing
-def main():
+def main() -> None:
     import sys
 
     from calibre_extensions import bzzdec as d

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "október 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "november 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -195,6 +195,11 @@ Bináris modulok tesztelése beépítés közben
 .TP
 .B \-\-un\-kepubify
 Konvertálja a megadott KEPUB fájlt EPUB\-ba anélkül, hogy teljes átalakítást végezne. Ezt teszi a Kobo illesztőprogram, amikor fájlokat importál az eszközről.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Verify every file in a folder exported by calibre, without restoring it. Checks archive parts and file checksums. Returns a nonzero exit status on error
 .UNINDENT
 .INDENT 0.0
 .TP

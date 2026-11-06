@@ -12,21 +12,28 @@ import time
 from contextlib import suppress
 from functools import wraps
 from threading import RLock, Thread
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    import unittest
+    from collections.abc import Callable
+
+    from calibre.utils.ipc.simple_worker import PipeWorker
 
 _plat = sys.platform.lower()
 iswindows = 'win32' in _plat or 'win64' in _plat
 
 lock = RLock()
-worker = None
+worker: PipeWorker | None = None
 RMTREE_ACTION = 'rmtree'
 UNLINK_ACTION = 'unlink'
 RUN_PROGRAM_ACTION = 'run_program'
 
 
-def thread_safe(f):
+def thread_safe[**P, R](f: Callable[P, R]) -> Callable[P, R]:
 
     @wraps(f)
-    def wrapper(*a, **kw):
+    def wrapper(*a: P.args, **kw: P.kwargs) -> R:
         with lock:
             return f(*a, **kw)
 
@@ -48,7 +55,7 @@ def run_program_now(cmdline: list[str]) -> None:
     _send_command(RUN_PROGRAM_ACTION, cmdline)
 
 
-def unlink(path):
+def unlink(path: str) -> None:
     with suppress(Exception):
         import os as oss
 
@@ -61,7 +68,7 @@ def run_program(cmdline: list[str]) -> None:
     Thread(name='WaitProgram', target=process.wait, daemon=True).start()
 
 
-def close_worker(worker):
+def close_worker(worker: PipeWorker) -> None:
     import subprocess
 
     worker.stdin.close()
@@ -72,7 +79,7 @@ def close_worker(worker):
     worker.wait()
 
 
-def ensure_worker():
+def ensure_worker() -> PipeWorker:
     global worker
     if worker is None:
         from calibre.utils.ipc.simple_worker import start_pipe_worker
@@ -82,7 +89,7 @@ def ensure_worker():
     return worker
 
 
-def reset_after_fork():
+def reset_after_fork() -> None:
     global worker
     atexit.unregister(close_worker)
     worker = None
@@ -97,7 +104,7 @@ def _send_command(action: str, payload: str | list[str]) -> None:
 
 if iswindows:
 
-    def remove_dir(x):
+    def remove_dir(x: str) -> None:
         from calibre.utils.filenames import make_long_path_useable
 
         x = make_long_path_useable(x)
@@ -121,14 +128,14 @@ if iswindows:
 
 else:
 
-    def remove_dir(x):
+    def remove_dir(x: str) -> None:
         import shutil
 
         with suppress(Exception):
             shutil.rmtree(x, ignore_errors=True)
 
 
-def reset_dll_dir():
+def reset_dll_dir() -> None:
     import ctypes
     from ctypes import wintypes
 
@@ -140,7 +147,7 @@ def reset_dll_dir():
         raise ctypes.WinError(error_code)
 
 
-def main():
+def main() -> None:
     if iswindows:
         reset_dll_dir()
     else:
@@ -166,7 +173,7 @@ def main():
                     traceback.print_exc()
 
 
-def main_for_test(do_forced_exit=False, check_tdir=False):
+def main_for_test(do_forced_exit: bool = False, check_tdir: bool = False) -> None:
     if check_tdir:
         import tempfile
 
@@ -185,14 +192,14 @@ def main_for_test(do_forced_exit=False, check_tdir=False):
         sys.stdin.read()
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import tempfile
     import unittest
 
     from calibre.utils.ipc.simple_worker import start_pipe_worker
 
     class TestSafeAtexit(unittest.TestCase):
-        def wait_for_empty(self, tdir, timeout=10):
+        def wait_for_empty(self, tdir: str, timeout: float = 10) -> None:
             st = time.monotonic()
             while time.monotonic() - st < timeout:
                 q = os.listdir(tdir)
@@ -201,7 +208,7 @@ def find_tests():
                 time.sleep(0.01)
             self.assertFalse(q)
 
-        def test_safe_atexit(self):
+        def test_safe_atexit(self) -> None:
             with tempfile.TemporaryDirectory() as tdir:
                 self.assertFalse(os.listdir(tdir))
                 p = start_pipe_worker('from calibre.utils.safe_atexit import main_for_test; main_for_test()', cwd=tdir)

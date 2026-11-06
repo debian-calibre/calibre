@@ -2,11 +2,10 @@
 # License: GPLv3 Copyright: 2025, Kovid Goyal <kovid at kovidgoyal.net>
 
 import textwrap
-from collections.abc import Iterator
 from html import escape
 from itertools import count
 from threading import Thread
-from typing import Any, NamedTuple, Self
+from typing import TYPE_CHECKING, Any, NamedTuple, Self
 
 from qt.core import (
     QAbstractItemView,
@@ -44,7 +43,6 @@ from calibre.ai.config import ConfigureAI
 from calibre.ai.prefs import plugin_for_purpose
 from calibre.ai.prefs import prefs as aiprefs
 from calibre.ai.utils import ContentType, StreamedResponseAccumulator, response_to_html
-from calibre.customize import AIProviderPlugin
 from calibre.gui2 import error_dialog, qapplication_or_fail, safe_open_url
 from calibre.gui2.chat_widget import Button, ChatWidget, Header
 from calibre.gui2.dialogs.confirm_delete import confirm
@@ -54,6 +52,11 @@ from calibre.utils.localization import _, ui_language_as_english
 from calibre.utils.logging import ERROR, WARN
 from calibre.utils.short_uuid import uuid4
 from polyglot.binary import as_hex_unicode
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from calibre.customize import AIProviderPlugin
 
 prompt_sep = '\n\n------\n\n'
 reasoning_icon = 'reports.png'
@@ -69,7 +72,7 @@ def for_display_to_human(self: ChatMessage, is_initial_query: bool = False, cont
     return response_to_html(q, content_type=content_type)
 
 
-def show_reasoning(reasoning: str, parent: QWidget | None = None):
+def show_reasoning(reasoning: str, parent: QWidget | None = None) -> None:
     d = QDialog(parent)
     l = QVBoxLayout(d)
     b = QTextBrowser(d)
@@ -84,7 +87,7 @@ def show_reasoning(reasoning: str, parent: QWidget | None = None):
 
 
 class ConversationHistory:
-    def __init__(self):
+    def __init__(self) -> None:
         self.accumulator = StreamedResponseAccumulator()
         self.items: list[ChatMessage] = []
         self.model_used = ''
@@ -188,7 +191,7 @@ class ConverseWidget(QWidget):
     response_received = pyqtSignal(int, object)
     close_requested = pyqtSignal()
 
-    def __init__(self, parent=None, add_close_button=False):
+    def __init__(self, parent=None, add_close_button=False) -> None:
         super().__init__(parent)
         self.counter = count(start=1)
         self.hid = hid = uuid4().lower()
@@ -245,7 +248,7 @@ class ConverseWidget(QWidget):
     def setFocus(self, reason=...) -> None:
         self.result_display.setFocus(reason)
 
-    def language_instruction(self):
+    def language_instruction(self) -> str:
         lang = ui_language_as_english()
         return f'If you can speak in {lang}, then respond in {lang}.'
 
@@ -262,12 +265,12 @@ class ConverseWidget(QWidget):
         links = '\xa0\xa0\xa0 '.join(ans)
         return f'<h3>{_("Quick actions")}</h3> {links}'
 
-    def show_settings(self):
+    def show_settings(self) -> None:
         self.settings_dialog().exec()
         self.update_ai_provider_plugin()
         self.update_ui_state()
 
-    def update_ai_provider_plugin(self):
+    def update_ai_provider_plugin(self) -> None:
         self.ai_provider_plugin = plugin_for_purpose(AICapabilities.text_to_text)
 
     @property
@@ -275,7 +278,7 @@ class ConverseWidget(QWidget):
         p = self.ai_provider_plugin
         return p is not None and p.is_ready_for_use
 
-    def show_initial_message(self):
+    def show_initial_message(self) -> None:
         if self.is_ready_for_use:
             msg = self.ready_message()
         else:
@@ -291,7 +294,7 @@ class ConverseWidget(QWidget):
         assert self.ai_provider_plugin is not None
         return self.ai_provider_plugin.human_readable_model_name(self.conversation_history.model_used) or _('Assistant')
 
-    def show_ai_conversation(self):
+    def show_ai_conversation(self) -> None:
         self.result_display.clear()
         assistant = self.assistant_name
         is_initial_query = True
@@ -428,7 +431,7 @@ class ConverseWidget(QWidget):
         for b in self.response_buttons.values():
             b.setEnabled(has_responses)
 
-    def update_cost(self):
+    def update_cost(self) -> None:
         h = self.conversation_history
         if self.session_cost_currency != h.currency:
             self.session_cost = 0
@@ -473,7 +476,7 @@ class ConverseWidget(QWidget):
             assert clip is not None
             clip.setText(text)
 
-    def on_chat_link_clicked(self, qurl: QUrl):
+    def on_chat_link_clicked(self, qurl: QUrl) -> None:
         if qurl.scheme() not in ('http', 'https'):
             return
         match qurl.host():
@@ -492,7 +495,7 @@ class ConverseWidget(QWidget):
             return
         safe_open_url(qurl)
 
-    def set_all_inputs_enabled(self, enabled):
+    def set_all_inputs_enabled(self, enabled) -> None:
         # for i in range(self.quick_actions_layout.count()):
         #     widget = self.quick_actions_layout.itemAt(i).widget()
         #     if widget:
@@ -575,7 +578,7 @@ class ActionData(NamedTuple):
 
 
 class ActionEditDialog(QDialog):
-    def __init__(self, help_text: str, action: ActionData | None = None, parent=None):
+    def __init__(self, help_text: str, action: ActionData | None = None, parent=None) -> None:
         super().__init__(parent)
         self.setWindowTitle(_('Edit Quick action') if action else _('Add Quick action'))
         fl = QFormLayout(self)
@@ -628,7 +631,7 @@ class ActionEditDialog(QDialog):
 
 
 class LocalisedResults(QCheckBox):
-    def __init__(self):
+    def __init__(self) -> None:
         super().__init__(_('Ask the AI to respond in the current language'))
         self.setToolTip(
             '<p>'
@@ -639,7 +642,7 @@ class LocalisedResults(QCheckBox):
             )
         )
 
-    def load_settings(self):
+    def load_settings(self) -> None:
         self.setChecked(aiprefs()['llm_localized_results'] == 'always')
 
     def commit(self) -> bool:
@@ -648,7 +651,7 @@ class LocalisedResults(QCheckBox):
 
 
 class LLMActionsSettingsWidget(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.setMinimumWidth(550)
         vl = QVBoxLayout(self)
@@ -685,7 +688,7 @@ class LLMActionsSettingsWidget(QWidget):
         self.load_settings()
         self.actions_list.setFocus()
 
-    def load_settings(self):
+    def load_settings(self) -> None:
         for w in self.custom_widgets:
             if ls := getattr(w, 'load_settings', None):
                 ls()
@@ -697,12 +700,12 @@ class LLMActionsSettingsWidget(QWidget):
         item.setCheckState(Qt.CheckState.Unchecked if ac.is_disabled else Qt.CheckState.Checked)
         item.setToolTip(textwrap.fill(ac.prompt_template))
 
-    def load_actions_from_prefs(self):
+    def load_actions_from_prefs(self) -> None:
         self.actions_list.clear()
         for ac in sorted(self.get_actions_from_prefs(), key=lambda ac: primary_sort_key(ac.human_name)):
             self.action_as_item(ac)
 
-    def add_action(self):
+    def add_action(self) -> None:
         dialog = ActionEditDialog(self.action_edit_help_text, parent=self)
         if dialog.exec() == QDialog.DialogCode.Accepted:
             action = dialog.get_action()
@@ -790,14 +793,14 @@ class LLMActionsSettingsWidget(QWidget):
 class LLMSettingsDialogBase(Dialog):
     ai_purpose = AICapabilities.text_to_text
 
-    def __init__(self, name, prefs, title='', parent=None):
+    def __init__(self, name, prefs, title='', parent=None) -> None:
         super().__init__(title=title or _('AI Settings'), name=name, prefs=prefs, parent=parent)
 
     def custom_tabs(self) -> Iterator[tuple[str, str, QWidget]]:
         if False:
             yield 'icon', 'title', QWidget()
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         l = QVBoxLayout(self)
         self.tabs = tabs = QTabWidget(self)
         self.ai_config = ai = ConfigureAI(self.ai_purpose, parent=self)
@@ -808,7 +811,7 @@ class LLMSettingsDialogBase(Dialog):
         l.addWidget(tabs)
         l.addWidget(self.bb)
 
-    def accept(self):
+    def accept(self) -> None:
         for i in range(self.tabs.count()):
             w = self.tabs.widget(i)
             assert w is not None
@@ -826,7 +829,7 @@ class FakeAIProvider:
 
 
 class StreamingDemoWidget(ConverseWidget):
-    def __init__(self, title: str, throttle_streaming: bool, parent: QWidget | None = None):
+    def __init__(self, title: str, throttle_streaming: bool, parent: QWidget | None = None) -> None:
         self.demo_title = title
         self.throttle_streaming = throttle_streaming
         self.render_count = 0
@@ -838,7 +841,7 @@ class StreamingDemoWidget(ConverseWidget):
         self.settings_button.setVisible(False)
         self.result_display.input.setEnabled(False)
         self.original_re_render = self.result_display.re_render
-        self.result_display.re_render = self.counted_re_render  # type: ignore
+        self.result_display.re_render = self.counted_re_render
         self.update_render_count(True)
 
     def counted_re_render(self) -> None:
@@ -851,7 +854,7 @@ class StreamingDemoWidget(ConverseWidget):
             self.render_count = 0
         self.render_count_label.setText(_('Full document renders: {}').format(self.render_count))
 
-    def update_ai_provider_plugin(self):
+    def update_ai_provider_plugin(self) -> None:
         self.ai_provider_plugin = FakeAIProvider()
 
     def settings_dialog(self) -> QDialog:
@@ -896,7 +899,7 @@ class StreamingDemoWidget(ConverseWidget):
 
 
 class StreamingRenderDemo(QDialog):
-    def __init__(self, auto_close: bool = False, parent: QWidget | None = None):
+    def __init__(self, auto_close: bool = False, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.auto_close = auto_close
         self.summary: dict[str, int] = {}

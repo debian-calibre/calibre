@@ -4,11 +4,21 @@ import glob
 import os
 import re
 import textwrap
+from typing import IO, TYPE_CHECKING
 
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 from calibre.utils.localization import _
 from calibre.utils.resources import get_path as P
 from polyglot.builtins import as_bytes
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from lxml.etree import _Element
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.ebooks.rtf.input import InlineClass
+    from calibre.utils.logging import Log
 
 border_style_map = {
     'single': 'solid',
@@ -57,7 +67,7 @@ class RTFInput(InputFormatPlugin):
         ),
     }
 
-    def generate_xml(self, stream):
+    def generate_xml(self, stream: str) -> bytes:
         from calibre.ebooks.rtf2xml.ParseRtf import ParseRtf
 
         ofile = 'dataxml.xml'
@@ -110,7 +120,7 @@ class RTFInput(InputFormatPlugin):
         with open(ofile, 'rb') as f:
             return f.read()
 
-    def extract_images(self, picts):
+    def extract_images(self, picts: str) -> dict[int, str]:
         from binascii import unhexlify
 
         from calibre.utils.imghdr import what
@@ -119,20 +129,18 @@ class RTFInput(InputFormatPlugin):
 
         with open(picts, 'rb') as f:
             raw = f.read()
-        picts = filter(len, re.findall(rb'\{\\pict([^}]+)\}', raw))
+        pict_data = filter(len, re.findall(rb'\{\\pict([^}]+)\}', raw))
         hex_pat = re.compile(rb'[^a-fA-F0-9]')
-        encs = [hex_pat.sub(b'', pict) for pict in picts]
+        encs = [hex_pat.sub(b'', pict) for pict in pict_data]
 
-        count = 0
-        imap = {}
-        for enc in encs:
+        imap: dict[int, str] = {}
+        for count, enc in enumerate(encs, 1):
             if len(enc) % 2 == 1:
                 enc = enc[:-1]
             data = unhexlify(enc)
             fmt = what(None, data)
             if fmt is None:
                 fmt = 'wmf'
-            count += 1
             name = f'{count:04}.{fmt}'
             with open(name, 'wb') as f:
                 f.write(data)
@@ -141,7 +149,7 @@ class RTFInput(InputFormatPlugin):
             #     f.write(enc)
         return self.convert_images(imap)
 
-    def convert_images(self, imap):
+    def convert_images(self, imap: dict[int, str]) -> dict[int, str]:
         self.default_img = None
         for count, val in imap.items():
             try:
@@ -150,7 +158,7 @@ class RTFInput(InputFormatPlugin):
                 self.log.exception('Failed to convert', val)
         return imap
 
-    def convert_image(self, name):
+    def convert_image(self, name: str) -> str:
         if not name.endswith('.wmf'):
             return name
         try:
@@ -159,7 +167,7 @@ class RTFInput(InputFormatPlugin):
             self.log.exception(f'Failed to convert WMF image {name!r}')
         return self.replace_wmf(name)
 
-    def replace_wmf(self, name):
+    def replace_wmf(self, name: str) -> str:
         if self.opts.ignore_wmf:
             os.remove(name)
             return '__REMOVE_ME__'
@@ -174,7 +182,7 @@ class RTFInput(InputFormatPlugin):
             f.write(self.default_img)
         return name
 
-    def rasterize_wmf(self, name):
+    def rasterize_wmf(self, name: str) -> str:
         from calibre.utils.wmf.parse import wmf_unwrap
 
         with open(name, 'rb') as f:
@@ -185,7 +193,7 @@ class RTFInput(InputFormatPlugin):
             f.write(data)
         return name
 
-    def write_inline_css(self, ic, border_styles):
+    def write_inline_css(self, ic: InlineClass, border_styles: dict[str, str]) -> None:
         font_size_classes = [f'span.fs{i} {{ font-size: {x}pt }}' for i, x in enumerate(ic.font_sizes)]
         color_classes = [f'span.col{i} {{ color: {x} }}' for i, x in enumerate(ic.colors) if x != 'false']
         css = textwrap.dedent('''
@@ -214,7 +222,7 @@ class RTFInput(InputFormatPlugin):
         with open('styles.css', 'ab') as f:
             f.write(css.encode('utf-8'))
 
-    def convert_borders(self, doc):
+    def convert_borders(self, doc: _Element) -> dict[str, str]:
         border_styles = []
         style_map = {}
         for elem in doc.xpath(r'//*[local-name()="cell"]'):
@@ -239,7 +247,7 @@ class RTFInput(InputFormatPlugin):
             elem.set('class', cls)
         return style_map
 
-    def convert(self, stream, options, file_ext, log, accelerators):
+    def convert(self, stream: IO[bytes], options: Values, file_ext: str, log: Log, accelerators: dict[str, str]) -> str:
         from lxml import etree
 
         from calibre.ebooks.metadata.meta import get_metadata
@@ -301,12 +309,17 @@ class RTFInput(InputFormatPlugin):
         opf = OPFCreator(os.getcwd(), mi)
         opf.create_manifest([('index.xhtml', None)])
         opf.create_spine(['index.xhtml'])
-        opf.render(open('metadata.opf', 'wb'))
+        with open('metadata.opf', 'wb') as f:
+            opf.render(f)
         return os.path.abspath('metadata.opf')
 
-    def postprocess_book(self, oeb, opts, log):
+    def postprocess_book(self, oeb: OEBBook, opts: Values, log: Log) -> None:
+        from lxml import etree
+
         for item in oeb.spine:
-            for img in item.data.xpath('//*[local-name()="img" and @src="__REMOVE_ME__"]'):
+            root = item.data
+            assert isinstance(root, etree._Element)
+            for img in root.xpath('//*[local-name()="img" and @src="__REMOVE_ME__"]'):
                 p = img.getparent()
                 idx = p.index(img)
                 p.remove(img)

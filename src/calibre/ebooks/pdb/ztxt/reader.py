@@ -7,9 +7,17 @@ Read content from ztxt pdb file.
 import io
 import struct
 from compression import zlib
+from typing import IO, TYPE_CHECKING
 
 from calibre.ebooks.pdb.formatreader import FormatReader
 from calibre.ebooks.pdb.ztxt import zTXTError
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.ebooks.pdb.header import PdbHeaderReader
+    from calibre.utils.logging import Log
 
 SUPPORTED_VERSION = (1, 40)
 
@@ -22,7 +30,7 @@ class HeaderRecord:
     defined in the file header.
     """
 
-    def __init__(self, raw):
+    def __init__(self, raw: bytes) -> None:
         (self.version,) = struct.unpack('>H', raw[0:2])
         (self.num_records,) = struct.unpack('>H', raw[2:4])
         (self.size,) = struct.unpack('>L', raw[4:8])
@@ -31,7 +39,7 @@ class HeaderRecord:
 
 
 class Reader(FormatReader):
-    def __init__(self, header, stream, log, options):
+    def __init__(self, header: PdbHeaderReader, stream: IO[bytes], log: Log, options: Values) -> None:
         self.stream = stream
         self.log = log
         self.options = options
@@ -58,15 +66,15 @@ class Reader(FormatReader):
         self.uncompressor = zlib.decompressobj()
         self.uncompressor.decompress(self.section_data(1))
 
-    def section_data(self, number):
+    def section_data(self, number: int) -> bytes:
         return self.sections[number]
 
-    def decompress_text(self, number):
+    def decompress_text(self, number: int) -> bytes:
         if number == 1:
             self.uncompressor = zlib.decompressobj()
         return self.uncompressor.decompress(self.section_data(number))
 
-    def extract_content(self, output_dir):
+    def extract_content(self, output_dir: str) -> str | OEBBook | None:
         raw_txt = b''
 
         self.log.info('Decompressing text...')
@@ -80,6 +88,7 @@ class Reader(FormatReader):
         from calibre.customize.ui import plugin_for_input_format
 
         txt_plugin = plugin_for_input_format('txt')
+        assert txt_plugin is not None
         for opt in txt_plugin.options:
             if not hasattr(self.options, opt.option.name):
                 setattr(self.options, opt.option.name, opt.recommended_value)

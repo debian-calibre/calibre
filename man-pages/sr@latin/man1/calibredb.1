@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "октобар 23, 2026" "9.17.0" "calibre"
+.TH "CALIBREDB" "1" "новембар 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -137,6 +137,18 @@ search
 fts_index
 .IP \(bu 2
 fts_search
+.IP \(bu 2
+notes
+.IP \(bu 2
+items
+.IP \(bu 2
+virtual_libraries
+.IP \(bu 2
+annotations
+.IP \(bu 2
+trash
+.IP \(bu 2
+data_files
 .UNINDENT
 .SH GLOBALNE MOGUĆNOSTI
 .INDENT 0.0
@@ -355,7 +367,7 @@ Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavit
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Ne koristi Kanta za otpatke
+Ne koristi korpu
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -659,22 +671,26 @@ Zameni postojeću naslovnu stranu prilikom generisanja kataloga. Podrazumevano: 
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [opcije] (list|add|remove)
+calibredb saved_searches [options] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Upravljajte sačuvanim pretragama u ovoj bazi podataka.
-Ako pokušate da dodate upit sa imenom koje već postoji, biće
-zamenjen.
+Manage the saved searches stored in this database.
+If you try to add a query with a name that already exists, it will be
+replaced.
 .sp
-Sintaksa za dodavanje:
+Syntax for listing, the default action:
 .sp
-calibredb \fBsaved_searches\fP add ime_pretrage izraz_pretrage
+calibredb \fBsaved_searches\fP list
 .sp
-Sintaksa za uklanjanje:
+Syntax for adding:
 .sp
-calibredb \fBsaved_searches\fP remove ime_pretrage
+calibredb \fBsaved_searches\fP add search_name search_expression
+.sp
+Syntax for removing:
+.sp
+calibredb \fBsaved_searches\fP remove search_name
 .sp
 Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
 .SH ADD_CUSTOM_COLUMN
@@ -764,19 +780,22 @@ Ako kolona čuva više vrednosti, dodaj navedene vrednosti postojećim umesto da
 .INDENT 3.5
 .sp
 .EX
-calibredb restore_database [opcije]
+calibredb restore_database [options]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Obnavlja ovu bazu podataka iz metapodataka sačuvanih u OPF datotekama u svakoj
-fascikli calibre biblioteke. Ovo je korisno ako je vaša metadata.db datoteka
+Vratite ovu bazu podataka iz metapodataka sačuvanih u OPF datotekama u svakoj
+fascikli calibre biblioteke. Ovo je korisno ako je datoteka metadata.db
 oštećena.
 .sp
-UPOZORENJE: Ova komanda potpuno regeneriše vašu bazu podataka. Izgubićete
-sve sačuvane pretrage, korisničke kategorije, plugboards, sačuvana podešavanja
-konverzije po knjizi i prilagođene recepte. Obnovljeni metapodaci biće tačni samo onoliko
-koliko i podaci pronađeni u OPF datotekama.
+UPOZORENJE: Ova komanda ponovo pravi celu bazu podataka. Izgubićete sve
+sačuvane pretrage, korisničke kategorije, šablone za prilagođavanje metapodataka,
+sačuvana podešavanja pretvaranja za pojedinačne knjige i prilagođene recepte.
+Vraćeni metapodaci biće tačni samo u meri u kojoj su tačni podaci u OPF datotekama.
+.sp
+Izlazni status je 0 ako je vraćanje uspelo, 1 ako je potpuno neuspešno i
+2 ako je baza podataka vraćena, ali neke knjige ili drugi podaci nisu mogli da se vrate.
 .sp
 Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1036,6 +1055,345 @@ Format u kojem će se prikazati rezultati pretrage. Bilo \fB\(dq\fPtext\fB\(dq\f
 .TP
 .B \-\-restrict\-to
 Ograničite pretražene knjige, bilo korišćenjem izraza za pretragu ili ID\-ova. Na primer: ids:1,2,3 za ograničavanje po ID\-ovima ili search:tag:foo za ograničavanje na knjige koje imaju oznaku foo.
+.UNINDENT
+.SH NOTES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb notes [options] [list|search|show|set|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the \fBnotes\fP attached to items such as authors, series, tags and
+publishers. FIELD is the lookup name of the field, for example: authors,
+series, tags, publisher or #mycolumn. ITEM is the name of the item, for
+example the name of an author. Items are matched case insensitively.
+.sp
+List the items that have \fBnotes\fP, optionally only those in the specified field.
+This is the default action:
+.sp
+calibredb \fBnotes\fP list [FIELD]
+.sp
+Search the text of \fBnotes\fP using the same SQLite full text search syntax as
+the Browse \fBnotes\fP tool in calibre. Print the field, item name and an excerpt
+for each match. Use \-\-field to search only the \fBnotes\fP in a particular field:
+.sp
+calibredb \fBnotes\fP search \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+.sp
+Print the note for an item as Markdown formatted text, or with \-\-as\-html as
+an HTML document with any images embedded, suitable for use with set:
+.sp
+calibredb \fBnotes\fP show FIELD ITEM
+.sp
+Replace the note for an item with the contents of an HTML file. Use \- to
+read the HTML from standard input. Images embedded as base64\-encoded data:
+URLs are added to the note for both local and remote libraries. When using a
+local library and reading from a file, images referenced by paths relative to
+the file are added as well:
+.sp
+calibredb \fBnotes\fP set FIELD ITEM FILE
+.sp
+Remove the note for an item:
+.sp
+calibredb \fBnotes\fP remove FIELD ITEM
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-html
+Pri prikazivanju beleške ispiši je kao HTML umesto kao tekst u Markdown formatu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-field
+Pri pretraživanju beleški ograniči pretragu na ovo polje, na primer: authors, tags ili #mycolumn
+.UNINDENT
+.SH ITEMS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb items [options] (rename|remove) FIELD ITEM ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Preimenujte ili uklonite stavke kao što su autori, oznake, serije i izdavači u svim
+knjigama, isto kao pomoću radnji za upravljanje autorima, oznakama itd. u calibre
+interfejsu. FIELD je ime polja za pretragu, na primer: authors, tags,
+series, publisher ili #mycolumn. Pri podudaranju stavki ne razlikuju se velika i mala slova.
+.sp
+Preimenujte stavku. Ako stavka sa imenom NEW_NAME već postoji, dve stavke se
+spajaju. Za polja koja sadrže više vrednosti, NEW_NAME može sadržati više
+vrednosti razdvojenih separatorom za to polje, na primer zarezom za oznake.
+Stavka se tada zamenjuje svim tim vrednostima:
+.sp
+calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
+.sp
+Uklonite jednu ili više stavki iz svih knjiga. Autori se ne mogu ukloniti:
+.sp
+calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Promeni samo knjige koje odgovaraju navedenom izrazu za pretragu, na primer: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+.UNINDENT
+.SH VIRTUAL_LIBRARIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb virtual_libraries [options] [list|add|rename|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the Virtual libraries of this library. A Virtual library is a search
+that behaves as though the library contains only the books it matches. To list
+or search the books in a Virtual library, use: calibredb search \(aqvl:\(dqname\(dq\(aq
+.sp
+List the Virtual libraries, with their searches and number of books. This is the
+default action:
+.sp
+calibredb \fBvirtual_libraries\fP list
+.sp
+Create a Virtual library from a search:
+.sp
+calibredb \fBvirtual_libraries\fP add name search_expression
+.sp
+Rename a Virtual library:
+.sp
+calibredb \fBvirtual_libraries\fP rename name new_name
+.sp
+Remove Virtual libraries, the books in them are not changed:
+.sp
+calibredb \fBvirtual_libraries\fP remove name ...
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Napravi izlaz u JSON formatu, pogodnijem za mašinsku obradu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Pri dodavanju zameni pretragu postojeće virtuelne biblioteke sa istim imenom
+.UNINDENT
+.SH ANNOTATIONS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb annotations [options] [list|search|export|import|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Manage the \fBannotations\fP, that is the highlights and bookmarks, of books, as
+created in the calibre E\-book viewer or synced from other applications.
+.sp
+List the \fBannotations\fP, with their ids. This is the default action:
+.sp
+calibredb \fBannotations\fP list
+.sp
+Search highlighted text, annotation notes and bookmark titles using the same
+SQLite full text search syntax as the Browse \fBannotations\fP tool. Results are
+ordered by relevance and include annotation ids, book titles and matching
+excerpts. Use \-\-search to restrict the books, \-\-type to restrict the annotation
+type, \-\-user\-type and \-\-annotation\-user to restrict the user, \-\-no\-stemming to
+match exact word forms, or \-\-format json for a JSON array of results including
+the annotation data and excerpts:
+.sp
+calibredb \fBannotations\fP search \(dqsearch expression\(dq
+.sp
+Export the \fBannotations\fP as plain text, Markdown or JSON, grouped by book. The
+JSON is the same calibre annotation collection as created by the Export
+button in the Browse \fBannotations\fP tool:
+.sp
+calibredb \fBannotations\fP export
+.sp
+Import a calibre annotation collection exported as JSON by this command or
+the Browse \fBannotations\fP tool. The collection must contain \fBannotations\fP from
+only one book. BOOK_ID is the destination book id, not the id stored in the
+file. Only the \fBannotations\fP of the format FORMAT are imported, \fBannotations\fP of
+other formats are skipped. FORMAT must exist in the destination book. Use the
+same edition of the book so positions match:
+.sp
+calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
+.sp
+Use \- for FILE to read from standard input. The entire collection is
+validated before importing. Annotations are merged with existing ones using
+the viewer\(aqs rules: highlights are matched by UUID and bookmarks by title,
+and the newer timestamp wins. Repeated imports do not create duplicates.
+Unrelated \fBannotations\fP and reading positions are preserved.
+.sp
+By default \fBannotations\fP are imported into those of the calibre E\-book viewer.
+Use \-\-user\-type web \-\-annotation\-user USER to import them into those of a
+Content server user instead. Exported collections record the user the
+\fBannotations\fP belong to, and if a collection contains \fBannotations\fP of more than
+one user, it is rejected. Use the \-\-user\-type and \-\-annotation\-user
+options when exporting, to export the \fBannotations\fP of a single user.
+.sp
+Permanently remove the \fBannotations\fP with the specified ids, as shown by list:
+.sp
+calibredb \fBannotations\fP remove ID ...
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-annotation\-user
+Only list, search or export the annotations of the specified user. For import, the Content server user to import the annotations for, required with \fB\-\-user\-type\fP web. Note that this can be any user, not just the one used to connect to a remote library.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-format, \-f
+The export format, one of: text, markdown, json. For search, text or json. Default is: text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-stemming
+For search, match exact word forms instead of word stems
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Only list, search or export the annotations of books matching the specified book search query, for example: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-type, \-t
+Only list, search or export annotations of the specified type, one of: highlight, bookmark
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-user\-type
+Only list, search or export the annotations of the specified type of user. For import, the type of user to import the annotations for, the calibre E\-book viewer (local) or a Content server user (web). Default for import is local.
+.UNINDENT
+.SH TRASH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb trash [options] (list|restore|delete|empty) [ids]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Upravljajte knjigama i formatima koji su uklonjeni i premešteni u korpu.
+Stavke u korpi automatski se trajno brišu posle određenog broja dana.
+ids je lista identifikatora knjiga razdvojenih zarezima, kao za komandu remove,
+na primer: 23,34,57\-85 (pri navođenju opsega poslednji broj u opsegu
+nije uključen).
+.sp
+Prikažite uklonjene knjige i formate, počevši od najskorije uklonjenih,
+sa vremenima uklanjanja u lokalnom vremenu. Uklonjeni formati knjiga koje više
+ne postoje označeni su kao nepovratni i mogu samo da se obrišu. Uz
+\-\-for\-machine, vremena su u UTC\-u:
+.sp
+calibredb \fBtrash\fP list
+.sp
+Vratite uklonjene knjige ili, uz \-\-formats, uklonjene formate knjiga:
+.sp
+calibredb \fBtrash\fP restore ids
+.sp
+Trajno obrišite stavke iz korpe:
+.sp
+calibredb \fBtrash\fP delete ids
+.sp
+Trajno obrišite sve iz korpe:
+.sp
+calibredb \fBtrash\fP empty
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Napravi izlaz za radnju list u JSON formatu, pogodnijem za mašinsku obradu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Primeni radnju na uklonjene formate navedenih knjiga, a ne na uklonjene knjige
+.UNINDENT
+.SH DATA_FILES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Upravljajte dodatnim datotekama podataka povezanim sa knjigom u lokalnim ili udaljenim bibliotekama.
+Imena su relativna u odnosu na direktorijum sa podacima knjige. Za poddirektorijume
+koristite /; prihvata se i . Datoteke čija imena sadrže prikazuju se na listi,
+ali njima nije moguće upravljati na druge načine.
+Ovom komandom nije moguće pristupiti formatima e\-knjiga, naslovnim stranama i datoteci metadata.opf.
+Udaljene biblioteke zahtevaju nalog sa pravom upisa, kao i ostale komande za upravljanje,
+i ne podržavaju naloge sa ograničenjima pretrage po bibliotekama.
+.sp
+Prikažite imena datoteka, veličine u bajtovima i vremena izmene (sekunde od početka
+Unix epohe). Za JSON izlaz koristite \-\-for\-machine:
+.sp
+calibredb \fBdata_files\fP list BOOK_ID
+.sp
+Dodajte datoteku koristeći njeno osnovno ime ili opciju \-\-name da zadate ime ili poddirektorijum.
+Postojeće datoteke se ne zamenjuju osim ako se navede \-\-replace. Ovo je dostupno
+i pomoću add_format \-\-as\-extra\-data\-file:
+.sp
+calibredb \fBdata_files\fP add BOOK_ID FILE
+.sp
+Sačuvajte jednu datoteku podataka na lokalnom računaru na odredištu \-\-output. Postojeće izlazne
+datoteke se ne zamenjuju osim ako se navede \-\-replace:
+.sp
+calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
+.sp
+Preimenujte datoteku. Postojeća odredišta se ne zamenjuju osim ako se navede \-\-replace:
+.sp
+calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
+.sp
+Premestite datoteku u korpu operativnog sistema. Uz \-\-permanent, umesto toga je trajno
+obrišite. Za udaljene biblioteke ovo se odvija na serveru:
+.sp
+calibredb \fBdata_files\fP remove BOOK_ID NAME
+.sp
+Direktorijumi koji ostanu prazni nakon preimenovanja i uklanjanja se brišu. Kod udaljenih
+biblioteka svaka datoteka se prenosi u jednom zahtevu, pa veoma velike datoteke
+zahtevaju dovoljno memorije i na klijentu i na serveru, a otpremanja su ograničena
+najvećom dozvoljenom veličinom zahteva na serveru.
+.sp
+Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavite ih pod navodnike. Na primer: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Prikaži listu datoteka kao JSON
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-name
+Ime koje će se koristiti za dodatu datoteku, relativno u odnosu na direktorijum sa podacima
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output
+Lokalno odredište za radnju get
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Trajno obriši datoteku podataka umesto premeštanja u korpu
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Dozvoli zamenu postojećih datoteka pri dodavanju, preuzimanju ili preimenovanju
 .UNINDENT
 .SH Author
 Kovid Goyal

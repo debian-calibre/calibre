@@ -4,6 +4,7 @@
 import os
 import shutil
 import sys
+from typing import IO, TYPE_CHECKING, cast
 
 from lxml import etree
 
@@ -13,20 +14,30 @@ from calibre.ebooks.docx.names import DOCXNamespace
 from calibre.ebooks.metadata import authors_to_sort_string, string_to_authors
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.ptempfile import PersistentTemporaryDirectory
+from calibre.utils import StreamOrPath
 from calibre.utils.localization import _, canonicalize_lang
 from calibre.utils.logging import default_log
 from calibre.utils.xml_parse import safe_xml_fromstring
 from calibre.utils.zipfile import ZipFile
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
 
-def fromstring(raw, parser=None):
+    from calibre.utils.logging import Log
+
+
+#: Relationships as returned by DOCX.get_relationships(), a map of id to target and a map of type to target
+type Relationships = tuple[dict[str, str], dict[str, str]]
+
+
+def fromstring(raw: str | bytes, parser: object = None) -> etree._Element:
     return safe_xml_fromstring(raw)
 
 
 # Read metadata {{{
 
 
-def read_doc_props(raw, mi, XPath):
+def read_doc_props(raw: str | bytes, mi: Metadata, XPath: Callable[[str], etree.XPath]) -> None:
     root = fromstring(raw)
     titles = XPath('//dc:title')(root)
     if titles:
@@ -68,14 +79,14 @@ def read_doc_props(raw, mi, XPath):
         mi.languages = langs
 
 
-def read_app_props(raw, mi):
+def read_app_props(raw: str | bytes, mi: Metadata) -> None:
     root = fromstring(raw)
     company = root.xpath('//*[local-name()="Company"]')
     if company and company[0].text and company[0].text.strip():
         mi.publisher = company[0].text.strip()
 
 
-def read_default_style_language(raw, mi, XPath):
+def read_default_style_language(raw: str | bytes, mi: Metadata, XPath: Callable[[str], etree.XPath]) -> None:
     root = fromstring(raw)
     for lang in XPath('/w:styles/w:docDefaults/w:rPrDefault/w:rPr/w:lang/@w:val')(root):
         lang = canonicalize_lang(lang)
@@ -88,24 +99,28 @@ def read_default_style_language(raw, mi, XPath):
 
 
 class DOCX:
-    def __init__(self, path_or_stream, log=None, extract=True):
+    def __init__(self, path_or_stream: str | IO[bytes], log: Log | None = None, extract: bool = True) -> None:
         self.docx_is_transitional = True
-        stream = path_or_stream if hasattr(path_or_stream, 'read') else open(path_or_stream, 'rb')
-        self.name = getattr(stream, 'name', None) or '<stream>'
         self.log = log or default_log
         if extract:
-            self.extract(stream)
+            with StreamOrPath(path_or_stream, 'rb') as stream:
+                self.name = getattr(stream, 'name', None) or '<stream>'
+                self.extract(stream)
         else:
+            # The zip file reads from the stream lazily, so it must remain open
+            # hasattr() check above means this is a stream, not a path
+            stream = cast('IO[bytes]', path_or_stream) if hasattr(path_or_stream, 'read') else open(path_or_stream, 'rb')  # ruff: ignore[open-file-with-context-handler]
+            self.name = getattr(stream, 'name', None) or '<stream>'
             self.init_zipfile(stream)
         self.read_content_types()
         self.read_package_relationships()
         self.namespace = DOCXNamespace(self.docx_is_transitional)
 
-    def init_zipfile(self, stream):
+    def init_zipfile(self, stream: IO[bytes]) -> None:
         self.zipf = ZipFile(stream)
         self.names = frozenset(self.zipf.namelist())
 
-    def extract(self, stream):
+    def extract(self, stream: IO[bytes]) -> None:
         self.tdir = PersistentTemporaryDirectory('docx_container')
         try:
             zf = ZipFile(stream)
@@ -122,17 +137,17 @@ class DOCX:
             name = os.path.relpath(f, self.tdir).replace(os.sep, '/')
             self.names[name] = f
 
-    def exists(self, name):
+    def exists(self, name: str) -> bool:
         return name in self.names
 
-    def read(self, name):
+    def read(self, name: str) -> bytes:
         if hasattr(self, 'zipf'):
             return self.zipf.open(name).read()
         path = self.names[name]
         with open(path, 'rb') as f:
             return f.read()
 
-    def read_content_types(self):
+    def read_content_types(self) -> None:
         try:
             raw = self.read('[Content_Types].xml')
         except KeyError:
@@ -146,7 +161,7 @@ class DOCX:
             name = item.get('PartName').lstrip('/')
             self.content_types[name] = item.get('ContentType')
 
-    def content_type(self, name):
+    def content_type(self, name: str) -> str | None:
         if name in self.content_types:
             return self.content_types[name]
         ext = name.rpartition('.')[-1].lower()
@@ -154,7 +169,7 @@ class DOCX:
             return self.default_content_types[ext]
         return guess_type(name)[0]
 
-    def read_package_relationships(self):
+    def read_package_relationships(self) -> None:
         try:
             raw = self.read('_rels/.rels')
         except KeyError:
@@ -171,7 +186,7 @@ class DOCX:
             self.relationships_rmap[target] = typ
 
     @property
-    def document_name(self):
+    def document_name(self) -> str:
         name = self.relationships.get(self.namespace.names['DOCUMENT'], None)
         if name is None:
             names = tuple(n for n in self.names if n == 'document.xml' or n.endswith('/document.xml'))
@@ -181,16 +196,17 @@ class DOCX:
         return name
 
     @property
-    def document(self):
+    def document(self) -> etree._Element:
         return fromstring(self.read(self.document_name))
 
     @property
-    def document_relationships(self):
+    def document_relationships(self) -> Relationships:
         return self.get_relationships(self.document_name)
 
-    def get_relationships(self, name):
+    def get_relationships(self, name: str) -> Relationships:
         base = '/'.join(name.split('/')[:-1])
-        by_id, by_type = {}, {}
+        by_id: dict[str, str] = {}
+        by_type: dict[str, str] = {}
         parts = name.split('/')
         name = '/'.join(parts[:-1] + ['_rels', parts[-1] + '.rels'])
         try:
@@ -209,7 +225,7 @@ class DOCX:
 
         return by_id, by_type
 
-    def get_document_properties_names(self):
+    def get_document_properties_names(self) -> Iterator[str | None]:
         name = self.relationships.get(self.namespace.names['DOCPROPS'], None)
         if name is None:
             names = tuple(n for n in self.names if n.lower() == 'docprops/core.xml')
@@ -224,7 +240,7 @@ class DOCX:
         yield name
 
     @property
-    def metadata(self):
+    def metadata(self) -> Metadata:
         mi = Metadata(_('Unknown'))
         dp_name, ap_name = self.get_document_properties_names()
         if dp_name:
@@ -253,7 +269,7 @@ class DOCX:
 
         return mi
 
-    def close(self):
+    def close(self) -> None:
         if hasattr(self, 'zipf'):
             self.zipf.close()
         else:

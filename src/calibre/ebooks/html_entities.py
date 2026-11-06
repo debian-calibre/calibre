@@ -1,7 +1,14 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
+from typing import TYPE_CHECKING
+
 from calibre import my_unichr
+
+if TYPE_CHECKING:
+    import re
+    import unittest
+    from collections.abc import Collection, Mapping
 
 html5_entities = {
     # ENTITY_DATA {{{
@@ -2136,11 +2143,13 @@ html5_entities = {
 }
 
 
-def entity_to_unicode_in_python(match, exceptions=(), encoding='cp1252', result_exceptions=None):
+def entity_to_unicode_in_python(
+    match: re.Match[str], exceptions: Collection[str] = (), encoding: str | None = 'cp1252', result_exceptions: Mapping[str, str] | None = None
+) -> str:
     if result_exceptions is None:
         result_exceptions = {}
 
-    def check(ch):
+    def check(ch: str) -> str:
         return result_exceptions.get(ch, ch)
 
     ent = match.group(1)
@@ -2178,17 +2187,17 @@ def entity_to_unicode_in_python(match, exceptions=(), encoding='cp1252', result_
         return '&' + ent + ';'
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import unittest
 
     class TestHTMLEntityReplacement(unittest.TestCase):
-        def test_html_entity_replacement(self):
+        def test_html_entity_replacement(self) -> None:
             from calibre_extensions.fast_html_entities import replace_all_entities
 
-            def t(inp, exp):
+            def t(inp: str, exp: str) -> None:
                 self.assertEqual(exp, replace_all_entities(inp), f'Failed for input: {inp!r}')
 
-            def x(inp, exp):
+            def x(inp: str, exp: str) -> None:
                 self.assertEqual(exp, replace_all_entities(inp, True), f'Failed for input: {inp!r}')
 
             t('a&#1234;b', 'aӒb')
@@ -2208,7 +2217,7 @@ def find_tests():
             t('a&#0;b&#x000;c', 'abc')
             x('&amp;&lt;&gt;&apos;&quot;', '&amp;&lt;&gt;&apos;&quot;')
 
-        def test_html_entity_replacement_expanding(self):
+        def test_html_entity_replacement_expanding(self) -> None:
             # Some entities decode to more UTF-8 bytes than the entity itself
             from calibre_extensions.fast_html_entities import replace_all_entities
 
@@ -2230,7 +2239,7 @@ def find_tests():
     return unittest.defaultTestLoader.loadTestsFromTestCase(TestHTMLEntityReplacement)
 
 
-def generate_entity_lists():
+def generate_entity_lists() -> None:
     import re
     from html import entities as e
 
@@ -2246,7 +2255,7 @@ struct html_entity { const char *name, *val; }
 %%
 '''.splitlines()
 
-    def esc_for_c(x):
+    def esc_for_c(x: str) -> str:
         if x == '\n':
             return '\\n'
         if x in '''"\\''':

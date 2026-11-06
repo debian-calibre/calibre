@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2014, Kovid Goyal <kovid at kovidgoyal.net>
 
-from collections import OrderedDict, namedtuple
+from collections import OrderedDict
 from threading import Event
+from typing import NamedTuple
 
 from qt.core import QObject, Qt, pyqtSignal
 
@@ -19,14 +20,20 @@ from calibre.utils.ipc import eintr_retry_call
 from calibre.utils.localization import _
 from calibre.utils.matcher import Matcher
 
-Request = namedtuple('Request', 'id type data query')
+
+class Request(NamedTuple):
+    id: str | None
+    type: str
+    data: str | None
+    query: str | None
+
 
 names_cache = {}
 file_cache = {}
 
 
 @control
-def clear_caches(cache_type, data_conn):
+def clear_caches(cache_type, data_conn) -> None:
     global names_cache, file_cache
     if cache_type is None:
         names_cache.clear()
@@ -155,12 +162,12 @@ class HandleDataRequest(QObject):
 
     call = pyqtSignal(object, object)
 
-    def __init__(self):
+    def __init__(self) -> None:
         QObject.__init__(self)
         self.called = Event()
         self.call.connect(self.run_func, Qt.ConnectionType.QueuedConnection)
 
-    def run_func(self, func, data):
+    def run_func(self, func, data) -> None:
         try:
             self.result, self.tb = func(data), None
         except Exception:

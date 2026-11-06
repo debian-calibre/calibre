@@ -3,18 +3,23 @@
 
 import os
 import re
-from collections import namedtuple
+from typing import TYPE_CHECKING, cast
 
 from calibre.customize import CatalogPlugin
 from calibre.customize.conversion import DummyReporter
-from calibre.library.catalogs import FIELDS
+from calibre.library.catalogs import FIELDS, Option
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Collection
+    from datetime import datetime
+    from optparse import Values
+
+    from calibre.db.legacy import LibraryDatabase
 
 
 class CSV_XML(CatalogPlugin):
     "CSV/XML catalog generator"
-
-    Option = namedtuple('Option', 'option, default, dest, action, help')
 
     name = 'Catalog_CSV_XML'
     description = _('CSV/XML catalog generator')
@@ -54,7 +59,14 @@ class CSV_XML(CatalogPlugin):
         ),
     ]
 
-    def run(self, path_to_output, opts, db, ids=None, notification=DummyReporter()):
+    def run(
+        self,
+        path_to_output: str,
+        opts: Values,
+        db: LibraryDatabase,
+        ids: Collection[int] | None = None,
+        notification: Callable[[float, str], object] | None = DummyReporter(),
+    ) -> None:
         from lxml import etree
 
         from calibre.ebooks.metadata import authors_to_string
@@ -104,71 +116,69 @@ class CSV_XML(CatalogPlugin):
         # If connected device, add 'On Device' values to data
         if opts.connected_device['is_device_connected'] and 'ondevice' in fields:
             for entry in data:
-                entry['ondevice'] = db.catalog_plugin_on_device_temp_mapping[entry['id']]['ondevice']
+                entry['ondevice'] = db.catalog_plugin_on_device_temp_mapping[cast('int', entry['id'])]['ondevice']
 
         fm = {x: db.field_metadata.get(x, {}) for x in fields}
 
         if self.fmt == 'csv':
-            outfile = open(path_to_output, 'w', encoding='utf8')
+            with open(path_to_output, 'w', encoding='utf8') as outfile:
+                # Write a UTF-8 BOM
+                outfile.write('\ufeff')
 
-            # Write a UTF-8 BOM
-            outfile.write('\ufeff')
+                # Output the field headers
+                outfile.write('{}\n'.format(','.join(fields)))
 
-            # Output the field headers
-            outfile.write('{}\n'.format(','.join(fields)))
+                # Output the entry fields
+                for entry in data:
+                    outstr = []
+                    for field in fields:
+                        m = fm.get(field, {})
+                        disp = m.get('display', {})
+                        if field.startswith('#'):
+                            item = db.get_field(cast('int', entry['id']), field, index_is_id=True)
+                            if isinstance(item, (list, tuple)):
+                                sep = ' & ' if disp.get('is_names', False) else ', '
+                                item = sep.join(item)
+                        elif field == 'library_name':
+                            item = current_library
+                        elif field == 'title_sort':
+                            item = entry['sort']
+                        else:
+                            item = entry[field]
 
-            # Output the entry fields
-            for entry in data:
-                outstr = []
-                for field in fields:
-                    m = fm.get(field, {})
-                    disp = m.get('display', {})
-                    if field.startswith('#'):
-                        item = db.get_field(entry['id'], field, index_is_id=True)
-                        if isinstance(item, (list, tuple)):
-                            sep = ' & ' if disp.get('is_names', False) else ', '
-                            item = sep.join(item)
-                    elif field == 'library_name':
-                        item = current_library
-                    elif field == 'title_sort':
-                        item = entry['sort']
-                    else:
-                        item = entry[field]
+                        if item is None:
+                            outstr.append('""')
+                            continue
+                        elif field == 'formats':
+                            fmt_list = []
+                            for format in cast('list[str]', item):
+                                fmt_list.append(format.rpartition('.')[2].lower())
+                            item = ', '.join(fmt_list)
+                        elif field == 'authors':
+                            item = authors_to_string(cast('list[str]', item))
+                        elif field == 'tags':
+                            item = ', '.join(cast('list[str]', item))
+                        elif field == 'isbn':
+                            # Could be 9, 10 or 13 digits, with hyphens, possibly ending in 'X'
+                            item = '{}'.format(re.sub(r'[^\dX-]', '', cast('str', item)))
+                        elif fm.get(field, {}).get('datatype') == 'datetime':
+                            item = isoformat(cast('datetime', item), as_utc=False)
+                        elif fm.get(field, {}).get('datatype', None) == 'rating' and item:
+                            item = f"{cast('float', item) / 2:.2g}"
 
-                    if item is None:
-                        outstr.append('""')
-                        continue
-                    elif field == 'formats':
-                        fmt_list = []
-                        for format in item:
-                            fmt_list.append(format.rpartition('.')[2].lower())
-                        item = ', '.join(fmt_list)
-                    elif field == 'authors':
-                        item = authors_to_string(item)
-                    elif field == 'tags':
-                        item = ', '.join(item)
-                    elif field == 'isbn':
-                        # Could be 9, 10 or 13 digits, with hyphens, possibly ending in 'X'
-                        item = '{}'.format(re.sub(r'[^\dX-]', '', item))
-                    elif fm.get(field, {}).get('datatype') == 'datetime':
-                        item = isoformat(item, as_utc=False)
-                    elif fm.get(field, {}).get('datatype', None) == 'rating' and item:
-                        item = f'{item / 2:.2g}'
+                        # Convert HTML to markdown text
+                        if isinstance(item, str):
+                            opening_tag = re.search(r'<(\w+)( |>)', item)
+                            if opening_tag:
+                                closing_tag = re.search(rf'</{opening_tag.group(1)}>$', item)
+                                if closing_tag:
+                                    item = html2text(item)
+                            item = item.replace('\r\n', ' ')
+                            item = item.replace('\n', ' ')
 
-                    # Convert HTML to markdown text
-                    if isinstance(item, str):
-                        opening_tag = re.search(r'<(\w+)( |>)', item)
-                        if opening_tag:
-                            closing_tag = re.search(rf'</{opening_tag.group(1)}>$', item)
-                            if closing_tag:
-                                item = html2text(item)
-                        item = item.replace('\r\n', ' ')
-                        item = item.replace('\n', ' ')
+                        outstr.append('"{}"'.format(str(item).replace('"', '""')))
 
-                    outstr.append('"{}"'.format(str(item).replace('"', '""')))
-
-                outfile.write(','.join(outstr) + '\n')
-            outfile.close()
+                    outfile.write(','.join(outstr) + '\n')
 
         elif self.fmt == 'xml':
             from lxml.builder import E
@@ -184,7 +194,7 @@ class CSV_XML(CatalogPlugin):
 
                     for field in fields:
                         if field.startswith('#'):
-                            val = db.get_field(r['id'], field, index_is_id=True)
+                            val = db.get_field(cast('int', r['id']), field, index_is_id=True)
                             if not isinstance(val, str):
                                 val = str(val)
                             item = getattr(E, field.replace('#', '_'))(val)
@@ -197,51 +207,51 @@ class CSV_XML(CatalogPlugin):
                                 continue
                             if not isinstance(val, (bytes, str)):
                                 if fm.get(field, {}).get('datatype', None) == 'rating' and val:
-                                    val = f'{val / 2:.2g}'
+                                    val = f"{cast('float', val) / 2:.2g}"
                                 val = str(val)
                             item = getattr(E, field)(val)
                             record.append(item)
 
                     if 'title' in fields:
-                        title = E.title(r['title'], sort=r['sort'])
+                        title = E.title(cast('str', r['title']), sort=cast('str', r['sort']))
                         record.append(title)
 
                     if 'authors' in fields:
-                        aus = E.authors(sort=r['author_sort'])
-                        for au in r['authors']:
+                        aus = E.authors(sort=cast('str', r['author_sort']))
+                        for au in cast('list[str]', r['authors']):
                             aus.append(E.author(au))
                         record.append(aus)
 
                     for field in ('timestamp', 'pubdate'):
                         if field in fields:
-                            record.append(getattr(E, field)(isoformat(r[field], as_utc=False)))
+                            record.append(getattr(E, field)(isoformat(cast('datetime', r[field]), as_utc=False)))
 
                     if 'tags' in fields and r['tags']:
                         tags = E.tags()
-                        for tag in r['tags']:
+                        for tag in cast('list[str]', r['tags']):
                             tags.append(E.tag(tag))
                         record.append(tags)
 
                     if 'comments' in fields and r['comments']:
-                        record.append(E.comments(r['comments']))
+                        record.append(E.comments(cast('str', r['comments'])))
 
                     if 'series' in fields and r['series']:
-                        record.append(E.series(r['series'], index=str(r['series_index'])))
+                        record.append(E.series(cast('str', r['series']), index=str(r['series_index'])))
 
                     if 'languages' in fields and r['languages']:
-                        record.append(E.languages(r['languages']))
+                        record.append(E.languages(cast('str', r['languages'])))
 
                     if 'cover' in fields and r['cover']:
-                        record.append(E.cover(r['cover'].replace(os.sep, '/')))
+                        record.append(E.cover(cast('str', r['cover']).replace(os.sep, '/')))
 
                     if 'formats' in fields and r['formats']:
                         fmt = E.formats()
-                        for f in r['formats']:
+                        for f in cast('list[str]', r['formats']):
                             fmt.append(E.format(f.replace(os.sep, '/')))
                         record.append(fmt)
 
                     if 'library_name' in fields:
-                        record.append(E.library_name(current_library))
+                        record.append(E.library_name(current_library or ''))
                 except Exception as e:
                     raise Exception('Failed to convert {} to XML with error: {}'.format(r['title'], e)) from e
 

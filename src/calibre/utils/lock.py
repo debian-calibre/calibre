@@ -7,11 +7,17 @@ import os
 import stat
 import time
 from functools import partial
+from typing import IO, TYPE_CHECKING
 
 from calibre.constants import __appname__, filesystem_encoding, islinux, ismacos, iswindows
 from calibre.ptempfile import base_dir, get_default_tempdir
 from calibre.utils.monotonic import monotonic
 from calibre_extensions import speedup
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from io import BufferedRandom
+    from types import TracebackType
 
 if iswindows:
     import msvcrt
@@ -25,7 +31,7 @@ else:
     import fcntl
 
 
-def unix_open(path):
+def unix_open(path: str | bytes) -> BufferedRandom:
     flags = os.O_RDWR | os.O_CREAT
     has_cloexec = False
     if hasattr(speedup, 'O_CLOEXEC'):
@@ -43,11 +49,11 @@ def unix_open(path):
     return os.fdopen(fd, 'r+b')
 
 
-def unix_retry(err):
+def unix_retry(err: OSError) -> bool:
     return err.errno in (errno.EACCES, errno.EAGAIN, errno.ENOLCK, errno.EINTR)
 
 
-def windows_open(path):
+def windows_open(path: str | bytes) -> BufferedRandom:
     if isinstance(path, bytes):
         path = os.fsdecode(path)
     h = winutil.create_file(
@@ -63,11 +69,11 @@ def windows_open(path):
     return ans
 
 
-def windows_retry(err):
+def windows_retry(err: OSError) -> bool:
     return err.winerror in (winutil.ERROR_SHARING_VIOLATION, winutil.ERROR_LOCK_VIOLATION)
 
 
-def retry_for_a_time(timeout, sleep_time, func, error_retry, *args):
+def retry_for_a_time[*Ts, R](timeout: float, sleep_time: float, func: Callable[[*Ts], R], error_retry: Callable[[OSError], bool], *args: *Ts) -> R:
     limit = monotonic() + timeout
     while True:
         try:
@@ -78,7 +84,7 @@ def retry_for_a_time(timeout, sleep_time, func, error_retry, *args):
         time.sleep(sleep_time)
 
 
-def lock_file(path, timeout=15, sleep_time=0.2):
+def lock_file(path: str | bytes, timeout: float = 15, sleep_time: float = 0.2) -> BufferedRandom:
     if iswindows:
         return retry_for_a_time(timeout, sleep_time, windows_open, windows_retry, path)
     f = unix_open(path)
@@ -91,22 +97,22 @@ def lock_file(path, timeout=15, sleep_time=0.2):
 
 
 class ExclusiveFile:
-    def __init__(self, path, timeout=15, sleep_time=0.2):
+    def __init__(self, path: str | bytes, timeout: float = 15, sleep_time: float = 0.2) -> None:
         if iswindows and isinstance(path, bytes):
             path = path.decode(filesystem_encoding)
         self.path = path
         self.timeout = timeout
         self.sleep_time = sleep_time
 
-    def __enter__(self):
+    def __enter__(self) -> BufferedRandom:
         self.file = lock_file(self.path, self.timeout, self.sleep_time)
         return self.file
 
-    def __exit__(self, type, value, traceback):
+    def __exit__(self, type: type[BaseException] | None, value: BaseException | None, traceback: TracebackType | None) -> None:
         self.file.close()
 
 
-def _clean_lock_file(file_obj):
+def _clean_lock_file(file_obj: IO[str]) -> None:
     try:
         os.remove(file_obj.name)
     except OSError:
@@ -119,7 +125,7 @@ def _clean_lock_file(file_obj):
 
 if iswindows:
 
-    def create_single_instance_mutex(name, per_user=True):
+    def create_single_instance_mutex(name: str, per_user: bool = True) -> Callable[[], None] | None:
         mutexname = '{}-singleinstance-{}-{}'.format(__appname__, (get_windows_username() if per_user else ''), name)
         try:
             mutex = winutil.create_mutex(mutexname, False)
@@ -129,7 +135,7 @@ if iswindows:
 
 elif islinux:
 
-    def create_single_instance_mutex(name, per_user=True):
+    def create_single_instance_mutex(name: str, per_user: bool = True) -> Callable[[], None] | None:
         import socket
 
         from calibre.utils.ipc import eintr_retry_call
@@ -151,7 +157,7 @@ elif islinux:
 
 else:
 
-    def singleinstance_path(name, per_user=True):
+    def singleinstance_path(name: str, per_user: bool = True) -> str:
         name = '{}-singleinstance-{}-{}.lock'.format(__appname__, (os.geteuid() if per_user else ''), name)
         home = os.path.expanduser('~')
         base_dir()  # initialize get_default_tempdir()
@@ -163,11 +169,11 @@ else:
                 return os.path.join(loc, ('.' if loc is home else '') + name)
         raise OSError('Failed to find a suitable filesystem location for the lock file')
 
-    def create_single_instance_mutex(name, per_user=True):
+    def create_single_instance_mutex(name: str, per_user: bool = True) -> Callable[[], None] | None:
         from calibre.utils.ipc import eintr_retry_call
 
         path = singleinstance_path(name, per_user)
-        f = open(path, 'w')
+        f = open(path, 'w')  # ruff: ignore[open-file-with-context-handler]
         try:
             eintr_retry_call(fcntl.lockf, f.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
             return partial(_clean_lock_file, f)
@@ -178,21 +184,21 @@ else:
 
 
 class SingleInstance:
-    def __init__(self, name):
+    def __init__(self, name: str) -> None:
         self.name = name
-        self.release_mutex = None
+        self.release_mutex: Callable[[], None] | None = None
 
-    def __enter__(self):
+    def __enter__(self) -> bool:
         self.release_mutex = create_single_instance_mutex(self.name)
         return self.release_mutex is not None
 
-    def __exit__(self, *a):
+    def __exit__(self, *a: object) -> None:
         if self.release_mutex is not None:
             self.release_mutex()
             self.release_mutex = None
 
 
-def singleinstance(name):
+def singleinstance(name: str) -> bool:
     "Ensure that only a single process exists with the specified mutex key"
     release_mutex = create_single_instance_mutex(name)
     if release_mutex is None:

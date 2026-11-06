@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2017-2019, Tomasz Długosz <tomek3d@gmail.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 3  # Needed for dynamic plugin loading
 
@@ -30,7 +28,7 @@ def as_base64(data):
 
 
 class SwiatEbookowStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         aff_root = 'https://www.a4b-tracking.com/pl/stat-click-text-link/181/58/'
 
         url = 'https://www.swiatebookow.pl/'
@@ -56,7 +54,7 @@ class SwiatEbookowStore(BasicStoreConfig, StorePlugin):
 
         counter = max_results
         while counter:
-            with closing(br.open('https://www.swiatebookow.pl/ebooki/?q=' + quote(query) + '&page={}'.format(page), timeout=timeout)) as f:
+            with closing(br.open('https://www.swiatebookow.pl/ebooki/?q=' + quote(query) + f'&page={page}', timeout=timeout)) as f:
                 doc = safe_html_fromstring(f.read())
                 for data in doc.xpath('//div[@class="category-item-container"]//div[@class="book-large"]'):
                     if counter <= 0:

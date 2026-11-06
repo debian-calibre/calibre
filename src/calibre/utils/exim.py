@@ -6,6 +6,7 @@ import hashlib
 import io
 import json
 import os
+import re
 import shutil
 import struct
 import sys
@@ -13,7 +14,7 @@ import tempfile
 import time
 import uuid
 from collections import Counter
-from typing import NamedTuple
+from typing import IO, TYPE_CHECKING, NamedTuple, Self, Unpack
 
 from calibre import prints
 from calibre.constants import config_dir, filesystem_encoding, iswindows
@@ -24,11 +25,20 @@ from calibre.utils.localization import _
 from polyglot.binary import as_hex_unicode
 from polyglot.builtins import error_message
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator, Mapping
+    from threading import Event
+
+    from calibre.db.cache import Cache
+    from calibre.prints import PrintKwargs
+
+    type ProgressCallback = Callable[[str, int, int], object]
+
 # Export {{{
 
 
 class FileDest:
-    def __init__(self, key, exporter, mtime=None):
+    def __init__(self, key: str, exporter: Exporter, mtime: float | None = None) -> None:
         self.exporter, self.key = exporter, key
         self.hasher = hashlib.sha1()
         self.start_part_number, self.start_pos = exporter.current_pos()
@@ -36,20 +46,20 @@ class FileDest:
         self.mtime = mtime
         self.size = 0
 
-    def discard(self):
+    def discard(self) -> None:
         self._discard = True
 
-    def write(self, data):
+    def write(self, data: bytes) -> None:
         self.size += len(data)
         written = self.exporter.write(data)
         if len(data) != written:
             raise RuntimeError(f'Exporter failed to write all data: {len(data)} != {written}')
         self.hasher.update(data)
 
-    def flush(self):
+    def flush(self) -> None:
         pass
 
-    def close(self):
+    def close(self) -> None:
         if not self._discard:
             digest = str(self.hasher.hexdigest())
             self.exporter.file_metadata[self.key] = (
@@ -61,10 +71,10 @@ class FileDest:
             )
         del self.exporter, self.hasher
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *args):
+    def __exit__(self, *args: object) -> None:
         self.close()
 
 
@@ -75,10 +85,10 @@ class Exporter:
     EXT = '.calibre-data'
 
     @classmethod
-    def tail_size(cls):
+    def tail_size(cls) -> int:
         return struct.calcsize(cls.TAIL_FMT)
 
-    def __init__(self, path_to_export_dir, part_size=None):
+    def __init__(self, path_to_export_dir: str, part_size: int | None = None) -> None:
         # default part_size is 1 GB
         self.part_size = (1 << 30) if part_size is None else part_size
         self.base = os.path.abspath(path_to_export_dir)
@@ -88,12 +98,12 @@ class Exporter:
         self.tail_sz = self.tail_size()
         self.metadata: dict[str, object] = {'file_metadata': self.file_metadata}
 
-    def set_metadata(self, key, val):
+    def set_metadata(self, key: str, val: object) -> None:
         if key in self.metadata:
             raise KeyError(f'The metadata already contains the key: {key}')
         self.metadata[key] = val
 
-    def current_pos(self):
+    def current_pos(self) -> tuple[int, int]:
         pos = 0
         if self.current_part is not None:
             pos = self.current_part.tell()
@@ -120,18 +130,18 @@ class Exporter:
             written += w
         return written
 
-    def new_part(self):
+    def new_part(self) -> None:
         self.commit_part()
-        self.current_part = open(os.path.join(self.base, f'part-{len(self.commited_parts) + 1:04d}{self.EXT}'), 'wb')
+        self.current_part = open(os.path.join(self.base, f'part-{len(self.commited_parts) + 1:04d}{self.EXT}'), 'wb')  # ruff: ignore[open-file-with-context-handler]
 
-    def commit_part(self, is_last=False):
+    def commit_part(self, is_last: bool = False) -> None:
         if self.current_part is not None:
             self.current_part.write(struct.pack(self.TAIL_FMT, len(self.commited_parts) + 1, self.VERSION, is_last))
             self.current_part.close()
             self.commited_parts.append(self.current_part.name)
             self.current_part = None
 
-    def commit(self):
+    def commit(self) -> None:
         raw = json.dumps(self.metadata, ensure_ascii=False)
         if not isinstance(raw, bytes):
             raw = raw.encode('utf-8')
@@ -142,7 +152,7 @@ class Exporter:
         self.part_size = orig
         self.commit_part(is_last=True)
 
-    def add_file(self, fileobj, key):
+    def add_file(self, fileobj: IO[bytes], key: str) -> None:
         try:
             mtime = os.fstat(fileobj.fileno()).st_mtime
         except io.UnsupportedOperation, OSError:
@@ -150,10 +160,10 @@ class Exporter:
         with self.start_file(key, mtime=mtime) as dest:
             shutil.copyfileobj(fileobj, dest)
 
-    def start_file(self, key, mtime=None):
+    def start_file(self, key: str, mtime: float | None = None) -> FileDest:
         return FileDest(key, self, mtime=mtime)
 
-    def export_dir(self, path, dir_key):
+    def export_dir(self, path: str, dir_key: str) -> None:
         pkey = as_hex_unicode(dir_key)
         self.metadata[dir_key] = files = []
         for dirpath, dirnames, filenames in os.walk(path):
@@ -173,7 +183,7 @@ class Exporter:
                 files.append((key, rpath))
 
 
-def all_known_libraries():
+def all_known_libraries() -> dict[str, int]:
     from calibre.gui2 import gprefs
 
     lus = gprefs.get('library_usage_stats', {})
@@ -192,7 +202,14 @@ def all_known_libraries():
     return added
 
 
-def export(destdir, library_paths=None, dbmap=None, progress1=None, progress2=None, abort=None):
+def export(
+    destdir: str,
+    library_paths: dict[str, int] | None = None,
+    dbmap: dict[str, Cache] | None = None,
+    progress1: ProgressCallback | None = None,
+    progress2: ProgressCallback | None = None,
+    abort: Event | None = None,
+) -> None:
     from calibre.db.backend import DB
     from calibre.db.cache import Cache
 
@@ -243,7 +260,7 @@ class Chunk(NamedTuple):
 
 
 class Pos:
-    def __init__(self, part, pos_in_part, size, importer):
+    def __init__(self, part: int, pos_in_part: int, size: int, importer: Importer) -> None:
         self.size = size
         self.pos_in_file = 0
         self.chunks = chunks = []
@@ -262,7 +279,7 @@ class Pos:
             part += 1
             pos_in_part = 0
 
-    def close(self):
+    def close(self) -> None:
         if self.currently_open_part is not None:
             self.currently_open_part.close()
             self.currently_open_part = None
@@ -271,7 +288,7 @@ class Pos:
     def tell(self) -> int:
         return self.pos_in_file
 
-    def seek(self, amt, whence=os.SEEK_SET) -> int:
+    def seek(self, amt: int, whence: int = os.SEEK_SET) -> int:
         if whence == os.SEEK_SET:
             new_pos_in_file = amt
         if whence == os.SEEK_END:
@@ -281,7 +298,7 @@ class Pos:
         self.pos_in_file = max(0, min(new_pos_in_file, self.size))
         return self.pos_in_file
 
-    def read(self, size=None):
+    def read(self, size: int | None = None) -> bytes:
         if size is None or size < 0:
             size = self.size
         size = min(size, self.size)
@@ -311,7 +328,7 @@ class Pos:
             chunk_idx += 1
         return b''.join(ans)
 
-    def _read_chunk(self, chunk, size, chunk_idx):
+    def _read_chunk(self, chunk: Chunk, size: int, chunk_idx: int) -> bytes:
         if self.currently_open_chunk_index != chunk_idx or self.currently_open_part is None:
             self.close()
             self.currently_open_part = self.open_part(chunk.part_num)
@@ -325,7 +342,7 @@ class Pos:
 
 
 class FileSource:
-    def __init__(self, start_partnum, start_pos, size, digest, description, mtime, importer):
+    def __init__(self, start_partnum: int, start_pos: int, size: int, digest: str, description: str, mtime: float | None, importer: Importer) -> None:
         self.size, self.digest, self.description = size, digest, description
         self.mtime = mtime
         self.start = start_pos
@@ -335,18 +352,18 @@ class FileSource:
         self.importer = importer
         self.check_hash = True
 
-    def seekable(self):
+    def seekable(self) -> bool:
         return False
 
-    def seek(self, amt, whence=os.SEEK_SET):
+    def seek(self, amt: int, whence: int = os.SEEK_SET) -> int:
         assert self.pos is not None
         return self.pos.seek(amt, whence)
 
-    def tell(self):
+    def tell(self) -> int:
         assert self.pos is not None
         return self.pos.tell()
 
-    def read(self, size=None):
+    def read(self, size: int | None = None) -> bytes:
         assert self.pos is not None
         ans = self.pos.read(size)
         if self.check_hash and ans:
@@ -354,7 +371,7 @@ class FileSource:
             self.hasher.update(ans)
         return ans
 
-    def close(self):
+    def close(self) -> None:
         if self.check_hash:
             assert self.hasher is not None
             if self.hasher.hexdigest() != self.digest:
@@ -364,20 +381,45 @@ class FileSource:
         self.pos.close()
         self.pos = None
 
-    def __enter__(self):
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *a):
+    def __exit__(self, *a: object) -> None:
         self.close()
 
 
+class LibraryExport(NamedTuple):
+    """The validated export metadata for a single library, as used by import_library()."""
+
+    REQUIRED_DATABASES = ('metadata.db',)
+    # Older exports can omit these
+    OPTIONAL_DATABASES = ('notes.db', 'full-text-search.db')
+
+    total: int
+    databases: dict[str, str]
+    format_data: dict[int, dict[str, str]]
+    extra_files: dict[int, dict[str, str]]
+
+    def referenced_keys(self, library_key: str) -> Iterator[tuple[str, str]]:
+        """Yield (description, key) for every file import_library() will read."""
+        for name, key in self.databases.items():
+            yield f'{name} for {library_key}', key
+        for book_map in (self.format_data, self.extra_files):
+            for book_id, keymap in book_map.items():
+                for key in keymap.values():
+                    yield f'book {book_id} in {library_key}', key
+
+
 class Importer:
-    def __init__(self, path_to_export_dir):
+    def __init__(self, path_to_export_dir: str) -> None:
         self.corrupted_files = []
+        self.duplicate_parts: dict[int, list[str]] = {}
         part_map = {}
         self.tail_size = tail_size = struct.calcsize(Exporter.TAIL_FMT)
         self.version = -1
-        for name in os.listdir(path_to_export_dir):
+        # Sort shortest name first so that the original is preferred over
+        # copies such as "part-0001 (1).calibre-data"
+        for name in sorted(os.listdir(path_to_export_dir), key=lambda n: (len(n), n)):
             # Exclude the "appledouble" files created by macOS.
             # See https://bugs.launchpad.net/calibre/+bug/2117345
             if name.lower().endswith(Exporter.EXT) and not name.startswith('._'):
@@ -385,11 +427,18 @@ class Importer:
                 with open(path, 'rb') as f:
                     f.seek(0, os.SEEK_END)
                     size_of_part = f.tell()
+                    if size_of_part < tail_size:
+                        raise ValueError(f'The exported data in {name} is not valid, tail too small')
                     f.seek(-tail_size, os.SEEK_END)
                     raw = f.read()
-                if len(raw) != tail_size:
-                    raise ValueError(f'The exported data in {name} is not valid, tail too small')
                 part_num, version, is_last = struct.unpack(Exporter.TAIL_FMT, raw)
+                if part_num < 1:
+                    raise ValueError(f'The exported data in {name} has an invalid part number: {part_num}')
+                if part_num in part_map:
+                    # Copies of parts are often left behind by file sync
+                    # tools, use the original and let verify() report them
+                    self.duplicate_parts.setdefault(part_num, [os.path.basename(part_map[part_num][0])]).append(name)
+                    continue
                 if version > Exporter.VERSION:
                     raise ValueError(
                         f'The exported data in {name} is not valid, version ({version})'
@@ -409,6 +458,8 @@ class Importer:
             raise ValueError('The last part of this exported data set is missing')
         if len(nums) != nums[-1]:
             raise ValueError('There are some parts of the exported data set missing')
+        if any(part_map[num][1] for num in nums[:-1]):
+            raise ValueError('The exported data set has more than one last part')
         self.part_map, self.part_size_map = {}, {}
         for part_num, (path, is_last, size_of_part) in part_map.items():
             self.part_map[part_num] = path
@@ -416,27 +467,121 @@ class Importer:
         msf = struct.calcsize(Exporter.MDATA_SZ_FMT)
         offset = tail_size + msf
         with self.open_part(nums[-1]) as f:
+            if self.part_size_map[nums[-1]] < offset:
+                raise ValueError('The last part is too small to contain export metadata')
             f.seek(-offset, os.SEEK_END)
             (sz,) = struct.unpack(Exporter.MDATA_SZ_FMT, f.read(msf))
+            self.metadata_start = self.part_size_map[nums[-1]] - offset - sz
+            if self.metadata_start < 0:
+                raise ValueError('The export metadata size is larger than the last part')
             f.seek(-sz - offset, os.SEEK_END)
             self.metadata = json.loads(f.read(sz))
+            if not isinstance(self.metadata, dict) or not isinstance(self.metadata.get('file_metadata'), dict):
+                raise ValueError('The exported data has no valid file metadata')  # ruff: ignore[type-check-without-type-error]
             self.file_metadata = self.metadata['file_metadata']
 
-    def size_of_part(self, num):
+    def library_export(self, library_key: str) -> LibraryExport:
+        """Validate and return the export metadata for a library, raising ValueError if import_library() cannot use it."""
+        lm = self.metadata.get(library_key)
+        if not isinstance(lm, dict):
+            raise ValueError(f'No metadata for the library: {library_key}')  # ruff: ignore[type-check-without-type-error]
+        databases = {}
+        for name in LibraryExport.REQUIRED_DATABASES + LibraryExport.OPTIONAL_DATABASES:
+            if name in lm:
+                if not isinstance(lm[name], str):
+                    raise ValueError(f'Invalid {name} reference for the library: {library_key}')
+                databases[name] = lm[name]
+            elif name in LibraryExport.REQUIRED_DATABASES:
+                raise ValueError(f'No {name} reference for the library: {library_key}')
+        total = lm.get('total')
+        if type(total) is not int or total < 0:
+            raise ValueError(f'Invalid book count for the library: {library_key}')
+
+        def book_map(name: str, required: bool) -> dict[int, dict[str, str]]:
+            if name not in lm and not required:
+                return {}
+            raw = lm.get(name)
+            if not isinstance(raw, dict):
+                raise ValueError(f'Invalid {name} for the library: {library_key}')  # ruff: ignore[type-check-without-type-error]
+            ans = {}
+            for book_id, keymap in raw.items():
+                try:
+                    num = int(book_id)
+                except ValueError:
+                    raise ValueError(f'Invalid book id {book_id!r} in {name} for the library: {library_key}') from None
+                if not isinstance(keymap, dict) or not all(isinstance(k, str) for k in keymap.values()):
+                    raise ValueError(f'Invalid {name} for book {book_id} in the library: {library_key}')
+                ans[num] = keymap
+            return ans
+
+        return LibraryExport(total, databases, book_map('format_data', True), book_map('extra_files', False))
+
+    def verify(self, progress: Callable[[str, int, int], object] | None = None) -> list[str]:
+        """Read every exported file and return errors, without restoring data."""
+        errors = [f'Part {num} is duplicated in: {", ".join(names)}' for num, names in sorted(self.duplicate_parts.items())]
+        references: list[tuple[str, object]] = []
+        try:
+            references.extend(('config_dir', entry[0]) for entry in self.metadata.get('config_dir', ()))
+        except (TypeError, IndexError, KeyError) as err:
+            errors.append(f'Invalid export metadata: config_dir: {err}')
+        libraries = self.metadata.get('libraries', {})
+        if not isinstance(libraries, dict):
+            errors.append('Invalid export metadata: The list of libraries is not valid')
+            libraries = {}
+        for library_key in libraries:
+            try:
+                references.extend(self.library_export(library_key).referenced_keys(library_key))
+            except ValueError as err:
+                errors.append(f'Invalid export metadata: {err}')
+        for desc, key in references:
+            if not isinstance(key, str) or key not in self.file_metadata:
+                errors.append(f'{desc}: Missing file {key}')
+        starts, limits, total_size = {}, {}, 0
+        last_part = max(self.part_map)
+        for num in sorted(self.part_map):
+            starts[num] = total_size
+            limits[num] = self.metadata_start if num == last_part else self.size_of_part(num)
+            total_size += limits[num]
+        for i, (key, entry) in enumerate(self.file_metadata.items(), 1):
+            if progress is not None:
+                progress(key, i, len(self.file_metadata))
+            try:
+                part, pos, size, digest, mtime = entry
+                if any(type(x) is not int for x in (part, pos, size)) or part not in starts or pos < 0 or size < 0:
+                    raise ValueError('Invalid file position or size')
+                if pos > limits[part] or starts[part] + pos + size > total_size:
+                    raise ValueError('File extends outside the exported data')
+                if not isinstance(digest, str) or re.fullmatch(r'[0-9a-f]{40}', digest) is None:
+                    raise ValueError('Invalid file checksum')
+                hasher, count = hashlib.sha1(), 0
+                with self.start_file(key, key) as src:
+                    src.check_hash = False
+                    while chunk := src.read(1024 * 1024):
+                        hasher.update(chunk)
+                        count += len(chunk)
+                if count != size:
+                    raise ValueError(f'Expected {size} bytes, read {count}')
+                if hasher.hexdigest() != digest:
+                    raise ValueError('Checksum mismatch')
+            except (OSError, ValueError, TypeError, KeyError, OverflowError) as err:
+                errors.append(f'{key}: {err}')
+        return errors
+
+    def size_of_part(self, num: int) -> int:
         return self.part_size_map[num] - self.tail_size
 
-    def open_part(self, num):
+    def open_part(self, num: int) -> io.BufferedReader:
         return open(self.part_map[num], 'rb')
 
-    def start_file(self, key, description):
+    def start_file(self, key: str, description: str) -> FileSource:
         partnum, pos, size, digest, mtime = self.file_metadata[key]
         return FileSource(partnum, pos, size, digest, description, mtime, self)
 
-    def save_file(self, key, description, output_path):
+    def save_file(self, key: str, description: str, output_path: str) -> None:
         with open(output_path, 'wb') as dest, self.start_file(key, description) as src:
             shutil.copyfileobj(src, dest)
 
-    def export_config(self, base_dir, library_usage_stats):
+    def export_config(self, base_dir: str, library_usage_stats: Counter[str]) -> None:
         for key, relpath in self.metadata['config_dir']:
             with self.start_file(key, relpath) as f:
                 path = os.path.join(base_dir, relpath.replace('/', os.sep))
@@ -469,7 +614,14 @@ class Importer:
         gprefs['library_usage_stats'] = dict(library_usage_stats)
 
 
-def import_data(importer, library_path_map, config_location=None, progress1=None, progress2=None, abort=None):
+def import_data(
+    importer: Importer,
+    library_path_map: Mapping[str, str],
+    config_location: str | None = None,
+    progress1: ProgressCallback | None = None,
+    progress2: ProgressCallback | None = None,
+    abort: Event | None = None,
+) -> None:
     from calibre.db.cache import import_library
 
     config_location = config_location or config_dir
@@ -490,7 +642,10 @@ def import_data(importer, library_path_map, config_location=None, progress1=None
                 raise
         if not os.path.isdir(dest):
             raise ValueError(f'{dest} is not a directory')
-        import_library(library_key, importer, dest, progress=progress2, abort=abort).close()
+        cache = import_library(library_key, importer, dest, progress=progress2, abort=abort)
+        if cache is None:  # aborted
+            return
+        cache.close()
         stats_key = os.path.abspath(dest).replace(os.sep, '/')
         library_usage_stats[stats_key] = importer.metadata['libraries'].get(library_key, 1)
     if progress1 is not None:
@@ -526,7 +681,7 @@ def import_data(importer, library_path_map, config_location=None, progress1=None
         progress1(_('Completed'), total, total)
 
 
-def test_import(export_dir='/t/ex', import_dir='/t/imp'):
+def test_import(export_dir: str = '/t/ex', import_dir: str = '/t/imp') -> None:
     importer = Importer(export_dir)
     if os.path.exists(import_dir):
         shutil.rmtree(import_dir)
@@ -540,21 +695,21 @@ def test_import(export_dir='/t/ex', import_dir='/t/imp'):
     )
 
 
-def cli_report(*args, **kw):
+def cli_report(*args: object, **kw: Unpack[PrintKwargs]) -> None:
     try:
         prints(*args, **kw)
     except OSError:
         pass
 
 
-def input_unicode(prompt):
+def input_unicode(prompt: str) -> str:
     ans = input(prompt)
     if isinstance(ans, bytes):
         ans = ans.decode(sys.stdin.encoding)
     return ans
 
 
-def run_exporter(export_dir=None, args=None, check_known_libraries=True):
+def run_exporter(export_dir: str | None = None, args: list[str] | None = None, check_known_libraries: bool = True) -> None:
     if args:
         if len(args) < 2:
             raise SystemExit('You must specify the export folder and libraries to export')
@@ -592,7 +747,25 @@ def run_exporter(export_dir=None, args=None, check_known_libraries=True):
         raise SystemExit('No libraries selected for export')
 
 
-def run_importer():
+def run_verifier(export_dir: str) -> int:
+    try:
+        importer = Importer(os.path.abspath(os.path.expanduser(export_dir)))
+        # Only report per file progress interactively, to keep the output of
+        # backup scripts small
+        errors = importer.verify(progress=cli_report if sys.stdout.isatty() else None)
+    except (OSError, ValueError, struct.error) as err:
+        prints(_('Verification failed: {}').format(err), file=sys.stderr)
+        return 1
+    if errors:
+        for err in errors:
+            prints(err, file=sys.stderr)
+        prints(_('Verification failed with {} errors').format(len(errors)), file=sys.stderr)
+        return 1
+    prints(_('Verified all {} exported files').format(len(importer.file_metadata)))
+    return 0
+
+
+def run_importer() -> None:
     export_dir = input_unicode('Enter path to folder containing previously exported data: ').rstrip('\r')
     if not os.path.isdir(export_dir):
         raise SystemExit(f'{export_dir} is not a folder')

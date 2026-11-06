@@ -1,14 +1,20 @@
 # License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from calibre.ebooks.pdb.formatreader import FormatReader
+    from calibre.ebooks.pdb.formatwriter import FormatWriter
+
 
 class PDBError(Exception):
     pass
 
 
-FORMAT_READERS = None
+FORMAT_READERS: dict[str, type[FormatReader]] | None = None
 
 
-def _import_readers():
+def _import_readers() -> None:
     global FORMAT_READERS
     from calibre.ebooks.pdb.ereader.reader import Reader as ereader_reader
     from calibre.ebooks.pdb.haodoo.reader import Reader as haodoo_reader
@@ -30,10 +36,10 @@ def _import_readers():
 
 
 ALL_FORMAT_WRITERS = 'doc', 'ereader', 'ztxt'  # keep sorted alphabetically
-FORMAT_WRITERS = None
+FORMAT_WRITERS: dict[str, type[FormatWriter]] | None = None
 
 
-def _import_writers():
+def _import_writers() -> None:
     global FORMAT_WRITERS
     from calibre.ebooks.pdb.ereader.writer import Writer as ereader_writer
     from calibre.ebooks.pdb.palmdoc.writer import Writer as palmdoc_writer
@@ -80,7 +86,7 @@ IDENTITY_TO_NAME = {
 }
 
 
-def get_reader(identity):
+def get_reader(identity: str) -> type[FormatReader] | None:
     """
     Returns None if no reader is found for the identity.
     """
@@ -91,7 +97,7 @@ def get_reader(identity):
     return FORMAT_READERS.get(identity, None)
 
 
-def get_writer(extension):
+def get_writer(extension: str) -> type[FormatWriter] | None:
     """
     Returns None if no writer is found for extension.
     """

@@ -1,7 +1,5 @@
 #!/usr/bin/env python
-# vim:fileencoding=utf-8
 # License: GPLv3 Copyright: 2015, Kovid Goyal <kovid at kovidgoyal.net>
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 16  # Needed for dynamic plugin loading
 
@@ -30,7 +28,7 @@ DRM_SEARCH_TEXT = 'Simultaneous Device Usage'
 DRM_FREE_TEXT = 'Unlimited'
 
 
-def get_user_agent():
+def get_user_agent() -> str:
     return 'Mozilla/5.0 (Windows NT 6.1; Trident/7.0; rv:11.0) like Gecko'
 
 
@@ -47,7 +45,7 @@ def search_amazon(
     uquery[field_keywords] = query
 
     def asbytes(x):
-        if isinstance(x, type('')):
+        if isinstance(x, str):
             x = x.encode('utf-8')
         return x
 
@@ -69,11 +67,11 @@ def search_amazon(
 
         if 's-result-list-parent-container' in results.get('class', ''):
             data_xpath = "descendant-or-self::li[@class and contains(concat(' ', normalize-space(@class), ' '), ' s-result-item ')]"
-            format_xpath = './/a[@title="%s"]/@title' % KINDLE_EDITION
+            format_xpath = f'.//a[@title="{KINDLE_EDITION}"]/@title'
             asin_xpath = '@data-asin'
             cover_xpath = "descendant-or-self::img[@class and contains(concat(' ', normalize-space(@class), ' '), ' s-access-image ')]/@src"
             title_xpath = "descendant-or-self::h2[@class and contains(concat(' ', normalize-space(@class), ' '), ' s-access-title ')]//text()"
-            author_xpath = './/span[starts-with(text(), "%s ")]/following-sibling::span//text()' % BY
+            author_xpath = f'.//span[starts-with(text(), "{BY} ")]/following-sibling::span//text()'
             price_xpath = (
                 'descendant::div[@class="a-row a-spacing-none" and not(span[contains(@class, "kindle-unlimited")])]//span[contains(@class, "s-price")]//text()'
             )
@@ -125,15 +123,14 @@ def search_amazon(
 
 
 class AmazonKindleStore(StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         store_link = (DETAILS_URL + detail_item) if detail_item else STORE_LINK
         open_url(QUrl(store_link))
 
     def search(self, query, max_results=10, timeout=60):
-        for result in search_amazon(query, max_results=max_results, timeout=timeout):
-            yield result
+        yield from search_amazon(query, max_results=max_results, timeout=timeout)
 
-    def get_details(self, search_result, timeout=60):
+    def get_details(self, search_result, timeout=60) -> bool:
         url = DETAILS_URL
 
         br = browser(user_agent=get_user_agent())

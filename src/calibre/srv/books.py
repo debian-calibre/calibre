@@ -9,6 +9,7 @@ import time
 from functools import partial
 from hashlib import sha256
 from threading import Lock, RLock
+from typing import IO, TYPE_CHECKING, cast
 
 from calibre.constants import cache_dir, iswindows
 from calibre.customize.ui import plugin_for_input_format
@@ -26,22 +27,30 @@ from calibre.utils.resources import get_path as P
 from calibre.utils.serialize import json_dumps
 from polyglot.builtins import as_unicode
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from calibre.db.book_storage import BookStorageEntry
+    from calibre.srv.handler import Context
+    from calibre.srv.http_response import ETaggedDynamicOutput, ETaggedFile, RequestData
+    from calibre.srv.jobs import Job
+
 cache_lock = RLock()
-queued_jobs = {}
-failed_jobs = {}
+queued_jobs: dict[str, int] = {}
+failed_jobs: dict[str, tuple[bool | None, str | None]] = {}
 
 
-def abspath(x):
+def abspath(x: str) -> str:
     x = os.path.abspath(x)
     if iswindows and not x.startswith('\\\\?\\'):
         x = '\\\\?\\' + os.path.abspath(x)
     return x
 
 
-_books_cache_dir = None
+_books_cache_dir: str | None = None
 
 
-def books_cache_dir():
+def books_cache_dir() -> str:
     global _books_cache_dir
     if _books_cache_dir:
         return _books_cache_dir
@@ -56,7 +65,7 @@ def books_cache_dir():
     return base
 
 
-def book_hash(library_uuid, book_id, fmt, size, mtime):
+def book_hash(library_uuid: str, book_id: int, fmt: str, size: int, mtime: int) -> str:
     raw = json_dumps((library_uuid, book_id, fmt.upper(), size, mtime, RENDER_VERSION))
     return as_unicode(sha256(raw).hexdigest())
 
@@ -64,7 +73,7 @@ def book_hash(library_uuid, book_id, fmt, size, mtime):
 staging_cleaned = False
 
 
-def safe_remove(x, is_file=None):
+def safe_remove(x: str, is_file: bool | None = None) -> None:
     if is_file is None:
         is_file = os.path.isfile(x)
     try:
@@ -73,7 +82,7 @@ def safe_remove(x, is_file=None):
         pass
 
 
-def queue_job(ctx, copy_format_to, bhash, fmt, book_id, size, mtime):
+def queue_job(ctx: Context, copy_format_to: Callable[[IO[bytes]], object], bhash: str, fmt: str, book_id: int, size: int, mtime: int) -> int | None:
     global staging_cleaned
     tdir = os.path.join(books_cache_dir(), 's')
     if not staging_cleaned:
@@ -92,14 +101,18 @@ def queue_job(ctx, copy_format_to, bhash, fmt, book_id, size, mtime):
         job_done_callback=job_done,
         job_data=(bhash, pathtoebook, tdir),
     )
-    queued_jobs[bhash] = job_id
+    if job_id is None:  # the server is shutting down
+        safe_remove(pathtoebook)
+        safe_remove(tdir, False)
+    else:
+        queued_jobs[bhash] = job_id
     return job_id
 
 
-last_final_clean_time = 0
+last_final_clean_time: float = 0
 
 
-def clean_final(interval=24 * 60 * 60):
+def clean_final(interval: float = 24 * 60 * 60) -> None:
     global last_final_clean_time
     now = time.time()
     if now - last_final_clean_time < interval:
@@ -116,7 +129,7 @@ def clean_final(interval=24 * 60 * 60):
             safe_remove(x)
 
 
-def rename_with_retry(a, b, sleep_time=1):
+def rename_with_retry(a: str, b: str, sleep_time: float = 1) -> None:
     try:
         os.rename(a, b)
     except PermissionError:
@@ -127,9 +140,9 @@ def rename_with_retry(a, b, sleep_time=1):
             raise
 
 
-def job_done(job):
+def job_done(job: Job) -> None:
     with cache_lock:
-        bhash, pathtoebook, tdir = job.data
+        bhash, pathtoebook, tdir = cast('tuple[str, str, str]', job.data)
         queued_jobs.pop(bhash, None)
         safe_remove(pathtoebook)
         if job.failed:
@@ -148,7 +161,7 @@ def job_done(job):
 
 
 @endpoint('/book-manifest/{book_id}/{fmt}', postprocess=json, types={'book_id': int})
-def book_manifest(ctx, rd, book_id, fmt):
+def book_manifest(ctx: Context, rd: RequestData, book_id: int, fmt: str) -> dict[str, object]:
     db, library_id = get_library_data(ctx, rd)[:2]
     force_reload = rd.query.get('force_reload') == '1'
     if is_recipe_fmt(fmt):
@@ -186,12 +199,13 @@ def book_manifest(ctx, rd, book_id, fmt):
             job_id = queued_jobs.get(bhash)
             if job_id is None:
                 job_id = queue_job(ctx, partial(db.copy_format_to, book_id, fmt), bhash, fmt, book_id, size, mtime)
-    status, result, tb, aborted = ctx.job_status(job_id)
+    # job_id is None when the server is shutting down
+    status, result, tb, aborted = (None, None, None, None) if job_id is None else ctx.job_status(job_id)
     return {'aborted': aborted, 'traceback': tb, 'job_status': status, 'job_id': job_id}
 
 
 @endpoint('/book-file/{book_id}/{fmt}/{size}/{mtime}/{+name}', types={'book_id': int, 'size': int, 'mtime': int})
-def book_file(ctx, rd, book_id, fmt, size, mtime, name):
+def book_file(ctx: Context, rd: RequestData, book_id: int, fmt: str, size: int, mtime: int, name: str) -> ETaggedFile:
     db, library_id = get_library_data(ctx, rd)[:2]
     if not ctx.has_id(rd, db, book_id):
         raise BookNotFound(book_id, db)
@@ -210,7 +224,7 @@ def book_file(ctx, rd, book_id, fmt, size, mtime, name):
 
 
 @endpoint('/book-get-last-read-position/{library_id}/{+which}', postprocess=json)
-def get_last_read_position(ctx, rd, library_id, which):
+def get_last_read_position(ctx: Context, rd: RequestData, library_id: str, which: str) -> dict[str, object]:
     """
     Get last read position data for the specified books, where which is of the form:
     book_id1-fmt1_book_id2-fmt2,...
@@ -235,11 +249,13 @@ def get_last_read_position(ctx, rd, library_id, which):
 
 
 @endpoint('/book-set-last-read-position/{library_id}/{book_id}/{+fmt}', types={'book_id': int}, methods=('POST',), needs_db_write=True)
-def set_last_read_position(ctx, rd, library_id, book_id, fmt):
+def set_last_read_position(ctx: Context, rd: RequestData, library_id: str, book_id: int, fmt: str) -> bytes:
     db = get_db(ctx, rd, library_id)
-    user = rd.username or None
+    user = rd.username
     if not ctx.has_id(rd, db, book_id):
         raise BookNotFound(book_id, db)
+    if not user:
+        raise HTTPForbidden('Last read positions are only saved for logged in users')
     try:
         data = jsonlib.load(rd.request_body_file)
         device, cfi, pos_frac = data['device'], data['cfi'], data['pos_frac']
@@ -247,17 +263,16 @@ def set_last_read_position(ctx, rd, library_id, book_id, fmt):
         raise HTTPNotFound('Invalid data')
     cfi = cfi or None
     db.set_last_read_position(book_id, fmt, user=user, device=device, cfi=cfi, pos_frac=pos_frac)
-    if user:
-        with db.safe_read_lock:
-            tt = db._field_for('title', book_id)
-            tt += ' ' + _('by') + ' ' + authors_to_string(db._field_for('authors', book_id))
-        last_read_cache().add_last_read_position(library_id, book_id, fmt, user, cfi, pos_frac, tt)
+    with db.safe_read_lock:
+        tt = cast('str', db._field_for('title', book_id))  # books always have a title
+        tt += ' ' + _('by') + ' ' + authors_to_string(db._field_for('authors', book_id))
+    last_read_cache().add_last_read_position(library_id, book_id, fmt, user, cfi, pos_frac, tt)
     rd.outheaders['Content-type'] = 'text/plain'
     return b''
 
 
 @endpoint('/book-get-annotations/{library_id}/{+which}', postprocess=json)
-def get_annotations(ctx, rd, library_id, which):
+def get_annotations(ctx: Context, rd: RequestData, library_id: str, which: str) -> dict[str, object]:
     """
     Get annotations and last read position data for the specified books, where which is of the form:
     book_id1-fmt1_book_id2-fmt2,...
@@ -288,7 +303,7 @@ def get_annotations(ctx, rd, library_id, which):
     methods=('POST',),
     needs_db_write=True,
 )
-def update_annotations(ctx, rd, library_id, book_id, fmt):
+def update_annotations(ctx: Context, rd: RequestData, library_id: str, book_id: int, fmt: str) -> bytes:
     db = get_db(ctx, rd, library_id)
     user = rd.username or '*'
     if not ctx.has_id(rd, db, book_id):
@@ -306,7 +321,7 @@ def update_annotations(ctx, rd, library_id, book_id, fmt):
 
 
 @endpoint('/book-get-storage/{library_id}/{book_id}/{+fmt}', types={'book_id': int}, postprocess=json)
-def get_book_storage(ctx, rd, library_id, book_id, fmt):
+def get_book_storage(ctx: Context, rd: RequestData, library_id: str, book_id: int, fmt: str) -> BookStorageEntry | None:
     """
     Get the per book storage (localStorage for scripts in the book) for the
     current user. Returns null if there is no storage or the user is not logged
@@ -327,7 +342,7 @@ def get_book_storage(ctx, rd, library_id, book_id, fmt):
     needs_db_write=True,
     postprocess=json,
 )
-def set_book_storage(ctx, rd, library_id, book_id, fmt):
+def set_book_storage(ctx: Context, rd: RequestData, library_id: str, book_id: int, fmt: str) -> BookStorageEntry:
     """
     Set the per book storage for the current user, unless the storage on the
     server is newer. Returns the storage on the server after the update. The
@@ -347,14 +362,14 @@ def set_book_storage(ctx, rd, library_id, book_id, fmt):
 
 
 mathjax_lock = Lock()
-mathjax_manifest = None
+mathjax_manifest: dict | None = None
 
 
-def manifest_as_json():
+def manifest_as_json() -> bytes:
     return P('mathjax/manifest.json', data=True, allow_user_override=False)
 
 
-def get_mathjax_manifest():
+def get_mathjax_manifest() -> dict:
     global mathjax_manifest
     with mathjax_lock:
         if mathjax_manifest is None:
@@ -363,7 +378,7 @@ def get_mathjax_manifest():
 
 
 @endpoint('/mathjax/{+which=""}', auth_required=False)
-def mathjax(ctx, rd, which):
+def mathjax(ctx: Context, rd: RequestData, which: str) -> ETaggedDynamicOutput | ETaggedFile:
     manifest = get_mathjax_manifest()
     if not which:
         return rd.etagged_dynamic_response(manifest['etag'], manifest_as_json, content_type='application/json; charset=UTF-8')

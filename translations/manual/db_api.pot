@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.17.0\n"
+"Project-Id-Version: calibre 9.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 08:33+0530\n"
+"POT-Creation-Date: 2026-11-06 05:42+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -157,7 +157,7 @@ msgid "Frozen set of ids for all values in the field ``name``."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.all_field_names:1
-msgid "Frozen set of all fields names (should only be used for many-one and many-many fields)"
+msgid "Frozen set of all fields names (should only be used for many-one and many-many fields). If book_ids is not None, only names used by the specified books are returned."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.annotation_count_for_book:1
@@ -183,6 +183,10 @@ msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid "Return a map of annotation id to book id for those of the specified annotation ids that exist. `ignore_removed` controls whether removed (deleted) annotations are also returned."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.book_storage_for_book:1
@@ -386,7 +390,7 @@ msgid "Get data for name. By default returns data for all book_ids, pass in a li
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_id_map:1
-msgid "Return a mapping of id numbers to values for the specified field. The field must be a many-one or many-many field, otherwise a ValueError is raised."
+msgid "Return a mapping of id numbers to values for the specified field. The field must be a many-one or many-many field, otherwise a ValueError is raised. If book_ids is not None, only items used by the specified books are returned. For the title field the ids are book ids."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -471,6 +475,10 @@ msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.items_using_notes_resource:1
+msgid "Return the set of (field, item_id) pairs for all notes that use the resource with the specified hash"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.items_with_notes_in_book:1
@@ -647,6 +655,14 @@ msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.search_notes:1
 msgid "Search the text of notes using an FTS index. If the query is empty return all notes."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.search_uses_templates:1
+msgid "Return True if the specified search query, or any saved search it uses, contains a template search. The query is checked without being evaluated. Use this to stop untrusted users from storing search expressions, such as saved searches, containing templates, since stored expressions are later evaluated with templates allowed, for example, in Virtual libraries."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/db/cache.py:docstring of calibre.db.cache.Cache.set_annotations_for_book:1

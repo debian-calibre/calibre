@@ -1,0 +1,591 @@
+#!/usr/bin/env python
+# License: GPLv3 Copyright: 2026, softwaregames1
+
+# Making books accessible: the language of the book and its HTML files, the
+# alternative text of images and the accessibility metadata of EPUB 3 books,
+# see https://www.w3.org/TR/epub-a11y-11/ and https://www.w3.org/TR/epub-a11y-tech-11/
+# Used by the Edit book accessibility tool.
+
+from typing import TYPE_CHECKING, NamedTuple, cast
+
+from calibre.ebooks.metadata.utils import normalize_languages
+from calibre.ebooks.oeb.base import DC, EPUB, OEB_DOCS, OPF, SVG, XHTML, XLINK, XML
+from calibre.ebooks.oeb.polish.opf import get_book_language_tag
+from calibre.utils.localization import canonicalize_lang
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from lxml import etree
+
+    from calibre.ebooks.oeb.polish.container import Container
+
+# Language {{{
+
+
+def has_language(root: etree._Element) -> bool:
+    return bool(root.get('lang') or root.get(XML('lang')))
+
+
+def book_languages(container: Container) -> list[str]:
+    # The languages of the book as ISO 639-3 codes
+    ans = []
+    for lang in container.opf_xpath('//opf:metadata/dc:language'):
+        code = canonicalize_lang((lang.text or '').strip())
+        if code and code != 'und' and code not in ans:
+            ans.append(code)
+    return ans
+
+
+def set_book_languages(container: Container, languages: list[str]) -> bool:
+    """
+    Set the languages of the book, given as ISO 639-3 codes. Country codes
+    already present in the OPF are kept. Returns True if the OPF was changed.
+    """
+    if languages == book_languages(container):
+        return False
+    tags = container.opf_xpath('//opf:metadata/dc:language')
+    existing = [t.text.strip() for t in tags if t.text and t.text.strip()]
+    parent = container.opf_xpath('//opf:metadata')[0]
+    index = parent.index(tags[0]) if tags else None
+    for t in tags:
+        container.remove_from_xml(t)
+    # The EPUB specification requires a dc:language
+    values = list(dict.fromkeys(normalize_languages(existing, languages))) or ['und']
+    for val in values:
+        t = parent.makeelement(DC('language'))
+        t.text = val
+        container.insert_into_xml(parent, t, index)
+        if index is not None:
+            index += 1
+    container.dirty(container.opf_name)
+    return True
+
+
+def html_files_without_language(container: Container) -> list[str]:
+    # HTML files are parsed into lxml trees
+    return [name for name in html_names(container) if not has_language(cast('etree._Element', container.parsed(name)))]
+
+
+def set_html_language(container: Container, names: list[str], lang: str, replace: bool = False) -> set[str]:
+    """
+    Set the language of the HTML files in ``names`` to the BCP 47 tag
+    ``lang``. Only files without a language are changed, unless ``replace`` is
+    True. Returns the names of the changed files.
+    """
+    # The lang attribute is not valid in the XHTML 1.1 used by EPUB 2
+    attrs = ('lang', XML('lang')) if container.opf_version_parsed.major > 2 else (XML('lang'),)
+    changed = set()
+    for name in names:
+        root = cast('etree._Element', container.parsed(name))  # HTML files are parsed into lxml trees
+        if replace or not has_language(root):
+            if all(root.get(attr) == lang for attr in attrs):
+                continue
+            for attr in attrs:
+                root.set(attr, lang)
+            container.dirty(name)
+            changed.add(name)
+    return changed
+
+
+# }}}
+
+# Alternative text for images {{{
+
+IMG, SVG_ROOT, SVG_TITLE, SVG_IMAGE = XHTML('img'), SVG('svg'), SVG('title'), SVG('image')
+DECORATIVE_ROLES = frozenset(('presentation', 'none'))
+CONTEXT_TAGS = frozenset(map(XHTML, ('p', 'figure', 'li', 'td', 'th', 'dd', 'blockquote', 'section', 'div', 'body')))
+MAX_CONTEXT_LENGTH = 300
+
+
+class ImageUse(NamedTuple):
+    html_name: str  # The HTML file containing the image
+    index: int  # The position of the image among all images in the HTML file, as returned by image_elements()
+    image_name: str | None  # The image file, None if it is missing or remote. For SVG images, the first image they link to.
+    sourceline: int | None
+    alt: str | None  # None when there is no description, an empty string means the image is decorative
+    context: str  # Text surrounding the image, to help describe it
+    is_svg: bool = False  # True for inline <svg> images, False for <img> tags
+    label: str | None = None  # The description of the image, even if it is decorative, as alt is then empty
+
+
+def html_names(container: Container) -> list[str]:
+    # Spine order first, then any HTML files not in the spine
+    ans = [name for name, linear in container.spine_names]
+    seen = set(ans)
+    ans.extend(sorted(name for name, mt in container.mime_map.items() if mt in OEB_DOCS and name not in seen))
+    return ans
+
+
+def normalize_text(text: str) -> str:
+    return ' '.join(text.split())
+
+
+def image_elements(root: etree._Element) -> Iterator[etree._Element]:
+    # The <img> and outermost <svg> elements, in document order. Nested <svg>
+    # elements are part of the image of the outer one.
+    for elem in root.iter(IMG, SVG_ROOT):
+        if elem.tag == IMG or next(elem.iterancestors(SVG_ROOT), None) is None:
+            yield elem
+
+
+def is_decorative(elem: etree._Element) -> bool:
+    # Hidden from screen readers by ARIA. For <img> an empty alt attribute
+    # also means decorative, but that is handled with the alt attribute.
+    roles = (elem.get('role') or '').split()
+    return bool(roles and roles[0] in DECORATIVE_ROLES) or (elem.get('aria-hidden') or '').strip().lower() == 'true'
+
+
+class ElementsById:
+    # The elements of an HTML file by id, built only when first needed, as
+    # most files have no aria-labelledby references
+
+    def __init__(self, root: etree._Element) -> None:
+        self.root = root
+        self.map: dict[str, etree._Element] | None = None
+
+    def get(self, elem_id: str) -> etree._Element | None:
+        if self.map is None:
+            self.map = {}
+            for elem in self.root.iter('*'):
+                if (x := elem.get('id')) and x not in self.map:
+                    self.map[x] = elem
+        return self.map.get(elem_id)
+
+
+def svg_titles(svg: etree._Element) -> list[etree._Element]:
+    return list(svg.iterchildren(SVG_TITLE))
+
+
+def svg_label(svg: etree._Element, ids: ElementsById) -> str | None:
+    """
+    The description of an SVG image, ignoring whether it is decorative, in the
+    order of precedence used by screen readers: aria-labelledby, aria-label
+    and then the <title> child of the <svg>, see
+    https://www.w3.org/TR/svg-aam-1.0/#mapping_additional_nd
+    """
+    parts = []
+    for elem_id in (svg.get('aria-labelledby') or '').split():
+        if (elem := ids.get(elem_id)) is not None:
+            parts.append(''.join(elem.itertext()))
+    for text in (' '.join(parts), svg.get('aria-label') or '', *(''.join(t.itertext()) for t in svg_titles(svg))):
+        if text := normalize_text(text):
+            return text
+    return None
+
+
+def svg_alt_text(svg: etree._Element, ids: ElementsById | None = None) -> str | None:
+    # As for ImageUse.alt
+    if is_decorative(svg):
+        return ''
+    return svg_label(svg, ElementsById(svg.getroottree().getroot()) if ids is None else ids)
+
+
+def linked_image_name(container: Container, name: str, svg: etree._Element) -> str | None:
+    for image in svg.iter(SVG_IMAGE):
+        href = (image.get(XLINK('href')) or image.get('href') or '').strip()
+        if href and (image_name := container.href_to_name(href, name)) and container.has_name(image_name):
+            return image_name
+    return None
+
+
+def text_without_images(root: etree._Element) -> str:
+    # The text of root, without the text inside SVG images, such as their
+    # <title>, which is their description, not text near the image
+    parts: list[str] = []
+
+    def walk(elem: etree._Element) -> None:
+        if isinstance(elem.tag, str) and elem.text:
+            parts.append(elem.text)
+        for child in elem:
+            if child.tag != SVG_ROOT:
+                walk(child)
+            if child.tail:
+                parts.append(child.tail)
+
+    walk(root)
+    return ''.join(parts)
+
+
+def context_text(img: etree._Element) -> str:
+    parent = img.getparent()
+    while parent is not None and parent.tag not in CONTEXT_TAGS:
+        parent = parent.getparent()
+    if parent is None:
+        return ''
+    if parent.tag == XHTML('figure'):
+        for caption in parent.iter(XHTML('figcaption')):
+            text = normalize_text(text_without_images(caption))
+            if text:
+                return text
+    text = normalize_text(text_without_images(parent))
+    if len(text) > MAX_CONTEXT_LENGTH:
+        text = text[: MAX_CONTEXT_LENGTH - 1].rstrip() + '…'
+    return text
+
+
+def image_uses(container: Container) -> list[ImageUse]:
+    ans = []
+    for name in html_names(container):
+        root = cast('etree._Element', container.parsed(name))  # HTML files are parsed into lxml trees
+        ids = ElementsById(root)
+        for i, elem in enumerate(image_elements(root)):
+            if elem.tag == IMG:
+                src = (elem.get('src') or '').strip()
+                image_name = container.href_to_name(src, name) if src else None
+                if image_name is not None and not container.has_name(image_name):
+                    image_name = None
+                alt = elem.get('alt')
+                ans.append(ImageUse(name, i, image_name, elem.sourceline, alt, context_text(elem), label=alt or None))
+            else:
+                ans.append(
+                    ImageUse(
+                        name,
+                        i,
+                        linked_image_name(container, name, elem),
+                        elem.sourceline,
+                        svg_alt_text(elem, ids),
+                        context_text(elem),
+                        is_svg=True,
+                        label=svg_label(elem, ids),
+                    )
+                )
+    return ans
+
+
+def remove_keeping_tail(elem: etree._Element) -> None:
+    parent = elem.getparent()
+    if parent is None:
+        return
+    if elem.tail:
+        prev = elem.getprevious()
+        if prev is None:
+            parent.text = (parent.text or '') + elem.tail
+        else:
+            prev.tail = (prev.tail or '') + elem.tail
+    parent.remove(elem)
+
+
+def set_text(elem: etree._Element, text: str | None) -> None:
+    for child in tuple(elem):
+        elem.remove(child)
+    elem.text = text
+
+
+def set_svg_alt_text(svg: etree._Element, alt: str | None, ids: ElementsById) -> bool:
+    """
+    Set the description of an SVG image, as for set_alt_text(). The existing
+    markup is changed as little as possible. Text referenced with
+    aria-labelledby is never changed, as it may be shared with other elements,
+    the reference is replaced instead. Returns True if the SVG was changed.
+    """
+    if alt == '':
+        # The existing description is kept, so that it is not lost if the
+        # image is later marked as not decorative
+        if is_decorative(svg):
+            return False
+        svg.set('aria-hidden', 'true')
+        return True
+
+    changed = False
+    if (svg.get('aria-hidden') or '').strip().lower() == 'true':
+        del svg.attrib['aria-hidden']
+        changed = True
+    roles = (svg.get('role') or '').split()
+    if roles and roles[0] in DECORATIVE_ROLES:
+        if remaining := [r for r in roles if r not in DECORATIVE_ROLES]:
+            svg.set('role', ' '.join(remaining))
+        else:
+            del svg.attrib['role']
+        changed = True
+
+    alt = normalize_text(alt or '') or None
+    current = svg_label(svg, ids)
+    if alt == current:
+        # For example, when only the decorative status was changed
+        return changed
+
+    if alt is None:
+        for attr in ('aria-labelledby', 'aria-label'):
+            svg.attrib.pop(attr, None)
+        for title in svg_titles(svg):
+            if title.get('id'):
+                # Other elements may refer to it, so keep it
+                set_text(title, None)
+            else:
+                remove_keeping_tail(title)
+        return True
+
+    svg.attrib.pop('aria-labelledby', None)
+    has_label = svg.get('aria-label') is not None
+    if has_label:
+        svg.set('aria-label', alt)
+    titles = svg_titles(svg)
+    if titles:
+        # Change the title that is used as the description, so that it and
+        # the tooltip that reading systems may show for it are not left stale
+        title = next((t for t in titles if normalize_text(''.join(t.itertext()))), titles[0])
+        set_text(title, alt)
+    elif not has_label:
+        # A <title> is used rather than aria-label as it is valid in EPUB 2 as well
+        title = svg.makeelement(SVG_TITLE)
+        title.text = alt
+        if svg.text and not svg.text.strip():
+            title.tail = svg.text
+        svg.insert(0, title)
+    return True
+
+
+def set_alt_text(container: Container, changes: dict[tuple[str, int], str | None]) -> set[str]:
+    """
+    Set the alternative text of images. ``changes`` maps (html_name, index), as
+    in :class:`ImageUse`, to the new alternative text. Use an empty string for
+    decorative images and None to remove the alternative text. Returns the
+    names of the changed HTML files.
+    """
+    by_name: dict[str, dict[int, str | None]] = {}
+    for (name, index), alt in changes.items():
+        by_name.setdefault(name, {})[index] = alt
+    changed = set()
+    for name, alts in by_name.items():
+        root = cast('etree._Element', container.parsed(name))  # HTML files are parsed into lxml trees
+        ids = ElementsById(root)
+        for i, elem in enumerate(image_elements(root)):
+            if i not in alts:
+                continue
+            alt = alts[i]
+            if elem.tag == IMG:
+                if alt == elem.get('alt'):
+                    continue
+                if alt is None:
+                    del elem.attrib['alt']
+                else:
+                    elem.set('alt', alt)
+                changed.add(name)
+            elif set_svg_alt_text(elem, alt, ids):
+                changed.add(name)
+        if name in changed:
+            container.dirty(name)
+    return changed
+
+
+# }}}
+
+# Accessibility metadata {{{
+
+SUMMARY = 'schema:accessibilitySummary'
+ACCESS_MODE = 'schema:accessMode'
+ACCESS_MODE_SUFFICIENT = 'schema:accessModeSufficient'
+FEATURE = 'schema:accessibilityFeature'
+HAZARD = 'schema:accessibilityHazard'
+CONFORMS_TO = 'dcterms:conformsTo'
+CERTIFIED_BY = 'a11y:certifiedBy'
+PROPERTIES = (SUMMARY, ACCESS_MODE, ACCESS_MODE_SUFFICIENT, FEATURE, HAZARD, CONFORMS_TO, CERTIFIED_BY)
+
+# The values from the schema.org vocabularies that are useful for e-books
+ACCESS_MODES = ('textual', 'visual', 'auditory', 'tactile', 'chartOnVisual', 'diagramOnVisual', 'mathOnVisual', 'textOnVisual', 'colorDependent')
+SUFFICIENT_ACCESS_MODES = ('textual', 'visual', 'auditory', 'tactile', 'textual,visual', 'textual,auditory', 'auditory,visual')
+FEATURES = (
+    'alternativeText',
+    'longDescription',
+    'tableOfContents',
+    'structuralNavigation',
+    'readingOrder',
+    'index',
+    'pageNavigation',
+    'pageBreakMarkers',
+    'printPageNumbers',
+    'displayTransformability',
+    'ARIA',
+    'MathML',
+    'describedMath',
+    'synchronizedAudioText',
+    'ttsMarkup',
+    'captions',
+    'transcript',
+    'annotations',
+    'none',
+)
+CONFORMANCE = (
+    'EPUB Accessibility 1.1 - WCAG 2.2 Level AA',
+    'EPUB Accessibility 1.1 - WCAG 2.2 Level A',
+    'EPUB Accessibility 1.1 - WCAG 2.1 Level AA',
+    'EPUB Accessibility 1.1 - WCAG 2.1 Level A',
+)
+
+# Hazards are flashing, motion simulation and sound, each of which can be
+# present, absent or unknown
+HAZARDS = {
+    'flashing': ('flashing', 'noFlashingHazard'),
+    'motionSimulation': ('motionSimulation', 'noMotionSimulationHazard'),
+    'sound': ('sound', 'noSoundHazard'),
+}
+PRESENT, ABSENT, UNKNOWN = 'present', 'absent', 'unknown'
+
+
+def hazard_states(values: list[str]) -> dict[str, str]:
+    ans = dict.fromkeys(HAZARDS, UNKNOWN)
+    for val in values:
+        if val == 'none':
+            ans = dict.fromkeys(HAZARDS, ABSENT)
+            break
+        for hazard, (present, absent) in HAZARDS.items():
+            if val == present:
+                ans[hazard] = PRESENT
+            elif val == absent:
+                ans[hazard] = ABSENT
+    return ans
+
+
+def hazard_values(states: dict[str, str]) -> list[str]:
+    if all(s == ABSENT for s in states.values()):
+        return ['none']
+    if all(s == UNKNOWN for s in states.values()):
+        return ['unknown']
+    ans = []
+    for hazard, (present, absent) in HAZARDS.items():
+        state = states.get(hazard, UNKNOWN)
+        if state == PRESENT:
+            ans.append(present)
+        elif state == ABSENT:
+            ans.append(absent)
+    return ans
+
+
+def property_tags(container: Container, prop: str) -> list[etree._Element]:
+    # Only tags that describe the book itself, not other metadata
+    return [m for m in container.opf_xpath('//opf:metadata/opf:meta[@property]') if m.get('property') == prop and not m.get('refines')]
+
+
+def read_accessibility_metadata(container: Container) -> dict[str, list[str]]:
+    ans = {}
+    for prop in PROPERTIES:
+        ans[prop] = [val for val in (' '.join((m.text or '').split()) for m in property_tags(container, prop)) if val]
+    return ans
+
+
+def set_accessibility_metadata(container: Container, metadata: dict[str, list[str]]) -> bool:
+    """
+    Replace the values of the accessibility properties in ``metadata``.
+    Properties not in ``metadata`` are left unchanged. Returns True if the
+    OPF was changed.
+    """
+    current = read_accessibility_metadata(container)
+    changed = False
+    parent = container.opf_xpath('//opf:metadata')[0]
+    for prop, values in metadata.items():
+        values = [val for val in (' '.join(v.split()) for v in values) if val]
+        if values == current.get(prop):
+            continue
+        for m in property_tags(container, prop):
+            container.remove_from_xml(m)
+        for val in values:
+            m = parent.makeelement(OPF('meta'), property=prop)
+            m.text = val
+            container.insert_into_xml(parent, m)
+        changed = True
+    if changed:
+        container.dirty(container.opf_name)
+    return changed
+
+
+# }}}
+
+
+# ARIA roles {{{
+
+EPUB_TYPE = EPUB('type')
+
+
+def _roles() -> dict[str, tuple[str, frozenset[str]]]:
+    # The epub:type values that have a corresponding role, from the EPUB Type
+    # to ARIA Role Authoring Guide, see
+    # https://www.w3.org/TR/epub-aria-authoring-11/ and the elements the roles
+    # are allowed on, from ARIA in HTML, see https://www.w3.org/TR/html-aria/
+    # Only the DPUB-ARIA roles are used, the WAI-ARIA roles such as list and
+    # table change the nature of the element and so need more care than can be
+    # taken automatically. The deprecated doc-biblioentry and doc-endnote roles
+    # are not used, and neither is doc-cover, which is for images, not the
+    # cover type.
+    allowed_on = {
+        'section': (
+            'abstract acknowledgments afterword appendix bibliography chapter colophon conclusion credit credits dedication'
+            ' endnotes epigraph epilogue errata foreword glossary index introduction notice page-list part preface prologue'
+            ' pullquote qna toc'
+        ),
+        'aside': 'dedication footnote glossary pullquote tip',
+        'footer': 'footnote',
+        'nav': 'index page-list toc',
+        'hr': 'pagebreak',
+        'a': 'backlink biblioref glossref noteref',
+    } | {f'h{i}': 'subtitle' for i in range(1, 7)}
+    ans: dict[str, set[str]] = {}
+    for tag, epub_types in allowed_on.items():
+        for epub_type in epub_types.split():
+            ans.setdefault(epub_type, set()).add(XHTML(tag))
+    return {epub_type: ('doc-' + epub_type.replace('-', ''), frozenset(tags)) for epub_type, tags in ans.items()}
+
+
+ROLE_FOR_EPUB_TYPE = _roles()
+# Elements that accept any role, from ARIA in HTML. Not included are <a> with
+# a href, <figure> with a <figcaption> and table cells and rows, which accept
+# any role only in some circumstances
+ACCEPTS_ANY_ROLE = frozenset(
+    map(
+        XHTML,
+        (
+            'abbr address b bdi bdo blockquote canvas cite code data del dfn div em hgroup i ins kbd mark output p pre q'
+            ' rp rt ruby s samp small span strong sub sup table tbody tfoot thead time u var'
+        ).split(),
+    )
+)
+A, FIGURE, FIGCAPTION = XHTML('a'), XHTML('figure'), XHTML('figcaption')
+
+
+def accepts_any_role(elem: etree._Element) -> bool:
+    if elem.tag in ACCEPTS_ANY_ROLE:
+        return True
+    if elem.tag == A:
+        return elem.get('href') is None
+    if elem.tag == FIGURE:
+        return next(elem.iterchildren(FIGCAPTION), None) is None
+    return False
+
+
+def role_for(elem: etree._Element) -> str | None:
+    # The role for the first epub:type of the element that has one valid on it
+    for epub_type in (elem.get(EPUB_TYPE) or '').split():
+        x = ROLE_FOR_EPUB_TYPE.get(epub_type)
+        if x is not None and (elem.tag in x[1] or accepts_any_role(elem)):
+            return x[0]
+    return None
+
+
+# }}}
+
+
+class AccessibilityChanges(NamedTuple):
+    languages: list[str] | None = None  # The new languages of the book as ISO 639-3 codes, None to leave unchanged
+    html_language: str | None = None  # One of the HTML_LANGUAGE_* values below, None to leave the HTML files unchanged
+    alt_text: dict[tuple[str, int], str | None] = {}  # As for set_alt_text()
+    metadata: dict[str, list[str]] = {}  # As for set_accessibility_metadata()
+
+    @property
+    def is_empty(self) -> bool:
+        return self.languages is None and self.html_language is None and not self.alt_text and not self.metadata
+
+
+HTML_LANGUAGE_MISSING, HTML_LANGUAGE_ALL = 'missing', 'all'
+
+
+def apply_accessibility_changes(container: Container, changes: AccessibilityChanges) -> bool:
+    changed = False
+    if changes.languages is not None:
+        changed |= set_book_languages(container, changes.languages)
+    if changes.html_language is not None and (lang := get_book_language_tag(container)):
+        changed |= bool(set_html_language(container, html_names(container), lang, replace=changes.html_language == HTML_LANGUAGE_ALL))
+    if changes.alt_text:
+        changed |= bool(set_alt_text(container, changes.alt_text))
+    if changes.metadata:
+        changed |= set_accessibility_metadata(container, changes.metadata)
+    return changed

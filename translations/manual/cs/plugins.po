@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2026\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
@@ -438,6 +438,13 @@ msgid ""
 msgstr "Pokud je True, tento modul se spustí po převodu na konečném souboru vytvořeném výstupním modulem převodu."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr "Cesta k původnímu souboru před spuštěním jakýchkoli modulů typů souborů. Nastavuje se těsně před voláním :meth:`run`."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -760,6 +767,13 @@ msgid ""
 " also waited for longer after the first result from any source arrives, "
 "since downloading with a browser is slow."
 msgstr "Pokud je nastaveno na True, tento zdroj používá prohlížeč Camoufox sdílený při všech stahováních metadat, viz :mod:`calibre.web.automate.metadata`. Prohlížeč se pak spustí ještě před stahováním metadat, aby byl včas připraven. Po obdržení prvního výsledku z libovolného zdroje se na tyto zdroje také čeká déle, protože stahování pomocí prohlížeče je pomalé."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr "Doba trvání posledního volání identify() v sekundách, nastavovaná funkcí :func:`calibre.ebooks.metadata.sources.identify.identify`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -2143,7 +2157,7 @@ msgstr "Volá správce zařízení při spouštění modulů. Pokud tato metoda 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2156,8 +2170,9 @@ msgstr "Tato metoda může být volána ve vlákně GUI. Ovladač, který tuto m
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "Tato metoda se volá ke spuštění modulu. Modul by měl začít přijímat připojení zařízení způsobem, kterým to dělá. Pokud už modul připojení přijímá, neprovádějte nic."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr "Tato metoda se volá ke spuštění modulu. Modul by měl začít přijímat připojení zařízení svým obvyklým způsobem. Pokud už modul připojení přijímá, metoda neprovede nic. Pokud se spuštění modulu nezdaří, vrátí chybovou zprávu, jinak None."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2291,8 +2306,8 @@ msgstr "Vrátí True, pokud zařízení podporuje kolekce pro tento seznam knih.
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "Přidá knihu do seznamu knih. Záměrem je zachovat veškerá interní metadata zařízení. Vrátí True, pokud musí být seznamy knih synchronizovány"
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr "Přidá knihu do seznamu knih. Záměrem je zachovat veškerá interní metadata zařízení. Vrátí knihu (hodnotu vyhodnocovanou jako pravdivou), pokud musí být seznamy knih synchronizovány"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2780,6 +2795,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "Volá se jednou pro každý modul, když se hlavní GUI právě ukončuje. Uvolněte všechny použité zdroje, ale snažte se neblokovat ukončování po dlouhou dobu."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr "Importní cesta ke skutečné třídě akce uživatelského rozhraní ve tvaru module:class"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

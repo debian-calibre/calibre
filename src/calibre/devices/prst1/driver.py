@@ -10,6 +10,7 @@ import re
 import time
 from contextlib import closing
 from datetime import date
+from typing import TYPE_CHECKING
 
 from calibre import fsync
 from calibre.constants import islinux
@@ -22,12 +23,20 @@ from calibre.ebooks.metadata import authors_to_sort_string, authors_to_string
 from calibre.prints import debug_print
 from calibre.utils.localization import _
 
+if TYPE_CHECKING:
+    import sqlite3
+    from collections.abc import Callable, Sequence
+
+    from calibre.devices.interface import BookList as _BookList
+    from calibre.devices.interface import USBDeviceInfo
+    from calibre.ebooks.metadata.book.base import Metadata
+
 DBPATH = 'Sony_Reader/database/books.db'
 THUMBPATH = 'Sony_Reader/database/cache/books/%s/thumbnail/main_thumbnail.jpg'
 
 
 class ImageWrapper:
-    def __init__(self, image_path):
+    def __init__(self, image_path: str) -> None:
         self.image_path = image_path
 
 
@@ -109,10 +118,11 @@ class PRST1(USBMS):
     OPT_PRESERVE_ASPECT_RATIO = 3
     OPT_USE_SONY_AUTHORS = 4
 
-    plugboards = None
-    plugboard_func = None
+    plugboards: dict[str, dict[str, object]] | None = None
+    plugboard_func: Callable[..., object] | None = None
+    device_offset: int | None
 
-    def post_open_callback(self):
+    def post_open_callback(self) -> None:
         # Set the thumbnail width to the theoretical max if the user has asked
         # that we do not preserve aspect ratio
         ec = self.settings().extra_customization
@@ -122,20 +132,20 @@ class PRST1(USBMS):
         # Make sure the date offset is set to none, we'll calculate it in books.
         self.device_offset = None
 
-    def windows_filter_pnp_id(self, pnp_id):
+    def windows_filter_pnp_id(self, pnp_id: str) -> bool:
         return '_LAUNCHER' in pnp_id or '_SETTING' in pnp_id
 
-    def get_carda_ebook_dir(self, for_upload=False):
+    def get_carda_ebook_dir(self, for_upload: bool = False) -> str | list[str]:
         if for_upload:
             return self.EBOOK_DIR_MAIN
         return self.EBOOK_DIR_CARD_A
 
-    def get_main_ebook_dir(self, for_upload=False):
+    def get_main_ebook_dir(self, for_upload: bool = False) -> str | list[str]:
         if for_upload:
             return self.EBOOK_DIR_MAIN
         return ''
 
-    def can_handle(self, device_info, debug=False):
+    def can_handle(self, device_info: USBDeviceInfo, debug: bool = False) -> bool:
         if islinux:
             dev = USBDevice(device_info)
             main, carda, cardb = self.find_device_nodes(detected_device=dev)
@@ -145,7 +155,7 @@ class PRST1(USBMS):
                 return False
         return True
 
-    def books(self, oncard=None, end_session=True):
+    def books(self, oncard: str | None = None, end_session: bool = True) -> BookList:
         import sqlite3 as sqlite
 
         dummy_bl = BookList(None, None, None)
@@ -226,11 +236,11 @@ class PRST1(USBMS):
 
         return bl
 
-    def set_plugboards(self, plugboards, pb_func):
+    def set_plugboards(self, plugboards: dict[str, dict[str, object]], pb_func: Callable[..., object]) -> None:
         self.plugboards = plugboards
         self.plugboard_func = pb_func
 
-    def sync_booklists(self, booklists, end_session=True):
+    def sync_booklists(self, booklists: Sequence[_BookList | None], end_session: bool = True) -> None:
         debug_print('PRST1: starting sync_booklists')
 
         opts = self.settings()
@@ -248,7 +258,7 @@ class PRST1(USBMS):
         USBMS.sync_booklists(self, booklists, end_session=end_session)
         debug_print('PRST1: finished sync_booklists')
 
-    def update_device_database(self, booklist, collections_attributes, oncard):
+    def update_device_database(self, booklist: _BookList, collections_attributes: Sequence[str], oncard: str | None) -> None:
         import sqlite3 as sqlite
 
         debug_print('PRST1: starting update_device_database')
@@ -276,7 +286,7 @@ class PRST1(USBMS):
 
         debug_print('PRST1: finished update_device_database')
 
-    def remove_orphaned_records(self, connection, dbpath):
+    def remove_orphaned_records(self, connection: sqlite3.Connection, dbpath: str) -> None:
         from sqlite3 import DatabaseError
 
         try:
@@ -321,7 +331,7 @@ class PRST1(USBMS):
                 '\n' + tb
             )
 
-    def get_lastrowid(self, cursor):
+    def get_lastrowid(self, cursor: sqlite3.Cursor) -> int:
         # SQLite3 + Python has a fun issue on 32-bit systems with integer overflows.
         # Issue a SQL query instead, getting the value as a string, and then converting to a long python int manually.
         query = 'SELECT last_insert_rowid()'
@@ -330,14 +340,14 @@ class PRST1(USBMS):
 
         return int(row[0])
 
-    def get_database_min_id(self, source_id):
+    def get_database_min_id(self, source_id: int) -> int:
         sequence_min = 0
         if source_id == 1:
             sequence_min = 4294967296
 
         return sequence_min
 
-    def set_database_sequence_id(self, connection, table, sequence_id):
+    def set_database_sequence_id(self, connection: sqlite3.Connection, table: str, sequence_id: int) -> None:
         cursor = connection.cursor()
 
         # Update the sequence Id if it exists
@@ -361,7 +371,7 @@ class PRST1(USBMS):
 
         cursor.close()
 
-    def read_device_books(self, connection, source_id, dbpath):
+    def read_device_books(self, connection: sqlite3.Connection, source_id: int, dbpath: str) -> dict[str, int | None]:
         from sqlite3 import DatabaseError
 
         sequence_min = self.get_database_min_id(source_id)
@@ -411,7 +421,7 @@ class PRST1(USBMS):
             debug_print(f'Book Sequence Dirty for Source Id: {source_id}')
             sequence_max = sequence_max + 1
             for book, bookId in db_books.items():
-                if bookId < sequence_min:
+                if bookId is not None and bookId < sequence_min:
                     # Record the new Id and write it to the DB
                     db_books[book] = sequence_max
                     sequence_max = sequence_max + 1
@@ -456,7 +466,7 @@ class PRST1(USBMS):
         cursor.close()
         return db_books
 
-    def update_device_books(self, connection, booklist, source_id, plugboard, dbpath):
+    def update_device_books(self, connection: sqlite3.Connection, booklist: _BookList, source_id: int, plugboard: object, dbpath: str) -> None:
         from calibre.ebooks.metadata.meta import path_to_ext
 
         opts = self.settings()
@@ -552,7 +562,7 @@ class PRST1(USBMS):
         connection.commit()
         cursor.close()
 
-    def read_device_collections(self, connection, source_id, dbpath):
+    def read_device_collections(self, connection: sqlite3.Connection, source_id: int, dbpath: str) -> dict[str, int | None]:
         from sqlite3 import DatabaseError
 
         sequence_min = self.get_database_min_id(source_id)
@@ -597,7 +607,7 @@ class PRST1(USBMS):
             debug_print(f'Collection Sequence Dirty for Source Id: {source_id}')
             sequence_max = sequence_max + 1
             for collection, collectionId in db_collections.items():
-                if collectionId < sequence_min:
+                if collectionId is not None and collectionId < sequence_min:
                     # Record the new Id and write it to the DB
                     db_collections[collection] = sequence_max
                     sequence_max = sequence_max + 1
@@ -658,7 +668,9 @@ class PRST1(USBMS):
         cursor.close()
         return db_collections
 
-    def update_device_collections(self, connection, booklist, collections, source_id, dbpath):
+    def update_device_collections(
+        self, connection: sqlite3.Connection, booklist: _BookList, collections: dict[str, list[Metadata]], source_id: int, dbpath: str
+    ) -> None:
 
         if collections:
             db_collections = self.read_device_collections(connection, source_id, dbpath)
@@ -687,6 +699,7 @@ class PRST1(USBMS):
                     db_books[row[0]] = row[1]
 
                 for idx, book in enumerate(books):
+                    assert book.lpath is not None  # device books always have an lpath
                     if collection not in book.device_collections:
                         book.device_collections.append(collection)
                     if db_books.get(book.lpath, None) is None:
@@ -735,7 +748,7 @@ class PRST1(USBMS):
             connection.commit()
             cursor.close()
 
-    def rebuild_collections(self, booklist, oncard):
+    def rebuild_collections(self, booklist: _BookList, oncard: str | None) -> None:
         debug_print('PRST1: starting rebuild_collections')
 
         opts = self.settings()
@@ -749,11 +762,12 @@ class PRST1(USBMS):
 
         debug_print('PRS-T1: finished rebuild_collections')
 
-    def upload_cover(self, path, filename, metadata, filepath):
+    def upload_cover(self, path: str, filename: str, metadata: Metadata, filepath: str) -> None:
         import sqlite3 as sqlite
 
         debug_print('PRS-T1: uploading cover')
 
+        assert self._main_prefix is not None
         if filepath.startswith(self._main_prefix):
             prefix = self._main_prefix
             source_id = 0
@@ -785,11 +799,16 @@ class PRST1(USBMS):
 
         debug_print('PRS-T1: done uploading cover')
 
-    def upload_book_cover(self, connection, book, source_id):
+    def upload_book_cover(self, connection: sqlite3.Connection, book: Metadata, source_id: int) -> None:
         debug_print('PRST1: Uploading/Refreshing Cover for ' + book.title)
-        if not book.thumbnail or isinstance(book.thumbnail, ImageWrapper) or not book.thumbnail[-1]:
+        thumbnail = book.thumbnail
+        if not thumbnail or isinstance(thumbnail, ImageWrapper):
             # If the thumbnail is an ImageWrapper instance, it refers to a book
             # not in the calibre library
+            return
+        # (width, height, data), see update_thumbnail() in gui2/device.py
+        assert isinstance(thumbnail, tuple)
+        if not thumbnail[-1]:
             return
         cursor = connection.cursor()
 
@@ -803,7 +822,7 @@ class PRST1(USBMS):
             os.makedirs(thumbnail_dir_path)
 
         with open(thumbnail_file_path, 'wb') as f:
-            f.write(book.thumbnail[-1])
+            f.write(thumbnail[-1])
             fsync(f)
 
         query = 'UPDATE books SET thumbnail = ? WHERE _id = ?'
@@ -816,16 +835,17 @@ class PRST1(USBMS):
         connection.commit()
         cursor.close()
 
-    def is_sony_periodical(self, book):
+    def is_sony_periodical(self, book: Metadata) -> bool:
         if _('News') not in book.tags:
             return False
+        assert book.lpath is not None  # device books always have an lpath
         if not book.lpath.lower().endswith('.epub'):
             return False
         if book.pubdate is None or book.pubdate.date() < date(2010, 10, 17):
             return False
         return True
 
-    def periodicalize_book(self, connection, book):
+    def periodicalize_book(self, connection: sqlite3.Connection, book: Metadata) -> None:
         if not self.is_sony_periodical(book):
             return
 
@@ -845,6 +865,7 @@ class PRST1(USBMS):
 
         pubdate = None
         try:
+            assert book.pubdate is not None  # checked in is_sony_periodical()
             pubdate = int(time.mktime(book.pubdate.timetuple()) * 1000)
         except Exception:
             pass

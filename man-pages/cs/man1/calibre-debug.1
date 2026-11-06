@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "října 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "listopadu 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -188,6 +188,11 @@ Testovat binární moduly v sestavení
 .TP
 .B \-\-un\-kepubify
 Převést zadaný soubor KEPUB do formátu EPUB bez provedení úplného převodu. Toto dělá ovladač Kobo při importu souborů ze zařízení.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Ověří každý soubor ve složce s daty exportovanými z calibre, aniž by jej obnovil. Zkontroluje části archivu a kontrolní součty souborů. Při chybě vrátí nenulový návratový kód
 .UNINDENT
 .INDENT 0.0
 .TP

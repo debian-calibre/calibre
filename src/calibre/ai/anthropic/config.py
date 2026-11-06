@@ -6,10 +6,10 @@ from typing import TYPE_CHECKING
 
 from qt.core import QCheckBox, QComboBox, QFormLayout, QLabel, QLineEdit, QWidget
 
-from calibre.ai import AICapabilities
 from calibre.ai.anthropic import AnthropicAI
 
 if TYPE_CHECKING:
+    from calibre.ai import AICapabilities
     from calibre.ai.anthropic.backend import Model as AIModel
 else:
     AIModel = object
@@ -94,6 +94,7 @@ class ConfigWidget(QWidget):
                 break
         else:
             raise ValueError(f'Could not find the {AnthropicAI.name} plugin')
+        assert backend is not None
         return tuple(sorted(backend.get_available_models().values(), key=lambda m: (-m.family_version, primary_sort_key(m.name))))
 
     def set_model(self, model_id: str, purpose: AICapabilities) -> bool:

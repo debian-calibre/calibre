@@ -6,10 +6,9 @@ import os
 import shutil
 import time
 import traceback
-from collections import defaultdict, namedtuple
-from io import BytesIO
+from collections import defaultdict
 from queue import Empty
-from typing import cast
+from typing import TYPE_CHECKING, NamedTuple, cast
 
 from qt.core import QObject, Qt, pyqtSignal
 
@@ -28,10 +27,18 @@ from calibre.utils.filenames import make_long_path_useable
 from calibre.utils.ipc.pool import Failure, Pool
 from calibre.utils.localization import _
 
-BookId = namedtuple('BookId', 'title authors')
+if TYPE_CHECKING:
+    from io import BytesIO
+
+    from calibre.library.save_to_disk import Plugboards
 
 
-def ensure_unique_components(data):  # {{{
+class BookId(NamedTuple):
+    title: str
+    authors: tuple[str, ...]
+
+
+def ensure_unique_components(data) -> None:  # {{{
     cmap = defaultdict(set)
     bid_map = {}
     for book_id, (mi, components, fmts) in data.items():
@@ -50,11 +57,11 @@ def ensure_unique_components(data):  # {{{
 
 
 class SpooledFile(SpooledTemporaryFile):  # {{{
-    def __init__(self, file_obj, max_size=50 * 1024 * 1024):
+    def __init__(self, file_obj, max_size=50 * 1024 * 1024) -> None:
         self._file_obj = file_obj
         SpooledTemporaryFile.__init__(self, max_size)
 
-    def rollover(self):
+    def rollover(self) -> None:
         if self._rolled:
             return
         orig = self._file
@@ -74,7 +81,7 @@ class Saver(QObject):
     do_one_signal = pyqtSignal()
     pd_title = ''
 
-    def __init__(self, book_ids, db, opts, root, parent=None, pool=None):
+    def __init__(self, book_ids, db, opts, root, parent=None, pool=None) -> None:
         QObject.__init__(self, parent)
         self.db = db.new_api
         self.plugboards = self.db.pref('plugboards', {})
@@ -110,7 +117,7 @@ class Saver(QObject):
         if DEBUG:
             self.start_time = time.time()
 
-    def tick(self):
+    def tick(self) -> None:
         pd = self.pd
         assert pd is not None
         if pd.canceled:
@@ -120,7 +127,7 @@ class Saver(QObject):
             return
         self.do_one()
 
-    def break_cycles(self):
+    def break_cycles(self) -> None:
         shutil.rmtree(self.tdir, ignore_errors=True)
         if self.pool is not None:
             self.pool.shutdown()
@@ -140,7 +147,7 @@ class Saver(QObject):
             self._book_id_data[book_id] = ans
         return ans
 
-    def do_one_collect(self):
+    def do_one_collect(self) -> None:
         try:
             book_id = next(self.ids_to_collect)
         except StopIteration:
@@ -152,7 +159,7 @@ class Saver(QObject):
             self.errors[book_id].append(('critical', traceback.format_exc()))
         self.do_one_signal.emit()
 
-    def collect_data(self, book_id):
+    def collect_data(self, book_id) -> None:
         db = self.db
         assert db is not None
         mi = db.get_metadata(book_id)
@@ -162,7 +169,7 @@ class Saver(QObject):
         assert collected_data is not None
         collected_data[book_id] = (mi, components, {fmt.lower() for fmt in db.formats(book_id)})
 
-    def collection_finished(self):
+    def collection_finished(self) -> None:
         self.do_one = self.do_one_write
         collected_data = self.collected_data
         assert collected_data is not None
@@ -175,7 +182,7 @@ class Saver(QObject):
         pd.value = 0
         if self.opts.update_metadata:
             all_fmts = {fmt for data in collected_data.values() for fmt in data[2]}
-            plugboards_cache = {fmt: find_plugboard(plugboard_save_to_disk_value, fmt, self.plugboards) for fmt in all_fmts}
+            plugboards_cache = {fmt: find_plugboard(plugboard_save_to_disk_value, fmt, cast('Plugboards', self.plugboards)) for fmt in all_fmts}
             self.pool = Pool(name='SaveToDisk') if self.pool is None else self.pool
             try:
                 self.pool.set_common_data({
@@ -188,13 +195,13 @@ class Saver(QObject):
                     pd,
                     _('Critical failure'),
                     _('Could not save books to disk, click "Show details" for more information'),
-                    det_msg=force_unicode(err.failure_message) + '\n' + force_unicode(err.details),
+                    det_msg=force_unicode(err.failure_message) + '\n' + cast('str', force_unicode(err.details)),
                     show=True,
                 )
                 pd.canceled = True
         self.do_one_signal.emit()
 
-    def do_one_write(self):
+    def do_one_write(self) -> None:
         try:
             book_id = next(self.ids_to_write)
         except StopIteration:
@@ -214,7 +221,7 @@ class Saver(QObject):
         self.consume_results()
         self.do_one_signal.emit()
 
-    def consume_results(self):
+    def consume_results(self) -> None:
         if self.pool is not None:
             while True:
                 try:
@@ -242,7 +249,7 @@ class Saver(QObject):
                     for fmt, tb in result.value:
                         self.errors[book_id].append(('metadata', (fmt, tb)))
 
-    def write_book(self, book_id, mi, components, fmts):
+    def write_book(self, book_id, mi, components, fmts) -> None:
         db = self.db
         assert db is not None
         base_path = os.path.join(self.root, *components)
@@ -366,7 +373,7 @@ class Saver(QObject):
         if written:
             return fmtpath
 
-    def writing_finished(self):
+    def writing_finished(self) -> None:
         if not self.opts.update_metadata:
             self.updating_metadata_finished()
         else:
@@ -397,7 +404,7 @@ class Saver(QObject):
             return self.updating_metadata_finished()
         self.do_one_signal.emit()
 
-    def updating_metadata_finished(self):
+    def updating_metadata_finished(self) -> None:
         if DEBUG:
             all_book_ids = self.all_book_ids
             assert all_book_ids is not None
@@ -410,7 +417,7 @@ class Saver(QObject):
         self.break_cycles()
         self.on_complete()
 
-    def on_complete(self):
+    def on_complete(self) -> None:
         if gprefs['show_files_after_save']:
             open_local_file(self.root)
 
@@ -447,7 +454,7 @@ class Saver(QObject):
                     a(indent(tb)), a('')
         return '\n'.join(report)
 
-    def report(self):
+    def report(self) -> None:
         if not self.errors:
             return
         all_book_ids = self.all_book_ids

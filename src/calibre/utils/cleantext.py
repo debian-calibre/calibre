@@ -3,18 +3,26 @@
 
 import re
 from html.entities import name2codepoint
+from typing import TYPE_CHECKING, Literal, overload
 
 from calibre.constants import preferred_encoding
 from calibre_extensions.speedup import clean_xml_chars as _ncxc
 
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
-def native_clean_xml_chars(x):
+
+def native_clean_xml_chars(x: str | bytes) -> str:
     if isinstance(x, bytes):
         x = x.decode(preferred_encoding)
     return _ncxc(x)
 
 
-def ascii_pat(for_binary=False):
+@overload
+def ascii_pat(for_binary: Literal[True]) -> re.Pattern[bytes]: ...
+@overload
+def ascii_pat(for_binary: Literal[False] = False) -> re.Pattern[str]: ...
+def ascii_pat(for_binary: bool = False) -> re.Pattern[str] | re.Pattern[bytes]:
     attr = 'binary' if for_binary else 'text'
     ans = getattr(ascii_pat, attr, None)
     if ans is None:
@@ -28,7 +36,11 @@ def ascii_pat(for_binary=False):
     return ans
 
 
-def clean_ascii_chars(txt, charlist=None):
+@overload
+def clean_ascii_chars(txt: bytes, charlist: Iterable[int] | None = None) -> bytes: ...
+@overload
+def clean_ascii_chars(txt: str | None, charlist: Iterable[int] | None = None) -> str: ...
+def clean_ascii_chars(txt: str | bytes | None, charlist: Iterable[int] | None = None) -> str | bytes:
     r"""
     Remove ASCII control chars.
     This is all control chars except \t, \n and \r
@@ -47,19 +59,19 @@ def clean_ascii_chars(txt, charlist=None):
         return re.compile('|'.join(map(chr, charlist))).sub('', txt)
 
 
-def allowed(x):
-    x = ord(x)
-    return (x != 127 and (31 < x < 0xD7FF or x in (9, 10, 13))) or (0xE000 < x < 0xFFFD) or (0x10000 < x < 0x10FFFF)
+def allowed(x: str) -> bool:
+    cp = ord(x)
+    return (cp != 127 and (31 < cp < 0xD7FF or cp in (9, 10, 13))) or (0xE000 < cp < 0xFFFD) or (0x10000 < cp < 0x10FFFF)
 
 
-def py_clean_xml_chars(unicode_string):
+def py_clean_xml_chars(unicode_string: str) -> str:
     return ''.join(filter(allowed, unicode_string))
 
 
 clean_xml_chars = native_clean_xml_chars or py_clean_xml_chars
 
 
-def test_clean_xml_chars():
+def test_clean_xml_chars() -> None:
     raw = 'asd\x02a\U00010437x\ud801b\udffe\ud802'
     if native_clean_xml_chars(raw) != 'asda\U00010437xb':
         raise ValueError(f'Failed to XML clean: {raw!r}')
@@ -72,8 +84,8 @@ def test_clean_xml_chars():
 # @return The plain text, as a Unicode string, if necessary.
 
 
-def unescape(text, rm=False, rchar=''):
-    def fixup(m, rm=rm, rchar=rchar):
+def unescape(text: str, rm: bool = False, rchar: str = '') -> str:
+    def fixup(m: re.Match[str], rm: bool = rm, rchar: str = rchar) -> str:
         text = m.group(0)
         if text[:2] == '&#':
             # character reference

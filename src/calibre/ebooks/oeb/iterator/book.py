@@ -9,6 +9,7 @@ import math
 import os
 import re
 from functools import partial
+from typing import TYPE_CHECKING, Self, cast
 
 from calibre import guess_type, prepare_string_for_xml
 from calibre.ebooks.metadata.opf2 import OPF
@@ -18,8 +19,15 @@ from calibre.ebooks.oeb.iterator.spine import SpineItem, create_indexing_data
 from calibre.ebooks.oeb.transforms.cover import CoverManager
 from calibre.ptempfile import PersistentTemporaryDirectory, remove_dir
 from calibre.utils.config import DynamicConfig
+from calibre.utils.localization import lang_as_bcp47
 from calibre.utils.logging import default_log
 from calibre.utils.tdir_in_cache import tdir_in_cache
+
+if TYPE_CHECKING:
+    from lxml.etree import _Element
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 TITLEPAGE = CoverManager.SVG_TEMPLATE.replace('__ar__', 'none').replace('__viewbox__', '0 0 600 800').replace('__width__', '600').replace('__height__', '800')
 
@@ -31,7 +39,7 @@ class FakeOpts:
     input_encoding = None
 
 
-def write_oebbook(oeb, path):
+def write_oebbook(oeb: OEBBook, path: str) -> str | None:
     from calibre import walk
     from calibre.ebooks.oeb.writer import OEBWriter
 
@@ -42,7 +50,9 @@ def write_oebbook(oeb, path):
             return f
 
 
-def extract_book(pathtoebook, tdir, log=None, view_kepub=False, processed=False, only_input_plugin=False):
+def extract_book(
+    pathtoebook: str, tdir: str, log: Log | None = None, view_kepub: bool = False, processed: bool = False, only_input_plugin: bool = False
+) -> tuple[str, str, str]:
     from calibre.ebooks.conversion.plumber import Plumber, create_oebbook
     from calibre.utils.logging import default_log
 
@@ -63,20 +73,21 @@ def extract_book(pathtoebook, tdir, log=None, view_kepub=False, processed=False,
             # well
             if processed or (plumber.input_fmt.lower() in {'pdb', 'pdf', 'rb'} and not hasattr(pathtoopf, 'manifest')):
                 if hasattr(pathtoopf, 'manifest'):
-                    pathtoopf = write_oebbook(pathtoopf, tdir)
+                    pathtoopf = write_oebbook(cast('OEBBook', pathtoopf), tdir)
                 pathtoopf = create_oebbook(log, pathtoopf, plumber.opts)
 
         if hasattr(pathtoopf, 'manifest'):
-            pathtoopf = write_oebbook(pathtoopf, tdir)
+            pathtoopf = write_oebbook(cast('OEBBook', pathtoopf), tdir)
 
     book_format = os.path.splitext(pathtoebook)[1][1:].upper()
     if getattr(plumber.input_plugin, 'is_kf8', False):
         fs = ':joint' if getattr(plumber.input_plugin, 'mobi_is_joint', False) else ''
         book_format = 'KF8' + fs
-    return book_format, pathtoopf, plumber.input_fmt
+    # input plugins return either the path to the OPF or an OEBBook, which is written out above
+    return book_format, cast('str', pathtoopf), plumber.input_fmt
 
 
-def run_extract_book(*args, **kwargs):
+def run_extract_book(*args: object, **kwargs: object) -> tuple[str, str, str]:
     from calibre.utils.ipc.simple_worker import fork_job
 
     ans = fork_job('calibre.ebooks.oeb.iterator.book', 'extract_book', args=args, kwargs=kwargs, timeout=3000, no_output=True)
@@ -86,7 +97,7 @@ def run_extract_book(*args, **kwargs):
 class EbookIterator(BookmarksMixin):
     CHARACTERS_PER_PAGE = 1000
 
-    def __init__(self, pathtoebook, log=None, copy_bookmarks_to_file=True, use_tdir_in_cache=False):
+    def __init__(self, pathtoebook: str, log: Log | None = None, copy_bookmarks_to_file: bool = True, use_tdir_in_cache: bool = False) -> None:
         BookmarksMixin.__init__(self, copy_bookmarks_to_file=copy_bookmarks_to_file)
         self.use_tdir_in_cache = use_tdir_in_cache
         self.log = log or default_log
@@ -97,7 +108,7 @@ class EbookIterator(BookmarksMixin):
         ext = re.sub(r'(x{0,1})htm(l{0,1})', 'html', ext)
         self.ebook_ext = ext.replace('original_', '')
 
-    def search(self, text, index, backwards=False):
+    def search(self, text: str, index: int, backwards: bool = False) -> int | None:
         from calibre.ebooks.oeb.polish.parsing import parse
 
         pmap = list(enumerate(self.spine))
@@ -107,24 +118,24 @@ class EbookIterator(BookmarksMixin):
         for i, path in pmap:
             if (backwards and i < index) or (not backwards and i > index):
                 with open(path, 'rb') as f:
-                    raw = f.read().decode(path.encoding)
+                    raw = f.read().decode(path.encoding or 'utf-8')  # encoding is None for empty files
                 root = parse(raw)
-                fragments = []
+                fragments: list[str] = []
 
-                def serialize(elem):
+                def serialize(elem: _Element) -> None:
                     if elem.text:
                         fragments.append(elem.text.lower())  # ruff: ignore[function-uses-loop-variable]
                     if elem.tail:
                         fragments.append(elem.tail.lower())  # ruff: ignore[function-uses-loop-variable]
                     for child in elem.iterchildren():
-                        if hasattr(getattr(child, 'tag', None), 'rpartition') and child.tag.rpartition('}')[-1] not in {
+                        if isinstance(tag := child.tag, str) and tag.rpartition('}')[-1] not in {
                             'script',
                             'style',
                             'del',
                         }:
                             serialize(child)
                         elif getattr(child, 'tail', None):
-                            fragments.append(child.tail.lower())  # ruff: ignore[function-uses-loop-variable]
+                            fragments.append(child.tail.lower())  # ruff: ignore[function-uses-loop-variable] # ty: ignore[unresolved-attribute] tail checked above
 
                 for body in root.xpath('//*[local-name() = "body"]'):
                     body.tail = None
@@ -135,17 +146,17 @@ class EbookIterator(BookmarksMixin):
 
     def __enter__(
         self,
-        processed=False,
-        only_input_plugin=False,
-        run_char_count=True,
-        read_anchor_map=True,
-        view_kepub=False,
-        read_links=True,
-    ):
+        processed: bool = False,
+        only_input_plugin: bool = False,
+        run_char_count: bool = True,
+        read_anchor_map: bool = True,
+        view_kepub: bool = False,
+        read_links: bool = True,
+    ) -> Self:
         """Convert an ebook file into an exploded OEB book suitable for
         display in viewers/preprocessing etc."""
 
-        self.delete_on_exit = []
+        self.delete_on_exit: list[str] = []
         if self.use_tdir_in_cache:
             self._tdir = tdir_in_cache('ev')
         else:
@@ -160,7 +171,7 @@ class EbookIterator(BookmarksMixin):
         if self.mi.languages:
             self.language = self.mi.languages[0].lower()
 
-        self.spine = []
+        self.spine: list[SpineItem] = []
         Spiny = partial(
             SpineItem,
             read_anchor_map=read_anchor_map,
@@ -197,7 +208,9 @@ class EbookIterator(BookmarksMixin):
         if cover and self.ebook_ext in {'lit', 'mobi', 'prc', 'opf', 'fb2', 'azw', 'azw3', 'docx', 'htmlz'}:
             cfile = os.path.join(self.base, 'calibre_iterator_cover.html')
             rcpath = os.path.relpath(cover, self.base).replace(os.sep, '/')
-            chtml = (TITLEPAGE % prepare_string_for_xml(rcpath, True)).encode('utf-8')
+            langs = () if self.opf.languages_are_fallback else self.mi.languages
+            lang = next(filter(None, map(lang_as_bcp47, langs)), None)
+            chtml = (CoverManager.fill_metadata(TITLEPAGE, self.mi.title or '', lang) % prepare_string_for_xml(rcpath, True)).encode('utf-8')
             with open(cfile, 'wb') as f:
                 f.write(chtml)
             self.spine[0:0] = [Spiny(cfile, mime_type='application/xhtml+xml')]
@@ -231,8 +244,8 @@ class EbookIterator(BookmarksMixin):
 
         return self
 
-    def verify_links(self):
-        spine_paths = {s: s for s in self.spine}
+    def verify_links(self) -> None:
+        spine_paths: dict[str, SpineItem] = {s: s for s in self.spine}
         for item in self.spine:
             base = os.path.dirname(item)
             for link in item.all_links:
@@ -249,7 +262,8 @@ class EbookIterator(BookmarksMixin):
                     if not p.fragment or p.fragment in path.anchor_map:
                         item.verified_links.add((path, p.fragment))
 
-    def __exit__(self, *args):
+    def __exit__(self, *args: object) -> None:
+
         remove_dir(self._tdir)
         for x in self.delete_on_exit:
             try:

@@ -5,11 +5,24 @@ import sys
 import traceback
 import weakref
 from threading import Event, Thread
+from typing import TYPE_CHECKING, cast
 
 from calibre.ebooks.metadata.opf2 import metadata_to_opf
 
+if TYPE_CHECKING:
+    from typing import TextIO, TypedDict, Unpack
 
-def prints(*a, **kw):
+    from calibre.db.cache import Cache
+    from calibre.db.legacy import LibraryDatabase
+
+    class PrintKwargs(TypedDict, total=False):
+        sep: str | None
+        end: str | None
+        file: TextIO | None
+        flush: bool
+
+
+def prints(*a: object, **kw: Unpack[PrintKwargs]) -> None:
     kw['file'] = sys.stderr
     return print(*a, **kw)
 
@@ -25,39 +38,38 @@ class MetadataBackup(Thread):
     thread.
     """
 
-    def __init__(self, db, interval=2, scheduling_interval=0.1):
+    def __init__(self, db: Cache | LibraryDatabase, interval: float = 2, scheduling_interval: float = 0.1) -> None:
         super().__init__(name='MetadataBackup', daemon=True)
         self.daemon = True
-        self._db = weakref.ref(getattr(db, 'new_api', db))
+        self._db: weakref.ref[Cache] = weakref.ref(cast('Cache', getattr(db, 'new_api', db)))
         self.stop_running = Event()
         self.interval = interval
         self.scheduling_interval = scheduling_interval
         self.check_dirtied_annotations = 0
 
     @property
-    def db(self):
+    def db(self) -> Cache:
         ans = self._db()
         if ans is None:
             raise Abort()
         return ans
 
-    def stop(self):
+    def stop(self) -> None:
         self.stop_running.set()
 
-    def wait(self, interval):
+    def wait(self, interval: float) -> None:
         if self.stop_running.wait(interval):
             raise Abort()
 
-    def run(self):
+    def run(self) -> None:
         while not self.stop_running.is_set():
             try:
-                if self.wait(self.interval):
-                    break
+                self.wait(self.interval)
                 self.do_one()
             except Abort:
                 break
 
-    def do_one(self):
+    def do_one(self) -> None:
         self.check_dirtied_annotations += 1
         if self.check_dirtied_annotations > 2:
             self.check_dirtied_annotations = 0
@@ -127,6 +139,6 @@ class MetadataBackup(Thread):
 
         self.db.clear_dirtied(book_id, sequence)
 
-    def break_cycles(self):
+    def break_cycles(self) -> None:
         # Legacy compatibility
         pass

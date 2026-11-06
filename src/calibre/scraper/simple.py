@@ -4,15 +4,21 @@
 import sys
 import weakref
 from threading import Lock
+from typing import TYPE_CHECKING, Literal, overload
 
-overseers = []
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from calibre.scraper.qt import WebEngineBrowser
+
+overseers: list[weakref.ref[WebEngineBrowser]] = []
 
 
-def cleanup_overseers():
+def cleanup_overseers() -> Callable[[], None]:
     browsers = tuple(filter(None, (x() for x in overseers)))
     del overseers[:]
 
-    def join_all():
+    def join_all() -> None:
         for br in browsers:
             br.shutdown()
 
@@ -22,7 +28,15 @@ def cleanup_overseers():
 read_url_lock = Lock()
 
 
-def read_url(storage, url, timeout=60, as_html=True):
+@overload
+def read_url(storage: list[WebEngineBrowser], url: str, timeout: float = 60, as_html: Literal[True] = True) -> str: ...
+@overload
+def read_url(storage: list[WebEngineBrowser], url: str, timeout: float = 60, *, as_html: Literal[False]) -> bytes: ...
+@overload
+def read_url(storage: list[WebEngineBrowser], url: str, timeout: float, as_html: Literal[False]) -> bytes: ...
+@overload
+def read_url(storage: list[WebEngineBrowser], url: str, timeout: float = 60, as_html: bool = True) -> str | bytes: ...
+def read_url(storage: list[WebEngineBrowser], url: str, timeout: float = 60, as_html: bool = True) -> str | bytes:
     with read_url_lock:
         from calibre.scraper.qt import WebEngineBrowser
 

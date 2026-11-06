@@ -19,16 +19,16 @@ class AirdropAction(InterfaceActionWithLibraryDrop):
     action_type = 'current'
     dont_add_to = frozenset(('context-menu-device',))
 
-    def genesis(self):
+    def genesis(self) -> None:
         self.qaction.triggered.connect(self.airdrop_books)
 
-    def do_drop(self):
+    def do_drop(self) -> None:
         book_ids = self.dropped_ids
         del self.dropped_ids
         if book_ids:
             self.airdrop_book_ids(book_ids)
 
-    def location_selected(self, loc):
+    def location_selected(self, loc) -> None:
         self.qaction.setEnabled(loc == 'library')
 
     def airdrop_books(self):
@@ -47,10 +47,7 @@ class AirdropAction(InterfaceActionWithLibraryDrop):
             return error_dialog(self.gui, _('Cannot AirDrop'), _('The selected books have no files to share'), show=True)
 
         def all_have_format(f: str) -> bool:
-            for q in formats.values():
-                if f not in q:
-                    return False
-            return True
+            return all(f in q for q in formats.values())
 
         common_formats = {f for f in all_fmts if all_have_format(f)}
         if not common_formats:

@@ -1,11 +1,19 @@
 # License: GPLv3 Copyright: 2009, John Schember <john@nachtimwald.com>
 
 import os
+from typing import IO, TYPE_CHECKING, cast
 
 from calibre import walk, xml_replace_entities
 from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation
 from calibre.ebooks.conversion.plugins.archive_input import archive_file_data
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    import unittest
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 MD_EXTENSIONS = {
     'abbr': _('Abbreviations'),
@@ -30,11 +38,11 @@ MD_EXTENSIONS = {
 TXTZ_FORMATTING_FOR_EXTENSION = {'md': 'markdown', 'markdown': 'markdown', 'textile': 'textile'}
 
 
-def txtz_file_ext(path):
+def txtz_file_ext(path: str) -> str:
     return os.path.splitext(path)[1].lower().lstrip('.')
 
 
-def txtz_formatting_for_extension(file_ext):
+def txtz_formatting_for_extension(file_ext: str) -> str | None:
     return TXTZ_FORMATTING_FOR_EXTENSION.get(file_ext.lower().lstrip('.'))
 
 
@@ -116,7 +124,7 @@ class TXTInput(InputFormatPlugin):
         ),
     }
 
-    def shift_file(self, fname, data):
+    def shift_file(self, fname: str, data: bytes) -> str:
         name, ext = os.path.splitext(fname)
         candidate = os.path.join(self.output_dir, fname)
         c = 0
@@ -128,7 +136,7 @@ class TXTInput(InputFormatPlugin):
             f.write(data)
         return f.name
 
-    def fix_resources(self, html, base_dir):
+    def fix_resources(self, html: str, base_dir: str) -> str:
         from html5_parser import parse
 
         root = parse(html)
@@ -151,7 +159,7 @@ class TXTInput(InputFormatPlugin):
             html = etree.tostring(root, encoding='unicode')
         return html
 
-    def convert(self, stream, options, file_ext, log, accelerators):
+    def convert(self, stream: IO[bytes], options: Values, file_ext: str, log: Log, accelerators: dict[str, str]) -> OEBBook:
         from calibre.ebooks.chardet import detect
         from calibre.ebooks.conversion.preprocess import Dehyphenator, DocAnalysis
         from calibre.ebooks.txt.processor import (
@@ -248,7 +256,7 @@ class TXTInput(InputFormatPlugin):
                 det_encoding = 'gbk'
             ienc = det_encoding
             log.debug(f'Detected input encoding as {ienc} with a confidence of {confidence * 100}%')
-        if not ienc:
+        if not ienc or ienc == 'ascii':
             ienc = 'utf-8'
             log.debug(f'No input encoding specified and could not auto detect using {ienc}')
         # Remove BOM from start of txt as its presence can confuse markdown
@@ -356,6 +364,7 @@ class TXTInput(InputFormatPlugin):
             from calibre.customize.ui import plugin_for_input_format
 
             html_input = plugin_for_input_format('html')
+            assert html_input is not None
             for opt in html_input.options:
                 setattr(options, opt.option.name, opt.recommended_value)
             options.input_encoding = 'utf-8'
@@ -363,7 +372,9 @@ class TXTInput(InputFormatPlugin):
             odi = options.debug_pipeline
             options.debug_pipeline = None
             # Generate oeb from html conversion.
-            oeb = html_input.convert(open(htmlfile, 'rb'), options, 'html', log, {})
+            with open(htmlfile, 'rb') as f:
+                oeb = html_input.convert(f, options, 'html', log, {})
+                assert oeb is not None and not isinstance(oeb, str)  # HTML input returns an OEBBook
             options.debug_pipeline = odi
         finally:
             for x in self.shifted_files:
@@ -384,24 +395,27 @@ class TXTInput(InputFormatPlugin):
             if cover_data is not None:
                 cover_name, cdata = cover_data
                 id, href = oeb.manifest.generate('cover', cover_name)
-                oeb.manifest.add(id, href, guess_type(cover_name)[0], data=cdata)
+                oeb.manifest.add(id, href, cast('str', guess_type(cover_name)[0]), data=cdata)
                 oeb.guide.add('cover', 'Cover', href)
 
         return oeb
 
-    def postprocess_book(self, oeb, opts, log):
+    def postprocess_book(self, oeb: OEBBook, opts: Values, log: Log) -> None:
+        from lxml import etree
+
         for item in oeb.spine:
-            if hasattr(item.data, 'xpath'):
-                for title in item.data.xpath('//*[local-name()="title"]'):
+            root = item.data
+            if isinstance(root, etree._Element):
+                for title in root.xpath('//*[local-name()="title"]'):
                     if title.text == _('Unknown'):
                         title.text = self.html_postprocess_title
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import unittest
 
     class TXTInputTest(unittest.TestCase):
-        def test_txtz_extension_formatting(self):
+        def test_txtz_extension_formatting(self) -> None:
             self.assertEqual(txtz_file_ext('book.md'), 'md')
             self.assertEqual(txtz_file_ext('book.MARKDOWN'), 'markdown')
             self.assertEqual(txtz_formatting_for_extension('.md'), 'markdown')

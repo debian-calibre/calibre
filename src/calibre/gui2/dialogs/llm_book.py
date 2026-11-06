@@ -1,14 +1,12 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2025, Kovid Goyal <kovid at kovidgoyal.net>
 
-from collections.abc import Iterator
 from functools import lru_cache
-from typing import Any
+from typing import TYPE_CHECKING, Any
 
 from qt.core import QAbstractItemView, QDialog, QDialogButtonBox, QLabel, QListWidget, QListWidgetItem, QSize, Qt, QUrl, QVBoxLayout, QWidget
 
 from calibre.ai import ChatMessage, ChatMessageType
-from calibre.db.cache import Cache
 from calibre.ebooks.metadata.book.base import Metadata
 from calibre.gui2 import Application, gprefs
 from calibre.gui2.llm import ActionData, ConverseWidget, LLMActionsSettingsWidget, LLMSettingsDialogBase, LocalisedResults
@@ -18,6 +16,11 @@ from calibre.library.comments import comments_as_markdown
 from calibre.utils.icu import primary_sort_key
 from calibre.utils.localization import _, ngettext
 from polyglot.binary import from_hex_unicode
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from calibre.db.cache import Cache
 
 
 def format_book_for_query(book: Metadata, is_first: bool, num_books: int) -> str:
@@ -37,14 +40,16 @@ def format_book_for_query(book: Metadata, is_first: bool, num_books: int) -> str
             continue
         m = book.metadata_for_field(field)
         if field == 'comments':
-            comments.append(comments_as_markdown(book.get(field)))
-        elif m.get('datatype') == 'comments':
-            ctype = m.get('display', {}).get('interpret_as') or 'html'
+            comments.append(comments_as_markdown(book.comments))
+        elif m.get('datatype') == 'comments':  # ty: ignore[unresolved-attribute] allowed fields always have metadata
+            ctype = m.get('display', {}).get('interpret_as') or 'html'  # ty: ignore[unresolved-attribute]
+            val = book.get(field)
+            assert isinstance(val, str)  # the value of a non-null comments column
             match ctype:
                 case 'long-text' | 'short-text' | 'markdown':
-                    comments.append(book.get(field))
+                    comments.append(val)
                 case _:
-                    comments.append(comments_as_markdown(book.get(field)))
+                    comments.append(comments_as_markdown(val))
         else:
             fields.append(book.format_field(field))
     if fields:
@@ -67,7 +72,7 @@ def format_books_for_query(books: list[Metadata]) -> str:
 
 def get_allowed_fields() -> set[str]:
     db = get_current_db()
-    ans: set[str] = set(db.pref('llm-book-allowed-custom-fields') or ())
+    ans: set[str] = set(db.pref('llm-book-allowed-custom-fields') or ())  # ty: ignore[invalid-argument-type]
     standard: set[str] = set(gprefs.get('llm-book-allowed-standard-fields') or ())
     return standard | ans
 
@@ -145,7 +150,7 @@ def get_current_db() -> Cache:
 
 
 class MetadataSettings(QWidget):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(parent)
         self.l = l = QVBoxLayout(self)
         la = QLabel(_('Select which metadata fields to send to the AI from the selected books. Note that title and authors are always sent.'))
@@ -180,15 +185,15 @@ class MetadataSettings(QWidget):
         lw = self.list_widget
         return (lw.item(r) for r in range(lw.count()))
 
-    def select_all(self):
+    def select_all(self) -> None:
         for item in self:
             item.setCheckState(Qt.CheckState.Checked)
 
-    def select_none(self):
+    def select_none(self) -> None:
         for item in self:
             item.setCheckState(Qt.CheckState.Unchecked)
 
-    def toggle_item(self, item):
+    def toggle_item(self, item) -> None:
         item.setCheckState(Qt.CheckState.Unchecked if item.checkState() == Qt.CheckState.Checked else Qt.CheckState.Checked)
 
     def commit(self) -> bool:
@@ -208,7 +213,7 @@ class MetadataSettings(QWidget):
 
 
 class LLMSettingsDialog(LLMSettingsDialogBase):
-    def __init__(self, parent=None):
+    def __init__(self, parent=None) -> None:
         super().__init__(title=_('AI Settings'), name='llm-book-settings-dialog', prefs=gprefs, parent=parent)
 
     def custom_tabs(self) -> Iterator[tuple[str, str, QWidget]]:
@@ -219,7 +224,7 @@ class LLMSettingsDialog(LLMSettingsDialogBase):
 class LLMPanel(ConverseWidget):
     NOTE_TITLE = _('AI Assistant Discussion')
 
-    def __init__(self, books: list[Metadata], parent: QWidget | None = None):
+    def __init__(self, books: list[Metadata], parent: QWidget | None = None) -> None:
         self.books = books
         super().__init__(parent, add_close_button=True)
 
@@ -272,7 +277,7 @@ class LLMPanel(ConverseWidget):
 
 
 class LLMBookDialog(Dialog):
-    def __init__(self, books: list[Metadata], parent: QWidget | None = None):
+    def __init__(self, books: list[Metadata], parent: QWidget | None = None) -> None:
         self.books = books
         super().__init__(
             name='llm-book-dialog',
@@ -281,7 +286,7 @@ class LLMBookDialog(Dialog):
             default_buttons=QDialogButtonBox.StandardButton.Close,
         )
 
-    def setup_ui(self):
+    def setup_ui(self) -> None:
         l = QVBoxLayout(self)
         l.setContentsMargins(0, 0, 0, 0)
         self.llm = llm = LLMPanel(self.books, parent=self)
@@ -295,7 +300,7 @@ class LLMBookDialog(Dialog):
         return QSize(600, 750)
 
 
-def develop():
+def develop() -> None:
     from calibre.library import db
 
     setattr(get_current_db, 'ans', db())

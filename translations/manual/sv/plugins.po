@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-09-16 15:05+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Sofie Sundberg <filaes@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -168,7 +168,7 @@ msgstr "En kort sträng som beskriver vad denna insticksmodul gör"
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.author:1
 msgid "The author of this plugin"
-msgstr "Författare av denna insticksmodul"
+msgstr "Insticksmodulens upphovsperson"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.priority:1
@@ -187,13 +187,13 @@ msgstr "Den tidigaste versionen av calibre som denna insticksmodul kräver"
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.installation_type:1
 msgid "The way this plugin is installed"
-msgstr "Sättet den här insticksmodulen installeras"
+msgstr "Hur denna insticksmodul är installerad"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.can_be_disabled:1
 msgid ""
 "If False, the user will not be able to disable this plugin. Use with care."
-msgstr "Om False, kommer inte användaren kunna deaktivera denna insticksmodul. Använd med försiktighet."
+msgstr "Om False kan användaren inte inaktivera denna insticksmodul. Använd med försiktighet."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.type:1
@@ -235,7 +235,7 @@ msgid ""
 "Perform any plugin specific initialization here, such as extracting "
 "resources from the plugin ZIP file. The path to the ZIP file is available as"
 " ``self.plugin_path``."
-msgstr "Utför valfri insticksmodulspecifik initiering här, såsom att utvinna resurser från insticksmoduls ZIP-filen. Sökvägen till ZIP-filen är tillgänglig som ``self.plugin_path``."
+msgstr "Utför eventuell initiering som är specifik för insticksmodulen här, till exempel att packa upp resurser från insticksmodulens ZIP-fil. Sökvägen till ZIP-filen finns i ``self.plugin_path``."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.initialize:10
@@ -272,7 +272,7 @@ msgid ""
 "If for some reason you cannot perform the configuration at this time, return"
 " a tuple of two strings (message, details), these will be displayed as a "
 "warning dialog to the user and the process will be aborted."
-msgstr "Om du av någon anledning inte kan utföra konfigurationen vid denna tid, returnera en tupel av två strängar (meddelande, detaljer), kommer dessa att visas som en varningsdialogruta för användaren och processen avbryts."
+msgstr "Om du av någon anledning inte kan utföra konfigurationen nu ska du returnera en tupel med två strängar (message, details). Dessa visas i en varningsdialogruta för användaren och processen avbryts."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.save_settings:1
@@ -306,14 +306,14 @@ msgstr "Denna metod visar en inställningsdialogruta för denna insticksmodul. D
 msgid ""
 "If this plugin comes in a ZIP file (user added plugin), this method will "
 "allow you to load resources from the ZIP file."
-msgstr "Om denna insticksmodul kommer i en ZIP-fil (användartillagd insticksmodul), kommer denna metod tillåta dig läsa in resurser från ZIP-fil."
+msgstr "Om insticksmodulen levereras i en ZIP-fil (en insticksmodul som lagts till av användaren) kan du använda denna metod för att läsa in resurser från ZIP-filen."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:4
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.load_resources:4
 msgid "For example to load an image::"
-msgstr "Till exempel att läsa in en bild::"
+msgstr "Till exempel kan du läsa in en bild så här::"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.load_resources:10
@@ -389,7 +389,7 @@ msgid ""
 "This method is the main entry point for your plugins command line interface."
 " It is called when the user does: calibre-debug -r \"Plugin Name\". Any "
 "arguments passed are present in the args variable."
-msgstr "Denna metod är den huvudsakliga ingångspunkten för dina insticksmodulers kommandoradsgränssnitt. Det anropas när användaren utför: calibre-debug -r \"insticksmodulsnamn\". Eventuella argument som skickas finns i variabeln args."
+msgstr "Denna metod är huvudingången till insticksmodulens kommandoradsgränssnitt. Den anropas när användaren kör: calibre-debug -r \"Plugin Name\". Eventuella argument som skickas finns i variabeln args."
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:28
 msgid "FileTypePlugin"
@@ -417,7 +417,7 @@ msgstr "Om True, körs denna insticksmodul när böcker läggs till i databasen"
 msgid ""
 "If True, this plugin is run after books are added to the database. In this "
 "case the postimport and postadd methods of the plugin are called."
-msgstr "Om True, körs denna insticksmodul efter att böcker läggs till i databasen. I detta fall anropas metoderna postimport och postadd av insticksmodulen."
+msgstr "Om True körs denna insticksmodul efter att böcker har lagts till i databasen. Då anropas insticksmodulens metoder postimport och postadd."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.on_postconvert:1
@@ -444,6 +444,13 @@ msgid ""
 "If True, this plugin is run after conversion on the final file produced by "
 "the conversion output plugin."
 msgstr "Om True, körs denna insticksmodul efter konvertering på den slutliga filen som produceras av insticksmodulen för konverteringsutmatning."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr "Sökvägen till originalfilen, innan några filtypsinsticksmoduler körs. Anges precis innan :meth:`run` anropas."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
@@ -482,7 +489,7 @@ msgid ""
 "when the book record is created for the first time. This method is called "
 "whenever a new file is added to a book record. It is useful for modifying "
 "the book record based on the contents of the newly added file."
-msgstr "Anropas efter importering, dvs. efter bokfilen har lagts till i databasen. Observera att detta skiljer sig från :meth:`postadd` som anropas när bokposten skapas för första gången. Denna metod anropas varje gång en ny fil läggs till i en bokpost. Det är användbart för att ändra bokposten baserat på innehållet i den nyligen tillagda filen."
+msgstr "Anropas efter import, dvs. efter att bokfilen har lagts till i databasen. Observera att detta skiljer sig från :meth:`postadd`, som anropas när bokposten skapas för första gången. Denna metod anropas varje gång en ny fil läggs till i en bokpost. Den är användbar för att ändra bokposten utifrån innehållet i den nytillagda filen."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postadd:8
@@ -628,7 +635,7 @@ msgstr "Utmatningsfiltypen som insticksmodulen ska köras för. Till exempel: 'e
 msgid ""
 "CLI parser options specific to this plugin, declared as `namedtuple` "
 "`Option`:"
-msgstr "CLI-parseralternativ som är specifika för denna insticksmodul deklareras som `namedtuple` `Option`:"
+msgstr "Alternativ för kommandoradstolken som är specifika för denna insticksmodul, deklarerade som `namedtuple` `Option`:"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.cli_options:3
@@ -662,7 +669,7 @@ msgstr "Kör insticksmodulen. Metoden måste implementeras i underklasser. Den s
 msgid ""
 "The generated catalog file should be created with the :meth:`temporary_file`"
 " method."
-msgstr "Den genererade katalogfilen ska genereras med :meth:`temporary_file`-metoden."
+msgstr "Den genererade katalogfilen ska skapas med metoden :meth:`temporary_file`."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:10
@@ -672,7 +679,7 @@ msgstr "Absoluta sökvägen till den genererade katalogfilen."
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:11
 msgid "A dictionary of keyword arguments"
-msgstr "En ordbok av nyckelordsargument"
+msgstr "En ordbok med nyckelordsargument"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.CatalogPlugin.run:12
@@ -743,7 +750,7 @@ msgstr "En sträng som visas högst upp på gränssnittskomponenten för denna i
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.can_get_multiple_covers:1
 msgid "If True this source can return multiple covers for a given query"
-msgstr "Om True kan denna källa returnera flera omslag för en viss förfråga"
+msgstr "Om True kan denna källa returnera flera omslag för en viss förfrågan"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.auto_trim_covers:1
@@ -757,7 +764,24 @@ msgid ""
 "If set to True, and this source returns multiple results for a query, some "
 "of which have ISBNs and some of which do not, the results without ISBNs will"
 " be ignored"
-msgstr "Om värdet är True, och denna källa returnerar flera resultat för en förfråga, av vilka några har ISBN och av vilka en del inte, så ignoreras resultaten utan ISBN"
+msgstr "Om värdet är True och denna källa returnerar flera resultat för en förfrågan, varav vissa har ISBN och andra saknar det, ignoreras resultaten utan ISBN"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.uses_camoufox_worker:1
+msgid ""
+"If set to True this source uses the Camoufox browser shared by all metadata "
+"downloads, see :mod:`calibre.web.automate.metadata`, which is then started "
+"before metadata is downloaded, so that it is ready in time. Such sources are"
+" also waited for longer after the first result from any source arrives, "
+"since downloading with a browser is slow."
+msgstr "Om detta sätts till True använder källan Camoufox-webbläsaren som delas av alla metadatahämtningar, se :mod:`calibre.web.automate.metadata`. Webbläsaren startas då innan metadata hämtas, så att den är redo i tid. När det första resultatet från någon källa kommer in väntar programmet också längre på sådana källor, eftersom hämtning med en webbläsare går långsamt."
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr "Antalet sekunder som den senaste körningen av identify() tog, anges av :func:`calibre.ebooks.metadata.sources.identify.identify`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -818,7 +842,7 @@ msgstr "Returnera en 3-tupel eller None. Tupeln ska ha formen (identifier_type, 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_url_name:1
 msgid "Return a human readable name from the return value of get_book_url()."
-msgstr "Returnera ett mänskligt läsbart namn från det återgivna värdet för get_book_url()."
+msgstr "Returnera ett läsbart namn utifrån returvärdet från get_book_url()."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_urls:1
@@ -883,7 +907,7 @@ msgid ""
 "source does not store all related identifiers (for example, all ISBNs of a "
 "book), this method should retry with just the title and author (assuming "
 "they were specified)."
-msgstr "Om en eller flera identifierare anges och ingen träff hittas och den här metadatakällan inte lagrar alla relaterade identifierare (till exempel alla ISBN av en bok), bör den här metoden försökas igen med bara titel och författare (förutsatt att de specificerades)."
+msgstr "Om en eller flera identifierare anges men ingen träff hittas, och metadatakällan inte lagrar alla relaterade identifierare (till exempel alla ISBN för en bok), bör metoden försöka igen med enbart titel och författare, förutsatt att dessa har angetts."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:8
@@ -892,7 +916,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "Om den här metadatakällan också innehåller omslag, bör URL:en till omslaget cachas så att ett efterföljande anrop till skaffa omslags-API:et med samma ISBN/specialidentifiering inte behöver hämta omslags-URL:en igen. Använd cache-API:et för detta."
+msgstr "Om metadatakällan också tillhandahåller omslag bör omslagets URL cachelagras, så att ett senare anrop till API:et för omslagshämtning med samma ISBN eller särskilda identifierare inte behöver hämta omslagets URL igen. Använd cache-API:et för detta."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -909,7 +933,7 @@ msgstr "Varje Metadata-objekt som denna metod placerar i result_queue måste ha 
 msgid ""
 "Make sure that any cover/ISBN mapping information is cached before the "
 "Metadata object is put into result_queue."
-msgstr "Se till att all omslags-/ISBN-kartläggningsinformation cachelagras innan Metadata-objektet placeras i result_queue."
+msgstr "Se till att all information om kopplingen mellan omslag och ISBN cachelagras innan Metadata-objektet placeras i result_queue."
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:22
@@ -928,7 +952,7 @@ msgstr "En resultatkö (Queue) där resultaten ska placeras. Varje resultat är 
 msgid ""
 "If abort.is_set() returns True, abort further processing and return as soon "
 "as possible"
-msgstr "Om abort.is_set() returnerar True, avbryt vidare bearbetning och återvända så snart som möjligt"
+msgstr "Om abort.is_set() returnerar True ska du avbryta fortsatt bearbetning och returnera så snart som möjligt"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:27
@@ -938,12 +962,12 @@ msgstr "Titeln på boken, kan vara None"
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:28
 msgid "A list of authors of the book, can be None"
-msgstr "En lista med författare av boken, kan vara None"
+msgstr "En lista med bokens författare, kan vara None"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:29
 msgid "A dictionary of other identifiers, most commonly {'isbn':'1234...'}"
-msgstr "En ordbok av andra identifieringsuppgifter oftast {'isbn':'1234...'}"
+msgstr "En ordbok med andra identifierare, oftast {'isbn':'1234...'}"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:31
@@ -1021,7 +1045,7 @@ msgstr "Föredra resultat med alla tillgängliga fält ifyllda"
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:13
 msgid ""
 "Prefer results with the same language as the current user interface language"
-msgstr "Föredra resultat med samma språk som aktuella användarens gränssnittsspråk"
+msgstr "Föredra resultat på samma språk som det aktuella användargränssnittet"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:14
@@ -1054,7 +1078,7 @@ msgid ""
 "InputFormatPlugins are responsible for converting a document into "
 "HTML+OPF+CSS+etc. The results of the conversion *must* be encoded in UTF-8. "
 "The main action happens in :meth:`convert`."
-msgstr "InputFormatPlugins ansvarar för att konvertera ett dokument till HTML+OPF+CSS+etc. Resultatet av konverteringen *måste* kodas i UTF-8. Den viktigaste åtgärden händer i :meth:`convert`."
+msgstr "InputFormatPlugins ansvarar för att konvertera ett dokument till HTML+OPF+CSS+etc. Resultatet av konverteringen *måste* kodas i UTF-8. Huvudarbetet utförs i :meth:`convert`."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.file_types:1
@@ -1161,14 +1185,14 @@ msgstr "Alternativ för att anpassa konverteringen. Objektet har garanterat attr
 msgid ""
 "The extension (without the .) of the input file. It is guaranteed to be one "
 "of the `file_types` supported by this plugin."
-msgstr "Filtypsändelsen (utan .) i inmatningsfilen. Det är garanterat att vara en av de `file_types` stöds av denna insticksmodul."
+msgstr "Indatafilens filändelse (utan punkten). Den är garanterat en av de `file_types` som denna insticksmodul stöder."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:20
 msgid ""
 "A :class:`calibre.utils.logging.Log` object. All output should use this "
 "object."
-msgstr "Ett :class:`calibre.utils.logging.Log` objekt. All utmatning bör använda detta objekt."
+msgstr "Ett :class:`calibre.utils.logging.Log`-objekt. All utmatning ska ske via detta objekt."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:22
@@ -1199,14 +1223,14 @@ msgid ""
 "Called to create the widget used for configuring this plugin in the calibre "
 "GUI. The widget must be an instance of the PluginWidget class. See the "
 "builtin input plugins for examples."
-msgstr "Anropas för att skapa gränssnittskomponenten som används för att anpassa denna insticksmodul i calibre-användaregränssnittet. Gränssnittskomponenten måste vara en instans av klassen PluginWidget. Se inbyggda inmatningsinsticksmoduler för exempel."
+msgstr "Anropas för att skapa gränssnittskomponenten som används för att konfigurera insticksmodulen i calibres användargränssnitt. Komponenten måste vara en instans av klassen PluginWidget. Exempel finns i de inbyggda inmatningsinsticksmodulerna."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin:1
 msgid ""
 "OutputFormatPlugins are responsible for converting an OEB document "
 "(OPF+HTML) into an output e-book."
-msgstr "OutputFormatPlugins är ansvariga för att konvertera ett OEB-dokument (OPF+HTML) till e-bokutmatning."
+msgstr "OutputFormatPlugins ansvarar för att konvertera ett OEB-dokument (OPF+HTML) till en e-bok i utmatningsformatet."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin:4
@@ -1264,12 +1288,12 @@ msgstr "Inmatningsinsticksmodulen som användes i början av konverteringsproces
 msgid ""
 "Conversion options. Guaranteed to have attributes corresponding to the "
 "OptionRecommendations of this plugin."
-msgstr "Konverteringsalternativ. Garanterat att ha attribut som motsvarar OptionRecommendations av denna insticksmodul."
+msgstr "Konverteringsalternativ. Objektet har garanterat attribut som motsvarar insticksmodulens OptionRecommendations."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:12
 msgid "The logger. Print debug/info messages etc. using this."
-msgstr "Loggern. Skriv ut felsöknings/infomeddelanden etc. med hjälp av denna."
+msgstr "Loggobjektet. Använd det för att skriva felsöknings- och informationsmeddelanden med mera."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.specialize_options:1
@@ -1325,7 +1349,7 @@ msgstr "Basklass för alla drivrutiner är :class:`DevicePlugin`. Men om din enh
 msgid ""
 "Defines the interface that should be implemented by backends that "
 "communicate with an e-book reader."
-msgstr "Definierar gränssnitt som ska implementeras av bakomliggande system som kommunicerar med en e-bokläsenhet."
+msgstr "Definierar gränssnittet som ska implementeras av bakomliggande system som kommunicerar med en e-boksläsare."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.FORMATS:1
@@ -1357,7 +1381,7 @@ msgstr "Ett heltal eller en lista med heltal"
 msgid ""
 "BCD can be either None to not distinguish between devices based on BCD, or "
 "it can be a list of the BCD numbers of all devices supported by this driver."
-msgstr "BCD kan vara antingen None att inte skilja mellan enheter baserade på BCD, eller det kan vara en lista med BCD-numren för alla enheter som stöds av denna drivrutin."
+msgstr "BCD kan vara None om enheter inte ska skiljas åt utifrån BCD, eller en lista med BCD-numren för alla enheter som denna drivrutin stöder."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.THUMBNAIL_HEIGHT:1
@@ -1370,7 +1394,7 @@ msgid ""
 "Compression quality for thumbnails. Set this closer to 100 to have better "
 "quality thumbnails with fewer compression artifacts. Of course, the "
 "thumbnails get larger as well."
-msgstr "Komprimeringskvalitet för miniatyrbilder. Ställ in detta till närmare 100 för att få bättre kvalitet på miniatyrbilder med färre komprimeringsartefakter. Naturligtvis, miniatyrbilden blir större också."
+msgstr "Komprimeringskvalitet för miniatyrbilder. Ange ett värde närmare 100 för högre bildkvalitet med färre komprimeringsartefakter. Filerna blir då också större."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.WANTS_UPDATED_THUMBNAILS:1
@@ -1390,7 +1414,7 @@ msgstr "Huruvida metadata om böckerna kan ställas in via GUI."
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.CAN_DO_DEVICE_DB_PLUGBOARD:1
 msgid "Whether the device can handle device_db metadata plugboards"
-msgstr "Huruvida enheten kan hantera device_db-metadatametadatakopplingar"
+msgstr "Huruvida enheten kan hantera device_db-metadatakopplingar"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.path_sep:1
@@ -1417,7 +1441,7 @@ msgstr "Alias för fält nummer 1"
 msgid ""
 "GUI displays this as a message if not None in the status bar. Useful if "
 "opening can take a long time"
-msgstr "Det grafiska användargränssnittet visar detta som ett meddelande om inte None i statusfältet. Användbart om öppning kan ta lång tid"
+msgstr "Om värdet inte är None visar användargränssnittet det som ett meddelande i statusfältet. Användbart om det kan ta lång tid att öppna enheten"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.VIRTUAL_BOOK_EXTENSIONS:1
@@ -1569,7 +1593,7 @@ msgstr "Nyckeln för att låsa upp enheten"
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.reset:2
 msgid "If true the packet stream to/from the device is logged"
-msgstr "Om True paketströmmen till/från enheten loggas"
+msgstr "Om True loggas paketströmmen till och från enheten"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.reset:3
@@ -1613,7 +1637,7 @@ msgid ""
 "Note that for devices based on USBMS this method by default delegates to "
 ":meth:`can_handle`.  So you only need to override :meth:`can_handle` in your"
 " subclass of USBMS."
-msgstr "Observera att för enheter baserade på USBMS denna metod delegerar som standard till :meth:`can_handle`. Så du behöver bara åsidosätta :meth:`can_handle` i din underklass av USBMS."
+msgstr "För USBMS-baserade enheter delegerar denna metod som standard till :meth:`can_handle`. Du behöver därför bara åsidosätta :meth:`can_handle` i din underklass av USBMS."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.can_handle_windows:12
@@ -1631,7 +1655,7 @@ msgstr "Unix-version av :meth:`can_handle_windows`."
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.can_handle:3
 msgid "Is a tuple of (vid, pid, bcd, manufacturer, product, serial number)"
-msgstr "Är en tupel av (VID, pid, BCD, tillverkare, produkt, serienummer)"
+msgstr "En tupel med (vid, pid, bcd, tillverkare, produkt, serienummer)"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:1
@@ -1684,7 +1708,7 @@ msgstr "UUID:et för det aktuella calibre-biblioteket. Kan vara None om det inte
 msgid ""
 "Un-mount / eject the device from the OS. This does not check if there are "
 "pending GUI jobs that need to communicate with the device."
-msgstr "Avmontera/mata ut enheten från OS. Detta innebär inte kontroll om det finns väntande jobb som behöver kommuniceras med enheten."
+msgstr "Avmontera eller mata ut enheten från operativsystemet. Metoden kontrollerar inte om det finns väntande jobb i användargränssnittet som behöver kommunicera med enheten."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.eject:4
@@ -1714,7 +1738,7 @@ msgstr "Ange en funktion för att rapportera förloppsinformation."
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.get_device_information:1
 msgid "Ask device for device information. See L{DeviceInfoQuery}."
-msgstr "Fråga enheten efter enhetsinformation . Se L{DeviceInfoQuery}."
+msgstr "Begär enhetsinformation från enheten. Se L{DeviceInfoQuery}."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_device_information:3
@@ -1752,7 +1776,7 @@ msgstr "Returnera en lista med två element som innehåller prefixen för sökv�
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.total_space:1
 msgid "Get total space available on the mountpoints:"
-msgstr "Få total utrymme på monteringspunkter:"
+msgstr "Hämta det totala utrymmet på monteringspunkterna:"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.free_space:2
@@ -1793,7 +1817,7 @@ msgstr "En lista med tre element som anger det totala utrymmet i byte för (1, 2
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.free_space:1
 msgid "Get free space available on the mountpoints:"
-msgstr "Få ledigt utrymme på monteringspunkter:"
+msgstr "Hämta det lediga utrymmet på monteringspunkterna:"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.free_space:3
@@ -1833,7 +1857,7 @@ msgid ""
 "If 'carda' or 'cardb' return a list of e-books on the specific storage card,"
 " otherwise return list of e-books in main memory of device. If a card is "
 "specified and no books are on the card return empty list."
-msgstr "Om \"carda\" eller \"cardb\" returnerar en lista med e-böcker på det specifika minneskortet, annars returneras en lista med e-böcker i huvudminnet av enheten. Om ett kort är specificerad och inga böcker finns på kortet returneras en tomma listan."
+msgstr "Om värdet är 'carda' eller 'cardb' returneras en lista med e-böcker på det angivna minneskortet. Annars returneras en lista med e-böcker i enhetens huvudminne. Om ett kort anges men inga böcker finns på det returneras en tom lista."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:8
@@ -1868,7 +1892,7 @@ msgstr "En lista med sökvägar"
 msgid ""
 "A list of file names that the books should have once uploaded to the device."
 " len(names) == len(files)"
-msgstr "En lista med filnamn som böckerna skulle ha när väl överförda till enheten. len(names) == len(files)"
+msgstr "En lista med de filnamn som böckerna ska ha när de har överförts till enheten. len(names) == len(files)"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:10
@@ -1880,7 +1904,7 @@ msgid ""
 " == len(files). Apart from the regular cover (path to cover), there may also"
 " be a thumbnail attribute, which should be used in preference. The thumbnail"
 " attribute is of the form (width, height, cover_data as jpeg)."
-msgstr "Om värdet inte är None är det en lista med :class:`Metadata`-objekt. Metadata används för att avgöra var boken ska placeras på enheten. ``len(metadata) == len(files)``. Förutom det vanliga omslaget kan ett ``thumbnail``-attribut finnas och bör då användas i första hand. Attributet har formen ``(width, height, cover_data as jpeg)``."
+msgstr "Om värdet inte är None är det en lista med :class:`Metadata`-objekt. Metadata används för att avgöra var boken ska placeras på enheten. ``len(metadata) == len(files)``. Förutom det vanliga omslaget (sökvägen till omslaget) kan ett ``thumbnail``-attribut finnas och bör då användas i första hand. Attributet har formen ``(width, height, cover_data as jpeg)``."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:17
@@ -1889,7 +1913,7 @@ msgstr "Om värdet inte är None är det en lista med :class:`Metadata`-objekt. 
 msgid ""
 "A list of 3-element tuples. The list is meant to be passed to "
 ":meth:`add_books_to_metadata`."
-msgstr "En lista med 3-elements tupler. Listan är tänkt att skickas till :meth:`add_books_to_metadata`."
+msgstr "En lista med tupler med tre element. Listan är avsedd att skickas till :meth:`add_books_to_metadata`."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.add_books_to_metadata:1
@@ -1936,7 +1960,7 @@ msgstr "En tupel som innehåller resultaten av anropen (:meth:`books(oncard=None
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.delete_books:1
 msgid "Delete books at paths on device."
-msgstr "Ta bort böcker i sökvägar på enhet."
+msgstr "Ta bort böcker på de angivna sökvägarna på enheten."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.remove_books_from_metadata:1
@@ -1969,14 +1993,14 @@ msgstr "Läs filen vid ``path`` på enheten och skriv den till outfile."
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_file:3
 msgid "file object like ``sys.stdout`` or the result of an :func:`open` call."
-msgstr "filobjekt som ``sys.stdout`` eller resultatet av ett :func:`open` anrop."
+msgstr "ett filobjekt som ``sys.stdout`` eller resultatet av ett anrop till :func:`open`."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.config_widget:1
 msgid ""
 "Should return a QWidget. The QWidget contains the settings for the device "
 "interface"
-msgstr "Bör returnera en QWidget-gränssnittskomponent. QWidget-gränssnittskomponent innehåller inställningarna för enhetens gränssnitt"
+msgstr "Ska returnera en QWidget-gränssnittskomponent som innehåller inställningarna för enhetens gränssnitt"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.save_settings:1
@@ -1998,7 +2022,7 @@ msgid ""
 "provide the driver the current set of plugboards and a function to select a "
 "specific plugboard. This method is called immediately before add_books and "
 "sync_booklists."
-msgstr "tillhandahåll drivrutinen den aktuella uppsättningen av metadatakopplingar och en funktion för att välja metadatakoppling. Denna metod anropas omedelbart före add_books och sync_booklists."
+msgstr "ge drivrutinen den aktuella uppsättningen metadatakopplingar och en funktion för att välja en viss metadatakoppling. Denna metod anropas omedelbart före add_books och sync_booklists."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:5
@@ -2017,7 +2041,7 @@ msgid ""
 "DEVICE_PLUGBOARD_NAME), the format you are interested in (a 'real' format or"
 " 'device_db'), and the plugboards (you were given those by set_plugboards, "
 "the same place you got this method)."
-msgstr "Du ger den det aktuella enhetsnamnet (antingen klassnamnet eller DEVICE_PLUGBOARD_NAME), formatet du är intresserad av (ett \"riktigt\" format eller \"device_db\") och de metadatakopplingar (du fick dem av set_plugboards, på samma plats som du fick den här metoden)."
+msgstr "Du anger det aktuella enhetsnamnet (antingen klassnamnet eller DEVICE_PLUGBOARD_NAME), formatet du är intresserad av (ett 'riktigt' format eller 'device_db') och metadatakopplingarna (som du fick från set_plugboards tillsammans med denna metod)."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:13
@@ -2040,7 +2064,7 @@ msgstr "Ange enhetens namn i driveinfo-filen till 'name'. Inställningen kvarst�
 msgid ""
 "Non-disk devices should implement this method based on the location codes "
 "returned by the get_device_information() method."
-msgstr "Icke-diskenheter bör genomföra denna metod baserad på platskoder som returneras av get_device_information() metoden."
+msgstr "För enheter som inte fungerar som diskar bör metoden implementeras utifrån de platskoder som returneras av metoden get_device_information()."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.prepare_addable_books:1
@@ -2073,7 +2097,7 @@ msgid ""
 "Called when calibre is shutting down, either for good or in preparation to "
 "restart. Do any cleanup required. This method is called on the device "
 "thread, not the GUI thread."
-msgstr "Anropas när calibre stängs, antingen för gott eller under förberedelser för omstart. Gör den sanering som krävs. Denna metod anropas på enhetens processtråd, inte tråden för det grafiska gränssnittet."
+msgstr "Anropas när calibre stängs, antingen helt eller inför en omstart. Utför nödvändig städning. Metoden anropas i enhetstråden, inte i användargränssnittets tråd."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_device_uid:1
@@ -2141,7 +2165,7 @@ msgstr "Anropas av enhetshanteraren när insticksmoduler startas. Om metoden ret
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2154,8 +2178,9 @@ msgstr "Metoden kan anropas i användargränssnittets tråd. En drivrutin som im
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "Anropas för att starta insticksmodulen. Den ska börja ta emot enhetsanslutningar på det sätt som den använder. Om den redan tar emot anslutningar ska inget göras."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr "Metoden anropas för att starta insticksmodulen. Insticksmodulen ska börja ta emot enhetsanslutningar på det sätt den använder för detta. Om insticksmodulen redan tar emot anslutningar ska inget göras. Returnera ett felmeddelande om insticksmodulen inte kunde startas, annars None."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2172,14 +2197,14 @@ msgid ""
 "Return the value of the option indicated by opt_string. This method can be "
 "called when the plugin is not started. Return None if the option does not "
 "exist."
-msgstr "Returnera värdet av optionen indikerad av opt_string. Den här metoden kan anropas när insticksmodulen inte startats. Returnera None om alternativet inte finns."
+msgstr "Returnera värdet för alternativet som anges av opt_string. Metoden kan anropas även när insticksmodulen inte har startats. Returnera None om alternativet inte finns."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:1
 msgid ""
 "Set the value of the option indicated by opt_string. This method can be "
 "called when the plugin is not started."
-msgstr "Ange värdet av alternativ som indikeras av opt_string. Den här metoden kan anropas när insticksmodulen inte startats."
+msgstr "Ange värdet för alternativet som anges av opt_string. Metoden kan anropas även när insticksmodulen inte har startats."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_running:1
@@ -2220,7 +2245,7 @@ msgid ""
 " value in the returned tuple indicated whether the format is future-dated. "
 "Return True if it is, otherwise return False. calibre will display a dialog "
 "to the user listing all future dated books."
-msgstr "Det andra värdet är i sig en tupel med två värden. Det första anger om ett bokformat ska skickas till enheten. Syftet är att kontrollera att boken på enheten är samma bok som i calibre. Värdet ska vara None om ingen bok ska skickas; annars ska basfilnamnet på enheten returneras, exempelvis foobar.epub. Ta med filnamnstillägget. Enhetsundersystemet skapar ett send_books-jobb för alla böcker vars returnerade värde inte är None. Namnet ignoreras när enheten använder en mall för att skapa filnamnet, förutom när filnamnstillägget senare behöver hämtas. Det andra värdet i den returnerade tupeln anger om formatet har ett framtida datum. Returnera True om det har det, annars False. calibre visar en dialogruta med alla framtidsdaterade böcker."
+msgstr "Det andra värdet är i sig en tupel med två värden. Det första anger om ett bokformat ska skickas till enheten. Syftet är att kontrollera att boken på enheten är samma bok som i calibre. Värdet ska vara None om ingen bok ska skickas; annars ska basfilnamnet på enheten returneras, exempelvis foobar.epub. Ta med filnamnstillägget. Enhetsundersystemet skapar ett send_books-jobb för alla böcker vars returnerade värde inte är None. Om enheten använder en mall för att skapa filnamnet, vilket de flesta enheter gör, används namnet endast för att senare hämta filnamnstillägget. Det andra värdet i den returnerade tupeln anger om formatet har ett framtida datum. Returnera True om det har det, annars False. calibre visar en dialogruta med alla framtidsdaterade böcker."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:27
@@ -2283,14 +2308,14 @@ msgstr "tags (en lista med strängar, kan vara tom)."
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.supports_collections:1
 msgid "Return True if the device supports collections for this book list."
-msgstr "Returnera True om enheten stöder kollektioner för denna boklista."
+msgstr "Returnera True om enheten stöder samlingar för denna boklista."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "Lägg till boken i boklistan. Syftet är att hålla enhetens interna metadata uppdaterade. Returnera True om boklistorna måste synkroniseras."
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr "Lägg till boken i boklistan. Syftet är att underhålla eventuella metadata som enheten lagrar internt. Returnera boken (ett värde som tolkas som sant) om boklistorna måste synkroniseras"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2304,7 +2329,7 @@ msgstr "Ta bort en bok från boklistan. Korrigera samtidigt enhetens metadata."
 msgid ""
 "Return a dictionary of collections created from collection_attributes. Each "
 "entry in the dictionary is of the form collection name:[list of books]"
-msgstr "Returnera en ordbok med samlingar som skapats från collection_attributes. Varje post i ordboken är på formen kollektionsnamn:[lista med böcker]"
+msgstr "Returnera en ordbok med samlingar som skapats från collection_attributes. Varje post i ordboken är på formen samlingsnamn:[lista med böcker]"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.get_collections:5
@@ -2328,7 +2353,7 @@ msgid ""
 ":class:`calibre.devices.usbms.driver.USBMS`. This class in turn inherits "
 "some of its functionality from its bases, documented below. A typical basic "
 "USBMS based driver looks like this:"
-msgstr "Basklass för sådan enhet är :class:`calibre.devices.usbms.driver.USBMS`. Denna klass ärver i sin tur en del av dess funktioner från sina baser, dokumenterad nedan. En typisk grund USBMS baserad drivrutin ser ut så här:"
+msgstr "Basklassen för sådana enheter är :class:`calibre.devices.usbms.driver.USBMS`. Klassen ärver i sin tur en del av sin funktionalitet från sina basklasser, som dokumenteras nedan. En enkel USBMS-baserad drivrutin ser vanligtvis ut så här:"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device:1
@@ -2336,28 +2361,28 @@ msgid ""
 "This class provides logic common to all drivers for devices that export "
 "themselves as USB Mass Storage devices. Provides implementations for "
 "mounting/ejecting of USBMS devices on all platforms."
-msgstr "Denna klass ger logik som är gemensam för alla drivrutiner för enheter som exporterar själva som USB-masslagringsenheter. Ger implementationer för montering/utmatning av USBMS-enheter på alla plattformar."
+msgstr "Klassen tillhandahåller gemensam logik för alla drivrutiner för enheter som presenterar sig som USB-masslagringsenheter. Den innehåller implementationer för montering och utmatning av USBMS-enheter på alla plattformar."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.WINDOWS_MAIN_MEM:1
 msgid ""
 "String identifying the main memory of the device in the Windows PnP id "
 "strings This can be None, string, list of strings or compiled regex"
-msgstr "Sträng som identifierar enhetens huvudminne i Windows PnP-id-strängarna Detta kan vara None, en sträng, en lista med strängar eller ett kompilerat reguljärt uttryck."
+msgstr "Sträng som identifierar enhetens huvudminne i Windows PnP-id-strängar. Värdet kan vara None, en sträng, en lista med strängar eller ett kompilerat reguljärt uttryck."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.WINDOWS_CARD_A_MEM:1
 msgid ""
 "String identifying the first card of the device in the Windows PnP id "
 "strings This can be None, string, list of strings or compiled regex"
-msgstr "Sträng som identifierar enhetens första kort i Windows PnP-id-strängarna Detta kan vara None, en sträng, en lista med strängar eller ett kompilerat reguljärt uttryck."
+msgstr "Sträng som identifierar enhetens första kort i Windows PnP-id-strängar. Värdet kan vara None, en sträng, en lista med strängar eller ett kompilerat reguljärt uttryck."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.WINDOWS_CARD_B_MEM:1
 msgid ""
 "String identifying the second card of the device in the Windows PnP id "
 "strings This can be None, string, list of strings or compiled regex"
-msgstr "Sträng som identifierar enhetens andra kort i Windows PnP-id-strängarna Detta kan vara None, en sträng, en lista med strängar eller ett kompilerat reguljärt uttryck."
+msgstr "Sträng som identifierar enhetens andra kort i Windows PnP-id-strängar. Värdet kan vara None, en sträng, en lista med strängar eller ett kompilerat reguljärt uttryck."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.OSX_MAIN_MEM_VOL_PAT:1
@@ -2370,7 +2395,7 @@ msgstr "Används av den nya drivrutinsidentifieringen för att skilja huvudminne
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.MAX_PATH_LEN:1
 msgid "The maximum length of paths created on the device"
-msgstr "Största längd av sökvägar som skapas på enheten"
+msgstr "Den maximala längden på sökvägar som skapas på enheten"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.NEWS_IN_FOLDER:1
@@ -2390,14 +2415,14 @@ msgstr "Anropas för att skilja huvudminnet från minneskortet på enheter där 
 msgid ""
 "Callback to allow individual device drivers to override the path "
 "sanitization used by :meth:`create_upload_path`."
-msgstr "Tillbakaanrop för att låta enskilda drivrutiner åsidosätta sanering av sökvägar som används av :meth:`create_upload_path`."
+msgstr "Återanrop som låter enskilda drivrutiner åsidosätta den sökvägssanering som används av :meth:`create_upload_path`."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.filename_callback:1
 msgid ""
 "Callback to allow drivers to change the default file name set by "
 ":meth:`create_upload_path`."
-msgstr "Tillbakaanrop för att låta enskilda drivrutiner ändra standardfilnamnet fastställt av :meth:`create_upload_path`."
+msgstr "Återanrop som låter drivrutiner ändra det standardfilnamn som anges av :meth:`create_upload_path`."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.sanitize_path_components:1
@@ -2409,7 +2434,7 @@ msgstr "Utför valfri enhetsspecifik sanering på sökvägskomponenter för file
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.get_annotations:1
 msgid "Resolve path_map to annotation_map of files found on the device"
-msgstr "Lös upp path_map till annotation_map för filer som hittats på enheten"
+msgstr "Omvandla path_map till annotation_map för filer som hittats på enheten"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.add_annotation_to_library:1
@@ -2471,7 +2496,7 @@ msgid ""
 "A plugin representing an \"action\" that can be taken in the graphical user "
 "interface. All the items in the toolbar and context menus are implemented by"
 " these plugins."
-msgstr "En insticksmodul som representerar en \"åtgärd\" som kan tas i grafiska användargränssnittet. Alla poster i verktygsfältet och snabbmenyer implementeras av dessa insticksmoduler."
+msgstr "En insticksmodul som representerar en åtgärd som kan utföras i det grafiska användargränssnittet. Alla poster i verktygsfältet och snabbmenyerna implementeras av dessa insticksmoduler."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:5
@@ -2487,7 +2512,7 @@ msgstr "Denna klass är basklassen för insticksmodulerna. För att integrera en
 msgid ""
 "If two :class:`InterfaceAction` objects have the same name, the one with "
 "higher priority takes precedence."
-msgstr "Om två :class:`InterfaceAction` objekt har samma namn, tar den med högre prioritet företräde."
+msgstr "Om två :class:`InterfaceAction`-objekt har samma namn får det med högre prioritet företräde."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:13
@@ -2496,14 +2521,14 @@ msgid ""
 ":meth:`location_selected`, :meth:`shutting_down`, "
 ":meth:`initialization_complete` and :meth:`tag_browser_context_action` "
 "methods."
-msgstr "Underklasser bör implementera :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected`, :meth:`shutting_down`, :meth:`initialization_complete` och :meth:`tag_browser_context_action` metoder."
+msgstr "Underklasser bör implementera metoderna :meth:`genesis`, :meth:`library_changed`, :meth:`location_selected`, :meth:`shutting_down`, :meth:`initialization_complete` och :meth:`tag_browser_context_action`."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:17
 msgid ""
 "Once initialized, this plugin has access to the main calibre GUI via the "
 ":attr:`gui` member. You can access other plugins by name, for example::"
-msgstr "När initierats, har denna insticksmodul tillgång till calibres huvudanvändargränssnitt via :attr:`gui` medlem. Du kan komma åt andra insticksmodul med namn, till exempel::"
+msgstr "När insticksmodulen har initierats har den tillgång till calibres huvudanvändargränssnitt via medlemmen :attr:`gui`. Du kan komma åt andra insticksmoduler via deras namn, till exempel::"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:22
@@ -2538,7 +2563,7 @@ msgstr "Insticksmodulens prioritet. Om två insticksmoduler har samma namn får 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.popup_type:1
 msgid "The menu popup type for when this plugin is added to a toolbar"
-msgstr "Menypopuptypen för när denna insticksmodul läggs till i ett verktygsfält"
+msgstr "Hur menyn öppnas när insticksmodulen läggs till i ett verktygsfält"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.auto_repeat:1
@@ -2562,7 +2587,7 @@ msgstr "På formen (text, icon_path, tooltip, kortkommando). Ikonen, verktygstip
 msgid ""
 "If not None, used for the name displayed to the user when customizing the "
 "keyboard shortcuts for the above action spec instead of action_spec[0]"
-msgstr "Om inte None, används för namnet som visas för användaren när man anpassar kortkommandon för ovanstående åtgärdsspecifikation i stället för action_spec[0]"
+msgstr "Om värdet inte är None används det i stället för action_spec[0] som namn när användaren anpassar kortkommandon för ovanstående åtgärdsspecifikation"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.action_add_menu:1
@@ -2575,14 +2600,14 @@ msgid ""
 "If True, a clone of self.qaction is added to the menu of self.qaction If you"
 " want the text of this action to be different from that of self.qaction, set"
 " this variable to the new text"
-msgstr "Om True, läggs en klon av self.qaction till menyn för self.qaction Om du vill att texten i den här åtgärden ska vara annorlunda än self.qaction, ställ in den här variabeln till den nya texten"
+msgstr "Om True läggs en klon av self.qaction till i menyn för self.qaction. Om du vill att klonens text ska skilja sig från texten för self.qaction anger du den nya texten som värde för denna variabel"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.dont_add_to:1
 msgid ""
 "Set of locations to which this action must not be added. See "
 ":attr:`all_locations` for a list of possible locations"
-msgstr "Uppsättning av platser som denna åtgärd får inte tilläggas. Se :attr:`all_locations` för en lista med möjliga platser"
+msgstr "En mängd med platser där åtgärden inte får läggas till. Möjliga platser anges i :attr:`all_locations`."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.dont_remove_from:1
@@ -2647,7 +2672,7 @@ msgstr "Den QMenu som den nyligen skapade åtgärden läggs till i"
 msgid ""
 "A unique name for this action, this must be globally unique, so make it as "
 "descriptive as possible. If in doubt, add an UUID to it."
-msgstr "Ett unikt namn för den här åtgärden, det måste vara globalt unikt, så gör det så beskrivande som möjligt. Om du är osäker, lägg till ett uuid i den."
+msgstr "Ett globalt unikt namn för åtgärden. Gör namnet så beskrivande som möjligt. Om du är osäker kan du lägga till ett UUID i namnet."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:10
@@ -2659,7 +2684,7 @@ msgstr "Texten för denna åtgärd."
 msgid ""
 "Either a QIcon or a file name. The file name is passed to the QIcon.ic() "
 "builtin, so you do not need to pass the full path to the images folder."
-msgstr "Antingen en QIcon eller ett filnamn. Filnamnet skickas till QIcon.ic() inbyggda, så du behöver inte ange den fullständiga sökvägen till bildmappen."
+msgstr "Antingen en QIcon eller ett filnamn. Filnamnet skickas till den inbyggda funktionen QIcon.ic(), så du behöver inte ange den fullständiga sökvägen till bildmappen."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:14
@@ -2709,7 +2734,7 @@ msgid ""
 "Setup this plugin. Only called once during initialization. self.gui is "
 "available. The action specified by :attr:`action_spec` is available as "
 "``self.qaction``."
-msgstr "Ställ in denna insticksmodul. Endast anropas en gång under initieringen. self.gui är tillgänglig. Den funktion som specificerats :attr:`action_spec` finns som ``self.qaction``."
+msgstr "Konfigurera denna insticksmodul. Metoden anropas bara en gång under initieringen. self.gui är tillgänglig. Åtgärden som anges av :attr:`action_spec` finns som ``self.qaction``."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.location_selected:1
@@ -2723,29 +2748,29 @@ msgstr "Anropas när boklistan som visas i calibre ändras. För närvarande är
 msgid ""
 "This method should enable/disable this action and its sub actions as "
 "appropriate for the location."
-msgstr "Denna metod bör aktivera/inaktivera denna åtgärd och dess underåtgärder som är lämpliga för platsen."
+msgstr "Metoden bör aktivera eller inaktivera åtgärden och dess underåtgärder efter vad som är lämpligt för platsen."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.library_about_to_change:1
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.library_changed:1
 msgid "Called whenever the current library is changed."
-msgstr "Anropas var gång det aktuella biblioteket är ändrat."
+msgstr "Anropas varje gång det aktuella biblioteket byts."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.library_about_to_change:3
 msgid "The LibraryDatabase corresponding to the previous library."
-msgstr "LibraryDatabasen som motsvarar det förra biblioteket."
+msgstr "Det LibraryDatabase-objekt som motsvarar det föregående biblioteket."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.library_about_to_change:4
 msgid "The LibraryDatabase corresponding to the new library."
-msgstr "LibraryDatabasen som motsvarar det nya biblioteket."
+msgstr "Det LibraryDatabase-objekt som motsvarar det nya biblioteket."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.library_changed:3
 msgid "The LibraryDatabase corresponding to the current library."
-msgstr "LibraryDatabase motsvarar det aktuella biblioteket."
+msgstr "Det LibraryDatabase-objekt som motsvarar det aktuella biblioteket."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.gui_layout_complete:1
@@ -2769,7 +2794,7 @@ msgid ""
 "Test it for validity with index.valid() and get the underlying TagTreeItem "
 "object with index.data(Qt.ItemDataRole.UserRole). Any action objects yielded"
 " by this method will be added to the context menu."
-msgstr "Anropas när snabbmenyn visas i taggbläddraren. ``index`` är QModelIndex som hänvisar till posten i taggbläddraren som högerklickades. Testa giltigheten med index.valid() och få den underliggande TagTreeItem-posten med index.data(Qt.ItemDataRole.UserRole). Eventuella åtgärdsobjekt som ges av denna metod läggs till i snabbmenyn."
+msgstr "Anropas när snabbmenyn visas i taggbläddraren. ``index`` är det QModelIndex som pekar på den högerklickade posten i taggbläddraren. Kontrollera giltigheten med index.valid() och hämta det underliggande TagTreeItem-objektet med index.data(Qt.ItemDataRole.UserRole). De åtgärdsobjekt som metoden genererar läggs till i snabbmenyn."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.shutting_down:1
@@ -2777,7 +2802,12 @@ msgid ""
 "Called once per plugin when the main GUI is in the process of shutting down."
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
-msgstr "Anropas en gång per insticksmodul när huvud-GUI är i färd med att stängas av. Släpp alla använda resurser, men försök att inte blockera avstängning under långa tidsperioder."
+msgstr "Anropas en gång per insticksmodul när huvudanvändargränssnittet håller på att stängas. Frigör använda resurser, men undvik att blockera avslutningen under längre tid."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr "Importsökväg till den faktiska klassen för gränssnittsåtgärden i formen module:class"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1
@@ -2829,7 +2859,7 @@ msgstr "Kategorin som insticksmodulen ska tillhöra"
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.gui_category:1
 msgid "The category name displayed to the user for this plugin"
-msgstr "Kategorinamnet som visas till användaren för denna insticksmodul"
+msgstr "Kategorinamnet som visas för användaren för denna insticksmodul"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.gui_name:1
@@ -2906,7 +2936,7 @@ msgstr "Om värdet är True hindrar dialogrutan Inställningar användaren från
 msgid ""
 "Called once before the widget is displayed, should perform any necessary "
 "setup."
-msgstr "Anropas en gång innan gränssnittskomponenten visas, bör utföra alla nödvändiga inställningar."
+msgstr "Anropas en gång innan gränssnittskomponenten visas och bör utföra nödvändig initiering."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:4
@@ -2978,7 +3008,7 @@ msgid ""
 "If your config widget inherits from this class but includes setting that are"
 " not registered, you should override the :class:`ConfigWidgetInterface` "
 "methods and call the base class methods inside the overrides."
-msgstr "Om din konfigureringsgränssnittskomponent ärver från denna klass men inkluderar inställning som inte är registrerad, bör du åsidosätta :class:`ConfigWidgetInterface`-metoder och anropa basklassmetoder inuti åsidosättningarna."
+msgstr "Om din konfigurationskomponent ärver från denna klass men innehåller inställningar som inte är registrerade bör du åsidosätta metoderna i :class:`ConfigWidgetInterface` och anropa basklassens metoder inifrån de åsidosatta metoderna."
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:1

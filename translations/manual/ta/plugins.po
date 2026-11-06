@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 02:31+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Tamil (http://app.transifex.com/calibre/calibre/language/ta/)\n"
@@ -435,6 +435,13 @@ msgid ""
 msgstr "உண்மை என்றால், மாற்று வெளியீட்டு சொருகி தயாரித்த இறுதிக் கோப்பில் மாற்றப்பட்ட பிறகு இந்த சொருகி இயக்கப்படுகிறது."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -747,6 +754,23 @@ msgid ""
 "of which have ISBNs and some of which do not, the results without ISBNs will"
 " be ignored"
 msgstr "உண்மை என அமைக்கப்பட்டால், இந்த மூலமானது வினவலுக்கு பல முடிவுகளைத் தருகிறது, அவற்றில் சில ஐ.எச்.பி.என் -கள் உள்ளன, அவற்றில் சில இல்லை, ஐ.எச்.பி.என்.எச் இல்லாத முடிவுகள் புறக்கணிக்கப்படும்"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.uses_camoufox_worker:1
+msgid ""
+"If set to True this source uses the Camoufox browser shared by all metadata "
+"downloads, see :mod:`calibre.web.automate.metadata`, which is then started "
+"before metadata is downloaded, so that it is ready in time. Such sources are"
+" also waited for longer after the first result from any source arrives, "
+"since downloading with a browser is slow."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -1390,6 +1414,16 @@ msgstr "சாதனத்தில் புத்தகங்களுக்�
 #: calibre.devices.interface.DevicePlugin.icon:1
 msgid "Icon for this device"
 msgstr "இந்த சாதனத்திற்கான படவுரு"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.type:1
+msgid "Alias for field number 0"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.value:1
+msgid "Alias for field number 1"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.OPEN_FEEDBACK_MESSAGE:1
@@ -2120,7 +2154,7 @@ msgstr "செருகுநிரல்களைத் தொடங்கு�
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2133,8 +2167,9 @@ msgstr "இந்த முறையை gui நூலில் அழைக்�
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "சொருகி தொடங்க இந்த முறை அழைக்கப்படுகிறது. சொருகி சாதன இணைப்புகளை ஏற்கத் தொடங்க வேண்டும். சொருகி ஏற்கனவே இணைப்புகளை ஏற்றுக்கொண்டால், எதுவும் செய்ய வேண்டாம்."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2268,8 +2303,8 @@ msgstr "இந்த புத்தக பட்டியலுக்கான 
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "புத்தகத்தை புத்தகப் பட்டியலில் சேர்க்கவும். எந்த சாதன-உள் மெட்டாடேட்டாவையும் பராமரிப்பதே நோக்கம். புத்தகப் பட்டியல்கள் ஒத்திசைக்கப்பட வேண்டும் என்றால் உண்மை திரும்பவும்"
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2757,6 +2792,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "முதன்மையான gui மூடப்படும் பணியில் இருக்கும்போது ஒரு சொருகி ஒரு முறை அழைக்கப்படுகிறது. பயன்படுத்தப்பட்ட எந்தவொரு வளங்களையும் விடுவிக்கவும், ஆனால் நீண்ட காலத்திற்கு பணிநிறுத்தத்தைத் தடுக்க வேண்டாம்."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

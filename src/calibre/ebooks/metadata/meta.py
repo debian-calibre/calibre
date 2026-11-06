@@ -2,6 +2,7 @@
 
 import collections
 import os
+from typing import IO, TYPE_CHECKING, cast
 
 import regex
 
@@ -9,8 +10,17 @@ from calibre.constants import filesystem_encoding
 from calibre.customize.ui import get_file_type_metadata, set_file_type_metadata
 from calibre.ebooks.metadata import MetaInformation, string_to_authors
 from calibre.ebooks.metadata.opf2 import OPF
+from calibre.utils import StreamOrPath
 from calibre.utils.config import prefs
+from calibre.utils.filenames import is_existing_subpath
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    import re
+    from collections.abc import Callable
+
+    from calibre.ebooks.metadata.book.base import Metadata
+    from calibre.ptempfile import PersistentTemporaryFile
 
 # The priorities for loading metadata from different file types
 # Higher values should be used to update metadata from lower values
@@ -40,11 +50,11 @@ for i, ext in enumerate((
     METADATA_PRIORITIES[ext] = i + 1
 
 
-def path_to_ext(path):
+def path_to_ext(path: str) -> str:
     return os.path.splitext(path)[1][1:].lower()
 
 
-def metadata_from_formats(formats, force_read_metadata=False, pattern=None):
+def metadata_from_formats(formats: list[str], force_read_metadata: bool = False, pattern: re.Pattern[str] | None = None) -> Metadata:
     try:
         return _metadata_from_formats(formats, force_read_metadata, pattern)
     except Exception:
@@ -54,7 +64,7 @@ def metadata_from_formats(formats, force_read_metadata=False, pattern=None):
         return mi
 
 
-def _metadata_from_formats(formats, force_read_metadata=False, pattern=None):
+def _metadata_from_formats(formats: list[str], force_read_metadata: bool = False, pattern: re.Pattern[str] | None = None) -> Metadata:
     mi = MetaInformation(None, None)
     formats.sort(key=lambda x: METADATA_PRIORITIES[path_to_ext(x)])
     extensions = list(map(path_to_ext, formats))
@@ -88,7 +98,13 @@ def _metadata_from_formats(formats, force_read_metadata=False, pattern=None):
     return mi
 
 
-def get_metadata(stream, stream_type='lrf', use_libprs_metadata=False, force_read_metadata=False, pattern=None):
+def get_metadata(
+    stream: IO[bytes],
+    stream_type: str | None = 'lrf',
+    use_libprs_metadata: bool = False,
+    force_read_metadata: bool = False,
+    pattern: re.Pattern[str] | None = None,
+) -> Metadata:
     pos = 0
     if hasattr(stream, 'tell'):
         pos = stream.tell()
@@ -99,7 +115,13 @@ def get_metadata(stream, stream_type='lrf', use_libprs_metadata=False, force_rea
             stream.seek(pos)
 
 
-def _get_metadata(stream, stream_type, use_libprs_metadata, force_read_metadata=False, pattern=None):
+def _get_metadata(
+    stream: IO[bytes],
+    stream_type: str | None,
+    use_libprs_metadata: bool,
+    force_read_metadata: bool = False,
+    pattern: re.Pattern[str] | None = None,
+) -> Metadata:
     if stream_type:
         stream_type = stream_type.lower()
     if stream_type in ('html', 'html', 'xhtml', 'xhtm', 'xml'):
@@ -116,6 +138,7 @@ def _get_metadata(stream, stream_type, use_libprs_metadata, force_read_metadata=
             opf = opf_metadata(os.path.abspath(c))
 
     if use_libprs_metadata and getattr(opf, 'application_id', None) is not None:
+        assert opf is not None  # getattr(None, 'application_id', None) is None
         return opf
 
     name = os.path.basename(getattr(stream, 'name', ''))
@@ -131,7 +154,7 @@ def _get_metadata(stream, stream_type, use_libprs_metadata, force_read_metadata=
         base.title = _('Unknown')
     mi = MetaInformation(None, None)
     if force_read_metadata or prefs['read_file_metadata']:
-        mi = get_file_type_metadata(stream, stream_type)
+        mi = get_file_type_metadata(stream, stream_type or '')
     base.smart_update(mi)
     if opf is not None:
         base.smart_update(opf)
@@ -139,13 +162,19 @@ def _get_metadata(stream, stream_type, use_libprs_metadata, force_read_metadata=
     return base
 
 
-def set_metadata(stream, mi, stream_type='lrf', report_error=None):
+def set_metadata(
+    stream: IO[bytes] | PersistentTemporaryFile,
+    mi: Metadata,
+    stream_type: str | None = 'lrf',
+    report_error: Callable[[Metadata, str, str], object] | None = None,
+) -> None:
     if stream_type:
         stream_type = stream_type.lower()
-    set_file_type_metadata(stream, mi, stream_type, report_error=report_error)
+    # PersistentTemporaryFile is a file like object
+    set_file_type_metadata(cast('IO[bytes]', stream), mi, stream_type or '', report_error=report_error)
 
 
-def metadata_from_filename(name, pat=None, fallback_pat=None):
+def metadata_from_filename(name: str | bytes, pat: re.Pattern[str] | None = None, fallback_pat: re.Pattern[str] | None = None) -> Metadata:
     if isinstance(name, bytes):
         name = name.decode(filesystem_encoding, 'replace')
     name = name.rpartition('.')[0]
@@ -175,7 +204,7 @@ def metadata_from_filename(name, pat=None, fallback_pat=None):
                 mi.authors = aus
                 if prefs['swap_author_names'] and mi.authors:
 
-                    def swap(a):
+                    def swap(a: str) -> str:
                         if ',' in a:
                             parts = a.split(',', 1)
                         else:
@@ -227,31 +256,31 @@ def metadata_from_filename(name, pat=None, fallback_pat=None):
     return mi
 
 
-def opf_metadata(opfpath):
-    if hasattr(opfpath, 'read'):
-        f = opfpath
-        opfpath = getattr(f, 'name', os.getcwd())
-    else:
-        f = open(opfpath, 'rb')
+def opf_metadata(opfpath: str | IO[bytes]) -> Metadata | None:
     try:
-        opf = OPF(f, os.path.dirname(opfpath))
-        if opf.application_id is not None:
-            mi = opf.to_book_metadata()
-            if hasattr(opf, 'cover') and opf.cover:
-                cpath = os.path.join(os.path.dirname(opfpath), opf.cover)
-                if os.access(cpath, os.R_OK):
-                    fmt = cpath.rpartition('.')[-1]
-                    with open(cpath, 'rb') as f:
-                        data = f.read()
-                    mi.cover_data = (fmt, data)
-            return mi
+        with StreamOrPath(opfpath, 'rb') as f:
+            opfpath = getattr(f, 'name', os.getcwd())
+            opf = OPF(f, os.path.dirname(opfpath))
+            if opf.application_id is not None:
+                mi = opf.to_book_metadata()
+                if hasattr(opf, 'cover') and opf.cover:
+                    base = os.path.dirname(opfpath)
+                    cpath = os.path.join(base, opf.cover)
+                    # Only read covers inside the OPF's directory, to prevent
+                    # a malicious OPF from reading arbitrary files
+                    if is_existing_subpath(cpath, base) and os.access(cpath, os.R_OK):
+                        fmt = cpath.rpartition('.')[-1]
+                        with open(cpath, 'rb') as f:
+                            data = f.read()
+                        mi.cover_data = (fmt, data)
+                return mi
     except Exception:
         import traceback
 
         traceback.print_exc()
 
 
-def forked_read_metadata(original_path, tdir):
+def forked_read_metadata(original_path: str, tdir: str) -> None:
     from calibre.ebooks.metadata.opf2 import metadata_to_opf
     from calibre.ebooks.metadata.worker import run_import_plugins
     from calibre.utils.filenames import make_long_path_useable
@@ -268,7 +297,7 @@ def forked_read_metadata(original_path, tdir):
             s.write(str(sz).encode('ascii'))
         f.seek(0)
         mi = get_metadata(f, fmt)
-    if mi.cover_data and mi.cover_data[1]:
+    if mi.cover_data[1]:
         with open(os.path.join(tdir, 'cover.jpg'), 'wb') as f:
             f.write(mi.cover_data[1])
         mi.cover_data = (None, None)

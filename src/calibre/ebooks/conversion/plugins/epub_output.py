@@ -4,12 +4,23 @@
 import os
 import re
 import shutil
+from typing import TYPE_CHECKING, cast
 
 from calibre import CurrentDir
-from calibre.customize.conversion import OptionRecommendation, OutputFormatPlugin
+from calibre.customize.conversion import InputFormatPlugin, OptionRecommendation, OutputFormatPlugin
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.localization import _
 from polyglot.builtins import as_bytes
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from optparse import Values
+
+    from lxml.etree import _Element
+
+    from calibre.ebooks.oeb.base import TOC, OEBBook
+    from calibre.ebooks.oeb.polish.container import Container, EpubContainer
+    from calibre.utils.logging import Log
 
 block_level_tags = (
     'address',
@@ -69,6 +80,9 @@ max_image_size_help = _(
 
 
 class EPUBOutput(OutputFormatPlugin):
+    if TYPE_CHECKING:
+        #: Set temporarily by the KEPUB output plugin to modify the container before it is written out
+        container_callback: Callable[[Container], None]
     name = 'EPUB Output'
     author = 'Kovid Goyal'
     file_type = 'epub'
@@ -151,11 +165,14 @@ class EPUBOutput(OutputFormatPlugin):
 
     recommendations = {('pretty_print', True, OptionRecommendation.HIGH)}
 
-    def workaround_webkit_quirks(self):  # {{{
+    def workaround_webkit_quirks(self) -> None:  # {{{
+        from lxml import etree
+
         from calibre.ebooks.oeb.base import XPath
 
         for x in self.oeb.spine:
             root = x.data
+            assert isinstance(root, etree._Element)
             body = XPath('//h:body')(root)
             if body:
                 body = body[0]
@@ -169,14 +186,37 @@ class EPUBOutput(OutputFormatPlugin):
 
     # }}}
 
-    def upshift_markup(self):  # {{{
+    def html_language(self) -> str | None:
+        from calibre.ebooks.oeb.transforms.cover import CoverManager
+
+        return CoverManager.book_language(self.oeb)
+
+    def set_html_languages(self) -> None:
+        # Screen readers and text-to-speech need the language of the text.
+        # For EPUB 3 the lang attribute is added when upgrading.
+        from lxml import etree
+
+        from calibre.ebooks.oeb.base import XML
+
+        if not (book_lang := self.html_language()):
+            return
+        for x in self.oeb.spine:
+            root = x.data
+            assert isinstance(root, etree._Element)
+            if not root.get(XML('lang')) and not root.get('lang'):
+                root.set(XML('lang'), book_lang)
+
+    def upshift_markup(self) -> None:  # {{{
         "Upgrade markup to comply with XHTML 1.1 where possible"
+        from lxml import etree
+
         from calibre.ebooks.oeb.base import XML, XPath
 
         for x in self.oeb.spine:
             root = x.data
-            if (not root.get(XML('lang'))) and (root.get('lang')):
-                root.set(XML('lang'), root.get('lang'))
+            assert isinstance(root, etree._Element)
+            if (not root.get(XML('lang'))) and (lang := root.get('lang')):
+                root.set(XML('lang'), lang)
             body = XPath('//h:body')(root)
             if body:
                 body = body[0]
@@ -202,7 +242,7 @@ class EPUBOutput(OutputFormatPlugin):
 
     # }}}
 
-    def convert(self, oeb_book, output, input_plugin, opts, log):
+    def convert(self, oeb_book: OEBBook, output: str, input_plugin: InputFormatPlugin, opts: Values, log: Log) -> None:
         oeb = oeb_book
         output_path = output
         self.log, self.opts, self.oeb = log, opts, oeb
@@ -246,6 +286,7 @@ class EPUBOutput(OutputFormatPlugin):
             preserve_aspect_ratio=self.opts.preserve_cover_aspect_ratio,
         )
         cm(self.oeb, self.opts, self.log)
+        self.set_html_languages()
 
         self.workaround_sony_quirks()
 
@@ -259,7 +300,7 @@ class EPUBOutput(OutputFormatPlugin):
         identifiers = oeb.metadata['identifier']
         uuid = None
         for x in identifiers:
-            if x.get(OPF('scheme'), None).lower() == 'uuid' or str(x).startswith('urn:uuid:'):
+            if (x.get(OPF('scheme')) or '').lower() == 'uuid' or str(x).startswith('urn:uuid:'):
                 uuid = str(x).split(':')[-1]
                 break
         encrypted_fonts = getattr(input_plugin, 'encrypted_fonts', [])
@@ -291,6 +332,7 @@ class EPUBOutput(OutputFormatPlugin):
                     metadata_xml, atom_xml = sony_metadata(oeb)
                     extra_entries = [('atom.xml', 'application/atom+xml', atom_xml)]
             oeb_output = plugin_for_output_format('oeb')
+            assert oeb_output is not None
             oeb_output.convert(oeb, tdir, input_plugin, opts, log)
             opf = [x for x in os.listdir(tdir) if x.endswith('.opf')][0]
             self.condense_ncx([os.path.join(tdir, x) for x in os.listdir(tdir) if x.endswith('.ncx')][0])
@@ -325,7 +367,7 @@ class EPUBOutput(OutputFormatPlugin):
                     zf.extractall(path=opts.extract_to)
                 self.log.info('Book extracted to:', opts.extract_to)
 
-    def create_container(self, tdir, opf, encryption):
+    def create_container(self, tdir: str, opf: str, encryption: str | bytes | None) -> tuple[EpubContainer, str, str]:
         from calibre.ebooks.epub import simple_container_xml
 
         try:
@@ -344,15 +386,16 @@ class EPUBOutput(OutputFormatPlugin):
         container = EpubContainer(tdir, self.log)
         return container, f.name, enc_file_name
 
-    def end_container(self, cxpath, encpath):
+    def end_container(self, cxpath: str, encpath: str) -> bytes | None:
         os.remove(cxpath)
         encryption = None
         if encpath:
-            encryption = open(encpath, 'rb').read()
+            with open(encpath, 'rb') as f:
+                encryption = f.read()
             os.remove(encpath)
         return encryption
 
-    def upgrade_to_epub3(self, tdir, opf, encryption=None):
+    def upgrade_to_epub3(self, tdir: str, opf: str, encryption: str | bytes | None = None) -> bytes | None:
         self.log.info('Upgrading to EPUB 3...')
         from calibre.ebooks.oeb.polish.cover import fix_conversion_titlepage_links_in_nav
         from calibre.ebooks.oeb.polish.upgrade import epub_2_to_3
@@ -373,7 +416,7 @@ class EPUBOutput(OutputFormatPlugin):
             pass
         return encryption
 
-    def encrypt_fonts(self, uris, tdir, uuid):  # {{{
+    def encrypt_fonts(self, uris: list[str], tdir: str, uuid: str) -> str | None:  # {{{
         from polyglot.binary import from_hex_bytes
 
         key = re.sub(r'[^a-fA-F0-9]', '', uuid)
@@ -383,12 +426,12 @@ class EPUBOutput(OutputFormatPlugin):
         paths = []
         with CurrentDir(tdir):
             paths = [os.path.join(*x.split('/')) for x in uris]
-            uris = dict(zip(uris, paths))
+            uri_map = dict(zip(uris, paths))
             fonts = []
-            for uri in list(uris.keys()):
-                path = uris[uri]
+            for uri in list(uri_map.keys()):
+                path = uri_map[uri]
                 if not os.path.exists(path):
-                    uris.pop(uri)
+                    uri_map.pop(uri)
                     continue
                 self.log.debug('Encrypting font:', uri)
                 with open(path, 'r+b') as f:
@@ -423,7 +466,7 @@ class EPUBOutput(OutputFormatPlugin):
 
     # }}}
 
-    def condense_ncx(self, ncx_path):  # {{{
+    def condense_ncx(self, ncx_path: str) -> None:  # {{{
         from lxml import etree
 
         if not self.opts.pretty_print:
@@ -439,11 +482,14 @@ class EPUBOutput(OutputFormatPlugin):
 
     # }}}
 
-    def workaround_ade_quirks(self):  # {{{
+    def workaround_ade_quirks(self) -> None:  # {{{
         """
         Perform various markup transforms to get the output to render correctly
         in the quirky ADE.
         """
+        from css_parser.css import CSSStyleSheet
+        from lxml import etree
+
         from calibre.ebooks.oeb.base import XHTML, XPath, barename, urlunquote
 
         stylesheet = self.oeb.manifest.main_stylesheet
@@ -461,6 +507,7 @@ class EPUBOutput(OutputFormatPlugin):
 
         for x in self.oeb.spine:
             root = x.data
+            assert isinstance(root, etree._Element)
             body = XPath('//h:body')(root)
             if body:
                 body = body[0]
@@ -552,26 +599,27 @@ class EPUBOutput(OutputFormatPlugin):
             special_chars = re.compile(r'[\u200b\u00ad]')
             for elem in root.iterdescendants('*'):
                 if elem.text:
-                    elem.text = special_chars.sub('', elem.text)
-                    elem.text = elem.text.replace('\u2011', '-')
+                    elem.text = special_chars.sub('', elem.text).replace('\u2011', '-')
                 if elem.tail:
-                    elem.tail = special_chars.sub('', elem.tail)
-                    elem.tail = elem.tail.replace('\u2011', '-')
+                    elem.tail = special_chars.sub('', elem.tail).replace('\u2011', '-')
 
             if stylesheet is not None:
                 # ADE doesn't render lists correctly if they have left margins
                 from css_parser.css import CSSRule
 
+                sheet = stylesheet.data
+                assert isinstance(sheet, CSSStyleSheet)
+
                 for lb in XPath('//h:ul[@class]|//h:ol[@class]')(root):
                     sel = '.' + lb.get('class')
-                    for rule in stylesheet.data.cssRules.rulesOfType(CSSRule.STYLE_RULE):
+                    for rule in sheet.cssRules.rulesOfType(CSSRule.STYLE_RULE):
                         if sel == rule.selectorList.selectorText:
                             rule.style.removeProperty('margin-left')
                             # padding-left breaks rendering in webkit and gecko
                             rule.style.removeProperty('padding-left')
                 # Change whitespace:pre to pre-wrap to accommodate readers that
                 # cannot scroll horizontally
-                for rule in stylesheet.data.cssRules.rulesOfType(CSSRule.STYLE_RULE):
+                for rule in sheet.cssRules.rulesOfType(CSSRule.STYLE_RULE):
                     style = rule.style
                     ws = style.getPropertyValue('white-space')
                     if ws == 'pre':
@@ -579,14 +627,16 @@ class EPUBOutput(OutputFormatPlugin):
 
     # }}}
 
-    def workaround_sony_quirks(self):  # {{{
+    def workaround_sony_quirks(self) -> None:  # {{{
         """
         Perform toc link transforms to alleviate slow loading.
         """
+        from lxml import etree
+
         from calibre.ebooks.oeb.base import XPath, urldefrag
         from calibre.ebooks.oeb.polish.toc import item_at_top
 
-        def frag_is_at_top(root, frag):
+        def frag_is_at_top(root: _Element, frag: str) -> bool:
             elem = XPath(f'//*[@id="{frag}" or @name="{frag}"]')(root)
             if elem:
                 elem = elem[0]
@@ -594,13 +644,15 @@ class EPUBOutput(OutputFormatPlugin):
                 return False
             return item_at_top(elem)
 
-        def simplify_toc_entry(toc):
+        def simplify_toc_entry(toc: TOC) -> None:
             if toc.href:
                 href, frag = urldefrag(toc.href)
                 if frag:
                     for x in self.oeb.spine:
                         if x.href == href:
-                            if frag_is_at_top(x.data, frag):
+                            root = x.data
+                            assert isinstance(root, etree._Element)
+                            if frag_is_at_top(root, frag):
                                 self.log.debug('Removing anchor from TOC href:', href + '#' + frag)
                                 toc.href = href
                             break
@@ -670,13 +722,13 @@ class KEPUBOutput(OutputFormatPlugin):
 
     recommendations = set(EPUBOutput.recommendations)
 
-    def convert(self, oeb_book, output, input_plugin, opts, log):
+    def convert(self, oeb_book: OEBBook, output: str, input_plugin: InputFormatPlugin, opts: Values, log: Log) -> None:
         oeb = oeb_book
         output_path = output
         from calibre.customize.ui import plugin_for_output_format
         from calibre.ebooks.oeb.polish.kepubify import kepubify_container, make_options
 
-        def kepubify(container):
+        def kepubify(container: Container) -> None:
             log.info('Adding Kobo markup...')
             kopts = make_options(
                 affect_hyphenation=opts.kepub_affect_hyphenation,
@@ -690,7 +742,8 @@ class KEPUBOutput(OutputFormatPlugin):
             kepubify_container(container, kopts)
             container.commit()
 
-        epub_output = plugin_for_output_format('epub')
+        epub_output = cast('EPUBOutput | None', plugin_for_output_format('epub'))
+        assert epub_output is not None
         dp, et, fs = opts.dont_split_on_page_breaks, opts.extract_to, opts.flow_size
         for opt in epub_output.options:
             setattr(opts, opt.option.name, opt.recommended_value)

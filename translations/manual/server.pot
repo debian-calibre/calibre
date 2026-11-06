@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.17.0\n"
+"Project-Id-Version: calibre 9.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-23 08:33+0530\n"
+"POT-Creation-Date: 2026-11-06 05:42+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -173,149 +173,197 @@ msgid "If you leave the Content server running, you can even open the same book 
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:195
-msgid "Browser support"
+msgid "Searching book contents in OPDS applications"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:197
-msgid "The new calibre server makes lots of use of advanced HTML 5 and CSS 3 features. As such it requires an up-to-date browser to use. It has been tested on Android Chrome and iOS Safari as well as Chrome and Firefox on the desktop."
-msgstr ""
-
-#: ../../../home/kovid/work/calibre/manual/server.rst:201
-msgid "The server is careful to use functionality that has either been already standardised or is on the standards track. As such if it does not currently work with your favorite browser, it probably will once that browser has caught up."
+msgid "When full text indexing is enabled for a library, its OPDS catalog offers a catalog entry titled :guilabel:`Search book contents`. Open this entry and use the application's search control to find books by words and phrases inside them, using calibre's existing full text index. Each feed has a single search link, so clients do not have to choose between multiple search links. Results contain the normal book information and download links. A book is listed once even if more than one of its formats matches. Only books available to the current user are searched."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:206
-msgid "If you are using a particularly old or limited browser or you don't like to run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` to the server address."
+msgid "The original search continues to search book metadata. Content search uses the same SQLite full text query syntax as calibre's full text search window. It searches the text indexed so far; books still waiting to be indexed will not appear yet. The content search entry is absent when indexing is disabled. Both OPDS 1 and OPDS 2 catalogs support content search, through the normal search URL with ``full_text=y`` added to its query parameters."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:211
-msgid "On iOS, Apple allows only a single browser engine, so Firefox, Chrome and Safari are all actually the same browser under the hood. The new server interface requires iOS 10.3.2 or newer. On Android, the server has been tested with Chrome version 58 and newer."
+#: ../../../home/kovid/work/calibre/manual/server.rst:215
+msgid "Reading comics in OPDS applications"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:217
-msgid "Enabling offline support"
+msgid "Applications that support OPDS 2.0 and the `Readium Divina format <https://readium.org/webpub-manifest/profiles/divina>`_ can read CBZ comics one page at a time, without downloading the entire archive. Connect the application to the server's ``/opds`` catalog. OPDS 2.0 applications request the JSON catalog using ``Accept: application/opds+json``."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:219
-msgid "The server has full support for offline mode, you can open a book and once it is loaded, continue reading it offline. However, typical browsers require the use of HTTPS connections to enable offline mode (service workers). So :ref:`setup HTTPS support <cs_https_mode>` as described above. Scroll to the bottom of the home page and you will see a message about the status of offline mode."
+#: ../../../home/kovid/work/calibre/manual/server.rst:223
+msgid "Comic entries link to a Divina manifest. The server lists pages only when the application opens that manifest, using the same page order as calibre's comic conversion. Each page offers its original image format, including AVIF and JPEG XL, and alternate formats the server can produce. GIF pages, which may be animated, are only offered in their original format. The application chooses an image format it supports from those links. JPEG is offered as the default for AVIF and JPEG XL pages when conversion is available."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:226
-msgid "Alternately, you can open a book and keep the browser tab open. As long as the tab stays open you can continue reading the book, even when offline."
+#: ../../../home/kovid/work/calibre/manual/server.rst:231
+msgid "For manga, a ``ComicInfo.xml`` file with ``Manga`` set to ``YesAndRightToLeft`` tells the application to use right-to-left reading direction. The file can be in the root of the archive or in the folder containing the page images. Page images remain in their original order. The reading direction is only given in the comic manifest, not in OPDS feeds, as finding it requires opening the archive."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:230
-msgid "Managing user accounts from the command-line only"
-msgstr ""
-
-#: ../../../home/kovid/work/calibre/manual/server.rst:232
-msgid "The calibre program has a nice section in :guilabel:`Preferences` to allow you to manage user accounts for the server. However, if you want to run the standalone server and cannot run the main calibre program on the same computer/user account, you can also manage users using just the command-line."
-msgstr ""
-
-#: ../../../home/kovid/work/calibre/manual/server.rst:237
-msgid "You can manage user accounts using the ``--manage-users`` option to the standalone ``calibre-server`` program. Suppose you want to store the user database in the folder ``/srv/calibre``, then you create it by running::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:238
+msgid "The normal username/password and library restrictions apply to manifests and page images. Complete archive downloads remain available. This feature supports CBZ archives; CBR and CB7 comics can still be downloaded as complete files."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:244
-msgid "Just follow the prompts to create user accounts, set their permissions, etc. Once you are done, you can run the server as::"
+msgid "Browser support"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:249
-msgid "It will use the user accounts you created in the previous step."
+#: ../../../home/kovid/work/calibre/manual/server.rst:246
+msgid "The new calibre server makes lots of use of advanced HTML 5 and CSS 3 features. As such it requires an up-to-date browser to use. It has been tested on Android Chrome and iOS Safari as well as Chrome and Firefox on the desktop."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:253
-msgid "Integrating the calibre Content server into other servers"
+#: ../../../home/kovid/work/calibre/manual/server.rst:250
+msgid "The server is careful to use functionality that has either been already standardised or is on the standards track. As such if it does not currently work with your favorite browser, it probably will once that browser has caught up."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:255
-msgid "Here, we will show you how to integrate the calibre Content server into another server. The most common reason for this is to make use of SSL or to serve the calibre library as part of a larger site. The basic technique is to run the calibre server and set up a reverse proxy to it from the main server."
+msgid "If you are using a particularly old or limited browser or you don't like to run JavaScript, you can use the *mobile* view, by simply adding ``/mobile`` to the server address."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:260
-msgid "A reverse proxy is when your normal server accepts incoming requests and passes them onto the calibre server. It then reads the response from the calibre server and forwards it to the client. This means that you can simply run the calibre server as normal without trying to integrate it closely with your main server."
+msgid "On iOS, Apple allows only a single browser engine, so Firefox, Chrome and Safari are all actually the same browser under the hood. The new server interface requires iOS 10.3.2 or newer. On Android, the server has been tested with Chrome version 58 and newer."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:267
-msgid "Using a full virtual host"
+#: ../../../home/kovid/work/calibre/manual/server.rst:266
+msgid "Enabling offline support"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:269
-msgid "The simplest configuration is to dedicate a full virtual host to the calibre server. In this case, run the calibre server as::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:268
+msgid "The server has full support for offline mode, you can open a book and once it is loaded, continue reading it offline. However, typical browsers require the use of HTTPS connections to enable offline mode (service workers). So :ref:`setup HTTPS support <cs_https_mode>` as described above. Scroll to the bottom of the home page and you will see a message about the status of offline mode."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:274
-msgid "Now setup the virtual host in your main server, for example, for nginx::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:275
+msgid "Alternately, you can open a book and keep the browser tab open. As long as the tab stays open you can continue reading the book, even when offline."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:289
-msgid "Or, for Apache::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:279
+msgid "Managing user accounts from the command-line only"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:304
-msgid "Using a URL prefix"
+#: ../../../home/kovid/work/calibre/manual/server.rst:281
+msgid "The calibre program has a nice section in :guilabel:`Preferences` to allow you to manage user accounts for the server. However, if you want to run the standalone server and cannot run the main calibre program on the same computer/user account, you can also manage users using just the command-line."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:306
-msgid "If you do not want to dedicate a full virtual host to calibre, you can have it use a URL prefix. Start the calibre server as::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:286
+msgid "You can manage user accounts using the ``--manage-users`` option to the standalone ``calibre-server`` program. Suppose you want to store the user database in the folder ``/srv/calibre``, then you create it by running::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:293
+msgid "Just follow the prompts to create user accounts, set their permissions, etc. Once you are done, you can run the server as::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:298
+msgid "It will use the user accounts you created in the previous step."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:301
+msgid "Syncing reading progress with KOReader"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:303
+msgid "The Content server can act as a progress sync server for the `KOReader <https://koreader.rocks>`_ e-book reader, so that devices running KOReader can sync your reading position in books with each other. In KOReader, go to :guilabel:`Tools->Progress sync->Custom sync server` and enter the address of the Content server followed by ``/kosync``, for example::"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:311
-msgid "The key parameter here is ``--url-prefix /calibre``. This causes the Content server to serve all URLs prefixed by ``/calibre``. To see this in action, visit ``http://localhost:8080/calibre`` in your browser. You should see the normal Content server website, but now it will run under ``/calibre``."
+msgid "If you are `Using a URL prefix`_, include it before ``/kosync``. Then use :guilabel:`Login` with the username and password of a user account on the Content server. Accounts cannot be created from KOReader, they are managed by calibre as described above. Users that are only allowed read access cannot sync their reading positions. If user accounts are not enabled on the server, any username and password can be used, but reading positions can only be synced from devices that are allowed to make changes without authentication, see the :guilabel:`Allow un-authenticated local connections to make changes` and :guilabel:`Allow un-authenticated connections from specific IP addresses to make changes` options. Reading positions synced while user accounts are not enabled are kept separate from those of user accounts. The reading positions of each user are stored separately in the user database of the server."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:313
-msgid "With nginx, the required configuration is::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:324
+msgid "By default, KOReader identifies books by a checksum of the book file. The Content server can change the metadata embedded in books when they are downloaded, so copies of a book downloaded at different times can have different checksums. Once KOReader has synced with the server, it remembers the checksums of downloaded books and of the library files they were created from, so that all copies of the same format of a book share one reading position. Different formats of a book have separate reading positions, as positions in one format cannot be used in another. Copies downloaded before KOReader first synced with the server, or obtained other than by downloading them from the server, are not recognized. If reading positions do not sync for such copies, set :guilabel:`Document matching method` in the KOReader progress sync settings to :guilabel:`Filename` on all devices and keep the file names of books the same."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:330
-msgid "For Apache, first enable the proxy modules in Apache, by adding the following to :file:`httpd.conf`::"
-msgstr ""
-
-#: ../../../home/kovid/work/calibre/manual/server.rst:335
-msgid "The exact technique for enabling the proxy modules will vary depending on your Apache installation. Once you have the proxy modules enabled, add the following rules to :file:`httpd.conf` (or if you are using virtual hosts to the conf file for the virtual host in question)::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:340
+msgid "Integrating the calibre Content server into other servers"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:342
-msgid "That's all, you will now be able to access the calibre Content server under the ``/calibre`` URL in your main server. The above rules pass all requests under ``/calibre`` to the calibre server running on port 8080 and thanks to the ``--url-prefix`` option above, the calibre server handles them transparently."
+msgid "Here, we will show you how to integrate the calibre Content server into another server. The most common reason for this is to make use of SSL or to serve the calibre library as part of a larger site. The basic technique is to run the calibre server and set up a reverse proxy to it from the main server."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:347
-msgid "When using a reverse proxy, you should tell the calibre Content server to only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the server will only listen for connections coming from the same computer, i.e. from the reverse proxy."
+msgid "A reverse proxy is when your normal server accepts incoming requests and passes them onto the calibre server. It then reads the response from the calibre server and forwards it to the client. This means that you can simply run the calibre server as normal without trying to integrate it closely with your main server."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:354
-msgid "If you have set up SSL for your main server, you should tell the calibre server to use basic authentication instead of digest authentication, as it is faster. To do so, pass the ``--auth-mode=basic`` option to ``calibre-server``."
+msgid "Using a full virtual host"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:363
-msgid "Creating a service for the calibre server on a modern Linux system"
+#: ../../../home/kovid/work/calibre/manual/server.rst:356
+msgid "The simplest configuration is to dedicate a full virtual host to the calibre server. In this case, run the calibre server as::"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:365
-msgid "You can easily create a service to run calibre at boot on a modern (`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system. Just create the file ``/etc/systemd/system/calibre-server.service`` with the contents shown below::"
+#: ../../../home/kovid/work/calibre/manual/server.rst:361
+msgid "Now setup the virtual host in your main server, for example, for nginx::"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:384
-msgid "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you want the server to run as. This should be the same user and group that own the files in the calibre library folder. Note that it is generally not a good idea to run the server as root. Also change the path to the calibre library folder to suit your system. You can add multiple libraries if needed. See the help for the ``calibre-server`` command."
+#: ../../../home/kovid/work/calibre/manual/server.rst:376
+msgid "Or, for Apache::"
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/server.rst:391
+msgid "Using a URL prefix"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:393
+msgid "If you do not want to dedicate a full virtual host to calibre, you can have it use a URL prefix. Start the calibre server as::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:398
+msgid "The key parameter here is ``--url-prefix /calibre``. This causes the Content server to serve all URLs prefixed by ``/calibre``. To see this in action, visit ``http://localhost:8080/calibre`` in your browser. You should see the normal Content server website, but now it will run under ``/calibre``."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:400
+msgid "With nginx, the required configuration is::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:417
+msgid "For Apache, first enable the proxy modules in Apache, by adding the following to :file:`httpd.conf`::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:422
+msgid "The exact technique for enabling the proxy modules will vary depending on your Apache installation. Once you have the proxy modules enabled, add the following rules to :file:`httpd.conf` (or if you are using virtual hosts to the conf file for the virtual host in question)::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:429
+msgid "That's all, you will now be able to access the calibre Content server under the ``/calibre`` URL in your main server. The above rules pass all requests under ``/calibre`` to the calibre server running on port 8080 and thanks to the ``--url-prefix`` option above, the calibre server handles them transparently."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:434
+msgid "When using a reverse proxy, you should tell the calibre Content server to only listen on localhost, by using ``--listen-on 127.0.0.1``. That way, the server will only listen for connections coming from the same computer, i.e. from the reverse proxy."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:441
+msgid "If you have set up SSL for your main server, you should tell the calibre server to use basic authentication instead of digest authentication, as it is faster. To do so, pass the ``--auth-mode=basic`` option to ``calibre-server``."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:450
+msgid "Creating a service for the calibre server on a modern Linux system"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:452
+msgid "You can easily create a service to run calibre at boot on a modern (`systemd <https://www.freedesktop.org/wiki/Software/systemd/>`_) based Linux system. Just create the file ``/etc/systemd/system/calibre-server.service`` with the contents shown below::"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:471
+msgid "Change ``mylinuxuser`` and ``mylinuxgroup`` to whatever user and group you want the server to run as. This should be the same user and group that own the files in the calibre library folder. Note that it is generally not a good idea to run the server as root. Also change the path to the calibre library folder to suit your system. You can add multiple libraries if needed. See the help for the ``calibre-server`` command."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/manual/server.rst:478
 msgid "Now run::"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:395
+#: ../../../home/kovid/work/calibre/manual/server.rst:482
 msgid "to start the server. Check its status with::"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:399
+#: ../../../home/kovid/work/calibre/manual/server.rst:486
 msgid "To make it start at boot, run::"
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:405
+#: ../../../home/kovid/work/calibre/manual/server.rst:492
 msgid "The calibre server *does not* need a running X server, but it does need the X libraries installed as some components it uses link against them."
 msgstr ""
 
-#: ../../../home/kovid/work/calibre/manual/server.rst:410
+#: ../../../home/kovid/work/calibre/manual/server.rst:497
 msgid "The calibre server also supports systemd socket activation, so you can use that, if needed, as well."
 msgstr ""

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -219,7 +219,7 @@ msgid ""
 "`ignore_removed` controls whether removed (deleted) annotations are also "
 "returned. Removed annotations are just a skeleton used for merging of "
 "annotations."
-msgstr "基準に一致するすべての注釈をタプルで返します。`ignore_removed`  で移動(または削除)済の注釈を対象とするかどうかを制御します。移動済の注釈は注釈マージの枠としてだけ使用されます。"
+msgstr "基準に一致するすべての注釈をタプルで返します。`ignore_removed` で、削除済みの注釈も返すかどうかを制御します。削除済みの注釈は、注釈の統合に使われる骨組みにすぎません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotations_for_book:1
@@ -248,8 +248,9 @@ msgstr "フィールド ``name`` のすべての値の frozenset 。"
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
-"many fields)"
-msgstr "すべてのフィールド名の凍結セット (多対 1 と多対多のフィールドにのみ使用)"
+"many fields). If book_ids is not None, only names used by the specified "
+"books are returned."
+msgstr "すべてのフィールド名の frozenset です（多対1または多対多のフィールドにのみ使用してください）。book_ids が None でない場合は、指定した本で使われている名前だけを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
@@ -291,6 +292,14 @@ msgstr "著者のリストを指定して、著者の author_sort 文字列を�
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "著者IDを指定してauthor sorts文字列を返します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid ""
+"Return a map of annotation id to book id for those of the specified "
+"annotation ids that exist. `ignore_removed` controls whether removed "
+"(deleted) annotations are also returned."
+msgstr "指定されたアノテーションIDのうち、存在するアノテーションについて、アノテーションIDから本のIDへのマッピングを返します。`ignore_removed` は、削除済みのアノテーションを含めるかどうかを制御します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.book_storage_for_book:1
@@ -351,7 +360,7 @@ msgid ""
 "format does not exist, raises :class:`NoSuchFormat` error. dest can also be "
 "a path (to a file), in which case the format is copied to it, iff the path "
 "is different from the current path (taking case sensitivity into account)."
-msgstr "形式` `fmt`` をオブジェクト ``dest`` のようなファイルにコピーします。指定された形式が存在しない場合には、:class:`NoSuchFormat` エラーを発生させます。 destには (ファイルへの) パスを指定することも可能です。その場合、パスが現在のパスと異なる場合にのみ、形式をコピーします (大文字と小文字は区別されます)。"
+msgstr "形式 ``fmt`` をファイルライクオブジェクト ``dest`` にコピーします。指定された形式が存在しない場合には、:class:`NoSuchFormat` エラーを発生させます。 destには (ファイルへの) パスを指定することも可能です。その場合、パスが現在のパスと異なる場合にのみ、形式をコピーします (大文字と小文字は区別されます)。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:1
@@ -454,7 +463,7 @@ msgid ""
 "Return the value of the field ``name`` for the book identified by "
 "``book_id``. If no such book exists or it has no defined value for the field"
 " ``name`` or no such field exists, then ``default_value`` is returned."
-msgstr "book_id で指定された本のフィールド ``name`` の値を返します。そのような本が存在しない、またはフィールド名に定義された値がない、またはそのようなフィールドが存在しない場合、``default_value`` が返されます。"
+msgstr "``book_id`` で指定された本のフィールド ``name`` の値を返します。そのような本が存在しない、またはフィールド ``name`` に定義された値がない、またはそのようなフィールドが存在しない場合、``default_value`` が返されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:6
@@ -462,7 +471,7 @@ msgid ""
 "``default_value`` is not used for title, title_sort, authors, author_sort "
 "and series_index. This is because these always have values in the db. "
 "``default_value`` is used for all custom columns."
-msgstr "``default_value`` は、title、title_sort、authors、author_sort、series_indexには使用されません。これらは常にデータベースに値を持っているためです。 default_valueは、すべてのカスタム列に使用されます。"
+msgstr "``default_value`` は、title、title_sort、authors、author_sort、series_indexには使用されません。これらは常にデータベースに値を持っているためです。``default_value`` は、すべてのカスタム列に使用されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:10
@@ -480,7 +489,7 @@ msgid ""
 "Return the ids (as a tuple) for the values that the field ``name`` has on "
 "the book identified by ``book_id``. If there are no values, or no such book,"
 " or no such field, an empty tuple is returned."
-msgstr "book_id で識別されるブックのフィールド名の値の ID を (タプルとして) 返します。値がない、またはそのような本がない、またはそのようなフィールドがない場合は、空のタプルが返されます。"
+msgstr "``book_id`` で識別される本のフィールド ``name`` の値の ID を (タプルとして) 返します。値がない、またはそのような本がない、またはそのようなフィールドがない場合は、空のタプルが返されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_supports_notes:1
@@ -576,7 +585,7 @@ msgstr "``True`` のとき、キャッシュした値を使用します。そう
 #: calibre.db.cache.Cache.format_metadata:10
 msgid ""
 "If ``True`` The max_size field of the database is updated for this book."
-msgstr "`True`` のとき、この本の max_size フィールドをデータベースで更新します"
+msgstr "``True`` のとき、この本の max_size フィールドをデータベースで更新します"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.formats:1
@@ -649,8 +658,10 @@ msgstr "name のデータを取得します。デフォルトでは、すべて�
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
-"must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "指定したフィールドの ID 番号から値へのマッピングを返します。フィールドは多対1または多対多のフィールドである必要があります。そうでない場合、ValueErrorが発生します。"
+"must be a many-one or many-many field, otherwise a ValueError is raised. If "
+"book_ids is not None, only items used by the specified books are returned. "
+"For the title field the ids are book ids."
+msgstr "指定したフィールドについて、ID 番号から値へのマッピングを返します。フィールドは多対1または多対多のフィールドである必要があり、そうでない場合は ValueError が発生します。book_ids が None でない場合は、指定した本で使われている項目だけを返します。title フィールドの場合、ID は本の ID です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -785,6 +796,13 @@ msgid "Initialize this cache with data from the backend."
 msgstr "バックエンドからのデータでこのキャッシュを初期化します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_using_notes_resource:1
+msgid ""
+"Return the set of (field, item_id) pairs for all notes that use the resource"
+" with the specified hash"
+msgstr "指定したハッシュのリソースを使用しているすべてのノートについて、(field, item_id) の組の集合を返します"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
 msgid ""
 "Return a dict of field to items that have associated notes for that field "
@@ -896,7 +914,7 @@ msgstr "本のページ数を更新するのにスキャンが必要とマーク
 msgid ""
 "Return the value for the specified preference or the value specified as "
 "``default`` if the preference is not set."
-msgstr "指定した環境設定の値、または環境設定に指定がなければデフォルト値を返します。"
+msgstr "指定した環境設定の値、または環境設定に指定がなければ ``default`` に指定した値を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.queue_pages_scan:1
@@ -1083,6 +1101,21 @@ msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "FTSインデックスを使用して注釈のテキストを検索します。クエリが空の場合は、すべてのノートを返します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:1
+msgid ""
+"Return True if the specified search query, or any saved search it uses, "
+"contains a template search. The query is checked without being evaluated. "
+"Use this to stop untrusted users from storing search expressions, such as "
+"saved searches, containing templates, since stored expressions are later "
+"evaluated with templates allowed, for example, in Virtual libraries."
+msgstr "指定された検索クエリ（またはそのクエリが利用する保存済み検索）にテンプレート検索が含まれている場合、Trueを返します。このチェックは、クエリを評価することなく行われます。この機能は、信頼できないユーザーがテンプレートを含む検索式（保存済み検索など）を保存するのを防ぐために使用してください。保存された検索式は、後で（例えば仮想ライブラリなどで）テンプレートが許可された状態で評価される可能性があるためです。"
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
+msgstr "クエリを解析できない場合、ParseExceptionをスローします。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1

@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-21 15:20+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: Yuri Chornoivan <yurchor@ukr.net>, 2014,2017-2018,2021-2026\n"
 "Language-Team: Ukrainian (http://app.transifex.com/calibre/calibre/language/uk/)\n"
@@ -250,8 +250,9 @@ msgstr "Заморожений набір ідентифікаторів для 
 #: calibre.db.cache.Cache.all_field_names:1
 msgid ""
 "Frozen set of all fields names (should only be used for many-one and many-"
-"many fields)"
-msgstr "Заморожений набір усіх назв полів (слід використовувати лише для полів багато-одне і багато-багато)"
+"many fields). If book_ids is not None, only names used by the specified "
+"books are returned."
+msgstr "Заморожений набір усіх назв полів (слід використовувати лише для полів багато-одне і багато-багато). Якщо значенням book_ids не є None, буде повернуто лише назви, які використано вказаними книгами."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotation_count_for_book:1
@@ -293,6 +294,14 @@ msgstr "За вказаними списком авторів повертає �
 #: calibre.db.cache.Cache.author_sorts:1
 msgid "Return author sorts for specified authors."
 msgstr "Повертає режим упорядкування запису автора для вказаних авторів."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.book_ids_for_annotations:1
+msgid ""
+"Return a map of annotation id to book id for those of the specified "
+"annotation ids that exist. `ignore_removed` controls whether removed "
+"(deleted) annotations are also returned."
+msgstr "Повертає прив'язку ідентифікаторів анотації до ідентифікатора книги для тих із вказаних ідентифікаторів анотацій, які існують. Параметр `ignore_removed` визначає, чи слід також повертати вилучені анотації."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.book_storage_for_book:1
@@ -651,8 +660,10 @@ msgstr "Отримати дані для назви `name`. Типово, пов
 #: calibre.db.cache.Cache.get_id_map:1
 msgid ""
 "Return a mapping of id numbers to values for the specified field. The field "
-"must be a many-one or many-many field, otherwise a ValueError is raised."
-msgstr "Повертає прив’язку номерів ідентифікаторів до значень для вказаного поля. Поле має бути полем багато-одне або багато-багато, інакше буде надіслано повідомлення ValueError."
+"must be a many-one or many-many field, otherwise a ValueError is raised. If "
+"book_ids is not None, only items used by the specified books are returned. "
+"For the title field the ids are book ids."
+msgstr "Повертає прив’язку номерів ідентифікаторів до значень для вказаного поля. Поле має бути полем багато-одне або багато-багато, інакше буде надіслано повідомлення ValueError. Якщо значенням book_ids не є None, буде повернуто лише назви, які використано вказаними книгами. Для поля заголовка ідентифікаторами є ідентифікатори книг."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_ids_for_custom_book_data:1
@@ -785,6 +796,13 @@ msgstr "Імпортує попередньо експортовану нота�
 #: calibre.db.cache.Cache.init:1
 msgid "Initialize this cache with data from the backend."
 msgstr "Ініціалізувати цей кеш даними від модуля обробки."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.items_using_notes_resource:1
+msgid ""
+"Return the set of (field, item_id) pairs for all notes that use the resource"
+" with the specified hash"
+msgstr "Повертає набір пар (поле, ідентифікатор_запису) для усіх нотаток, які використовують ресурс із вказаним хешем"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.items_with_notes_in_book:1
@@ -1085,6 +1103,21 @@ msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
 msgstr "Шукає у тексті нотаток за допомогою покажчика повнотекстового пошуку. Якщо запит є порожнім, повертає усі нотатки."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:1
+msgid ""
+"Return True if the specified search query, or any saved search it uses, "
+"contains a template search. The query is checked without being evaluated. "
+"Use this to stop untrusted users from storing search expressions, such as "
+"saved searches, containing templates, since stored expressions are later "
+"evaluated with templates allowed, for example, in Virtual libraries."
+msgstr "Повертає значення True, якщо вказаний пошуковий запит (або будь-який збережений пошуковий запит, який використано у ньому) містить пошуковий шаблон. Запит виконується без обчислень. Це надає дмогу запобігти збереженню недовіреними користувачами пошукових виразів (наприклад, у вигляді збережених пошукових запитів), які містять шаблони, оскільки надалі такі збережені вирази обчислюватимуться з дозволеним використанням шаблонів — наприклад, у віртуальних бібліотеках."
+
+#: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
+#: calibre.db.cache.Cache.search_uses_templates:7
+msgid "Raises ParseException if the query cannot be parsed."
+msgstr "Видає ParseException, якщо не вдалося обробити запит."
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_annotations_for_book:1

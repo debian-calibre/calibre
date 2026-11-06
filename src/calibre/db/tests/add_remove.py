@@ -7,6 +7,7 @@ from contextlib import suppress
 from datetime import timedelta
 from io import BytesIO
 from tempfile import NamedTemporaryFile
+from typing import TYPE_CHECKING, Never
 
 from calibre.db.constants import METADATA_FILE_NAME
 from calibre.db.tests.base import IMG, BaseTest
@@ -15,9 +16,16 @@ from calibre.utils.date import UNDEFINED_DATE, now, utcnow
 from calibre.utils.img import image_from_path
 from calibre.utils.resources import get_image_path
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
-def import_test(replacement_data, replacement_fmt=None):
-    def func(path, fmt):
+    from apsw import Cursor
+
+    from calibre.db.cache import Cache
+
+
+def import_test(replacement_data: bytes, replacement_fmt: str | None = None) -> Callable[[str, str], str]:
+    def func(path: str, fmt: str) -> str:
         if not path.endswith('.' + fmt.lower()):
             raise AssertionError('path extension does not match format')
         ext = (replacement_fmt or fmt).lower()
@@ -29,7 +37,7 @@ def import_test(replacement_data, replacement_fmt=None):
 
 
 class AddRemoveTest(BaseTest):
-    def test_add_format(self):  # {{{
+    def test_add_format(self) -> None:  # {{{
         "Test adding formats to an existing book record"
         af, ae, at = self.assertFalse, self.assertEqual, self.assertTrue
 
@@ -103,12 +111,12 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_add_format_failure(self):  # {{{
+    def test_add_format_failure(self) -> None:  # {{{
         "Test that a failure while writing a format does not destroy the existing file"
         from calibre.constants import iswindows
 
         class FailingStream(BytesIO):
-            def read(self, size=-1):
+            def read(self, size: int | None = -1) -> bytes:
                 ans = super().read(4)
                 if not ans:
                     raise OSError('simulated read failure')
@@ -121,7 +129,7 @@ class AddRemoveTest(BaseTest):
         if not iswindows:
             os.chmod(path, 0o640)
 
-        def leftover_temp_files():
+        def leftover_temp_files() -> list[str]:
             return [x for x in os.listdir(book_dir) if x.startswith('.calibre-format-')]
 
         # Replacing an existing format
@@ -155,12 +163,12 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_add_extra_file_failure(self):  # {{{
+    def test_add_extra_file_failure(self) -> None:  # {{{
         "Test that a failure while writing an extra file does not destroy the existing file"
         from calibre.constants import iswindows
 
         class FailingStream(BytesIO):
-            def read(self, size=-1):
+            def read(self, size: int | None = -1) -> bytes:
                 ans = super().read(4)
                 if not ans:
                     raise OSError('simulated read failure')
@@ -173,10 +181,10 @@ class AddRemoveTest(BaseTest):
         if not iswindows:
             os.chmod(path, 0o640)
 
-        def listing():
+        def listing() -> list[str]:
             return sorted(os.path.relpath(os.path.join(r, f), book_dir) for r, _, files in os.walk(book_dir) for f in files)
 
-        def read(path):
+        def read(path: str) -> bytes:
             with open(path, 'rb') as f:
                 return f.read()
 
@@ -217,16 +225,16 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_add_format_categories(self):  # {{{
+    def test_add_format_categories(self) -> None:  # {{{
         "Test that adding a format keeps the cached formats category correct"
         from io import BytesIO
 
         cache = self.init_cache()
 
-        def shown():
+        def shown() -> set[tuple[str, int]]:
             return {(t.original_name or t.name, t.count) for t in cache.get_categories()['formats']}
 
-        def check(label):
+        def check(label: str) -> None:
             cached = shown()
             # Throw the cache away and compute the category again, which is what
             # the cached value must have agreed with
@@ -265,7 +273,7 @@ class AddRemoveTest(BaseTest):
         table = cache.fields['size'].table
         orig = table.update_sizes
 
-        def raise_error(size_map):
+        def raise_error(size_map: dict[int, int]) -> Never:
             raise RuntimeError('simulated failure after the formats table changed')
 
         table.update_sizes = raise_error
@@ -282,7 +290,7 @@ class AddRemoveTest(BaseTest):
 
         orig_execute = cache.backend.execute
 
-        def failing_execute(sql, *args, **kw):
+        def failing_execute(sql: str, *args: object, **kw: object) -> Cursor:
             if sql.startswith('INSERT OR REPLACE INTO data'):
                 raise RuntimeError('simulated failure while updating the formats table')
             return orig_execute(sql, *args, **kw)
@@ -293,17 +301,17 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_format_writes_report_changes(self):  # {{{
+    def test_format_writes_report_changes(self) -> None:  # {{{
         "Test that the quiet writes of formats and new books report everything they change"
         from calibre.ebooks.metadata.book.base import Metadata
 
         cache = self.init_cache()
         cc = cache.categories_cache
 
-        def all_shown():
+        def all_shown() -> dict[str, list[tuple[str, int]]]:
             return {k: [(t.original_name or t.name, t.count) for t in v] for k, v in cache.get_categories().items()}
 
-        def check(label):
+        def check(label: str) -> None:
             cached = all_shown()
             cache.categories_cache.invalidate_all()
             self.assertEqual(all_shown(), cached, f'the cached categories are stale after {label}')
@@ -353,7 +361,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_remove_formats(self):  # {{{
+    def test_remove_formats(self) -> None:  # {{{
         "Test removal of formats from book records"
         af, ae, at = self.assertFalse, self.assertEqual, self.assertTrue
 
@@ -396,7 +404,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_create_book_entry(self):  # {{{
+    def test_create_book_entry(self) -> None:  # {{{
         "Test the creation of new book entries"
         from calibre.ebooks.metadata.book.base import Metadata
 
@@ -409,7 +417,7 @@ class AddRemoveTest(BaseTest):
         book_id = cache.create_book_entry(mi)
         self.assertIsNot(book_id, None)
 
-        def do_test(cache, book_id):
+        def do_test(cache: Cache, book_id: int) -> None:
             for field in (
                 'path',
                 'uuid',
@@ -480,7 +488,7 @@ class AddRemoveTest(BaseTest):
         resynced = []
         orig = cache._read_books_table_fields
 
-        def read_books_table_fields(book_id):
+        def read_books_table_fields(book_id: int) -> bool:
             resynced.append(orig(book_id))
             return resynced[-1]
 
@@ -496,7 +504,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_add_books(self):  # {{{
+    def test_add_books(self) -> None:  # {{{
         "Test the adding of new books"
         from calibre.ebooks.metadata.book.base import Metadata
 
@@ -514,7 +522,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_remove_books(self):  # {{{
+    def test_remove_books(self) -> None:  # {{{
         "Test removal of books"
         cl = self.cloned_library
         cl2 = self.cloned_library
@@ -630,10 +638,35 @@ class AddRemoveTest(BaseTest):
             cache.move_format_from_trash(1, fmt)
         self.assertEqual(all_formats, cache.formats(1))
         self.assertFalse(os.listdir(os.path.join(cache.backend.trash_dir, 'f')))
+        self.assertTrue(f[0].restorable)
+
+        # removed formats of a deleted book are listed but not restorable,
+        # until the book is restored
+        cache.remove_formats({1: all_formats})
+        cache.remove_books((1,))
+        b, f = cache.list_trash_entries()
+        self.assertEqual([e.book_id for e in b], [1])
+        self.assertEqual([(e.book_id, e.restorable, e.cover_path) for e in f], [(1, False, '')])
+        self.assertRaises(ValueError, cache.move_format_from_trash, 1, all_formats[0])
+        cache.move_book_from_trash(1)
+        b, f = cache.list_trash_entries()
+        self.assertEqual([(e.book_id, e.restorable) for e in f], [(1, True)])
+        for fmt in all_formats:
+            cache.move_format_from_trash(1, fmt)
+        self.assertEqual(set(all_formats), set(cache.formats(1)))
+
+        # removed formats of a permanently deleted book can still be saved
+        cache.remove_formats({1: all_formats})
+        cache.remove_books((1,), permanent=True)
+        b, f = cache.list_trash_entries()
+        self.assertEqual([(e.book_id, e.restorable) for e in f], [(1, False)])
+        dest = os.path.join(self.mkdtemp(), 'saved_format')
+        cache.copy_format_from_trash(1, all_formats[0], dest)
+        self.assertTrue(os.path.exists(dest))
 
     # }}}
 
-    def test_remove_books_failures(self):  # {{{
+    def test_remove_books_failures(self) -> None:  # {{{
         "Test that books whose files cannot be removed are left intact"
         import shutil
         from unittest.mock import patch
@@ -641,7 +674,7 @@ class AddRemoveTest(BaseTest):
         from calibre.db.errors import BooksNotRemoved
         from calibre.utils.copy_files import SourceDeletionFailed, copy_tree
 
-        def trash_dir(cache, book_id):
+        def trash_dir(cache: Cache, book_id: int) -> str:
             return os.path.join(cache.backend.trash_dir, 'b', str(book_id))
 
         # Copying into the trash fails: the book must be unchanged and no
@@ -651,7 +684,7 @@ class AddRemoveTest(BaseTest):
         fmtdata = cache.format(1, 'FMT1')
         bookdir = os.path.dirname(fmtpath)
 
-        def failing_copy(src, dest, delete_source=False):
+        def failing_copy(src: str, dest: str, delete_source: bool = False) -> None:
             if os.path.samefile(src, bookdir):
                 os.makedirs(dest, exist_ok=True)
                 open(os.path.join(dest, 'partial'), 'wb').close()
@@ -680,7 +713,7 @@ class AddRemoveTest(BaseTest):
         cache = self.init_cache(self.cloned_library)
         bookdir = os.path.dirname(cache.format_abspath(1, 'FMT1'))
 
-        def failing_delete(src, dest, delete_source=False):
+        def failing_delete(src: str, dest: str, delete_source: bool = False) -> None:
             copy_tree(src, dest)
             if os.path.samefile(src, bookdir):
                 raise SourceDeletionFailed('simulated delete failure')
@@ -707,7 +740,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_original_fmt(self):  # {{{
+    def test_original_fmt(self) -> None:  # {{{
         "Test management of original fmt"
         af, ae, at = self.assertFalse, self.assertEqual, self.assertTrue
         db = self.init_cache()
@@ -741,7 +774,7 @@ class AddRemoveTest(BaseTest):
         at(db.save_original_format(1, 'FMT1'))
         db.add_format(1, 'FMT1', BytesIO(b'replacedfmt'))
 
-        def fail(*a):
+        def fail(*a: object) -> Never:
             raise OSError('simulated rename failure')
 
         db.backend.rename_format_file = fail
@@ -753,7 +786,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_format_orphan(self):  # {{{
+    def test_format_orphan(self) -> None:  # {{{
         "Test that adding formats does not create orphans if the file name algorithm changes"
         cache = self.init_cache()
         path = cache.format_abspath(1, 'FMT1')
@@ -770,7 +803,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_copy_to_library(self):  # {{{
+    def test_copy_to_library(self) -> None:  # {{{
         from calibre.db.copy_to_library import copy_one_book
         from calibre.ebooks.metadata import authors_to_string
         from calibre.utils.date import EPOCH, utcnow
@@ -778,11 +811,11 @@ class AddRemoveTest(BaseTest):
         src_db = self.init_cache()
         dest_db = self.init_cache(self.cloned_library)
 
-        def read(x, mode='r'):
+        def read(x: str, mode: str = 'r') -> str | bytes:
             with open(x, mode) as f:
                 return f.read()
 
-        def a(**kw):
+        def a(**kw: object) -> tuple[dict[str, object], float]:
             ts = utcnow()
             kw['timestamp'] = utcnow().isoformat()
             return kw, (ts - EPOCH).total_seconds()
@@ -800,7 +833,7 @@ class AddRemoveTest(BaseTest):
         with open(os.path.join(bookdir, 'sub', 'recurse'), 'w') as f:
             f.write('recurse')
 
-        def make_rdata(book_id=1, new_book_id=None, action='add'):
+        def make_rdata(book_id: int = 1, new_book_id: int | None = None, action: str = 'add') -> dict[str, object]:
             return {
                 'title': src_db.field_for('title', book_id),
                 'authors': list(src_db.field_for('authors', book_id)),
@@ -810,20 +843,20 @@ class AddRemoveTest(BaseTest):
                 'action': action,
             }
 
-        def compare_field(field, func=self.assertEqual):
+        def compare_field(field: str, func: Callable[[object, object], None] = self.assertEqual) -> None:
             func(src_db.field_for(field, rdata['book_id']), dest_db.field_for(field, rdata['new_book_id']))
 
-        def assert_has_extra_files(book_id):
+        def assert_has_extra_files(book_id: int) -> None:
             bookdir = os.path.dirname(dest_db.format_abspath(book_id, '__COVER_INTERNAL__'))
             self.assertEqual('exf', read(os.path.join(bookdir, 'exf')))
             self.assertEqual('recurse', read(os.path.join(bookdir, 'sub', 'recurse')))
 
-        def assert_does_not_have_extra_files(book_id):
+        def assert_does_not_have_extra_files(book_id: int) -> None:
             bookdir = os.path.dirname(dest_db.format_abspath(book_id, '__COVER_INTERNAL__'))
             self.assertFalse(os.path.exists(os.path.join(bookdir, 'exf')))
             self.assertFalse(os.path.exists(os.path.join(bookdir, 'sub', 'recurse')))
 
-        def clear_extra_files(book_id):
+        def clear_extra_files(book_id: int) -> None:
             for ef in dest_db.list_extra_files(book_id):
                 os.remove(ef.file_path)
 
@@ -902,7 +935,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_copy_to_library_without_formats(self):  # {{{
+    def test_copy_to_library_without_formats(self) -> None:  # {{{
         from calibre.db.copy_to_library import copy_one_book
 
         actions = ('overwrite', 'ignore', 'new record')
@@ -928,13 +961,14 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_merging_extra_files(self):  # {{{
+    def test_merging_extra_files(self) -> None:  # {{{
         db = self.init_cache()
 
-        def add_extra(book_id, relpath):
+        def add_extra(book_id: int, relpath: str) -> None:
             db.add_extra_files(book_id, {relpath: BytesIO(f'{book_id}:{relpath}'.encode())})
 
-        def extra_files_for(book_id):
+        def extra_files_for(book_id: int) -> dict[str, str]:
+
             ans = {}
             for ef in db.list_extra_files(book_id):
                 with open(ef.file_path) as f:
@@ -969,7 +1003,7 @@ class AddRemoveTest(BaseTest):
 
     # }}}
 
-    def test_custom_column_defaults(self):  # {{{
+    def test_custom_column_defaults(self) -> None:  # {{{
         "Test that custom column defaults are applied correctly when adding books"
         from calibre.ebooks.metadata.book.base import Metadata
 

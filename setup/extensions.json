@@ -57,7 +57,8 @@
     },
     {
         "name": "tokenizer",
-        "sources": "tinycss/tokenizer.c"
+        "headers": "tinycss/color.h",
+        "sources": "tinycss/tokenizer.c tinycss/color.c"
     },
     {
         "name": "_patiencediff_c",
@@ -137,10 +138,20 @@
     {
         "name": "piper",
         "sources": "calibre/utils/tts/piper.cpp",
+        "headers": "calibre/utils/onnx_common.h",
 		"needs_c++": "17",
         "libraries": "!piper_libs",
         "lib_dirs": "!piper_lib_dirs",
         "inc_dirs": "!piper_inc_dirs"
+    },
+    {
+        "name": "seq2seq",
+        "sources": "calibre/utils/grammar/seq2seq.cpp",
+        "headers": "calibre/utils/onnx_common.h",
+        "needs_c++": "17",
+        "libraries": "!onnx_libs",
+        "lib_dirs": "!onnx_lib_dirs",
+        "inc_dirs": "!onnx_inc_dirs"
     },
     {
         "name": "html_as_json",
@@ -184,7 +195,7 @@
     {
         "name": "translator",
         "sources": "calibre/utils/translator/mo_parser.cpp calibre/utils/translator/plural_expression_parser.cpp calibre/utils/translator/main.cpp",
-        "headers": "calibre/utils/translator/mo_translator.h calibre/utils/translator/plural_expression_parser.h",
+        "headers": "calibre/utils/translator/mo_parser.h calibre/utils/translator/plural_expression_parser.h",
         "inc_dirs": "calibre/utils/translator",
 		"needs_c++": "20"
     },

@@ -1,11 +1,18 @@
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
 import os
+from typing import IO, TYPE_CHECKING, cast
 
 from calibre import guess_type
 from calibre.customize.conversion import InputFormatPlugin
 from calibre.ebooks.conversion.plugins.archive_input import archive_file_data
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from optparse import Values
+
+    from calibre.ebooks.oeb.base import OEBBook
+    from calibre.utils.logging import Log
 
 
 class HTMLZInput(InputFormatPlugin):
@@ -15,7 +22,7 @@ class HTMLZInput(InputFormatPlugin):
     file_types = {'htmlz'}
     commit_name = 'htmlz_input'
 
-    def convert(self, stream, options, file_ext, log, accelerators):
+    def convert(self, stream: IO[bytes], options: Values, file_ext: str, log: Log, accelerators: dict[str, str]) -> OEBBook:
         from calibre.ebooks.chardet import xml_to_unicode
         from calibre.ebooks.metadata.opf2 import OPF
         from calibre.utils.zipfile import ZipFile
@@ -74,12 +81,14 @@ class HTMLZInput(InputFormatPlugin):
             ienc = options.input_encoding
         else:
             ienc = xml_to_unicode(html[:4096])[-1]
+            assert ienc is not None  # always detected for non-empty bytes
         html = html.decode(ienc, 'replace')
 
         # Run the HTML through the html processing plugin.
         from calibre.customize.ui import plugin_for_input_format
 
         html_input = plugin_for_input_format('html')
+        assert html_input is not None
         for opt in html_input.options:
             setattr(options, opt.option.name, opt.recommended_value)
         options.input_encoding = 'utf-8'
@@ -96,6 +105,7 @@ class HTMLZInput(InputFormatPlugin):
         # Generate oeb from html conversion.
         with open(htmlfile, 'rb') as f:
             oeb = html_input.convert(f, options, 'html', log, {})
+            assert oeb is not None and not isinstance(oeb, str)  # HTML input returns an OEBBook
         options.debug_pipeline = odi
         os.remove(htmlfile)
 
@@ -123,7 +133,7 @@ class HTMLZInput(InputFormatPlugin):
             if cover_data is not None:
                 cover_name, cdata = cover_data
                 id, href = oeb.manifest.generate('cover', cover_name)
-                oeb.manifest.add(id, href, guess_type(cover_name)[0], data=cdata)
+                oeb.manifest.add(id, href, cast('str', guess_type(cover_name)[0]), data=cdata)
                 oeb.guide.add('cover', 'Cover', href)
 
         return oeb

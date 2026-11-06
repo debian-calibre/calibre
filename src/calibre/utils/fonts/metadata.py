@@ -1,33 +1,84 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2012, Kovid Goyal <kovid at kovidgoyal.net>
 
-from collections import namedtuple
 from io import BytesIO
+from typing import IO, TYPE_CHECKING, NamedTuple, TypedDict, cast
 
 from calibre.utils.fonts.utils import get_font_characteristics, get_font_names_from_ttlib_names_table
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from fontTools.ttLib import TTFont
+
+    # The dictionary returned by FontMetadata.to_dict(), plus the path key added by
+    # the font scanner. All keys are optional because the scanner caches an
+    # empty dict for unsupported fonts.
+    FontFace = TypedDict(
+        'FontFace',
+        {
+            'is_otf': bool,
+            'font-family': str,
+            'font-weight': str,
+            'font-style': str,
+            'font-stretch': str,
+            'family_name': str | None,
+            'subfamily_name': str | None,
+            'full_name': str | None,
+            'preferred_family_name': str | None,
+            'preferred_subfamily_name': str | None,
+            'wws_family_name': str | None,
+            'wws_subfamily_name': str | None,
+            'weight': int,
+            'is_italic': bool,
+            'is_bold': bool,
+            'is_regular': bool,
+            'fs_type': int,
+            'panose': Sequence[int],
+            'width': int,
+            'is_oblique': bool,
+            'is_wws': bool,
+            'os2_version': int,
+            'path': str,
+        },
+        total=False,
+    )
 
 
 class UnsupportedFont(ValueError):
     pass
 
 
-FontCharacteristics = namedtuple(
-    'FontCharacteristics',
-    'weight, is_italic, is_bold, is_regular, fs_type, panose, width, is_oblique, is_wws, os2_version',
-)
-FontNames = namedtuple(
-    'FontNames',
-    'family_name, subfamily_name, full_name, preferred_family_name, preferred_subfamily_name, wws_family_name, wws_subfamily_name',
-)
+class FontCharacteristics(NamedTuple):
+    weight: int
+    is_italic: bool
+    is_bold: bool
+    is_regular: bool
+    fs_type: int
+    panose: tuple
+    width: int
+    is_oblique: bool
+    is_wws: bool
+    os2_version: int
+
+
+class FontNames(NamedTuple):
+    family_name: str | None
+    subfamily_name: str | None
+    full_name: str | None
+    preferred_family_name: str | None
+    preferred_subfamily_name: str | None
+    wws_family_name: str | None
+    wws_subfamily_name: str | None
 
 
 class FontMetadata:
-    def __init__(self, bytes_or_stream):
+    def __init__(self, bytes_or_stream: bytes | IO[bytes]) -> None:
         from fontTools.subset import Subsetter, load_font
 
         if not hasattr(bytes_or_stream, 'read'):
             bytes_or_stream = BytesIO(bytes_or_stream)
-        f = bytes_or_stream
+        f = cast('IO[bytes]', bytes_or_stream)
         f.seek(0)
         s = Subsetter()
         try:
@@ -67,14 +118,14 @@ class FontMetadata:
         else:
             self.font_style = 'normal'
 
-    def _read_names(self, font):
+    def _read_names(self, font: TTFont) -> None:
         try:
             name_table = font['name']
         except KeyError:
             raise UnsupportedFont('This font has no name table')
         self.names = FontNames(*get_font_names_from_ttlib_names_table(name_table))
 
-    def _read_characteristics(self, font):
+    def _read_characteristics(self, font: TTFont) -> None:
         try:
             os2_table = font['OS/2']
         except KeyError:
@@ -83,7 +134,7 @@ class FontMetadata:
         vals = get_font_characteristics(os2_table, raw_is_table=True)
         self.characteristics = FontCharacteristics(*vals)
 
-    def to_dict(self):
+    def to_dict(self) -> FontFace:
         ans = {
             'is_otf': self.is_otf,
             'font-family': self.font_family,
@@ -95,7 +146,7 @@ class FontMetadata:
             ans[f] = getattr(self.names, f)
         for f in self.characteristics._fields:
             ans[f] = getattr(self.characteristics, f)
-        return ans
+        return cast('FontFace', ans)
 
 
 if __name__ == '__main__':

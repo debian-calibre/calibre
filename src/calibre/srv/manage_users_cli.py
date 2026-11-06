@@ -2,20 +2,26 @@
 # License: GPLv3 Copyright: 2017, Kovid Goyal <kovid at kovidgoyal.net>
 
 import sys
+from typing import TYPE_CHECKING
 
 from calibre import prints
 from calibre.constants import iswindows, preferred_encoding
 from calibre.utils.config import OptionParser
 from calibre.utils.localization import _, ngettext
 
+if TYPE_CHECKING:
+    from collections.abc import Callable, Sequence
 
-def create_subcommand_parser(name, usage):
+    from calibre.srv.users import UserManager
+
+
+def create_subcommand_parser(name: str, usage: str) -> OptionParser:
     usage = f'%prog --manage-users -- {name} ' + usage
     parser = OptionParser(usage)
     return parser
 
 
-def add(user_manager, args):
+def add(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'add',
         _('username [password]')
@@ -38,7 +44,7 @@ is not specified on the command line, it will be read from STDIN.
     user_manager.add_user(username, pw, readonly=opts.readonly)
 
 
-def remove(user_manager, args):
+def remove(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'remove',
         _('username')
@@ -55,7 +61,7 @@ Remove the user account with the specified username.
     user_manager.remove_user(username)
 
 
-def list_users(user_manager, args):
+def list_users(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'list',
         '\n\n'
@@ -68,7 +74,7 @@ List all usernames.
         print(name)
 
 
-def change_set_password(user_manager, args):
+def change_set_password(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'change_set_password',
         _('username set|reset|toggle|show')
@@ -98,7 +104,7 @@ own password, toggle flips the value and show prints out the current value. \
     user_manager.set_allowed_to_change_password_via_http(username, val)
 
 
-def change_readonly(user_manager, args):
+def change_readonly(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'readonly',
         _('username set|reset|toggle|show')
@@ -128,7 +134,7 @@ changes, toggle flips the value and show prints out the current value. \
     user_manager.set_readonly(username, val)
 
 
-def change_libraries(user_manager, args):
+def change_libraries(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'libraries',
         _('[options] username [library_name ...]')
@@ -140,7 +146,7 @@ Manage the libraries the specified user account is restricted to.
     p.add_option(
         '--action',
         type='choice',
-        choices='allow-all allow block per-library show'.split(),
+        choices=('allow-all', 'allow', 'block', 'per-library', 'show'),
         default='show',
         help=_(
             'Specify the action to perform.'
@@ -207,7 +213,7 @@ Manage the libraries the specified user account is restricted to.
         user_manager.update_user_restrictions(username, r)
 
 
-def chpass(user_manager, args):
+def chpass(user_manager: UserManager, args: Sequence[str]) -> None:
     p = create_subcommand_parser(
         'chpass',
         _('username [password]')
@@ -229,7 +235,7 @@ is not specified on the command line, it will be read from STDIN.
     user_manager.change_password(username, pw)
 
 
-def main(user_manager, args):
+def main(user_manager: UserManager, args: Sequence[str]) -> None:
     q, rest = args[0], args[1:]
     if q == 'add':
         return add(user_manager, rest)
@@ -254,7 +260,7 @@ def main(user_manager, args):
     raise SystemExit(1)
 
 
-def manage_users_cli(path=None, args=()):
+def manage_users_cli(path: str | None = None, args: Sequence[str] = ()) -> None:
     from calibre.srv.users import UserManager
 
     m = UserManager(path)
@@ -263,7 +269,7 @@ def manage_users_cli(path=None, args=()):
         return
     enc = getattr(sys.stdin, 'encoding', preferred_encoding) or preferred_encoding
 
-    def get_input(prompt):
+    def get_input(prompt: str) -> str:
         prints(prompt, end=' ')
         ans = input()
         if isinstance(ans, bytes):
@@ -273,7 +279,7 @@ def manage_users_cli(path=None, args=()):
             ans = ans.rstrip('\r')
         return ans
 
-    def choice(question=_('What do you want to do?'), choices=(), default=None, banner=''):
+    def choice(question: str = _('What do you want to do?'), choices: Sequence[str] = (), default: int | None = None, banner: str = '') -> int:
         prints(banner)
         for i, choice in enumerate(choices):
             prints(f'{i + 1})', choice)
@@ -297,7 +303,7 @@ def manage_users_cli(path=None, args=()):
             except Exception:
                 prints(_('%s is not a valid choice, try again') % reply)
 
-    def get_valid(prompt, invalidq=lambda x: None):
+    def get_valid(prompt: str, invalidq: Callable[[str], str | None] = lambda x: None) -> str:
         while True:
             ans = get_input(prompt + ':').strip()
             fail_message = invalidq(ans)
@@ -305,20 +311,20 @@ def manage_users_cli(path=None, args=()):
                 return ans
             prints(fail_message)
 
-    def get_valid_user():
+    def get_valid_user() -> str:
         prints(_('Existing user names:'))
         users = sorted(m.all_user_names)
         if not users:
             raise SystemExit(_('There are no users, you must first add an user'))
         prints(', '.join(users))
 
-        def validate(username):
+        def validate(username: str) -> str | None:
             if not m.has_user(username):
                 return _('The username %s does not exist') % username
 
         return get_valid(_('Enter the username'), validate)
 
-    def get_pass(username):
+    def get_pass(username: str) -> str:
         from getpass import getpass
 
         while True:
@@ -335,29 +341,29 @@ def manage_users_cli(path=None, args=()):
                 return one
             prints(msg)
 
-    def add_user():
+    def add_user() -> None:
         username = get_valid(_('Enter the username'), m.validate_username)
         pw = get_pass(username)
         m.add_user(username, pw)
         prints(_('User %s added successfully!') % username)
 
-    def remove_user():
+    def remove_user() -> None:
         un = get_valid_user()
         if get_input((_('Are you sure you want to remove the user %s?') % un) + ' [y/n]:') != 'y':
             raise SystemExit(0)
         m.remove_user(un)
         prints(_('User %s successfully removed!') % un)
 
-    def change_password(username):
+    def change_password(username: str) -> None:
         pw = get_pass(username)
         m.change_password(username, pw)
         prints(_('Password for %s successfully changed!') % username)
 
-    def show_password(username):
+    def show_password(username: str) -> None:
         pw = m.get(username)
         prints(_('Current password for {0} is: {1}').format(username, pw))
 
-    def change_readonly(username):
+    def change_readonly(username: str) -> None:
         readonly = m.is_readonly(username)
         if readonly:
             q = _('Allow {} to make changes (i.e. grant write access)')
@@ -366,7 +372,7 @@ def manage_users_cli(path=None, args=()):
         if get_input(q.format(username) + '? [y/n]:').lower() == 'y':
             m.set_readonly(username, not readonly)
 
-    def change_set_password(username):
+    def change_set_password(username: str) -> None:
         allowed = m.is_allowed_to_change_password_via_http(username)
         if allowed:
             q = _('Prevent {} from changing their own password via the web')
@@ -375,7 +381,7 @@ def manage_users_cli(path=None, args=()):
         if get_input(q.format(username) + '? [y/n]:').lower() == 'y':
             m.set_allowed_to_change_password_via_http(username, not allowed)
 
-    def change_restriction(username):
+    def change_restriction(username: str) -> None:
         r = m.restrictions(username)
         if r is None:
             raise SystemExit(f'The user {username} does not exist')
@@ -443,7 +449,7 @@ def manage_users_cli(path=None, args=()):
             prints(t.format(', '.join(names)))
             m.update_user_restrictions(username, {w: names})
 
-    def edit_user(username=None):
+    def edit_user(username: str | None = None) -> None:
         username = username or get_valid_user()
         c = choice(
             choices=[
@@ -469,12 +475,12 @@ def manage_users_cli(path=None, args=()):
         }[c](username)
         actions.append(lambda: edit_user(username=username))
 
-    def toplevel():
+    def toplevel() -> None:
         {0: add_user, 1: edit_user, 2: remove_user, 3: lambda: None}[
             choice(choices=[_('Add a new user'), _('Edit an existing user'), _('Remove a user'), _('Cancel')])
         ]()
 
-    actions = [toplevel]
+    actions: list[Callable[[], None]] = [toplevel]
     while actions:
         actions[0]()
         del actions[0]

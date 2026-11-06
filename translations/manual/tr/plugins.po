@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-12 02:31+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Bora Atıcı, 2023\n"
 "Language-Team: Turkish (http://app.transifex.com/calibre/calibre/language/tr/)\n"
@@ -440,6 +440,13 @@ msgid ""
 msgstr "True ise, bu eklenti dönüştürme çıktı eklentisi tarafından üretilen son dosyanın dönüştürmesi sonrası çalışır."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.FileTypePlugin.original_path_to_file:1
+msgid ""
+"The path to the original file, before any file type plugins are run. Set "
+"just before :meth:`run` is called."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
 msgid ""
 "Run the plugin. Must be implemented in subclasses. It should perform "
@@ -752,6 +759,23 @@ msgid ""
 "of which have ISBNs and some of which do not, the results without ISBNs will"
 " be ignored"
 msgstr "True olarak ayarlanırsa, ve bu kaynak bir sorgu için bazılarında ISBN'ler olan bazılarında olmayan birden çok sonuç döndürüyorsa, ISBN olmayan sonuçlar göz ardı edilir"
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.uses_camoufox_worker:1
+msgid ""
+"If set to True this source uses the Camoufox browser shared by all metadata "
+"downloads, see :mod:`calibre.web.automate.metadata`, which is then started "
+"before metadata is downloaded, so that it is ready in time. Such sources are"
+" also waited for longer after the first result from any source arrives, "
+"since downloading with a browser is slow."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
+#: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
+msgid ""
+"Seconds taken by the last identify() run, set by "
+":func:`calibre.ebooks.metadata.sources.identify.identify`"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -1395,6 +1419,16 @@ msgstr "Bu aygıttaki kitaplara olan yollar için yol ayracı"
 #: calibre.devices.interface.DevicePlugin.icon:1
 msgid "Icon for this device"
 msgstr "Bu aygıt için simge"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.type:1
+msgid "Alias for field number 0"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
+#: calibre.devices.interface.DevicePlugin.UserAnnotation.value:1
+msgid "Alias for field number 1"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.OPEN_FEEDBACK_MESSAGE:1
@@ -2125,7 +2159,7 @@ msgstr "Eklentiler başlatılırken aygıt yöneticisi tarafından çağrılır.
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_option:4
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
-#: calibre.devices.interface.DevicePlugin.start_plugin:5
+#: calibre.devices.interface.DevicePlugin.start_plugin:6
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:6
 msgid ""
@@ -2138,8 +2172,9 @@ msgstr "Bu metod GUI sürecinde çağrılabilir. Bu metodu uygulayan bir sürüc
 msgid ""
 "This method is called to start the plugin. The plugin should begin to accept"
 " device connections however it does that. If the plugin is already accepting"
-" connections, then do nothing."
-msgstr "Bu metod eklentiyi başlatmak için çağrılır. Eklenti aygıt bağlantılarını her nasıl yapıyorsa öyle kabul etmeye başlamalıdır. Eklenti zaten bağlantı kabul ediyorsa, bir şey yapma."
+" connections, then do nothing. Return an error message if starting the "
+"plugin failed, otherwise None."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2273,8 +2308,8 @@ msgstr "Aygıt bu kitap listesi için koleksiyonları destekliyorsa True döndü
 #: calibre.devices.interface.BookList.add_book:1
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
-"metadata. Return True if booklists must be sync'ed"
-msgstr "Kitabı kitap listesine ekle. Amaç tüm aygıt-dahili metadatayı yönetmektir. Kitaplisteleri eşzamanlanmalıysa True döndür"
+"metadata. Return the book (a truthy value) if booklists must be sync'ed"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2762,6 +2797,11 @@ msgid ""
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
 msgstr "Ana GUI kapanma evresindeyken her eklenti için bir kere çağrılır. Kullanılan kaynakları bırakın, ama kapatmayı uzun süre engellememeye çalışın."
+
+#: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
+#: calibre.customize.InterfaceActionBase.actual_plugin:1
+msgid "Import path of the actual interface action class as module:class"
+msgstr ""
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

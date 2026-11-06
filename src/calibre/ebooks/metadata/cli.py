@@ -7,6 +7,7 @@ ebook-meta
 import os
 import sys
 import unicodedata
+from typing import IO, TYPE_CHECKING
 
 from calibre import prints
 from calibre.customize.ui import force_identifiers, metadata_readers, metadata_writers
@@ -16,6 +17,13 @@ from calibre.ebooks.metadata.meta import get_metadata, set_metadata
 from calibre.utils.config import StringConfig
 from calibre.utils.date import parse_date
 from calibre.utils.localization import _
+
+if TYPE_CHECKING:
+    from multiprocessing.synchronize import Lock
+    from optparse import Values
+
+    from calibre.ebooks.metadata.book.base import Metadata
+    from calibre.utils.config import OptionParser
 
 USAGE = _('%prog ebook_file [options]\n') + _('''
 Read/Write metadata from/to e-book files.
@@ -30,7 +38,7 @@ silently ignored.
 ''')
 
 
-def config():
+def config() -> StringConfig:
     c = StringConfig('')
     c.add_opt('title', ['-t', '--title'], help=_('Set the title.'))
     c.add_opt(
@@ -95,26 +103,26 @@ def config():
     return c
 
 
-def filetypes():
-    readers = set()
+def filetypes() -> set[str]:
+    readers: set[str] = set()
     for r in metadata_readers():
         readers = readers.union(set(r.file_types))
     return readers
 
 
-def option_parser():
-    writers = set()
+def option_parser() -> OptionParser:
+    writers: set[str] = set()
     for w in metadata_writers():
         writers = writers.union(set(w.file_types))
     ft, w = ', '.join(sorted(filetypes())), ', '.join(sorted(writers))
     return config().option_parser(USAGE.format(ft, w))
 
 
-def normalize(x):
+def normalize(x: str) -> str:
     return unicodedata.normalize('NFC', x)
 
 
-def do_set_metadata(opts, mi, stream, stream_type):
+def do_set_metadata(opts: Values, mi: Metadata, stream: IO[bytes], stream_type: str) -> None:
     mi = MetaInformation(mi)
     for x in ('guide', 'toc', 'manifest', 'spine'):
         setattr(mi, x, None)
@@ -123,7 +131,8 @@ def do_set_metadata(opts, mi, stream, stream_type):
     if from_opf is not None:
         from calibre.ebooks.metadata.opf2 import OPF
 
-        opf_mi = OPF(open(from_opf, 'rb')).to_book_metadata()
+        with open(from_opf, 'rb') as f:
+            opf_mi = OPF(f).to_book_metadata()
         mi.smart_update(opf_mi)
 
     for pref in config().option_set.preferences:
@@ -170,13 +179,14 @@ def do_set_metadata(opts, mi, stream, stream_type):
 
     if getattr(opts, 'cover', None) is not None:
         ext = os.path.splitext(opts.cover)[1].replace('.', '').upper()
-        mi.cover_data = (ext, open(opts.cover, 'rb').read())
+        with open(opts.cover, 'rb') as f:
+            mi.cover_data = (ext, f.read())
 
     with force_identifiers:
         set_metadata(stream, mi, stream_type)
 
 
-def one(line: str, lock) -> None:
+def one(line: str, lock: Lock) -> None:
     import json
 
     rq = json.loads(line)
@@ -191,17 +201,19 @@ def one(line: str, lock) -> None:
                 stream_type = os.path.splitext(ebookpath)[1].replace('.', '').lower()
                 mi = get_metadata(stream, stream_type, force_read_metadata=True)
 
-            if mi.cover_data and mi.cover_data[1] and coverpath:
+            if mi.cover_data[1] and coverpath:
                 with open(coverpath, 'wb') as f:
                     f.write(mi.cover_data[1])
                     ans['cover'] = coverpath
-            ans['metadata'] = m = {'title': mi.title, 'authors': mi.authors}
+            m: dict[str, object] = {'title': mi.title, 'authors': mi.authors}
+            ans['metadata'] = m
             if not mi.is_null('series'):
                 m['series'] = mi.series
                 m['series_index'] = mi.series_index
             if not mi.is_null('tags'):
                 m['tags'] = mi.tags
             if not mi.is_null('rating'):
+                assert mi.rating is not None
                 m['rating'] = float(mi.rating) / 2
             for field in ('pubdate', 'timestamp'):
                 if not mi.is_null(field):
@@ -214,7 +226,7 @@ def one(line: str, lock) -> None:
         print(json.dumps(ans), file=sys.__stdout__, flush=True)
 
 
-def simple_metadata_server():
+def simple_metadata_server() -> None:
     import calibre.ebooks.metadata.docx as speedup
 
     del speedup
@@ -239,7 +251,7 @@ def simple_metadata_server():
                 break
 
 
-def main(args=sys.argv):
+def main(args: list[str] = sys.argv) -> int:
     parser = option_parser()
     opts, args = parser.parse_args(list(map(normalize, args)))
     if len(args) < 2:
@@ -290,11 +302,11 @@ def main(args=sys.argv):
 
         opf = OPFCreator(os.getcwd(), mi)
         with open(opts.to_opf, 'wb') as f:
-            opf.render(f)
+            opf.render(f, mark_fallback_language=False)
         prints(_('OPF created in'), opts.to_opf)
 
     if opts.get_cover is not None:
-        if mi.cover_data and mi.cover_data[1]:
+        if mi.cover_data[1]:
             with open(opts.get_cover, 'wb') as f:
                 f.write(mi.cover_data[1])
                 prints(_('Cover saved to'), f.name)

@@ -30,12 +30,11 @@ import secrets
 import time
 import weakref
 from collections import OrderedDict
-from collections.abc import Callable, Iterable, Mapping, Sequence
 from contextlib import suppress
 from http import HTTPStatus
 from io import BytesIO
 from threading import RLock
-from typing import Any
+from typing import TYPE_CHECKING, Any, Self
 from urllib.error import URLError
 from urllib.parse import urlencode, urlparse
 from urllib.request import Request
@@ -43,6 +42,9 @@ from urllib.request import Request
 from calibre.web.automate.camoufox import DEFAULT_TIMEOUT, Error, InputWedged, Page, TimeoutExceeded, debug
 from calibre.web.automate.download_deps import Install
 from calibre.web.automate.worker import make_request, start_worker
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterable, Mapping, Sequence
 
 # The recipe thread pool defaults to five threads and a tab costs real memory,
 # so the pool of them is kept to a size that a download actually uses
@@ -417,11 +419,17 @@ async def fill_field(page: Page, selector: str, value: str, remaining: Callable[
     into it. Either way typing it again, into what is there now, is what works,
     and looking at what the field holds afterwards is the only way to know.
     """
+    found = False
     for attempt in range(FILL_ATTEMPTS):
         if attempt:
             await asyncio.sleep(min(FILL_RETRY_DELAY, remaining()))
         try:
-            await page.fill(selector, value, timeout=remaining())
+            element = await page.wait_for_selector(selector, timeout=remaining(), visible=True)
+            found = True
+            try:
+                await element.fill(value)
+            finally:
+                await element.dispose()
             await asyncio.sleep(min(FILL_RETRY_DELAY, remaining()))
             element = await page.find(selector)
             if element is None:
@@ -431,7 +439,16 @@ async def fill_field(page: Page, selector: str, value: str, remaining: Callable[
                     return True
             finally:
                 await element.dispose()
-        except TimeoutExceeded, InputWedged:
+        except TimeoutExceeded:
+            # Typing is slow, so on a slow machine the time can run out while
+            # trying again. The field was found by an earlier attempt, so what
+            # went wrong is that it would not take what was typed, not that it
+            # never appeared.
+            if found:
+                debug(f'Ran out of time typing into {selector} again, after attempt {attempt + 1} of {FILL_ATTEMPTS}')
+                return False
+            raise
+        except InputWedged:
             raise
         except Error as err:
             # Not the message itself, which quotes what was being typed
@@ -646,10 +663,10 @@ class Response:
     def close(self) -> None:
         self._data.close()
 
-    def __enter__(self) -> Response:
+    def __enter__(self) -> Self:
         return self
 
-    def __exit__(self, *a: Any) -> None:  # ruff: ignore[any-type]
+    def __exit__(self, *a: object) -> None:
         self.close()
 
 

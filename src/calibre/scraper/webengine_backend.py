@@ -11,8 +11,7 @@ from collections import deque
 from contextlib import suppress
 from http import HTTPStatus
 from time import monotonic
-from types import TracebackType
-from typing import Any
+from typing import TYPE_CHECKING
 
 from qt.core import QApplication, QByteArray, QNetworkCookie, QObject, Qt, QTimer, QUrl, pyqtSignal, sip
 from qt.webengine import QWebEnginePage, QWebEngineProfile, QWebEngineScript, QWebEngineSettings
@@ -22,8 +21,12 @@ from calibre.scraper.qt_backend import worker as qt_worker
 from calibre.utils.resources import get_path as P
 from calibre.utils.webengine import create_script, insert_scripts, setup_profile
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
+    from types import TracebackType
 
-def create_base_profile(cache_name='', allow_js=False):
+
+def create_base_profile(cache_name: str = '', allow_js: bool = False) -> QWebEngineProfile:
     from calibre.utils.random_ua import random_common_chrome_user_agent
 
     if cache_name:
@@ -51,7 +54,7 @@ class DownloadRequest(QObject):
     aborted_on_timeout: bool = False
     response_received = pyqtSignal(object)
 
-    def __init__(self, url: str, output_path: str, timeout: float, req_id: int, parent: FetchBackend):
+    def __init__(self, url: str, output_path: str, timeout: float, req_id: int, parent: FetchBackend) -> None:
         super().__init__(parent)
         self.url, self.filename = url, os.path.basename(output_path)
         self.output_path = output_path
@@ -110,18 +113,18 @@ class Worker(QWebEnginePage):
     result_received = pyqtSignal(object)
     token: str
 
-    def __init__(self, profile, parent: FetchBackend):
+    def __init__(self, profile: QWebEngineProfile, parent: FetchBackend) -> None:
         super().__init__(profile, parent)
         self._parent = parent
         self.messages_dispatch.connect(self.on_messages)
 
-    def javaScriptAlert(self, securityOrigin, msg):
+    def javaScriptAlert(self, securityOrigin: QUrl, msg: str | None) -> None:
         pass
 
-    def javaScriptConfirm(self, securityOrigin, msg):
+    def javaScriptConfirm(self, securityOrigin: QUrl, msg: str | None) -> bool:
         return True
 
-    def javaScriptPrompt(self, securityOrigin, msg, defaultValue):
+    def javaScriptPrompt(self, securityOrigin: QUrl, msg: str | None, defaultValue: str | None) -> tuple[bool, str | None]:
         return True, defaultValue
 
     def javaScriptConsoleMessage(
@@ -144,7 +147,7 @@ class Worker(QWebEnginePage):
         if not sip.isdeleted(self):
             self.messages_dispatch.emit(messages)
 
-    def runjs(self, js: str, callback=None) -> None:
+    def runjs(self, js: str, callback: Callable[[list], None] | None = None) -> None:
         if callback is None:
             self.runJavaScript(js, QWebEngineScript.ScriptWorldId.ApplicationWorld)
         else:
@@ -226,7 +229,7 @@ class FetchBackend(QObject):
         t.setInterval(50)
         t.timeout.connect(self.enforce_timeouts)
 
-    def excepthook(self, cls: type[BaseException], exc: BaseException, tb: TracebackType | None) -> Any:
+    def excepthook(self, cls: type[BaseException], exc: BaseException, tb: TracebackType | None) -> None:
         if not isinstance(exc, KeyboardInterrupt):
             sys.__excepthook__(cls, exc, tb)
         app = QApplication.instance()
@@ -240,7 +243,7 @@ class FetchBackend(QObject):
         assert app is not None
         app.exit(1)
 
-    def enforce_timeouts(self):
+    def enforce_timeouts(self) -> None:
         now = monotonic()
         has_workers = False
         for w in self.workers:
@@ -255,6 +258,7 @@ class FetchBackend(QObject):
     def download(self, req: Request) -> None:
         qurl = QUrl(req['url'])
         cs = self.profile.cookieStore()
+        assert cs is not None
         for c in self.all_request_cookies:
             c = QNetworkCookie(c)
             c.normalize(qurl)
@@ -303,6 +307,7 @@ class FetchBackend(QObject):
 
     def add_cookie(self, c: QNetworkCookie) -> None:
         cs = self.profile.cookieStore()
+        assert cs is not None
         if c.domain():
             cs.setCookie(c)
         else:
@@ -319,7 +324,7 @@ class FetchBackend(QObject):
             else:
                 self.set_simple_cookie(c['name'], c['value'], c.get('domain'), c.get('path'))
 
-    def set_simple_cookie(self, name: str, value: str, domain: str | None = None, path: str | None = '/'):
+    def set_simple_cookie(self, name: str, value: str, domain: str | None = None, path: str | None = '/') -> None:
         c = QNetworkCookie()
         c.setName(name.encode())
         c.setValue(value.encode())

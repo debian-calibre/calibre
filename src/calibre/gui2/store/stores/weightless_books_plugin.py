@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011, John Schember <john@nachtimwald.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 2  # Needed for dynamic plugin loading
 
@@ -24,7 +22,7 @@ except ImportError:
 
 
 class WeightlessBooksStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         url = 'http://weightlessbooks.com/'
 
         if external or self.config.get('open_external', False):

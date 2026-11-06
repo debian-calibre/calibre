@@ -64,8 +64,12 @@ __author__ = 'sengian <sengian1 at gmail.com>'
 
 import re
 import string
+from typing import TYPE_CHECKING
 
 from calibre.utils.mreplace import MReplace
+
+if TYPE_CHECKING:
+    from collections.abc import Iterable
 
 utf8enc2latex_mapping = {  # {{{
     # This is a mapping of Unicode characters to LaTeX equivalents.
@@ -2540,7 +2544,7 @@ entity_mapping = {
 
 
 class BibTeX:
-    def __init__(self):
+    def __init__(self) -> None:
         self.rep_utf8 = MReplace(utf8enc2latex_mapping)
         self.rep_ent = MReplace(entity_mapping)
         # Set default conversion to ASCII BibTeX
@@ -2551,27 +2555,27 @@ class BibTeX:
         self.upper = re.compile('[' + string.ascii_uppercase + ']')
         self.escape = re.compile(r'[#&%_]')
 
-    def ValidateCitationKey(self, text):
+    def ValidateCitationKey(self, text: str) -> str:
         """
         Removes characters not allowed in BibTeX keys
         """
         return self.invalid_cit.sub('', text)
 
-    def braceUppercase(self, text):
+    def braceUppercase(self, text: str) -> str:
         """
         Convert uppercase letters to bibtex encoded uppercase
         """
         return self.upper.sub(lambda m: f'{{{m.group()}}}', text)
 
-    def resolveEntities(self, text):
+    def resolveEntities(self, text: str) -> str:
         return self.rep_ent.mreplace(text)
 
-    def resolveUnicode(self, text):
+    def resolveUnicode(self, text: str) -> str:
         # UTF-8 text as entry
         text = self.rep_utf8.mreplace(text)
         return text.replace('$}{$', '')
 
-    def escapeSpecialCharacters(self, text):
+    def escapeSpecialCharacters(self, text: str) -> str:
         """
         Latex escaping some (not all) special characters
         """
@@ -2580,7 +2584,7 @@ class BibTeX:
         return self.escape.sub(lambda m: f'\\{m.group()}', text)
 
     # Calibre functions: Option to go to official ASCII Bibtex or unofficial UTF-8
-    def utf8ToBibtex(self, text):
+    def utf8ToBibtex(self, text: str) -> str:
         """
         Go from an unicode entry to ASCII Bibtex format without encoding
         """
@@ -2592,13 +2596,13 @@ class BibTeX:
             text = self.resolveUnicode(text)
         return text
 
-    def bibtex_author_format(self, item):
+    def bibtex_author_format(self, item: Iterable[str]) -> str:
         """
         Format authors for Bibtex compliance (get a list as input)
         """
         return self.utf8ToBibtex(' and '.join(item))
 
-    def stripUnmatchedSyntax(self, text, open_character, close_character):
+    def stripUnmatchedSyntax(self, text: str, open_character: str, close_character: str) -> str:
         """
         Strips unmatched BibTeX syntax
         """
@@ -2618,8 +2622,8 @@ class BibTeX:
         remove.extend(stack)
 
         if remove:
-            text = list(text)
+            chars = list(text)
             for i in sorted(remove, reverse=True):
-                text.pop(i)
-            text = ''.join(text)
+                chars.pop(i)
+            text = ''.join(chars)
         return text

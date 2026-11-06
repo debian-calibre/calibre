@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2013, Kovid Goyal <kovid at kovidgoyal.net>
 
-from collections import namedtuple
-from collections.abc import Iterable
 from functools import partial
+from typing import TYPE_CHECKING, NamedTuple, cast
+
+from lxml import etree
 
 from calibre.ebooks.oeb.base import OEB_DOCS, OEB_STYLES
+from calibre.ebooks.oeb.polish.check.accessibility import check_accessibility
 from calibre.ebooks.oeb.polish.check.base import WARN, BaseError, run_checkers
 from calibre.ebooks.oeb.polish.check.fonts import check_fonts
 from calibre.ebooks.oeb.polish.check.images import check_raster_images
@@ -25,20 +27,28 @@ from calibre.ebooks.oeb.polish.cover import is_raster_image
 from calibre.ebooks.oeb.polish.utils import guess_type
 from polyglot.builtins import as_unicode
 
+if TYPE_CHECKING:
+    from collections.abc import Iterable, Sequence
+
+    from lxml.etree import Element
+
+    from calibre.ebooks.oeb.polish.check.css import Job
+    from calibre.ebooks.oeb.polish.container import Container
+
 XML_TYPES = frozenset(map(guess_type, ('a.xml', 'a.svg', 'a.opf', 'a.ncx'))) | {'application/oebps-page-map+xml'}
 
 
 class CSSChecker:
-    def __init__(self, skipped_rules: frozenset[str] = frozenset()):
-        self.jobs = []
+    def __init__(self, skipped_rules: frozenset[str] = frozenset()) -> None:
+        self.jobs: list[Job] = []
         self.skipped_rules = skipped_rules
 
-    def create_job(self, name, raw, line_offset=0, is_declaration=False):
+    def create_job(self, name: str, raw: str | bytes, line_offset: int = 0, is_declaration: bool = False) -> None:
         from calibre.ebooks.oeb.polish.check.css import create_job
 
         self.jobs.append(create_job(name, as_unicode(raw), line_offset, is_declaration))
 
-    def __call__(self):
+    def __call__(self) -> Sequence[BaseError]:
         from calibre.ebooks.oeb.polish.check.css import check_css
 
         if not self.jobs:
@@ -50,9 +60,9 @@ def remove_skipped(errors: Iterable[BaseError], skipped_rules: frozenset[str]) -
     return [e for e in errors if not e.can_be_skipped or e.rule_id not in skipped_rules]
 
 
-def run_checks(container, skipped_rules: frozenset[str] = frozenset()):
+def run_checks(container: Container, skipped_rules: frozenset[str] = frozenset(), accessibility: bool = False) -> list[BaseError]:
 
-    errors = []
+    errors: list[BaseError] = []
 
     # Check parsing
     xml_items, html_items, raster_images, stylesheets = [], [], [], []
@@ -98,6 +108,7 @@ def run_checks(container, skipped_rules: frozenset[str] = frozenset()):
         if not raw:
             continue
         root = container.parsed(name)
+        assert isinstance(root, etree._Element)
         for style in root.xpath('//*[local-name()="style"]'):
             if style.get('type', 'text/css') == 'text/css' and style.text:
                 css_checker.create_job(name, style.text, line_offset=style.sourceline - 1)
@@ -114,24 +125,30 @@ def run_checks(container, skipped_rules: frozenset[str] = frozenset()):
     errors += check_filenames(container)
     errors += check_markup(container)
     errors += check_opf(container)
+    if accessibility:
+        errors += check_accessibility(container)
 
     return remove_skipped(errors, skipped_rules)
 
 
-CSSFix = namedtuple('CSSFix', 'original_css elem attribute')
+class CSSFix(NamedTuple):
+    original_css: str
+    elem: Element | None
+    attribute: str
 
 
-def fix_css(container, skipped_rules: frozenset[str] = frozenset()):
+def fix_css(container: Container, skipped_rules: frozenset[str] = frozenset()) -> bool:
     from calibre.ebooks.oeb.polish.check.css import create_job, pool, stylelint_rules_from_skipped_rules
 
     jobs = []
 
     for name, mt in container.mime_map.items():
         if mt in OEB_STYLES:
-            css = container.raw_data(name, decode=True)
+            css = cast('str', container.raw_data(name, decode=True))  # CSS files are decoded to str
             jobs.append(create_job(name, css, fix_data=CSSFix(css, None, '')))
         elif mt in OEB_DOCS:
             root = container.parsed(name)
+            assert isinstance(root, etree._Element)
             for style in root.xpath('//*[local-name()="style"]'):
                 if style.get('type', 'text/css') == 'text/css' and style.text:
                     jobs.append(create_job(name, style.text, fix_data=CSSFix(style.text, style, '')))
@@ -145,6 +162,7 @@ def fix_css(container, skipped_rules: frozenset[str] = frozenset()):
         if result['type'] == 'error':
             continue
         fx = job.fix_data
+        assert fx is not None  # all jobs above are created with fix_data
         fixed_css = result['results']['output']
         if fixed_css == fx.original_css:
             continue
@@ -161,7 +179,7 @@ def fix_css(container, skipped_rules: frozenset[str] = frozenset()):
     return changed
 
 
-def fix_errors(container, errors, skipped_rules: frozenset[str] = frozenset()):
+def fix_errors(container: Container, errors: Sequence[BaseError], skipped_rules: frozenset[str] = frozenset()) -> bool:
     # Fix parsing
     changed = False
     for name in {e.name for e in errors if getattr(e, 'is_parsing_error', False)}:
@@ -171,6 +189,7 @@ def fix_errors(container, errors, skipped_rules: frozenset[str] = frozenset()):
             continue
         container.dirty(name)
         if container.mime_map[name] in OEB_DOCS:
+            assert isinstance(root, etree._Element)
             for style in root.xpath('//*[local-name()="style"]'):
                 if style.get('type', 'text/css') == 'text/css' and style.text and style.text.strip():
                     fix_style_tag(container, style)

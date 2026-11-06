@@ -3,18 +3,24 @@
 
 import glob
 import os
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from calibre.devices.mtp.unix.driver import MTPCandidate
 
 
 class MTPDetect:
     SYSFS_PATH = os.environ.get('SYSFS_PATH', '/sys')
 
-    def __init__(self):
+    def __init__(self) -> None:
         self.base = os.path.join(self.SYSFS_PATH, 'subsystem', 'usb', 'devices')
         if not os.path.exists(self.base):
             self.base = os.path.join(self.SYSFS_PATH, 'bus', 'usb', 'devices')
         self.ok = os.path.exists(self.base)
 
-    def __call__(self, dev, debug=None):
+    def __call__(self, dev: MTPCandidate, debug: Callable[..., object] | None = None) -> bool:
         '''
         Check if the device has an interface named "MTP" using sysfs, which
         avoids probing the device.
@@ -22,7 +28,7 @@ class MTPDetect:
         if not self.ok:
             return False
 
-        def read(x):
+        def read(x: str) -> bytes | None:
             try:
                 with open(x, 'rb') as f:
                     return f.read()

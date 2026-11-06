@@ -12,6 +12,7 @@ from collections import OrderedDict
 from io import BytesIO
 from queue import Empty
 from threading import Thread
+from typing import cast
 
 from qt.core import QObject, Qt, pyqtSignal
 
@@ -35,7 +36,7 @@ from calibre.utils.ipc.pool import Failure, Pool
 from calibre.utils.localization import _, ngettext
 
 
-def validate_source(source, parent=None):  # {{{
+def validate_source(source, parent=None) -> bool:  # {{{
     if isinstance(source, (str, bytes)):
         if not os.path.exists(source):
             error_dialog(parent, _('Cannot add books'), _('The path %s does not exist') % source, show=True)
@@ -92,7 +93,7 @@ class Adder(QObject):
         callback=None,
         pool=None,
         list_of_archives=False,
-    ):
+    ) -> None:
         if isinstance(source, str):
             source = make_long_path_useable(source)
         else:
@@ -143,7 +144,7 @@ class Adder(QObject):
         if DEBUG:
             self.start_time = time.time()
 
-    def break_cycles(self):
+    def break_cycles(self) -> None:
         self.abort_scan = True
         pd = self.pd
         assert pd is not None
@@ -161,7 +162,7 @@ class Adder(QObject):
         ) = self.tdir = self.file_groups = self.scan_thread = None
         self.deleteLater()
 
-    def tick(self):
+    def tick(self) -> None:
         pd = self.pd
         assert pd is not None
         if pd.canceled:
@@ -175,7 +176,7 @@ class Adder(QObject):
 
     # Filesystem scan {{{
 
-    def scan(self):
+    def scan(self) -> None:
         file_groups = self.file_groups
         assert file_groups is not None
 
@@ -189,7 +190,7 @@ class Adder(QObject):
 
         if iswindows or ismacos:
 
-            def find_files(root):
+            def find_files(root) -> None:
                 for dirpath, dirnames, filenames in os.walk(root):
                     for files in find_books_in_directory(dirpath, self.single_book_per_directory, compiled_rules=compiled_rules):
                         if self.abort_scan:
@@ -201,7 +202,7 @@ class Adder(QObject):
 
         else:
 
-            def find_files(root):
+            def find_files(root) -> None:
                 if isinstance(root, str):
                     root = root.encode(filesystem_encoding)
                 for dirpath, dirnames, filenames in os.walk(root):
@@ -276,7 +277,7 @@ class Adder(QObject):
         except Exception:
             self.scan_error = traceback.format_exc()
 
-    def monitor_scan(self):
+    def monitor_scan(self) -> None:
         scan_thread = self.scan_thread
         assert scan_thread is not None
         scan_thread.join(0.05)
@@ -329,7 +330,7 @@ class Adder(QObject):
 
     # }}}
 
-    def do_one_group(self):
+    def do_one_group(self) -> None:
         try:
             group_id = next(self.groups_to_add)
         except StopIteration:
@@ -357,7 +358,7 @@ class Adder(QObject):
             pd.canceled = True
         self.do_one_signal.emit()
 
-    def monitor_pool(self):
+    def monitor_pool(self) -> None:
         pool = self.pool
         assert pool is not None
         pd = self.pd
@@ -429,7 +430,7 @@ class Adder(QObject):
         mi.read_metadata_failed = False
         return mi
 
-    def process_result(self, group_id, result):
+    def process_result(self, group_id, result) -> None:
         file_groups = self.file_groups
         assert file_groups is not None
         pd = self.pd
@@ -444,7 +445,7 @@ class Adder(QObject):
         else:
             paths, opf, has_cover, duplicate_info = result.value
             try:
-                mi = OPF(BytesIO(opf), basedir=self.tdir, populate_spine=False, try_to_guess_cover=False).to_book_metadata()
+                mi = OPF(BytesIO(opf), basedir=cast('str', self.tdir), populate_spine=False, try_to_guess_cover=False).to_book_metadata()
                 mi.read_metadata_failed = False
             except Exception:
                 mi = self.report_metadata_failure(group_id, traceback.format_exc())
@@ -483,7 +484,7 @@ class Adder(QObject):
             return
 
         if self.add_formats_to_existing:
-            identical_book_ids = find_identical_books(mi, self.find_identical_books_data)
+            identical_book_ids = find_identical_books(mi, self.find_identical_books_data)  # ty: ignore[invalid-argument-type]
             if identical_book_ids:
                 try:
                     self.merge_books(mi, cover_path, paths, identical_book_ids)
@@ -502,7 +503,7 @@ class Adder(QObject):
         else:
             self.add_book(mi, cover_path, paths)
 
-    def merge_books(self, mi, cover_path, paths, identical_book_ids):
+    def merge_books(self, mi, cover_path, paths, identical_book_ids) -> None:
         merged_books = self.merged_books
         assert merged_books is not None
         merged_books.add((mi.title, ' & '.join(mi.authors)))
@@ -537,7 +538,7 @@ class Adder(QObject):
             except Exception:
                 pass
 
-    def add_book(self, mi, cover_path, paths):
+    def add_book(self, mi, cover_path, paths) -> None:
         if DEBUG:
             st = time.time()
         try:
@@ -579,13 +580,15 @@ class Adder(QObject):
         if DEBUG:
             prints('Added', mi.title, f'to db in: {time.time() - st:.1f}')
 
-    def add_formats(self, book_id, paths, mi, replace=True, is_an_add=False):
+    def add_formats(self, book_id, paths, mi, replace=True, is_an_add=False) -> None:
         fmap = {p.rpartition(os.path.extsep)[-1].lower(): p for p in paths}
         fmt_map = {}
         db = self.db
         assert db is not None
         dbref = self.dbref
         assert dbref is not None
+        db_inst = dbref()
+        assert db_inst is not None
         for fmt, path in fmap.items():
             # The onimport plugins have already been run by the read metadata
             # worker
@@ -593,7 +596,7 @@ class Adder(QObject):
                 continue
             try:
                 if db.add_format(book_id, fmt, path, run_hooks=False, replace=replace):
-                    run_plugins_on_postimport(dbref(), book_id, fmt)
+                    run_plugins_on_postimport(db_inst, book_id, fmt)
                     fmt_map[fmt.lower()] = path
             except Exception:
                 a = self.report.append
@@ -601,9 +604,9 @@ class Adder(QObject):
                 a(_('Failed to add the file {0} to the book: {1}').format(path, mi.title))
                 a(_('With error:')), a(traceback.format_exc())
         if is_an_add:
-            run_plugins_on_postadd(dbref(), book_id, fmt_map)
+            run_plugins_on_postadd(db_inst, book_id, fmt_map)
 
-    def process_duplicates(self):
+    def process_duplicates(self) -> None:
         if self.duplicates:
             dbref = self.dbref
             assert dbref is not None
@@ -622,7 +625,7 @@ class Adder(QObject):
                 return
         self.finish()
 
-    def process_duplicate(self):
+    def process_duplicate(self) -> None:
         try:
             mi, cover_path, paths = next(self.duplicates_to_process)
         except StopIteration:
@@ -635,7 +638,7 @@ class Adder(QObject):
         self.add_book(mi, cover_path, paths)
         self.do_one_signal.emit()
 
-    def finish(self):
+    def finish(self) -> None:
         added_book_ids = self.added_book_ids
         assert added_book_ids is not None
         pd = self.pd

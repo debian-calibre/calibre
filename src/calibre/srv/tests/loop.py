@@ -9,6 +9,7 @@ import time
 from collections import namedtuple
 from glob import glob
 from threading import Event
+from typing import TYPE_CHECKING, Never
 from unittest import skipIf
 
 from calibre.ptempfile import TemporaryDirectory
@@ -17,11 +18,16 @@ from calibre.srv.tests.base import BaseTest, TestServer
 from calibre.utils.certgen import create_server_cert
 from calibre.utils.monotonic import monotonic
 
+if TYPE_CHECKING:
+    import unittest
+
+    from calibre.srv.loop import ServerLoop
+
 is_ci = os.environ.get('CI', '').lower() == 'true'
 
 
 class LoopTest(BaseTest):
-    def test_log_rotation(self):
+    def test_log_rotation(self) -> None:
         "Test log rotation"
         from calibre.ptempfile import TemporaryDirectory
         from calibre.srv.utils import RotatingLog
@@ -30,10 +36,10 @@ class LoopTest(BaseTest):
             fname = os.path.join(tdir, 'log')
             l = RotatingLog(fname, max_size=100)
 
-            def history():
+            def history() -> set[int]:
                 return {int(x.rpartition('.')[-1]) for x in glob(fname + '.*')}
 
-            def log_size():
+            def log_size() -> int:
                 ssize = l.outputs[0].stream.tell()
                 self.ae(ssize, os.path.getsize(fname))
                 return ssize
@@ -49,22 +55,22 @@ class LoopTest(BaseTest):
             self.assertLessEqual(log_size(), 100)
             self.ae(history(), {1, 2, 3, 4, 5})
 
-    def test_plugins(self):
+    def test_plugins(self) -> None:
         "Test plugin semantics"
 
         class Plugin:
-            def __init__(self):
+            def __init__(self) -> None:
                 self.running = Event()
                 self.event = Event()
                 self.port = None
 
-            def start(self, loop):
+            def start(self, loop: ServerLoop) -> None:
                 self.running.set()
                 self.port = loop.bound_address[1]
                 self.event.wait()
                 self.running.clear()
 
-            def stop(self):
+            def stop(self) -> None:
                 self.event.set()
 
         plugin = Plugin()
@@ -74,7 +80,7 @@ class LoopTest(BaseTest):
         self.assertTrue(plugin.event.wait(5))
         self.assertFalse(plugin.running.is_set())
 
-    def test_workers(self):
+    def test_workers(self) -> Never:
         "Test worker semantics"
         with TestServer(lambda data: data.path[0] + data.read(), worker_count=3) as server:
             self.ae(3, sum(int(w.is_alive()) for w in server.loop.pool.workers))
@@ -98,13 +104,13 @@ class LoopTest(BaseTest):
             w.join()
         self.ae(0, sum(int(w.is_alive()) for w in server.loop.pool.workers))
 
-    def test_fallback_interface(self):
+    def test_fallback_interface(self) -> None:
         "Test falling back to default interface"
         with TestServer(lambda data: data.path[0] + data.read(), listen_on='1.1.1.1', fallback_to_detected_interface=True) as server:
             self.assertNotEqual('1.1.1.1', server.address[0])
 
     @skipIf(True, 'Disabled as it is failing on the build server, need to investigate')
-    def test_bonjour(self):
+    def test_bonjour(self) -> None:
         "Test advertising via BonJour"
         from zeroconf import Zeroconf
 
@@ -123,7 +129,7 @@ class LoopTest(BaseTest):
 
         self.assertTrue(b.stopped.wait(5), 'BonJour not stopped')
 
-    def test_dual_stack(self):
+    def test_dual_stack(self) -> None:
         from calibre.srv.loop import IPPROTO_IPV6
 
         with TestServer(lambda data: data.path[0] + data.read().decode('utf-8'), listen_on='::') as server:
@@ -135,14 +141,14 @@ class LoopTest(BaseTest):
             self.ae(r.status, http.client.OK)
             self.ae(r.read(), b'testbody')
 
-    def test_ring_buffer(self):
+    def test_ring_buffer(self) -> None:
         "Test the ring buffer used for reads"
 
         class FakeSocket:
-            def __init__(self, data):
+            def __init__(self, data: bytes) -> None:
                 self.data = data
 
-            def recv_into(self, mv):
+            def recv_into(self, mv: memoryview) -> int:
                 sz = min(len(mv), len(self.data))
                 mv[:sz] = self.data[:sz]
                 return sz
@@ -151,10 +157,10 @@ class LoopTest(BaseTest):
 
         buf = ReadBuffer(100)
 
-        def write(data):
+        def write(data: bytes) -> int:
             return buf.recv_from(FakeSocket(data))
 
-        def set(data, rpos, wpos, state):
+        def set(data: bytes, rpos: int, wpos: int, state: str) -> None:
             buf.ba = bytearray(data)
             buf.buf = memoryview(buf.ba)
             buf.read_pos, buf.write_pos, buf.full_state = rpos, wpos, state
@@ -194,7 +200,7 @@ class LoopTest(BaseTest):
         set(b'123456\n7', 4, 2, READ)
         self.ae(buf.readline(), b'56\n')
 
-    def test_ssl(self):
+    def test_ssl(self) -> None:
         "Test serving over SSL"
         address = '127.0.0.1'
         with TemporaryDirectory('srv-test-ssl') as tdir:
@@ -219,7 +225,7 @@ class LoopTest(BaseTest):
                 self.ae(subject['commonName'], address)
 
     @skipIf(not has_preactivated_support, 'pre_activated_socket not available')
-    def test_socket_activation(self):
+    def test_socket_activation(self) -> None:
         "Test socket activation"
         # Pre-activated sockets must be fd 3, which may be in use in this
         # process, for instance by the DBus connection of a QApplication created
@@ -247,7 +253,7 @@ class LoopTest(BaseTest):
         status = os.waitpid(pid, 0)[1]
         self.assertEqual(os.waitstatus_to_exitcode(status), 0, output)
 
-    def run_socket_activation_test(self):
+    def run_socket_activation_test(self) -> None:
         os.closerange(3, 4)  # Ensure the socket gets fileno == 3
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM, 0)
         s.bind(('localhost', 0))
@@ -264,7 +270,7 @@ class LoopTest(BaseTest):
             self.ae(r.read(), b'testbody')
             self.ae(server.loop.bound_address[1], port)
 
-    def test_monotonic(self):
+    def test_monotonic(self) -> None:
         "Test the monotonic() clock"
         a = monotonic()
         b = monotonic()
@@ -276,20 +282,20 @@ class LoopTest(BaseTest):
         self.assertGreaterEqual(b - a, 0.09)
         self.assertLessEqual(b - a, 0.4)
 
-    def test_jobs_manager(self):
+    def test_jobs_manager(self) -> None:
         "Test the jobs manager"
         from calibre.srv.jobs import JobsManager
 
-        O = namedtuple('O', 'max_jobs max_job_time')
+        O = namedtuple('O', 'max_jobs max_job_time')  # ruff: ignore[collections-named-tuple]
 
         class FakeLog(list):
-            def error(self, *args):
+            def error(self, *args: str) -> None:
                 self.append(' '.join(args))
 
         s = ('waiting', 'running')
         jm = JobsManager(O(1, 5), FakeLog())
 
-        def job_status(jid):
+        def job_status(jid: int) -> str | None:
             return jm.job_status(jid)[0]
 
         # Start jobs
@@ -336,7 +342,7 @@ class LoopTest(BaseTest):
         jm.shutdown(), jm.wait_for_shutdown(monotonic() + 1)
 
 
-def find_tests():
+def find_tests() -> unittest.TestSuite:
     import unittest
 
     return unittest.defaultTestLoader.loadTestsFromTestCase(LoopTest)

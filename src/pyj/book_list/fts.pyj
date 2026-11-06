@@ -3,7 +3,7 @@
 from __python__ import bound_methods, hash_literals
 
 from elementmaker import E
-from gettext import gettext as _
+from gettext import gettext as _, ngettext
 
 from ajax import ajax, ajax_send
 from book_list.cover_grid import THUMBNAIL_MAX_HEIGHT, THUMBNAIL_MAX_WIDTH
@@ -14,13 +14,15 @@ from book_list.top_bar import create_top_bar
 from book_list.ui import panel_is_shown, query_as_href, set_panel_handler
 from book_list.views import create_image
 from complete import create_search_bar
-from dom import add_extra_css, clear, set_css, svgicon
-from modals import create_custom_dialog, error_dialog, info_dialog, question_dialog
+from dom import add_extra_css, clear, create_live_region, set_css, set_live_region_text, svgicon
+from modals import create_custom_dialog, error_dialog, info_dialog, is_modal_visible, question_dialog
 from widgets import create_spinner
 
 overall_container_id = ''
 current_fts_query = {}
+current_search_xhr = None
 query_id_counter = 0
+status_region_is_new = False
 
 add_extra_css(def ():
     sel = '.fts-help-display '
@@ -30,6 +32,9 @@ add_extra_css(def ():
     style += f'{sel} .bq' + ' { margin-left: 1em; margin-top: 0.5ex; margin-bottom: 0.5ex; font-style: normal; font-weight: 700 }\n'
     style += f'{sel} p' + ' { margin: 0}\n'
     style += '.fts-highlight-match { font-style: normal; font-weight: bold }\n'
+    # The cover button must look exactly like a bare cover image
+    style += '.fts-result-cover { display: block; margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; cursor: pointer }\n'
+    style += '.fts-result-cover:focus-visible { outline: 2px solid var(--calibre-color-link-foreground); outline-offset: 2px }\n'
     return style
 )
 
@@ -50,15 +55,24 @@ def search_page_is_shown(container_id):
     return panel_is_shown(container_id) and showing_search_panel(container_id)
 
 
+def abort_current_search():
+    nonlocal current_search_xhr
+    if current_search_xhr:
+        xhr, current_search_xhr = current_search_xhr, None
+        xhr.abort()
+
+
 def make_new_fts_query(q):
-    nonlocal current_fts_query, query_id_counter
+    nonlocal current_fts_query, query_id_counter, current_search_xhr
+    abort_current_search()
     query_id_counter += 1
     current_fts_query = {'query_id': query_id_counter + ''}
     if current_library_id():
         current_fts_query.library_id = current_library_id()
     Object.assign(current_fts_query, q)
-    xhr = ajax('fts/search', on_initial_fts_fetched, query=current_fts_query, bypass_cache=True)
-    xhr.send()
+    current_search_xhr = ajax(
+        'fts/search', on_initial_fts_fetched.bind(None, current_fts_query, overall_container_id), query=current_fts_query, bypass_cache=True)
+    current_search_xhr.send()
 
 
 def enable_indexing():
@@ -92,17 +106,23 @@ def report_fts_not_enabled():
     )
 
 
-def on_initial_fts_fetched(end_type, xhr, ev):
-    if end_type is 'abort' or not showing_search_panel():
+def on_initial_fts_fetched(query, container_id, end_type, xhr, ev):
+    nonlocal current_search_xhr
+    if xhr is current_search_xhr:
+        current_search_xhr = None
+    if (end_type is 'abort' or query is not current_fts_query or container_id is not overall_container_id
+            or not search_page_is_shown(container_id)):
         return
     if end_type is not 'load':
-        clear_to_waiting_for_results(_('No matches found'))
         if xhr.status is 428:
+            clear_to_message(_('Full text searching disabled'))
             return report_fts_not_enabled()
+        clear_to_message(_('Search failed'))
         return error_dialog(_('Failed to search'), _('The search failed. Click "Show details" for more information.'), xhr.error_html)
     try:
         results = JSON.parse(xhr.responseText)
     except Exception as err:
+        clear_to_message(_('Search failed'))
         return error_dialog(_('Server error'), _('Failed to parse search response from server.'), err + '')
     if results.query_id + '' is not current_fts_query.query_id:
         return
@@ -167,20 +187,36 @@ def build_search_page():
     restrict_bar.dataset.component = 'restrict'
     container.appendChild(E.div(style='padding-top: 1ex; display: flex; width: 100%; align-items: center', svgicon('search'), E.span('\xa0'), restrict_bar))
 
-    # Search help
+    # Keep the live region outside results, which is cleared while searching
+    status = create_live_region()
+    status.dataset.component = 'status'
+    container.appendChild(status)
     container.appendChild(E.div(style='border-top: var(--calibre-border-style); margin-top: 1ex', data_component='results'))
 
 
-def clear_to_waiting_for_results(msg):
+def set_search_status(msg):
+    status = component('status')
+    if status and search_page_is_shown(overall_container_id):
+        # Delay updates made while the panel is being built
+        set_live_region_text(status, msg, status_region_is_new)
+
+
+def clear_to_message(msg, show_spinner=False):
     container = component('results')
     if not container:
         return
     clear(container)
-    msg = msg or (_('Searching, please wait') + '…')
-    container.appendChild(E.div(
-        style='margin: auto; width: 100%; text-align: center; margin-top: 4ex',
-        create_spinner(), '\xa0' + msg
-    ))
+    set_search_status(msg)
+    div = E.div(style='margin: auto; width: 100%; text-align: center; margin-top: 4ex')
+    if show_spinner:
+        div.appendChild(create_spinner())
+        msg = '\xa0' + msg
+    div.appendChild(document.createTextNode(msg))
+    container.appendChild(div)
+
+
+def clear_to_waiting_for_results(msg):
+    clear_to_message(msg or (_('Searching, please wait') + '…'), show_spinner=True)
 
 
 def toggle_restrict():
@@ -196,6 +232,7 @@ def clear_to_help():
     container = component('results')
     if not container:
         return
+    set_search_status('')
     clear(container)
     container.appendChild(E.div(class_='fts-help-display'))
     restrict = get_current_query().restricted is 'y'
@@ -237,6 +274,7 @@ def clear_to_help():
 
 
 def apply_search_panel_state():
+    nonlocal current_fts_query
     q = get_current_query()
     ftsq = {'query': q.fts_query or '', 'use_stemming': q.fts_use_stemming or 'y', 'restriction': q.restriction if q.restricted is 'y' else ''}
     component('query').querySelector('input').value = ftsq.query
@@ -245,9 +283,12 @@ def apply_search_panel_state():
     r.parentNode.style.display = 'flex' if ftsq.restriction is not '' else 'none'
     r.querySelector('input').value = q.restriction or ''
     if not ftsq.query:
+        abort_current_search()
+        current_fts_query = {}
         clear_to_help()
         return
-    if (current_fts_query.query is not ftsq.query or current_fts_query.use_stemming is not ftsq.use_stemming
+    if (not current_fts_query.results or (current_fts_query.library_id or '') is not (current_library_id() or '')
+            or current_fts_query.query is not ftsq.query or current_fts_query.use_stemming is not ftsq.use_stemming
             or current_fts_query.restriction is not ftsq.restriction):
         make_new_fts_query(ftsq)
         clear_to_waiting_for_results(_('Searching for {}, please wait…').format(ftsq.query))
@@ -343,8 +384,19 @@ def disable_fts():
     )
 
 
+def restore_result_focus(button, container_id):
+    if button.isConnected and search_page_is_shown(container_id) and not is_modal_visible():
+        button.focus()
+
+
 def book_result_tile_clicked(ev):
     result_tile = ev.currentTarget
+    button = result_tile.querySelector('.fts-result-cover')
+    container_id = overall_container_id
+
+    def on_close():
+        window.setTimeout(restore_result_focus.bind(None, button, container_id), 0)
+
     bid = int(result_tile.dataset.bookId)
     results = current_fts_query.results
     formats = []
@@ -377,7 +429,7 @@ def book_result_tile_clicked(ev):
             style='margin-top: 1ex',
             E.a(_('Re-index this book'), class_='blue-link', href='javascript: void(0)', onclick=reindex.bind(None, bid))
         ))
-    )
+    , on_close = on_close)
 
 
 def book_result_tile(book_id, title, authors):
@@ -386,7 +438,8 @@ def book_result_tile(book_id, title, authors):
     img.style.maxHeight = tile_height
     img.style.maxWidth = img_max_width
     tooltip = (title) + ' ' + _('by') + ' ' + (authors)
-    img.alt = _('Cover of') + ' ' + tooltip
+    # The cover is decorative, the button wrapping it is labelled with the title
+    img.alt = ''
     return E.div(
         onclick=book_result_tile_clicked,
         title=tooltip,
@@ -394,7 +447,7 @@ def book_result_tile(book_id, title, authors):
         style=f'cursor: pointer; margin-bottom: 1ex; display:flex; height: {tile_height}; max-height: {tile_height}; width: 100%; align-items: stretch',
         E.div(
             style=f'margin-right: 1ex; width: {img_max_width}',
-            img
+            E.button(img, type='button', class_='fts-result-cover', aria_label=tooltip, aria_haspopup='dialog'),
         ),
         E.div(
             style=f'display:flex; flex-direction: column; height: 100%; overflow-y: auto',
@@ -403,8 +456,9 @@ def book_result_tile(book_id, title, authors):
     )
 
 
-def on_snippets_fetched(end_type, xhr, ev):
-    if end_type is 'abort' or not showing_search_panel():
+def on_snippets_fetched(query, container_id, end_type, xhr, ev):
+    if (end_type is 'abort' or query is not current_fts_query or container_id is not overall_container_id
+            or not search_page_is_shown(container_id)):
         return
     if end_type is not 'load':
         return error_dialog(_('Failed to search'), _('The search failed. Click "Show details" for more information.'), xhr.error_html)
@@ -476,7 +530,7 @@ def fetch_snippets():
     q = {}
     Object.assign(q, current_fts_query)
     q.results = v'undefined'
-    xhr = ajax(f'fts/snippets/{ids}', on_snippets_fetched, query=q, bypass_cache=True)
+    xhr = ajax(f'fts/snippets/{ids}', on_snippets_fetched.bind(None, current_fts_query, overall_container_id), query=q, bypass_cache=True)
     xhr.send()
 
 
@@ -487,12 +541,13 @@ def show_initial_results():
     clear(container)
     results = current_fts_query.results
     left, total = results.indexing_status['left'], results.indexing_status['total']
+    indexing_warning = ''
     if left > 0:
         pc = int(((total - left) / total) * 100) if total > 0 else 0
+        indexing_warning = _('Indexing of library only {}% complete, search results may be incomplete.').format(pc)
         container.appendChild(E.div(
             style='margin-top: 0.5ex',
-            E.span(_('WARNING:'), style='color: red; font-weight: bold'), '\xa0',
-            _('Indexing of library only {}% complete, search results may be incomplete.').format(pc)
+            E.span(_('WARNING:'), style='color: red; font-weight: bold'), '\xa0', indexing_warning
         ))
     rc = E.div(style='margin-top: 0.5ex')
     container.appendChild(rc)
@@ -507,6 +562,11 @@ def show_initial_results():
             rc.appendChild(E.hr())
     if results.results.length < 1:
         rc.appendChild(E.div(_('No matches found')))
+    num_books = Object.keys(seen).length
+    msg = ngettext('{} book found', '{} books found', num_books).format(num_books) if num_books else _('No matches found')
+    if indexing_warning:
+        msg += ' ' + indexing_warning
+    set_search_status(msg)
     fetch_snippets()
 
 
@@ -530,7 +590,7 @@ def show_index_panel():
 
 
 def init(container_id):
-    nonlocal overall_container_id
+    nonlocal overall_container_id, status_region_is_new
     overall_container_id = container_id
     container = document.getElementById(container_id)
     create_top_bar(container, title=_('Search text of books'), icon='back')
@@ -541,10 +601,14 @@ def init(container_id):
     ))
     build_search_page()
     q = get_current_query()
-    if not q.fts_panel or q.fts_panel is 'search':
-        show_search_panel()
-    elif q.fts_panel is 'index':
-        show_index_panel()
+    status_region_is_new = True
+    try:
+        if not q.fts_panel or q.fts_panel is 'search':
+            show_search_panel()
+        elif q.fts_panel is 'index':
+            show_index_panel()
+    finally:
+        status_region_is_new = False
 
 
 def set_panel_handlers():

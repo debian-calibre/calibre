@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-10-08 02:41+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
 "Last-Translator: Jellby <jellby@yahoo.com>, 2016-2023,2025-2026\n"
 "Language-Team: Spanish (http://app.transifex.com/calibre/calibre/language/es/)\n"
@@ -572,11 +572,27 @@ msgid ""
 "malfunction on reader devices."
 msgstr "Se ralizan distintas comprobaciones de compatibilidad relativas a problemas conocidos que pueden provocar un mal funcionamiento del libro electrónico en dispositivos de lectura."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:376
+#: ../../../__w/calibre/calibre/manual/edit.rst:375
+msgid ""
+"Accessibility problems, based on the `EPUB Accessibility "
+"<https://www.w3.org/TR/epub-a11y-11/>`_ specification. Images, including SVG"
+" images, without alternative text, HTML files that do not specify their "
+"language and headings that skip levels are reported. For EPUB 3 books, "
+"missing accessibility metadata and elements whose ``epub:type`` has a "
+"corresponding ARIA role, such as ``doc-noteref`` for ``noteref``, but that "
+"do not have a ``role`` attribute, are also reported. Screen readers rely on "
+"the ``role`` attribute, not ``epub:type``. The language of the HTML files "
+"can be set automatically to the language of the book and the missing roles "
+"can be added automatically. These checks are only run if you turn on the "
+":guilabel:`Check for accessibility problems` option below the list of "
+"problems."
+msgstr "Problemas de accesibilidad, según la especificación `EPUB Accessibility <https://www.w3.org/TR/epub-a11y-11/>`_. Se informa de imágenes, incluidas las SVG, sin texto alternativo, archivos HTML que no especifican su idioma y encabezados que omiten niveles. Para los libros EPUB 3, también se informa de la ausencia de metadatos de accesibilidad y de elementos cuyo ``epub:type`` tiene un papel ARIA correspondiente, como ``doc-noteref`` para ``noteref``, pero no tienen un atributo ``role``. Los lectores de pantalla se basan en el atributo ``role``, no en ``epub:type``. El idioma de los archivos HTML puede establecerse automáticamente al idioma del libro y los atributos ``role`` ausentes pueden añadirse automáticamente. Estas comprobaciones sólo se ejecutan si se habilita la opción :guilabel:`Comprobar problemas de accesibilidad` debajo de la lista de problemas."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:390
 msgid "Adding a cover"
 msgstr "Añadir una portada"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:378
+#: ../../../__w/calibre/calibre/manual/edit.rst:392
 msgid ""
 "You can easily add a cover to the book via :guilabel:`Tools->Add cover`. "
 "This allows you to either choose an existing image in the book as the cover "
@@ -587,11 +603,11 @@ msgid ""
 "the OPF."
 msgstr "Puede añadir fácilmente una portada al libro por medio de :guilabel:`Herramientas > Añadir portada`. Esto le permite elegir una imagen existente en el libro como la portada o importar una nueva imagen al libro y hace que sea la portada. Al modificar archivos EPUB, el contenedor HTML para la portada se genera de forma automática. Si se encuentra una portada existente en el libro, se sustituye. La herramienta también se encarga automáticamente de marcar correctamente los archivos de la portada como portadas en el OPF."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:387
+#: ../../../__w/calibre/calibre/manual/edit.rst:401
 msgid "Embedding referenced fonts"
 msgstr "Incrustar tipos de letra referenciados"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:389
+#: ../../../__w/calibre/calibre/manual/edit.rst:403
 msgid ""
 "Accessed via :guilabel:`Tools->Embed reference fonts`, this tool finds all "
 "fonts referenced in the book and if they are not already embedded, searches "
@@ -600,11 +616,11 @@ msgid ""
 "licensed fonts, before doing this."
 msgstr "Se accede a través de :guilabel:`Herramientas > Incrustar tipos de letra referenciados`, esta herramienta busca todos los tipos de letra referenciados en el libro y si no están ya incrustados, los busca en el equipo y los incrusta en el el libro, si los encuentra. Haga el favor de asegurarse de que tiene los permisos necesarios para incrustar tipos de letra con licencia comercial antes de hacerlo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:396
+#: ../../../__w/calibre/calibre/manual/edit.rst:410
 msgid "Subsetting embedded fonts"
 msgstr "Reducir tipos de letra incrustados"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:398
+#: ../../../__w/calibre/calibre/manual/edit.rst:412
 msgid ""
 "Accessed via :guilabel:`Tools->Subset embedded fonts`, this tool reduces all"
 " the fonts in the book to only contain glyphs for the text actually present "
@@ -614,11 +630,11 @@ msgid ""
 "work for the new text. So do this only as the last step in your workflow."
 msgstr "Se accede a través de :guilabel:`Herramientas > Reducir tipos de letra`, esta herramienta reduce todos los tipos de letra incrustados en el libro para que contengan sólo los glifos necesarios para el texto realmente presente en el libro. Normalmente esto reduce el tamaño de los archivos de tipo de letra en alrededor del 50%. Sin embargo, tenga en cuenta que una vez reducidos los tipos de letra, si añade nuevo texto cuyos caracteres no estaban previamente presentes en el tipo de letra reducido, el tipo de letra no funcionará para el nuevo texto. Así que realice esta acción solamente en el último paso del trabajo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:406
+#: ../../../__w/calibre/calibre/manual/edit.rst:420
 msgid "Smartening punctuation"
 msgstr "Corregir puntuación"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:408
+#: ../../../__w/calibre/calibre/manual/edit.rst:422
 msgid ""
 "Convert plain text dashes, ellipsis, quotes, multiple hyphens, etc. into "
 "their typographically correct equivalents. Note that the algorithm can "
@@ -627,40 +643,40 @@ msgid ""
 "punctuation`."
 msgstr "Convertir guiones sencillos, puntos suspensivos, comillas, guiones múltiples, etc. en sus equivalentes tipográficos correctos. Tenga en cuenta que el algoritmo a veces puede generar resultados incorrectos, especialmente cuando se encuentran comillas simples al inicio de las contracciones. Se accede a través de :guilabel: `Herramientas > Mejorar puntuación`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:415
+#: ../../../__w/calibre/calibre/manual/edit.rst:429
 msgid "Transforming CSS properties"
 msgstr "Transformar propiedades CSS"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:417
+#: ../../../__w/calibre/calibre/manual/edit.rst:431
 msgid ""
 "Create rules to transform the styling of the book. For example, create a "
 "rule to convert all red text to green or to double the font size of all text"
 " in the book or make text of a certain font family italic, etc."
 msgstr "Crear reglas para transformar el estilo del libro. Por ejemplo, crear una regla que convierta todo el texto rojo a verde, o duplicar el tamaño de letra de todo el texto del libro, o poner en cursiva todo el texto en determinado tipo de letra, etc."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:421
+#: ../../../__w/calibre/calibre/manual/edit.rst:435
 msgid ""
 "Creating the rules is simple, the rules follow a natural language format, "
 "that looks like:"
 msgstr "Crear las reglas es sencillo, las reglas tienen un formato de idioma natural, de esta manera:"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:424
+#: ../../../__w/calibre/calibre/manual/edit.rst:438
 msgid "If the property *color* is *red* *change* it to *green*"
 msgstr "Si la propiedad *color* es *red* *cambiar* a *verde*"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:425
+#: ../../../__w/calibre/calibre/manual/edit.rst:439
 msgid "If the property *font-size* is *any value* *multiply* the value by *2*"
 msgstr "Si la propiedad *font-size* es *cualquier valor* *multiplicar* el valor por *2*"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:427
+#: ../../../__w/calibre/calibre/manual/edit.rst:441
 msgid "Accessed via :guilabel:`Tools->Transform styles`."
 msgstr "Se accede a través de :guilabel:`Herramientas > Transformar estilos`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:430
+#: ../../../__w/calibre/calibre/manual/edit.rst:444
 msgid "Removing unused CSS rules"
 msgstr "Eliminar reglas CSS sin usar"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:432
+#: ../../../__w/calibre/calibre/manual/edit.rst:446
 msgid ""
 "Remove all unused CSS rules from stylesheets and <style> tags. Some books "
 "created from production templates can have a large number of extra CSS rules"
@@ -669,11 +685,11 @@ msgid ""
 " unused CSS`."
 msgstr "Eliminar todas las reglas sin usar de las hojas de estilo y etiquetas <style>. Algunos libros creados a partir de plantillas de producción pueden contener un gran número de reglas CSS innecesarias que no afectan a ningún contenido del libro. Estas reglas adicionales pueden ralentizar los lectores, que necesitan procesarlas todas. Accesible en :guilabel:`Herramientas > Eliminar CSS sin usar`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:439
+#: ../../../__w/calibre/calibre/manual/edit.rst:453
 msgid "Fixing HTML"
 msgstr "Corregir HTML"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:441
+#: ../../../__w/calibre/calibre/manual/edit.rst:455
 msgid ""
 "This tool simply converts HTML that cannot be parsed as XML into well-formed"
 " XML. It is very common in e-books to have non-well-formed XML, so this tool"
@@ -685,11 +701,11 @@ msgid ""
 " the HTML. Accessed via :guilabel:`Tools->Fix HTML`."
 msgstr "Esta herramienta no hace más que convertir un HTML que no puede procesarse como XML a XML correcto. Es muy frecuente que los libros electrónicos contengan XML defectuoso, por lo que que esta herramienta automatiza la corrección de dicho código. La herramienta funciona procesando el HTML con el algoritmo HTML5 (el algoritmo usado en todos los navegadores modernos) y convirtiendo el resultado en XML. Tenga en cuenta que la corrección automática puede tener a veces resultados contraintuitivos. Si lo prefiere, puede usar la herramienta :guilable:`Comprobar libro`, discutida anteriormente, para buscar y corregir manualmente problemas en el HTML. Se activa en :guilabel:`Herramientas > Corregir HTML`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:451
+#: ../../../__w/calibre/calibre/manual/edit.rst:465
 msgid "Beautifying files"
 msgstr "Embellecer archivos"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:453
+#: ../../../__w/calibre/calibre/manual/edit.rst:467
 msgid ""
 "This tool is used to auto-format all HTML and CSS files so that they \"look "
 "pretty\". The code is auto-indented so that it lines up nicely, blank lines "
@@ -699,7 +715,7 @@ msgid ""
 "then run beautify.  Accessed via :guilabel:`Tools->Beautify all files`."
 msgstr "Esta herramienta se utiliza para dar formato automático a todos los archivos HTML y CSS para que «se vean atractivos». El código se sangra automáticamente para que esté bien alineado, se insertan líneas en blanco donde sea apropiado, etc. Tenga en cuenta que este embellecimiento también corrige automáticamente código HTML o CSS incorrecto. Por lo tanto, si no quiere que se lleve a cabo ninguna corrección automática, utilice primero la herramienta :guilabel:`Comprobar libro` para corregir todos los problemas y sólo entonces ejecute esta acción. Se accede a través de :guilabel:`Herramientas > Embellecer todos los archivos`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:461
+#: ../../../__w/calibre/calibre/manual/edit.rst:475
 msgid ""
 "In HTML any text can have significant whitespace, via the CSS white-space "
 "directive. Therefore, beautification could potentially change the rendering "
@@ -713,11 +729,11 @@ msgid ""
 "Tidy <https://infohound.net/tidy/>`_."
 msgstr "En HTML, cualquier texto puede tener espacios significativos por medio de la directriz CSS «white-space». Por lo tanto, el embellecimiento puede alterar potencialmente cómo se muestra el HTML. Para evitarlo tanto como sea posible, el algoritmo de embellecimiento sólo modifica etiquetas de bloque que contienen otras etiquetas de bloque. Por ejemplo, el texto dentro de una etiqueta <p> no verá sus espacios alterados. Pero una etiqueta <body> que contiene sólo etiquetas <p> y <div> será embellecida. Esto significa que a veces un archivo concreto no se verá afectado por el embellecimiento al no tener etiquetas de bloque que cumplan las condiciones. En tales casos puede probar otras herramientas de embellecimiento que toman menos precauciones, como: `HTML Tidy <https://infohound.net/tidy/>`_."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:474
+#: ../../../__w/calibre/calibre/manual/edit.rst:488
 msgid "Inserting an inline Table of Contents"
 msgstr "Insertar un índice en línea"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:476
+#: ../../../__w/calibre/calibre/manual/edit.rst:490
 msgid ""
 "Normally in e-books, the Table of Contents is separate from the main text "
 "and is typically accessed via a special Table of Contents button/menu in the"
@@ -726,7 +742,7 @@ msgid ""
 "generated based on the currently defined Table of Contents."
 msgstr "Normalmente en los libros electrónicos, el índice es independiente del texto principal y por lo general se accede a través de un botón o menú de índice en el dispositivo de lectura. También puede hacer que calibre genere automáticamente un índice que sea parte del texto del libro. Éste se genera de acuerdo al índice actualmente ya definido."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:482
+#: ../../../__w/calibre/calibre/manual/edit.rst:496
 msgid ""
 "If you use this tool multiple times, each invocation will cause the "
 "previously created inline Table of Contents to be replaced. The tool can be "
@@ -734,11 +750,11 @@ msgid ""
 "Contents`."
 msgstr "Si utiliza esta herramienta varias veces, en cada ocasión se sustituirá el Índice creado previamente. La herramienta está accesible en :guilabel:`Herramientas > Índice > Insertar un Índice explícito`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:487
+#: ../../../__w/calibre/calibre/manual/edit.rst:501
 msgid "Setting Semantics"
 msgstr "Establecer conceptos"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:489
+#: ../../../__w/calibre/calibre/manual/edit.rst:503
 msgid ""
 "This tool is used to set *semantics* in EPUB files. Semantics are simply, "
 "links in the OPF file that identify certain locations in the book as having "
@@ -749,11 +765,79 @@ msgid ""
 "semantics`."
 msgstr "Esta herramienta se usa para establecer *conceptos* en archivos EPUB. Los conceptos son simplemente enlaces en el archivo OPF que identifican ciertas ubicaciones en el archivo con ciertos significados. Puede usarlos para identificar el prefacio, dedicatoria, portada, índice, etc. Elija el tipo de concepto que quiere especificar y luego seleccione la ubicación del libro adonde debe apuntar el enlace. A esta herramienta se accede a través de :guilabel:`Herramientas > Establecer concepto`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:497
+#: ../../../__w/calibre/calibre/manual/edit.rst:511
+msgid "Making the book accessible"
+msgstr "Hacer el libro accesible"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:513
+msgid ""
+"This tool helps make the book accessible to readers with disabilities, such "
+"as people using screen readers. It can be accessed via "
+":guilabel:`Tools->Accessibility` and has three tabs:"
+msgstr "Esta herramienta ayuda a hacer el libro accesible a lectores con discapacidad, como usuarios de lectores de pantalla. Se puede acceder a ella mediante :guilabel:`Herramientas > Accesibilidad` y tiene tres pestañas:"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:517
+msgid ":guilabel:`Language`"
+msgstr ":guilabel:`Idioma`"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:518
+msgid ""
+"Set the languages of the book. Screen readers and text-to-speech engines use"
+" the language to pronounce the text correctly. You can also set the language"
+" of the HTML files in the book to the main language of the book, either only"
+" for the files that do not specify a language or for all files."
+msgstr "Establecer los idiomas del libro. Los lectores de pantalla y motores de síntesis de voz usan el idioma para pronunciar el texto correctamente. También puede establecer el idioma de los archivos HTML del libro al idioma principal del libro, bien para los archivos que no tengan idioma especificado únicamente o para todos los archivos."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:523
+msgid ":guilabel:`Image descriptions`"
+msgstr ":guilabel:`Descripciones de imágenes`"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:524
+msgid ""
+"Images should have a description, called *alternative text*, for readers who"
+" cannot see them. This lists every image in the book, in reading order, "
+"including SVG images inside the HTML files, along with its current "
+"description, so you can add or change descriptions for all of them in one "
+"place. The description of an SVG image is stored in its ``<title>`` element,"
+" or its ``aria-label`` attribute if it already has one. Selecting an image "
+"shows a larger preview along with the text near the image in the book, to "
+"help you describe it. Images that are purely decorative, such as ornaments "
+"and scene separators, should be marked as :guilabel:`Decorative` so that "
+"screen readers skip them. If the same image is used in several places, you "
+"can use the :guilabel:`Use for all uses of this image` button to copy its "
+"description to all of them."
+msgstr "Las imágenes deben tener una descripción, llamada «texto alternativo», para lectores que no pueden verla. Se muestra una lista de todas las imágenes del libro, en orden de lectura, incluidas las imágenes SVG dentro de los archivos HTML, junto con su descripción actual, para que pueda añadir o cambiar las descripciones para todas en un mismo lugar. La descripción de una imagen SVG se almacena en su elemento ``<title>``, o en su atributo ``aria-label`` si ya tiene uno. Al seleccionar una imagen se muestra una previsualización más grande junto con el texto alrededor de la imagen en el libro, como ayuda para describirla. Las imágenes que son puramente decorativas, como ornamentos y separadores de escena, deben marcarse como :guilabel:`Decorativa` para que los lectores de pantalla las omitan. Si la misma imagen se usa en varios lugares, puede usar el botón :guilabel:`Usar para todos los usos de esta imagen` para copiar su descripción a todos los casos."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:537
+msgid ":guilabel:`Accessibility metadata`"
+msgstr ":guilabel:`Metadatos de accesibilidad`"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:538
+msgid ""
+"EPUB 3 books can describe how accessible they are with accessibility "
+"metadata, as required by the `EPUB Accessibility "
+"<https://www.w3.org/TR/epub-a11y-11/>`_ specification. Reading systems and "
+"online stores show this information to readers. Here you can set a short "
+"summary of the accessibility of the book, the ways the content is presented "
+"(text, images, audio, etc.), which of these are enough to understand all of "
+"the content, accessibility features such as alternative text for images or a"
+" page list, whether the book contains hazards such as flashing content, and "
+"the accessibility standard the book conforms to. Only claim what is actually"
+" true of the book."
+msgstr "Los libros EPUB 3 pueden describir su accesibilidad con metadatos de accesibilidad, como requiere la especificación `EPUB Accessibility <https://www.w3.org/TR/epub-a11y-11/>`_. Los sistemas de lectura y tiendas en línea muestran esta información a los lectores. Aquí puede establecer un breve resumen de la accesibilidad del libro, las formas en las que se presenta el contenido (texto, imágenes, audio, etc.), cuáles de ellas son suficientes para comprender todo el contenido, funciones de accesibilidad como texto alternativo para imágenes o una lista de páginas, si el libro tiene contenido peligroso como destellos y el estándar de accesibilidad que cumple el libro. Afirme únicamente lo que sea cierto para el libro."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:549
+msgid ""
+"Only the things you actually change are written to the book, and all the "
+"changes can be undone together with the :guilabel:`Revert to` checkpoint "
+"that is created."
+msgstr "Sólo las cosas que modifique se escribirán en el libro, y todos las cambios pueden deshacerse de una vez con el hito :guilabel:`Revertir a` que se crea."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:554
 msgid "Filtering style information"
 msgstr "Filtrar información de estilo"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:499
+#: ../../../__w/calibre/calibre/manual/edit.rst:556
 msgid ""
 "This tool can be used to easily remove specified CSS style properties from "
 "the entire book. You can tell it what properties you want removed, for "
@@ -764,22 +848,22 @@ msgid ""
 "tool can be accessed via :guilabel:`Tools->Filter style information`."
 msgstr "Esta herramienta puede usarse para eliminar determinadas propiedades de estilo CSS de todo el libro. Puede indicarle qué propiedades quiere eliminar, por ejemplo: ``color, background-color, line-height``, y las eliminará de cualquier lugar donde apararezcan: hojas de estilo, etiquetas ``<style>`` y atributos ``style``. Una vez eliminada la información de estilo se mostrará un resumen de todos los cambios realizados, para que pueda ver qué ha cambiado exactamente. Se puede acceder a la herramienta en :guilabel:`Herramientas > Filtrar información de estilo`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:509
+#: ../../../__w/calibre/calibre/manual/edit.rst:566
 msgid "Upgrading the book's internals"
 msgstr "Actualizar el código interno del libro"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:511
+#: ../../../__w/calibre/calibre/manual/edit.rst:568
 msgid ""
 "This tool can be used to upgrade the book's internals, if possible. For "
 "instance it will upgrade EPUB 2 books to EPUB 3 books. The tool can be "
 "accessed via :guilabel:`Upgrade book internals`."
 msgstr "Esta herramienta puede usarse para actualizar el código interno del libro, si es posible. Por ejemplo, actualizará libros EPUB 2 a EPUB 3. Puede accederse a esta herramienta en :guilabel:`Actualizar código del libro`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:518
+#: ../../../__w/calibre/calibre/manual/edit.rst:575
 msgid "Checkpoints"
 msgstr "Hitos"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:520
+#: ../../../__w/calibre/calibre/manual/edit.rst:577
 msgid ""
 ":guilabel:`Checkpoints` are a way to mark the current state of the book as "
 "\"special\". You can then go on to do whatever changes you want to the book "
@@ -788,13 +872,13 @@ msgid ""
 "automated tools described in the previous section."
 msgstr "Los :guilabel:`Hitos` son una forma de marcar el estado actual del libro como «especial». Después hacer todos los cambios que quiera en el libro, y si no está satisfecho con el resultado, puede volver al estado marcado. Los hitos se crean automáticamente cada vez que ejecuta alguna de las herramientas automáticas descritas en la sección anterior."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:526
+#: ../../../__w/calibre/calibre/manual/edit.rst:583
 msgid ""
 "You can create a checkpoint via :guilabel:`Edit->Create checkpoint`. And go "
 "back to a previous checkpoint with :guilabel:`Edit->Revert to ...`"
 msgstr "Puede crear un hito en :guilabel:`Editar > Crear hito`. Y volver a un hito anterior con :guilabel:`Editar > Revertir a...`"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:529
+#: ../../../__w/calibre/calibre/manual/edit.rst:586
 msgid ""
 "The check pointing functionality is in addition to the normal Undo/redo "
 "mechanism when editing individual files. Checkpoints are needed for when "
@@ -802,7 +886,7 @@ msgid ""
 "able to revert a large group of related changes as a whole."
 msgstr "El uso de hitos es adicional al mecanismo normal de deshacer y rehacer al modificar archivos individuales. Los hitos son necesarios cuando los cambios se extienden por varios archivos del libro o cuando quiere poder revertir un grupo de modificaciones de una vez."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:534
+#: ../../../__w/calibre/calibre/manual/edit.rst:591
 msgid ""
 "You can see a list of available checkpoints via "
 ":guilabel:`View->Checkpoints`. You can compare the current state of the book"
@@ -812,15 +896,15 @@ msgid ""
 "undoing all changes since that checkpoint was created."
 msgstr "Puede ver una lista de los hitos disponibles en :guilabel:`Ver > Hitos`. Puede comparar el estado actual del libro con un hito específico con la herramienta :ref:`diff`, seleccionando el hito de interés y pulsando el botón :guilabel:`Comparar`. El botón :guilabel:`Revertir a` restaura el libro al hito seleccionado, deshaciendo todos los cambios desde que se creó el hito."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:542
+#: ../../../__w/calibre/calibre/manual/edit.rst:599
 msgid "The Live preview panel"
 msgstr "El panel de previsualización en vivo"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:544
+#: ../../../__w/calibre/calibre/manual/edit.rst:601
 msgid "The Live preview panel showing a rendering of the current file"
 msgstr "El panel de vista previa en vivo mostrando el archivo actual"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:548
+#: ../../../__w/calibre/calibre/manual/edit.rst:605
 msgid ""
 "The live preview panel shows you the changes you are making live (with a "
 "second or two of delay). As you edit HTML or CSS files, the preview panel is"
@@ -832,7 +916,7 @@ msgid ""
 " will be opened in the edit and the preview panel, automatically."
 msgstr "El panel de vista previa en vivo te muestra los cambios que estás realizando en tiempo real (con uno o dos segundos de retraso). Al editar archivos HTML o CSS, el panel de vista previa se actualiza automáticamente para reflejar los cambios. Al mover el cursor por el editor, el panel de vista previa rastreará su ubicación, mostrándote la ubicación correspondiente en el libro. Al hacer clic en el panel de vista previa, el cursor se posicionará sobre el elemento en el que hiciste clic. Si haces clic en un enlace que apunta a otro archivo del libro, este se abrirá automáticamente en el panel de edición y vista previa."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:557
+#: ../../../__w/calibre/calibre/manual/edit.rst:614
 msgid ""
 "You can turn off the automatic syncing of position and live preview of "
 "changes -- by buttons under the preview panel. The live update of the "
@@ -841,7 +925,7 @@ msgid ""
 "render."
 msgstr "Puede desactivar la sincronización automática de la posición y vista previa en vivo de los cambios, por medio de los botones bajo el panel de vista previa. La actualización en vivo del panel de vista previa sólo ocurre cuando no se está escribiendo activamente en el editor, a fin de no crear una distracción o reducir la velocidad mientras se espera a que se genere la vista previa."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:562
+#: ../../../__w/calibre/calibre/manual/edit.rst:619
 msgid ""
 "The preview panel shows you how the text will look when viewed. However, the"
 " preview panel is not a substitute for actually testing your book on an "
@@ -853,18 +937,18 @@ msgid ""
 "reader device or software emulator."
 msgstr "El panel de vista previa muestra cómo se verá el texto al visualizarlo. Sin embargo, no sustituye la prueba del libro en un lector real. Ofrece más y menos capacidad que un lector real. Tolera errores y marcas descuidadas mucho mejor que la mayoría de los lectores. Tampoco muestra márgenes de página, saltos de página ni fuentes incrustadas con alias. Usa el panel de vista previa mientras trabajas en el libro, pero una vez que hayas terminado, revísalo en un lector real o un emulador de software."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:571
+#: ../../../__w/calibre/calibre/manual/edit.rst:628
 msgid ""
 "The preview panel does not support embedded fonts if the name of the font "
 "inside the font file does not match the name in the CSS @font-face rule. You"
 " can use the Check Book tool to quickly find and fix any such problem fonts."
 msgstr "El panel de vista previa no admite fuentes incrustadas si el nombre de la fuente dentro del código del archivo no coincide con el nombre de la regla CSS @font-face. Puede utilizar la herramienta Comprobar libro para encontrar y corregir rápidamente cualquier fuente con dichos problemas."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:577
+#: ../../../__w/calibre/calibre/manual/edit.rst:634
 msgid "Splitting HTML files"
 msgstr "Dividir archivos HTML"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:581
+#: ../../../__w/calibre/calibre/manual/edit.rst:638
 msgid ""
 "One, perhaps non-obvious, use of the preview panel is to split long HTML "
 "files. While viewing the file you want to split, click the :guilabel:`Split "
@@ -875,18 +959,18 @@ msgid ""
 "be performed."
 msgstr "Un uso quizá no evidente del panel de vista previa es dividir archivos HTML largos. Mientras visualiza el archivo que quiere dividir, pulse el botón :guilabel:`modo de división`, bajo el panel de vista previa |spmb|. Luego mueva el ratón al lugar donde quiere dividir el archivo y pulse. Aparecerá una línea verde gruesa en el lugar exacto donde ocurrirá la división según mueva el ratón. Una vez que haya encontrado la ubicación que desee, pulse y se efectuará la división."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:579
+#: ../../../__w/calibre/calibre/manual/edit.rst:636
 msgid "spmb"
 msgstr "botón de modo de división"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:588
+#: ../../../__w/calibre/calibre/manual/edit.rst:645
 msgid ""
 "Splitting the file will automatically update all links and references that "
 "pointed into the bottom half of the file and will open the newly split file "
 "in an editor."
 msgstr "Al dividir automáticamente el archivo se actualizarán todos los enlaces y referencias que apuntaban a la segunda porción del archivo y se abrirá el archivo recién dividido en un editor."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:592
+#: ../../../__w/calibre/calibre/manual/edit.rst:649
 msgid ""
 "You can also split a single HTML file at multiple locations automatically, "
 "by right clicking inside the file in the editor and choosing "
@@ -895,15 +979,15 @@ msgid ""
 "on."
 msgstr "También puede dividir un único archivo HTML en múltiples ubicaciones de manera automática, pulsando con el botón derecho en el editor y eligiendo :guilabel:`Dividir en múltiples ubicaciones`. Esto le permite dividir un archvo grande en todas las etiquetas de encabezado, o todas las etiquetas que tienen una determinada clase, o alguna otra condición."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:602
+#: ../../../__w/calibre/calibre/manual/edit.rst:659
 msgid "The Live CSS panel"
 msgstr "El panel de CSS en vivo"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:604
+#: ../../../__w/calibre/calibre/manual/edit.rst:661
 msgid "The Live CSS panel showing the styles for the current element"
 msgstr "El panel de CSS en vivo mostrando los estilos del elemento actual"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:609
+#: ../../../__w/calibre/calibre/manual/edit.rst:666
 msgid ""
 "The :guilabel:`Live CSS` panel shows you all the style rules that apply to "
 "the tag you are currently editing. The name of tag, along with its line "
@@ -911,7 +995,7 @@ msgid ""
 "rules."
 msgstr "El panel :guilabel:`CSS en vivo` muestra todas las reglas de estilo que se aplican a la etiqueta que está editando actualmente. Se muestra el nombre de la etiqueta, junto con su número de línea, seguido de una lista de reglas de estilo coincidentes."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:613
+#: ../../../__w/calibre/calibre/manual/edit.rst:670
 msgid ""
 "It is a great way to quickly see which style rules apply to any tag. The "
 "view also has clickable links (in blue), which take you directly to the "
@@ -920,30 +1004,30 @@ msgid ""
 "rules that are inherited from parent tags are shown."
 msgstr "Es una manera excelente de ver rápidamente qué reglas de estilo se aplican a cualquier etiqueta. La vista también posee enlaces activos (en azul), que llevan directamente a la ubicación donde se define el estilo, en caso de que desee realizar algún cambio en las reglas de estilo. Se muestran las reglas de estilo que se aplican directamente a la etiqueta, así como las reglas que se heredan de las etiquetas superiores."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:619
+#: ../../../__w/calibre/calibre/manual/edit.rst:676
 msgid ""
 "The panel also shows you what the finally calculated styles for the tag are."
 " Properties in the list that are superseded by higher priority rules are "
 "shown with a line through them."
 msgstr "El panel también muestra los estilos calculados finales para la etiqueta. Las propiedades en la lista que son reemplazadas por reglas de mayor prioridad se muestran tachadas."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:623
+#: ../../../__w/calibre/calibre/manual/edit.rst:680
 msgid "You can enable the Live CSS panel via :guilabel:`View->Live CSS`."
 msgstr "Puede habilitar el panel de CSS en vivo en :guilabel:`Ver > CSS en vivo`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:630
+#: ../../../__w/calibre/calibre/manual/edit.rst:687
 msgid "Miscellaneous tools"
 msgstr "Herramientas variadas"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:632
+#: ../../../__w/calibre/calibre/manual/edit.rst:689
 msgid "There are a few more tools that can be useful while you edit the book."
 msgstr "Existen algunas herramientas más que pueden ser útiles mientras se modifica un libro."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:635
+#: ../../../__w/calibre/calibre/manual/edit.rst:692
 msgid "The Table of Contents view"
 msgstr "La vista del Índice"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:637
+#: ../../../__w/calibre/calibre/manual/edit.rst:694
 msgid ""
 "The Table of Contents view shows you the current table of contents in the "
 "book. Double clicking on any entry opens the place that entry points to in "
@@ -952,19 +1036,19 @@ msgid ""
 ":guilabel:`View->Table of Contents`."
 msgstr "La vista de Índice le muestra el índice actual del libro. Pulsando dos veces sobre una entrada se abre la ubicación a la que apunta la entrada en un editor. Puede pulsar con el botón derecho para modificar el Índice, refrescar la vista o expandir o contraer todos los elementos. Acceda a esta vista en :guilabel:`Vista -> Índice`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:644
+#: ../../../__w/calibre/calibre/manual/edit.rst:701
 msgid "Checking the spelling of words in the book"
 msgstr "Comprobar la ortografía en el libro"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:646
+#: ../../../__w/calibre/calibre/manual/edit.rst:703
 msgid "You can run a spelling checker via :guilabel:`Tools->Check spelling`."
 msgstr "Puede ejecutar un corrector ortográfico en :guilabel:`Herramientas > Comprobar ortografía`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:648
+#: ../../../__w/calibre/calibre/manual/edit.rst:705
 msgid "The Check spelling tool"
 msgstr "La herramienta de comprobación de ortografía"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:653
+#: ../../../__w/calibre/calibre/manual/edit.rst:710
 msgid ""
 "Words are shown with the number of times they occur in the book and the "
 "language the word belongs to. Language information is taken from the books "
@@ -975,14 +1059,14 @@ msgid ""
 "English::"
 msgstr "Las palabras se muestran con el número de veces que aparecen en el libro y el idioma al que pertenecen. La información del idioma se extrae de los metadatos del libro y de los atributos ``lang`` en los archivos HTML. Esto permite que la comprobación de ortografía funcione incluso con libros que contienen texto en varios idiomas. Por ejemplo, en el siguiente fragmento HTML la palabra «color» se comprobará como inglés americano, y «colour» como inglés británico."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:663
+#: ../../../__w/calibre/calibre/manual/edit.rst:720
 msgid ""
 "You can double click a word to highlight the next occurrence of that word in"
 " the editor. This is useful if you wish to manually edit the word, or see "
 "what context it is in."
 msgstr "Puede pulsar dos veces sobre una palabra para resaltar la siguiente aparición de esta palabra en el editor. Esto es útil si desea modificar la palabra manualmente, o ver en qué contexto se encuentra."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:667
+#: ../../../__w/calibre/calibre/manual/edit.rst:724
 msgid ""
 "To change a word, simply double click one of the suggested alternative "
 "spellings on the right, or type in your own corrected spelling and click the"
@@ -992,7 +1076,7 @@ msgid ""
 "menu."
 msgstr "Para cambiar una palabra, simplemente pulse dos veces en una de las alternativas sugeridas a la derecha, o escriba su propia sugerencia correcta y pulse en el botón :guilabel:`Cambiar la palabra seleccionada a`. Esto sustituirá todas las apariciones de esta palabra en el libro. También puede pulsar con el botón derecho sobre una palabra en la lista principal de palabras para cambiar la palabra directamente desde el menú emergente."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:673
+#: ../../../__w/calibre/calibre/manual/edit.rst:730
 msgid ""
 "You can have the spelling checker ignore a word for the current session by "
 "clicking the :guilabel:`Ignore` button. You can also add a word to the user "
@@ -1001,7 +1085,7 @@ msgid ""
 "dictionary you want the word added to."
 msgstr "Puede hacer que la comprobación de ortografía ignore una palabra durante la sesión actual pulsando en el botón :guilabel:`Ignorar`. También puede añadir una palabra al diccionario de usuario pulsando en el botón :guilabel:`Añadir palabra al diccionario`. La comprobación de ortografía permite usar varos diccionarios de usuario, por lo que puede elegir a qué diccionario quiere añadir la palabra."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:679
+#: ../../../__w/calibre/calibre/manual/edit.rst:736
 msgid ""
 "You can also have the spelling checker display all the words in your book, "
 "not just the incorrectly spelled ones. This is useful to see what words are "
@@ -1009,7 +1093,7 @@ msgid ""
 "individual words."
 msgstr "También puede hacer que el corrector ortográfico muestre todas las palabras del libro, no sólo las escritas incorrectamente. Esto es útil para ver qué palabras son las más frecuentes en el libro y ejecutar una simple búsqueda y sustitución de ciertas palabras."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:684
+#: ../../../__w/calibre/calibre/manual/edit.rst:741
 msgid ""
 "If you make any changes to the book by editing files while the spell check "
 "tool is open, you should click the :guilabel:`Refresh` button in the Spell "
@@ -1017,18 +1101,18 @@ msgid ""
 "you could lose the changes you have made in the editor."
 msgstr "Si realiza cambios en el libro modificando los archivos mientras la herramienta de corrección ortográfica está abierta, debe pulsar en el botón :guilabel:`Actualizar` en la herramienta de corrección ortográfica. Si no lo hace y continúa utilizando la herramienta de corrección ortográfica, podría perder los cambios realizados en el editor."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:690
+#: ../../../__w/calibre/calibre/manual/edit.rst:747
 msgid ""
 "To exclude an individual file from being spell checked when running the "
 "spell check tool, you can use the :guilabel:`Exclude files` button or add "
 "the following comment just under the opening tag in the file::"
 msgstr "Para excluir un archivo individual de la revisión ortográfica al ejecutar la herramienta, puede usar el botón :guilabel:`Excluir archivos` o añadir el siguiente comentario justo debajo de la etiqueta de apertura en el archivo::"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:698
+#: ../../../__w/calibre/calibre/manual/edit.rst:755
 msgid "Adding new dictionaries"
 msgstr "Añadir nuevos diccionarios"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:700
+#: ../../../__w/calibre/calibre/manual/edit.rst:757
 msgid ""
 "The spelling checker comes with builtin dictionaries for the English and "
 "Spanish languages. You can install your own dictionaries via "
@@ -1038,11 +1122,11 @@ msgid ""
 "Extensions repository <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
 msgstr "El corrector ortográfico viene con diccionarios predefinidos para los idiomas inglés y español. Puede instalar sus propios diccionarios mediante :guilabel:`Preferencias > Editor > Administrar diccionarios de ortografía`. El corrector ortográfico puede utilizar diccionarios del programa LibreOffice (con el formato .oxt). Puede descargar estos diccionarios desde el `repositorio de extensiones de LibreOffice <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:709
+#: ../../../__w/calibre/calibre/manual/edit.rst:766
 msgid "Inserting special characters"
 msgstr "Insertar caracteres especiales"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:711
+#: ../../../__w/calibre/calibre/manual/edit.rst:768
 msgid ""
 "You can insert characters that are difficult to type by using the "
 ":guilabel:`Edit->Insert special character` tool. This shows you all Unicode "
@@ -1053,7 +1137,7 @@ msgid ""
 "Search and replace tool."
 msgstr "Puede insertar caracteres que son difíciles de teclear mediante la herramienta :guilabel: `Edición > Insertar carácter especial`. Esto muestra todos los caracteres Unicode, simplemente pulse en el carácter que desea escribir. Si mantiene pulsada la tecla :kbd:`Ctrl` mientras pulsa, la ventana se cerrará después de insertar el carácter seleccionado. Esta herramienta se puede utilizar para insertar caracteres especiales en el texto principal o en cualquier otra área de la interfaz de usuario, como la herramienta de búsqueda y sustitución."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:719
+#: ../../../__w/calibre/calibre/manual/edit.rst:776
 msgid ""
 "Because there are a lot of characters, you can define your own "
 ":guilabel:`Favorite` characters, that will be shown first. Simply right "
@@ -1064,7 +1148,7 @@ msgid ""
 "favorites around."
 msgstr "Debido a que hay una gran cantidad de caracteres, puede definir sus propios caracteres :guilabel:`Favoritos`, que se mostrarán en primer lugar. Pulse con el botón derecho sobre un carácter para marcarlo como favorito. También puede pulsar con el botón derecho sobre un carácter en los favoritos para quitarlo de la lista. Por último, se puede volver modificar el orden de los caracteres favoritos pulsando en el botón :guilabel:`Reordenar los favoritos` y luego arrastrando y soltando los caracteres en favoritos."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:726
+#: ../../../__w/calibre/calibre/manual/edit.rst:783
 msgid ""
 "You can also directly type in special characters using the keyboard. To do "
 "this, you type the Unicode code for the character (in hexadecimal) and then "
@@ -1075,7 +1159,7 @@ msgid ""
 ":kbd:`Alt+X` and so on."
 msgstr "También puede escribir directamente caracteres especiales mediante el teclado. Para ello, escriba el código Unicode para el carácter (en hexadecimal) y luego presione :kbd:`Alt+X`, lo que convertirá el código previamente escrito en el carácter correspondiente. Por ejemplo, para escribir «ÿ» debería escribir «ff» y luego pulsar :kbd:`Alt+X`. Para escribir un espacio duro debería usar «a0» y luego :kbd:`Alt+X`, para escribir puntos suspensivos horizontales debería usar «2026» y :kbd:`Alt+X`, y así sucesivamente."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:734
+#: ../../../__w/calibre/calibre/manual/edit.rst:791
 msgid ""
 "Finally, you can type in special characters by using HTML named entities. "
 "For example, typing &nbsp; will be replaced by a non breaking space when you"
@@ -1083,11 +1167,11 @@ msgid ""
 "colon."
 msgstr "Por último, puede escribir caracteres especiales mediante el uso de las entidades con nombr HTML. Por ejemplo, si escribe «&nbsp;» sustituido por un espacio duro al introducir el punto y coma. La sustitución ocurre sólo cuando se escribe el punto y coma."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:739
+#: ../../../__w/calibre/calibre/manual/edit.rst:796
 msgid "The code inspector view"
 msgstr "La vista del inspector de código"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:741
+#: ../../../__w/calibre/calibre/manual/edit.rst:798
 msgid ""
 "This view shows you the HTML coding and CSS that applies to the current "
 "element of interest. You open it by right clicking a location in the preview"
@@ -1099,11 +1183,11 @@ msgid ""
 "ability to live edit inside the Inspector is under development."
 msgstr "Esta vista muestra el código HTML y CSS que se aplica al actual elemento de interés. Se abre pulsando con el botón derecho sobre una ubicación en el panel de vista previa y seleccionando :guilabel:`Inspeccionar`. Le permite ver el código HTML para ese elemento y lo más importante, los estilos CSS que se aplican al mismo. Incluso puede editar dinámicamente los estilos y ver qué efecto tienen los cambios al instante. Tenga en cuenta que la edición de los estilos en realidad no realiza cambios en el contenido del libro, sólo permite una experimentación rápida. La capacidad de modificación en tiempo real del inspector está en desarrollo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:751
+#: ../../../__w/calibre/calibre/manual/edit.rst:808
 msgid "Checking external links"
 msgstr "Comprobar enlaces externos"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:753
+#: ../../../__w/calibre/calibre/manual/edit.rst:810
 msgid ""
 "You can use this tool to check all links in your book that point to external"
 " websites. The tool will try to visit every externally linked website, and "
@@ -1111,11 +1195,11 @@ msgid ""
 "for you to fix."
 msgstr "Puede usar esta herramienta para comprobar todos los enlaces del libro que apuntan a sitios externos. La herramienta intentará visitar todos los enlaces y, si falla, informará de todos los enlaces rotos de manera que sea sencillo corregirlos."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:760
+#: ../../../__w/calibre/calibre/manual/edit.rst:817
 msgid "Downloading external resources"
 msgstr "Descargar recursos externos"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:762
+#: ../../../__w/calibre/calibre/manual/edit.rst:819
 msgid ""
 "You can use this tool to automatically download any images/stylesheets/etc. "
 "in the book that are not bundled with the book (i.e. they have URLs pointing"
@@ -1124,11 +1208,11 @@ msgid ""
 " to them to use the downloaded files."
 msgstr "Puede utilizar esta herramienta para descargar automáticamente cualquier imagen, hoja de estilo, etc. del libro que no esté incluida en él (es decir, que tenga un URL referido a una ubicación en Internet). La herramienta encontrará todos estos recursos, los descargará automáticamente, los añadirá al libro y sustituirá todas las referencias para que se utilicen los archivos descargados."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:770
+#: ../../../__w/calibre/calibre/manual/edit.rst:827
 msgid "Arranging files into folders by type"
 msgstr "Organizar archivos en carpetas por tipo"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:772
+#: ../../../__w/calibre/calibre/manual/edit.rst:829
 msgid ""
 "Often when editing EPUB files that you get from somewhere, you will find "
 "that the files inside the EPUB are arranged haphazardly, in different sub-"
@@ -1138,11 +1222,11 @@ msgid ""
 " the EPUB, it does not change how they are displayed in the File browser."
 msgstr "A menudo, al modificar archivos EPUB obtenidos de alguna parte, verá que los archivos dentro del EPUB están organizados arbitrariamente en diferentes subcarpetas. Esta herramienta le permite mover automáticamente todos los archivos a carpetas según su tipo. Se accede en :guilabel:`Herramientas > Disponer en carpetas`. Tenga en cuenta que esta herramienta sólo cambia la organización de los archivos dentro del EPUB, no cambia la forma en que se muestran en el Explorador de archivos."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:780
+#: ../../../__w/calibre/calibre/manual/edit.rst:837
 msgid "Importing files in other e-book formats as EPUB"
 msgstr "Importar archivos en otros formatos de libro electrónico como EPUB"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:782
+#: ../../../__w/calibre/calibre/manual/edit.rst:839
 msgid ""
 "The editor includes the ability to import files in some other e-book formats"
 " directly as a new EPUB, without going through a full conversion. This is "
@@ -1151,11 +1235,11 @@ msgid ""
 " as a new book`."
 msgstr "El editor incluye la habilidad de importar archivos en otros formatos de libro electrónico directamente como un nuevo EPUB, sin requerir una conversión total. Esto es particularmente útil para crear archivos EPUB a partir de archivos HTML editados a mano. Puede hacer esto por medio de :guilabel:`Archivo > Importar un archivo HTML o DOCX como un libro nuevo`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:795
+#: ../../../__w/calibre/calibre/manual/edit.rst:852
 msgid "The Reports tool"
 msgstr "La herramienta de Informes"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:797
+#: ../../../__w/calibre/calibre/manual/edit.rst:854
 msgid ""
 "The editor includes a nice *Reports* tool (via :guilabel:`Tools->Reports`) "
 "that shows summaries of the files, images, links, words, characters and "
@@ -1167,35 +1251,35 @@ msgid ""
 "where the link points."
 msgstr "El editor incluye una práctica herramienta de *Informes* (en Herramientas->Informes) que muestra resúmenes de los archivos, imágenes, enlaces, palabras, caracteres y estilos utilizados en el libro. Cada línea del informe tiene enlaces directos. Al hacer doble clic en una línea, se accede al lugar del libro donde se usa o define ese elemento (según corresponda). Por ejemplo, en la vista Enlaces, se puede hacer doble clic en las entradas de la columna Origen para acceder a la definición del enlace y en las entradas de la columna Destino para acceder a la dirección del enlace."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:805
+#: ../../../__w/calibre/calibre/manual/edit.rst:862
 msgid "The Reports tool with information and statistics about the book"
 msgstr "La herramienta de informes con información y estadísticas sobre el libro"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:812
+#: ../../../__w/calibre/calibre/manual/edit.rst:869
 msgid "Special features in the code editor"
 msgstr "Características especiales del editor de código"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:814
+#: ../../../__w/calibre/calibre/manual/edit.rst:871
 msgid ""
 "The calibre HTML editor is very powerful. It has many features that make "
 "editing of HTML (and CSS) easier."
 msgstr "El editor de HTML de calibre es muy potente. Tiene muchas funciones que facilitan la modificación de HTML (y CSS)."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:818
+#: ../../../__w/calibre/calibre/manual/edit.rst:875
 msgid "Syntax highlighting"
 msgstr "Resaltado de sintaxis"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:820
+#: ../../../__w/calibre/calibre/manual/edit.rst:877
 msgid ""
 "The HTML editor has very sophisticated syntax highlighting. Features "
 "include:"
 msgstr "El editor HTML tiene un resaltado de sintaxis muy sofisticado. Sus características incluyen:"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:822
+#: ../../../__w/calibre/calibre/manual/edit.rst:879
 msgid "The text inside bold, italic and heading tags is made bold/italic"
 msgstr "El texto dentro de etiquetas de negrita, cursiva o cabeceras se muestra en negrita o cursiva"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:823
+#: ../../../__w/calibre/calibre/manual/edit.rst:880
 msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
@@ -1203,45 +1287,45 @@ msgid ""
 "select the contents of a tag with :kbd:`Ctrl+Alt+T` or :kbd:`Ctrl+Shift+T`."
 msgstr "Al mover el cursor por el código HTML, las etiquetas HTML emparejadas se destacan y puede ir directamente a la etiqueta de apertura o cierre con los atajos de teclado :kbd:`Ctrl+{` y :kbd:`Ctrl+}`. De manera similar, puede seleccionar el contenido de una etiqueta con :kbd:`Ctrl+Alt+T` o :kbd:`Ctrl+Mayús+T`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:828
+#: ../../../__w/calibre/calibre/manual/edit.rst:885
 msgid "Invalid HTML is highlighted with a red underline"
 msgstr "El código HTML no válido se subraya en rojo"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:829
+#: ../../../__w/calibre/calibre/manual/edit.rst:886
 msgid ""
 "Spelling errors in the text inside HTML tags and attributes such as title "
 "are highlighted. The spell checking is language aware, based on the value of"
 " the ``lang`` attribute of the current tag and the overall book language."
 msgstr "Los problemas de ortografía en el texto dentro de las etiquetas HTML y en atributos como «title» se resaltan. La comprobación de ortografía detecta el idioma especificado en el atributo ``lang`` de la etiqueta actual y el idioma global del libro."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:832
+#: ../../../__w/calibre/calibre/manual/edit.rst:889
 msgid "CSS embedded inside ``<style>`` tags is highlighted"
 msgstr "El código CSS dentro de etiquetas ``<style>`` también se resalta"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:833
+#: ../../../__w/calibre/calibre/manual/edit.rst:890
 msgid ""
 "Special characters that can be hard to distinguish such as non-breaking "
 "spaces, different types of hyphens, etc. are highlighted."
 msgstr "Los caracteres especiales que pueden ser indistinguibles, como espacios duros, diferentes tipos de guiones y rayas, etc., se resaltan"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:835
+#: ../../../__w/calibre/calibre/manual/edit.rst:892
 msgid ""
 "Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
 " the filenames highlighted. If the filename they point to does not exist, "
 "the filename is marked with a red underline."
 msgstr "Los enlaces a otros archivos en etiquetas ``<a>``, ``<img>`` y ``<link>`` tienen el nombre de archivo resaltado. Si el archivo al que apuntan no existe, el nombre se subraya en rojo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:840
+#: ../../../__w/calibre/calibre/manual/edit.rst:897
 msgid "Context sensitive help"
 msgstr "Ayuda sensible al contexto"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:842
+#: ../../../__w/calibre/calibre/manual/edit.rst:899
 msgid ""
 "You can right click on an HTML tag name or a CSS property name to get help "
 "for that tag or property."
 msgstr "Puede pulsar con el botón derecho sobre cualquier nombre de etiqueta o de propiedad CSS para obtener ayuda para esa etiqueta o propiedad."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:844
+#: ../../../__w/calibre/calibre/manual/edit.rst:901
 msgid ""
 "You can also hold down the :kbd:`Ctrl` key and click on any filename inside "
 "a link tag to open that file in the editor automatically. Similarly, "
@@ -1249,18 +1333,18 @@ msgid ""
 " matches the tag and class."
 msgstr "También puede mantener pulsada la tecla :kbd:`Ctrl` y pulsar sobre cualquier nombre de archivo en una etiqueta de enlace para abrir dicho archivo automáticamente en el editor. Análogamente, si pulsa en un nombre de clase con :kbd:`Ctrl` irá a la primera regla de estilo que coincida con la etiqueta y la clase."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:848
+#: ../../../__w/calibre/calibre/manual/edit.rst:905
 msgid ""
 "Right clicking a class name in an HTML file will allow you to rename the "
 "class, changing all occurrences of the class throughout the book and all its"
 " stylesheets."
 msgstr "Si pulsa con el botón derecho sobre un nombre de clase en un archivo HTML podrá cambiar el nombre de la clase, cambiando todas las apariciones de la clase en el libro y sus hojas de estilo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:855
+#: ../../../__w/calibre/calibre/manual/edit.rst:912
 msgid "Auto-complete"
 msgstr "Completado automático"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:857
+#: ../../../__w/calibre/calibre/manual/edit.rst:914
 msgid ""
 "When editing an e-book, one of the most tedious tasks is creating links to "
 "other files inside the book, or to CSS stylesheets, or images. You have to "
@@ -1268,7 +1352,7 @@ msgid ""
 "has auto-complete to make that easier."
 msgstr "Al modificar un libro, una de las tareas más engorrosas es crear enlaces a otros archivos dentro del libro, a hojas de estilo CSS o a imágenes. Debe encontrar el nombre y ubicación relativa correctos para el archivo. El editor tiene una función de completado automático para hacerlo más sencillo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:862
+#: ../../../__w/calibre/calibre/manual/edit.rst:919
 msgid ""
 "As you type a filename, the editor automatically pops up suggestions. Simply"
 " use the :kbd:`Tab` key to select the correct file name. The editor even "
@@ -1278,7 +1362,7 @@ msgid ""
 "the right anchor."
 msgstr "Según teclea un nombr de archivo, el editor muestra sugerencias automáticas. Use la tecla :kbd:`Tab` para seleccionar el nombre correcto. El editor también ofrece sugerencias para enlaces que apuntan a un punto de anclaje dentre de otro archivo HTML. Después de introducir el carácter ``#``, el editor mostrará una lista de todos los puntos de anclaje en el archivo de destino, con un pequeño fragmento de texto para ayudarle a elegir el punto de anclaje correcto."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:868
+#: ../../../__w/calibre/calibre/manual/edit.rst:925
 msgid ""
 "Note that unlike most other completion systems, the editor's completion "
 "system uses subsequence matching. This means that you can type just two or "
@@ -1290,11 +1374,11 @@ msgid ""
 " system, you will find it saves you a lot of time and effort."
 msgstr "Tenga en cuenta que, a diferencia de la mayoría de sistemas de completado, el sistema usa una correspondencia de subsecuencias. Esto significa que puede teclear sólo dos o tres letras de cualquier parte del nombre de archivo para completarlo. Por ejemplo, supongamos que quiere el nombre de archivo ``../imagenes/flecha1.png``, puede teclear simplemente ``if1`` y pulsar :kbd:`Tab` para completar el nombre de archivo. Al buscar coincidencias, el sistema de completado da prioridad a las letras que están al inicio de una palabra, o justo detras de un separador de ruta. Cuando se acostumbre a este sistema, notará que ahorra mucho tiempo y esfuerzo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:878
+#: ../../../__w/calibre/calibre/manual/edit.rst:935
 msgid "Snippets"
 msgstr "Fragmentos"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:880
+#: ../../../__w/calibre/calibre/manual/edit.rst:937
 msgid ""
 "The calibre E-book editor supports *snippets*. A snippet is a piece of text "
 "that is either re-used often or contains a lot of redundant text. The editor"

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "oktober 23, 2026" "9.17.0" "calibre"
+.TH "CALIBREDB" "1" "november 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -139,6 +139,18 @@ search
 fts_index
 .IP \(bu 2
 fts_search
+.IP \(bu 2
+notes
+.IP \(bu 2
+items
+.IP \(bu 2
+virtual_libraries
+.IP \(bu 2
+annotations
+.IP \(bu 2
+trash
+.IP \(bu 2
+data_files
 .UNINDENT
 .SH GLOBALA ALTERNATIV
 .INDENT 0.0
@@ -357,7 +369,7 @@ När du skickar argument som innehåller blanksteg till calibredb ska du omge ar
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Använd inte Papperskorgen
+Använd inte papperskorgen
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -470,7 +482,7 @@ Låt calibre konvertera alla icke\-engelska tecken till engelska ekvivalenter f�
 .INDENT 0.0
 .TP
 .B \-\-dont\-save\-cover
-Normalt sparar calibre omslaget i en separat fil tillsammans med själva e\-bokfilerna. Om den här flaggan anges stängs beteendet av.
+Normalt sparar calibre omslaget i en separat fil tillsammans med själva e\-boksfilerna. Om den här flaggan anges stängs beteendet av.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -485,7 +497,7 @@ Normalt kommer calibre att uppdatera metadata i de sparade filerna utifrån det 
 .INDENT 0.0
 .TP
 .B \-\-dont\-write\-opf
-Normalt kommer calibre att skriva metadata i en separat OPF\-fil tillsammans med själva e\-bokfilerna. Om den här flaggan anges stängs beteendet av.
+Normalt kommer calibre att skriva metadata i en separat OPF\-fil tillsammans med själva e\-boksfilerna. Om den här flaggan anges stängs beteendet av.
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -648,7 +660,7 @@ Använd en namngiven förinställning som skapats med katalogbyggaren i det graf
 .INDENT 0.0
 .TP
 .B \-\-thumb\-width
-Storleksråd (i tum) för bokomslag i katalog. Intervall: 1.0 \- 2.0 Standard: \fB\(aq\fP1.0\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
+Riktvärde för storleken (i tum) på bokomslag i katalogen. Intervall: 1.0 \- 2.0 Standard: \fB\(aq\fP1.0\fB\(aq\fP Gäller: AZW3\-, EPUB\-, MOBI\-utmatningsformat
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -660,14 +672,18 @@ Ersätt befintliga omslag när du skapar katalog.  Standard: \fB\(aq\fPFalse\fB\
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [options] (list|add|remove)
+calibredb saved_searches [options] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Hantera sparade sökningar i den här databasen.
-Om du försöker lägga till en sökförfråga med ett namn som redan finns, kommer den att
-ersättas.
+Hantera de sparade sökningarna i den här databasen.
+Om du försöker lägga till en sökfråga med ett namn som redan finns
+ersätts den befintliga sökningen.
+.sp
+Syntax för att lista, vilket är standardåtgärden:
+.sp
+calibredb \fBsaved_searches\fP list
 .sp
 Syntax för att lägga till:
 .sp
@@ -771,14 +787,18 @@ calibredb restore_database [options]
 .UNINDENT
 .UNINDENT
 .sp
-Återställ denna databas från metadata som lagras i OPF\-filer i varje
-mapp i calibre\-biblioteket. Det här är användbart om din metadata.db\-fil
-har skadats.
+Återställ den här databasen från metadata som lagras i OPF\-filer i varje
+mapp i calibre\-biblioteket. Det är användbart om filen metadata.db har
+skadats.
 .sp
-VARNING: Det här kommandot återskapar din databas helt. Du förlorar
-alla sparade sökningar, användarkategorier, metadatakopplingar, lagrade
-konverteringsinställningar per bok och anpassade recept. Återställda metadata är
-bara så exakta som det som finns i OPF\-filerna.
+VARNING: Det här kommandot återskapar databasen fullständigt. Du förlorar
+alla sparade sökningar, användarkategorier, metadatakopplingar, sparade
+konverteringsinställningar för enskilda böcker och anpassade recept.
+Återställd metadata är bara så korrekt som innehållet i OPF\-filerna.
+.sp
+Avslutningsstatusen är 0 om återställningen lyckades, 1 om den misslyckades
+helt och 2 om databasen återställdes men vissa böcker eller andra data
+inte kunde återställas.
 .sp
 När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1037,6 +1057,352 @@ Formatet att mata ut sökresultaten i. Antingen \fB\(dq\fPtext\fB\(dq\fP för va
 .TP
 .B \-\-restrict\-to
 Begränsa de sökta böckerna, antingen med ett sökuttryck eller identifierare. Till exempel: ids:1,2,3 för att begränsa med id eller search:tag:foo för att begränsa till böcker med taggen foo.
+.UNINDENT
+.SH NOTES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb notes [options] [list|search|show|set|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Hantera anteckningar som hör till objekt som författare, serier, taggar
+och utgivare. FIELD är fältets söknamn, till exempel authors, series,
+tags, publisher eller #mycolumn. ITEM är objektets namn, till exempel
+en författares namn. Objekten matchas utan hänsyn till skiftläge.
+.sp
+Lista objekten som har anteckningar, eventuellt bara i det angivna fältet.
+Detta är standardåtgärden:
+.sp
+calibredb \fBnotes\fP list [FIELD]
+.sp
+Sök i anteckningarnas text med samma syntax för SQLite\-fulltextsökning
+som verktyget Bläddra bland anteckningar i calibre. Skriv ut fältet,
+objektnamnet och ett utdrag för varje träff. Använd \-\-field för att bara
+söka i anteckningar i ett visst fält:
+.sp
+calibredb \fBnotes\fP search \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+.sp
+Skriv ut ett objekts anteckning som Markdown\-formaterad text, eller med
+\-\-as\-html som ett HTML\-dokument med eventuella bilder inbäddade,
+lämpligt för användning med set:
+.sp
+calibredb \fBnotes\fP show FIELD ITEM
+.sp
+Ersätt ett objekts anteckning med innehållet i en HTML\-fil. Använd \- för
+att läsa HTML\-koden från standardinmatning. Bilder som är inbäddade som
+base64\-kodade \%<data:-URL:er> läggs till i anteckningen för både lokala
+bibliotek och fjärrbibliotek. När ett lokalt bibliotek används och
+innehållet läses från en fil läggs även bilder till som anges med
+sökvägar relativa till filen:
+.sp
+calibredb \fBnotes\fP set FIELD ITEM FILE
+.sp
+Ta bort anteckningen för ett objekt:
+.sp
+calibredb \fBnotes\fP remove FIELD ITEM
+.sp
+När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-as\-html
+Visa anteckningen som HTML i stället för Markdown\-formaterad text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-field
+Vid sökning i anteckningar begränsas sökningen till detta fält, till exempel: authors, tags eller #mycolumn
+.UNINDENT
+.SH ITEMS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb items [options] (rename|remove) FIELD ITEM ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Byt namn på eller ta bort objekt, som författare, taggar, serier och
+utgivare, i alla böcker, på samma sätt som åtgärderna Hantera författare,
+taggar osv. i calibres gränssnitt. FIELD är fältets söknamn, till exempel
+authors, tags, series, publisher eller #mycolumn. Objekten matchas utan
+hänsyn till skiftläge.
+.sp
+Byt namn på ett objekt. Om ett objekt med namnet NEW_NAME redan finns
+slås de båda objekten ihop. För fält som innehåller flera värden kan
+NEW_NAME innehålla mer än ett värde, åtskilda av fältets avgränsare,
+till exempel ett kommatecken för taggar. Objektet ersätts då av alla värden:
+.sp
+calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
+.sp
+Ta bort ett eller flera objekt från alla böcker. Författare kan inte tas bort:
+.sp
+calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
+.sp
+När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Ändra endast böcker som matchar det angivna sökuttrycket, till exempel: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+.UNINDENT
+.SH VIRTUAL_LIBRARIES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb virtual_libraries [options] [list|add|rename|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Hantera det här bibliotekets virtuella bibliotek. Ett virtuellt bibliotek
+är en sökning som får biblioteket att fungera som om det bara innehöll
+de böcker som matchar sökningen. För att lista eller söka efter böckerna
+i ett virtuellt bibliotek använder du: calibredb search \(aqvl:\(dqname\(dq\(aq
+.sp
+Lista de virtuella biblioteken med deras sökningar och antal böcker.
+Detta är standardåtgärden:
+.sp
+calibredb \fBvirtual_libraries\fP list
+.sp
+Skapa ett virtuellt bibliotek från en sökning:
+.sp
+calibredb \fBvirtual_libraries\fP add name search_expression
+.sp
+Byt namn på ett virtuellt bibliotek:
+.sp
+calibredb \fBvirtual_libraries\fP rename name new_name
+.sp
+Ta bort virtuella bibliotek; böckerna i dem ändras inte:
+.sp
+calibredb \fBvirtual_libraries\fP remove name ...
+.sp
+När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generera utdata i JSON\-format, som lämpar sig bättre för maskintolkning
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Ersätt sökningen för ett befintligt virtuellt bibliotek med samma namn när ett bibliotek läggs till
+.UNINDENT
+.SH ANNOTATIONS
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb annotations [options] [list|search|export|import|remove]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Hantera böckers noteringar, det vill säga markeringar och bokmärken, som
+skapats i calibres e\-bokvisare eller synkroniserats från andra program.
+.sp
+Lista noteringarna med deras id. Detta är standardåtgärden:
+.sp
+calibredb \fBannotations\fP list
+.sp
+Sök i markerad text, anteckningar till noteringar och bokmärkestitlar med
+samma syntax för SQLite\-fulltextsökning som verktyget Bläddra bland
+noteringar. Resultaten sorteras efter relevans och innehåller noteringarnas
+id, boktitlar och matchande utdrag. Använd \-\-search för att begränsa
+böckerna, \-\-type för att begränsa typen av notering, \-\-user\-type och
+\-\-annotation\-user för att begränsa till en användare, \-\-no\-stemming för att
+matcha exakta ordformer eller \-\-format json för en JSON\-array med
+resultat som innehåller noteringsdata och utdrag:
+.sp
+calibredb \fBannotations\fP search \(dqsearch expression\(dq
+.sp
+Exportera noteringarna som vanlig text, Markdown eller JSON, grupperade
+efter bok. JSON\-formatet är samma noteringssamling för calibre som skapas
+av knappen Exportera i verktyget Bläddra bland noteringar:
+.sp
+calibredb \fBannotations\fP export
+.sp
+Importera en noteringssamling för calibre som exporterats som JSON med
+detta kommando eller verktyget Bläddra bland noteringar. Samlingen får
+endast innehålla noteringar från en bok. BOOK_ID är målbokens id, inte det
+id som lagrats i filen. Endast noteringar för formatet FORMAT importeras;
+noteringar för andra format hoppas över. FORMAT måste finnas i målboken.
+Använd samma utgåva av boken så att positionerna stämmer överens:
+.sp
+calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
+.sp
+Använd \- som FILE för att läsa från standardinmatning. Hela samlingen valideras
+före importen. Noteringarna slås ihop med befintliga enligt e\-bokvisarens
+regler: markeringar matchas efter UUID och bokmärken efter titel, och den
+nyare tidsstämpeln gäller. Upprepad import skapar inte dubbletter.
+Orelaterade noteringar och läspositioner bevaras.
+.sp
+Som standard importeras noteringar till dem som hör till calibres
+e\-bokvisare. Använd \-\-user\-type web \-\-annotation\-user USER för att i
+stället importera dem till en användare av innehållsservern. Exporterade
+samlingar anger vilken användare noteringarna tillhör. Om en samling
+innehåller noteringar från mer än en användare avvisas den. Använd
+alternativen \-\-user\-type och \-\-annotation\-user vid export för att
+exportera en enda användares noteringar.
+.sp
+Ta permanent bort noteringarna med angivna id, som visas av list:
+.sp
+calibredb \fBannotations\fP remove ID ...
+.sp
+När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-annotation\-user
+Lista, sök efter eller exportera endast den angivna användarens noteringar. Vid import anger detta vilken användare av innehållsservern noteringarna ska importeras för och krävs med \fB\-\-user\-type\fP web. Observera att detta kan vara vilken användare som helst, inte bara den som används för att ansluta till ett fjärrbibliotek.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-format, \-f
+Exportformatet, ett av: text, markdown, json. Vid sökning: text eller json. Standardvärdet är: text
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-no\-stemming
+Matcha exakta ordformer i stället för ordstammar vid sökning
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-search, \-s
+Lista, sök efter eller exportera endast noteringar för böcker som matchar den angivna boksökfrågan, till exempel: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-type, \-t
+Lista, sök efter eller exportera endast noteringar av den angivna typen, en av: highlight, bookmark
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-user\-type
+Lista, sök efter eller exportera endast noteringar för den angivna typen av användare. Vid import anger detta vilken typ av användare noteringarna ska importeras för: calibres e\-bokvisare (local) eller en användare av innehållsservern (web). Standardvärdet vid import är local.
+.UNINDENT
+.SH TRASH
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb trash [options] (list|restore|delete|empty) [ids]
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Hantera böcker och format som har tagits bort och lagts i papperskorgen.
+Poster i papperskorgen raderas automatiskt permanent efter några dagar.
+ids är en kommaseparerad lista över bok\-id, precis som för kommandot
+remove, till exempel: 23,34,57\-85 (när ett intervall anges ingår inte
+det sista talet i intervallet).
+.sp
+Lista de borttagna böckerna och formaten, med de senast borttagna först,
+och tidpunkten då de togs bort, angiven i lokal tid. Borttagna format för
+böcker som inte längre finns markeras som omöjliga att återställa; de kan
+bara raderas. Med \-\-for\-machine anges tiderna i UTC:
+.sp
+calibredb \fBtrash\fP list
+.sp
+Återställ borttagna böcker eller, med \-\-formats, böckernas borttagna format:
+.sp
+calibredb \fBtrash\fP restore ids
+.sp
+Radera poster från papperskorgen permanent:
+.sp
+calibredb \fBtrash\fP delete ids
+.sp
+Radera allt i papperskorgen permanent:
+.sp
+calibredb \fBtrash\fP empty
+.sp
+När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Generera utdata för åtgärden list i JSON\-format, som lämpar sig bättre för maskintolkning
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-formats
+Utför åtgärden på de angivna böckernas borttagna format i stället för på borttagna böcker
+.UNINDENT
+.SH DATA_FILES
+.INDENT 0.0
+.INDENT 3.5
+.sp
+.EX
+calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+.EE
+.UNINDENT
+.UNINDENT
+.sp
+Hantera de extra datafiler som hör till en bok i lokala bibliotek eller
+fjärrbibliotek. Namnen är relativa till bokens datamapp. Använd / för
+undermappar; accepteras också. Filer vars namn innehåller ett listas,
+men kan inte hanteras på annat sätt.
+E\-boksformat, omslag och metadata.opf kan inte nås med detta kommando.
+Fjärrbibliotek kräver ett konto med skrivåtkomst, liksom andra
+hanteringskommandon, och stöder inte konton med sökbegränsningar per bibliotek.
+.sp
+Lista filnamn, storlekar i byte och ändringstider (sekunder sedan
+Unix\-epoken). Använd \-\-for\-machine för JSON\-utdata:
+.sp
+calibredb \fBdata_files\fP list BOOK_ID
+.sp
+Lägg till en fil med dess basnamn, eller använd \-\-name för att ange ett
+namn eller en undermapp. Befintliga filer ersätts inte om inte \-\-replace
+anges. Detta kan också göras med add_format \-\-as\-extra\-data\-file:
+.sp
+calibredb \fBdata_files\fP add BOOK_ID FILE
+.sp
+Spara en datafil till \-\-output på den lokala datorn. Befintliga
+utdatafiler ersätts inte om inte \-\-replace anges:
+.sp
+calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
+.sp
+Byt namn på en fil. Befintliga mål ersätts inte om inte \-\-replace anges:
+.sp
+calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
+.sp
+Flytta en fil till operativsystemets papperskorg. Med \-\-permanent raderas
+den permanent i stället. För fjärrbibliotek sker detta på servern:
+.sp
+calibredb \fBdata_files\fP remove BOOK_ID NAME
+.sp
+Mappar som lämnas tomma av rename och remove tas bort. För fjärrbibliotek
+överförs varje fil i en enda begäran, så mycket stora filer kräver
+tillräckligt med minne både på klienten och servern. Uppladdningar begränsas
+av serverns maximala storlek för en begäran.
+.sp
+När du skickar argument som innehåller blanksteg till calibredb ska du omge argumenten med citattecken. Till exempel: \(dq/some path/with spaces\(dq
+.INDENT 0.0
+.TP
+.B \-\-for\-machine
+Mata ut listan över filer som JSON
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-name
+Namn att använda för den tillagda filen, relativt datamappen
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-output
+Lokalt mål för åtgärden get
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-permanent
+Radera datafilen permanent i stället för att använda papperskorgen
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-replace
+Tillåt att befintliga filer ersätts när filer läggs till, hämtas eller byter namn
 .UNINDENT
 .SH Author
 Kovid Goyal

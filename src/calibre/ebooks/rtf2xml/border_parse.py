@@ -18,7 +18,7 @@ class BorderParse:
     Parse a border line and return a dictionary of attributes and values
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         # cw<bd<bor-t-r-hi<nu<true
         self.__border_dict = {
             'bor-t-r-hi': 'border-table-row-horizontal-inside',
@@ -74,7 +74,7 @@ class BorderParse:
             'bdr-frame_': 'frame',
         }
 
-    def parse_border(self, line):
+    def parse_border(self, line: str) -> dict[str, str]:
         """
         Requires:
             line -- line with border definition in it
@@ -119,7 +119,7 @@ class BorderParse:
         border_dict.update(new_border_dict)
         return border_dict
 
-    def __determine_styles(self, border_type, border_style_list):
+    def __determine_styles(self, border_type: str, border_style_list: list[str]) -> dict[str, str]:
         new_border_dict = {}
         att = f'{border_type}-style'
         if 'shadowed-border' in border_style_list:

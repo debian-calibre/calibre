@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBRE-DEBUG" "1" "Οκτωβρίου 23, 2026" "9.17.0" "calibre"
+.TH "CALIBRE-DEBUG" "1" "Νοεμβρίου 06, 2026" "9.18.0" "calibre"
 .SH NAME
 calibre-debug \- calibre-debug
 .INDENT 0.0
@@ -189,6 +189,11 @@ Run the GUI with debugging enabled. Debug output is printed to stdout and stderr
 .TP
 .B \-\-un\-kepubify
 Μετατρέψτε το καθορισμένο αρχείο KEPUB σε EPUB χωρίς να κάνετε πλήρη μετατροπή. Αυτό είναι που κάνει ο οδηγός Kobo κατά την εισαγωγή αρχείων από τη συσκευή.
+.UNINDENT
+.INDENT 0.0
+.TP
+.B \-\-verify\-calibre\-data
+Verify every file in a folder exported by calibre, without restoring it. Checks archive parts and file checksums. Returns a nonzero exit status on error
 .UNINDENT
 .INDENT 0.0
 .TP

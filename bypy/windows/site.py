@@ -50,6 +50,13 @@ def run_entry_point():
     return getattr(pmod, func)()
 
 
+def setup_langtool():
+    # The langtool data files, including the precompiled rule tables, are
+    # placed in resources/langtool by the freeze scripts, as they must be real
+    # files, not frozen
+    os.environ['LANGTOOL_RESOURCE_DIR'] = os.path.join(sys.resources_location, 'langtool')
+
+
 def set_helper():
     builtins.help = _sitebuiltins._Helper()
 
@@ -58,6 +65,14 @@ def set_quit():
     eof = 'Ctrl-Z plus Return'
     builtins.quit = _sitebuiltins.Quitter('quit', eof)
     builtins.exit = _sitebuiltins.Quitter('exit', eof)
+
+
+def exit_code(ret: object) -> int:
+    # Entry points may return None or arbitrary non-numeric objects, only
+    # integers (including bools) are meaningful as process exit codes
+    if isinstance(ret, int):
+        return int(ret)
+    return 0
 
 
 def main():
@@ -74,13 +89,14 @@ def main():
 
     set_helper()
     set_quit()
+    setup_langtool()
 
     return run_entry_point()
 
 
 if __name__ == '__main__':
     try:
-        main()
+        ret = main()
     except Exception:
         if sys.gui_app and sys.excepthook == sys.__excepthook__:
             import traceback
@@ -90,3 +106,4 @@ if __name__ == '__main__':
                 f"Unhandled exception running {sys.calibre_basename}",
                 traceback.format_exc())
         raise
+    sys.exit(exit_code(ret))

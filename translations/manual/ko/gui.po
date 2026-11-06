@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-04-29 04:37+0000\n"
+"POT-Creation-Date: 2026-11-05 03:11+0000\n"
 "PO-Revision-Date: 2014-06-17 08:37+0000\n"
 "Last-Translator: Junghee Lee <daemul72@gmail.com>, 2022-2023,2026\n"
 "Language-Team: Korean (http://app.transifex.com/calibre/calibre/language/ko/)\n"
@@ -60,7 +60,7 @@ msgid ""
 msgstr "동작 도구 모음은 자주 사용하는 작업에 대한 편리한 바로가기를 제공합니다. 버튼을 마우스 오른쪽 버튼으로 클릭하면 기본 동작의 다른 변형을 수행할 수 있습니다. 컴퓨터에 전자책 리더가 연결되어 있는지에 따라 동작 도구 모음의 모양이 약간 달라질 수 있습니다."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:41
-#: ../../../__w/calibre/calibre/manual/gui.rst:916
+#: ../../../__w/calibre/calibre/manual/gui.rst:923
 msgid "Add books"
 msgstr "책 추가하기"
 
@@ -300,7 +300,7 @@ msgid ""
 msgstr "**calibre 라이브러리의 책 카탈로그 만들기**: XML, CSV, BiBTeX, EPUB, MOBI 등 여러 형식으로 라이브러리에 있는 책의 전체 목록과 모든 메타데이터를 생성할 수 있습니다. 카탈로그에는 현재 라이브러리 보기에서 표시되는 모든 책이 들어갑니다. 따라서 검색 기능으로 카탈로그에 포함할 책을 제한할 수 있습니다. 또한 마우스로 여러 책을 선택했다면 그 책들만 카탈로그에 추가됩니다. EPUB, MOBI, AZW3 같은 전자책 형식으로 카탈로그를 만들면 다음에 전자책 리더를 연결할 때 카탈로그가 자동으로 장치로 전송됩니다. 카탈로그 동작 방식에 대한 자세한 내용은 :ref:`catalog_tut`를 읽어 보십시오."
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:126
-#: ../../../__w/calibre/calibre/manual/gui.rst:946
+#: ../../../__w/calibre/calibre/manual/gui.rst:953
 msgid "View"
 msgstr "보기"
 
@@ -320,7 +320,7 @@ msgid "vi"
 msgstr "vi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:141
-#: ../../../__w/calibre/calibre/manual/gui.rst:922
+#: ../../../__w/calibre/calibre/manual/gui.rst:929
 msgid "Send to device"
 msgstr "장치로 보내기"
 
@@ -548,7 +548,7 @@ msgid "dvi"
 msgstr "dvi"
 
 #: ../../../__w/calibre/calibre/manual/gui.rst:213
-#: ../../../__w/calibre/calibre/manual/gui.rst:942
+#: ../../../__w/calibre/calibre/manual/gui.rst:949
 msgid "Save to disk"
 msgstr "디스크에 저장하기"
 
@@ -1214,7 +1214,7 @@ msgid ""
 "search box."
 msgstr "검색 상자 왼쪽의 |sbi| 버튼을 클릭하면 열리는 :guilabel:`Advanced search dialog`를 사용해 고급 검색 질의를 쉽게 만들 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:577
+#: ../../../__w/calibre/calibre/manual/gui.rst:584
 msgid "sbi"
 msgstr "sbi"
 
@@ -1242,24 +1242,29 @@ msgid ""
 "comparison. For example, in an mm/dd/yyyy locale 2/1/2009 is interpreted as "
 "1 Feb 2009. In a dd/mm/yyyy locale it is interpreted as 2 Jan 2009.  Some "
 "special date strings are available. The string ``today`` translates to "
-"today's date, whatever it is. The strings ``yesterday`` and ``thismonth`` "
-"(or the translated equivalent in the current language) also work. In "
-"addition, the string ``daysago`` (also translated) can be used to compare to"
-" a date some number of days ago. For example::"
-msgstr "날짜가 모호한 경우 비교에는 현재 로캘이 사용됩니다. 예를 들어 mm/dd/yyyy 로캘에서는 2/1/2009를 2009년 2월 1일로 해석합니다. dd/mm/yyyy 로캘에서는 2009년 1월 2일로 해석합니다. 사용할 수 있는 특별한 날짜 문자열도 있습니다. ``today`` 문자열은 그날의 날짜를 뜻합니다. ``yesterday``와 ``thismonth``(또는 현재 언어로 번역된 동등한 문자열)도 동작합니다. 또한 ``daysago`` 문자열(이 역시 번역됨)을 사용해 며칠 전 날짜와 비교할 수 있습니다. 예를 들면 다음과 같습니다::"
+"today's date, whatever it is. The strings ``yesterday``, ``thismonth``, "
+"``lastmonth``, ``thisyear`` and ``lastyear`` (or the translated equivalent "
+"in the current language) also work. In addition, the strings ``daysago``, "
+"``monthsago`` and ``yearsago`` (also translated) can be used to compare to a"
+" date some number of days, months or years ago. Searches using "
+"``thismonth``, ``lastmonth`` and ``monthsago`` compare only the year and "
+"month, while those using ``thisyear``, ``lastyear`` and ``yearsago`` compare"
+" only the year. For example::"
+msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:476
+#: ../../../__w/calibre/calibre/manual/gui.rst:481
 msgid ""
 "To avoid potential problems with translated strings when using a non-English"
 " version of calibre, the strings ``_today``, ``_yesterday``, ``_thismonth``,"
-" and ``_daysago`` are always available. They are not translated."
-msgstr "영어가 아닌 calibre를 사용할 때 번역된 문자열로 인한 문제를 피하기 위해 ``_today``, ``_yesterday``, ``_thismonth``, ``_daysago`` 문자열은 항상 사용할 수 있습니다. 이들은 번역되지 않습니다."
+" ``_lastmonth``, ``_thisyear``, ``_lastyear``, ``_daysago``, ``_monthsago`` "
+"and ``_yearsago`` are always available. They are not translated."
+msgstr ""
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:478
+#: ../../../__w/calibre/calibre/manual/gui.rst:485
 msgid "*Searching dates and numeric values with relational comparisons*"
 msgstr "*관계 비교를 사용한 날짜 및 숫자 값 검색*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:480
+#: ../../../__w/calibre/calibre/manual/gui.rst:487
 msgid ""
 "Dates and numeric fields support the relational operators ``=`` (equals), "
 "``>`` (greater than), ``>=`` (greater than or equal to), ``<`` (less than), "
@@ -1268,21 +1273,21 @@ msgid ""
 "all books rated 3 or higher."
 msgstr "날짜 및 숫자 필드는 관계 연산자 ``=``(같음), ``>``(보다 큼), ``>=``(보다 크거나 같음), ``<``(보다 작음)을 지원합니다. , ``<=``(보다 작거나 같음) 및 ``!=``(같지 않음). 등급 필드는 숫자로 간주됩니다. 예를 들어 ``평점:>=3``을 검색하면 평점이 3 이상인 모든 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:485
+#: ../../../__w/calibre/calibre/manual/gui.rst:492
 msgid ""
 "You can search for books that have a format of a certain size like this:"
 msgstr "특정 크기의 형식을 가진 책은 다음과 같이 검색할 수 있습니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:487
+#: ../../../__w/calibre/calibre/manual/gui.rst:494
 msgid "``size:>1.1M`` will find books with a format larger than 1.1MB"
 msgstr "``size:>1.1M``은 1.1MB보다 큰 형식을 가진 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:488
+#: ../../../__w/calibre/calibre/manual/gui.rst:495
 msgid ""
 "``size:<=1K``  will find books with a format smaller than or equal to 1KB"
 msgstr "``size:<=1K``는 1KB 이하의 형식을 가진 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:490
+#: ../../../__w/calibre/calibre/manual/gui.rst:497
 msgid ""
 "You can search for the number of items in multiple-valued fields such as "
 "tags using the character ``#`` then using the same syntax as numeric fields."
@@ -1290,11 +1295,11 @@ msgid ""
 "find all books with exactly 10 tags use ``tags:#=10``."
 msgstr "태그처럼 여러 값을 가질 수 있는 필드의 항목 개수는 ``#`` 문자를 사용한 뒤 숫자 필드와 같은 구문으로 검색할 수 있습니다. 예를 들어 태그가 4개보다 많은 책을 찾으려면 ``tags:#>4``를 사용합니다. 태그가 정확히 10개인 책을 찾으려면 ``tags:#=10``을 사용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:492
+#: ../../../__w/calibre/calibre/manual/gui.rst:499
 msgid "*Series indices*"
 msgstr "*시리즈 인덱스*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:494
+#: ../../../__w/calibre/calibre/manual/gui.rst:501
 msgid ""
 "Series indices are searchable. For the standard series, the search name is "
 "``series_index``. For custom series columns, use the column search name "
@@ -1304,11 +1309,11 @@ msgid ""
 "relational operators described above."
 msgstr "시리즈 인덱스는 검색할 수 있습니다. 기본 시리즈의 검색 이름은 ``series_index``입니다. 사용자 정의 시리즈 열의 경우 열 검색 이름 뒤에 _index를 붙입니다. 예를 들어 ``#my_series``라는 사용자 정의 시리즈 열의 인덱스를 검색하려면 ``#my_series_index``라는 검색 이름을 사용합니다. 시리즈 인덱스는 숫자이므로 위에서 설명한 관계 연산자를 사용할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:499
+#: ../../../__w/calibre/calibre/manual/gui.rst:506
 msgid "*Saved searches*"
 msgstr "*저장된 검색*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:501
+#: ../../../__w/calibre/calibre/manual/gui.rst:508
 msgid ""
 "The special field ``search`` is used for :ref:`saved searches "
 "<saved_searches>`. If you save a search with the name \"My spouse's books\" "
@@ -1316,11 +1321,11 @@ msgid ""
 "the saved search. More about saving searches below."
 msgstr "특수 필드 ``search``는 :ref:`saved searches <saved_searches>`에 사용됩니다. \"My spouse's books\"라는 이름으로 검색을 저장했다면 Search bar에 ``search:\"My spouse's books\"``를 입력해 저장한 검색을 다시 사용할 수 있습니다. 검색 저장 방법은 아래에서 더 설명합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:505
+#: ../../../__w/calibre/calibre/manual/gui.rst:512
 msgid "*Virtual libraries*"
 msgstr "*가상 라이브러리*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:507
+#: ../../../__w/calibre/calibre/manual/gui.rst:514
 msgid ""
 "The special field ``vl`` is used to search for books in a Virtual library. "
 "For example, ``vl:Read`` will find all the books in the *Read* Virtual "
@@ -1330,41 +1335,41 @@ msgid ""
 "Virtual library name contains spaces then surround it with quotes."
 msgstr "특수 필드 ``vl``은 가상 라이브러리에 있는 책을 검색하는 데 사용됩니다. 예를 들어 ``vl:Read``는 *Read* 가상 라이브러리에 있는 모든 책을 찾습니다. ``vl:Read and vl:\"Science Fiction\"`` 검색은 *Read*와 *Science Fiction* 가상 라이브러리에 모두 속한 책을 찾습니다. ``vl:`` 뒤의 값은 가상 라이브러리 이름이어야 합니다. 가상 라이브러리 이름에 공백이 있으면 큰따옴표로 감싸십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:513
+#: ../../../__w/calibre/calibre/manual/gui.rst:520
 msgid "*Whether a field has a value*"
 msgstr "*필드에 값이 있는지 여부*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:515
+#: ../../../__w/calibre/calibre/manual/gui.rst:522
 msgid ""
 "You can search for the absence or presence of a value for a field using "
 "\"true\" and \"false\". For example:"
 msgstr "필드에 값이 있는지 없는지는 \"true\"와 \"false\"를 사용해 검색할 수 있습니다. 예를 들면 다음과 같습니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:517
+#: ../../../__w/calibre/calibre/manual/gui.rst:524
 msgid "``cover:false`` finds all books without a cover"
 msgstr "``cover:false``는 표지가 없는 모든 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:518
+#: ../../../__w/calibre/calibre/manual/gui.rst:525
 msgid "``series:true`` finds all books that are in a series"
 msgstr "``series:true``는 시리즈에 속한 모든 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:519
+#: ../../../__w/calibre/calibre/manual/gui.rst:526
 msgid "``series:false`` finds all books that are not in a series"
 msgstr "``series:false``는 시리즈에 속하지 않은 모든 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:520
+#: ../../../__w/calibre/calibre/manual/gui.rst:527
 msgid "``comments:false`` finds all books with an empty comment"
 msgstr "``comments:false``는 댓글이 비어 있는 모든 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:521
+#: ../../../__w/calibre/calibre/manual/gui.rst:528
 msgid "``formats:false`` finds all books with no book files (empty records)"
 msgstr "``formats:false``는 책 파일이 전혀 없는 모든 책(빈 레코드)을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:523
+#: ../../../__w/calibre/calibre/manual/gui.rst:530
 msgid "*Yes/no custom columns*"
 msgstr "*예/아니오 사용자 정의 열*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:525
+#: ../../../__w/calibre/calibre/manual/gui.rst:532
 msgid ""
 "Searching Yes/no custom columns for ``false``, ``empty``, or ``blank`` will "
 "find all books with undefined values in the column. Searching for ``true`` "
@@ -1378,11 +1383,11 @@ msgid ""
 "``_empty`` are not translated."
 msgstr "예/아니오 사용자 정의 열에서 ``false``, ``empty``, ``blank``를 검색하면 해당 열의 값이 정의되지 않은 책을 모두 찾습니다. ``true``를 검색하면 값이 정의되지 않은 것이 아닌 모든 책을 찾습니다. ``yes`` 또는 ``checked``를 검색하면 그 열에 ``Yes``가 있는 책을 찾습니다. ``no`` 또는 ``unchecked``를 검색하면 그 열에 ``No``가 있는 책을 찾습니다. ``yes``, ``no``, ``blank``, ``empty``, ``checked``, ``unchecked``라는 단어는 번역되므로 현재 언어의 단어 또는 영어 단어 둘 다 사용할 수 있습니다. ``true``와 ``false`` 및 특수 값 ``_yes``, ``_no``, ``_empty``는 번역되지 않습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:530
+#: ../../../__w/calibre/calibre/manual/gui.rst:537
 msgid "*Identifiers*"
 msgstr "*식별자*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:532
+#: ../../../__w/calibre/calibre/manual/gui.rst:539
 msgid ""
 "Identifiers (e.g., ISBN, DOI, LCCN, etc.) use an extended syntax. An "
 "identifier has the form ``type:value``, as in ``isbn:123456789``. The "
@@ -1391,60 +1396,60 @@ msgid ""
 "the :ref:`search kinds <search_kinds>`. Examples:"
 msgstr "식별자(예: ISBN, DOI, LCCN 등)는 확장 구문을 사용합니다. 식별자는 ``type:value`` 형태이며, 예를 들어 ``isbn:123456789``입니다. 확장 구문을 사용하면 검색할 형식과 값을 독립적으로 지정할 수 있습니다. 질의의 형식 부분과 값 부분 모두 :ref:`search kinds <search_kinds>`에서 설명한 검색 종류를 사용할 수 있습니다. 예를 들면 다음과 같습니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:534
+#: ../../../__w/calibre/calibre/manual/gui.rst:541
 msgid "``identifiers:true`` will find books with any identifier."
 msgstr "``identifiers:true``는 아무 식별자나 하나 이상 있는 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:535
+#: ../../../__w/calibre/calibre/manual/gui.rst:542
 msgid "``identifiers:false`` will find books with no identifier."
 msgstr "``identifiers:false``는 식별자가 전혀 없는 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:536
+#: ../../../__w/calibre/calibre/manual/gui.rst:543
 msgid ""
 "``identifiers:123`` will search for books with any type having a value "
 "containing `123`."
 msgstr "``identifiers:123``은 값에 `123`이 포함된 아무 형식의 식별자를 가진 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:537
+#: ../../../__w/calibre/calibre/manual/gui.rst:544
 msgid ""
 "``identifiers:=123456789`` will search for books with any type having a "
 "value equal to `123456789`."
 msgstr "``identifiers:=123456789``은 값이 `123456789`와 같은 아무 형식의 식별자를 가진 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:538
+#: ../../../__w/calibre/calibre/manual/gui.rst:545
 msgid ""
 "``identifiers:=isbn:`` and ``identifiers:isbn:true`` will find books with a "
 "type equal to ISBN having any value"
 msgstr "``identifiers:=isbn:`` 및 ``identifiers:isbn:true``는 형식이 ISBN이고 값은 무엇이든 있는 책을 찾습니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:539
+#: ../../../__w/calibre/calibre/manual/gui.rst:546
 msgid ""
 "``identifiers:=isbn:false`` will find books with no type equal to ISBN."
 msgstr "``identifiers:=isbn:false``는 형식이 ISBN인 식별자가 없는 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:540
+#: ../../../__w/calibre/calibre/manual/gui.rst:547
 msgid ""
 "``identifiers:=isbn:123`` will find books with a type equal to ISBN having a"
 " value containing `123`."
 msgstr "``identifiers:=isbn:123``은 형식이 ISBN이며 값에 `123`이 포함된 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:541
+#: ../../../__w/calibre/calibre/manual/gui.rst:548
 msgid ""
 "``identifiers:=isbn:=123456789`` will find books with a type equal to ISBN "
 "having a value equal to `123456789`."
 msgstr "``identifiers:=isbn:=123456789``은 형식이 ISBN이며 값이 `123456789`와 같은 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:542
+#: ../../../__w/calibre/calibre/manual/gui.rst:549
 msgid ""
 "``identifiers:i:1`` will find books with a type containing an `i` having a "
 "value containing a `1`."
 msgstr "``identifiers:i:1``은 형식에 `i`가 포함되고 값에 `1`이 포함된 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:544
+#: ../../../__w/calibre/calibre/manual/gui.rst:551
 msgid "*Categories visible in the Tag browser*"
 msgstr "*태그 탐색기에 표시되는 카테고리*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:546
+#: ../../../__w/calibre/calibre/manual/gui.rst:553
 msgid ""
 "The search ``in_tag_browser:true`` finds all books that are in categories "
 "(tags, authors, etc.) currently shown in the :guilabel:`Tag browser`. This "
@@ -1459,18 +1464,18 @@ msgid ""
 ":guilabel:`Show only books that have visible categories` entry."
 msgstr "``in_tag_browser:true`` 검색은 현재 :guilabel:`Tag browser`에 표시되고 있는 카테고리(태그, 저자 등)에 속한 모든 책을 찾습니다. 이 기능은 :guilabel:`Preferences->Look & feel->Tag browser->Hide empty categories`와 :guilabel:`Find shows all items that match` 두 환경설정을 사용할 때 유용합니다. 이 둘이 설정되어 있으면 :guilabel:`Tag browser`에서 :guilabel:`Find`를 수행했을 때 :guilabel:`Find`와 일치하는 항목을 포함하는 카테고리만 표시됩니다. 그 다음 ``in_tag_browser:true`` 검색을 사용하면 이러한 카테고리/항목을 가진 책도 함께 찾을 수 있습니다. :kbd:`Ctrl+Alt+Shift+F` 키를 누르거나 :guilabel:`Tag browser`의 설정 버튼을 클릭한 뒤 :guilabel:`Show only books that have visible categories` 항목을 선택해 이 검색을 쉽게 실행할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:558
+#: ../../../__w/calibre/calibre/manual/gui.rst:565
 msgid "*Search using templates*"
 msgstr "*템플릿을 사용한 검색*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:560
+#: ../../../__w/calibre/calibre/manual/gui.rst:567
 msgid ""
 "You can search using a template in :ref:`templatelangcalibre` instead of a "
 "metadata field. To do so you enter a template, a search type, and the value "
 "to search for. The syntax is::"
 msgstr ":ref:`templatelangcalibre`의 템플릿을 메타데이터 필드 대신 사용하여 검색할 수 있습니다. 이를 위해 템플릿, 검색 유형, 검색 값을 입력합니다. 구문은 다음과 같습니다::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:564
+#: ../../../__w/calibre/calibre/manual/gui.rst:571
 msgid ""
 "The ``template`` is any valid calibre template language template. The "
 "``search type`` must be one of ``t`` (text search), ``d`` (date search), "
@@ -1480,30 +1485,30 @@ msgid ""
 "search string if there are spaces anywhere in it."
 msgstr "``template``은 유효한 calibre 템플릿 언어 템플릿이면 무엇이든 가능합니다. ``search type``은 ``t``(텍스트 검색), ``d``(날짜 검색), ``n``(숫자 검색), ``b``(설정/미설정(불리언)) 중 하나여야 합니다. ``value``는 원하는 값이면 무엇이든 가능하며, 각 검색 유형에 대해 위에서 설명한 :ref:`search kinds <search_kinds>`를 사용할 수 있습니다. 전체 검색 문자열 안에 공백이 하나라도 있으면 전체를 큰따옴표로 감싸야 합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:566
+#: ../../../__w/calibre/calibre/manual/gui.rst:573
 msgid "Examples:"
 msgstr "예:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:568
+#: ../../../__w/calibre/calibre/manual/gui.rst:575
 msgid ""
 "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- is "
 "true when the ``kindle`` device is connected."
 msgstr "``template:\"program: connected_device_name('main')#@#:t:kindle\"`` -- ``kindle`` 장치가 연결되어 있을 때 참입니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:569
+#: ../../../__w/calibre/calibre/manual/gui.rst:576
 msgid ""
 "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- "
 "finds books with EPUB files larger than 1 MB."
 msgstr "``template:\"program: select(formats_sizes(), 'EPUB')#@#:n:>1000000\"`` -- 1MB보다 큰 EPUB 파일을 가진 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:570
+#: ../../../__w/calibre/calibre/manual/gui.rst:577
 msgid ""
 "``template:\"program: select(formats_modtimes('iso'), "
 "'EPUB')#@#:d:>10daysago\"`` -- finds books with EPUB files newer than 10 "
 "days ago."
 msgstr "``template:\"program: select(formats_modtimes('iso'), 'EPUB')#@#:d:>10daysago\"`` -- 10일 전보다 새 EPUB 파일을 가진 책을 찾습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:571
+#: ../../../__w/calibre/calibre/manual/gui.rst:578
 msgid ""
 "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != "
 "0#@#:n:1\"\"\"`` -- finds all books containing the series name in the tags. "
@@ -1511,7 +1516,7 @@ msgid ""
 " (``'``) and double quotes (``\"``) when constructing the search expression."
 msgstr "``template:\"\"\"program: book_count('tags:^\"' & $series & '\"', 0) != 0#@#:n:1\"\"\"`` -- 태그 안에 시리즈 이름이 들어 있는 모든 책을 찾습니다. 이 예제는 템플릿이 검색 식을 만들 때 작은따옴표(``'``)와 큰따옴표(``\"``)를 모두 사용하므로 슈퍼 따옴표를 사용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:573
+#: ../../../__w/calibre/calibre/manual/gui.rst:580
 msgid ""
 "You can build template search queries easily using the :guilabel:`Advanced "
 "search dialog` accessed by clicking the button |sbi|. You can test templates"
@@ -1521,19 +1526,19 @@ msgid ""
 ":guilabel:`Preferences->Shortcuts`."
 msgstr "|sbi| 버튼을 클릭하면 열리는 :guilabel:`Advanced search dialog`를 사용해 템플릿 검색 질의를 쉽게 만들 수 있습니다. 특정 책에서 템플릿을 시험해 보려면 calibre의 :guilabel:`Template tester`를 사용할 수 있으며, 이는 :guilabel:`Preferences->Toolbars & menus`를 통해 도구 모음이나 메뉴에 추가할 수 있습니다. :guilabel:`Preferences->Shortcuts`에서 키보드 단축키를 지정할 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:575
+#: ../../../__w/calibre/calibre/manual/gui.rst:582
 msgid "*Advanced search dialog*"
 msgstr "*고급 검색 대화 상자*"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:583
+#: ../../../__w/calibre/calibre/manual/gui.rst:590
 msgid ":guilabel:`Advanced search dialog`"
 msgstr ":guilabel:`고급 검색 대화 상자`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:588
+#: ../../../__w/calibre/calibre/manual/gui.rst:595
 msgid "Saving searches"
 msgstr "검색 저장"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:590
+#: ../../../__w/calibre/calibre/manual/gui.rst:597
 msgid ""
 "calibre allows you to save a frequently used search under a special name and"
 " then reuse that search with a single click. To do this, create your search "
@@ -1543,18 +1548,18 @@ msgid ""
 "save the search."
 msgstr "calibre에서는 자주 사용하는 검색을 특별한 이름으로 저장한 뒤 클릭 한 번으로 다시 사용할 수 있습니다. 이렇게 하려면 Search bar에 직접 검색을 입력하거나 Tag browser를 사용해 검색을 만든 다음, Search bar 옆 Saved Searches 상자에 해당 검색에 붙일 이름을 입력합니다. 그런 다음 저장된 검색 상자 옆의 더하기 아이콘을 클릭해 검색을 저장합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:592
+#: ../../../__w/calibre/calibre/manual/gui.rst:599
 msgid ""
 "Now you can access your saved search in the Tag browser under "
 ":guilabel:`Saved searches`. A single click will allow you to reuse any "
 "arbitrarily complex search easily, without needing to re-create it."
 msgstr "이제 Tag browser의 :guilabel:`Saved searches` 아래에서 저장한 검색에 접근할 수 있습니다. 한 번 클릭하면 아무리 복잡한 검색이라도 다시 만들 필요 없이 쉽게 재사용할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:595
+#: ../../../__w/calibre/calibre/manual/gui.rst:602
 msgid "Searching the full text of all books"
 msgstr "모든 책의 전체 텍스트 검색"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:600
+#: ../../../__w/calibre/calibre/manual/gui.rst:607
 msgid ""
 "|ftsb| calibre can *optionally* index the full text of books in the library "
 "to allow for instant searching of words inside any book. To use this "
@@ -1562,11 +1567,11 @@ msgid ""
 " bar."
 msgstr "|ftsb| calibre는 라이브러리의 책 전체 텍스트를 *선택적으로* 색인하여 어떤 책 안에 있는 단어든 즉시 검색할 수 있게 해 줍니다. 이 기능을 사용하려면 검색 표시줄 왼쪽 끝의 :guilabel:`FT` 버튼을 클릭하십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:597
+#: ../../../__w/calibre/calibre/manual/gui.rst:604
 msgid "ftsb"
 msgstr "ftsb"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:604
+#: ../../../__w/calibre/calibre/manual/gui.rst:611
 msgid ""
 "Then, enable indexing for the current library. Once indexing is complete you"
 " can search all the text in the full library. When you add new books to the "
@@ -1579,18 +1584,18 @@ msgid ""
 "calibre :guilabel:`E-book viewer`."
 msgstr "그런 다음 현재 라이브러리에 대해 색인을 활성화하십시오. 색인이 완료되면 라이브러리 전체 텍스트를 검색할 수 있습니다. 라이브러리에 새 책을 추가하면 백그라운드에서 자동으로 색인됩니다. 이 검색을 사용하면 특정 단어나 단어 조합이 들어 있는 모든 책을 빠르게 찾을 수 있습니다. 검색 팝업 창의 예처럼 서로 가까이 나타나는 단어도 검색할 수 있습니다. 이 검색 도구는 특정 책에서 검색 질의가 나온 모든 위치를 나열하는 것이 아니라 한 번의 위치만 찾아낸다는 점에 유의하십시오. 모든 위치를 보려면 calibre의 :guilabel:`E-book viewer`에서 책 내부를 검색하는 것이 가장 좋습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:613
+#: ../../../__w/calibre/calibre/manual/gui.rst:620
 msgid ""
 "You can re-index an individual book by right clicking on the :guilabel:`Book"
 " details panel` in calibre and choosing :guilabel:`Re-index this book for "
 "full text searching`."
 msgstr "calibre에서 :guilabel:`Book details panel`을 마우스 오른쪽 버튼으로 클릭한 다음 :guilabel:`Re-index this book for full text searching`을 선택하면 개별 책을 다시 색인할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:618
+#: ../../../__w/calibre/calibre/manual/gui.rst:625
 msgid "Virtual libraries"
 msgstr "가상 라이브러리"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:620
+#: ../../../__w/calibre/calibre/manual/gui.rst:627
 msgid ""
 "A :guilabel:`Virtual library` is a way to pretend that your calibre library "
 "has only a few books instead of its full collection. This is an excellent "
@@ -1599,11 +1604,11 @@ msgid ""
 ":ref:`virtual_libraries`."
 msgstr ":guilabel:`Virtual library`는 전체 라이브러리 대신 일부 책만 있는 것처럼 calibre 라이브러리를 가정하도록 만드는 기능입니다. 큰 책 컬렉션을 더 작고 관리하기 쉬운 덩어리로 나누는 훌륭한 방법입니다. 가상 라이브러리를 만들고 사용하는 방법은 튜토리얼 :ref:`virtual_libraries`를 참조하십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:627
+#: ../../../__w/calibre/calibre/manual/gui.rst:634
 msgid "Temporarily marking books"
 msgstr "책 임시 표시"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:629
+#: ../../../__w/calibre/calibre/manual/gui.rst:636
 msgid ""
 "You can temporarily mark arbitrary sets of books. Marked books will have a "
 "pin on them and can be found with the search ``marked:true``. To mark a book"
@@ -1611,7 +1616,7 @@ msgid ""
 "add the :guilabel:`Mark books` button to the main toolbar."
 msgstr "임의의 책 집합을 임시로 표시할 수 있습니다. 표시된 책에는 핀이 붙으며 ``marked:true`` 검색으로 찾을 수 있습니다. 책을 표시하려면 :kbd:`Ctrl+M`을 누르거나 :guilabel:`Preferences->Toolbars & menus`로 가서 메인 도구 모음에 :guilabel:`Mark books` 버튼을 추가하십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:631
+#: ../../../__w/calibre/calibre/manual/gui.rst:638
 msgid ""
 "You can mark books with a specific text label by right clicking the "
 ":guilabel:`Mark books` button and choosing :guilabel:`Mark books with text "
@@ -1619,11 +1624,11 @@ msgid ""
 "``marked:\"=the-text-you-entered\"``."
 msgstr ":guilabel:`Mark books` 버튼을 마우스 오른쪽 버튼으로 클릭하고 :guilabel:`Mark books with text label`을 선택하면 특정 텍스트 레이블로 책을 표시할 수 있습니다. 텍스트 레이블이 붙은 책은 나중에 ``marked:\"=the-text-you-entered\"`` 검색으로 찾을 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:636
+#: ../../../__w/calibre/calibre/manual/gui.rst:643
 msgid "Guessing metadata from file names"
 msgstr "파일 이름에서 메타데이터 추측중"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:638
+#: ../../../__w/calibre/calibre/manual/gui.rst:645
 msgid ""
 "Normally, calibre reads metadata from inside the book file. However, it can "
 "be configured to read metadata from the file name instead, via "
@@ -1631,7 +1636,7 @@ msgid ""
 " contents`."
 msgstr "기본적으로 calibre는 책 파일 내부에서 메타데이터를 읽습니다. 그러나 :guilabel:`Preferences->Import/export->Adding books->Read metadata from file contents`를 통해 대신 파일 이름에서 메타데이터를 읽도록 설정할 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:642
+#: ../../../__w/calibre/calibre/manual/gui.rst:649
 msgid ""
 "You can also control how metadata is read from the filename using regular "
 "expressions (see :doc:`regexp`). In the :guilabel:`Adding books` section of "
@@ -1640,30 +1645,30 @@ msgid ""
 "add to the library. The default regular expression is::"
 msgstr "정규 표현식(참조: :doc:`regexp`)을 사용해 파일 이름에서 메타데이터를 읽는 방식도 제어할 수 있습니다. 설정 대화 상자의 :guilabel:`Adding books` 항목에서 calibre가 라이브러리에 추가하는 전자책 파일 이름으로부터 메타데이터를 추측하는 데 사용할 정규 표현식을 지정할 수 있습니다. 기본 정규 표현식은 다음과 같습니다::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:650
+#: ../../../__w/calibre/calibre/manual/gui.rst:657
 msgid ""
 "that is, it assumes that all characters up to the first ``-`` are the title "
 "of the book and subsequent characters are the author of the book. For "
 "example, the filename::"
 msgstr "즉, 첫 번째 ``-`` 앞까지의 모든 문자를 책 제목으로, 그 뒤의 문자를 저자로 가정합니다. 예를 들어 파일 이름이 다음과 같다면::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:656
+#: ../../../__w/calibre/calibre/manual/gui.rst:663
 msgid ""
 "will be interpreted to have the title: Foundation and Earth and author: "
 "Isaac Asimov"
 msgstr "제목은 Foundation and Earth, 저자는 Isaac Asimov로 해석됩니다"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:659
+#: ../../../__w/calibre/calibre/manual/gui.rst:666
 msgid ""
 "If the filename does not contain the hyphen, the above regular expression "
 "will fail."
 msgstr "파일 이름에 하이픈이 없으면 위 정규 표현식은 실패합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:665
+#: ../../../__w/calibre/calibre/manual/gui.rst:672
 msgid "Book details"
 msgstr "책 상세정보"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:669
+#: ../../../__w/calibre/calibre/manual/gui.rst:676
 msgid ""
 "The Book details display shows the cover and all the metadata for the "
 "currently selected book. It can be hidden via the :guilabel:`Layout` button "
@@ -1673,51 +1678,51 @@ msgid ""
 " on the author name and selecting Manage this author."
 msgstr "책 상세정보 표시는 현재 선택한 책의 표지와 모든 메타데이터를 보여 줍니다. calibre 메인 창 오른쪽 아래의 :guilabel:`Layout` 버튼을 통해 숨길 수 있습니다. 책 상세정보 패널에 표시된 저자 이름은 클릭할 수 있으며, 기본적으로 해당 저자의 Wikipedia 페이지로 이동합니다. 이 동작은 저자 이름을 마우스 오른쪽 버튼으로 클릭해 Manage this author를 선택하여 사용자 지정할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:676
+#: ../../../__w/calibre/calibre/manual/gui.rst:683
 msgid ""
 "Similarly, if you download metadata for the book, the Book details panel "
 "will automatically show you links pointing to the web pages for the book on "
 "Amazon, WorldCat, etc. from where the metadata was downloaded."
 msgstr "마찬가지로 책의 메타데이터를 다운로드하면, 책 상세정보 패널에는 해당 메타데이터를 가져온 Amazon, WorldCat 등의 책 웹 페이지로 연결되는 링크가 자동으로 표시됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:680
+#: ../../../__w/calibre/calibre/manual/gui.rst:687
 msgid ""
 "You can right click on individual e-book formats in the Book details panel "
 "to delete them, compare them to their original versions, save them to disk, "
 "open them with an external program, etc."
 msgstr "책 상세정보 패널에서 개별 전자책 형식을 마우스 오른쪽 버튼으로 클릭하면 삭제, 원본과 비교, 디스크에 저장, 외부 프로그램으로 열기 등을 할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:684
+#: ../../../__w/calibre/calibre/manual/gui.rst:691
 msgid ""
 "You can change the cover of the book by simply drag and dropping an image "
 "onto the Book details panel. If you wish to edit the cover image in an "
 "external program, simply right click on it and choose :guilabel:`Open with`."
 msgstr "이미지를 책 상세정보 패널로 끌어다 놓기만 하면 책 표지를 바꿀 수 있습니다. 외부 프로그램에서 표지 이미지를 편집하고 싶다면 해당 이미지를 마우스 오른쪽 버튼으로 클릭하고 :guilabel:`Open with`를 선택하십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:688
+#: ../../../__w/calibre/calibre/manual/gui.rst:695
 msgid ""
 "You can also add e-book files to the current book by drag and dropping the "
 "files onto the Book details panel."
 msgstr "파일을 책 상세정보 패널로 끌어다 놓아 현재 책에 전자책 파일을 추가할 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:691
+#: ../../../__w/calibre/calibre/manual/gui.rst:698
 msgid ""
 "Double clicking the Book details panel will open it up in a separate popup "
 "window."
 msgstr "책 상세정보 패널을 두 번 클릭하면 별도의 팝업 창으로 열립니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:694
+#: ../../../__w/calibre/calibre/manual/gui.rst:701
 msgid ""
 "Finally, you can customize exactly what information is displayed in the Book"
 " details panel via :guilabel:`Preferences->Interface->Look & feel->Book "
 "details`."
 msgstr "마지막으로 :guilabel:`Preferences->Interface->Look & feel->Book details`를 통해 책 상세정보 패널에 정확히 어떤 정보를 표시할지 사용자 지정할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:704
+#: ../../../__w/calibre/calibre/manual/gui.rst:711
 msgid "Tag browser"
 msgstr "태그 탐색기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:708
+#: ../../../__w/calibre/calibre/manual/gui.rst:715
 msgid ""
 "The Tag browser allows you to easily browse your collection by "
 "Author/Tags/Series/etc. If you click on any item in the Tag browser, for "
@@ -1727,7 +1732,7 @@ msgid ""
 " series."
 msgstr "태그 탐색기를 사용하면 저자/태그/시리즈 등으로 컬렉션을 쉽게 둘러볼 수 있습니다. 태그 탐색기에서 어떤 항목이든 클릭하면, 예를 들어 저자 이름 Isaac Asimov를 클릭하면, 오른쪽의 책 목록은 그 저자의 책만 보여 주도록 제한됩니다. 카테고리 이름 자체도 클릭할 수 있습니다. 예를 들어 \"Series\"를 클릭하면 어떤 시리즈에 속한 책이든 모두 표시됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:710
+#: ../../../__w/calibre/calibre/manual/gui.rst:717
 msgid ""
 "The first click on an item will restrict the list of books to those that "
 "contain or match the item. Continuing the above example, clicking on Isaac "
@@ -1745,7 +1750,7 @@ msgid ""
 "learn how to construct basic search expressions."
 msgstr "항목을 처음 클릭하면 그 항목을 포함하거나 일치하는 책만 목록에 남습니다. 위 예를 계속 사용하면 Isaac Asimov를 클릭하면 그 저자의 책이 표시됩니다. 같은 항목을 다시 클릭하면 해당 항목에 자식이 있는지에 따라 표시 내용이 바뀝니다(아래의 하위 카테고리와 계층형 항목 참조). Isaac Asimov 예를 계속 들면, 다시 클릭하면 Isaac Asimov가 아닌 책만 표시됩니다. 세 번째 클릭은 제한을 제거하여 모든 책을 다시 보여 줍니다. :kbd:`Ctrl` 또는 :kbd:`Shift` 키를 누른 채 여러 항목을 클릭하면 여러 항목을 기준으로 한 제한을 만들 수 있습니다. 예를 들어 유럽 역사 책을 찾기 위해 :kbd:`Ctrl`을 누른 채 History와 Europe 태그를 클릭할 수 있습니다. 태그 탐색기는 자동으로 Search bar에 입력되는 검색 식을 만들어 동작합니다. 태그 탐색기가 생성한 검색 식을 살펴보면 기본 검색 식 작성 방법을 익히는 데 도움이 됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:712
+#: ../../../__w/calibre/calibre/manual/gui.rst:719
 msgid ""
 "Items in the Tag browser have their icons partially colored. The amount of "
 "color depends on the average rating of the books in that category. So for "
@@ -1754,7 +1759,7 @@ msgid ""
 "your mouse over the icon to see the average rating."
 msgstr "태그 탐색기의 항목 아이콘은 일부가 색으로 채워져 있습니다. 채워지는 양은 해당 카테고리 책들의 평균 평점에 따라 달라집니다. 예를 들어 Isaac Asimov의 책 평균 평점이 별 네 개라면 태그 탐색기에서 Isaac Asimov의 아이콘은 5분의 4가 색칠되어 보입니다. 아이콘 위에 마우스를 올리면 평균 평점을 확인할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:714
+#: ../../../__w/calibre/calibre/manual/gui.rst:721
 msgid ""
 "The outer-level items in the :guilabel:`Tag browser`, such as Authors and "
 "Series, are called categories. You can create your own categories, called "
@@ -1773,38 +1778,38 @@ msgid ""
 "Favorites example above."
 msgstr ":guilabel:`Tag browser`의 바깥쪽 수준 항목(예: Authors, Series 등)은 카테고리라고 부릅니다. 항목을 정리하는 데 유용한 :guilabel:`User categories`라는 사용자 카테고리를 직접 만들 수도 있습니다. 예를 들어 :guilabel:`User categories editor`(:guilabel:`Tag browser` 왼쪽 아래의 :guilabel:`Configure` 버튼을 클릭한 다음 :guilabel:`Manage authors, tags, etc->User categories`를 선택)를 사용해 ``Favorite Authors``라는 사용자 카테고리를 만든 뒤 즐겨찾는 저자를 그 안에 넣을 수 있습니다. 사용자 카테고리에는 하위 카테고리도 둘 수 있습니다. 예를 들어 사용자 카테고리 ``Favorites.Authors``는 ``Favorites``의 하위 카테고리입니다. ``Favorites.Series``도 만들 수 있으며, 이 경우 ``Favorites`` 아래에 두 개의 하위 카테고리가 생깁니다. 하위 카테고리는 사용자 카테고리를 마우스 오른쪽 버튼으로 클릭하고 :guilabel:`Add sub-category to...`를 선택한 뒤 이름을 입력해서 만들 수 있습니다. 또는 위 Favorites 예와 같은 이름을 입력하여 :guilabel:`User categories editor`를 사용해 만들 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:716
+#: ../../../__w/calibre/calibre/manual/gui.rst:723
 msgid ""
 "You can search User categories in the same way as built-in categories, by "
 "clicking on them. There are four different searches cycled through by "
 "clicking:"
 msgstr "사용자 카테고리는 클릭하여 내장 카테고리와 같은 방식으로 검색할 수 있습니다. 클릭할 때 다음 네 가지 검색이 순환합니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:717
+#: ../../../__w/calibre/calibre/manual/gui.rst:724
 msgid ""
 "\"everything matching an item in the category\" indicated by a single green "
 "plus sign."
 msgstr "녹색 더하기 하나로 표시되는 \"카테고리 안의 항목과 일치하는 모든 것\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:718
+#: ../../../__w/calibre/calibre/manual/gui.rst:725
 msgid ""
 "\"everything matching an item in the category or its sub-categories\" "
 "indicated by two green plus signs."
 msgstr "녹색 더하기 두 개로 표시되는 \"카테고리 또는 그 하위 카테고리의 항목과 일치하는 모든 것\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:719
+#: ../../../__w/calibre/calibre/manual/gui.rst:726
 msgid ""
 "\"everything not matching an item in the category\" shown by a single red "
 "minus sign."
 msgstr "빨간 빼기 하나로 표시되는 \"카테고리 안의 항목과 일치하지 않는 모든 것\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:720
+#: ../../../__w/calibre/calibre/manual/gui.rst:727
 msgid ""
 "\"everything not matching an item in the category or its sub-categories\" "
 "shown by two red minus signs."
 msgstr "빨간 빼기 두 개로 표시되는 \"카테고리 또는 그 하위 카테고리의 항목과 일치하지 않는 모든 것\"."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:722
+#: ../../../__w/calibre/calibre/manual/gui.rst:729
 msgid ""
 "It is also possible to create hierarchies inside some of the text categories"
 " such as tags, series, and custom columns. These hierarchies show with the "
@@ -1821,14 +1826,14 @@ msgid ""
 " \"genre\" <subgroups-tutorial>` for more information."
 msgstr "태그, 시리즈, 사용자 정의 열 같은 일부 텍스트 카테고리 안에는 계층 구조를 만들 수도 있습니다. 이런 계층 구조는 작은 삼각형으로 표시되어 하위 항목을 숨길 수 있게 해 줍니다. 카테고리 안의 항목 계층 구조를 사용하려면 먼저 :guilabel:`Preferences->Interface->Look & feel`로 가서 \"Categories with hierarchical items\" 필드에 해당 카테고리 이름을 입력해야 합니다. 이렇게 하면 그 카테고리 안에서 마침표를 포함한 항목이 작은 삼각형과 함께 표시됩니다. 예를 들어 \"Genre\"라는 사용자 정의 열을 만들고 계층형 항목이 들어 있다고 지정했다고 가정합시다. 그러면 Mystery.Thriller, Mystery.English 같은 항목은 옆에 작은 삼각형이 붙은 Mystery로 표시됩니다. 삼각형을 클릭하면 Thriller와 English가 하위 항목으로 나타납니다. 자세한 내용은 :ref:`Managing subgroups of books, for example \"genre\" <subgroups-tutorial>`를 참조하십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:724
+#: ../../../__w/calibre/calibre/manual/gui.rst:731
 msgid ""
 "Hierarchical items (items with children) use the same four 'click-on' "
 "searches as User categories. Items that do not have children use two of the "
 "searches: \"everything matching\" and \"everything not matching\"."
 msgstr "계층형 항목(자식이 있는 항목)은 사용자 카테고리와 같은 네 가지 클릭 검색을 사용합니다. 자식이 없는 항목은 \"everything matching\"과 \"everything not matching\" 두 가지 검색만 사용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:726
+#: ../../../__w/calibre/calibre/manual/gui.rst:733
 msgid ""
 "You can drag and drop items in the Tag browser onto User categories to add "
 "them to that category. If the source is a User category, holding the "
@@ -1840,7 +1845,7 @@ msgid ""
 "History will add the tag History to the book's tags."
 msgstr "태그 탐색기의 항목을 사용자 카테고리로 끌어다 놓아 그 카테고리에 추가할 수 있습니다. 원본이 사용자 카테고리인 경우, 끌 때 :kbd:`Shift` 키를 누르고 있으면 새 카테고리로 이동됩니다. 책 목록의 책을 태그 탐색기 항목으로 끌어다 놓을 수도 있는데, 이렇게 하면 그 항목이 떨어뜨린 책들에 자동으로 적용됩니다. 예를 들어 책을 Isaac Asimov에 끌어다 놓으면 그 책의 저자가 Isaac Asimov로 설정됩니다. 책을 History 태그에 떨어뜨리면 해당 책의 태그에 History가 추가됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:728
+#: ../../../__w/calibre/calibre/manual/gui.rst:735
 msgid ""
 "You can easily find any item in the Tag browser by clicking the search "
 "button at the lower-right corner. In addition, you can right click on any "
@@ -1850,7 +1855,7 @@ msgid ""
 "rename authors and control how their names are sorted."
 msgstr "오른쪽 아래 모서리의 검색 버튼을 클릭하면 태그 탐색기에서 어떤 항목이든 쉽게 찾을 수 있습니다. 또한 항목을 마우스 오른쪽 버튼으로 클릭해 여러 작업 중 하나를 선택할 수 있습니다. 예를 들어 숨기기, 이름 바꾸기, 또는 그 종류의 항목을 관리할 수 있는 \"Manage x\" 대화 상자를 여는 작업 등이 있습니다. 예를 들어 :guilabel:`Manage authors` 대화 상자에서는 저자 이름을 바꾸고 정렬 방식을 제어할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:730
+#: ../../../__w/calibre/calibre/manual/gui.rst:737
 msgid ""
 "You can control how items are sorted in the Tag browser via the "
 ":guilabel:`Configure` button at the lower-left of the Tag browser. You can "
@@ -1859,7 +1864,7 @@ msgid ""
 " Isaac Asimov is the number of books in your library by Isaac Asimov)."
 msgstr "태그 탐색기 왼쪽 아래의 :guilabel:`Configure` 버튼을 통해 항목 정렬 방식을 제어할 수 있습니다. 이름, 평균 평점, 인기도로 정렬할 수 있습니다(인기도는 라이브러리에서 해당 항목을 가진 책의 수입니다. 예를 들어 Isaac Asimov의 인기도는 라이브러리에 있는 Isaac Asimov 저서 수입니다)."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:732
+#: ../../../__w/calibre/calibre/manual/gui.rst:739
 msgid ""
 "You can use your own icons for categories and values in categories. To "
 "change the icon for a category, right-click on the category (the outer-level"
@@ -1868,27 +1873,27 @@ msgid ""
 "its default choose `Restore (category name) default icon`."
 msgstr "카테고리와 카테고리 안의 값에 대해 자신만의 아이콘을 사용할 수 있습니다. 카테고리 아이콘을 바꾸려면 카테고리(바깥쪽 수준 항목)를 마우스 오른쪽 버튼으로 클릭한 뒤 `Change (category name) category icon`을 선택하십시오. 아이콘으로 사용할 이미지를 고르는 대화 상자가 열립니다. 기본 아이콘으로 되돌리려면 `Restore (category name) default icon`을 선택하십시오."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:735
+#: ../../../__w/calibre/calibre/manual/gui.rst:742
 msgid ""
 "To choose icons for values in categories, right-click on a value then choose"
 " `Manage icon for (value name)`. You will see a list of choices:"
 msgstr "카테고리 안의 값에 대한 아이콘을 고르려면 값을 마우스 오른쪽 버튼으로 클릭한 뒤 `Manage icon for (value name)`을 선택하십시오. 다음과 같은 선택지가 표시됩니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:737
+#: ../../../__w/calibre/calibre/manual/gui.rst:744
 msgid ""
 "`Choose an icon for this value but not its children`. A dialog will open "
 "where you choose an icon for the value. Children of that value will not "
 "inherit that icon."
 msgstr "`이 값에만 아이콘 선택, 자식에는 적용하지 않기`. 값에 대한 아이콘을 고르는 대화 상자가 열립니다. 이 값의 자식들은 그 아이콘을 상속받지 않습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:738
+#: ../../../__w/calibre/calibre/manual/gui.rst:745
 msgid ""
 "`Choose an icon for this value and its children`. A dialog will open where "
 "you choose an icon for the value. Any children that don't have their own "
 "specified icon will inherit this icon."
 msgstr "`이 값과 그 자식에 아이콘 선택`. 값에 대한 아이콘을 선택하는 대화 상자가 열립니다. 자체 아이콘이 지정되지 않은 자식은 이 아이콘을 상속받습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:739
+#: ../../../__w/calibre/calibre/manual/gui.rst:746
 msgid ""
 "`Use the existing icon for this value but not its children`. This option is "
 "offered if the value already has an icon that is inherited by the value's "
@@ -1896,7 +1901,7 @@ msgid ""
 "children."
 msgstr "`이 값에는 기존 아이콘을 사용하되 자식에는 적용하지 않기`. 이 옵션은 값에 이미 아이콘이 있고 그 아이콘이 자식에게 상속되고 있을 때 제공됩니다. 선택하면 아이콘이 값에는 적용되지만 자식에는 적용되지 않습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:740
+#: ../../../__w/calibre/calibre/manual/gui.rst:747
 msgid ""
 "`Use the existing icon for this value and its children`. This option is "
 "offered if the value already has an icon that is not inherited by the "
@@ -1904,50 +1909,50 @@ msgid ""
 " children."
 msgstr "`이 값과 그 자식에 기존 아이콘 사용`. 이 옵션은 값에 이미 아이콘이 있지만 그 아이콘이 자식에게 상속되지 않을 때 제공됩니다. 선택하면 아이콘이 값과 자식 모두에 적용됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:741
+#: ../../../__w/calibre/calibre/manual/gui.rst:748
 msgid ""
 "`Use the default icon for this value`. This option is offered if the item "
 "has an icon. It removes the icon from the value and any children inheriting "
 "the icon. The default icon is what is specified below."
 msgstr "`이 값에 기본 아이콘 사용`. 항목에 아이콘이 있을 때 제공되는 옵션입니다. 값에서 아이콘을 제거하고 그 아이콘을 상속받던 자식에서도 제거합니다. 기본 아이콘은 아래에서 지정한 것입니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:742
+#: ../../../__w/calibre/calibre/manual/gui.rst:749
 msgid ""
 "`Reset all value icons to the default icon`. This option removes all item "
 "value icons for the category. It does not remove a template if one exists. "
 "There is no undo."
 msgstr "`모든 값 아이콘을 기본 아이콘으로 재설정`. 이 옵션은 해당 카테고리의 모든 항목 값 아이콘을 제거합니다. 템플릿이 있는 경우 템플릿은 제거하지 않습니다. 실행 취소는 없습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:743
+#: ../../../__w/calibre/calibre/manual/gui.rst:750
 msgid ""
 "`Use/edit a template to choose the default value icon`. This option permits "
 "you to provide a calibre template that returns the name of an icon file to "
 "be used as a default icon. The template can use the following variables:"
 msgstr "`기본 값 아이콘을 고르는 템플릿 사용/편집`. 이 옵션을 사용하면 아이콘 파일 이름을 반환하는 calibre 템플릿을 제공하여 기본 아이콘으로 사용할 수 있습니다. 템플릿은 다음 변수를 사용할 수 있습니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:745
+#: ../../../__w/calibre/calibre/manual/gui.rst:752
 msgid ""
 "``category``: the lookup name of the category, for example ``authors``, "
 "``series``, ``#mycolumn``."
 msgstr "``category``: 카테고리의 lookup 이름입니다. 예: ``authors``, ``series``, ``#mycolumn``."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:746
+#: ../../../__w/calibre/calibre/manual/gui.rst:753
 msgid "``value``: the value of the item within the category."
 msgstr "``value``: 카테고리 안의 해당 항목 값입니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:747
+#: ../../../__w/calibre/calibre/manual/gui.rst:754
 msgid ""
 "``count``: the number of books with this value. If the value is part of a "
 "hierarchy then the count includes the children."
 msgstr "``count``: 이 값을 가진 책의 수입니다. 값이 계층 구조의 일부라면 자식 수까지 포함합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:748
+#: ../../../__w/calibre/calibre/manual/gui.rst:755
 msgid ""
 "``avg_rating``: the average rating for books with this value. If the value "
 "is part of a hierarchy then the average includes the children."
 msgstr "``avg_rating``: 이 값을 가진 책의 평균 평점입니다. 값이 계층 구조의 일부라면 자식의 평균도 포함합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:750
+#: ../../../__w/calibre/calibre/manual/gui.rst:757
 msgid ""
 "Book metadata such as title is not available. Template database functions "
 "such as :ref:`ff_book_count` and :ref:`ff_book_values` will work, but the "
@@ -1958,7 +1963,7 @@ msgid ""
 ":ref:`ff_virtual_libraries`."
 msgstr "제목 같은 책 메타데이터는 사용할 수 없습니다. :ref:`ff_book_count`와 :ref:`ff_book_values` 같은 템플릿 데이터베이스 함수는 동작하지만 성능이 만족스럽지 않을 수 있습니다. 다음 템플릿 함수는 GUI에서는 동작하지만 콘텐츠 서버에서는 동작하지 않습니다: :ref:`ff_connected_device_name`, :ref:`ff_connected_device_uuid`, :ref:`ff_current_virtual_library_name`, :ref:`ff_is_marked`, :ref:`ff_virtual_libraries`."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:752
+#: ../../../__w/calibre/calibre/manual/gui.rst:759
 msgid ""
 "In the GUI, Python templates have full access to the calibre database. In "
 "the content server, Python templates have access to new API (see `API "
@@ -1966,51 +1971,51 @@ msgid ""
 "ebook.com/db_api.html>`_) but not the old API (LibraryDatabase)."
 msgstr "GUI에서 Python 템플릿은 calibre 데이터베이스에 완전히 접근할 수 있습니다. 콘텐츠 서버에서는 Python 템플릿이 새 API(`API documentation for the database interface <https://manual.calibre-ebook.com/db_api.html>`_ 참조)에는 접근할 수 있지만, 이전 API(LibraryDatabase)에는 접근할 수 없습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:754
+#: ../../../__w/calibre/calibre/manual/gui.rst:761
 msgid ""
 "For example, this template specifies that any value in the clicked-on "
 "category beginning with `History` will have an icon named ``flower.png``::"
 msgstr "예를 들어 이 템플릿은 클릭한 카테고리에서 `History`로 시작하는 값이 있으면 ``flower.png``라는 아이콘을 사용하도록 지정합니다::"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:759
+#: ../../../__w/calibre/calibre/manual/gui.rst:766
 msgid ""
 "If a template returns the empty string (``''``) then the category icon will "
 "be used. If the template returns a file name that doesn't exist then no icon"
 " is displayed."
 msgstr "템플릿이 빈 문자열(``''``)을 반환하면 카테고리 아이콘이 사용됩니다. 존재하지 않는 파일 이름을 반환하면 아무 아이콘도 표시되지 않습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:762
+#: ../../../__w/calibre/calibre/manual/gui.rst:769
 msgid ""
 "`Use the category icon as the default`. This option specifies that the icon "
 "used for the category should be used for any value that doesn't otherwise "
 "have an icon. Selecting this option removes any template icon specification."
 msgstr "`카테고리 아이콘을 기본값으로 사용`. 이 옵션은 별도의 아이콘이 없는 값에 대해 카테고리 아이콘을 사용하도록 지정합니다. 이 옵션을 선택하면 템플릿 아이콘 지정은 제거됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:765
+#: ../../../__w/calibre/calibre/manual/gui.rst:772
 msgid "The icon is chosen using the following hierarchy:"
 msgstr "아이콘은 다음 계층에 따라 선택됩니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:767
+#: ../../../__w/calibre/calibre/manual/gui.rst:774
 msgid "The icon specified for the value, if it exists."
 msgstr "값에 지정된 아이콘이 있으면 그것을 사용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:768
+#: ../../../__w/calibre/calibre/manual/gui.rst:775
 msgid ""
 "The icon specified for a parent node found by walking up the tree, if one "
 "exists."
 msgstr "트리를 따라 위로 올라가며 찾은 부모 노드에 아이콘이 있으면 그것을 사용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:769
+#: ../../../__w/calibre/calibre/manual/gui.rst:776
 msgid ""
 "The icon from a template, if a template exists and it returns a non-empty "
 "string."
 msgstr "템플릿이 있고 비어 있지 않은 문자열을 반환하면 템플릿의 아이콘을 사용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:770
+#: ../../../__w/calibre/calibre/manual/gui.rst:777
 msgid "The default category icon, which always exists."
 msgstr "항상 존재하는 기본 카테고리 아이콘."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:772
+#: ../../../__w/calibre/calibre/manual/gui.rst:779
 msgid ""
 "Icons are per-user, not per-library, stored in the calibre configuration "
 "folder. Icons for item values are stored in the :file:`tb_icons` subfolder. "
@@ -2018,11 +2023,11 @@ msgid ""
 ":file:`tb_icons`."
 msgstr "아이콘은 라이브러리별이 아니라 사용자별이며, calibre 설정 폴더에 저장됩니다. 항목 값 아이콘은 :file:`tb_icons` 하위 폴더에 저장됩니다. 템플릿이 사용하는 아이콘은 :file:`tb_icons`의 :file:`template_icons` 하위 폴더에 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:780
+#: ../../../__w/calibre/calibre/manual/gui.rst:787
 msgid "Cover grid"
 msgstr "표지 격자 보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:785
+#: ../../../__w/calibre/calibre/manual/gui.rst:792
 msgid ""
 "You can have calibre display a grid of book covers instead of a list of "
 "books, if you prefer to browse your collection by covers instead. The "
@@ -2034,11 +2039,11 @@ msgid ""
 "title or authors or rating or a custom column of your own devising."
 msgstr "목록 대신 책 표지 그리드로 컬렉션을 표시하도록 calibre를 설정할 수 있습니다. 표지로 컬렉션을 탐색하고 싶을 때 유용합니다. :guilabel:`Cover grid`는 calibre 메인 창 오른쪽 아래의 :guilabel:`Layout` 버튼을 클릭하면 활성화됩니다. :guilabel:`Preferences->Interface->Look & feel->Cover grid`에서 표지 크기와 :guilabel:`Cover grid`의 배경을 사용자 지정할 수 있습니다. 제목, 저자, 평점, 또는 사용자가 만든 사용자 정의 열 등 원하는 필드를 표지 아래에 표시하도록 할 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:796
+#: ../../../__w/calibre/calibre/manual/gui.rst:803
 msgid "Bookshelf view"
 msgstr "책장 보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:801
+#: ../../../__w/calibre/calibre/manual/gui.rst:808
 msgid ""
 "You can have calibre display your book collection in shelves, optionally "
 "grouped by authors/date/rating etc. The :guilabel:`Bookshelf view` is "
@@ -2048,11 +2053,11 @@ msgid ""
 "via :guilabel:`Preferences->Interface->Look & feel->Bookshelf`."
 msgstr "책 컬렉션을 선반 형태로 표시하도록 calibre를 설정할 수도 있으며, 필요하면 저자/날짜/평점 등으로 그룹화할 수 있습니다. :guilabel:`Bookshelf view`는 calibre 메인 창 오른쪽 아래의 :guilabel:`Layout` 버튼을 클릭하면 활성화됩니다. :guilabel:`Preferences->Interface->Look & feel->Bookshelf`에서 배경부터 책등의 글자, 글꼴 등에 이르기까지 보기의 모든 요소를 사용자 지정할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:810
+#: ../../../__w/calibre/calibre/manual/gui.rst:817
 msgid "Cover browser"
 msgstr "표지 탐색기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:815
+#: ../../../__w/calibre/calibre/manual/gui.rst:822
 msgid ""
 "In addition to the :guilabel:`Cover grid` described above, you can also have"
 " calibre display covers in a single row. This is activated via the "
@@ -2062,11 +2067,11 @@ msgid ""
 "browser` display itself in a separate popup window."
 msgstr "위에서 설명한 :guilabel:`Cover grid` 외에도 calibre는 표지를 한 줄로 표시할 수 있습니다. 이것은 메인 창 오른쪽 아래의 :guilabel:`Layout` 버튼으로 활성화합니다. :guilabel:`Preferences->Interface->Look & feel->Cover browser`에서 표시할 표지 수를 바꿀 수 있으며, :guilabel:`Cover browser` 자체를 별도의 팝업 창으로 표시할 수도 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:822
+#: ../../../__w/calibre/calibre/manual/gui.rst:829
 msgid "Adding notes for authors, series, etc."
 msgstr "저자, 시리즈 등에 메모 추가하기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:827
+#: ../../../__w/calibre/calibre/manual/gui.rst:834
 msgid ""
 "You can add notes for an author/series/tag/publisher/etc. to your calibre "
 "library. To do so right click on the author name in the :guilabel:`Tag "
@@ -2074,7 +2079,7 @@ msgid ""
 "choose :guilabel:`Create note` or :guilabel:`Edit note`."
 msgstr "저자/시리즈/태그/출판사 등에 대한 메모를 calibre 라이브러리에 추가할 수 있습니다. 왼쪽의 :guilabel:`Tag browser`나 오른쪽의 :guilabel:`Book details` 패널에서 해당 이름을 마우스 오른쪽 버튼으로 클릭한 뒤 :guilabel:`Create note` 또는 :guilabel:`Edit note`를 선택하면 됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:832
+#: ../../../__w/calibre/calibre/manual/gui.rst:839
 msgid ""
 "A simple popup window will allow you to enter your notes using basic "
 "formatting and supporting links and images. Once a note for an author is "
@@ -2082,18 +2087,18 @@ msgid ""
 "clicking the little pencil icon next to the author name."
 msgstr "간단한 팝업 창이 열리며 기본 서식과 링크, 이미지 지원을 사용해 메모를 입력할 수 있습니다. 예를 들어 저자에 대한 메모를 만들면, 나중에 :guilabel:`Book details` 패널에서 저자 이름 옆의 작은 연필 아이콘을 클릭해 쉽게 볼 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:837
+#: ../../../__w/calibre/calibre/manual/gui.rst:844
 msgid ""
 "You can search through all the notes in your library using the "
 ":guilabel:`Browse notes` tool by pressing :kbd:`Ctrl+Shift+N` or adding it "
 "to the toolbar via :guilabel:`Preferences->Toolbars & menus`."
 msgstr ":kbd:`Ctrl+Shift+N`을 누르거나 :guilabel:`Preferences->Toolbars & menus`를 통해 도구 모음에 추가한 :guilabel:`Browse notes` 도구를 사용해 라이브러리의 모든 메모를 검색할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:847
+#: ../../../__w/calibre/calibre/manual/gui.rst:854
 msgid "Quickview"
 msgstr "빨리보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:849
+#: ../../../__w/calibre/calibre/manual/gui.rst:856
 msgid ""
 "Sometimes you want to select a book and quickly get a list of books with the"
 " same value in some category (authors, tags, publisher, series, etc.) as the"
@@ -2108,53 +2113,53 @@ msgid ""
 "the left, and all the books by the selected author on the right."
 msgstr "현재 라이브러리 보기를 바꾸지 않으면서, 선택한 책과 같은 카테고리 값(저자, 태그, 출판사, 시리즈 등)을 가진 책 목록을 빠르게 보고 싶은 경우가 있습니다. 이럴 때 Quickview를 사용할 수 있습니다. Quickview는 두 번째 창이나 책 목록 안의 패널을 열어 관심 값과 일치하는 책 목록을 보여 줍니다. 예를 들어 현재 선택한 책의 저자 중 하나 이상을 공유하는 모든 책 목록을 보고 싶다고 가정해 봅시다. 관심 있는 저자 셀을 클릭한 뒤 'Q' 키를 누르거나 calibre 창의 :guilabel:`Layout` 영역에 있는 :guilabel:`Quickview` 아이콘을 클릭하십시오. 왼쪽에는 그 책의 모든 저자가, 오른쪽에는 선택한 저자의 모든 책이 표시되는 창 또는 패널이 열립니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:851
+#: ../../../__w/calibre/calibre/manual/gui.rst:858
 msgid "Some example Quickview usages: quickly seeing what other books:"
 msgstr "Quickview의 활용 예를 들면, 다음과 같은 다른 책을 빠르게 확인할 수 있습니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:852
+#: ../../../__w/calibre/calibre/manual/gui.rst:859
 msgid "have some tag(s) applied to the currently selected book,"
 msgstr "현재 선택한 책에 적용된 태그가 같은 책"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:853
+#: ../../../__w/calibre/calibre/manual/gui.rst:860
 msgid "are in the same series as the current book"
 msgstr "현재 책과 같은 시리즈에 있는 책"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:854
+#: ../../../__w/calibre/calibre/manual/gui.rst:861
 msgid "have the same values in a custom column as the current book"
 msgstr "현재 책과 같은 사용자 정의 열 값을 가진 책"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:855
+#: ../../../__w/calibre/calibre/manual/gui.rst:862
 msgid "are written by one of the same authors of the current book"
 msgstr "현재 책과 같은 저자 중 한 명이 쓴 책"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:856
+#: ../../../__w/calibre/calibre/manual/gui.rst:863
 msgid "share values in a custom column"
 msgstr "사용자 정의 열 값을 공유하는 책"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:858
+#: ../../../__w/calibre/calibre/manual/gui.rst:865
 msgid "There are two choices for where the Quickview information appears:"
 msgstr "Quickview 정보가 표시되는 위치는 두 가지입니다:"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:860
+#: ../../../__w/calibre/calibre/manual/gui.rst:867
 msgid ""
 "It can open \"undocked\": on top of the calibre window and will stay open "
 "until you explicitly close it."
 msgstr "\"도킹 해제\" 상태로 열 수 있습니다. 이 경우 calibre 창 위에 떠 있으며 사용자가 명시적으로 닫을 때까지 열려 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:861
+#: ../../../__w/calibre/calibre/manual/gui.rst:868
 msgid ""
 "It can open \"docked\": as a panel in the book list section of the calibre "
 "main window."
 msgstr "\"도킹\" 상태로 열 수 있습니다. 이 경우 calibre 메인 창의 책 목록 영역 안의 패널로 열립니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:863
+#: ../../../__w/calibre/calibre/manual/gui.rst:870
 msgid ""
 "You can move the window from docked to undocked as desired using the "
 "\"Dock/Undock\" button."
 msgstr "\"Dock/Undock\" 버튼을 사용하여 필요에 따라 도킹 상태와 도킹 해제 상태 사이를 전환할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:865
+#: ../../../__w/calibre/calibre/manual/gui.rst:872
 msgid ""
 "The Quickview panel can be left open permanently, in which case it follows "
 "movements on the book list. For example, if you click in the calibre library"
@@ -2167,21 +2172,21 @@ msgid ""
 "panel to see the books with that different value."
 msgstr "Quickview 패널은 계속 열어 둘 수 있으며, 이 경우 책 목록의 움직임을 따라갑니다. 예를 들어 calibre 라이브러리 보기에서 어떤 책의 카테고리 열(태그, 시리즈, 출판사, 저자 등)을 클릭하면 Quickview 창 내용이 바뀌어 왼쪽 패널에는 선택한 책의 해당 카테고리 값들(예: 그 책의 태그)이 표시됩니다. 그 목록의 첫 번째 항목이 선택되고, 오른쪽 패널에는 라이브러리에서 그 값을 사용하는 모든 책이 표시됩니다. 왼쪽 패널에서 다른 값을 클릭하면 그 다른 값을 가진 책을 볼 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:867
+#: ../../../__w/calibre/calibre/manual/gui.rst:874
 msgid ""
 "Double-click on a book in the Quickview window to select that book in the "
 "library view. This will also change the items display in the QuickView "
 "window (the left-hand panel) to show the items in the newly-selected book."
 msgstr "Quickview 창에서 책을 두 번 클릭하면 라이브러리 보기에서 그 책이 선택됩니다. 그러면 QuickView 창(왼쪽 패널)의 항목 표시도 바뀌어 새로 선택한 책의 항목을 보여 줍니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:869
+#: ../../../__w/calibre/calibre/manual/gui.rst:876
 msgid ""
 ":kbd:`Shift-` or :kbd:`Ctrl-` double-click on a book in the Quickview window"
 " to open the edit metadata dialog on that book in the calibre window. The "
 "edited book will be Quickview'ed when you close the edit metadata dialog."
 msgstr "Quickview 창에서 책을 :kbd:`Shift-` 또는 :kbd:`Ctrl-` 더블클릭하면 calibre 창에서 그 책의 메타데이터 편집 대화 상자가 열립니다. 대화 상자를 닫으면 편집한 책이 Quickview 대상으로 표시됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:871
+#: ../../../__w/calibre/calibre/manual/gui.rst:878
 msgid ""
 "You can see if a column can be Quickview'ed by hovering your mouse over the "
 "column heading and looking at the tooltip for that heading. You can also "
@@ -2190,47 +2195,47 @@ msgid ""
 " equivalent to pressing 'Q' in the current cell."
 msgstr "열 머리글 위에 마우스를 올려 툴팁을 보면 그 열이 Quickview 가능한지 확인할 수 있습니다. 또한 열 머리글을 마우스 오른쪽 버튼으로 클릭하여 메뉴에 \"Quickview\" 옵션이 표시되는지 확인할 수도 있습니다. 이 메뉴의 Quickview를 선택하는 것은 현재 셀에서 'Q'를 누르는 것과 같습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:873
+#: ../../../__w/calibre/calibre/manual/gui.rst:880
 msgid "Options (in :guilabel:`Preferences->Look & feel->Quickview`):"
 msgstr "옵션(:guilabel:`Preferences->Look & feel->Quickview` 안):"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:875
+#: ../../../__w/calibre/calibre/manual/gui.rst:882
 msgid ""
 "Respect (or not) the current Virtual library. If checked then Quickview "
 "shows only books in the current Virtual library. Default: respect Virtual "
 "libraries"
 msgstr "현재 가상 라이브러리를 존중할지 여부. 체크하면 Quickview는 현재 가상 라이브러리에 있는 책만 보여 줍니다. 기본값: 가상 라이브러리 존중"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:876
+#: ../../../__w/calibre/calibre/manual/gui.rst:883
 msgid ""
 "Change the Quickview window contents when the column is changed on the book "
 "list using the cursor keys. Default: don't follow changes made with cursor "
 "keys"
 msgstr "커서 키로 책 목록의 열이 바뀔 때 Quickview 창 내용도 바꿀지 여부. 기본값: 커서 키로 바뀐 내용은 따라가지 않음"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:877
+#: ../../../__w/calibre/calibre/manual/gui.rst:884
 msgid ""
 "Change the column being \"quickview'ed\" when a cell in the Quickview window"
 " is double-clicked. Otherwise the book is changed but the column being "
 "examined is not. Default: change the column"
 msgstr "Quickview 창에서 셀을 더블클릭했을 때 \"빠르게 보기\" 중인 열도 바꿀지 여부. 그렇지 않으면 책은 바뀌지만 조사 중인 열은 바뀌지 않습니다. 기본값: 열 바꾸기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:878
+#: ../../../__w/calibre/calibre/manual/gui.rst:885
 msgid ""
 "Change the column being \"quickview'ed\" to the current column when the "
 "return key is pressed in the Quickview panel. Otherwise the book is changed "
 "but the column being examined is not. Default: change the column"
 msgstr "Quickview 패널에서 Enter 키를 눌렀을 때 \"빠르게 보기\" 중인 열을 현재 열로 바꿀지 여부. 그렇지 않으면 책은 바뀌지만 조사 중인 열은 바뀌지 않습니다. 기본값: 열 바꾸기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:879
+#: ../../../__w/calibre/calibre/manual/gui.rst:886
 msgid "Choose which columns are shown in the Quickview window/panel."
 msgstr "Quickview 창/패널에 어떤 열을 표시할지 선택합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:888
+#: ../../../__w/calibre/calibre/manual/gui.rst:895
 msgid "Jobs"
 msgstr "작업"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:892
+#: ../../../__w/calibre/calibre/manual/gui.rst:899
 msgid ""
 "The Jobs panel shows the number of currently running jobs. Jobs are tasks "
 "that run in a separate process. They include converting e-books and talking "
@@ -2240,11 +2245,11 @@ msgid ""
 "have completed successfully."
 msgstr "작업 패널은 현재 실행 중인 작업 수를 표시합니다. 작업은 별도 프로세스에서 실행되는 태스크입니다. 전자책 변환이나 리더 장치와의 통신 등이 여기에 포함됩니다. 작업 패널을 클릭하면 작업 목록에 접근할 수 있습니다. 작업이 완료되면 목록에서 해당 작업을 두 번 클릭하여 상세 로그를 볼 수 있습니다. 정상적으로 완료되지 않았을 수 있는 작업을 디버그할 때 유용합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:899
+#: ../../../__w/calibre/calibre/manual/gui.rst:906
 msgid "Keyboard shortcuts"
 msgstr "키보드 단축키"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:901
+#: ../../../__w/calibre/calibre/manual/gui.rst:908
 msgid ""
 "calibre has several keyboard shortcuts to save you time and mouse movement. "
 "These shortcuts are active in the book list view (when you're not editing "
@@ -2254,494 +2259,494 @@ msgid ""
 ":guilabel:`Preferences`."
 msgstr "calibre에는 시간과 마우스 이동을 줄여 주는 여러 키보드 단축키가 있습니다. 이 단축키는 책 목록 보기에서(특정 책의 상세 정보를 편집하고 있지 않을 때) 활성화되며, 대부분은 현재 선택한 제목에 영향을 줍니다. calibre 전자책 뷰어는 :ref:`자체 단축키를 가지고 있으며 <viewer_shortcuts>`, 뷰어의 :guilabel:`Preferences`에서 사용자 지정할 수 있습니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:905
+#: ../../../__w/calibre/calibre/manual/gui.rst:912
 msgid ""
 "Note: The calibre keyboard shortcuts do not require a modifier key (Command,"
 " Option, Control, etc.), unless specifically noted. You only need to press "
 "the letter key, e.g. E to edit."
 msgstr "참고: calibre의 키보드 단축키는 특별히 언급된 경우가 아니면 수정 키(Command, Option, Control 등)가 필요하지 않습니다. 예를 들어 편집하려면 E처럼 문자 키만 누르면 됩니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:907
+#: ../../../__w/calibre/calibre/manual/gui.rst:914
 msgid "Keyboard shortcuts for the main calibre program"
 msgstr "calibre 메인 프로그램의 키보드 단축키"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:911
+#: ../../../__w/calibre/calibre/manual/gui.rst:918
 msgid "Keyboard shortcut"
 msgstr "키보드 단축키"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:912
+#: ../../../__w/calibre/calibre/manual/gui.rst:919
 msgid "Action"
 msgstr "동작"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:913
+#: ../../../__w/calibre/calibre/manual/gui.rst:920
 msgid ":kbd:`F2 (Enter for macOS)`"
 msgstr ":kbd:`F2 (macOS의 경우 입력)`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:914
+#: ../../../__w/calibre/calibre/manual/gui.rst:921
 msgid "Edit the metadata of the currently selected field in the book list."
 msgstr "책 목록에서 현재 선택한 필드의 메타데이터를 편집합니다."
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:915
+#: ../../../__w/calibre/calibre/manual/gui.rst:922
 msgid ":kbd:`A`"
 msgstr ":kbd:`A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:917
+#: ../../../__w/calibre/calibre/manual/gui.rst:924
 msgid ":kbd:`Shift+A`"
 msgstr ":kbd:`Shift+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:918
+#: ../../../__w/calibre/calibre/manual/gui.rst:925
 msgid "Add formats to the selected books"
 msgstr "선택한 책에 형식 추가"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:919
+#: ../../../__w/calibre/calibre/manual/gui.rst:926
 msgid ":kbd:`C`"
 msgstr ":kbd:`C`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:920
+#: ../../../__w/calibre/calibre/manual/gui.rst:927
 msgid "Convert selected books"
 msgstr "선택한 책 변환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:921
+#: ../../../__w/calibre/calibre/manual/gui.rst:928
 msgid ":kbd:`D`"
 msgstr ":kbd:`D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:923
+#: ../../../__w/calibre/calibre/manual/gui.rst:930
 msgid ":kbd:`Del`"
 msgstr ":kbd:`Del`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:924
+#: ../../../__w/calibre/calibre/manual/gui.rst:931
 msgid "Remove selected books"
 msgstr "선택한 책 제거"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:925
+#: ../../../__w/calibre/calibre/manual/gui.rst:932
 msgid ":kbd:`E`"
 msgstr ":kbd:`E`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:926
+#: ../../../__w/calibre/calibre/manual/gui.rst:933
 msgid "Edit metadata of selected books"
 msgstr "선택한 책의 메타데이터 편집하기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:927
+#: ../../../__w/calibre/calibre/manual/gui.rst:934
 msgid ":kbd:`G`"
 msgstr ":kbd:`G`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:928
+#: ../../../__w/calibre/calibre/manual/gui.rst:935
 msgid "Get books"
 msgstr "책 가져오기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:929
+#: ../../../__w/calibre/calibre/manual/gui.rst:936
 msgid ":kbd:`I`"
 msgstr ":kbd:`I`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:930
+#: ../../../__w/calibre/calibre/manual/gui.rst:937
 msgid "Show Book details"
 msgstr "책 상세정보 보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:931
+#: ../../../__w/calibre/calibre/manual/gui.rst:938
 msgid ":kbd:`K`"
 msgstr ":kbd:`K`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:932
+#: ../../../__w/calibre/calibre/manual/gui.rst:939
 msgid "Edit Table of Contents"
 msgstr "목차 편집하기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:933
+#: ../../../__w/calibre/calibre/manual/gui.rst:940
 msgid ":kbd:`M`"
 msgstr ":kbd:`M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:934
+#: ../../../__w/calibre/calibre/manual/gui.rst:941
 msgid "Merge selected records"
 msgstr "선택한 레코드 병합"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:935
+#: ../../../__w/calibre/calibre/manual/gui.rst:942
 msgid ":kbd:`Alt+M`"
 msgstr ":kbd:`Alt+M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:936
+#: ../../../__w/calibre/calibre/manual/gui.rst:943
 msgid "Merge selected records, keeping originals"
 msgstr "선택한 레코드 병합, 원본 유지"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:937
+#: ../../../__w/calibre/calibre/manual/gui.rst:944
 msgid ":kbd:`O`"
 msgstr ":kbd:`O`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:938
+#: ../../../__w/calibre/calibre/manual/gui.rst:945
 msgid "Open containing folder"
 msgstr "담고 있는 폴더 열기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:939
+#: ../../../__w/calibre/calibre/manual/gui.rst:946
 msgid ":kbd:`P`"
 msgstr ":kbd:`P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:940
+#: ../../../__w/calibre/calibre/manual/gui.rst:947
 msgid "Polish books"
 msgstr "책 다듬기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:941
+#: ../../../__w/calibre/calibre/manual/gui.rst:948
 msgid ":kbd:`S`"
 msgstr ":kbd:`S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:943
+#: ../../../__w/calibre/calibre/manual/gui.rst:950
 msgid ":kbd:`T`"
 msgstr ":kbd:`T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:944
+#: ../../../__w/calibre/calibre/manual/gui.rst:951
 msgid "Edit book"
 msgstr "책 편집"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:945
+#: ../../../__w/calibre/calibre/manual/gui.rst:952
 msgid ":kbd:`V`"
 msgstr ":kbd:`V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:947
+#: ../../../__w/calibre/calibre/manual/gui.rst:954
 msgid ":kbd:`Shift+V`"
 msgstr ":kbd:`Shift+V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:948
+#: ../../../__w/calibre/calibre/manual/gui.rst:955
 msgid "View last read book"
 msgstr "마지막으로 읽은 책 보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:949
+#: ../../../__w/calibre/calibre/manual/gui.rst:956
 msgid ":kbd:`Ctrl+Alt+A`"
 msgstr ":kbd:`Ctrl+Alt+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:950
+#: ../../../__w/calibre/calibre/manual/gui.rst:957
 msgid "Ask AI about the currently selected books"
 msgstr "현재 선택한 책에 대해 AI에게 묻기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:951
+#: ../../../__w/calibre/calibre/manual/gui.rst:958
 msgid ":kbd:`Alt+V/Cmd+V for macOS`"
 msgstr ":kbd:`macOS의 경우 Alt+V/Cmd+V`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:952
+#: ../../../__w/calibre/calibre/manual/gui.rst:959
 msgid "View specific format"
 msgstr "형식 지정해서 보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:953
+#: ../../../__w/calibre/calibre/manual/gui.rst:960
 msgid ":kbd:`Alt+Shift+J`"
 msgstr ":kbd:`Alt+Shift+J`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:954
+#: ../../../__w/calibre/calibre/manual/gui.rst:961
 msgid "Toggle jobs list"
 msgstr "작업 목록 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:955
+#: ../../../__w/calibre/calibre/manual/gui.rst:962
 msgid ":kbd:`Alt+Shift+B`"
 msgstr ":kbd:`Alt+Shift+B`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:956
+#: ../../../__w/calibre/calibre/manual/gui.rst:963
 msgid "Toggle Cover browser"
 msgstr "표지 브라우저 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:957
+#: ../../../__w/calibre/calibre/manual/gui.rst:964
 msgid ":kbd:`Alt+Shift+D`"
 msgstr ":kbd:`Alt+Shift+D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:958
+#: ../../../__w/calibre/calibre/manual/gui.rst:965
 msgid "Toggle Book details panel"
 msgstr "책 상세정보 패널 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:959
+#: ../../../__w/calibre/calibre/manual/gui.rst:966
 msgid ":kbd:`Alt+Shift+T`"
 msgstr ":kbd:`Alt+Shift+T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:960
+#: ../../../__w/calibre/calibre/manual/gui.rst:967
 msgid "Toggle Tag browser"
 msgstr "태그 탐색기 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:961
+#: ../../../__w/calibre/calibre/manual/gui.rst:968
 msgid ":kbd:`Alt+Shift+G`"
 msgstr ":kbd:`Alt+Shift+G`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:962
+#: ../../../__w/calibre/calibre/manual/gui.rst:969
 msgid "Toggle Cover grid"
 msgstr "표지 그리드 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:963
+#: ../../../__w/calibre/calibre/manual/gui.rst:970
 msgid ":kbd:`Alt+Shift+H`"
 msgstr ":kbd:`Alt+Shift+H`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:964
+#: ../../../__w/calibre/calibre/manual/gui.rst:971
 msgid "Toggle Bookshelf"
 msgstr "책장 보기 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:965
+#: ../../../__w/calibre/calibre/manual/gui.rst:972
 msgid ":kbd:`Alt+A`"
 msgstr ":kbd:`Alt+A`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:966
+#: ../../../__w/calibre/calibre/manual/gui.rst:973
 msgid "Show books by the same author as the current book"
 msgstr "현재 책과 같은 저자의 책 표시"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:967
+#: ../../../__w/calibre/calibre/manual/gui.rst:974
 msgid ":kbd:`Alt+T`"
 msgstr ":kbd:`Alt+T`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:968
+#: ../../../__w/calibre/calibre/manual/gui.rst:975
 msgid "Show books with the same tags as current book"
 msgstr "현재 책과 같은 태그를 가진 책 표시"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:969
+#: ../../../__w/calibre/calibre/manual/gui.rst:976
 msgid ":kbd:`Alt+P`"
 msgstr ":kbd:`Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:970
+#: ../../../__w/calibre/calibre/manual/gui.rst:977
 msgid "Show books by the same publisher as current book"
 msgstr "현재 책과 같은 출판사의 책 표시"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:971
+#: ../../../__w/calibre/calibre/manual/gui.rst:978
 msgid ":kbd:`Alt+Shift+S`"
 msgstr ":kbd:`Alt+Shift+S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:972
+#: ../../../__w/calibre/calibre/manual/gui.rst:979
 msgid "Show books in the same series as current book"
 msgstr "현재 책과 같은 시리즈의 책 표시"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:973
+#: ../../../__w/calibre/calibre/manual/gui.rst:980
 msgid ":kbd:`/, Ctrl+F`"
 msgstr ":kbd:`/, Ctrl+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:974
+#: ../../../__w/calibre/calibre/manual/gui.rst:981
 msgid "Focus the Search bar"
 msgstr "검색 표시줄로 포커스 이동"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:975
+#: ../../../__w/calibre/calibre/manual/gui.rst:982
 msgid ":kbd:`Shift+Ctrl+F`"
 msgstr ":kbd:`Shift+Ctrl+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:976
+#: ../../../__w/calibre/calibre/manual/gui.rst:983
 msgid "Open the Advanced search dialog"
 msgstr "고급 검색 대화 상자 열기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:977
+#: ../../../__w/calibre/calibre/manual/gui.rst:984
 msgid ":kbd:`Shift+Alt+F`"
 msgstr ":kbd:`Shift+Alt+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:978
+#: ../../../__w/calibre/calibre/manual/gui.rst:985
 msgid "Toggle the Search bar"
 msgstr "검색 표시줄 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:979
+#: ../../../__w/calibre/calibre/manual/gui.rst:986
 msgid ":kbd:`Esc`"
 msgstr ":kbd:`Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:980
+#: ../../../__w/calibre/calibre/manual/gui.rst:987
 msgid "Clear the current search"
 msgstr "지금 검색결과 비우기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:981
+#: ../../../__w/calibre/calibre/manual/gui.rst:988
 msgid ":kbd:`Shift+Esc`"
 msgstr ":kbd:`Shift+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:982
+#: ../../../__w/calibre/calibre/manual/gui.rst:989
 msgid "Focus the book list"
 msgstr "책 목록으로 포커스 이동"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:983
+#: ../../../__w/calibre/calibre/manual/gui.rst:990
 msgid ":kbd:`Ctrl+Esc`"
 msgstr ":kbd:`Ctrl+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:984
+#: ../../../__w/calibre/calibre/manual/gui.rst:991
 msgid "Clear the Virtual library"
 msgstr "가상 라이브러리 지우기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:985
+#: ../../../__w/calibre/calibre/manual/gui.rst:992
 msgid ":kbd:`Alt+Esc`"
 msgstr ":kbd:`Alt+Esc`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:986
+#: ../../../__w/calibre/calibre/manual/gui.rst:993
 msgid "Clear the additional restriction"
 msgstr "\"그외 사용 가능한 검색 제한\" 지우기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:987
+#: ../../../__w/calibre/calibre/manual/gui.rst:994
 msgid ":kbd:`Ctrl+*`"
 msgstr ":kbd:`Ctrl+*`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:988
+#: ../../../__w/calibre/calibre/manual/gui.rst:995
 msgid "Create a temporary Virtual library based on the current search"
 msgstr "현재 검색을 기준으로 임시 가상 라이브러리 만들기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:989
+#: ../../../__w/calibre/calibre/manual/gui.rst:996
 msgid ":kbd:`Ctrl+Tab`"
 msgstr ":kbd:`Ctrl+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:990
+#: ../../../__w/calibre/calibre/manual/gui.rst:997
 msgid "Select the next Virtual library tab"
 msgstr "다음 가상 라이브러리 탭 선택"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:991
+#: ../../../__w/calibre/calibre/manual/gui.rst:998
 msgid ":kbd:`Ctrl+Shift+Tab`"
 msgstr ":kbd:`Ctrl+Shift+Tab`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:992
+#: ../../../__w/calibre/calibre/manual/gui.rst:999
 msgid "Select the previous Virtual library tab"
 msgstr "이전 가상 라이브러리 탭 선택"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:993
+#: ../../../__w/calibre/calibre/manual/gui.rst:1000
 msgid ":kbd:`N or F3`"
 msgstr ":kbd:`N 또는 F3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:994
+#: ../../../__w/calibre/calibre/manual/gui.rst:1001
 msgid ""
 "Find the next book that matches the current search (only works if search "
 "highlighting is turned on in search preferences)"
 msgstr "현재 검색과 일치하는 다음 책 찾기(검색 환경설정에서 검색 강조가 켜져 있을 때만 동작)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:995
+#: ../../../__w/calibre/calibre/manual/gui.rst:1002
 msgid ":kbd:`Shift+N or Shift+F3`"
 msgstr ":kbd:`Shift+N 또는 Shift+F3`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:996
+#: ../../../__w/calibre/calibre/manual/gui.rst:1003
 msgid ""
 "Find the previous book that matches the current search (only works if search"
 " highlighting is turned on in search preferences)"
 msgstr "현재 검색과 일치하는 이전 책 찾기(검색 환경설정에서 검색 강조가 켜져 있을 때만 동작)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:997
+#: ../../../__w/calibre/calibre/manual/gui.rst:1004
 msgid ":kbd:`Ctrl+D`"
 msgstr ":kbd:`Ctrl+D`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:998
+#: ../../../__w/calibre/calibre/manual/gui.rst:1005
 msgid "Download metadata and covers"
 msgstr "메타데이터와 표지 다운로드"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:999
+#: ../../../__w/calibre/calibre/manual/gui.rst:1006
 msgid ":kbd:`Ctrl+R`"
 msgstr ":kbd:`Ctrl+R`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1000
+#: ../../../__w/calibre/calibre/manual/gui.rst:1007
 msgid "Restart calibre"
 msgstr "캘리버 재시작"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1001
+#: ../../../__w/calibre/calibre/manual/gui.rst:1008
 msgid ":kbd:`Ctrl+Shift+R`"
 msgstr ":kbd:`Ctrl+Shift+R`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1002
+#: ../../../__w/calibre/calibre/manual/gui.rst:1009
 msgid "Restart calibre in debug mode"
 msgstr "디버그 모드에서 캘리버 재시작"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1003
+#: ../../../__w/calibre/calibre/manual/gui.rst:1010
 msgid ":kbd:`Shift+Ctrl+E`"
 msgstr ":kbd:`Shift+Ctrl+E`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1004
+#: ../../../__w/calibre/calibre/manual/gui.rst:1011
 msgid "Add empty books to calibre"
 msgstr "calibre에 빈 책 추가"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1005
+#: ../../../__w/calibre/calibre/manual/gui.rst:1012
 msgid ":kbd:`Ctrl+M`"
 msgstr ":kbd:`Ctrl+M`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1006
+#: ../../../__w/calibre/calibre/manual/gui.rst:1013
 msgid "Toggle mark/unmarked status on selected books"
 msgstr "선택한 책의 표시/표시 해제 상태 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1007
+#: ../../../__w/calibre/calibre/manual/gui.rst:1014
 msgid ":kbd:`Ctrl+/` or :kbd:`Ctrl+Alt+F`"
 msgstr ":kbd:`Ctrl+/` 또는 :kbd:`Ctrl+Alt+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1008
+#: ../../../__w/calibre/calibre/manual/gui.rst:1015
 msgid "Open the popup to search the full text of all books in the library"
 msgstr "라이브러리의 모든 책 전체 텍스트를 검색하는 팝업 열기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1009
+#: ../../../__w/calibre/calibre/manual/gui.rst:1016
 msgid ":kbd:`Q`"
 msgstr ":kbd:`Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1010
+#: ../../../__w/calibre/calibre/manual/gui.rst:1017
 msgid ""
 "Open the Quick View popup for viewing books in related series/tags/etc."
 msgstr "관련 시리즈/태그 등을 보는 Quick View 팝업 열기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1011
+#: ../../../__w/calibre/calibre/manual/gui.rst:1018
 msgid ":kbd:`Shift+Q`"
 msgstr ":kbd:`Shift+Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1012
+#: ../../../__w/calibre/calibre/manual/gui.rst:1019
 msgid "Focus the opened Quick View panel"
 msgstr "열린 Quick View 패널로 포커스 이동"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1013
+#: ../../../__w/calibre/calibre/manual/gui.rst:1020
 msgid ":kbd:`Shift+S`"
 msgstr ":kbd:`Shift+S`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1014
+#: ../../../__w/calibre/calibre/manual/gui.rst:1021
 msgid "Perform a search in the Quick View panel"
 msgstr "Quick View 패널에서 검색 수행"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1015
+#: ../../../__w/calibre/calibre/manual/gui.rst:1022
 msgid ":kbd:`F5`"
 msgstr ":kbd:`F5`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1016
+#: ../../../__w/calibre/calibre/manual/gui.rst:1023
 msgid "Re-apply the current sort"
 msgstr "현재 정렬 다시 적용"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1017
+#: ../../../__w/calibre/calibre/manual/gui.rst:1024
 msgid ":kbd:`Ctrl+Q`"
 msgstr ":kbd:`Ctrl+Q`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1018
+#: ../../../__w/calibre/calibre/manual/gui.rst:1025
 msgid "Quit calibre"
 msgstr "나가기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1019
+#: ../../../__w/calibre/calibre/manual/gui.rst:1026
 msgid ":kbd:`X`"
 msgstr ":kbd:`X`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1020
+#: ../../../__w/calibre/calibre/manual/gui.rst:1027
 msgid "Toggle auto scroll of the book list"
 msgstr "책 목록 자동 스크롤 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1021
+#: ../../../__w/calibre/calibre/manual/gui.rst:1028
 msgid ":kbd:`Ctrl+Alt+Shift+F`"
 msgstr ":kbd:`Ctrl+Alt+Shift+F`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1022
+#: ../../../__w/calibre/calibre/manual/gui.rst:1029
 msgid ""
 "Restrict the displayed books to only those books that are in a category "
 "currently displayed in the :guilabel:`Tag browser`"
 msgstr ":guilabel:`Tag browser`에 현재 표시된 카테고리에 속한 책만 표시하도록 제한"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1024
+#: ../../../__w/calibre/calibre/manual/gui.rst:1031
 msgid ":kbd:`B`"
 msgstr ":kbd:`B`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1025
+#: ../../../__w/calibre/calibre/manual/gui.rst:1032
 msgid ""
 "Browse annotations (highlights and bookmarks) made in the calibre E-book "
 "viewer for all books in the library"
 msgstr "라이브러리의 모든 책에 대해 calibre 전자책 뷰어에서 만든 주석(하이라이트 및 책갈피) 둘러보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1026
+#: ../../../__w/calibre/calibre/manual/gui.rst:1033
 msgid ":kbd:`Ctrl+Shift+N`"
 msgstr ":kbd:`Ctrl+Shift+N`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1027
+#: ../../../__w/calibre/calibre/manual/gui.rst:1034
 msgid "Browse notes associated with authors/series/tags/etc."
 msgstr "저자/시리즈/태그 등과 연결된 메모 둘러보기"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1028
+#: ../../../__w/calibre/calibre/manual/gui.rst:1035
 msgid ":kbd:`Alt+Shift+L`"
 msgstr ":kbd:`Alt+Shift+L`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1029
+#: ../../../__w/calibre/calibre/manual/gui.rst:1036
 msgid "Toggle the layout between wide and narrow views"
 msgstr "넓은 보기와 좁은 보기 사이에서 레이아웃 전환"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1030
+#: ../../../__w/calibre/calibre/manual/gui.rst:1037
 msgid ":kbd:`Ctrl+Alt+P`"
 msgstr ":kbd:`Ctrl+Alt+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1031
+#: ../../../__w/calibre/calibre/manual/gui.rst:1038
 msgid "Switch to previous library, if any"
 msgstr "이전 라이브러리로 전환(있는 경우)"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1032
+#: ../../../__w/calibre/calibre/manual/gui.rst:1039
 msgid ":kbd:`Ctrl+Alt+Shift+P`"
 msgstr ":kbd:`Ctrl+Alt+Shift+P`"
 
-#: ../../../__w/calibre/calibre/manual/gui.rst:1033
+#: ../../../__w/calibre/calibre/manual/gui.rst:1040
 msgid "Switch to previous virtual library, if any"
 msgstr "이전 가상 라이브러리로 전환(있는 경우)"

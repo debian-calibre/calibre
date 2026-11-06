@@ -4,15 +4,19 @@
 # See https://bugreports.qt.io/browse/QTBUG-69104 for why we need to implement
 # our own restore geometry
 
-from collections.abc import Callable
+
+from typing import TYPE_CHECKING
 
 from qt.core import QRect, QScreen, QSize, Qt, QWidget
 
 from calibre.constants import is_debugging as _is_debugging
 from calibre.utils.config_base import Prefs, tweaks
 
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
-def geometry_pref_name(name):
+
+def geometry_pref_name(name) -> str:
     return f'geometry-of-{name}'
 
 
@@ -20,7 +24,7 @@ def is_debugging():
     return _is_debugging() and tweaks.get('show_geometry_debug_output')
 
 
-def debug(*a, **kw):
+def debug(*a, **kw) -> None:
     if is_debugging():
         from pprint import pformat
 
@@ -84,11 +88,11 @@ def geometry_for_restore_as_dict(self: QWidget):
     return ans
 
 
-def delete_geometry(prefs: dict, name: str):
+def delete_geometry(prefs: dict, name: str) -> None:
     prefs.pop(geometry_pref_name(name), None)
 
 
-def save_geometry(self: QWidget, prefs: Prefs, name: str):
+def save_geometry(self: QWidget, prefs: Prefs, name: str) -> None:
     x = geometry_for_restore_as_dict(self)
     if x:
         if is_debugging():
@@ -122,7 +126,7 @@ def find_matching_screen(screen_as_dict):
         return screens_of_matching_size[0]
 
 
-def _do_restore(self: QWidget, s: QScreen, geometry: QRect, saved_data: dict):
+def _do_restore(self: QWidget, s: QScreen, geometry: QRect, saved_data: dict) -> bool:
     ws = self.windowState()
     if ws & (Qt.WindowState.WindowFullScreen | Qt.WindowState.WindowMaximized):
         debug('Not restoring geometry as widget is already maximized or fullscreen')
@@ -250,7 +254,7 @@ def find_tests():
     import unittest
 
     class TestSavedGeometrySanity(unittest.TestCase):
-        def test_saved_geometry_sanity(self):
+        def test_saved_geometry_sanity(self) -> None:
             virtual_geometry = QRect(0, 0, 1920, 1080)
 
             def sane(x, y, width, height):

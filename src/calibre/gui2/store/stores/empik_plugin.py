@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
 # License: GPLv3 Copyright: 2011-2023, Tomasz Długosz <tomek3d@gmail.com>
 
-from __future__ import absolute_import, division, print_function, unicode_literals
 
 store_version = 11  # Needed for dynamic plugin loading
 
@@ -34,7 +32,7 @@ def as_base64(data):
 
 
 class EmpikStore(BasicStoreConfig, StorePlugin):
-    def open(self, gui=None, parent=None, detail_item=None, external=False):
+    def open(self, gui=None, parent=None, detail_item=None, external=False) -> None:
         aff_root = 'https://www.a4b-tracking.com/pl/stat-click-text-link/78/58/'
 
         url = 'https://www.empik.com/ebooki'
@@ -54,7 +52,7 @@ class EmpikStore(BasicStoreConfig, StorePlugin):
             d.exec()
 
     def search(self, query, max_results=10, timeout=60):
-        url = 'https://www.empik.com/ebooki/ebooki,3501,s?sort=scoreDesc&resultsPP={}&q={}'.format(max_results, quote(query))
+        url = f'https://www.empik.com/ebooki/ebooki,3501,s?sort=scoreDesc&resultsPP={max_results}&q={quote(query)}'
 
         br = browser()
 
