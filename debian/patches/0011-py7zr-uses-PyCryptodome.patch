@@ -11,13 +11,13 @@ py7zr requires Cryptodome's extended features like AES.
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index 8545992..d4ee837 100644
+index 9b2438c..1ba8ab2 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -43,7 +43,7 @@ class BuildTest(unittest.TestCase):
                      self.assertTrue(False, f'Failed to load DLL {x} with error: {err}')
  
-     def test_pycryptodome(self):
+     def test_pycryptodome(self) -> None:
 -        from Crypto.Cipher import AES
 +        from Cryptodome.Cipher import AES
  

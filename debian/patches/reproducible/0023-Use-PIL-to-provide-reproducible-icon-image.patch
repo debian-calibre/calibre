@@ -12,13 +12,13 @@ Use PIL for reproducible build.
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 1b28a58..81955cb 100644
+index c34bb20..512d05d 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -1485,10 +1485,10 @@ def write_appdata(key, entry, base, translators):
+@@ -1534,10 +1534,10 @@ def write_appdata(key: str, entry: AppData, base: str, translators: dict[str, Tr
  
  
- def render_img(image, dest, width=128, height=128):
+ def render_img(image: str, dest: str, width: int = 128, height: int = 128) -> None:
 -    from qt.core import QImage, Qt
 +    from PIL import Image
  
@@ -28,4 +28,4 @@ index 1b28a58..81955cb 100644
 +    img.save(fp=dest)
  
  
- def main():
+ def main() -> int:

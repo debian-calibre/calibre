@@ -10,7 +10,7 @@ disable unrar test since the module is not in Debian main
  1 file changed, 5 insertions(+)
 
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index cddcefb..6ab5dcb 100644
+index 4b8caa8..5650d63 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
 @@ -20,6 +20,10 @@ from calibre.utils.resources import get_path as P
@@ -22,13 +22,13 @@ index cddcefb..6ab5dcb 100644
 +except ModuleNotFoundError:
 +    unrardll = None
  
- def print(*a):
+ def print(*a: object) -> None:
      builtins.print(*a, flush=True, file=sys.__stdout__)
-@@ -443,6 +447,7 @@ class BuildTest(unittest.TestCase):
+@@ -473,6 +477,7 @@ class BuildTest(unittest.TestCase):
  
          test()
  
 +    @unittest.skipUnless(unrardll, 'Module unrardll is missing')
-     def test_unrar(self):
+     def test_unrar(self) -> None:
          from calibre.utils.unrar import test_basic
  

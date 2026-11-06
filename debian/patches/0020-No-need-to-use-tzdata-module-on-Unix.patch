@@ -15,30 +15,30 @@ See also:
  2 files changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/pyproject.toml b/pyproject.toml
-index a6a8b9a..056a3e1 100644
+index bbcff31..4d2c9dd 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -54,7 +54,6 @@ dependencies = [
+@@ -55,7 +55,6 @@ dependencies = [
  	"PyQt6_WebEngine == 6.10.0",
  	"MacFSEvents == 0.8.4; sys_platform == 'darwin'",
  	"xxhash == 3.6.0",
--    "tzdata == 2026.4",
+-    "tzdata == 2026.5",
      "tzlocal == 5.4.4",
  	"pystache == 0.6.8",
  
 diff --git a/src/calibre/test_build.py b/src/calibre/test_build.py
-index d4ee837..07e3926 100644
+index 1ba8ab2..f8c5135 100644
 --- a/src/calibre/test_build.py
 +++ b/src/calibre/test_build.py
-@@ -88,10 +88,9 @@ class BuildTest(unittest.TestCase):
+@@ -108,10 +108,9 @@ class BuildTest(unittest.TestCase):
          del CHMFile, chmlib
  
-     def test_tzdata(self):
+     def test_tzdata(self) -> None:
 -        import tzdata
          import tzlocal
  
 -        del tzlocal, tzdata
 +        del tzlocal
  
-     def test_chardet(self):
+     def test_chardet(self) -> None:
          from calibre_extensions.uchardet import detect

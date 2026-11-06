@@ -55,10 +55,10 @@ Signed-off-by: YOKOTA Hiroshi <yokota.hgml@gmail.com>
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/src/calibre/linux.py b/src/calibre/linux.py
-index 40999a9..02b9635 100644
+index 899277f8..8765d3b 100644
 --- a/src/calibre/linux.py
 +++ b/src/calibre/linux.py
-@@ -1287,6 +1287,10 @@ def get_appdata():
+@@ -1336,6 +1336,10 @@ def get_appdata() -> dict[str, AppData]:
                      'You can use calibre to catalog your books, fetch metadata for them automatically, convert them from and to all the various e-book formats, send them to your e-book reader devices, read the books on your computer, edit the books in a dedicated e-book editor and even make them available over the network with the built-in Content server. You can also download news and periodicals in e-book format from over a thousand different news and magazine websites.'  # ruff: ignore[line-too-long]
                  ),
              ),
@@ -69,7 +69,7 @@ index 40999a9..02b9635 100644
              'screenshots': (
                  (
                      1408,
-@@ -1344,6 +1348,10 @@ def get_appdata():
+@@ -1393,6 +1397,10 @@ def get_appdata() -> dict[str, AppData]:
                  _('The calibre E-book viewer allows you to read e-books in over a dozen different formats.'),
                  _('It has a full screen mode for distraction free reading and can display the text with multiple columns per screen.'),
              ),
@@ -80,16 +80,16 @@ index 40999a9..02b9635 100644
              'screenshots': (
                  (
                      1408,
-@@ -1414,7 +1422,7 @@ def make_appdata_releases():
+@@ -1463,7 +1471,7 @@ def make_appdata_releases() -> _Element:
  
- def write_appdata(key, entry, base, translators):
+ def write_appdata(key: str, entry: AppData, base: str, translators: dict[str, Translator]) -> str:
      from lxml.builder import E
 -    from lxml.etree import tostring
 +    from lxml.etree import Element, tostring
  
      fpath = os.path.join(base, f'{key}.metainfo.xml')
      screenshots = E.screenshots()
-@@ -1455,6 +1463,14 @@ def write_appdata(key, entry, base, translators):
+@@ -1504,6 +1512,14 @@ def write_appdata(key: str, entry: AppData, base: str, translators: dict[str, Tr
          tp = t.gettext(entry['summary'])
          if tp != entry['summary']:
              root.append(E.summary(tp, **{'{http://www.w3.org/XML/1998/namespace}lang': lang}))
