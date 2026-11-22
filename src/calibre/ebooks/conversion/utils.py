@@ -5,7 +5,7 @@ import re
 from math import ceil
 from typing import TYPE_CHECKING
 
-from calibre.ebooks.conversion.preprocess import Dehyphenator, DocAnalysis
+from calibre.ebooks.conversion.preprocess import Dehyphenator, DocAnalysis, anchors_for_ids, id_attr_pat
 from calibre.utils.logging import default_log
 from calibre.utils.wordcount import get_wordcount_obj
 
@@ -488,16 +488,17 @@ class HeuristicProcessor:
         """
 
         def style_unwrap(match: re.Match[str]) -> str:
-            style_close = match.group('style_close')
-            style_open = match.group('style_open')
-            if style_open and style_close:
-                return style_close + ' ' + style_open
-            elif style_open and not style_close:
-                return ' ' + style_open
-            elif not style_open and style_close:
-                return style_close + ' '
-            else:
-                return ' '
+            style_close = match.group('style_close') or ''
+            style_open = match.group('style_open') or ''
+            # Preserve the ids of removed tags, as they may be link targets,
+            # for example, the page anchors used by the Table of Contents in
+            # PDF conversion. style_open is kept, so ignore its id.
+            removed = match.group()
+            if style_open:
+                start, end = match.span('style_open')
+                start, end = start - match.start(), end - match.start()
+                removed = removed[:start] + removed[end:]
+            return style_close + ' ' + anchors_for_ids(removed) + style_open
 
         # define the pieces of the regex
         # (?<!\&\w{4});) is a semicolon not part of an entity
@@ -679,7 +680,15 @@ class HeuristicProcessor:
             elif content.find('scenebreak') != -1:
                 return content
             else:
-                content = re.sub(r'(?i)<h(?P<hnum>\d+)[^>]*>', r'\n\n<h\g<hnum> style="' + top_margin + bottom_margin + '">', content)
+
+                def restyle_heading(m: re.Match[str]) -> str:
+                    # Keep the id as it may be a link target, for example, the
+                    # page anchors used by the Table of Contents in PDF conversion
+                    idm = id_attr_pat.search(m.group())
+                    id_attr = f' id={idm.group(1)}{idm.group(2)}{idm.group(1)}' if idm else ''
+                    return f'\n\n<h{m.group("hnum")}{id_attr} style="{top_margin}{bottom_margin}">'
+
+                content = re.sub(r'(?i)<h(?P<hnum>\d+)[^>]*>', restyle_heading, content)
             return content
 
         html = blanks_around_headings.sub(merge_header_whitespace, html)

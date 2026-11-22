@@ -23,7 +23,7 @@ PdfObject::PdfObject()
     : m_Variant(new PdfDictionary()), m_IsDirty(false), m_IsImmutable(false)
 {
     initObject();
-    m_Variant.GetDictionaryUnsafe().SetOwner(*this);
+    m_Variant.GetDictionaryUnsafe().SetOwner(*this, nullptr);
 }
 
 PdfObject::PdfObject(nullptr_t)
@@ -83,28 +83,28 @@ PdfObject::PdfObject(const PdfArray& arr)
     : m_Variant(arr), m_IsDirty(false), m_IsImmutable(false)
 {
     initObject();
-    m_Variant.GetArray().SetOwner(*this);
+    m_Variant.GetArray().SetOwner(*this, nullptr);
 }
 
 PdfObject::PdfObject(PdfArray&& arr) noexcept
     : m_Variant(std::move(arr)), m_IsDirty(false), m_IsImmutable(false)
 {
     initObject();
-    m_Variant.GetArray().SetOwner(*this);
+    m_Variant.GetArray().SetOwner(*this, nullptr);
 }
 
 PdfObject::PdfObject(const PdfDictionary& dict)
     : m_Variant(dict), m_IsDirty(false), m_IsImmutable(false)
 {
     initObject();
-    m_Variant.GetDictionaryUnsafe().SetOwner(*this);
+    m_Variant.GetDictionaryUnsafe().SetOwner(*this, nullptr);
 }
 
 PdfObject::PdfObject(PdfDictionary&& dict) noexcept
     : m_Variant(std::move(dict)), m_IsDirty(false), m_IsImmutable(false)
 {
     initObject();
-    m_Variant.GetDictionaryUnsafe().SetOwner(*this);
+    m_Variant.GetDictionaryUnsafe().SetOwner(*this, nullptr);
 }
 
 // NOTE: Don't copy parent document/container/indirect reference.
@@ -120,7 +120,7 @@ PdfObject::PdfObject(const PdfObject& rhs)
 // always detached. Ownership will be set automatically elsewhere.
 // Also don't move reference
 PdfObject::PdfObject(PdfObject&& rhs) noexcept
-    : m_Document(nullptr), m_Parent(nullptr), m_IsDirty(false), m_IsImmutable(false)
+    : m_Document(nullptr), m_isContained(false), m_IsDirty(false), m_IsImmutable(false)
 {
     moveFrom(std::move(rhs));
     rhs.SetDirty();
@@ -139,7 +139,29 @@ PdfObject::PdfObject(PdfArray* arr)
     : m_Variant(arr), m_IsDirty(false), m_IsImmutable(false)
 {
     initObject();
-    m_Variant.GetDictionaryUnsafe().SetOwner(*this);
+    m_Variant.GetDictionaryUnsafe().SetOwner(*this, nullptr);
+}
+
+PdfObject::PdfObject(PdfDataContainer& parent, nullptr_t)
+    : m_Parent(&parent), m_isContained(true), m_IsDirty(false), m_IsImmutable(false)
+{
+    initContainedObject();
+}
+
+PdfObject::PdfObject(PdfDataContainer& parent, const PdfObject& rhs)
+    : m_Variant(rhs.GetVariant()), m_Parent(&parent), m_isContained(true), m_IsDirty(false),
+        m_IsImmutable(false)
+{
+    initContainedObject();
+    SetVariantOwner();
+    copyStreamFrom(rhs);
+}
+
+PdfObject::PdfObject(PdfDataContainer& parent, PdfObject&& rhs) noexcept
+    : m_Parent(&parent), m_isContained(true), m_IsDirty(false), m_IsImmutable(false)
+{
+    moveFrom(std::move(rhs));
+    rhs.SetDirty();
 }
 
 const PdfObjectStream* PdfObject::GetStream() const
@@ -160,8 +182,20 @@ void PdfObject::ForceCreateStream()
     forceCreateStream();
 }
 
+PdfDocument* PdfObject::GetDocument() const
+{
+    return m_isContained ? m_Parent->GetDocument() : m_Document;
+}
+
+const PdfDataContainer* PdfObject::GetParent() const
+{
+    return m_isContained ? m_Parent : nullptr;
+}
+
 void PdfObject::SetDocument(PdfDocument* document)
 {
+    // A contained object takes the document from its container
+    PODOFO_ASSERT(!m_isContained);
     if (m_Document == document)
     {
         // The inner document for variant data objects is guaranteed to be same
@@ -177,7 +211,8 @@ void PdfObject::DelayedLoad() const
     if (m_IsDelayedLoadDone)
         return;
 
-    DelayedLoad(m_Document == nullptr ? true : m_Document->IsStrictParsing());
+    auto document = GetDocument();
+    DelayedLoad(document == nullptr ? true : document->IsStrictParsing());
 }
 
 void PdfObject::DelayedLoad(bool throwOnError) const
@@ -230,14 +265,32 @@ void PdfObject::SetVariantOwner()
     switch (dataType)
     {
         case PdfDataType::Dictionary:
-            m_Variant.GetDictionaryUnsafe().SetOwner(*this);
+            m_Variant.GetDictionaryUnsafe().SetOwner(*this, GetDocument());
             break;
         case PdfDataType::Array:
-            m_Variant.GetArrayUnsafe().SetOwner(*this);
+            m_Variant.GetArrayUnsafe().SetOwner(*this, GetDocument());
             break;
         default:
             break;
     }
+}
+
+void PdfObject::RelocateBackPointers()
+{
+    switch (m_Variant.GetDataType())
+    {
+        case PdfDataType::Dictionary:
+            m_Variant.GetDictionaryUnsafe().SetOwnerShallow(*this);
+            break;
+        case PdfDataType::Array:
+            m_Variant.GetArrayUnsafe().SetOwnerShallow(*this);
+            break;
+        default:
+            break;
+    }
+
+    if (m_Stream != nullptr)
+        m_Stream->SetParent(*this);
 }
 
 void PdfObject::FreeStream()
@@ -248,7 +301,14 @@ void PdfObject::FreeStream()
 void PdfObject::initObject()
 {
     m_Document = nullptr;
-    m_Parent = nullptr;
+    m_isContained = false;
+    // By default delayed load is disabled
+    m_IsDelayedLoadDone = true;
+    m_IsDelayedLoadStreamDone = true;
+}
+
+void PdfObject::initContainedObject()
+{
     // By default delayed load is disabled
     m_IsDelayedLoadDone = true;
     m_IsDelayedLoadStreamDone = true;
@@ -276,17 +336,21 @@ void PdfObject::write(OutputStream& stream, bool skipLengthFix,
     if (m_IndirectReference.IsIndirect())
         WriteHeader(stream, writeMode, buffer);
 
+    auto streamEncrypt = encrypt;
     if (m_Stream != nullptr)
     {
+        const PdfObject* metadataObj;
+        auto document = GetDocument();
+        bool isMetadataObj = document != nullptr
+            && (metadataObj = document->GetCatalog().GetMetadataObject()) != nullptr
+            && m_IndirectReference == metadataObj->GetIndirectReference();
+
         // Try to compress the flate compress the stream if it has no filters,
         // the compression is not disabled and it's not the /MetaData object,
         // which must be unfiltered as per PDF/A
-        const PdfObject* metadataObj;
         if ((writeMode & PdfWriteFlags::NoFlateCompress) == PdfWriteFlags::None
             && m_Stream->GetFilters().size() == 0
-            && (m_Document == nullptr 
-                || (metadataObj = m_Document->GetCatalog().GetMetadataObject()) == nullptr
-                || m_IndirectReference != metadataObj->GetIndirectReference()))
+            && !isMetadataObj)
         {
             PdfObject object;
             auto& objStream = object.GetOrCreateStream();
@@ -299,12 +363,21 @@ void PdfObject::write(OutputStream& stream, bool skipLengthFix,
             m_Stream->MoveFrom(objStream);
         }
 
+        // NOTE: The /Metadata stream is left unencrypted when the document
+        // has /EncryptMetadata false
+        const PdfEncrypt* docEncrypt;
+        if (isMetadataObj && (docEncrypt = document->GetEncrypt()) != nullptr
+            && !docEncrypt->IsMetadataEncrypted())
+        {
+            streamEncrypt = nullptr;
+        }
+
         // Set length if it's not handled by the underlying provider
         if (!skipLengthFix)
         {
             size_t length = m_Stream->GetLength();
-            if (encrypt != nullptr)
-                length = encrypt->CalculateStreamLength(length);
+            if (streamEncrypt != nullptr)
+                length = streamEncrypt->CalculateStreamLength(length);
 
             // Add the key without triggering SetDirty
             const_cast<PdfObject&>(*this).m_Variant.GetDictionaryUnsafe()
@@ -316,7 +389,7 @@ void PdfObject::write(OutputStream& stream, bool skipLengthFix,
     stream.Write('\n');
 
     if (m_Stream != nullptr)
-        m_Stream->Write(stream, encrypt);
+        m_Stream->Write(stream, streamEncrypt);
 
     if (m_IndirectReference.IsIndirect())
         stream.Write("endobj\n");
@@ -407,14 +480,15 @@ void PdfObject::forceCreateStream()
     if (m_Variant.GetDataType() != PdfDataType::Dictionary)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidDataType, "Tried to get stream of non-dictionary object");
 
-    if (m_Document == nullptr)
+    auto document = GetDocument();
+    if (document == nullptr)
     {
         m_Stream.reset(new PdfObjectStream(*this,
             unique_ptr<PdfObjectStreamProvider>(new PdfMemoryObjectStream())));
     }
     else
     {
-        m_Stream.reset(new PdfObjectStream(*this, m_Document->GetObjects().CreateStream()));
+        m_Stream.reset(new PdfObjectStream(*this, document->GetObjects().CreateStream()));
     }
 }
 
@@ -426,9 +500,15 @@ PdfObjectStream* PdfObject::getStream()
 void PdfObject::DelayedLoadStream() const
 {
     if (m_IsDelayedLoadStreamDone)
+    {
+        // NOTE: The data block may still need to be loaded, as it
+        // happens when just enabling non-stream delayed loading
+        DelayedLoad();
         return;
+    }
 
-    DelayedLoadStream(m_Document == nullptr ? true : m_Document->IsStrictParsing());
+    auto document = GetDocument();
+    DelayedLoadStream(document == nullptr ? true : document->IsStrictParsing());
 }
 
 void PdfObject::DelayedLoadStream(bool throwOnError) const
@@ -478,9 +558,11 @@ PdfObject& PdfObject::operator=(const PdfObject& rhs)
 
 PdfObject& PdfObject::operator=(PdfObject&& rhs) noexcept
 {
+    // NOTE: rhs is set dirty first, as it's destroyed by the move
+    // when nested in the container owned by this object
+    rhs.SetDirty();
     moveFrom(std::move(rhs));
     SetDirty();
-    rhs.SetDirty();
     return *this;
 }
 
@@ -495,7 +577,13 @@ void PdfObject::copyStreamFrom(const PdfObject& obj)
         const_cast<PdfObject&>(obj).MakeDelayedLoadingStreamDone();
     }
 
-    if (obj.m_Stream != nullptr)
+    if (obj.m_Stream == nullptr)
+    {
+        // The stream mirrors the one of obj, so the stream
+        // of the replaced content, if any, is dropped
+        m_Stream = nullptr;
+    }
+    else
     {
         auto& stream = getOrCreateStream();
         stream.CopyFrom(*obj.m_Stream);
@@ -557,15 +645,38 @@ void PdfObject::AssignNoDirtySet(PdfVariant&& rhs)
     m_Variant = std::move(rhs);
     m_IsDelayedLoadDone = true;
     SetVariantOwner();
+    removeStream();
     m_Stream = nullptr;
     m_IsDelayedLoadStreamDone = true;
 }
 
 void PdfObject::SetParent(PdfDataContainer& parent)
 {
+    m_isContained = true;
     m_Parent = &parent;
-    auto document = parent.GetObjectDocument();
-    SetDocument(document);
+    setVariantOwnerIfNeeded();
+}
+
+// NOTE: Containers cache the document, so a nested one is visited only when the
+// document report changes
+void PdfObject::setVariantOwnerIfNeeded()
+{
+    PdfDataContainer* container;
+    switch (m_Variant.GetDataType())
+    {
+        case PdfDataType::Dictionary:
+            container = &m_Variant.GetDictionaryUnsafe();
+            break;
+        case PdfDataType::Array:
+            container = &m_Variant.GetArrayUnsafe();
+            break;
+        default:
+            return;
+    }
+
+    auto document = GetDocument();
+    if (container->GetDocument() != document)
+        container->SetOwner(*this, document);
 }
 
 void PdfObject::assertMutable() const
@@ -578,10 +689,18 @@ void PdfObject::assertMutable() const
 // Objects being assigned always keep current ownership
 void PdfObject::assign(const PdfObject& rhs)
 {
+    if (&rhs == this)
+        return;
+
     rhs.DelayedLoad();
+    // NOTE: rhs may be nested in the container of this object, so the
+    // current content is kept alive until rhs has been fully copied
+    auto current = std::move(m_Variant);
     m_Variant = rhs.m_Variant;
     SetVariantOwner();
     m_IsDelayedLoadDone = true;
+    // Drop a stream of this object still to be parsed
+    removeStream();
     copyStreamFrom(rhs);
     m_IsDelayedLoadStreamDone = true;
 }
@@ -590,13 +709,22 @@ void PdfObject::assign(const PdfObject& rhs)
 // Objects being assigned always keep current ownership
 void PdfObject::moveFrom(PdfObject&& rhs) noexcept
 {
+    if (&rhs == this)
+        return;
+
     // NOTE: move should not throw, as it's used in "noexcept" moethods
     if (!rhs.m_IsDelayedLoadStreamDone)
         rhs.DelayedLoadStream(false);
+    else if (!rhs.m_IsDelayedLoadDone)
+        rhs.DelayedLoad(false);
 
+    // NOTE: As in assign(), keep the current content alive until rhs has been moved
+    auto current = std::move(m_Variant);
     m_Variant = std::move(rhs.m_Variant);
     SetVariantOwner();
     m_IsDelayedLoadDone = true;
+    // Drop a stream of this object still to be parsed
+    removeStream();
     m_Stream = std::move(rhs.m_Stream);
     if (m_Stream != nullptr)
         m_Stream->SetParent(*this);
@@ -640,7 +768,7 @@ void PdfObject::SetDirty()
         // Set dirty only if is indirect object
         setDirty();
     }
-    else if (m_Parent != nullptr)
+    else if (m_isContained)
     {
         // Reset parent if not indirect. Resetting will stop at
         // first indirect ancestor
@@ -667,10 +795,11 @@ PdfObject::operator const PdfVariant& () const
 
 PdfDocument& PdfObject::MustGetDocument() const
 {
-    if (m_Document == nullptr)
+    auto document = GetDocument();
+    if (document == nullptr)
         PODOFO_RAISE_ERROR(PdfErrorCode::InvalidHandle);
 
-    return *m_Document;
+    return *document;
 }
 
 const PdfVariant& PdfObject::GetVariant() const
@@ -1028,7 +1157,7 @@ bool PdfObject::IsReference() const
 
 bool PdfObject::operator<(const PdfObject& rhs) const
 {
-    if (m_Document != rhs.m_Document)
+    if (GetDocument() != rhs.GetDocument())
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic, "Can't compare objects with different parent document");
 
     return m_IndirectReference < rhs.m_IndirectReference;
@@ -1042,7 +1171,7 @@ bool PdfObject::operator==(const PdfObject& rhs) const
     if (m_IndirectReference.IsIndirect())
     {
         // If lhs is indirect, just check document and reference
-        return m_Document == rhs.m_Document &&
+        return GetDocument() == rhs.GetDocument() &&
             m_IndirectReference == rhs.m_IndirectReference;
     }
     else
@@ -1056,13 +1185,13 @@ bool PdfObject::operator==(const PdfObject& rhs) const
 
 bool PdfObject::operator!=(const PdfObject& rhs) const
 {
-    if (this != &rhs)
-        return true;
+    if (this == &rhs)
+        return false;
 
     if (m_IndirectReference.IsIndirect())
     {
         // If lhs is indirect, just check document and reference
-        return m_Document != rhs.m_Document ||
+        return GetDocument() != rhs.GetDocument() ||
             m_IndirectReference != rhs.m_IndirectReference;
     }
     else

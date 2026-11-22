@@ -160,7 +160,7 @@ def wrap_simple[**P, R](lock: RWLockWrapper, func: Callable[P, R]) -> Callable[P
 def run_import_plugins(path_or_stream: str | IO[bytes], fmt: str) -> str:
     fmt = fmt.lower()
     if hasattr(path_or_stream, 'seek'):
-        path_or_stream.seek(0)  # ty: ignore[call-non-callable]
+        path_or_stream.seek(0)  # ty: ignore[not-callable]
         pt = PersistentTemporaryFile('_import_plugin.' + fmt)
         shutil.copyfileobj(path_or_stream, pt, 1024**2)  # ty: ignore[invalid-argument-type]
         pt.close()
@@ -603,8 +603,8 @@ class Cache:
             daemon=True,
         )
         self.fts_queue_thread.start()
-        self.backend.fts.pool.initialize()  # ty: ignore[unresolved-attribute]
-        self.backend.fts.pool.initialized.wait()  # ty: ignore[unresolved-attribute]
+        self.backend.fts.pool.initialize()  # ty: ignore[missing-union-attribute]
+        self.backend.fts.pool.initialized.wait()  # ty: ignore[missing-union-attribute]
         self.queue_next_fts_job()
 
     @read_api
@@ -623,7 +623,7 @@ class Cache:
     def _update_fts_indexing_numbers(self, job_time: float | None = None) -> None:
         # this is called when formats are added, removed or indexed and when
         # books are removed
-        nl = self.backend.fts.number_dirtied()  # ty: ignore[unresolved-attribute]
+        nl = self.backend.fts.number_dirtied()  # ty: ignore[missing-union-attribute]
         nt = self.backend.get('SELECT COUNT(*) FROM main.data')[0][0] or 0
         if not nl:
             self._fts_start_measuring_rate(measure=False)
@@ -639,7 +639,7 @@ class Cache:
         rate = None
         if self.fts_measuring_rate is not None and self.fts_num_done_since_start > 4:
             rate = self.fts_num_done_since_start / (monotonic() - self.fts_measuring_rate)
-        return self.fts_indexing_left, self.fts_indexing_total, rate  # ty: ignore[invalid-return-type]
+        return self.fts_indexing_left, self.fts_indexing_total, rate  # ty: ignore[invalid-explicit-return]
 
     _fts_indexing_progress = fts_indexing_progress
 
@@ -686,7 +686,7 @@ class Cache:
                     self._update_fts_indexing_numbers()
                 return True
 
-            with self.read_lock, open(path, 'rb') as src, PersistentTemporaryFile(suffix=f'.{fmt.lower()}') as pt:  # ty: ignore[unresolved-attribute]
+            with self.read_lock, open(path, 'rb') as src, PersistentTemporaryFile(suffix=f'.{fmt.lower()}') as pt:  # ty: ignore[missing-union-attribute]
                 sz = 0
                 h = hashlib.sha1()
                 while True:
@@ -763,7 +763,7 @@ class Cache:
         with self.write_lock:
             self.backend.reindex_fts()
             fts = self.initialize_fts()
-            fts.initialize(self.backend.conn)  # ensure fts is pre-initialized needed for the tests  # ty: ignore[unresolved-attribute]
+            fts.initialize(self.backend.conn)  # ensure fts is pre-initialized needed for the tests  # ty: ignore[missing-union-attribute]
             self._queue_next_fts_job()
         return fts
 
@@ -797,8 +797,8 @@ class Cache:
 
     _set_fts_speed = set_fts_speed
 
-    @quiet_write_api  # we need to use write locking as SQLITE gives a locked table error if multiple FTS queries are made at the same time
-    def fts_search[T = tuple[FTSSearchResult, ...]](
+    @overload
+    def fts_search(
         self,
         fts_engine_query: str,
         use_stemming: bool = True,
@@ -807,9 +807,36 @@ class Cache:
         snippet_size: int | None = None,
         restrict_to_book_ids: Collection[int] | None = None,
         return_text: bool = True,
-        result_type: Callable[[Iterator[FTSSearchResult]], T] = tuple,
+        *,
         process_each_result: Callable[[FTSSearchResult], FTSSearchResult] | None = None,
-    ) -> T:
+    ) -> tuple[FTSSearchResult, ...]: ...
+    @overload
+    def fts_search[T](
+        self,
+        fts_engine_query: str,
+        use_stemming: bool = True,
+        highlight_start: str | None = None,
+        highlight_end: str | None = None,
+        snippet_size: int | None = None,
+        restrict_to_book_ids: Collection[int] | None = None,
+        return_text: bool = True,
+        *,
+        result_type: Callable[[Iterator[FTSSearchResult]], T],
+        process_each_result: Callable[[FTSSearchResult], FTSSearchResult] | None = None,
+    ) -> T: ...
+    @quiet_write_api  # we need to use write locking as SQLITE gives a locked table error if multiple FTS queries are made at the same time
+    def fts_search(
+        self,
+        fts_engine_query: str,
+        use_stemming: bool = True,
+        highlight_start: str | None = None,
+        highlight_end: str | None = None,
+        snippet_size: int | None = None,
+        restrict_to_book_ids: Collection[int] | None = None,
+        return_text: bool = True,
+        result_type: Callable[[Iterator[FTSSearchResult]], object] = tuple,
+        process_each_result: Callable[[FTSSearchResult], FTSSearchResult] | None = None,
+    ) -> object:
         return result_type(
             self.backend.fts_search(
                 fts_engine_query,
@@ -964,8 +991,8 @@ class Cache:
 
     _import_note = import_note
 
-    @quiet_write_api  # we need to use write locking as SQLITE gives a locked table error if multiple FTS queries are made at the same time
-    def search_notes[T = tuple[NotesSearchResult, ...]](
+    @overload
+    def search_notes(
         self,
         fts_engine_query: str = '',
         use_stemming: bool = True,
@@ -974,10 +1001,39 @@ class Cache:
         snippet_size: int | None = None,
         restrict_to_fields: tuple[str, ...] = (),
         return_text: bool = True,
-        result_type: Callable[[Iterator[NotesSearchResult]], T] = tuple,
+        *,
         process_each_result: Callable[[NotesSearchResult], NotesSearchResult] | None = None,
         limit: int | None = None,
-    ) -> T:
+    ) -> tuple[NotesSearchResult, ...]: ...
+    @overload
+    def search_notes[T](
+        self,
+        fts_engine_query: str = '',
+        use_stemming: bool = True,
+        highlight_start: str | None = None,
+        highlight_end: str | None = None,
+        snippet_size: int | None = None,
+        restrict_to_fields: tuple[str, ...] = (),
+        return_text: bool = True,
+        *,
+        result_type: Callable[[Iterator[NotesSearchResult]], T],
+        process_each_result: Callable[[NotesSearchResult], NotesSearchResult] | None = None,
+        limit: int | None = None,
+    ) -> T: ...
+    @quiet_write_api  # we need to use write locking as SQLITE gives a locked table error if multiple FTS queries are made at the same time
+    def search_notes(
+        self,
+        fts_engine_query: str = '',
+        use_stemming: bool = True,
+        highlight_start: str | None = None,
+        highlight_end: str | None = None,
+        snippet_size: int | None = None,
+        restrict_to_fields: tuple[str, ...] = (),
+        return_text: bool = True,
+        result_type: Callable[[Iterator[NotesSearchResult]], object] = tuple,
+        process_each_result: Callable[[NotesSearchResult], NotesSearchResult] | None = None,
+        limit: int | None = None,
+    ) -> object:
         "Search the text of notes using an FTS index. If the query is empty return all notes."
         return result_type(
             self.backend.search_notes(
@@ -1077,7 +1133,7 @@ class Cache:
     def fast_field_for(self, field_obj: Field, book_id: int, default_value: object = None) -> object:
         "Same as field_for, except that it avoids the extra lookup to get the field object"
         if field_obj.is_composite:
-            return field_obj.get_value_with_cache(book_id, self._get_proxy_metadata)  # ty: ignore[unresolved-attribute]
+            return field_obj.get_value_with_cache(book_id, self._get_proxy_metadata)  # ty: ignore[missing-attribute]
         if field_obj.is_multiple:
             default_value = field_obj.default_value
         try:
@@ -2016,10 +2072,10 @@ class Cache:
                         return ans * order
                 return 0
 
-            def __eq__(self, other: SortKey) -> bool:  # ty: ignore[invalid-method-override]
+            def __eq__(self, other: SortKey) -> bool:  # ty: ignore[incompatible-method-override]
                 return self.compare_to_other(other) == 0
 
-            def __ne__(self, other: SortKey) -> bool:  # ty: ignore[invalid-method-override]
+            def __ne__(self, other: SortKey) -> bool:  # ty: ignore[incompatible-method-override]
                 return self.compare_to_other(other) != 0
 
             def __lt__(self, other: SortKey) -> bool:
@@ -2567,7 +2623,7 @@ class Cache:
 
         try:
             # Handle code passing in an OPF object instead of a Metadata object
-            mi = mi.to_book_metadata()  # ty: ignore[call-non-callable] only OPF has it, it raises AttributeError for Metadata
+            mi = mi.to_book_metadata()  # ty: ignore[not-callable] only OPF has it, it raises AttributeError for Metadata
         except AttributeError, TypeError:
             pass
 
@@ -2758,7 +2814,7 @@ class Cache:
 
             if name and not replace:
                 if needs_close:
-                    stream_or_path.close()  # ty: ignore[unresolved-attribute]
+                    stream_or_path.close()  # ty: ignore[missing-union-attribute]
                 return False
 
             if hasattr(stream_or_path, 'read'):
@@ -2770,7 +2826,7 @@ class Cache:
                 size, fname = self._do_add_format(book_id, fmt, stream, name)
             finally:
                 if needs_close:
-                    stream.close()  # ty: ignore[unresolved-attribute]
+                    stream.close()  # ty: ignore[missing-union-attribute]
             del stream
 
             self._record_format_added(book_id, fmt, fname, size)
@@ -2782,7 +2838,7 @@ class Cache:
             # Run post import plugins, the write lock is released so the plugin
             # can call api without a locking violation.
             run_plugins_on_postimport(dbapi or self, book_id, fmt)
-            stream_or_path.close()  # ty: ignore[unresolved-attribute]
+            stream_or_path.close()  # ty: ignore[missing-union-attribute]
 
         self.queue_next_fts_job()
         return True
@@ -2870,7 +2926,7 @@ class Cache:
         idf = sf.index_field
         index_map = {book_id: self._fast_field_for(idf, book_id, default_value=1.0) for book_id in books}
         if current_indices:
-            return index_map  # ty: ignore[invalid-return-type]
+            return index_map  # ty: ignore[invalid-explicit-return]
         series_indices = sorted(index_map.values(), key=lambda s: s or 0)  # ty: ignore[no-matching-overload]
         return _get_next_series_num_for_list(tuple(series_indices), unwrap=False)
 

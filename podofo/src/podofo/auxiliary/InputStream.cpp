@@ -12,11 +12,25 @@ using namespace PoDoFo;
 
 constexpr size_t BUFFER_SIZE = 4096;
 
-InputStream::InputStream() { }
+InputStream::InputStream()
+    : m_head(nullptr), m_tail(nullptr) { }
 
 InputStream::~InputStream() { }
 
-void InputStream::Read(char* buffer, size_t size)
+PODOFO_INLINE void InputStream::Read(char* buffer, size_t size)
+{
+    if (size != 0 && size <= (size_t)(m_tail - m_head) && buffer != nullptr)
+    {
+        // Serve the whole request from the read window
+        std::memcpy(buffer, m_head, size);
+        m_head += size;
+        return;
+    }
+
+    readSlowPath(buffer, size);
+}
+
+void InputStream::readSlowPath(char* buffer, size_t size)
 {
     if (buffer == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Invalid buffer");
@@ -35,7 +49,15 @@ void InputStream::Read(char* buffer, size_t size)
     PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnexpectedEOF, "Unexpected EOF when reading from stream");
 }
 
-char InputStream::ReadChar()
+PODOFO_INLINE char InputStream::ReadChar()
+{
+    if (m_head != m_tail)
+        return *m_head++;
+
+    return readCharSlowPath();
+}
+
+char InputStream::readCharSlowPath()
 {
     checkRead();
     char ch;
@@ -45,13 +67,39 @@ char InputStream::ReadChar()
     return ch;
 }
 
-bool InputStream::Read(char& ch)
+PODOFO_INLINE bool InputStream::Read(char& ch)
+{
+    if (m_head != m_tail)
+    {
+        ch = *m_head++;
+        return true;
+    }
+
+    return tryReadCharSlowPath(ch);
+}
+
+bool InputStream::tryReadCharSlowPath(char& ch)
 {
     checkRead();
     return readChar(ch);
 }
 
-size_t InputStream::Read(char* buffer, size_t size, bool& eof)
+PODOFO_INLINE size_t InputStream::Read(char* buffer, size_t size, bool& eof)
+{
+    if (size != 0 && size < (size_t)(m_tail - m_head) && buffer != nullptr)
+    {
+        // NOTE: Don't satisfy an exact drain (hence < and not <=),
+        // so the actual device is consulted for EOF
+        std::memcpy(buffer, m_head, size);
+        m_head += size;
+        eof = false;
+        return size;
+    }
+
+    return readSlowPath(buffer, size, eof);
+}
+
+size_t InputStream::readSlowPath(char* buffer, size_t size, bool& eof)
 {
     if (buffer == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Invalid buffer");
@@ -71,6 +119,7 @@ size_t InputStream::Read(char* buffer, size_t size, bool& eof)
 
 void InputStream::CopyTo(OutputStream& stream)
 {
+    checkRead();
     bool eof;
     size_t read = 0;
     char buffer[BUFFER_SIZE];
@@ -109,6 +158,7 @@ void InputStream::CopyTo(OutputStream& stream)
 
 void InputStream::CopyTo(OutputStream& stream, size_t size)
 {
+    checkRead();
     bool eof;
     size_t read = 0;
     char buffer[BUFFER_SIZE];
@@ -165,12 +215,28 @@ void InputStream::checkRead() const
     // Do nothing
 }
 
-size_t InputStream::ReadBuffer(InputStream& stream, char* buffer, size_t size, bool& eof)
+PODOFO_INLINE size_t InputStream::ReadBuffer(InputStream& stream, char* buffer, size_t size, bool& eof)
 {
+    if (size != 0 && size < (size_t)(stream.m_tail - stream.m_head))
+    {
+        // NOTE: Don't satisfy an exact drain (hence < and not <=),
+        // so the actual device is consulted for EOF
+        std::memcpy(buffer, stream.m_head, size);
+        stream.m_head += size;
+        eof = false;
+        return size;
+    }
+
     return stream.readBuffer(buffer, size, eof);
 }
 
-bool InputStream::ReadChar(InputStream& stream, char& ch)
+PODOFO_INLINE bool InputStream::ReadChar(InputStream& stream, char& ch)
 {
+    if (stream.m_head != stream.m_tail)
+    {
+        ch = *stream.m_head++;
+        return true;
+    }
+
     return stream.readChar(ch);
 }

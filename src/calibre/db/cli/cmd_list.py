@@ -142,7 +142,7 @@ def implementation(
                     data[field] = {k: cover(db, k) for k in book_ids}
                     continue
             data[field] = db.all_field_for(field, book_ids)
-    return {'book_ids': book_ids, 'data': data, 'metadata': metadata, 'fields': fields}  # ty: ignore[invalid-argument-type, invalid-return-type]
+    return {'book_ids': book_ids, 'data': data, 'metadata': metadata, 'fields': fields}  # ty: ignore[invalid-argument-type, invalid-explicit-return]
 
 
 def stringify(data: dict[str, dict[int, object]], metadata: dict[str, dict[str, object]], for_machine: bool) -> None:
@@ -157,7 +157,7 @@ def stringify(data: dict[str, dict[int, object]], metadata: dict[str, dict[str, 
                 ism = m['is_multiple']
                 if ism:
                     if field == 'identifiers':
-                        data[field] = {k: ism['list_to_ui'].join(f'{key}:{val}' for key, val in v.items()) for k, v in data[field].items()}  # ty: ignore[not-subscriptable, unresolved-attribute]
+                        data[field] = {k: ism['list_to_ui'].join(f'{key}:{val}' for key, val in v.items()) for k, v in data[field].items()}  # ty: ignore[not-subscriptable, missing-attribute]
                     else:
                         data[field] = {k: ism['list_to_ui'].join(v) for k, v in data[field].items()}  # ty: ignore[not-subscriptable]
                         if field == 'formats':

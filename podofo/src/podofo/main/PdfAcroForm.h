@@ -60,6 +60,8 @@ public:
     bool GetNeedAppearances() const;
 
     /// Get the value of the /SigFlags document-level characteristics related to signature fields
+     ///
+     ///  @returns The signature flags.
     PdfAcroFormSigFlags GetSigFlags() const;
 
     template <typename TField>
@@ -72,7 +74,7 @@ public:
     ///
     /// @returns a field object. The field object is owned by the PdfAcroForm.
     ///
-    /// @see GetAnnotationCount
+    /// @see GetFieldCount
     PdfField& GetFieldAt(unsigned index);
 
     const PdfField& GetFieldAt(unsigned index) const;
@@ -107,7 +109,11 @@ public:
     public:
         Iterator() { }
     private:
-        Iterator(const TListIterator& iterator) : m_iterator(iterator) { }
+        Iterator(const TListIterator& iterator, const TListIterator& end)
+            : m_iterator(iterator), m_end(end)
+        {
+            skipPlaceholders();
+        }
     public:
         Iterator(const Iterator&) = default;
         Iterator& operator=(const Iterator&) = default;
@@ -122,12 +128,14 @@ public:
         Iterator& operator++()
         {
             m_iterator++;
+            skipPlaceholders();
             return *this;
         }
         Iterator operator++(int)
         {
             auto copy = *this;
             m_iterator++;
+            skipPlaceholders();
             return copy;
         }
         value_type operator*()
@@ -139,7 +147,15 @@ public:
             return (*m_iterator).get();
         }
     private:
+        // Invalid fields are stored as null placeholders: the iteration skips them
+        void skipPlaceholders()
+        {
+            while (m_iterator != m_end && *m_iterator == nullptr)
+                m_iterator++;
+        }
+    private:
         TListIterator m_iterator;
+        TListIterator m_end;
     };
 
     using iterator = Iterator<PdfField, FieldList::iterator>;
@@ -168,7 +184,10 @@ private:
 
     PdfArray* getFieldArray() const;
 
+    void inlineFieldsArray();
+
     void initFields();
+    void promoteDirectEntries();
 
     PdfField& getField(unsigned index) const;
     PdfField& getField(const PdfReference& ref) const;

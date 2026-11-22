@@ -56,6 +56,7 @@ public:
 
     /// Get the glyph count with the given glyph access
     /// @param access the desired access for retrieving the glyph count
+    /// @returns the glyph count
     unsigned GetGlyphCount(PdfGlyphAccess access) const;
 
     /// Get the width of a single glyph id. It tries to access parsed pdf metrics first,
@@ -64,6 +65,12 @@ public:
     /// @param gid id of the glyph
     /// @returns the width of a single glyph id
     double GetGlyphWidth(unsigned gid) const;
+    /// Try to get the width of a single glyph id.
+    ///
+    /// @param gid id of the glyph
+    /// @param width output width
+    /// @returns true if the width was successfully retrieved
+    ///
     bool TryGetGlyphWidth(unsigned gid, double& width) const;
 
     /// Get the width of a single glyph id
@@ -72,6 +79,13 @@ public:
     /// @param access the desired access for retrieving the metrics
     /// @returns the width of a single glyph id
     double GetGlyphWidth(unsigned gid, PdfGlyphAccess access) const;
+    /// Try to get the width of a single glyph id
+    ///
+    /// @param gid id of the glyph
+    /// @param access the desired access for retrieving the metrics
+    /// @param width output width
+    /// @returns true if the width was successfully retrieved
+    ///
     bool TryGetGlyphWidth(unsigned gid, PdfGlyphAccess access, double& width) const;
 
     /// Some fonts provides a glyph substitution list, eg. for ligatures.
@@ -159,6 +173,9 @@ public:
     /// from available /BaseFont, /FontName (eg. "AAAAAA+Arial,Bold" becomes "Arial")
     ///
     /// @remarks It doesn't correspond to /BaseFont name entry in the font
+    std::string_view GetFontFamilyNameSafe() const;
+
+    [[deprecated("Use GetFontFamilyNameSafe() instead")]]
     std::string_view GeFontFamilyNameSafe() const;
 
     /// Get the length of the subset prefix (eg. 7 for "AAAAAA+") if present
@@ -327,8 +344,8 @@ private:
     static std::unique_ptr<const PdfFontMetrics> CreateFromBuffer(const bufferview& buffer, unsigned faceIndex,
         const PdfFontMetrics* metrics, bool skipNormalization);
 
-    static std::unique_ptr<PdfFontMetrics> CreateFromFace(FT_Face face, std::unique_ptr<charbuff>&& buffer,
-        const PdfFontMetrics* metrics, bool skipNormalization);
+    static std::unique_ptr<PdfFontMetrics> CreateFromFace(std::unique_ptr<FT_FaceRec_, void(*)(FT_Face)> face,
+        std::unique_ptr<charbuff>&& buffer, const PdfFontMetrics* metrics, bool skipNormalization);
 
     /// Create a new font metrics by merging characteristics from this instance
     std::unique_ptr<const PdfFontMetrics> CreateMergedMetrics(bool skipNormalization) const;

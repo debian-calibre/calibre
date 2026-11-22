@@ -987,14 +987,16 @@ class BooksView(TableView):  # {{{
         for f in ('last_modified', 'languages', 'formats', 'id', 'path', 'pages'):
             state[f + '_injected'] = True
         state['sort_history'] = self.cleanup_sort_history(self._model.sort_history, ignore_column_map=self.is_library_view)
-        state['column_positions'] = {}
-        state['column_sizes'] = {}
+        column_positions: dict[str, int] = {}
+        column_sizes: dict[str, int] = {}
+        state['column_positions'] = column_positions
+        state['column_sizes'] = column_sizes
         state['column_alignment'] = self._model.alignment_map
         for i in range(h.count()):
             name = cm[i]
-            state['column_positions'][name] = h.visualIndex(i)
+            column_positions[name] = h.visualIndex(i)
             if name != 'ondevice':
-                state['column_sizes'][name] = h.sectionSize(i)
+                column_sizes[name] = h.sectionSize(i)
         return state
 
     def write_state(self, state) -> None:
@@ -1178,8 +1180,12 @@ class BooksView(TableView):  # {{{
             self.pin_view.restore_state()
 
         self.column_header.blockSignals(True)
-        self.apply_state(old_state, max_sort_levels=max_levels)
-        self.column_header.blockSignals(False)
+        try:
+            self.apply_state(old_state, max_sort_levels=max_levels)
+        finally:
+            # Do not leave the header with its signals blocked if restoring
+            # the state fails
+            self.column_header.blockSignals(False)
 
         self.do_row_sizing()
 

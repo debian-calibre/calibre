@@ -24,7 +24,24 @@ const unsigned s_Powers85[] = { 85 * 85 * 85 * 85, 85 * 85 * 85, 85 * 85, 85, 1 
 /// key of a PDF dictionary.
 class PdfPredictorDecoder
 {
+    // Bounds for the file supplied parameters: BitsPerComponent is at most 16
+    // by specification, DeviceN spaces have at most 32 components (doubled for
+    // headroom), and the row buffers are allocated for every filter of the chain
+    static constexpr int64_t MaxColors = 64;
+    static constexpr int64_t MaxBitsPerComponent = 16;
+    static constexpr uint64_t MaxRowSize = 1 << 22;
+
 public:
+    /// @returns null with no prediction, as the data is then passed through
+    static unique_ptr<PdfPredictorDecoder> Create(const PdfDictionary* decodeParms)
+    {
+        if (decodeParms == nullptr || decodeParms->FindKeyAsSafe<int64_t>("Predictor", 1) == 1)
+            return nullptr;
+
+        return unique_ptr<PdfPredictorDecoder>(new PdfPredictorDecoder(*decodeParms));
+    }
+
+private:
     PdfPredictorDecoder(const PdfDictionary& decodeParms)
     {
         // check that input values are in range (CVE-2018-20797)
@@ -40,17 +57,17 @@ public:
         m_Predictor = (unsigned)num;
 
         num = decodeParms.FindKeyAsSafe<int64_t>("Colors", 1);
-        if (num < 1)
+        if (num < 1 || num > MaxColors)
             goto OutOfRange;
         m_Colors = (unsigned)num;
 
         num = decodeParms.FindKeyAsSafe<int64_t>("BitsPerComponent", 8);
-        if (num < 1)
+        if (num < 1 || num > MaxBitsPerComponent)
             goto OutOfRange;
         m_BitsPerComponent = (unsigned)num;
 
         num = decodeParms.FindKeyAsSafe<int64_t>("Columns", 1);
-        if (num < 1)
+        if (num < 1 || num > (int64_t)MaxRowSize)
             goto OutOfRange;
         m_ColumnCount = (unsigned)num;
 
@@ -70,18 +87,11 @@ public:
         }
 
         m_CurrRowIndex = 0;
-        m_Rows = (m_ColumnCount * m_Colors * m_BitsPerComponent) / 8;
+        uint64_t rowSize = (uint64_t)m_ColumnCount * m_Colors * m_BitsPerComponent / 8;
+        if (rowSize < 1 || rowSize > MaxRowSize)
+            goto OutOfRange;
 
-        // check for multiplication overflow on buffer sizes (e.g. if m_nBPC=2 and m_nColors=SIZE_MAX/2+1)
-        if (utls::DoesMultiplicationOverflow(m_BitsPerComponent, m_Colors)
-            || utls::DoesMultiplicationOverflow(m_ColumnCount, (size_t)m_BitsPerComponent * m_Colors))
-        {
-            PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
-        }
-
-        // check that computed allocation sizes are > 0 (CVE-2018-20797)
-        if (m_Rows < 1 || m_BitsPerComponent < 1)
-            PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
+        m_Rows = (unsigned)rowSize;
 
         m_Prev.resize(m_Rows);
         memset(m_Prev.data(), 0, sizeof(char) * m_Rows);
@@ -90,14 +100,9 @@ public:
         memset(m_UpperLeftPixelComponents.data(), 0, sizeof(char) * m_BytesPerPixel);
     }
 
+public:
     void Decode(const char* buffer, size_t len, OutputStream& stream)
     {
-        if (m_Predictor == 1)
-        {
-            stream.Write(buffer, len);
-            return;
-        }
-
         while (len-- != 0)
         {
             if (m_NextByteIsPredictor)
@@ -235,7 +240,7 @@ private:
 #pragma region PdfHexFilter
 
 PdfHexFilter::PdfHexFilter()
-    : m_DecodedByte(0), m_Low(true)
+    : m_DecodedByte(0), m_Low(true), m_EndReached(false)
 {
 }
 
@@ -254,23 +259,32 @@ void PdfHexFilter::BeginDecodeImpl(const PdfDictionary*)
 {
     m_DecodedByte = 0;
     m_Low = true;
+    m_EndReached = false;
 }
 
 void PdfHexFilter::DecodeBlockImpl(const char* buffer, size_t len)
 {
+    if (m_EndReached)
+        return;
+
     unsigned char val;
-    while (len-- != 0)
+    for (size_t i = 0; i < len; i++)
     {
-        if (PoDoFo::IsCharWhitespace(*buffer))
+        // ISO 32000-2:2020 7.4.2 "ASCIIHexDecode filter": "A GREATER-THAN
+        // SIGN (3Eh) indicates EOD (End Of Data)."
+        if (buffer[i] == '>')
         {
-            buffer++;
-            continue;
+            m_EndReached = true;
+            return;
         }
 
-        (void)utls::TryGetHexValue(*buffer, val);
+        // NOTE: Whitespace and, leniently, any other invalid character are skipped
+        if (!utls::TryGetHexValue(buffer[i], val))
+            continue;
+
         if (m_Low)
         {
-            m_DecodedByte = (char)(val & 0x0F);
+            m_DecodedByte = (char)val;
             m_Low = false;
         }
         else
@@ -280,19 +294,15 @@ void PdfHexFilter::DecodeBlockImpl(const char* buffer, size_t len)
 
             GetStream().Write(m_DecodedByte);
         }
-
-        buffer++;
     }
 }
 
 void PdfHexFilter::EndDecodeImpl()
 {
+    // An odd number of digits was read: the
+    // missing last one is assumed to be 0
     if (!m_Low)
-    {
-        // an odd number of bytes was read,
-        // so the last byte is 0
-        GetStream().Write(m_DecodedByte);
-    }
+        GetStream().Write((char)(m_DecodedByte << 4));
 }
 
 #pragma endregion // PdfHexFilter
@@ -305,7 +315,7 @@ void PdfHexFilter::EndDecodeImpl()
 // Paul Haahr - http://www.webcom.com/~haahr/
 
 PdfAscii85Filter::PdfAscii85Filter()
-    : m_count(0), m_tuple(0)
+    : m_count(0), m_tuple(0), m_endReached(false)
 {
 }
 
@@ -381,13 +391,12 @@ void PdfAscii85Filter::BeginDecodeImpl(const PdfDictionary*)
 {
     m_count = 0;
     m_tuple = 0;
+    m_endReached = false;
 }
 
 void PdfAscii85Filter::DecodeBlockImpl(const char* buffer, size_t len)
 {
-    bool foundEndMarker = false;
-
-    while (len != 0 && !foundEndMarker)
+    while (len != 0 && !m_endReached)
     {
         switch (*buffer)
         {
@@ -414,12 +423,9 @@ void PdfAscii85Filter::DecodeBlockImpl(const char* buffer, size_t len)
                 this->WidePut(0, 4);
                 break;
             case '~':
-                buffer++;
-                len--;
-                if (len != 0 && *buffer != '>')
-                    PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
-
-                foundEndMarker = true;
+                // ISO 32000-2:2020 7.4.3 "ASCII85Decode filter": the EOD marker
+                // is ~>. The data ends leniently at the ~, the > is not checked
+                m_endReached = true;
                 break;
             case '\n': case '\r': case '\t': case ' ':
             case '\0': case '\f': case '\b': case 0177:
@@ -538,8 +544,7 @@ void PdfFlateFilter::BeginDecodeImpl(const PdfDictionary* decodeParms)
     m_stream.zfree = Z_NULL;
     m_stream.opaque = Z_NULL;
 
-    if (decodeParms != nullptr)
-        m_Predictor.reset(new PdfPredictorDecoder(*decodeParms));
+    m_Predictor = PdfPredictorDecoder::Create(decodeParms);
 
     if (inflateInit(&m_stream) != Z_OK)
         PODOFO_RAISE_ERROR(PdfErrorCode::FlateError);
@@ -692,6 +697,9 @@ const unsigned short PdfLZWFilter::s_masks[] = { 0x01FF, 0x03FF, 0x07FF, 0x0FFF 
 const unsigned short PdfLZWFilter::s_clear = 0x0100;      // clear table
 const unsigned short PdfLZWFilter::s_eod = 0x0101;      // end of data
 
+// Codes are at most 12 bits wide: entries past the code space can't be referenced
+constexpr size_t LzwTableMaxSize = 4096;
+
 PdfLZWFilter::PdfLZWFilter() :
     m_mask(0),
     m_code_len(0),
@@ -713,8 +721,7 @@ void PdfLZWFilter::BeginDecodeImpl(const PdfDictionary* decodeParms)
 
     m_First = true;
 
-    if (decodeParms != nullptr)
-        m_Predictor.reset(new PdfPredictorDecoder(*decodeParms));
+    m_Predictor = PdfPredictorDecoder::Create(decodeParms);
 
     InitTable();
 }
@@ -793,8 +800,12 @@ void PdfLZWFilter::DecodeBlockImpl(const char* buffer, size_t len)
                     data = m_table[old].value;
                 data.push_back(m_character);
 
-                item.value = data;
-                m_table.push_back(item);
+                // A stream without clear codes must not grow the table without bound
+                if (m_table.size() < LzwTableMaxSize)
+                {
+                    item.value = data;
+                    m_table.push_back(item);
+                }
 
                 old = code;
 

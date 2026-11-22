@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "11月 06, 2026" "9.18.0" "calibre"
+.TH "CALIBREDB" "1" "11月 21, 2026" "9.19.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -233,8 +233,8 @@ calibredb add [options] file1 file2 file3 ...
 .UNINDENT
 .UNINDENT
 .sp
-指定したファイルを本としてデータベースに追加します。フォルダを指定することもできます。参照
-以下のフォルダ関連のオプション。
+指定したファイルを本としてデータベースに追加します。フォルダを指定することもできます。
+以下のフォルダ関連のオプションを参照してください。
 .sp
 スペースを含む引数を calibredb に渡す場合には、クォーテーションマークでくくってください。例: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -265,7 +265,7 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-identifier, \-I
-この本の識別子を設定します。例： \-I asin：XXX \-I isbn：YYY
+この本の識別子を設定します。例： \-I asin:XXX \-I isbn:YYY
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -308,7 +308,7 @@ calibredb add [options] file1 file2 file3 ...
 .INDENT 0.0
 .TP
 .B \-\-ignore
-ファイル名（glob）パターン。このパターンに一致するファイルは、フォルダでファイルをスキャンするときに無視されます。複数のパターンに対して複数回指定できます。例：*。pdfはすべてのPDFファイルを無視します
+ファイル名（glob）パターン。このパターンに一致するファイルは、フォルダでファイルをスキャンするときに無視されます。複数のパターンに対して複数回指定できます。例：*.pdfはすべてのPDFファイルを無視します
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -402,7 +402,7 @@ calibredb set_metadata [options] book_id [/path/to/metadata.opf]
 .UNINDENT
 .UNINDENT
 .sp
-calibreデータベースに保存されている、指定された本の書誌データを、OPFファイルmetadata.opfから取得します。book_idは、searchコマンドで取得した本のIDです。
+calibreデータベースに保存されている、指定された本の書誌データを、OPFファイルmetadata.opfの内容で設定します。book_idは、searchコマンドで取得した本のIDです。
 show_metadataコマンドに\-\-as\-opfオプションを使用すると、OPFフォーマットの概要を簡単に確認できます。
 \-\-fieldオプションを使用すると、個々のフィールドのメタデータを設定することもできます。\-\-fieldオプションを使用する場合は、OPFファイルを指定する必要はありません。
 .sp
@@ -455,7 +455,7 @@ IDのリストを無視してデータベースからすべての本をエクス
 .INDENT 0.0
 .TP
 .B \-\-dont\-update\-metadata
-通常、calibreはライブラリ内のファイルの書誌をアップデートしますが、これはディスクへの保存を遅くします。 このスイッチ指定すると、この挙動をOFFにできます。
+通常、calibreは保存するファイルの書誌をライブラリの内容でアップデートしますが、これはディスクへの保存を遅くします。 このスイッチ指定すると、この挙動をOFFにできます。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -556,7 +556,7 @@ path/to/destination の拡張子で指定される形式でカタログをエク
 .INDENT 0.0
 .TP
 .B \-\-exclude\-genre
-ジャンルとして除外するタグを表す正規表現。 デフォルト: \fB\(aq\fP[.+]|^+$\fB\(aq\fP はブラケットで囲まれたタグを除外します。例: \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP と \fB\(aq\fP+\fB\(aq\fP は本を読むデフォルトのタグ。 適用: AZW3, EPUB, MOBI出力形式
+ジャンルとして除外するタグを表す正規表現。 デフォルト: \fB\(aq\fP[.+]|^+$\fB\(aq\fP はブラケットで囲まれたタグ (例: \fB\(aq\fP[Project Gutenberg]\fB\(aq\fP) と、既読の本のデフォルトのタグである \fB\(aq\fP+\fB\(aq\fP を除外します。 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -611,7 +611,7 @@ Descriptionヘッダに挿入するノートを格納したカスタムフィー
 .INDENT 0.0
 .TP
 .B \-\-output\-profile
-出力プロファイルを指定。場合により、デバイスに合わせてカタログをオプティマイズする際に出力プロファイルが必要になります。例えば、\fB\(aq\fPkindle\fB\(aq\fP または \fB\(aq\fPkindle_dx\fB\(aq\fP は、セクションと記事からなる構造化された目次を精製します。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
+出力プロファイルを指定。場合により、デバイスに合わせてカタログをオプティマイズする際に出力プロファイルが必要になります。例えば、\fB\(aq\fPkindle\fB\(aq\fP または \fB\(aq\fPkindle_dx\fB\(aq\fP は、セクションと記事からなる構造化された目次を生成します。 デフォルト: \fB\(aq\fPNone\fB\(aq\fP 適用: AZW3, EPUB, MOBI出力形式
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -677,7 +677,7 @@ datatypeは以下のいずれか: bool, comments, composite, datetime, enumerati
 .INDENT 0.0
 .TP
 .B \-\-display
-列のデータがどのように翻訳されるかをカスタマイズする辞書を指定するオプションです。JSON文字列で指定します。列挙型の列の場合、以下を使用してください:option:\fI\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 。 値の表示方法には、様々なオプションがあります。列の型ごとのオプションは以下の通りです。 合成型: composite_template, composite_sort, make_category,contains_html, use_decorations 日付: date_format 列挙型: enum_values, enum_colors, use_decorations 整数、浮動小数点数: number_format テキスト: is_names, use_decorations  型とオプションの正しい組み合わせを知るには、GUIから適切な型のカスタム列を作成して、出力されるバックアップのOPFファイルを見てみるのが一番よい方法です(列を追加して以降にOPFが再生成されていることを確認してください)。OPFの新しい列に \fB\(dq\fPdisplay\fB\(dq\fP というJSONが見つかるでしょう。
+列のデータがどのように解釈されるかをカスタマイズする辞書を指定するオプションです。JSON文字列で指定します。列挙型の列の場合、以下を使用してください:option:\fI\-\-display\fP\fB\(dq\fP{\e \fB\(dq\fPenum_values\e \fB\(dq\fP:[\e \fB\(dq\fPval1\e \fB\(dq\fP, \e \fB\(dq\fPval2\e \fB\(dq\fP]}\fB\(dq\fP 。 値の表示方法には、様々なオプションがあります。列の型ごとのオプションは以下の通りです。 合成型: composite_template, composite_sort, make_category,contains_html, use_decorations 日付: date_format 列挙型: enum_values, enum_colors, use_decorations 整数、浮動小数点数: number_format テキスト: is_names, use_decorations  型とオプションの正しい組み合わせを知るには、GUIから適切な型のカスタム列を作成して、出力されるバックアップのOPFファイルを見てみるのが一番よい方法です(列を追加して以降にOPFが再生成されていることを確認してください)。OPFの新しい列に \fB\(dq\fPdisplay\fB\(dq\fP というJSONが見つかるでしょう。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -801,7 +801,7 @@ CSVで出力
 .INDENT 0.0
 .TP
 .B \-\-vacuum\-fts\-db
-全文検索データベースより抽出を行います。この操作はデータベースのサイズによっては非常に遅くなり、またメモリーを消費する場合があります。
+全文検索データベースを圧縮します。この操作はデータベースのサイズによっては非常に遅くなり、またメモリーを消費する場合があります。
 .UNINDENT
 .SH LIST_CATEGORIES
 .INDENT 0.0
@@ -829,7 +829,7 @@ CSVで出力
 .INDENT 0.0
 .TP
 .B \-\-dialect
-DSVファイルのタイプ。選択肢: excel, excel\-tab, unix
+CSVファイルのタイプ。選択肢: excel, excel\-tab, unix
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -980,7 +980,7 @@ calibredb fts_search [options] search expression
 .INDENT 0.0
 .TP
 .B \-\-do\-not\-match\-on\-related\-words
-完全一致のみで、関連語は一致しません。そのため、修正内容は修正対象と一致しません。
+完全一致のみで、関連語は一致しません。そのため、correction は correcting に一致しません。
 .UNINDENT
 .INDENT 0.0
 .TP
@@ -1138,7 +1138,7 @@ calibredb annotations [options] [list|search|export|import|remove]
 .sp
 calibredb \fBannotations\fP list
 .sp
-「注釈を見る」ツールと同じ SQLite 全文検索の構文を使用して、ハイライトされたテキスト、注釈のメモ、ブックマークのタイトルを検索します。結果は関連度順に並べられ、注釈のID、本のタイトル、一致した抜粋が含まれます。本を絞り込むには \-\-search、注釈の種類を絞り込むには \-\-type、ユーザーを絞り込むには \-\-user\-type と \-\-annotation\-user、語形どおりに一致させるには \-\-no\-stemming を使用します。\-\-format json を指定すると、注釈データと抜粋を含む結果を JSON 配列で出力します:
+「注釈を見る」ツールと同じ SQLite 全文検索の構文を使用して、ハイライトされたテキスト、注釈のノート、ブックマークのタイトルを検索します。結果は関連度順に並べられ、注釈のID、本のタイトル、一致した抜粋が含まれます。本を絞り込むには \-\-search、注釈の種類を絞り込むには \-\-type、ユーザーを絞り込むには \-\-user\-type と \-\-annotation\-user、語形どおりに一致させるには \-\-no\-stemming を使用します。\-\-format json を指定すると、注釈データと抜粋を含む結果を JSON 配列で出力します:
 .sp
 calibredb \fBannotations\fP search \(dqsearch expression\(dq
 .sp

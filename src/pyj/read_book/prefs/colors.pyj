@@ -8,14 +8,17 @@ from gettext import gettext as _
 from book_list.globals import get_session_data
 from book_list.theme import cached_color_to_rgba
 from dom import (
-    add_extra_css, build_rule, clear, set_css, set_radio_group_value, svgicon,
-    unique_id
+    add_extra_css, build_rule, ensure_id, set_css, set_radio_group_value,
+    svgicon, unique_id
 )
 from modals import error_dialog
 from read_book.globals import default_color_schemes, ui_operations
 from read_book.prefs.utils import create_button_box
 from session import session_defaults
-from widgets import create_button
+from widgets import (
+    choice_list_items, create_button, create_choice_list, current_choice,
+    fill_choice_list, focus_choice_list, set_current_choice
+)
 
 CONTAINER = unique_id('reader-color-scheme')
 COLOR_LIST = unique_id()
@@ -30,7 +33,7 @@ add_extra_css(def ():
     sel += ' > li'
     style += build_rule(sel, padding='1ex 1rem', margin='1ex 0.5rem', border_radius='4px', cursor='pointer', border='var(--calibre-border-style-strong)')
     style += build_rule(sel + ' svg', visibility='hidden')
-    sel += '.current-color'
+    sel += '[aria-checked=true]'
     style += build_rule(sel + ' svg', visibility='visible')
     style += build_rule('#{} #{} td'.format(CONTAINER, EDIT_SCHEME), padding='1ex 1em')
     sel = '#' + ACTION_BUTTONS
@@ -64,16 +67,11 @@ def resolve_color_scheme(current_color_scheme):
     return ans
 
 
-def change_current_color(ev):
-    ul = ev.currentTarget.parentNode
-    for li in ul.childNodes:
-        li.setAttribute('class', 'current-color' if li is ev.currentTarget else '')
-    set_action_button_visibility(ul.parentNode)
-
-
 def new_color_scheme(ev):
     container = document.getElementById(EDIT_SCHEME)
     container.style.display = 'block'
+    # Return focus here if the form is discarded
+    container.opened_by = ev.currentTarget if ev else None
     for inp in container.querySelectorAll('input'):
         if inp.name.endswith('_color_type'):
             inp.checked = inp.value is 'default'
@@ -112,33 +110,36 @@ def remove_color_scheme(ev):
     ccs = current_color_scheme()
     if default_color_schemes[ccs]:
         return error_dialog(_('Cannot remove'), _('Cannot remove a builtin color scheme'))
+    had_focus = document.activeElement is ev.currentTarget
     sd = get_session_data()
     ucs = sd.get('user_color_schemes')
     v'delete ucs[ccs]'
     sd.set('user_color_schemes', ucs)
     create_color_buttons()
     set_current_color_scheme()
+    if had_focus:
+        # The list was rebuilt and the Remove button is hidden when the
+        # scheme now chosen is builtin, so move focus to the chosen scheme
+        focus_choice_list(document.getElementById(COLOR_LIST))
 
 
 def current_color_scheme():
     try:
-        return get_container().querySelector('li.current-color').getAttribute('data-name')
+        return current_choice(get_container()).getAttribute('data-value')
     except Exception:
         return session_defaults().current_color_scheme
 
 
 def set_current_color_scheme(value):
     ul = document.getElementById(COLOR_LIST)
-    done = False
-    for li in ul.childNodes:
-        li.classList.remove('current-color')
-        if li.getAttribute('data-name') is value:
-            li.classList.add('current-color')
-            done = True
-    if not done:
-        for li in ul.childNodes:
-            li.classList.add('current-color')
+    li = None
+    for x in choice_list_items(ul):
+        if x.getAttribute('data-value') is value:
+            li = x
             break
+    li = li or ul.querySelector('[role=radio]')
+    if li:
+        set_current_choice(li)
     set_action_button_visibility()
 
 
@@ -154,6 +155,7 @@ def add_color_scheme(ev):
         return True
 
     div = document.getElementById(EDIT_SCHEME)
+    had_focus = div.contains(document.activeElement)
     if this is not 'cancel':
         name = div.querySelector('input[name=name]').value
         if not name:
@@ -182,6 +184,13 @@ def add_color_scheme(ev):
         create_color_buttons()
         set_current_color_scheme(key)
     div.style.display = 'none'
+    if had_focus:
+        # Focus was in the form, which is now hidden. Put it on the scheme
+        # that was saved, or back on the button that opened the form.
+        if this is 'cancel' and div.opened_by and div.opened_by.isConnected:
+            div.opened_by.focus()
+        else:
+            focus_choice_list(document.getElementById(COLOR_LIST))
 
 
 def all_color_schemes():
@@ -196,20 +205,20 @@ def all_color_schemes():
 
 
 def create_color_buttons():
-    ul = document.getElementById(COLOR_LIST)
     sd = get_session_data()
-    clear(ul)
     all_schemes = all_color_schemes()
     ccs = sd.get('current_color_scheme')
     if not all_schemes[ccs]:
         ccs = session_defaults().current_color_scheme
-    for name in sorted(all_schemes, key=def (k): return all_schemes[k].name.toLowerCase();):
+
+    def render_scheme(li, name):
         scheme = all_schemes[name]
-        is_current = name is ccs
-        item = set_css(E.li(svgicon('check'), '\xa0' + scheme.name, data_name=name, onclick=change_current_color,
-                            class_='current-color' if is_current else ''),
-                       color=scheme.foreground, background_color=scheme.background)
-        ul.appendChild(item)
+        li.appendChild(svgicon('check'))
+        li.appendChild(document.createTextNode('\xa0' + scheme.name))
+        set_css(li, color=scheme.foreground, background_color=scheme.background)
+
+    names = sorted(all_schemes, key=def (k): return all_schemes[k].name.toLowerCase();)
+    fill_choice_list(document.getElementById(COLOR_LIST), names, ccs, render_scheme)
 
 
 def set_action_button_visibility():
@@ -232,8 +241,11 @@ def create_colors_panel(container, apply_func, cancel_func):
     container.dataset.bg = cs.background
     container.dataset.fg = cs.foreground
     container.dataset.link = cs.link or ''
-    container.appendChild(E.p(_('Choose a color scheme below'), style='margin:1ex 1em; padding: 1ex 0'))
-    ul = E.ul(id=COLOR_LIST)
+    label = E.p(_('Choose a color scheme below'), style='margin:1ex 1em; padding: 1ex 0')
+    container.appendChild(label)
+    ul = create_choice_list(None, [], None, None, set_action_button_visibility)
+    ul.id = COLOR_LIST
+    ul.setAttribute('aria-labelledby', ensure_id(label, 'color-scheme-label'))
     container.appendChild(ul)
     container.appendChild(E.div(
         E.span(_('Override all book colors:') + '\xa0'),
@@ -258,8 +270,12 @@ def create_colors_panel(container, apply_func, cancel_func):
     ))
 
     def margin_row(title, which):
+        # Name the controls of each margin as a group, so that its Default,
+        # Custom, Background and Foreground can be told from the other margins
+        label = E.td(title)
         return E.tr(
-            E.td(title), E.td(
+            label, E.td(
+                role='group', aria_labelledby=ensure_id(label, 'color-scheme-margin'),
                 E.label(E.input(type='radio', name=f'margin_{which}_color_type', value='default'), _('Default')),
                 '\xa0\xa0',
                 E.label(E.input(type='radio', name=f'margin_{which}_color_type', value='custom'), _('Custom')),
@@ -273,17 +289,23 @@ def create_colors_panel(container, apply_func, cancel_func):
                 ), '\xa0' + _('Foreground')),
             )
         )
+
+    def labelled_row(title, control):
+        return E.tr(E.td(E.label(title, for_=ensure_id(control, 'color-scheme-field'))), E.td(control))
+
+    link_label = E.td(_('Link:'))
     container.appendChild(E.div(id=EDIT_SCHEME, style='display:none',
         E.table(
-            E.tr(E.td(_('Name:')), E.td(E.input(name='name'))),
-            E.tr(E.td(_('Background:')), E.td(E.input(name='bg', type='color', value='#ffffff'))),
-            E.tr(E.td(_('Foreground:')), E.td(E.input(name='fg', type='color', value='#000000'))),
-            E.tr(E.td(_('Link:')), E.td(
+            labelled_row(_('Name:'), E.input(name='name')),
+            labelled_row(_('Background:'), E.input(name='bg', type='color', value='#ffffff')),
+            labelled_row(_('Foreground:'), E.input(name='fg', type='color', value='#000000')),
+            E.tr(link_label, E.td(
+                role='group', aria_labelledby=ensure_id(link_label, 'color-scheme-link'),
                 E.label(E.input(type='radio', name='link_color_type', value='default'), _('Default')),
                 '\xa0\xa0',
                 E.label(E.input(type='radio', name='link_color_type', value='custom'), _('Custom')),
                 '\xa0',
-                E.input(name='link', type='color', value='#000000', onclick=def (ev):
+                E.input(name='link', type='color', value='#000000', aria_label=_('Custom link color'), onclick=def (ev):
                     set_radio_group_value(ev.currentTarget.closest('td'), 'link_color_type', 'custom')
                 )
             )),

@@ -157,3 +157,21 @@ void TestFromEscape(const string_view& name1, const string_view& name2)
     PdfName name = PdfName::FromEscaped(name1);
     REQUIRE(name == name2);
 }
+
+TEST_CASE("TestNameSelfAssignment")
+{
+    PdfName name("TestName");
+    PdfName& nameRef = name;
+    name = nameRef;
+    REQUIRE(name.GetString() == "TestName");
+    name = std::move(nameRef);
+    REQUIRE(name.GetString() == "TestName");
+}
+
+TEST_CASE("TestNameFromCharBuffer")
+{
+    // A character buffer is read up to its NUL termination, not its size
+    char buffer[16] = "Name";
+    PdfName name(buffer);
+    REQUIRE(name.GetString() == "Name");
+}

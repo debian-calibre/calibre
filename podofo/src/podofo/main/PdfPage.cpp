@@ -293,19 +293,34 @@ PdfField& PdfPage::CreateField(const string_view& name, PdfFieldType fieldType, 
 
 void PdfPage::FlattenStructure()
 {
+    // NOTE: A page that is inlined in a /Kids array would be destroyed by flattening.
+    // We move the object dictionary to a new document object, so the cached contents,
+    // resources and annotations stay valid
+    if (!GetObject().IsIndirect())
+        SetObject(MoveToIndirect(GetObject()));
+
     if (m_parents.size() == 0)
         return;
 
-    static PdfName inheritableAttributes[] = { "Resources"_n, "MediaBox"_n, "CropBox"_n, "Rotate"_n };
-
-    bool isShallow;
-    // Move inherited attributes to current dictionary
-    for (unsigned i = 0; i < std::size(inheritableAttributes); i++)
+    // Copy the attributes inherited from the ancestors to the page: the
+    // flattening re-parents the page to the root, which drops them, and
+    // the intermediate nodes that held them become unreachable
+    auto& dict = GetDictionary();
+    for (auto& name : GetInheritableAttributes())
     {
-        auto obj = findInheritableAttribute(inheritableAttributes[i], isShallow);
-        if (obj != nullptr && !isShallow)
-            GetDictionary().AddKeyIndirectSafe(inheritableAttributes[i], *obj);
+        if (dict.HasKey(name))
+            continue;
+
+        auto obj = findInheritableAttribute(name);
+        if (obj != nullptr)
+            dict.AddKeyIndirectSafe(name, *obj);
     }
+
+    // The resources may have been bound to a dictionary of an ancestor,
+    // which was copied by value above: rebind them to the page's own
+    auto resources = dict.FindKey("Resources");
+    if (resources != nullptr && (m_Resources == nullptr || &m_Resources->GetObject() != resources))
+        m_Resources.reset(new PdfResources(*resources));
 
     // Finally clear the parents
     m_parents.clear();
@@ -384,23 +399,19 @@ PdfDictionaryElement& PdfPage::getElement()
     return *this;
 }
 
-PdfObject* PdfPage::findInheritableAttribute(const string_view& name) const
+cspan<PdfName> PdfPage::GetInheritableAttributes()
 {
-    bool isShallow;
-    return findInheritableAttribute(name, isShallow);
+    static PdfName inheritableAttributes[] = { "Resources"_n, "MediaBox"_n, "CropBox"_n, "Rotate"_n };
+    return inheritableAttributes;
 }
 
-PdfObject* PdfPage::findInheritableAttribute(const string_view& name, bool& isShallow) const
+PdfObject* PdfPage::findInheritableAttribute(const string_view& name) const
 {
     auto& dict = const_cast<PdfPage&>(*this).GetDictionary();
     auto obj = dict.FindKeyParent(name);
     if (obj != nullptr)
-    {
-        isShallow = true;
         return obj;
-    }
 
-    isShallow = false;
     for (unsigned i = 0; i < m_parents.size(); i++)
     {
         obj = m_parents[i]->GetDictionary().FindKeyParent(name);

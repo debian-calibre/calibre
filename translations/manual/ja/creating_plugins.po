@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -30,7 +30,7 @@ msgid ""
 "interface, to connect to different devices, to process files when adding "
 "them to calibre and so on. You can get a complete list of all the built-in "
 "plugins in calibre by going to :guilabel:`Preferences->Advanced->Plugins`."
-msgstr "calibre の設計は非常にモジュラーです。ほとんどすべての calibre の機能がプラグインという形で提供されます。プラグインは変換、ニュースのダウンロード (ただしこれはレシピと呼ばれます)、ユーザインタフェースのさまざまな部品、いろいろなデバイスへの接続、calibre にファイルを追加する際の処理など、多岐にわたって使用されます。ビルトインのプラグインは、:guilabel:`環境設定->高度な設定->プラグイン` ですべてを確認できます。"
+msgstr "calibre は非常にモジュール化された設計になっています。ほとんどすべての calibre の機能がプラグインという形で提供されます。プラグインは変換、ニュースのダウンロード (ただしこれはレシピと呼ばれます)、ユーザインタフェースのさまざまな部品、いろいろなデバイスへの接続、calibre にファイルを追加する際の処理など、多岐にわたって使用されます。ビルトインのプラグインは、:guilabel:`環境設定->高度な設定->プラグイン` ですべてを確認できます。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:8
 msgid ""
@@ -55,7 +55,7 @@ msgid ""
 "A calibre plugin is very simple, it's just a ZIP file that contains some "
 "Python code and any other resources like image files needed by the plugin. "
 "Without further ado, let's see a basic example."
-msgstr "calibre のプラグインはとてもシンプルです。Python のコードと、プラグインが必要とする画像ファイルなどのその他リソースからなる単なる ZIP ファイルにすぎません。これ以上面倒なことは避けて、基本的な例を見てみましょう。"
+msgstr "calibre のプラグインはとてもシンプルです。Python のコードと、プラグインが必要とする画像ファイルなどのその他リソースからなる単なる ZIP ファイルにすぎません。前置きはこのくらいにして、基本的な例を見てみましょう。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:24
 msgid ""
@@ -65,7 +65,7 @@ msgid ""
 "here's how to do it. Create a file named :file:`__init__.py` (this is a "
 "special name and must always be used for the main file of your plugin) and "
 "enter the following Python code into it:"
-msgstr "EPUB および MOBI 形式のさまざまな電子ドキュメントを自己出版するために calibre をインストールしているとしましょう。calibre で生成したすべてのファイルの発行元を「Hello World」に設定したい場合には、次のようにします。:file:`__init__.py` という名前でファイルを作成し (これは特別な名前で、プラグインのメインファイルとして必ず使用しなくてはなりません)、その中に次の Python コードを入力します:"
+msgstr "EPUB および MOBI 形式のさまざまな電子ドキュメントを自己出版するために calibre をインストールしているとしましょう。calibre で生成したすべてのファイルの発行者を「Hello World」に設定したい場合には、次のようにします。:file:`__init__.py` という名前でファイルを作成し (これは特別な名前で、プラグインのメインファイルとして必ず使用しなくてはなりません)、その中に次の Python コードを入力します:"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:32
 msgid ""
@@ -78,7 +78,7 @@ msgid ""
 "On macOS, the command line tools are inside the calibre bundle, for example,"
 " if you installed calibre in :file:`/Applications` the command line tools "
 "are in :file:`/Applications/calibre.app/Contents/MacOS/`."
-msgstr "macOS では、コマンドラインツールは calibre にバンドルされています。たとえばcalibre を :file:`/Applications` にインストールした場合には、コマンドラインツールは :file:`/Applications/calibre.app/Contents/MacOS/` にあります。"
+msgstr "macOS では、コマンドラインツールは calibre のバンドルの中にあります。たとえばcalibre を :file:`/Applications` にインストールした場合には、コマンドラインツールは :file:`/Applications/calibre.app/Contents/MacOS/` にあります。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:42
 msgid ""
@@ -92,7 +92,7 @@ msgid ""
 "method will be called and the converted book will have its publisher set to "
 "\"Hello World\". This is a trivial plugin, let's move on to a more complex "
 "example that actually adds a component to the user interface."
-msgstr "calibre で本を変換するたびにプラグインの :meth:`run` メソッドが呼び出され、変換した本の発行元は \"Hello World\" に設定されます。これは非常に簡単なプラグインですが、ユーザインタフェースに実際にコンポーネントを追加するようなもっと複雑な例に移りましょう。"
+msgstr "calibre で本を変換するたびにプラグインの :meth:`run` メソッドが呼び出され、変換した本の発行者は \"Hello World\" に設定されます。これは非常に簡単なプラグインですが、ユーザインタフェースに実際にコンポーネントを追加するようなもっと複雑な例に移りましょう。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:50
 msgid "A User Interface plugin"
@@ -142,14 +142,14 @@ msgid ""
 "subpackages of .py modules inside the ZIP file, just like you would normally"
 " (by defining __init__.py in each sub-folder), and everything should \"just "
 "work\"."
-msgstr "必ずプリフィックス ``calibre_plugins`` をつける必要があります。``some_name`` は空のテキストファイルのファイル名から取得します。 ``some_module`` は ZIP ファイル内の :file:`some_module.py` を参照します。このインポートは Python の普通のインポートと同じくらい強力です。通常と同じように (各サボフォルダに __init__.py を定義することにより) ZIP ファイルの中に .py モジュールのパッケージとサブパッケージを作成でき、すべては \"ちゃんと動きます\" 。"
+msgstr "必ずプリフィックス ``calibre_plugins`` をつける必要があります。``some_name`` は空のテキストファイルのファイル名から取得します。 ``some_module`` は ZIP ファイル内の :file:`some_module.py` を参照します。このインポートは Python の普通のインポートと同じくらい強力です。通常と同じように (各サブフォルダに __init__.py を定義することにより) ZIP ファイルの中に .py モジュールのパッケージとサブパッケージを作成でき、すべては \"ちゃんと動きます\" 。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:76
 msgid ""
 "The name you use for ``some_name`` enters a global namespace shared by all "
 "plugins, **so make it as unique as possible**. But remember that it must be "
 "a valid Python identifier (only alphabets, numbers and the underscore)."
-msgstr "``some_name`` に使う名前はすべてのプラグインで共有するグローバルな名前空間に入るので、**可能な限り一意なものにしてください**。そしてこれは有効な Python の識別子 (英数字およびアンダースコアの使用可能) でなくてはなりません。"
+msgstr "``some_name`` に使う名前はすべてのプラグインで共有するグローバルな名前空間に入るので、**可能な限り一意なものにしてください**。そしてこれは有効な Python の識別子 (英数字とアンダースコアのみ使用可能) でなくてはなりません。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:79
 msgid "**__init__.py**"
@@ -199,7 +199,7 @@ msgstr "**translations**"
 msgid ""
 "A folder containing .mo files with the translations of the user interface of"
 " your plugin into different languages. See below for details."
-msgstr "プラグインのユーザインタフェースを別の言語に翻訳するための .mo ファイルが入ったフォルダ"
+msgstr "プラグインのユーザインタフェースを別の言語に翻訳するための .mo ファイルが入ったフォルダ。詳しくは下記を参照してください。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:99
 msgid "Now let's look at the code."
@@ -211,7 +211,7 @@ msgstr "__init__.py"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:104
 msgid "First, the obligatory ``__init__.py`` to define the plugin metadata:"
-msgstr "プラグインのメタデータを定義するために必須な ``__init__.py``:"
+msgstr "まず、プラグインのメタデータを定義する必須の ``__init__.py`` です:"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:109
 msgid ""
@@ -221,7 +221,7 @@ msgid ""
 "does this for you, by telling calibre that the actual plugin is to be found "
 "in another file inside your ZIP archive, which will only be loaded in a GUI "
 "context."
-msgstr "注目すべき機能はフィールド :attr:`actual_plugin` だけです。calibre にはコマンドラインと GUI インタフェースが両方あるため、このような GUI プラグインは __init__.py の中で GUI ライブラリをロードすべきではありません。actual_plugin が calibre に実際のプラグインが ZIP アーカイブ内の別のファイルに見つかったことを知らせて、GUI コンテキストでのみロードされるようになります。"
+msgstr "注目すべき機能はフィールド :attr:`actual_plugin` だけです。calibre にはコマンドラインと GUI インタフェースが両方あるため、このような GUI プラグインは __init__.py の中で GUI ライブラリをロードすべきではありません。actual_plugin フィールドは、実際のプラグインが ZIP アーカイブ内の別のファイルにあることを calibre に伝えることで、これを実現します。そのファイルは GUI コンテキストでのみロードされます。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:114
 msgid ""
@@ -233,7 +233,7 @@ msgstr "これを機能させるには、上で説明したようにプラグイ
 msgid ""
 "Also there are a couple of methods for enabling user configuration of the "
 "plugin. These are discussed below."
-msgstr "プラグインのユーザ設定を有効にする方法は、いくつか存在します。それについては下で説明します。"
+msgstr "また、プラグインのユーザ設定を有効にするためのメソッドがいくつかあります。それについては下で説明します。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:120
 msgid "ui.py"
@@ -321,7 +321,7 @@ msgstr "デモプラグインの設定データを管理するコードは confi
 msgid ""
 "The ``prefs`` object is now available throughout the plugin code by a "
 "simple::"
-msgstr "次のようにするだけで ``prefs`` がプラグインコード全体から使用できりうようになります::"
+msgstr "次のようにするだけで ``prefs`` がプラグインコード全体から使用できるようになります::"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:185
 msgid "You can see the ``prefs`` object being used in main.py:"
@@ -329,21 +329,21 @@ msgstr "``prefs`` オブジェクトが main.py で使われているのがわ�
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:192
 msgid "Edit book plugins"
-msgstr "本の編集プラグイン"
+msgstr "書籍編集プラグイン"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:194
 msgid ""
 "Now let's change gears for a bit and look at creating a plugin to add tools "
 "to the calibre book editor. The plugin is available here: "
 ":download_file:`editor_demo_plugin.zip`."
-msgstr "それでは少し趣向を変えて、calibre の書籍エディタにツールを追加するプラグインを作成する方法を見てみましょう。プラグインはここちら: :download_file:`editor_demo_plugin.zip`"
+msgstr "それでは少し趣向を変えて、calibre の書籍エディタにツールを追加するプラグインを作成する方法を見てみましょう。プラグインはこちら: :download_file:`editor_demo_plugin.zip`"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:198
 msgid ""
 "The first step, as for all plugins is to create the import name empty txt "
 "file, as described :ref:`above <import_name_txt>`. We shall name the file "
 "``plugin-import-name-editor_plugin_demo.txt``."
-msgstr "すべてのプラグインと同様、最初のステップは上記 :ref:`above <import_name_txt>` で説明したようにインポート名の空のテキストファイルを作成することです。ここではファイルを ``plugin-import-name-editor_plugin_demo.txt`` という名前にします。"
+msgstr "すべてのプラグインと同様、最初のステップは :ref:`上記 <import_name_txt>` で説明したようにインポート名の空のテキストファイルを作成することです。ここではファイルを ``plugin-import-name-editor_plugin_demo.txt`` という名前にします。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:202
 msgid ""
@@ -399,7 +399,7 @@ msgid ""
 "customize. The triggered signal from the QAction is connected to the "
 "ask_user() method that asks the user for the font size multiplier, and then "
 "runs the magnification code."
-msgstr "次に重要なエントリポイントは :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action` です。このメソッドはプラグインツールバーとプラグインメニューに表示される QAction を生成します。オプションで、ユーザがカスタマイズ可能なショートカットを割り当てることができます。トリガーとなる QAction からのシグナルは ask_user() に接続してユーザにフォントサイズを何倍にするかをを尋ね、その後に拡大するコードを実行します。"
+msgstr "次に重要なエントリポイントは :meth:`calibre.gui2.tweak_book.plugin.Tool.create_action` です。このメソッドはプラグインツールバーとプラグインメニューに表示される QAction を生成します。オプションで、ユーザがカスタマイズ可能なショートカットを割り当てることができます。QAction の triggered シグナルは ask_user() メソッドに接続されており、このメソッドがユーザにフォントサイズを何倍にするかを尋ね、その後に拡大するコードを実行します。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:245
 msgid ""
@@ -419,7 +419,7 @@ msgid ""
 "and has convenience methods for doing many useful things. The container "
 "object and various useful utility functions that can be reused in your "
 "plugin code are documented in :ref:`polish_api`."
-msgstr "最後に ``self.current_container`` があり、これは編集されようとしている本を :class:`calibre.ebooks.oeb.polish.container.Container` オブジェクトへの参照です。これは本をその構成要素であるHTML/CSS/画像 ファイルの集まりとして表し、役に立ついろいろなことができる便利なメソッドを備えています。プラグインコードで再利用可能なコンテナオブジェクトとさまざまな便利なユーティリティ関数については、:ref:`polish_api` に説明があります。"
+msgstr "最後に ``self.current_container`` があり、これは編集中の本を表す :class:`calibre.ebooks.oeb.polish.container.Container` オブジェクトへの参照です。これは本をその構成要素であるHTML/CSS/画像 ファイルの集まりとして表し、役に立ついろいろなことができる便利なメソッドを備えています。プラグインコードで再利用可能なコンテナオブジェクトとさまざまな便利なユーティリティ関数については、:ref:`polish_api` に説明があります。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:259
 msgid "Adding translations to your plugin"
@@ -462,7 +462,7 @@ msgid ""
 " this function in those .py files that actually have translatable strings. "
 "So in a typical User Interface plugin you would call it at the top of "
 "``ui.py`` but not ``__init__.py``."
-msgstr "最後のステップは、ただ単にプラグインの .pu ファイルの先頭で関数 `load_translations()` を呼び出すだけです。性能上の理由からこの関数を呼び出すのは、実際に翻訳可能な文字列が含まれている .py ファイルに限るべきです。したがって典型的なユーザインタフェースプラグインではこの関数は ``__init__.py`` ではなく ``ui.py`` の先頭で呼び出します。"
+msgstr "最後のステップは、ただ単にプラグインの .py ファイルの先頭で関数 `load_translations()` を呼び出すだけです。性能上の理由からこの関数を呼び出すのは、実際に翻訳可能な文字列が含まれている .py ファイルに限るべきです。したがって典型的なユーザインタフェースプラグインではこの関数は ``__init__.py`` ではなく ``ui.py`` の先頭で呼び出します。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:287
 msgid ""
@@ -470,12 +470,12 @@ msgid ""
 " language in calibre under :guilabel:`Preferences->Interface->Look & feel` "
 "or by running calibre with the ``CALIBRE_OVERRIDE_LANG`` environment "
 "variable set. For example::"
-msgstr "プラグインの翻訳をテストするには、calibreの :guilabel:`環境設定 ->  インタフェース -> 外観` の主要インタフェースの「言語を選択」で言語を変更するか、``CALIBRE_OVERRIDE_LANG`` 環境変数に言語を設定してcalibreを実行します。例::"
+msgstr "プラグインの翻訳をテストするには、calibreの :guilabel:`環境設定 -> インタフェース -> 外観` の主要インタフェースの「言語を選択」で言語を変更するか、``CALIBRE_OVERRIDE_LANG`` 環境変数に言語を設定してcalibreを実行します。例::"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:293
 msgid ""
 "Replace ``de`` with the language code of the language you want to test."
-msgstr "``de`` の部分はテスとしたい言語の言語コードに置き換えてください。"
+msgstr "``de`` の部分はテストしたい言語の言語コードに置き換えてください。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:295
 msgid ""
@@ -493,7 +493,7 @@ msgid ""
 "different classes for the different types of plugins in calibre. Details on "
 "each class, including the base class of all plugins can be found in "
 ":ref:`plugins`."
-msgstr "すでにお気づきかもしれませんが、calibre のプラグインとはクラスです。calibre プラグインの種類ごとに異なるクラスがあります。すｓべてのプラグインの基底クラスのを含め、それぞれのクラスについての詳細は :ref:`plugins` に記載されています。"
+msgstr "すでにお気づきかもしれませんが、calibre のプラグインとはクラスです。calibre プラグインの種類ごとに異なるクラスがあります。すべてのプラグインの基底クラスを含め、それぞれのクラスについての詳細は :ref:`plugins` に記載されています。"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:306
 msgid ""
@@ -504,7 +504,7 @@ msgstr "プラグインはほぼ確実に calibre のコードを使用します
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:311
 msgid "Debugging plugins"
-msgstr "デバッグプラグイン"
+msgstr "プラグインのデバッグ"
 
 #: ../../../__w/calibre/calibre/manual/creating_plugins.rst:313
 msgid ""

@@ -186,7 +186,7 @@ class ThreadSafePrefs(MutableMapping):
         prefs = db.backend.prefs
         prefs.disable_setting = val
 
-    def get(self, key: str, default: object = None) -> object:  # ty: ignore[invalid-method-override]
+    def get(self, key: str, default: object = None) -> object:  # ty: ignore[incompatible-method-override]
         db = self.db()
         assert db is not None
         prefs = db.backend.prefs
@@ -510,7 +510,7 @@ class LibraryDatabase:
         ids = book_ids if return_ids else len(book_ids)
         if book_ids:
             self.data.books_added(book_ids)
-        return duplicates or None, ids  # ty: ignore[invalid-return-type]
+        return duplicates or None, ids  # ty: ignore[invalid-explicit-return]
 
     def import_book(
         self,

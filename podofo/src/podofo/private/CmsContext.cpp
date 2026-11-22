@@ -19,6 +19,8 @@ static void serializeCmsTo(charbuff& buff, CMS_ContentInfo* info);
 static void addAttribute(CMS_SignerInfo* si, int(*addAttributeFun)(CMS_SignerInfo*, const char*, int, const void*, int),
     const string_view& nid, const bufferview& attr, bool octet);
 
+// NOTE: PdfSignatureEncryption is deprecated only for the public API
+PODOFO_SUPPRESS_DEPRECATED_PUSH
 CmsContext::CmsContext() :
     m_status(CmsContextStatus::Uninitialized),
     m_encryption(PdfSignatureEncryption::Unknown),
@@ -28,6 +30,7 @@ CmsContext::CmsContext() :
     m_databio(nullptr)
 {
 }
+PODOFO_SUPPRESS_DEPRECATED_POP
 
 void CmsContext::Reset(const bufferview& cert, const CmsContextParams& parameters)
 {
@@ -138,7 +141,7 @@ void CmsContext::Dump(xmlNodePtr ctxElem, string& temp)
     if (xmlNewChild(ctxElem, nullptr, XMLCHAR "Encoded", XMLCHAR temp.data()) == nullptr)
     {
     SerializationFailed:
-        THROW_LIBXML_EXCEPTION("PdfSignerCms serialization failed");
+        THROW_LIBXML_EXCEPTION(PdfErrorCode::OutOfMemory, "CmsContext serialization failed");
     }
 
     auto parametersElem = xmlNewChild(ctxElem, nullptr, XMLCHAR "Parameters", nullptr);
@@ -168,8 +171,10 @@ void CmsContext::Dump(xmlNodePtr ctxElem, string& temp)
     if (xmlNewChild(parametersElem, nullptr, XMLCHAR "SigningTimeUTC", XMLCHAR temp.data()) == nullptr)
         goto SerializationFailed;
 
+    PODOFO_SUPPRESS_DEPRECATED_PUSH
     if (xmlNewChild(ctxElem, nullptr, XMLCHAR "Encryption", XMLCHAR PoDoFo::ToString(m_encryption).data()) == nullptr)
         goto SerializationFailed;
+    PODOFO_SUPPRESS_DEPRECATED_POP
 
     utls::WriteHexStringTo(temp, m_certHash);
     auto certificateElem = xmlNewChild(ctxElem, nullptr, XMLCHAR "CertHash", XMLCHAR temp.data());
@@ -189,14 +194,14 @@ void CmsContext::Restore(xmlNodePtr ctxElem, charbuff& temp)
     if (node == nullptr || node->children == nullptr || node->children->content == nullptr)
     {
     DeserializationFailed:
-        THROW_LIBXML_EXCEPTION("CmsContext deserialization failed");
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidInput, "CmsContext deserialization failed");
     }
 
     utls::DecodeHexStringTo(temp, (const char*)node->children->content);
 
     const unsigned char* buff = (const unsigned char*)temp.data();
-    m_cms = d2i_CMS_ContentInfo(NULL, &buff, (long)temp.size());
-    if (m_cms == nullptr)
+    m_cms = ssl::NewCMSContentInfoEmpty();
+    if (d2i_CMS_ContentInfo(&m_cms, &buff, (long)temp.size()) == nullptr)
         goto DeserializationFailed;
 
     m_signer = sk_CMS_SignerInfo_value(CMS_get0_SignerInfos(m_cms), 0);
@@ -260,7 +265,9 @@ void CmsContext::Restore(xmlNodePtr ctxElem, charbuff& temp)
     node = utls::FindChildElement(ctxElem, "Encryption");
     if (node == nullptr || node->children == nullptr || node->children->content == nullptr)
         goto DeserializationFailed;
+    PODOFO_SUPPRESS_DEPRECATED_PUSH
     m_encryption = PoDoFo::ConvertTo<PdfSignatureEncryption>((const char*)node->children->content);
+    PODOFO_SUPPRESS_DEPRECATED_POP
 
     node = utls::FindChildElement(ctxElem, "CertHash");
     if (node == nullptr || node->children == nullptr || node->children->content == nullptr)
@@ -283,16 +290,20 @@ unsigned CmsContext::GetSignedHashSize() const
 void CmsContext::loadX509Certificate(const bufferview& cert)
 {
     auto in = (const unsigned char*)cert.data();
-    m_cert = d2i_X509(nullptr, &in, (int)cert.size());
-    if (m_cert == nullptr)
+    m_cert = ssl::NewX509();
+    if (d2i_X509(&m_cert, &in, (int)cert.size()) == nullptr)
     {
         unique_ptr<BIO, decltype(&BIO_free)> bio(BIO_new_mem_buf(cert.data(), (int)cert.size()), BIO_free);
         if (bio == nullptr)
             goto Fail;
 
-        m_cert = PEM_read_bio_X509(bio.get(), nullptr, nullptr, nullptr);
-        if (m_cert == nullptr)
+        m_cert = ssl::NewX509();
+        if (PEM_read_bio_X509(bio.get(), &m_cert, nullptr, nullptr) == nullptr)
         {
+            // NOTE: PEM_read_bio_X509() leaves the supplied certificate alive
+            // if it fails before decoding the PEM wrapper
+            X509_free(m_cert);
+            m_cert = nullptr;
         Fail:
             string err("Certificate loading failed. Internal OpenSSL error:\n");
             ssl::GetOpenSSLError(err);
@@ -304,11 +315,13 @@ void CmsContext::loadX509Certificate(const bufferview& cert)
     if (pubkey == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::OpenSSLError, "Invalid public key");
 
+    PODOFO_SUPPRESS_DEPRECATED_PUSH
     m_encryption = PdfSignatureEncryption::Unknown;
     if (EVP_PKEY_base_id(pubkey) == EVP_PKEY_RSA)
         m_encryption = PdfSignatureEncryption::RSA;
     else if (EVP_PKEY_base_id(pubkey) == EVP_PKEY_EC)
         m_encryption = PdfSignatureEncryption::ECDSA;
+    PODOFO_SUPPRESS_DEPRECATED_POP
 }
 
 void CmsContext::computeCertificateHash()
@@ -360,7 +373,7 @@ void CmsContext::clear()
 void CmsContext::reset()
 {
     // By default CMS_sign uses SHA1, so create a partial context with streaming enabled
-    m_cms = CMS_sign(nullptr, nullptr, nullptr, nullptr, CMS_FLAGS);
+    m_cms = ssl::NewCMSContentInfo(CMS_FLAGS);
     if (m_cms == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::OutOfMemory, "CMS_sign");
 
@@ -474,7 +487,9 @@ void addAttribute(CMS_SignerInfo* si, int(*addAttributeFun)(CMS_SignerInfo*, con
         }
 
         type = asn1type->type;
-        bytes = asn1type->value.ptr;
+        // NOTE: A decoded NULL has no value, OpenSSL stores just
+        // a presence marker in its place: the value must be null
+        bytes = type == V_ASN1_NULL ? nullptr : asn1type->value.ptr;
         len = -1;
     }
 
@@ -482,7 +497,7 @@ void addAttribute(CMS_SignerInfo* si, int(*addAttributeFun)(CMS_SignerInfo*, con
     if (asn1type != nullptr)
         ASN1_TYPE_free(asn1type);
 
-    if (rc < 0)
+    if (rc <= 0)
     {
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::OpenSSLError,
             "Unable to insert an attribute to the signer");

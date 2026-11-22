@@ -586,7 +586,7 @@ class Connection(apsw.Connection):  # {{{
 
     def executemany(
         self, statements: str, sequenceofbindings: Iterable[Bindings], *, can_cache: bool = True, prepare_flags: int = 0, explain: int = -1
-    ) -> apsw.Cursor:  # ty: ignore[invalid-return-type]
+    ) -> apsw.Cursor:  # ty: ignore[invalid-implicit-return]
         with self:  # Disable autocommit mode, for performance
             return self.cursor().executemany(statements, sequenceofbindings, can_cache=can_cache, prepare_flags=prepare_flags, explain=explain)
 
@@ -1099,7 +1099,7 @@ class DB:
                 x = [y.decode(preferred_encoding, 'replace') if not isinstance(y, str) else y for y in x]
                 return [normalize_whitespace(y) for y in x]
             else:
-                return x if x is None or isinstance(x, str) else x.decode(preferred_encoding, 'replace')  # ty: ignore[unresolved-attribute]
+                return x if x is None or isinstance(x, str) else x.decode(preferred_encoding, 'replace')  # ty: ignore[missing-union-attribute]
 
         def adapt_datetime(x: str | bytes | datetime | None, d: CustomColumnData) -> datetime | None:
             if isinstance(x, (str, bytes)):
@@ -1550,7 +1550,7 @@ class DB:
             self.reopen(force=True)
             return self.conn.cursor().execute(sql, bindings)
 
-    def executemany(self, sql: str, sequence_of_bindings: Iterable[Bindings]) -> apsw.Cursor:  # ty: ignore[invalid-return-type]
+    def executemany(self, sql: str, sequence_of_bindings: Iterable[Bindings]) -> apsw.Cursor:  # ty: ignore[invalid-implicit-return]
         try:
             with self.conn:  # Disable autocommit mode, for performance
                 return self.conn.cursor().executemany(sql, sequence_of_bindings)
@@ -2159,7 +2159,7 @@ class DB:
                         f.seek(0)
                     shutil.copyfileobj(f, dest)  # ty: ignore[invalid-argument-type]
                     if hasattr(dest, 'flush'):
-                        dest.flush()  # ty: ignore[call-non-callable]
+                        dest.flush()  # ty: ignore[not-callable]
                     return True
                 elif dest and not samefile(dest, path):
                     if use_hardlink:
@@ -2228,7 +2228,7 @@ class DB:
 
             data = pixmap_to_data(data)
         elif callable(getattr(data, 'read', None)):
-            data = data.read()  # ty: ignore[unresolved-attribute]
+            data = data.read()  # ty: ignore[missing-union-attribute]
         if data is None:
             if os.path.exists(path):
                 try:
@@ -2285,7 +2285,7 @@ class DB:
                     f.seek(0)
                 shutil.copyfileobj(f, dest)  # ty: ignore[invalid-argument-type]
             if hasattr(dest, 'flush'):
-                dest.flush()  # ty: ignore[call-non-callable]
+                dest.flush()  # ty: ignore[not-callable]
         elif dest:
             if samefile(dest, path):
                 if not self.is_case_sensitive and path != dest:
@@ -2546,8 +2546,11 @@ class DB:
                             yield relpath, src, stat_result
 
     def remove_extra_files(self, book_path: str, relpaths: Iterable[str], permanent: bool) -> dict[str, Exception | None]:
+        from calibre.utils.recycle_bin import can_recycle, recycle
+
         bookdir = os.path.join(self.library_path, book_path)
         errors: dict[str, Exception | None] = {}
+        permanent = permanent or not can_recycle or recycle is None
         for relpath in relpaths:
             try:
                 path = path_from_root(bookdir, relpath, case_sensitive=self.is_case_sensitive)
@@ -2565,8 +2568,6 @@ class DB:
                         time.sleep(1)
                         os.remove(make_long_path_useable(path))
                 else:
-                    from calibre.utils.recycle_bin import recycle
-
                     assert recycle is not None
                     recycle(make_long_path_useable(path))
             except Exception as e:
@@ -2934,7 +2935,7 @@ class DB:
     def book_storage_for_book(self, book_id: int, fmt: str, user_type: str, user: str) -> BookStorageEntry | None:
         return book_storage_for_book(self.conn, book_id, fmt, user_type, user)
 
-    def update_book_storage_for_book(self, book_id: int, fmt: str, entry: BookStorageEntry, user_type: str, user: str) -> BookStorageEntry:  # ty: ignore[invalid-return-type]
+    def update_book_storage_for_book(self, book_id: int, fmt: str, entry: BookStorageEntry, user_type: str, user: str) -> BookStorageEntry:  # ty: ignore[invalid-implicit-return]
         with self.conn:
             return update_book_storage_for_book(self.conn.cursor(), book_id, fmt, entry, user_type, user)
 
@@ -3225,7 +3226,7 @@ class DB:
                 except Exception:
                     pass
 
-    def has_conversion_options(self, ids: Iterable[int], fmt: str = 'PIPE') -> bool:  # ty: ignore[invalid-return-type]
+    def has_conversion_options(self, ids: Iterable[int], fmt: str = 'PIPE') -> bool:  # ty: ignore[invalid-implicit-return]
         ids = frozenset(ids)
         with self.conn:
             self.execute('DROP TABLE IF EXISTS conversion_options_temp; CREATE TEMP TABLE conversion_options_temp (id INTEGER PRIMARY KEY);')

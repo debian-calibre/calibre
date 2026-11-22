@@ -20,8 +20,13 @@ enum class PdfContentType : uint8_t
     Operator,          ///< The token is a PDF operator
     ImageDictionary,   ///< Inline image dictionary
     ImageData,         ///< Raw inline image data found between ID and EI tags (see PDF ref section 4.8.6)
-    DoXObject,         ///< Issued when a Do operator is found and it is handled by the reader. NOTE: for Form XObjects BeginFormXObject is issued instead, unless PdfContentReaderFlags::SkipFollowFormXObject is used. 
-    BeginFormXObject,  ///< Issued when a Form XObject is being followed
+    DoXObject,         ///< Issued when a Do operator is found and it is handled by the reader.
+                       ///< NOTE: for Form XObjects BeginFormXObject is issued instead, unless
+                       ///< PdfContentReaderFlags::SkipFollowFormXObject is used, the call
+                       ///< is recursive (see PdfContentWarnings::RecursiveXObject) or the
+                       ///< limit of followed forms is reached (see PdfContentWarnings::FormXObjectLimitReached)
+    BeginFormXObject,  ///< Issued when a Form XObject is being followed. The reader keeps
+                       ///< the XObject alive until the matching EndFormXObject
     EndFormXObject,    ///< Issued when a Form XObject has just been followed
     UnexpectedKeyword, ///< An unexpected keyword that can be a custom operator or invalid PostScript content   
 };
@@ -33,6 +38,8 @@ enum class PdfContentWarnings : uint16_t
     RecursiveXObject = 2,               ///< Recursive XObject call detected. Applies to DoXObject
     InvalidImageDictionaryContent = 4,  ///< Found invalid content while reading inline image dictionary. Applies to ImageDictionary
     MissingEndImage = 8,                ///< Missing end inline image EI operator
+    FormXObjectLimitReached = 16,       ///< The maximum count of followed Form XObjects was reached and this one is not followed. Applies to DoXObject
+    OperandLimitReached = 32,           ///< The maximum count of operands was reached and the operands read until then were dropped
 };
 
 enum class PdfContentErrors : uint16_t
@@ -172,6 +179,7 @@ private:
     std::shared_ptr<charbuff> m_buffer;
     PdfPostScriptTokenizer m_tokenizer;
     bool m_readingInlineImgData;  // A state of reading inline image data
+    unsigned m_formXObjectCount;  // Count of followed Form XObjects
 
     // Temp storage
     Storage m_temp;

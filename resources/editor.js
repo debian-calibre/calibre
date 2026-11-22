@@ -5380,7 +5380,7 @@ var str = ρσ_str, repr = ρσ_repr;;
         var __name__ = "__main__";
 
 
-        var FAKE_HOST, FAKE_PROTOCOL, state, settings, css;
+        var FAKE_HOST, FAKE_PROTOCOL, state, PARAGRAPH_HIGHLIGHT_NAME, NON_PARAGRAPH_TEXT_ELEMENTS, PARAGRAPH_BLOCK_ELEMENTS, block_tag_name, UNCOMPARED_CHARS, UNCOMPARED_CHARS_GLOBAL, settings, css;
         var E = ρσ_modules.elementmaker.E;
 
         var fix_fullscreen_svg_images = ρσ_modules.fs_images.fix_fullscreen_svg_images;
@@ -5511,21 +5511,34 @@ var str = ρσ_str, repr = ρσ_repr;;
             __module__ : {value: null}
         });
 
+        function find_sourceline_node(sourceline, tags) {
+            var nodes, node, index;
+            nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
+            for (var ρσ_Index10 = 0; ρσ_Index10 < nodes.length; ρσ_Index10++) {
+                index = ρσ_Index10;
+                node = nodes[(typeof index === "number" && index < 0) ? nodes.length + index : index];
+                if (index >= tags.length || node.tagName.toLowerCase() !== tags[(typeof index === "number" && index < 0) ? tags.length + index : index]) {
+                    break;
+                }
+                if (ρσ_equals(index, tags.length - 1)) {
+                    return node;
+                }
+            }
+            return null;
+        };
+        if (!find_sourceline_node.__argnames__) Object.defineProperties(find_sourceline_node, {
+            __argnames__ : {value: ["sourceline", "tags"]},
+            __module__ : {value: null}
+        });
+
         
         
         var go_to_sourceline_address = from_python((function() {
             var ρσ_anonfunc = function go_to_sourceline_address(sourceline, tags, sync_context) {
-                var nodes, node, index;
-                nodes = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                for (var ρσ_Index10 = 0; ρσ_Index10 < nodes.length; ρσ_Index10++) {
-                    index = ρσ_Index10;
-                    node = nodes[(typeof index === "number" && index < 0) ? nodes.length + index : index];
-                    if (index >= tags.length || node.tagName.toLowerCase() !== tags[(typeof index === "number" && index < 0) ? tags.length + index : index]) {
-                        break;
-                    }
-                    if (ρσ_equals(index, tags.length - 1) && !is_hidden(node)) {
-                        return scroll_to_node(node, sync_context);
-                    }
+                var node;
+                node = find_sourceline_node(sourceline, tags);
+                if (node && !is_hidden(node)) {
+                    return scroll_to_node(node, sync_context);
                 }
                 go_to_line(sourceline, sync_context);
             };
@@ -5536,15 +5549,190 @@ var str = ρσ_str, repr = ρσ_repr;;
             return ρσ_anonfunc;
         })());
 
+        PARAGRAPH_HIGHLIGHT_NAME = "calibre-paragraph-highlight";
+        NON_PARAGRAPH_TEXT_ELEMENTS = (function(){
+            var ρσ_d = Object.create(null);
+            ρσ_d["rt"] = true;
+            ρσ_d["rp"] = true;
+            ρσ_d["svg"] = true;
+            ρσ_d["math"] = true;
+            ρσ_d["mjx-container"] = true;
+            ρσ_d["script"] = true;
+            ρσ_d["style"] = true;
+            ρσ_d["template"] = true;
+            ρσ_d["noscript"] = true;
+            ρσ_d["textarea"] = true;
+            ρσ_d["select"] = true;
+            ρσ_d["pre"] = true;
+            ρσ_d["iframe"] = true;
+            ρσ_d["object"] = true;
+            return ρσ_d;
+        }).call(this);
+        PARAGRAPH_BLOCK_ELEMENTS = Object.create(null);
+        var ρσ_Iter11 = "address article aside blockquote body caption center dd details dialog dir div dl dt fieldset figcaption figure footer form frameset h1 h2 h3 h4 h5 h6 header hgroup hr html legend li main menu nav ol p section summary table tbody td tfoot th thead tr ul".split(" ");
+        ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
+        for (var ρσ_Index11 of ρσ_Iter11) {
+            block_tag_name = ρσ_Index11;
+            PARAGRAPH_BLOCK_ELEMENTS[(typeof block_tag_name === "number" && block_tag_name < 0) ? PARAGRAPH_BLOCK_ELEMENTS.length + block_tag_name : block_tag_name] = true;
+        }
+        UNCOMPARED_CHARS = /[\s\u00ad\u200b\u2060\ufeff\ufffc]/;
+        UNCOMPARED_CHARS_GLOBAL = /[\s\u00ad\u200b\u2060\ufeff\ufffc]+/g;
+        function is_noteref(node) {
+            var epub_type;
+            epub_type = node.getAttribute("epub:type");
+            if (epub_type && ρσ_in("noteref", epub_type.split(/\s+/))) {
+                return true;
+            }
+            return node.getAttribute("role") === "doc-noteref";
+        };
+        if (!is_noteref.__argnames__) Object.defineProperties(is_noteref, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+
+        function accept_paragraph_text_node(node) {
+            if (node.nodeType === Node.ELEMENT_NODE) {
+                if (NON_PARAGRAPH_TEXT_ELEMENTS[ρσ_bound_index(node.localName.toLowerCase(), NON_PARAGRAPH_TEXT_ELEMENTS)] || is_noteref(node)) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+                return NodeFilter.FILTER_SKIP;
+            }
+            return NodeFilter.FILTER_ACCEPT;
+        };
+        if (!accept_paragraph_text_node.__argnames__) Object.defineProperties(accept_paragraph_text_node, {
+            __argnames__ : {value: ["node"]},
+            __module__ : {value: null}
+        });
+
+        function compared_chars(root) {
+            var ρσ_unpack, text, nodes, offsets, walker, node, data, ch, i;
+            ρσ_unpack = [[], [], []];
+            text = ρσ_unpack[0];
+            nodes = ρσ_unpack[1];
+            offsets = ρσ_unpack[2];
+            walker = document.createTreeWalker(root, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, accept_paragraph_text_node);
+            node = walker.nextNode();
+            while (node) {
+                data = node.data;
+                for (var ρσ_Index12 = 0; ρσ_Index12 < data.length; ρσ_Index12++) {
+                    i = ρσ_Index12;
+                    ch = data[(typeof i === "number" && i < 0) ? data.length + i : i];
+                    if (!UNCOMPARED_CHARS.test(ch)) {
+                        text.push(ch);
+                        nodes.push(node);
+                        offsets.push(i);
+                    }
+                }
+                node = walker.nextNode();
+            }
+            return (function(){
+                var ρσ_d = Object.create(null);
+                ρσ_d["text"] = text.join("");
+                ρσ_d["nodes"] = nodes;
+                ρσ_d["offsets"] = offsets;
+                return ρσ_d;
+            }).call(this);
+        };
+        if (!compared_chars.__argnames__) Object.defineProperties(compared_chars, {
+            __argnames__ : {value: ["root"]},
+            __module__ : {value: null}
+        });
+
+        function find_paragraph_range(start_node, paragraph_text) {
+            var needle, ancestor, chars, idx, best, last, r;
+            needle = paragraph_text.replace(UNCOMPARED_CHARS_GLOBAL, "");
+            if (!needle) {
+                return null;
+            }
+            ancestor = start_node;
+            while (ancestor && ancestor !== document.documentElement) {
+                chars = compared_chars(ancestor);
+                idx = chars.text.indexOf(needle);
+                if (idx > -1) {
+                    best = idx;
+                    while (idx > -1) {
+                        if (start_node.contains((ρσ_expr_temp = chars.nodes)[(typeof idx === "number" && idx < 0) ? ρσ_expr_temp.length + idx : idx])) {
+                            best = idx;
+                            break;
+                        }
+                        idx = chars.text.indexOf(needle, idx + 1);
+                    }
+                    last = best + needle.length - 1;
+                    r = document.createRange();
+                    r.setStart((ρσ_expr_temp = chars.nodes)[(typeof best === "number" && best < 0) ? ρσ_expr_temp.length + best : best], (ρσ_expr_temp = chars.offsets)[(typeof best === "number" && best < 0) ? ρσ_expr_temp.length + best : best]);
+                    r.setEnd((ρσ_expr_temp = chars.nodes)[(typeof last === "number" && last < 0) ? ρσ_expr_temp.length + last : last], (ρσ_expr_temp = chars.offsets)[(typeof last === "number" && last < 0) ? ρσ_expr_temp.length + last : last] + 1);
+                    return r;
+                }
+                if (PARAGRAPH_BLOCK_ELEMENTS[ρσ_bound_index(ancestor.localName.toLowerCase(), PARAGRAPH_BLOCK_ELEMENTS)]) {
+                    break;
+                }
+                ancestor = ancestor.parentElement;
+            }
+            return null;
+        };
+        if (!find_paragraph_range.__argnames__) Object.defineProperties(find_paragraph_range, {
+            __argnames__ : {value: ["start_node", "paragraph_text"]},
+            __module__ : {value: null}
+        });
+
+        
+        
+        var clear_paragraph_highlight = from_python((function() {
+            var ρσ_anonfunc = function clear_paragraph_highlight() {
+                if (window.CSS && window.CSS.highlights) {
+                    window.CSS.highlights.delete(PARAGRAPH_HIGHLIGHT_NAME);
+                }
+            };
+            if (!ρσ_anonfunc.__module__) Object.defineProperties(ρσ_anonfunc, {
+                __module__ : {value: null}
+            });
+            return ρσ_anonfunc;
+        })());
+
+        
+        
+        var highlight_paragraph = from_python((function() {
+            var ρσ_anonfunc = function highlight_paragraph(sourceline, tags, paragraph_text, sync_context) {
+                var node, r, rect, elem;
+                clear_paragraph_highlight();
+                if (!window.CSS || !window.CSS.highlights) {
+                    return;
+                }
+                node = find_sourceline_node(sourceline, tags);
+                if (!node) {
+                    return;
+                }
+                r = find_paragraph_range(node, paragraph_text);
+                if (!r) {
+                    return;
+                }
+                window.CSS.highlights.set(PARAGRAPH_HIGHLIGHT_NAME, new Highlight(r));
+                rect = r.getBoundingClientRect();
+                if (rect.top < 0 || rect.bottom > window.innerHeight) {
+                    elem = r.startContainer.parentElement;
+                    if (elem) {
+                        elem.scrollIntoView();
+                        rect = r.getBoundingClientRect();
+                    }
+                    window.scrollBy(0, rect.top - sync_context * line_height());
+                }
+            };
+            if (!ρσ_anonfunc.__argnames__) Object.defineProperties(ρσ_anonfunc, {
+                __argnames__ : {value: ["sourceline", "tags", "paragraph_text", "sync_context"]},
+                __module__ : {value: null}
+            });
+            return ρσ_anonfunc;
+        })());
+
         function find_blocks() {
             var elem;
             if (state.blocks_found) {
                 return;
             }
-            var ρσ_Iter11 = document.body.getElementsByTagName("*");
-            ρσ_Iter11 = ((typeof ρσ_Iter11[Symbol.iterator] === "function") ? (ρσ_Iter11 instanceof Map ? ρσ_Iter11.keys() : ρσ_Iter11) : Object.keys(ρσ_Iter11));
-            for (var ρσ_Index11 of ρσ_Iter11) {
-                elem = ρσ_Index11;
+            var ρσ_Iter13 = document.body.getElementsByTagName("*");
+            ρσ_Iter13 = ((typeof ρσ_Iter13[Symbol.iterator] === "function") ? (ρσ_Iter13 instanceof Map ? ρσ_Iter13.keys() : ρσ_Iter13) : Object.keys(ρσ_Iter13));
+            for (var ρσ_Index13 of ρσ_Iter13) {
+                elem = ρσ_Index13;
                 if (is_block(elem) && !in_table(elem)) {
                     elem.setAttribute("data-is-block", "1");
                 }
@@ -5663,10 +5851,10 @@ var str = ρσ_str, repr = ρσ_repr;;
                 }).call(this);
                 target = null;
                 i = 0;
-                var ρσ_Iter12 = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
-                ρσ_Iter12 = ((typeof ρσ_Iter12[Symbol.iterator] === "function") ? (ρσ_Iter12 instanceof Map ? ρσ_Iter12.keys() : ρσ_Iter12) : Object.keys(ρσ_Iter12));
-                for (var ρσ_Index12 of ρσ_Iter12) {
-                    node = ρσ_Index12;
+                var ρσ_Iter14 = document.querySelectorAll("[data-lnum=\"" + ρσ_str.format("{}", sourceline) + "\"]");
+                ρσ_Iter14 = ((typeof ρσ_Iter14[Symbol.iterator] === "function") ? (ρσ_Iter14 instanceof Map ? ρσ_Iter14.keys() : ρσ_Iter14) : Object.keys(ρσ_Iter14));
+                for (var ρσ_Index14 of ρσ_Iter14) {
+                    node = ρσ_Index14;
                     tn = (node.tagName) ? node.tagName.toLowerCase() : "";
                     if (tn !== tags[(typeof i === "number" && i < 0) ? tags.length + i : i]) {
                         if (to_python.live_css_data) {
@@ -5713,10 +5901,10 @@ var str = ρσ_str, repr = ρσ_repr;;
             if (document.body.getElementsByTagNameNS("http://www.w3.org/1998/Math/MathML", "math").length > 0) {
                 return true;
             }
-            var ρσ_Iter13 = document.scripts;
-            ρσ_Iter13 = ((typeof ρσ_Iter13[Symbol.iterator] === "function") ? (ρσ_Iter13 instanceof Map ? ρσ_Iter13.keys() : ρσ_Iter13) : Object.keys(ρσ_Iter13));
-            for (var ρσ_Index13 of ρσ_Iter13) {
-                s = ρσ_Index13;
+            var ρσ_Iter15 = document.scripts;
+            ρσ_Iter15 = ((typeof ρσ_Iter15[Symbol.iterator] === "function") ? (ρσ_Iter15 instanceof Map ? ρσ_Iter15.keys() : ρσ_Iter15) : Object.keys(ρσ_Iter15));
+            for (var ρσ_Index15 of ρσ_Iter15) {
+                s = ρσ_Index15;
                 if (s.type === "text/x-mathjax-config") {
                     return true;
                 }
@@ -5741,6 +5929,7 @@ var str = ρσ_str, repr = ρσ_repr;;
         if (document.body) {
             settings = JSON.parse(window.navigator.userAgent.split("|")[1]);
             css = "[data-in-split-mode=\"1\"] [data-is-block=\"1\"]:hover { cursor: pointer !important; border-top: solid 5px green !important }";
+            css += "\n::highlight(" + PARAGRAPH_HIGHLIGHT_NAME + ") { background-color: Mark; color: MarkText }\n";
             if (settings.os === "macos") {
                 css += "\n* { -webkit-hyphenate-character: \"-\" !important }\n";
             }

@@ -52,6 +52,7 @@ public:
 private:
     char m_DecodedByte;
     bool m_Low;
+    bool m_EndReached;
 };
 
 /// The Ascii85 filter.
@@ -85,6 +86,7 @@ private:
 private:
     int m_count;
     unsigned m_tuple;
+    bool m_endReached;
 };
 
 /// The Flate filter.

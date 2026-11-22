@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.18.0\n"
+"Project-Id-Version: calibre 9.19.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-06 05:42+0530\n"
+"POT-Creation-Date: 2026-11-21 10:59+0530\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1434,6 +1434,18 @@ msgstr ""
 msgid "The base class for all USBMS devices. Implements the logic for sending/getting/updating metadata/caching metadata/etc."
 msgstr ""
 
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.SCAN_SKIP_DIR_SUFFIXES:1
+msgid "Folders whose names end with one of these are not searched for books"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.FOLDER_SCAN_THREADS:1
+msgid "Number of folders to list at the same time when the device is a folder, which may be on a slow network drive, see :meth:`scan_threads`"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.scan_threads:1
+msgid "The number of threads to use to list the folders on the device. Only folders connected as devices use more than one, as they may be on a high latency network drive, whereas real devices gain nothing from it."
+msgstr ""
+
 #: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.upload_cover:1
 msgid "Upload book cover to the device. Default implementation does nothing."
 msgstr ""
@@ -1456,6 +1468,22 @@ msgstr ""
 
 #: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.normalize_path:1
 msgid "Return path with platform native path separators"
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.supports_deferred_datetime:1
+msgid "True if :attr:`book_class` can be created without looking up the date of the book file, see the defer_datetime argument of :class:`Book`. Book classes that override __init__() without that argument are created normally."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.parse_metadata_cache:1
+msgid "Do not look up the date of every book, which is slow on network drives, the caller must set it. Only use when :meth:`supports_deferred_datetime` returns True."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.update_metadata_item:1
+msgid "Re-read the metadata of book if the size of its file changed."
+msgstr ""
+
+#: ../../../home/kovid/work/calibre/src/calibre/devices/usbms/driver.py:docstring of calibre.devices.usbms.driver.USBMS.update_metadata_item:3
+msgid "The size of the file, if already known, to avoid a stat() call."
 msgstr ""
 
 #: ../../../home/kovid/work/calibre/manual/plugins.rst:157

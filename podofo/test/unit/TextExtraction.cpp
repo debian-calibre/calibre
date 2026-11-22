@@ -4,6 +4,8 @@
 
 #include <PdfTest.h>
 
+#include <clocale>
+
 using namespace std;
 using namespace PoDoFo;
 
@@ -264,4 +266,144 @@ TEST_CASE("TestBfRange4CodePoints")
     page.ExtractTextTo(entries);
     REQUIRE(entries.size() == 1);
     REQUIRE(entries[0].Text == "Aሴ噸C");
+}
+
+TEST_CASE("TestRecursiveFormXObjectExtraction")
+{
+    // The Form XObject invokes itself: the recursive "Do" must not leave a
+    // dangling form in the extraction state, and the text is extracted once
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 100 100]/Resources<</XObject<</Fm0 4 0 R>>>>/Contents 5 0 R>>endobj
+4 0 obj<</Type/XObject/Subtype/Form/BBox[0 0 100 100]/Resources<</XObject<</Fm0 4 0 R>>/Font<</F1 6 0 R>>>>/Length 30>>stream
+/Fm0 Do BT /F1 12 Tf (x) Tj ET
+endstream
+endobj
+5 0 obj<</Length 7>>stream
+/Fm0 Do
+endstream
+endobj
+6 0 obj<</Type/Font/Subtype/Type1/BaseFont/Helvetica>>endobj
+trailer<</Root 1 0 R/Size 7>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    vector<PdfTextEntry> entries;
+    doc.GetPages().GetPageAt(0).ExtractTextTo(entries);
+    REQUIRE(entries.size() == 1);
+    REQUIRE(entries[0].Text == "x");
+}
+
+TEST_CASE("TestWholeWordSubstringInvalidUtf8")
+{
+    // Shown without a font, the literal string is taken as is: the invalid
+    // UTF-8 after its BOM must not reach the whole word scan before the pattern
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 100 100]/Contents 4 0 R>>endobj
+4 0 obj<</Length 30>>stream
+BT (\357\273\277A\340ZZ) Tj ET
+endstream
+endobj
+trailer<</Root 1 0 R/Size 5>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    auto& page = doc.GetPages().GetPageAt(0);
+    vector<PdfTextEntry> entries;
+    PdfTextExtractParams params;
+    params.Flags = PdfTextExtractFlags::KeepWhiteTokens;
+    page.ExtractTextTo(entries, { }, params);
+    REQUIRE(entries.size() == 1);
+    REQUIRE(entries[0].Text == "A\xEF\xBF\xBD" "ZZ");
+    entries.clear();
+    params.Flags |= PdfTextExtractFlags::MatchWholeWord | PdfTextExtractFlags::ExtractSubstring;
+    page.ExtractTextTo(entries, "ZZ", params);
+    REQUIRE(entries.size() == 0);
+}
+
+TEST_CASE("TestIgnoreCaseMatchUnderSingleByteLocale")
+{
+    // The case insensitive match lowers the text: under a single byte host
+    // locale std::tolower would also map the UTF-8 lead bytes, corrupting
+    // the sequence that precedes the matched word
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 100 100]/Contents 4 0 R>>endobj
+4 0 obj<</Length 19>>stream
+BT (\351 sum) Tj ET
+endstream
+endobj
+trailer<</Root 1 0 R/Size 5>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    auto& page = doc.GetPages().GetPageAt(0);
+    vector<PdfTextEntry> entries;
+    PdfTextExtractParams params;
+    params.Flags = PdfTextExtractFlags::IgnoreCase | PdfTextExtractFlags::MatchWholeWord
+        | PdfTextExtractFlags::ExtractSubstring;
+
+    string oldLocale = setlocale(LC_ALL, nullptr);
+    setlocale(LC_ALL, "de_DE");
+    try
+    {
+        page.ExtractTextTo(entries, "SUM", params);
+    }
+    catch (...)
+    {
+        setlocale(LC_ALL, oldLocale.c_str());
+        throw;
+    }
+
+    setlocale(LC_ALL, oldLocale.c_str());
+    REQUIRE(entries.size() == 1);
+    REQUIRE(entries[0].Text == "sum");
+}
+
+TEST_CASE("TestRegexPatternLongEntry")
+{
+    // The regex matching recurses per character in some runtimes, so an
+    // entry longer than the limit is skipped instead of being matched. The
+    // content is run length encoded: "BT (", 5120 times "7", ") Tj ET"
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 100 100]/Contents 4 0 R>>endobj
+4 0 obj<</Length 192/Filter[/ASCIIHexDecode/RunLengthDecode]>>stream
+034254202881378137813781378137813781378137813781378137813781
+378137813781378137813781378137813781378137813781378137813781
+37813781378137813781378137813781378137813781378137062920546A
+20455480>
+endstream
+endobj
+trailer<</Root 1 0 R/Size 5>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    auto& page = doc.GetPages().GetPageAt(0);
+    vector<PdfTextEntry> entries;
+    page.ExtractTextTo(entries);
+    REQUIRE(entries.size() == 1);
+    REQUIRE(entries[0].Text.length() == 5120);
+    entries.clear();
+    PdfTextExtractParams params;
+    params.Flags = PdfTextExtractFlags::RegexPattern;
+    page.ExtractTextTo(entries, "\\d+", params);
+    REQUIRE(entries.size() == 0);
 }

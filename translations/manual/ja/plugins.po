@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Yuka Kachi, 2022\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -243,7 +243,7 @@ msgid ""
 "Implement this method and :meth:`save_settings` in your plugin to use a "
 "custom configuration dialog, rather then relying on the simple string based "
 "default customization."
-msgstr "このメソッドと :meth:`save_settings` をプラグインに実装して、単純な文字列ベースのデフォルトのカスタマイズに依存するのではなく、カスタム構成ダイアログを使用します。"
+msgstr "単純な文字列ベースのデフォルトのカスタマイズではなくカスタムの設定ダイアログを使用するには、このメソッドと :meth:`save_settings` をプラグインに実装します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:5
@@ -254,7 +254,7 @@ msgid ""
 "optional method validate() that takes no arguments and is called immediately"
 " after the user clicks OK. Changes are applied if and only if the method "
 "returns True."
-msgstr "このメソッドは、実装された場合には QWidget を返す必要があります。ウィジェットにはオプションのメソッド validate() を含めることができます。このメソッド引数をとらず、ユーザが OKをクリックした直後に呼び出されます。メソッドが True を返す場合にのみ、変更が適用されます。"
+msgstr "このメソッドは、実装された場合には QWidget を返す必要があります。ウィジェットにはオプションのメソッド validate() を含めることができます。このメソッドは引数をとらず、ユーザが OKをクリックした直後に呼び出されます。メソッドが True を返す場合にのみ、変更が適用されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.config_widget:10
@@ -323,7 +323,7 @@ msgstr "返り値"
 msgid ""
 "A dictionary of the form ``{name: file_contents}``. Any names that were not "
 "found in the ZIP file will not be present in the dictionary."
-msgstr "``{name: file_contents}`` 形式の辞書。ZIPファイルで見つからなかった名前は、辞書に表示されません。"
+msgstr "``{name: file_contents}`` 形式の辞書。ZIPファイルで見つからなかった名前は、辞書に含まれません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.Plugin.customization_help:1
@@ -381,7 +381,7 @@ msgid ""
 "This method is the main entry point for your plugins command line interface."
 " It is called when the user does: calibre-debug -r \"Plugin Name\". Any "
 "arguments passed are present in the args variable."
-msgstr "このメソッドは、プラグインのコマンドラインインタフェースの主要なエントリポイントです。これは、ユーザが次のように実行したときに呼び出されます: calibre-debug-r \"プラグイン名\"。渡された引数はすべて args 変数に存在します。"
+msgstr "このメソッドは、プラグインのコマンドラインインタフェースの主要なエントリポイントです。これは、ユーザが次のように実行したときに呼び出されます: calibre-debug -r \"プラグイン名\"。渡された引数はすべて args 変数に存在します。"
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:28
 msgid "FileTypePlugin"
@@ -390,7 +390,7 @@ msgstr "FileTypePlugin"
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin:1
 msgid "A plugin that is associated with a particular set of file types."
-msgstr "特定のファイルタイプのセットに関連付けられているプラ​​グイン。"
+msgstr "特定のファイルタイプのセットに関連付けられているプラグイン。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.file_types:1
@@ -435,7 +435,7 @@ msgstr "True のとき、このプラグインは変換の直前に実行され�
 msgid ""
 "If True, this plugin is run after conversion on the final file produced by "
 "the conversion output plugin."
-msgstr "True のとき、このプラグインは、変換出力プラグインによって生成された最終ファイルで変換後に実行されます。"
+msgstr "True のとき、このプラグインは、変換後に、変換出力プラグインによって生成された最終ファイルに対して実行されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.original_path_to_file:1
@@ -454,7 +454,7 @@ msgid ""
 " raise an Exception. The default implementation simply return the path to "
 "the original e-book. Note that the path to the original file (before any "
 "file type plugins are run, is available as self.original_path_to_file)."
-msgstr "プラグインを実行します。サブクラスで実装する必要があります。それは電子書籍に必要な変更を実行し、変更された電子書籍への絶対パスを返します。変更が必要なければ、元の電子書籍へのパスを返します。エラーが発生した場合は、例外を発生させます。デフォルトの実装では、元の電子書籍へのパスを返すだけです。元のファイルへのパスに注意してください (ファイルタイプのプラグインが実行される前は、self.original_path_to_file として使用できます)。"
+msgstr "プラグインを実行します。サブクラスで実装する必要があります。それは電子書籍に必要な変更を実行し、変更された電子書籍への絶対パスを返します。変更が必要なければ、元の電子書籍へのパスを返します。エラーが発生した場合は、例外を発生させます。デフォルトの実装では、元の電子書籍へのパスを返すだけです。なお、(ファイルタイププラグインが実行される前の) 元のファイルへのパスは self.original_path_to_file として利用できます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:11
@@ -519,7 +519,7 @@ msgid ""
 " added to the database. Note that it is run after a conversion only, not "
 "after a book is added. It is useful for modifying the book record based on "
 "the contents of the newly added file."
-msgstr "変換後、つまり変換後の本のファイルがデータベースに追加された後に呼び出されます。ブックの追加後ではなく、変換後にのみ実行されることに注意してください。これは、新しく追加されたファイルの内容に基づいて本のレコードを変更する場合に便利です。"
+msgstr "変換後、つまり変換後の本のファイルがデータベースに追加された後に呼び出されます。本の追加後ではなく、変換後にのみ実行されることに注意してください。これは、新しく追加されたファイルの内容に基づいて本のレコードを変更する場合に便利です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.postdelete:1
@@ -581,7 +581,7 @@ msgid ""
 "Return metadata for the file represented by stream (a file like object that "
 "supports reading). Raise an exception when there is an error with the input "
 "data."
-msgstr "ストリームで表されるファイル(読み取りをサポートするオブジェクトのようなファイル)の書誌を返します。入力データにエラーがある場合は、例外を発生させます。"
+msgstr "ストリームで表されるファイル(読み取りをサポートするファイルのようなオブジェクト)の書誌を返します。入力データにエラーがある場合は、例外を発生させます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.MetadataReaderPlugin.get_metadata:5
@@ -604,7 +604,7 @@ msgid ""
 "Set metadata for the file represented by stream (a file like object that "
 "supports reading). Raise an exception when there is an error with the input "
 "data."
-msgstr "ストリームで表されるファイル(読み取りをサポートするオブジェクトのようなファイル)の書誌を設定します。入力データにエラーがある場合は、例外を発生させます。"
+msgstr "ストリームで表されるファイル(読み取りをサポートするファイルのようなオブジェクト)の書誌を設定します。入力データにエラーがある場合は、例外を発生させます。"
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:54
 msgid "Catalog plugins"
@@ -766,7 +766,7 @@ msgid ""
 "before metadata is downloaded, so that it is ready in time. Such sources are"
 " also waited for longer after the first result from any source arrives, "
 "since downloading with a browser is slow."
-msgstr "True に設定すると、このソースはすべてのメタデータダウンロードで共有される Camoufox ブラウザを使用します（詳細は :mod:`calibre.web.automate.metadata` を参照）。このブラウザは、メタデータのダウンロード前に起動されるため、ダウンロード開始までに準備が整います。また、ブラウザでのダウンロードは時間がかかるため、いずれかのソースから最初の結果が届いた後も、このようなソースに対してはより長く待機します。"
+msgstr "True に設定すると、このソースはすべての書誌ダウンロードで共有される Camoufox ブラウザを使用します（詳細は :mod:`calibre.web.automate.metadata` を参照）。このブラウザは、書誌のダウンロード前に起動されるため、ダウンロード開始までに準備が整います。また、ブラウザでのダウンロードは時間がかかるため、いずれかのソースから最初の結果が届いた後も、このようなソースに対してはより長く待機します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.dl_time_spent:1
@@ -808,7 +808,7 @@ msgstr "ジョブのリストを最大で num 個のグループにできるだ�
 msgid ""
 "Return the first field from self.touched_fields that is null on the mi "
 "object"
-msgstr "mi オブジェクトで null である self.touched_fields から最初のフィールドを返します"
+msgstr "self.touched_fields のうち、mi オブジェクトで null である最初のフィールドを返します"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.clean_downloaded_metadata:1
@@ -829,7 +829,7 @@ msgid ""
 "to easily visit the books page at this source. If no URL is found, return "
 "None. This method must be quick, and consistent, so only implement it if it "
 "is possible to construct the URL from a known scheme given identifiers."
-msgstr "3 要素タプルまたは None を返します。3 タプルの形式は、(identifier_type, identifier_value, URL) です。URL は、このソースの識別子によって識別される本の URL です。identifier_type, identifier_value は、URL に対応する識別子を指定します。この URL は、ブラウザを使用する人間が閲覧できる必要があります。これは、ユーザがこのソースの本のページに簡単にアクセスできるよう、クリック可能なリンクを提供することを目的としています。URL が見つからない場合は、None を返します。このメソッドは迅速で一貫性がなければならないため、識別子が指定された既知のスキームから URL を構築できる場合にのみ実装してください。"
+msgstr "3 要素タプルまたは None を返します。3 タプルの形式は、(identifier_type, identifier_value, URL) です。URL は、このソースの識別子によって識別される本の URL です。identifier_type, identifier_value は、URL に対応する識別子を指定します。この URL は、ブラウザを使用する人間が閲覧できる必要があります。これは、ユーザがこのソースの本のページに簡単にアクセスできるよう、クリック可能なリンクを提供することを目的としています。URL が見つからない場合は、None を返します。このメソッドは迅速で一貫性がなければならないため、与えられた識別子から既知のスキームで URL を構築できる場合にのみ実装してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_book_url_name:1
@@ -849,14 +849,14 @@ msgstr "この本のURLを複数返したい場合は、このメソッドをオ
 msgid ""
 "Return cached cover URL for the book identified by the identifiers "
 "dictionary or None if no such URL exists."
-msgstr "ID辞書によって識別される本のキャッシュされた表紙画像URL を返します。そのような URL が存在しない場合は None を返します。"
+msgstr "識別子の辞書によって識別される本のキャッシュされた表紙画像URL を返します。そのような URL が存在しない場合は None を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.get_cached_cover_url:4
 msgid ""
 "Note that this method must only return validated URLs, i.e. not URLS that "
 "could result in a generic cover image or a not found error."
-msgstr "このメソッドは、検証済みの URL のみを返す必要があることに注意してください。つまり、一般的な表紙画像や見つからないエラーが発生する可能性のある URL は返さないでください。"
+msgstr "このメソッドは、検証済みの URL のみを返す必要があることに注意してください。つまり、汎用の表紙画像が返されたり not found エラーが発生したりする可能性のある URL は返さないでください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.id_from_url:1
@@ -872,7 +872,7 @@ msgid ""
 "Return a function that is used to generate a key that can sort Metadata "
 "objects by their relevance given a search query (title, authors, "
 "identifiers)."
-msgstr "検索クエリ(タイトル、作成者、識別子)を指定して、書誌オブジェクトを関連性で並べ替えることができるキーを生成するために使用される関数を返します。"
+msgstr "検索クエリ(タイトル、著者、識別子)を指定して、書誌オブジェクトを関連性で並べ替えることができるキーを生成するために使用される関数を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify_results_keygen:5
@@ -899,7 +899,7 @@ msgid ""
 "source does not store all related identifiers (for example, all ISBNs of a "
 "book), this method should retry with just the title and author (assuming "
 "they were specified)."
-msgstr "ID が指定されていて、一致するものが見つからず、この書誌ソースに関連するすべてのID (たとえば、本のすべてのISBN)が保存されていない場合、このメソッドは、タイトルと作成者のみで再試行する必要があります(指定されている場合)。"
+msgstr "識別子が指定されていて、一致するものが見つからず、この書誌ソースに関連するすべての識別子 (たとえば、本のすべてのISBN)が保存されていない場合、このメソッドは、タイトルと著者のみで再試行する必要があります(指定されている場合)。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:8
@@ -908,7 +908,7 @@ msgid ""
 " cached so that a subsequent call to the get covers API with the same "
 "ISBN/special identifier does not need to get the cover URL again. Use the "
 "caching API for this."
-msgstr "この書誌ソースが表紙も提供している場合は、表紙への URL をキャッシュして、同じISBN/特別な IDを使用した表紙取得 API への後続の呼び出しで表紙 URL を再度取得する必要がないようにする必要があります。これにはキャッシング API を使用します。"
+msgstr "この書誌ソースが表紙も提供している場合は、表紙への URL をキャッシュして、同じ ISBN/特別な識別子を使用した表紙取得 API への後続の呼び出しで表紙 URL を再度取得する必要がないようにする必要があります。これにはキャッシング API を使用します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:13
@@ -937,7 +937,7 @@ msgstr "ログオブジェクト。デバッグ情報/エラーを出力する�
 msgid ""
 "A result Queue, results should be put into it. Each result is a Metadata "
 "object"
-msgstr "結果キュー、結果はそれに入れられるべきです。各結果は書誌オブジェクトです"
+msgstr "結果キュー。結果はこのキューに入れます。各結果は書誌オブジェクトです"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:25
@@ -959,13 +959,13 @@ msgstr "本の著者のリスト。None にすることができます"
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:29
 msgid "A dictionary of other identifiers, most commonly {'isbn':'1234...'}"
-msgstr "他の ID の辞書、最も一般的なのは {'isbn': '1234 ...'}"
+msgstr "他の識別子の辞書。最も一般的なのは {'isbn':'1234...'}"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:31
 msgid ""
 "Timeout in seconds, no network request should hang for longer than timeout."
-msgstr "秒単位のタイムアウト。ネットワーク要求がタイムアウトより長くハングすることはありません。"
+msgstr "秒単位のタイムアウト。どのネットワーク要求も、タイムアウトより長くハングしないようにする必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.identify:33
@@ -988,7 +988,7 @@ msgid ""
 "This method should use cached cover URLs for efficiency whenever possible. "
 "When cached data is not present, most plugins simply call identify and use "
 "its results."
-msgstr "この方法では、可能な限り効率を上げるために、キャッシュされた表紙 URL を使用する必要があります。キャッシュされたデータが存在しない場合、ほとんどのプラグインは単に identify を呼び出し、その結果を使用します。"
+msgstr "このメソッドでは、可能な限り効率を上げるために、キャッシュされた表紙 URL を使用する必要があります。キャッシュされたデータが存在しない場合、ほとんどのプラグインは単に identify を呼び出し、その結果を使用します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.download_cover:9
@@ -1010,7 +1010,7 @@ msgstr "検索クエリを指定して、書誌オブジェクトの関連性を
 msgid ""
 "The sort key ensures that an ascending order sort is a sort by order of "
 "decreasing relevance."
-msgstr "ソートキーは、昇順のソートが関連性の低いオーダーによるソートであることを保証します。"
+msgstr "このソートキーにより、昇順でソートすると関連性の高い順に並びます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:8
@@ -1021,17 +1021,17 @@ msgstr "アルゴリズムは:"
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:10
 msgid ""
 "Prefer results that have at least one identifier the same as for the query"
-msgstr "クエリと同じ ID が少なくともひとつある結果を優先する"
+msgstr "クエリと同じ識別子が少なくともひとつある結果を優先する"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:11
 msgid "Prefer results with a cached cover URL"
-msgstr "キャッシュされた表紙 URL で結果を優先する"
+msgstr "キャッシュされた表紙 URL がある結果を優先する"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:12
 msgid "Prefer results with all available fields filled in"
-msgstr "使用可能なすべてのフィールドに入力した結果を優先する"
+msgstr "使用可能なすべてのフィールドが埋まっている結果を優先する"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.InternalMetadataCompareKeyGen:13
@@ -1070,7 +1070,7 @@ msgid ""
 "InputFormatPlugins are responsible for converting a document into "
 "HTML+OPF+CSS+etc. The results of the conversion *must* be encoded in UTF-8. "
 "The main action happens in :meth:`convert`."
-msgstr "InputFormatPlugins は、ドキュメントを HTML+OPF+CSS+その他に変換する役割を果たします。変換の結果は、UTF-8 でエンコードする必要があります。主なアクションは :meth:`convert` で発生します。"
+msgstr "InputFormatPlugins は、ドキュメントを HTML+OPF+CSS+その他に変換する役割を果たします。変換の結果は、UTF-8 でエンコードする必要があります。主な処理は :meth:`convert` で行われます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.file_types:1
@@ -1087,7 +1087,7 @@ msgid ""
 "can be both image collections and non-image collections. If you set this to "
 "True, you must implement the get_images() method that returns a list of "
 "images."
-msgstr "True のとき、この入力プラグインは、HTML ファイルごとに1つずつ、画像のコレクションを生成します。入力ファイルが画像コレクションと非画像コレクションの両方である場合は、convert メソッドでこれを動的に設定できます。これを True に設定する場合は、画像のリストを返す get_images() メソッドを実装する必要があります。"
+msgstr "True のとき、この入力プラグインは、HTML ファイルごとに1つずつ、画像のコレクションを生成します。入力ファイルが画像コレクションである場合とそうでない場合の両方がありうるときは、convert メソッドでこれを動的に設定できます。これを True に設定する場合は、画像のリストを返す get_images() メソッドを実装する必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.core_usage:1
@@ -1136,7 +1136,7 @@ msgstr "このプラグインの動作をカスタマイズするためのオプ
 msgid ""
 "A set of 3-tuples of the form (option_name, recommended_value, "
 "recommendation_level)"
-msgstr "フォームの 3 タプルのセット(option_name, recommended_value, recommendation_level)"
+msgstr "(option_name, recommended_value, recommendation_level) の形式の 3 タプルのセット"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.get_images:1
@@ -1144,7 +1144,7 @@ msgid ""
 "Return a list of absolute paths to the images, if this input plugin "
 "represents an image collection. The list of images is in the same order as "
 "the spine and the TOC."
-msgstr "この入力プラグインが画像コレクションを表す場合は、画像への絶対パスのリストを返します。画像のリストは、背表紙および目次と同じ順序です。"
+msgstr "この入力プラグインが画像コレクションを表す場合は、画像への絶対パスのリストを返します。画像のリストは、スパインおよび目次と同じ順序です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:1
@@ -1154,12 +1154,12 @@ msgid ""
 "contained in the current folder. If this plugin creates files outside the "
 "current folder they must be deleted/marked for deletion before this method "
 "returns."
-msgstr "このメソッドは、サブクラスで実装する必要があります。作成された OPF ファイルまたは :class:`OEBBook` インスタンスへのパスを返す必要があります。すべての出力は現在のフォルダに含まれている必要があります。このプラグインが現在のフォルダの外にファイルを作成する場合、このメソッドが戻る前に、それらを削除するか、削除のマークを付ける必要があります。"
+msgstr "このメソッドは、サブクラスで実装する必要があります。作成された OPF ファイルへのパス、または :class:`OEBBook` インスタンスを返す必要があります。すべての出力は現在のフォルダに含まれている必要があります。このプラグインが現在のフォルダの外にファイルを作成する場合、このメソッドが戻る前に、それらを削除するか、削除のマークを付ける必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:8
 msgid "A file like object that contains the input file."
-msgstr "入力ファイルを含むオブジェクトのようなファイル。"
+msgstr "入力ファイルを含むファイルのようなオブジェクト。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:9
@@ -1170,7 +1170,7 @@ msgid ""
 "Higher numbers mean be more verbose. Another useful attribute is "
 "``input_profile`` that is an instance of "
 ":class:`calibre.customize.profiles.InputProfile`."
-msgstr "変換プロセスをカスタマイズするためのオプション。このプラグインによって宣言されたすべてのオプションに対応する属性を持つことが保証されています。さらに、ゼロから上に向かって整数値を取る冗長属性があります。数値が大きいほど、冗長であることを意味します。もう1つの便利な属性は、:class:`calibre.customize.profiles.InputProfile` のインスタンスである ``input_profile`` です。"
+msgstr "変換プロセスをカスタマイズするためのオプション。このプラグインによって宣言されたすべてのオプションに対応する属性を持つことが保証されています。さらに、0 以上の整数値を取る verbose 属性があります。数値が大きいほど、冗長であることを意味します。もう1つの便利な属性は、:class:`calibre.customize.profiles.InputProfile` のインスタンスである ``input_profile`` です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.InputFormatPlugin.convert:17
@@ -1229,7 +1229,7 @@ msgstr "OutputFormatPlugins は、OEB ドキュメント (OPF+HTML) を出力電
 msgid ""
 "The OEB document can be assumed to be encoded in UTF-8. The main action "
 "happens in :meth:`convert`."
-msgstr "OEB ドキュメントは UTF-8 でエンコードされていると見なすことができます。主なアクションは :meth:`convert` で発生します。"
+msgstr "OEB ドキュメントは UTF-8 でエンコードされていると見なすことができます。主な処理は :meth:`convert` で行われます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.file_type:1
@@ -1267,7 +1267,7 @@ msgid ""
 " folder that may or may not exist. The output plugin should write its output"
 " into that folder. If it is a file like object, the output plugin should "
 "write its output into the file."
-msgstr "オブジェクトまたは文字列のようなファイル。文字列の場合は、存在する場合と存在しない場合があるフォルダへのパスです。出力プラグインは、その出力をそのフォルダに書き込む必要があります。オブジェクトのようなファイルの場合、出力プラグインはその出力をファイルに書き込む必要があります。"
+msgstr "ファイルのようなオブジェクト、または文字列。文字列の場合は、存在する場合と存在しない場合があるフォルダへのパスです。出力プラグインは、その出力をそのフォルダに書き込む必要があります。ファイルのようなオブジェクトの場合、出力プラグインはその出力をファイルに書き込む必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:8
@@ -1285,7 +1285,7 @@ msgstr "変換オプション。このプラグインの OptionRecommendations �
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.convert:12
 msgid "The logger. Print debug/info messages etc. using this."
-msgstr "ロガー。これを使用して、デバッグ/情報メッセージなどを印刷します。"
+msgstr "ロガー。これを使用して、デバッグ/情報メッセージなどを出力します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/conversion.pydocstring
 #: of calibre.customize.conversion.OutputFormatPlugin.specialize_options:1
@@ -1334,7 +1334,7 @@ msgid ""
 "your device exposes itself as a USBMS drive to the operating system, you "
 "should use the USBMS class instead as it implements all the logic needed to "
 "support these kinds of devices."
-msgstr "すべてのデバイスドライバの基底クラスは :class:`DevicePlugin` です。ただし、デバイスがそれ自体を USBMS ドライブとしてオペレーティングシステムに公開する場合は、これらの種類のデバイスをサポートするために必要なすべてのロジックを実装するため、代わりに USBMS クラスを使用する必要があります"
+msgstr "すべてのデバイスドライバの基底クラスは :class:`DevicePlugin` です。ただし、デバイスがそれ自体を USBMS ドライブとしてオペレーティングシステムに公開する場合は、代わりに USBMS クラスを使用してください。このクラスには、この種のデバイスのサポートに必要なロジックがすべて実装されています。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin:1
@@ -1348,7 +1348,7 @@ msgstr "電子書籍リーダと通信するバックエンドによって実装
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.FORMATS:1
 msgid "Ordered list of supported formats"
-msgstr "サポートされている形式を順に並べ替えられたリスト"
+msgstr "サポートされている形式の順序付きリスト"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.VENDOR_ID:1
@@ -1433,7 +1433,7 @@ msgstr "フィールド番号 1 のエイリアス"
 msgid ""
 "GUI displays this as a message if not None in the status bar. Useful if "
 "opening can take a long time"
-msgstr "ステータスバーに None でない場合、GUI はこれをメッセージとして表示します。開くのに時間がかかる場合に便利です"
+msgstr "None でない場合、GUI はこれをステータスバーにメッセージとして表示します。開くのに時間がかかる場合に便利です"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.VIRTUAL_BOOK_EXTENSIONS:1
@@ -1441,12 +1441,12 @@ msgid ""
 "Set of extensions that are \"virtual books\" on the device and therefore "
 "cannot be viewed/saved/added to library. For example: "
 "``frozenset(['kobo'])``"
-msgstr "デバイス上の「仮想本」であるため、ライブラリに表示/保存/追加できない拡張機能のセット。例:``frozenset(['kobo'])``"
+msgstr "デバイス上の「仮想本」であるため、表示/保存/ライブラリへの追加ができない拡張子のセット。例:``frozenset(['kobo'])``"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.VIRTUAL_BOOK_EXTENSION_MESSAGE:1
 msgid "Message to display to user for virtual book extensions."
-msgstr "仮想本拡張機能についてユーザに表示するメッセージ。"
+msgstr "仮想本の拡張子についてユーザに表示するメッセージ。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.NUKE_COMMENTS:1
@@ -1469,7 +1469,7 @@ msgid ""
 "driver must maintain its own blacklist of failed devices. Similarly, when "
 "ejecting, calibre will call eject() and then assuming the next call to "
 "detect_managed_devices() returns None, it will call post_yank_cleanup()."
-msgstr "True のとき、このドライバがデバイスの検出や取り出しなどを完全に管理していることを示します。これを True に設定する場合は、detect_managed_devices メソッドと debug_managed_device_detection メソッドを実装する必要があります。これを true に設定したドライバは、デバイスの検出、デバイスのブラックリスト、排出されたデバイスのリストなどを管理します。calibre は定期的に detect_managed_devices() メソッドを呼び出し、それが検出されたデバイスを返す場合、calibre は open() を呼び出します。open() は、open() の以前の呼び出しが失敗した場合でも、デバイスが返されるたびに呼び出されるため、ドライバは失敗したデバイスの独自のブラックリストを維持する必要があります。同様に、イジェクトするとき、calibreはeject() を呼び出し、次に detect_managed_devices() への次の呼び出しが None を返すと仮定して、post_yank_cleanup() を呼び出します。"
+msgstr "True のとき、このドライバがデバイスの検出や取り出しなどを完全に管理していることを示します。これを True に設定する場合は、detect_managed_devices メソッドと debug_managed_device_detection メソッドを実装する必要があります。これを true に設定したドライバは、デバイスの検出、デバイスのブラックリスト、イジェクトされたデバイスのリストなどを管理します。calibre は定期的に detect_managed_devices() メソッドを呼び出し、それが検出されたデバイスを返す場合、calibre は open() を呼び出します。open() は、open() の以前の呼び出しが失敗した場合でも、デバイスが返されるたびに呼び出されるため、ドライバは失敗したデバイスの独自のブラックリストを維持する必要があります。同様に、イジェクトするとき、calibre は eject() を呼び出し、続く detect_managed_devices() の呼び出しが None を返すことを前提に、post_yank_cleanup() を呼び出します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.SLOW_DRIVEINFO:1
@@ -1517,7 +1517,7 @@ msgstr "このドライバがサポートするすべての実際のデバイス
 msgid ""
 "Return True, device_info if a device handled by this plugin is currently "
 "connected."
-msgstr "このプラグインによって処理されるデバイスが現在接続されている場合は、true, device_info を返します。"
+msgstr "このプラグインによって処理されるデバイスが現在接続されている場合は、True, device_info を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.is_usb_connected:3
@@ -1564,7 +1564,7 @@ msgstr "True かつ、ドライバがキャッシュを使用してスキャン�
 msgid ""
 "Should write information about the devices detected on the system to output,"
 " which is a file like object."
-msgstr "システムで検出されたデバイスに関する情報を出力に書き込む必要があります。これは、オブジェクトのようなファイルです。"
+msgstr "システムで検出されたデバイスに関する情報を output に書き込む必要があります。output はファイルのようなオブジェクトです。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.debug_managed_device_detection:6
@@ -1619,7 +1619,7 @@ msgid ""
 " can do some relatively time intensive checks. The default implementation "
 "returns True. This method is called only on Windows. See also "
 ":meth:`can_handle`."
-msgstr "このドライバがデバイスを処理できるかどうかを確認するために、デバイスでさらにチェックを実行するためのオプションの方法。そうでない場合は、False を返す必要があります。このメソッドは、ベンダー、製品 ID、および bcd が一致した後にのみ呼び出されるため、比較的時間のかかるチェックを実行できます。デフォルトの実装は True を返します。このメソッドは、Windows でのみ呼び出されます。:meth:`can_handle` も参照してください。"
+msgstr "このドライバがデバイスを処理できるかどうかを確認するために、デバイスでさらにチェックを実行するためのオプションのメソッド。そうでない場合は、False を返す必要があります。このメソッドは、ベンダー、製品 ID、および bcd が一致した後にのみ呼び出されるため、比較的時間のかかるチェックを実行できます。デフォルトの実装は True を返します。このメソッドは、Windows でのみ呼び出されます。:meth:`can_handle` も参照してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.can_handle_windows:8
@@ -1662,7 +1662,7 @@ msgid ""
 "method :meth:`calibre.devices.usbms.device.Device.open` has an "
 "implementation of this function that should serve as a good example for USB "
 "Mass storage devices."
-msgstr "デバイス固有の初期化を実行します。デバイスが検出された後、デバイスと通信する他の機能の前に呼び出されます。例: USBマスストレージデバイスとして表示されるデバイスの場合、この方法でデバイスをマウントするか、デバイスが自動マウントされている場合は、マウントされている場所を確認します。メソッド :meth:`calibre.devices.usbms.device.Device.open` には、USB マスストレージデバイスの良い例として役立つこの関数の実装があります。"
+msgstr "デバイス固有の初期化を実行します。デバイスが検出された後、デバイスと通信する他の関数の前に呼び出されます。例: USBマスストレージデバイスとして表示されるデバイスの場合、このメソッドがデバイスのマウント、またはデバイスが自動マウントされている場合はマウント先の確認を担当します。メソッド :meth:`calibre.devices.usbms.device.Device.open` には、USB マスストレージデバイスの良い例として役立つこの関数の実装があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:11
@@ -1682,7 +1682,7 @@ msgid ""
 "id, bcd, manufacturer name, product name, device serial number). However, "
 "some devices have no serial number and on Windows only the first three "
 "fields are present, the rest are None."
-msgstr "開こうとしているデバイス。(ベンダ ID, 製品 ID, BCD, メーカー名, 製品名, デバイスのシリアル番号)のタプルです。ただし、一部のデバイスにはシリアル番号がなく、Windows では最初の 3 つのフィールドのみが表示され、残りは None です。"
+msgstr "開こうとしているデバイス。(ベンダ ID, 製品 ID, BCD, メーカー名, 製品名, デバイスのシリアル番号)のタプルです。ただし、一部のデバイスにはシリアル番号がなく、Windows では最初の 3 つのフィールドのみが存在し、残りは None です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.open:20
@@ -1716,14 +1716,14 @@ msgstr "注:このメソッドは、他のデバイスメソッドと同じス�
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.post_yank_cleanup:1
 msgid "Called if the user yanks the device without ejecting it first."
-msgstr "デバイス上の本が calibre のデータベース内の本と一致するときに、本の一致中に呼び出されます。このメソッドは、デバイスからのデータを calibre のデータベースに同期する役割を果たします (必要な場合)。"
+msgstr "ユーザがデバイスをイジェクトせずに引き抜いた場合に呼び出されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_progress_reporter:1
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.set_progress_reporter:1
 msgid "Set a function to report progress information."
-msgstr "進捗情報を報告する機能を設定します。"
+msgstr "進捗情報を報告する関数を設定します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_device_information:1
@@ -1751,7 +1751,7 @@ msgid ""
 " called by calibre after the book lists have been loaded. Note that it is "
 "not called on the device thread, so the driver should cache the drive info "
 "in the books() method and this function should return the cached data."
-msgstr "driveinfo ディクショナリを返します。通常は get_device_information() から呼び出されますが、このドライバの driveinfo のロードが遅い場合は、SLOW_DRIVEINFO を設定する必要があります。この場合、このメソッドは、本リストがロードされた後に calibre によって呼び出されます。デバイススレッドでは呼び出されないため、ドライバはドライブ情報を books() メソッドにキャッシュし、この関数はキャッシュされたデータを返す必要があることに注意してください。"
+msgstr "driveinfo 辞書を返します。通常は get_device_information() から呼び出されますが、このドライバの driveinfo のロードが遅い場合は、SLOW_DRIVEINFO を設定する必要があります。この場合、このメソッドは、本リストがロードされた後に calibre によって呼び出されます。デバイススレッドでは呼び出されないため、ドライバはドライブ情報を books() メソッド内でキャッシュし、この関数はキャッシュされたデータを返す必要があることに注意してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.card_prefix:1
@@ -1761,7 +1761,7 @@ msgid ""
 "Return a 2 element list of the prefix to paths on the cards. If no card is "
 "present None is set for the card's prefix. E.G. ('/place', '/place2') (None,"
 " 'place2') ('place', None) (None, None)"
-msgstr "カードのパスにプレフィックスの 2 要素リストを返します。カードが存在しない場合、カードのプレフィックスには None が設定されます。例: ('/place', '/place2') (None, 'place2') ('place', None) (None, None)"
+msgstr "カード上のパスのプレフィックスの 2 要素リストを返します。カードが存在しない場合、カードのプレフィックスには None が設定されます。例: ('/place', '/place2') (None, 'place2') ('place', None) (None, None)"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.total_space:1
@@ -1849,14 +1849,14 @@ msgid ""
 "If 'carda' or 'cardb' return a list of e-books on the specific storage card,"
 " otherwise return list of e-books in main memory of device. If a card is "
 "specified and no books are on the card return empty list."
-msgstr "'carda' または 'cardb' が特定のストレージカード上の電子書籍のリストを返す場合、それ以外の場合はデバイスのメインメモリにある電子書籍のリストを返します。カードが指定されていて、カードに本がない場合は、空のリストを返します。"
+msgstr "'carda' または 'cardb' の場合は特定のストレージカード上の電子書籍のリストを返し、それ以外の場合はデバイスのメインメモリにある電子書籍のリストを返します。カードが指定されていて、カードに本がない場合は、空のリストを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.books:8
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.books:8
 msgid "A BookList."
-msgstr "本のリスト。"
+msgstr "BookList。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:1
@@ -1884,7 +1884,7 @@ msgstr "パスのリスト"
 msgid ""
 "A list of file names that the books should have once uploaded to the device."
 " len(names) == len(files)"
-msgstr "本がデバイスにアップロードされたときに必要なファイル名のリスト。len(names)== len(files)"
+msgstr "デバイスにアップロードした本に付けるファイル名のリスト。len(names) == len(files)"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:10
@@ -1896,7 +1896,7 @@ msgid ""
 " == len(files). Apart from the regular cover (path to cover), there may also"
 " be a thumbnail attribute, which should be used in preference. The thumbnail"
 " attribute is of the form (width, height, cover_data as jpeg)."
-msgstr "None でない場合は、:class:`Metadata` オブジェクトのリストです。アイデアは、書誌を使用して、本を置くデバイスの場所を決定することです。len(metadata)== len(files)。通常の表紙(表紙へのパス)とは別に、サムネイル属性もある場合があります。これは優先的に使用する必要があります。サムネイル属性の形式は (幅, 高さ, JPEG の cover_data) です。"
+msgstr "None でない場合は、:class:`Metadata` オブジェクトのリストです。書誌を使用して、デバイス上のどこに本を置くかを決定するためのものです。len(metadata) == len(files)。通常の表紙(表紙へのパス)とは別に、サムネイル属性もある場合があります。これは優先的に使用する必要があります。サムネイル属性の形式は (幅, 高さ, JPEG の cover_data) です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.upload_books:17
@@ -1914,7 +1914,7 @@ msgstr "3 要素タプルのリスト。このリストは、:meth:`add_books_to
 msgid ""
 "Add locations to the booklists. This function must not communicate with the "
 "device."
-msgstr "本リストに場所を追加します。この機能はデバイスと通信してはなりません。"
+msgstr "本リストに場所を追加します。この関数はデバイスと通信してはなりません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.add_books_to_metadata:4
@@ -1961,7 +1961,7 @@ msgstr "デバイス上のパスにある本を削除します。"
 msgid ""
 "Remove books from the metadata list. This function must not communicate with"
 " the device."
-msgstr "書誌リストから本を削除します。この機能はデバイスと通信してはなりません。"
+msgstr "書誌リストから本を削除します。この関数はデバイスと通信してはなりません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.remove_books_from_metadata:4
@@ -1980,7 +1980,7 @@ msgstr "デバイスの書誌を更新します。"
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_file:1
 msgid "Read the file at ``path`` on the device and write it to outfile."
-msgstr "デバイスの ``path`` にあるファイルを読み取り、出力ファイルに書き込みます。"
+msgstr "デバイスの ``path`` にあるファイルを読み取り、outfile に書き込みます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_file:3
@@ -2006,7 +2006,7 @@ msgstr "設定をディスクに保存する必要があります。:meth:`confi
 msgid ""
 "Should return an opts object. The opts object should have at least one "
 "attribute `format_map` which is an ordered list of formats for the device."
-msgstr "opts オブジェクトを返す必要があります。opts オブジェクトには、デバイスのフォーマットの順序付きリストである少なくとも1つの属性 `format_map` が必要です。"
+msgstr "opts オブジェクトを返す必要があります。opts オブジェクトには少なくとも、デバイスの形式の順序付きリストである属性 `format_map` が必要です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:1
@@ -2014,12 +2014,12 @@ msgid ""
 "provide the driver the current set of plugboards and a function to select a "
 "specific plugboard. This method is called immediately before add_books and "
 "sync_booklists."
-msgstr "ドライバに現在のプラグボードのセットと特定のプラグボードを選択する機能を提供します。このメソッドは、add_books および sync_booklists の直前に呼び出されます。"
+msgstr "ドライバに現在のプラグボードのセットと特定のプラグボードを選択する関数を提供します。このメソッドは、add_books および sync_booklists の直前に呼び出されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:5
 msgid "pb_func is a callable with the following signature::"
-msgstr "pb_funcは、次のシグネチャを持つ呼び出し可能です::"
+msgstr "pb_funcは、次のシグネチャを持つ呼び出し可能オブジェクトです::"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:6
@@ -2033,7 +2033,7 @@ msgid ""
 "DEVICE_PLUGBOARD_NAME), the format you are interested in (a 'real' format or"
 " 'device_db'), and the plugboards (you were given those by set_plugboards, "
 "the same place you got this method)."
-msgstr "現在のデバイス名 (クラス名または DEVICE_PLUGBOARD_NAME のいずれか)、関心のある形式('real' 形式または 'device_db')、およびプラグボード (これらは set_plugboards によって与えらます。このメソッドが与えられたのと同じ場所です)。"
+msgstr "これには、現在のデバイス名 (クラス名または DEVICE_PLUGBOARD_NAME のいずれか)、関心のある形式 ('real' 形式または 'device_db')、およびプラグボード (このメソッドと同じく set_plugboards から渡されたもの) を渡します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_plugboards:13
@@ -2081,7 +2081,7 @@ msgid ""
 "__init__ can be called multiple times, but only one instance will have this "
 "method called. This method is called on the device thread, not the GUI "
 "thread."
-msgstr "calibre がデバイスを起動しているときに呼び出されます。必要な初期化を行います。クラスの複数のインスタンスをインスタンス化できるため、__ init__ を複数回呼び出すことができますが、このメソッドが呼び出されるのは1つのインスタンスのみであることに注意してください。このメソッドは、GUI スレッドではなく、デバイススレッドで呼び出されます。"
+msgstr "calibre がデバイスを起動しているときに呼び出されます。必要な初期化を行います。クラスの複数のインスタンスをインスタンス化できるため、__init__ を複数回呼び出すことができますが、このメソッドが呼び出されるのは1つのインスタンスのみであることに注意してください。このメソッドは、GUI スレッドではなく、デバイススレッドで呼び出されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.shutdown:1
@@ -2089,7 +2089,7 @@ msgid ""
 "Called when calibre is shutting down, either for good or in preparation to "
 "restart. Do any cleanup required. This method is called on the device "
 "thread, not the GUI thread."
-msgstr "calibre がシャットダウンしているとき、または再起動の準備のために呼び出されます。必要なクリーンアップを実行します。このメソッドは、GUI スレッドではなく、デバイススレッドで呼び出されます。"
+msgstr "calibre が完全に終了するとき、または再起動の準備のためにシャットダウンするときに呼び出されます。必要なクリーンアップを実行します。このメソッドは、GUI スレッドではなく、デバイススレッドで呼び出されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_device_uid:1
@@ -2114,7 +2114,7 @@ msgstr "将来、uid (get_device_uid() の呼び出しの結果) によって識
 msgid ""
 "Return map of device uid to friendly name for all devices that the user has "
 "asked to be ignored."
-msgstr "ユーザが無視するように要求したすべてのデバイスのフレンドリ名にデバイス uid のマップを返します。"
+msgstr "ユーザが無視するように要求したすべてのデバイスについて、デバイス uid からフレンドリ名へのマップを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_user_blacklisted_devices:1
@@ -2130,7 +2130,7 @@ msgid ""
 "prefs['something']. Your method should call "
 "device_prefs.set_overrides(pref=val, pref=val, ...). Currently used for: "
 "metadata management (prefs['manage_device_metadata'])"
-msgstr "デバイスが特定の設定を上書きする場合は、このメソッドを実装します。オーバーライド可能な設定が必要なすべての呼び出しサイトで、prefs['something'] ではなく device_prefs['something'] を使用するようにする必要があります。メソッドは device_prefs.set_overrides(pref=val, pref=val, ...) を呼び出す必要があります。現在使用されているもの: 書誌管理 (prefs ['manage_device_metadata'])"
+msgstr "デバイスが特定の設定を上書きする場合は、このメソッドを実装します。オーバーライド可能な設定が必要なすべての呼び出しサイトで、prefs['something'] ではなく device_prefs['something'] を使用するようにする必要があります。メソッドは device_prefs.set_overrides(pref=val, pref=val, ...) を呼び出す必要があります。現在使用されているもの: 書誌管理 (prefs['manage_device_metadata'])"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.set_library_info:1
@@ -2181,7 +2181,7 @@ msgid ""
 " connections, and should cleanup behind itself. It is likely that this "
 "method should call shutdown. If the plugin is already not accepting "
 "connections, then do nothing."
-msgstr "このメソッドは、プラグインを停止するために呼び出されます。プラグインは接続を受け入れなくなり、プラグイン自体の背後でクリーンアップする必要があります。このメソッドは shutdown を呼び出す必要がある可能性があります。プラグインがすでに接続を受け入れていない場合は、何もしません。"
+msgstr "このメソッドは、プラグインを停止するために呼び出されます。プラグインは接続の受け入れをやめ、自身の後片付けをする必要があります。このメソッドは shutdown を呼び出す必要がある可能性があります。プラグインがすでに接続を受け入れていない場合は、何もしません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.get_option:1
@@ -2237,7 +2237,7 @@ msgid ""
 " value in the returned tuple indicated whether the format is future-dated. "
 "Return True if it is, otherwise return False. calibre will display a dialog "
 "to the user listing all future dated books."
-msgstr "2 番目の値は、それ自体が 2 値のタプルです。タプルの最初の値は、本の形式をデバイスに送信するかどうかを指定します。目的は、デバイス上の本が calibre の本と同じであるかどうかを検証できるようにすることです。本を送信しない場合は、この値を None にする必要があります。そうでない場合は、デバイスのベースファイル名 (foobar.epub などの文字列) を返します。名前には必ず拡張子を含めてください。デバイスサブシステムは、戻り値が None でないすべての本に対して send_books ジョブを作成します。注: 後で拡張子を取得する場合を除いて、デバイスがテンプレートを使用してファイル名を生成する場合、名前は無視されます。ほとんどの場合、この名前は無視されます。返されたタプルの 2 番目の値は、その形式が未来の日付であるかどうかを示しています。そうである場合は True を返し、そうでない場合は False を返します。calibre は、未来の日付の本をすべて一覧表示するダイアログをユーザに表示します。"
+msgstr "2 番目の値は、それ自体が 2 値のタプルです。タプルの最初の値は、本の形式をデバイスに送信するかどうかを指定します。目的は、デバイス上の本が calibre の本と同じであるかどうかを検証できるようにすることです。本を送信しない場合は、この値を None にする必要があります。そうでない場合は、デバイスのベースファイル名 (foobar.epub などの文字列) を返します。名前には必ず拡張子を含めてください。デバイスサブシステムは、戻り値が None でないすべての本に対して send_books ジョブを作成します。注: デバイスがテンプレートを使用してファイル名を生成する場合 (ほとんどのデバイスがそうです)、名前は後で拡張子を取得するために使われる以外は無視されます。返されたタプルの 2 番目の値は、その形式が未来の日付であるかどうかを示しています。そうである場合は True を返し、そうでない場合は False を返します。calibre は、未来の日付の本をすべて一覧表示するダイアログをユーザに表示します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.synchronize_with_db:27
@@ -2277,7 +2277,7 @@ msgstr "size (本のファイルサイズ)"
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList:6
 msgid "datetime (a UTC time tuple)"
-msgstr "datetime (a UTC 時刻タプル)"
+msgstr "datetime (UTC 時刻タプル)"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList:7
@@ -2321,7 +2321,7 @@ msgstr "本リストから本を削除します。デバイスの書誌を同時
 msgid ""
 "Return a dictionary of collections created from collection_attributes. Each "
 "entry in the dictionary is of the form collection name:[list of books]"
-msgstr "collection_attributes から作成されたコレクションの辞書を返します。辞書の各エントリは、コレクション 名の形式です:[本のリスト]"
+msgstr "collection_attributes から作成されたコレクションの辞書を返します。辞書の各エントリは コレクション名:[本のリスト] の形式です"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.get_collections:5
@@ -2345,7 +2345,7 @@ msgid ""
 ":class:`calibre.devices.usbms.driver.USBMS`. This class in turn inherits "
 "some of its functionality from its bases, documented below. A typical basic "
 "USBMS based driver looks like this:"
-msgstr "このようなデバイスの基底クラスは :class:`calibre.devices.usbms.driver.USBMS` です。このクラスは、その機能の一部をベースから順に継承します。これについては、以下で説明します。典型的な基本的な USBMS ベースのドライバは次のようになります。"
+msgstr "このようなデバイスの基底クラスは :class:`calibre.devices.usbms.driver.USBMS` です。このクラスはさらに、その機能の一部を基底クラスから継承しています。基底クラスについては以下で説明します。典型的な基本的な USBMS ベースのドライバは次のようになります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device:1
@@ -2382,7 +2382,7 @@ msgid ""
 "Used by the new driver detection to disambiguate main memory from storage "
 "cards. Should be a regular expression that matches the main memory mount "
 "point assigned by macOS"
-msgstr "新しいドライバ検出によって使用され、ストレージカードからメインメモリを明確にします。macOS によって割り当てられたメインメモリのマウントポイントにマッチする正規表現である必要があります"
+msgstr "新しいドライバ検出によって使用され、メインメモリとストレージカードを区別します。macOS によって割り当てられたメインメモリのマウントポイントにマッチする正規表現である必要があります"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.MAX_PATH_LEN:1
@@ -2400,7 +2400,7 @@ msgid ""
 "Called to disambiguate main memory and storage card for devices that do not "
 "distinguish between them on the basis of `WINDOWS_CARD_NAME`. For example: "
 "The EB600"
-msgstr "`WINDOWS_CARD_NAME` に基づいてそれらを区別しないデバイスのメインメモリとストレージカードを明確にするために呼び出されます。例: EB600"
+msgstr "`WINDOWS_CARD_NAME` に基づいてそれらを区別しないデバイスのメインメモリとストレージカードを区別するために呼び出されます。例: EB600"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.sanitize_callback:1
@@ -2441,6 +2441,26 @@ msgid ""
 msgstr "すべての USBMS デバイスの基底クラス。書誌の送信/取得/更新/書誌のキャッシュなどのロジックを実装します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.SCAN_SKIP_DIR_SUFFIXES:1
+msgid "Folders whose names end with one of these are not searched for books"
+msgstr "名前がこれらのどれかで終わるフォルダからは本を探しません"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.FOLDER_SCAN_THREADS:1
+msgid ""
+"Number of folders to list at the same time when the device is a folder, "
+"which may be on a slow network drive, see :meth:`scan_threads`"
+msgstr "デバイスがフォルダの場合に、同時に一覧を取得するフォルダの数。フォルダは遅いネットワークドライブ上にあることもあります。:meth:`scan_threads` を参照してください"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.scan_threads:1
+msgid ""
+"The number of threads to use to list the folders on the device. Only folders"
+" connected as devices use more than one, as they may be on a high latency "
+"network drive, whereas real devices gain nothing from it."
+msgstr "デバイス上のフォルダの一覧の取得に使うスレッドの数。複数のスレッドを使うのは、デバイスとして接続したフォルダだけです。これは遅延の大きいネットワークドライブ上にあることがあるためで、実際のデバイスでは効果がありません。"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
 msgid "Upload book cover to the device. Default implementation does nothing."
 msgstr "本の表紙をデバイスにアップロードします。デフォルトの実装は何もしません。"
@@ -2468,7 +2488,33 @@ msgstr "電子書籍ファイルへのフルパス"
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.normalize_path:1
 msgid "Return path with platform native path separators"
-msgstr "プラットフォームのネイティブパスセパレータを使用したリターンパス"
+msgstr "プラットフォームのネイティブパスセパレータを使用したパスを返します"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.supports_deferred_datetime:1
+msgid ""
+"True if :attr:`book_class` can be created without looking up the date of the"
+" book file, see the defer_datetime argument of :class:`Book`. Book classes "
+"that override __init__() without that argument are created normally."
+msgstr "本のファイルの日付を調べずに :attr:`book_class` を作成できるなら True。:class:`Book` の defer_datetime 引数を参照してください。この引数のない __init__() をオーバーライドする本のクラスは、通常どおり作成されます。"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.parse_metadata_cache:1
+msgid ""
+"Do not look up the date of every book, which is slow on network drives, the "
+"caller must set it. Only use when :meth:`supports_deferred_datetime` returns"
+" True."
+msgstr "ネットワークドライブでは時間のかかる、本ごとの日付の取得を行いません。呼び出し側で日付を設定する必要があります。:meth:`supports_deferred_datetime` が True を返す場合にだけ使ってください。"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:1
+msgid "Re-read the metadata of book if the size of its file changed."
+msgstr "ファイルのサイズが変わった場合に、本の書誌を読み込み直します。"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:3
+msgid "The size of the file, if already known, to avoid a stat() call."
+msgstr "ファイルのサイズ（わかっている場合）。stat() の呼び出しを避けるためのものです。"
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"
@@ -2480,7 +2526,7 @@ msgid ""
 "InterfaceActionBase and InterfaceAction. The :meth:`load_actual_plugin` "
 "method of your InterfaceActionBase subclass must return an instantiated "
 "object of your InterfaceAction subclass."
-msgstr "独自のプラグインを ZIP ファイルで追加する場合は、InterfaceActionBase と InterfaceAction の両方をサブクラス化する必要があります。InterfaceActionBase サブクラスの :meth:`load_actual_plugin` メソッドは、InterfaceBase サブクラスのインスタンス化されたオブジェクトを返す必要があります。"
+msgstr "独自のプラグインを ZIP ファイルで追加する場合は、InterfaceActionBase と InterfaceAction の両方をサブクラス化する必要があります。InterfaceActionBase サブクラスの :meth:`load_actual_plugin` メソッドは、InterfaceAction サブクラスのインスタンス化されたオブジェクトを返す必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:1
@@ -2520,7 +2566,7 @@ msgstr "サブクラスは、:meth:`genesis`, :meth:`library_changed`, :meth:`lo
 msgid ""
 "Once initialized, this plugin has access to the main calibre GUI via the "
 ":attr:`gui` member. You can access other plugins by name, for example::"
-msgstr "初期化されると、このプラグインは :attr:`gui` メンバーを介してメイン calibre GUI にアクセスできます。次のように、名前で他のプラグインにアクセスできます::"
+msgstr "初期化されると、このプラグインは :attr:`gui` メンバーを介してcalibre のメイン GUI にアクセスできます。次のように、名前で他のプラグインにアクセスできます::"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction:22
@@ -2562,7 +2608,7 @@ msgstr "このプラグインがツールバーに追加されたときのメニ
 msgid ""
 "Whether this action should be auto repeated when its shortcut key is held "
 "down."
-msgstr "ショートカットキーを押したときにこのアクションを自動的に繰り返すかどうか。"
+msgstr "ショートカットキーを押し続けたときにこのアクションを自動的に繰り返すかどうか。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.action_spec:1
@@ -2632,7 +2678,7 @@ msgid ""
 "This method should return True iff this interface action is capable of "
 "handling the drag event. Do not call accept/ignore on the event, that will "
 "be taken care of by the calibre UI."
-msgstr "このインタフェースアクションがドラッグイベントを処理できる場合、このメソッドは True を返す必要があります。イベントで accept/ignore を呼び出さないでください。これは calibre UI によって処理されます。"
+msgstr "このインタフェースアクションがドラッグイベントを処理できる場合にのみ、このメソッドは True を返す必要があります。イベントで accept/ignore を呼び出さないでください。これは calibre UI によって処理されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.drop_event:1
@@ -2643,7 +2689,7 @@ msgid ""
 "You should not perform blocking/long operations in this function. Instead "
 "emit a signal or use QTimer.singleShot and return quickly. See the builtin "
 "actions for examples."
-msgstr "このインタフェースアクションがドロップイベントを処理できる場合、このメソッドはいくつかの有用なアクションを実行し、True を返す必要があります。イベントで accept/ignore を呼び出さないでください。これは calibre UI によって処理されます。この関数では、ブロッキング/ロング操作を実行しないでください。代わりに、信号を発するか、QTimer.singleShot を使用して、すばやく戻ります。例については、ビルトインのアクションを参照してください。"
+msgstr "このインタフェースアクションがドロップイベントを処理できる場合にのみ、このメソッドはいくつかの有用なアクションを実行し、True を返す必要があります。イベントで accept/ignore を呼び出さないでください。これは calibre UI によって処理されます。この関数では、ブロッキングする処理や時間のかかる処理を実行しないでください。代わりに、シグナルを発行するか、QTimer.singleShot を使用して、すばやく戻ります。例については、ビルトインのアクションを参照してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:1
@@ -2652,7 +2698,7 @@ msgid ""
 "QAction. This action has one extra attribute calibre_shortcut_unique_name "
 "which if not None refers to the unique name under which this action is "
 "registered with the keyboard manager."
-msgstr "QMenu にアクションを簡単に追加するための便利な方法。作成された QAction を返します。このアクションには、1つの追加属性 calibre_shortcut_unique_name があります。これは、None でない場合、このアクションがキーボードマネージャに登録される一意の名前を参照します。"
+msgstr "QMenu にアクションを簡単に追加するための便利なメソッド。作成された QAction を返します。このアクションには、1つの追加属性 calibre_shortcut_unique_name があります。これは、None でない場合、このアクションがキーボードマネージャに登録される一意の名前を参照します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:6
@@ -2664,7 +2710,7 @@ msgstr "新しく作成されたアクションが追加される QMenu"
 msgid ""
 "A unique name for this action, this must be globally unique, so make it as "
 "descriptive as possible. If in doubt, add an UUID to it."
-msgstr "このアクションの一意の名前。これはグローバルに一意である必要があるため、できるだけわかりやすくします。疑わしい場合は、UUID を追加してください。"
+msgstr "このアクションの一意の名前。これはグローバルに一意である必要があるため、できるだけわかりやすくします。迷った場合は、UUID を追加してください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:10
@@ -2696,7 +2742,7 @@ msgstr "このアクションの説明。ツールチップを設定するため
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:20
 msgid ""
 "A callable which is connected to the triggered signal of the created action."
-msgstr "作成されたアクションのトリガーされたシグナルに接続されている呼び出し可能オブジェクト。"
+msgstr "作成されたアクションの triggered シグナルに接続される呼び出し可能オブジェクト。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.create_menu_action:22
@@ -2718,7 +2764,7 @@ msgstr "``persist_shortcut`` が True に設定されていない限り、他の
 msgid ""
 "A dictionary of the form ``{name : file_contents}``. Any names that were not"
 " found in the ZIP file will not be present in the dictionary."
-msgstr "``{name : file_contents}`` 形式の辞書。ZIPファイルで見つからなかった名前は、辞書に表示されません。"
+msgstr "``{name : file_contents}`` 形式の辞書。ZIPファイルで見つからなかった名前は、辞書に含まれません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/actions/__init__.pydocstring
 #: of calibre.gui2.actions.InterfaceAction.genesis:1
@@ -2794,7 +2840,7 @@ msgid ""
 "Called once per plugin when the main GUI is in the process of shutting down."
 " Release any used resources, but try not to block the shutdown for long "
 "periods of time."
-msgstr "メインGUIがシャットダウン中の場合、プラグインごとに1回呼び出されます。使用済みのリソースを解放しますが、シャットダウンを長期間ブロックしないようにしてください。"
+msgstr "メインGUIがシャットダウン中の場合、プラグインごとに1回呼び出されます。使用済みのリソースを解放しますが、シャットダウンを長時間ブロックしないようにしてください。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.actual_plugin:1
@@ -2808,7 +2854,7 @@ msgstr "このメソッドは、実際のインタフェースアクションプ
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:175
 msgid "Preferences plugins"
-msgstr "設定プラグイン"
+msgstr "環境設定プラグイン"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin:1
@@ -2827,7 +2873,7 @@ msgstr "このプラグインには、重要なメソッドが1つだけあり�
 msgid ""
 "Import path to module that contains a class named ConfigWidget which "
 "implements the ConfigWidgetInterface. Used by :meth:`create_widget`."
-msgstr "ConfigWidgetInterface を実装する ConfigWidget という名前のクラスを含むモジュールへのパスをインポートします。:meth:`create_widget` によって使用されます。"
+msgstr "ConfigWidgetInterface を実装する ConfigWidget という名前のクラスを含むモジュールのインポートパス。:meth:`create_widget` によって使用されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.category_order:1
@@ -2841,7 +2887,7 @@ msgstr "カテゴリのリストのどこに、このプラグインの :attr:`c
 msgid ""
 "Where in the list of names in a category, the :attr:`gui_name` of this "
 "plugin should be"
-msgstr "カテゴリ内の名前のリストで、このプラグインの :attr:`gui_name` は次のようになります"
+msgstr "カテゴリ内の名前のリストのどこに、このプラグインの :attr:`gui_name` があるべきか。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.category:1
@@ -2874,7 +2920,7 @@ msgid ""
 "Create and return the actual Qt widget used for setting this group of "
 "preferences. The widget must implement the "
 ":class:`calibre.gui2.preferences.ConfigWidgetInterface`."
-msgstr "このプリファレンスのグループを設定するために使用される実際の Qt ウィジェットを作成して返します。ウィジェットは :class:`calibre.gui2.preferences.ConfigWidgetInterface` を実装する必要があります。"
+msgstr "この環境設定のグループを設定するために使用される実際の Qt ウィジェットを作成して返します。ウィジェットは :class:`calibre.gui2.preferences.ConfigWidgetInterface` を実装する必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.PreferencesPlugin.create_widget:5
@@ -2907,7 +2953,7 @@ msgstr "このシグナルは、ユーザがこのウィジェットの値を変
 #: of
 #: calibre.gui2.preferences.ConfigWidgetInterface.supports_restoring_to_defaults:1
 msgid "Set to True iff the :meth:`restore_to_defaults` method is implemented."
-msgstr ":meth:`restore_to_defaults` メソッドが実装されている場合は、True に設定します。"
+msgstr ":meth:`restore_to_defaults` メソッドが実装されている場合にのみ、True に設定します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.restore_defaults_desc:1
@@ -2921,7 +2967,7 @@ msgstr "\"デフォルトに戻す\" ボタンのツールチップ"
 msgid ""
 "If True the Preferences dialog will not allow the user to set any more "
 "preferences. Only has effect if :meth:`commit` returns True."
-msgstr "True のとき、環境設定ダイアログでは、ユーザはこれ以上設定を設定できません。:meth:`commit` が True を返す場合にのみ効果があります。"
+msgstr "True のとき、環境設定ダイアログでは、ユーザはこれ以上設定を変更できません。:meth:`commit` が True を返す場合にのみ効果があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:1
@@ -2933,7 +2979,7 @@ msgstr "ウィジェットが表示される前に 1 回呼び出され、必要
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.genesis:4
 msgid "The main calibre graphical user interface"
-msgstr "メイン calibre のグラフィカルユーザインタフェース"
+msgstr "calibre のメイングラフィカルユーザインタフェース"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.initialize:1
@@ -2961,7 +3007,7 @@ msgid ""
 "False otherwise. Raise an :class:`AbortCommit` exception to indicate that an"
 " error occurred. You are responsible for giving the user feedback about what"
 " the error is and how to correct it."
-msgstr "変更した設定を保存します。変更で再起動が必要な場合は True を返し、それ以外の場合はFalseを返します。:class:`AbortCommit` 例外を発生させて、エラーが発生したことを示します。あなたは、エラーが何であるか、そしてそれを修正する方法についてユーザにフィードバックを与える責任があります。"
+msgstr "変更した設定を保存します。変更で再起動が必要な場合は True を返し、それ以外の場合はFalseを返します。:class:`AbortCommit` 例外を発生させて、エラーが発生したことを示します。エラーの内容とその修正方法をユーザに伝えるのは、実装する側の責任です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.refresh_gui:1
@@ -2969,14 +3015,14 @@ msgid ""
 "Called once after this widget is committed. Responsible for causing the gui "
 "to reread any changed settings. Note that by default the GUI re-initializes "
 "various elements anyway, so most widgets won't need to use this method."
-msgstr "このウィジェットがコミットされた後に 1 回呼び出されます。変更された設定を GUI に再読み取りさせる責任があります。ただしデフォルトでは、GUI はとにかくさまざまな要素を再初期化するため、ほとんどのウィジェットはこのメソッドを使用する必要がありません。"
+msgstr "このウィジェットがコミットされた後に 1 回呼び出されます。変更された設定を GUI に再読み取りさせる責任があります。ただしデフォルトでは、GUI はいずれにせよさまざまな要素を再初期化するため、ほとんどのウィジェットはこのメソッドを使用する必要がありません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetInterface.initial_tab_changed:1
 msgid ""
 "Called if the initially displayed tab is changed before the widget is shown,"
 " but after it is initialized."
-msgstr "初期化されてウィジェットが表示される前で、最初に表示されたタブが変更された場合に呼び出されます。"
+msgstr "ウィジェットの初期化後、表示前に、最初に表示されるタブが変更された場合に呼び出されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase:1
@@ -3022,7 +3068,7 @@ msgstr "設定の読み取り/書き込みを行う構成オブジェクト"
 msgid ""
 "The name of the GUI object that presents an interface to change the setting."
 " By default it is assumed to be ``'opt_' + name``."
-msgstr "設定を変更するためのインターフェースを提供する GUI オブジェクトの名前。デフォルトでは、``'opt_' + name`` と見なされます。"
+msgstr "設定を変更するためのインタフェースを提供する GUI オブジェクトの名前。デフォルトでは、``'opt_' + name`` と見なされます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:8
@@ -3030,7 +3076,7 @@ msgid ""
 "If this setting is a multiple choice (combobox) based setting, the list of "
 "choices. The list is a list of two element tuples of the form: ``[(gui name,"
 " value), ...]``"
-msgstr "この設定が複数選択 (コンボボックス) ベースの設定である場合、選択肢のリスト。このリストは、次の形式の 2 つの要素タプルのリストです: ``[(gui name, value), ...]``"
+msgstr "この設定が選択式 (コンボボックス) の設定である場合、選択肢のリスト。このリストは、次の形式の 2 要素タプルのリストです: ``[(gui name, value), ...]``"
 
 #: ../../../__w/calibre/calibre/src/calibre/gui2/preferences/__init__.pydocstring
 #: of calibre.gui2.preferences.ConfigWidgetBase.register:11

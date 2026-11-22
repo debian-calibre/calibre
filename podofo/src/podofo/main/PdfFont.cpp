@@ -113,7 +113,7 @@ bool PdfFont::TryCreateProxyFont(PdfFontCreateFlags initFlags, PdfFont*& proxyFo
             {
                 PdfFontSearchParams params;
                 params.Style = metrics.GetStyle();
-                params.FontFamilyPattern = metrics.GeFontFamilyNameSafe();
+                params.FontFamilyPattern = metrics.GetFontFamilyNameSafe();
                 proxyMetrics = PdfFontManager::SearchFontMetrics(metrics.GetPostScriptNameRough(), params, metrics, skipNormalization);
                 if (proxyMetrics == nullptr)
                 {
@@ -883,6 +883,10 @@ void PdfFont::AddSubsetCIDs(const PdfString& encodedStr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InternalLogic,
             "Can't add more subsetting glyphs on an already embedded font");
     }
+
+    // No subset maps are allocated without subsetting
+    if (!m_SubsettingEnabled)
+        return;
 
     PODOFO_ASSERT(!m_Encoding->IsDynamicEncoding());
 

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: toshi oota <ppp15479@gmail.com>, 2021\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -56,13 +56,13 @@ msgid ""
 "The prefix `//` means *search at any level of the document*. Now suppose you"
 " want to search for ``<span>`` tags that are inside ``<a>`` tags. That can "
 "be achieved with::"
-msgstr "プリフィックス `//` は *ドキュメント内の任意のレベルの検索* を意味します。``<a>`` タグの中にある ``<span>`` タグを検索したいとしましょう。これを実現するには、次のようにします::"
+msgstr "プレフィックス `//` は *ドキュメント内の任意のレベルの検索* を意味します。``<a>`` タグの中にある ``<span>`` タグを検索したいとしましょう。これを実現するには、次のようにします::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:33
 msgid ""
 "If you want to search for tags at a particular level in the document, change"
 " the prefix::"
-msgstr "ドキュメント内のある特定のレベルのタグを検索したい場合には、プリフィックスを変更します::"
+msgstr "ドキュメント内のある特定のレベルのタグを検索したい場合には、プレフィックスを変更します::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:39
 msgid ""
@@ -72,7 +72,7 @@ msgid ""
 " This is because internally, calibre represents all content as XHTML. In "
 "XHTML tags have a *namespace*, and ``h:`` is the namespace prefix for HTML "
 "tags."
-msgstr "これは :ref:`sample_ebook` の中にある ``<p>XPath の使用を実演してみせるための非常に短い電子書籍です。</p>`` にのみマッチして、他の ``<p>`` タグ内のものにはマッチしません。上記の例では XHTML タグにマッチさせるために ``h:`` プリフィックスが必要です。なぜなら calibre は内部的にはすべてのコンテンツを XHTML で表現しているためです。XHTML においてタグには *名前空間が* 存在し、``h:`` が HTML タグの名前空間プレフィックスです。"
+msgstr "これは :ref:`sample_ebook` の中にある ``<p>A very short e-book to demonstrate the use of XPath.</p>`` にのみマッチして、他の ``<p>`` タグ内のものにはマッチしません。上記の例では XHTML タグにマッチさせるために ``h:`` プレフィックスが必要です。なぜなら calibre は内部的にはすべてのコンテンツを XHTML で表現しているためです。XHTML においてタグには *名前空間* が存在し、``h:`` が HTML タグの名前空間プレフィックスです。"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:45
 msgid ""
@@ -81,7 +81,7 @@ msgid ""
 "a test that is used to select tags. Tests can be arbitrarily powerful and as"
 " this tutorial progresses, you will see more powerful examples. A predicate "
 "is created by enclosing the test expression in square brackets::"
-msgstr "では ``<h1>`` と ``<h2>`` タブの両方を選択したいとしましょう。これをするには *述語* と呼ばれる XPath の構造体が必要になります。:dfn:`述語` とはタグの選択に使用される単なるテストです。テストは自ずと強力であり、チュートリアルを進めるにつれて、より強力な使用例を目にするでしょう。述語はテストの式を角カッコで囲むことで作成します::"
+msgstr "では ``<h1>`` と ``<h2>`` タグの両方を選択したいとしましょう。これをするには *述語* と呼ばれる XPath の構文が必要になります。:dfn:`述語` とはタグの選択に使用される単なるテストです。テストはいくらでも強力にでき、このチュートリアルを進めるにつれて、より強力な使用例を目にするでしょう。述語はテストの式を角カッコで囲むことで作成します::"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:53
 msgid ""
@@ -93,7 +93,7 @@ msgid ""
 "the :term:`name()` function ignores namespaces so that there is no need for "
 "the ``h:`` prefix. XPath has several useful built-in functions. A few more "
 "will be introduced in this tutorial."
-msgstr "この XPath 式にはいくつかの新しい機能があります。ひとつはワイルドカード ``*`` の使用です。これは *すべてのタグにマッチ* することを意味します。では、テスト式 ``name()='h1' or name()='h2'`` を見てみましょう。:term:`name()` は *ビルトイン関数* の例です。これは単にタグの名前を評価します。したがってこれを使用することで、名前が `h1` または `h2` であるタグを選択できます。:term:`name()` は名前空間を無視するため、``h:`` プリフィックスは必要ありません。XPath にはいくつもの便利なビルトイン関数があります。このチュートリアルの中で、さらにいくつか紹介します。"
+msgstr "この XPath 式にはいくつかの新しい機能があります。ひとつはワイルドカード ``*`` の使用です。これは *すべてのタグにマッチ* することを意味します。では、テスト式 ``name()='h1' or name()='h2'`` を見てみましょう。:term:`name()` は *ビルトイン関数* の例です。これは単にタグの名前を返します。したがってこれを使用することで、名前が `h1` または `h2` であるタグを選択できます。:term:`name()` は名前空間を無視するため、``h:`` プレフィックスは必要ありません。XPath にはいくつもの便利なビルトイン関数があります。このチュートリアルの中で、さらにいくつか紹介します。"
 
 #: ../../../__w/calibre/calibre/manual/xpath.rst:62
 msgid "Selecting by attributes"

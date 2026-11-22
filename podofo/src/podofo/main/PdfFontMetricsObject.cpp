@@ -212,7 +212,7 @@ PdfFontMetricsObject::PdfFontMetricsObject(const PdfDictionary& fontDict,
             vector<double> widths;
             while (pos < widthsArr.GetSize())
             {
-                unsigned start = (unsigned)widthsArr.MustFindAt(pos++).GetNumberLenient();
+                int64_t start = widthsArr.MustFindAt(pos++).GetNumberLenient();
                 auto second = widthsArr.FindAt(pos);
                 if (second == nullptr)
                 {
@@ -221,28 +221,51 @@ PdfFontMetricsObject::PdfFontMetricsObject(const PdfDictionary& fontDict,
                     break;
                 }
 
+                if (start < 0 || start > MAX_CID)
+                {
+                    // Invalid starting CID, stop parsing
+                    break;
+                }
+
                 const PdfArray* arr;
                 if (second->TryGetArray(arr))
                 {
                     pos++;
-                    unsigned length = start + arr->GetSize();
-                    PODOFO_ASSERT(length >= start);
+                    unsigned count = arr->GetSize();
+                    if (count > MAX_CID + 1 - start)
+                    {
+                        PoDoFo::LogMessage(PdfLogSeverity::Warning, "/W sub-array starting at CID {} extends past the maximum CID {}", start, MAX_CID);
+                        count = (unsigned)(MAX_CID + 1 - start);
+                    }
+
+                    size_t length = (size_t)start + count;
                     if (length > widths.size())
                         widths.resize(length, m_DefaultWidth);
 
-                    for (unsigned i = 0; i < arr->GetSize(); i++)
-                        widths[start + i] = arr->FindAtAsSafe<double>(i, 0) * m_Matrix[0];
+                    for (unsigned i = 0; i < count; i++)
+                        widths[(size_t)start + i] = arr->FindAtAsSafe<double>(i, 0) * m_Matrix[0];
                 }
                 else
                 {
-                    unsigned end = (unsigned)widthsArr.MustFindAt(pos++).GetNumberLenient();
-                    unsigned length = end + 1;
-                    PODOFO_ASSERT(length >= start);
+                    int64_t end = widthsArr.MustFindAt(pos++).GetNumberLenient();
+                    double width = widthsArr.FindAtAsSafe<double>(pos++, 0) * m_Matrix[0];
+                    if (end < start)
+                    {
+                        // Malformed descending range, skip it
+                        continue;
+                    }
+
+                    if (end > MAX_CID)
+                    {
+                        PoDoFo::LogMessage(PdfLogSeverity::Warning, "/W range ending at CID {} exceeds the maximum CID {}", end, MAX_CID);
+                        end = MAX_CID;
+                    }
+
+                    size_t length = (size_t)end + 1;
                     if (length > widths.size())
                         widths.resize(length, m_DefaultWidth);
 
-                    double width = widthsArr.FindAtAsSafe<double>(pos++, 0) * m_Matrix[0];
-                    for (unsigned i = start; i <= end; i++)
+                    for (size_t i = (size_t)start; i <= (size_t)end; i++)
                         widths[i] = width;
                 }
             }
@@ -298,7 +321,7 @@ PdfFontMetricsObject::PdfFontMetricsObject(const PdfDictionary& fontDict,
             if (stretchObj->TryGetName(name))
                 m_FontStretch = stretchFromString(name->GetString());
             else if (stretchObj->TryGetString(str))
-                m_FontStretch = stretchFromString(name->GetString());
+                m_FontStretch = stretchFromString(str->GetString());
             else
                 m_FontStretch = PdfFontStretch::Unknown;
         }
@@ -453,7 +476,7 @@ void PdfFontMetricsObject::ExportType3GlyphData(PdfDictionary& fontDict, cspan<s
         for (unsigned i = 0; i < glyphs.size(); i++)
         {
             auto obj = srcCharProcs.FindKey(glyphs[i]);
-            if (obj->GetStream() == nullptr)
+            if (obj == nullptr || obj->GetStream() == nullptr)
             {
                 // Create an object with a dummy stream
                 auto& newObject = objects.CreateDictionaryObject();

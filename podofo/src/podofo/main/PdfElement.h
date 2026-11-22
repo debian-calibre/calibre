@@ -22,9 +22,22 @@ namespace PoDoFo {
 /// A PdfElement cannot be created directly. Use one
 /// of the subclasses which implement real functionality.
 ///
+/// @remarks The elements, and the collections built on them such as pages,
+/// annotations and fields, cache the objects they wrap, and the typed API keeps
+/// them consistent. Editing through the raw dictionary or array a key that a typed
+/// accessor manages, for example removing /Annots, /Kids, /Fields or /A, is not
+/// supported: the cached elements are left stale, also after a garbage collection
+/// frees the detached objects
+///
 /// @see PdfPage @see PdfAction @see PdfAnnotation
 class PODOFO_API PdfElement
 {
+    friend class PdfPage;
+    friend class PdfNameTreeBase;
+    friend class PdfAnnotationCollection;
+    friend class PdfAcroForm;
+    friend class PdfFieldChildrenCollectionBase;
+
 public:
 
     virtual ~PdfElement();
@@ -59,6 +72,9 @@ protected:
 
 private:
     PdfElement& operator=(const PdfElement& element) = delete;
+
+    // To be called by the classes moving a direct object to an indirect one
+    void SetObject(PdfObject& obj) { m_Object = &obj; }
 
 private:
     PdfObject* m_Object;

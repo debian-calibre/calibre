@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: Yuka Kachi, 2022\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -104,7 +104,7 @@ msgid ""
 ":command:`ebook-convert` command. The conversion process is controlled via "
 "``conversion.plumber``. The format independent code is all in ``ebooks.oeb``"
 " and the format dependent code is in ``ebooks.format_name``."
-msgstr "e-books - すべての電子書籍変換/書誌のコード。:command:`ebook-convert` コマンドを起動するモジュールである ``calibre.ebooks.conversion.cli`` から始めるとよいでしょう。変換処理は ``conversion.plumber`` を介して行われます。形式に依存しないコードはすべて ``ebooks.oeb`` にあり、形式依存のコードは ``ebooks.format_name`` にあります。"
+msgstr "e-books - すべての電子書籍変換/書誌のコード。:command:`ebook-convert` コマンドの処理を担うモジュールである ``calibre.ebooks.conversion.cli`` から始めるとよいでしょう。変換処理は ``conversion.plumber`` を介して行われます。形式に依存しないコードはすべて ``ebooks.oeb`` にあり、形式依存のコードは ``ebooks.format_name`` にあります。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:47
 msgid ""
@@ -123,7 +123,7 @@ msgid ""
 "transformations that are applied to the book during conversions live in "
 ":file:`oeb/transforms/*.py`. And the input and output plugins live in "
 ":file:`conversion/plugins/*.py`."
-msgstr "変換はパイプラインで行われます。パイプラインの構造については :ref:`conversion-introduction` を参照してください。パイプラインは、入力プラグイン、種々の変換、および出力プラグインで構成されています。パイプラインを構築して動かすコードは :file:`plumber.py` にあります。パイプラインは電子書籍の中身に対して機能します。中身とは、たとえばマニフェスト、スパイン、目次、ガイド、HTML コンテンツなどを含む、解凍された EPUB のことです。この中身を管理するクラスは、``ebooks.oeb.base`` にある OEBBook です。変換中に本に対して施される種々の変形は、:file:`oeb/transforms/*.py` にあります。また入力および出力プラグインは :file:`conversion/plugins/*.py` にあります。"
+msgstr "変換はパイプラインで行われます。パイプラインの構造については :ref:`conversion-introduction` を参照してください。パイプラインは、入力プラグイン、種々の変換、および出力プラグインで構成されています。パイプラインを構築して動かすコードは :file:`plumber.py` にあります。パイプラインは、マニフェスト、スパイン、目次、ガイド、HTML コンテンツなどを含む、解凍された EPUB のような電子書籍の内部表現に対して機能します。この内部表現を管理するクラスは、``ebooks.oeb.base`` にある OEBBook です。変換中に本に対して施される種々の変形は、:file:`oeb/transforms/*.py` にあります。また入力および出力プラグインは :file:`conversion/plugins/*.py` にあります。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:58
 msgid ""
@@ -227,7 +227,7 @@ msgid ""
 "<https://bugs.launchpad.net/calibre>`_. Note that this will include *all* "
 "the commits you have made. If you only want to send some commits, you have "
 "to change ``origin/master`` above. To send only the last commit, use::"
-msgstr "これは現在のフォルダに :file:`my-changes` ファイルを作成し、calibre `バグトラッカー <https://bugs.launchpad.net/calibre>`_ のチケットにそれを添付します。ただしこれは、コミットしたもの *すべて* を含めます。一部のコミットのみを送信したい場合には、上の ``origin/master`` を変更する必要があります。最後のコミットのみを送信するには、次のようにします::"
+msgstr "これは現在のフォルダに :file:`my-changes` ファイルを作成します。これを calibre `バグトラッカー <https://bugs.launchpad.net/calibre>`_ のチケットに添付してください。ただしこれは、コミットしたもの *すべて* を含めます。一部のコミットのみを送信したい場合には、上の ``origin/master`` を変更する必要があります。最後のコミットのみを送信するには、次のようにします::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:119
 msgid ""
@@ -245,7 +245,7 @@ msgid ""
 "to create a `GitHub <https://github.com>`__ account. Below is a basic guide "
 "to setting up your own fork of calibre in a way that will allow you to "
 "submit pull requests for inclusion into the main calibre repository:"
-msgstr "calibre で多くの開発を行うつもりであれば、最良の方法は `GitHub <https://github.com>`_ アカウントを作成することです。下に示す基本的なガイドに従ってフォークを作成すれば、メインの calibre リポジトリにプルリクエストを送れるようになります:"
+msgstr "calibre で多くの開発を行うつもりであれば、最良の方法は `GitHub <https://github.com>`__ アカウントを作成することです。下に示す基本的なガイドに従ってフォークを作成すれば、メインの calibre リポジトリにプルリクエストを送れるようになります:"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:131
 msgid ""
@@ -292,7 +292,7 @@ msgstr "そして ``https://github.com/<username>/calibre`` に行き、:guilabe
 msgid ""
 "You can update your local copy with code from the main repo at any time by "
 "doing::"
-msgstr "次の手順を実行することで、メインのリポジトリからのコードでローカルコピーを更新できます::"
+msgstr "次の手順を実行することで、いつでもメインのリポジトリからのコードでローカルコピーを更新できます::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:150
 msgid ""
@@ -318,7 +318,7 @@ msgid ""
 "Install calibre normally, using the `Windows installer <https://calibre-"
 "ebook.com/download_windows>`__. Then open a Command Prompt and change to the"
 " previously checked out calibre code folder. For example::"
-msgstr "`Windows インストーラ <https://calibre-ebook.com/download_windows>`__ を使用して通常どおりにインストールします。次にコマンドプロンプトを開き、先にチェックアウトしておいた calibre のコードに移動します。例::"
+msgstr "`Windows インストーラ <https://calibre-ebook.com/download_windows>`__ を使用して通常どおりにインストールします。次にコマンドプロンプトを開き、先にチェックアウトしておいた calibre のコードのフォルダに移動します。例::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:165
 #: ../../../__w/calibre/calibre/manual/develop.rst:241
@@ -338,7 +338,7 @@ msgstr "次のステップは、環境変数 ``CALIBRE_DEVELOP_FROM`` に src �
 msgid ""
 "Once you have set the environment variable, open a new command prompt and "
 "check that it was correctly set by using the command::"
-msgstr "環境変数を設定したらコマンドプロンプトを開き、正しく設定されていることを確認するために次のコマンドを実行します::"
+msgstr "環境変数を設定したら新しいコマンドプロンプトを開き、正しく設定されていることを確認するために次のコマンドを実行します::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:177
 #: ../../../__w/calibre/calibre/manual/develop.rst:260
@@ -359,7 +359,7 @@ msgstr "これでおしまいです。calibre コードのハックを開始で�
 msgid ""
 "near the top of the file. Now run the command :command:`calibredb`. The very"
 " first line of output should be ``Hello, world!``."
-msgstr "次に :command:`calibredb` コマンドを実行します。最初の行の出力は ``Hello, world!`` となるでしょう。"
+msgstr "次に :command:`calibredb` コマンドを実行します。出力の最初の行は ``Hello, world!`` となるでしょう。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:186
 msgid ""
@@ -407,7 +407,7 @@ msgstr "これを :file:`/usr/local/bin/calibre-develop` という名前のフ�
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:218
 msgid "Once you have done this, run::"
-msgstr "それが終わったら、実行します::"
+msgstr "それが終わったら、次を実行します::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:222
 msgid ""
@@ -454,13 +454,13 @@ msgid ""
 "You can get these by running ``calibre-debug --paths``. But note that "
 "distribution calibre packages are often terminally broken and are completely"
 " unsupported."
-msgstr "アップストリームから提供されるバイナリインストーラの使用をお勧めします。どうしてもディストリビューションが提供するパッケージを使用したい場合は、代わりに ``CALIBRE_PYTHON_PATH`` および ``CALIBRE_RESOURCES_PATH`` 変数を使用してください。これらの変数は ``calibre-debug --paths`` を実行することで取得できます。ただし、ディストリビューションのcalibreパッケージは多くの場合、長期間メンテされず、完全にサポートされていないことに注意してください。"
+msgstr "アップストリームから提供されるバイナリインストーラの使用をお勧めします。どうしてもディストリビューションが提供するパッケージを使用したい場合は、代わりに ``CALIBRE_PYTHON_PATH`` および ``CALIBRE_RESOURCES_PATH`` 変数を使用してください。これらの変数は ``calibre-debug --paths`` を実行することで取得できます。ただし、ディストリビューションのcalibreパッケージは多くの場合、致命的に壊れており、まったくサポートされていないことに注意してください。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:255
 msgid ""
 "Once you have set the environment variable, open a new terminal and check "
 "that it was correctly set by using the command::"
-msgstr "環境変数を設定したらターミナルを開き、正しく設定されていることを確認するために次のコマンドを実行します::"
+msgstr "環境変数を設定したら新しいターミナルを開き、正しく設定されていることを確認するために次のコマンドを実行します::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:262
 msgid ""
@@ -521,11 +521,11 @@ msgstr "Kovid のお気に入りのデバッグ方法は、これです。気に
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:304
 msgid "Similarly, you can start the E-book viewer as::"
-msgstr "同様にして、電子書籍ビューアは次にように開始します::"
+msgstr "同様にして、電子書籍ビューアは次のように開始します::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:308
 msgid "The e-book editor can be started as::"
-msgstr "電子書籍エディターは次のように起動できます::"
+msgstr "電子書籍エディタは次のように起動できます::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:313
 msgid "Using an interactive Python interpreter"
@@ -544,7 +544,7 @@ msgid ""
 "local scope). The interactive prompt even has :kbd:`Tab` completion for "
 "object properties and you can use the various Python facilities for "
 "introspection, such as :func:`dir`, :func:`type`, :func:`repr`, etc."
-msgstr "コマンドラインから実行すると、これはローカルに定義された変数 (ローカルスコープ内の変数) にアクセスできるインタラクティブな Python インタプリタを開始します。インタラクティブプロンプトはオブジェクトプロパティの :kbd:`Tab` 補完機能も備えており、さまざまな Python 機能を :func:`dir`, :func:`type`, :func:`repr` などの内省に使用できます。"
+msgstr "コマンドラインから実行すると、これはローカルに定義された変数 (ローカルスコープ内の変数) にアクセスできるインタラクティブな Python インタプリタを開始します。インタラクティブプロンプトはオブジェクトプロパティの :kbd:`Tab` 補完機能も備えており、:func:`dir`, :func:`type`, :func:`repr` など、内省のためのさまざまな Python 機能を使用できます。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:326
 msgid "Using the Python debugger as a remote debugger"
@@ -602,7 +602,7 @@ msgid ""
 "checkout to the ``PYTHONPATH`` in your IDE. In other words, the folder you "
 "set as ``CALIBRE_DEVELOP_FROM`` above, must also be in the ``PYTHONPATH`` of"
 " your IDE."
-msgstr "リモートデバッグをサポートしていれば、お気に入りの IDE でビルトインデバッガを使用することも可能です。最初のステップは、calibre の src を IDE の ``PYTHONPATH`` にチェックアウトすることです。別の言葉で言うと、上で ``CALIBRE_DEVELOP_FROM`` に設定したフォルダを、IDE の ``PYTHONPATH`` にする必要があります。"
+msgstr "リモートデバッグをサポートしていれば、お気に入りの IDE でビルトインデバッガを使用することも可能です。最初のステップは、チェックアウトした calibre の src を IDE の ``PYTHONPATH`` に追加することです。別の言葉で言うと、上で ``CALIBRE_DEVELOP_FROM`` に設定したフォルダを、IDE の ``PYTHONPATH`` にも含める必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:365
 msgid ""
@@ -644,11 +644,11 @@ msgstr "``--`` を指定すると、後続のすべての引数がスクリプ�
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:392
 msgid "Running the calibre test suite"
-msgstr "calibreテストスイート実行中"
+msgstr "calibre テストスイートの実行"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:394
 msgid "The calibre test suite can be run by::"
-msgstr "calibreテストスイートが実行可能::"
+msgstr "calibre テストスイートは次のようにして実行できます::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:400
 msgid "Using calibre in your projects"
@@ -668,7 +668,7 @@ msgstr "calibre のバイナリインストール"
 msgid ""
 "If you have a binary install of calibre, you can use the Python interpreter "
 "bundled with calibre, like this::"
-msgstr "calibre のバイナリインストールがある場合には、calibre に付属している Python インタプリタを次のようｊにして使用できます::"
+msgstr "calibre のバイナリインストールがある場合には、calibre に付属している Python インタプリタを次のようにして使用できます::"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:412
 msgid "Source install on Linux"
@@ -684,7 +684,7 @@ msgstr "上記の手法に加えて、Linux 上にソースインストールを
 msgid ""
 "It is essential that you import the init_calibre module before any other "
 "calibre modules/packages as it sets up the interpreter to run calibre code."
-msgstr "重要なのは、他の calibre モジュール/パッケージの前に init_calibre をインポートすることです。インタプリタを calibre コードとして実行するようセットアップするためです。"
+msgstr "重要なのは、他の calibre モジュール/パッケージの前に init_calibre をインポートすることです。インタプリタが calibre コードを実行できるようにセットアップするためです。"
 
 #: ../../../__w/calibre/calibre/manual/develop.rst:426
 msgid "API documentation for various parts of calibre"

@@ -84,13 +84,27 @@ PdfField& PdfAcroForm::getField(unsigned index) const
     if (index >= m_Fields.size())
         PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
 
-    return *m_Fields[index];
+    auto ret = m_Fields[index].get();
+    if (ret == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The field at index {} is invalid", index);
+
+    return *ret;
 }
 
 PdfField& PdfAcroForm::getField(const PdfReference& ref) const
 {
     const_cast<PdfAcroForm&>(*this).initFields();
-    return *m_Fields[(*m_fieldMap).at(ref)];
+    auto found = m_fieldMap->find(ref);
+    if (found == m_fieldMap->end())
+        PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
+
+    unsigned index = found->second;
+    PODOFO_ASSERT(index < m_Fields.size());
+    auto ret = m_Fields[index].get();
+    if (ret == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The field at index {} is invalid", index);
+
+    return *ret;
 }
 
 void PdfAcroForm::RemoveFieldAt(unsigned index)
@@ -99,12 +113,8 @@ void PdfAcroForm::RemoveFieldAt(unsigned index)
     if (index >= m_Fields.size())
         PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
 
-    if (m_Fields[index] != nullptr)
-    {
-        // It may be null if the field is invalid
-        m_fieldMap->erase(m_fieldMap->find(m_Fields[index]->GetObject().GetIndirectReference()));
-    }
-
+    inlineFieldsArray();
+    promoteDirectEntries();
     m_fieldArray->RemoveAt(index);
     m_Fields.erase(m_Fields.begin() + index);
     fixIndices(index);
@@ -121,9 +131,11 @@ void PdfAcroForm::RemoveField(const PdfReference& ref)
         return;
 
     unsigned index = found->second;
-    m_Fields.erase(m_Fields.begin() + index);
+    PODOFO_ASSERT(index < m_Fields.size());
+    inlineFieldsArray();
+    promoteDirectEntries();
     m_fieldArray->RemoveAt(index);
-    m_fieldMap->erase(found);
+    m_Fields.erase(m_Fields.begin() + index);
     fixIndices(index);
 
     // NOTE: No need to remove the object from the document
@@ -139,25 +151,25 @@ unsigned PdfAcroForm::GetFieldCount() const
 PdfAcroForm::iterator PdfAcroForm::begin()
 {
     initFields();
-    return iterator(m_Fields.begin());
+    return iterator(m_Fields.begin(), m_Fields.end());
 }
 
 PdfAcroForm::iterator PdfAcroForm::end()
 {
     initFields();
-    return iterator(m_Fields.end());
+    return iterator(m_Fields.end(), m_Fields.end());
 }
 
 PdfAcroForm::const_iterator PdfAcroForm::begin() const
 {
     const_cast<PdfAcroForm&>(*this).initFields();
-    return const_iterator(m_Fields.begin());
+    return const_iterator(m_Fields.begin(), m_Fields.end());
 }
 
 PdfAcroForm::const_iterator PdfAcroForm::end() const
 {
     const_cast<PdfAcroForm&>(*this).initFields();
-    return const_iterator(m_Fields.end());
+    return const_iterator(m_Fields.end(), m_Fields.end());
 }
 
 PdfField& PdfAcroForm::CreateField(PdfObject& obj, PdfFieldType type)
@@ -169,9 +181,16 @@ PdfField& PdfAcroForm::AddField(unique_ptr<PdfField>&& field)
 {
     initFields();
     if (m_fieldArray == nullptr)
+    {
         m_fieldArray = &GetDictionary().AddKey("Fields"_n, PdfArray()).GetArray();
+    }
+    else
+    {
+        inlineFieldsArray();
+        promoteDirectEntries();
+    }
 
-    (*m_fieldMap)[field->GetObject().GetIndirectReference()] = m_fieldArray->GetSize();
+    (*m_fieldMap)[field->GetObject().GetIndirectReference()] = (unsigned)m_Fields.size();
     m_fieldArray->AddIndirectSafe(field->GetObject());
     m_Fields.push_back(std::move(field));
     return *m_Fields.back();
@@ -180,7 +199,13 @@ PdfField& PdfAcroForm::AddField(unique_ptr<PdfField>&& field)
 shared_ptr<PdfField> PdfAcroForm::GetFieldPtr(const PdfReference& ref)
 {
     PODOFO_INVARIANT(m_fieldMap != nullptr);
-    return m_Fields[(*m_fieldMap)[ref]];
+    auto found = m_fieldMap->find(ref);
+    if (found == m_fieldMap->end())
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The field is not listed in the AcroForm");
+
+    unsigned index = found->second;
+    PODOFO_ASSERT(index < m_Fields.size());
+    return m_Fields[index];
 }
 
 void PdfAcroForm::SetNeedAppearances(bool needAppearances)
@@ -216,43 +241,109 @@ PdfArray* PdfAcroForm::getFieldArray() const
     return &obj->GetArray();
 }
 
+// A /Fields array stored in its own object may be shared with the /Kids of
+// a field: it's copied inline in the form before a modification
+void PdfAcroForm::inlineFieldsArray()
+{
+    if (!m_fieldArray->GetOwner()->IsIndirect())
+        return;
+
+    m_fieldArray = &GetDictionary().AddKey("Fields"_n, PdfArray(*m_fieldArray)).GetArray();
+}
+
 void PdfAcroForm::initFields()
 {
     if (m_fieldMap != nullptr)
         return;
 
-    m_fieldMap.reset(new FieldMap());
-    m_fieldArray = getFieldArray();
-    if (m_fieldArray == nullptr)
+    // The state is built in locals and committed at the end, so a throwing
+    // entry doesn't leave the form half initialized
+    unique_ptr<FieldMap> fieldMap(new FieldMap());
+    FieldList fields;
+    auto fieldArray = getFieldArray();
+    if (fieldArray != nullptr)
+    {
+        fields.reserve(fieldArray->size());
+        unique_ptr<PdfField> field;
+        unsigned i = 0;
+        for (auto obj : fieldArray->GetIndirectIterator())
+        {
+            auto& ref = obj->GetIndirectReference();
+            // NOTE: Direct fields all share the 0 0 R reference
+            if (!fieldMap->try_emplace(ref, i).second && ref.IsIndirect())
+            {
+                // A repeated reference is wrapped only once: the duplicate is a placeholder
+                fields.push_back(nullptr);
+            }
+            else if (PdfField::TryCreateFromObject(*obj, field))
+            {
+                field->SetAcroForm(*this);
+                fields.push_back(std::move(field));
+            }
+            else
+            {
+                // The field may be invalid. In that case we push a placeholder
+                fields.push_back(nullptr);
+            }
+
+            i++;
+        }
+    }
+
+    m_fieldMap = std::move(fieldMap);
+    m_Fields = std::move(fields);
+    m_fieldArray = fieldArray;
+}
+
+// Fields from direct dictionaries point into the array storage, which a
+// modification can relocate or free: such entries are first moved to indirect
+// objects, as the specification requires, and the elements are rebound to them
+void PdfAcroForm::promoteDirectEntries()
+{
+    PODOFO_ASSERT(m_fieldArray->GetSize() == m_Fields.size());
+    bool promoted = false;
+    for (unsigned i = 0; i < m_fieldArray->GetSize(); i++)
+    {
+        auto& elem = (*m_fieldArray)[i];
+        if (elem.IsDictionary())
+        {
+            // It's a field stored directly in the array
+            auto& obj = PoDoFo::MoveToIndirect(elem);
+            if (m_Fields[i] != nullptr)
+                m_Fields[i]->SetObject(obj);
+
+            promoted = true;
+        }
+    }
+
+    if (!promoted)
         return;
 
-    m_Fields.reserve(m_fieldArray->size());
-    unique_ptr<PdfField> field;
+    // Key the map again, as the promoted entries have their own references now
+    m_fieldMap->clear();
     unsigned i = 0;
     for (auto obj : m_fieldArray->GetIndirectIterator())
     {
-        (*m_fieldMap)[obj->GetIndirectReference()] = i;
-        // The field may be invalid. In that case we push a placeholder
-        if (PdfField::TryCreateFromObject(*obj, field))
-        {
-            field->SetAcroForm(*this);
-            m_Fields.push_back(std::move(field));
-        }
-        else
-        {
-            m_Fields.push_back(nullptr);
-        }
-
+        (void)m_fieldMap->try_emplace(obj->GetIndirectReference(), i);
         i++;
     }
 }
 
 void PdfAcroForm::fixIndices(unsigned index)
 {
-    for (auto& pair : *m_fieldMap)
+    for (auto it = m_fieldMap->begin(); it != m_fieldMap->end(); )
     {
+        if (it->second == index)
+        {
+            // The entry of the removed slot: it exists also for placeholders
+            it = m_fieldMap->erase(it);
+            continue;
+        }
+
         // Decrement indices where needed
-        if (pair.second > index)
-            pair.second--;
+        if (it->second > index)
+            it->second--;
+
+        it++;
     }
 }

@@ -28,12 +28,29 @@ PdfStreamedDocument::PdfStreamedDocument(const string_view& filename, PdfVersion
 
 PdfStreamedDocument::~PdfStreamedDocument()
 {
-    GetFonts().EmbedFonts();
+    // NOTE: Destructors can't throw: a failure leaves the document truncated
+    try
+    {
+        GetFonts().EmbedFonts();
+    }
+    catch (const std::exception& e)
+    {
+        PoDoFo::LogMessage(PdfLogSeverity::Error, "Error while embedding the fonts of the streamed document: {}", e.what());
+    }
+    catch (...)
+    {
+        PoDoFo::LogMessage(PdfLogSeverity::Error, "Unknown error while embedding the fonts of the streamed document");
+    }
 }
 
 void PdfStreamedDocument::init(PdfVersion version, PdfSaveOptions opts)
 {
     m_Writer.reset(new PdfImmediateWriter(this->GetObjects(), this->GetTrailer().GetObject(), *m_Device, version, m_Encrypt, opts));
+}
+
+void PdfStreamedDocument::clear()
+{
+    PODOFO_RAISE_ERROR_INFO(PdfErrorCode::NotImplemented, "Resetting a streamed document is not supported");
 }
 
 PdfVersion PdfStreamedDocument::GetPdfVersion() const

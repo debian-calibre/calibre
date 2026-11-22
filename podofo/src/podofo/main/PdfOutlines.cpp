@@ -14,28 +14,53 @@
 using namespace std;
 using namespace PoDoFo;
 
-PdfOutlineItem::PdfOutlineItem(PdfObject& obj, PdfOutlineItem* parentOutline, PdfOutlineItem* previous)
+static void deleteItems(PdfOutlineItem* item);
+
+PdfOutlineItem::PdfOutlineItem(PdfObject& obj, PdfOutlineItem* parentOutline, PdfOutlineItem* previous,
+        unordered_set<const PdfObject*>* visited)
     : PdfDictionaryElement(obj), m_ParentOutline(parentOutline), m_Prev(previous),
     m_Next(nullptr), m_First(nullptr), m_Last(nullptr), m_Destination(nullptr), m_Action(nullptr)
 {
+    // NOTE: Only the nesting recurses, as the children are built
+    // below in a loop along /Next, by the parent that owns them
     utls::RecursionGuard guard;
-    PdfReference first, next;
 
-    if (GetDictionary().HasKey("First"))
+    // NOTE: The depth guard can't bound the count of items: if /First and
+    // /Next of each object point to the same next object, every path to an
+    // object would create an item, so an object linked twice is rejected,
+    // which also ends a /Next cycle
+    unique_ptr<unordered_set<const PdfObject*>> rootVisited;
+    if (visited == nullptr)
     {
-        first = GetDictionary().GetKey("First")->GetReference();
-        m_First = new PdfOutlineItem(obj.GetDocument()->GetObjects().MustGetObject(first), this, nullptr);
+        rootVisited.reset(new unordered_set<const PdfObject*>());
+        visited = rootVisited.get();
     }
 
-    if (GetDictionary().HasKey("Next"))
+    if (!visited->insert(&obj).second)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::BrokenFile, "The outline item {} is linked more than once", obj.GetIndirectReference().ToString());
+
+    // NOTE: The chain is owned by a local guard until it's complete, as
+    // the destructor doesn't run for a throwing constructor
+    unique_ptr<PdfOutlineItem, void(*)(PdfOutlineItem*)> first(nullptr, deleteItems);
+    auto& objects = GetDocument().GetObjects();
+    auto childRef = GetDictionary().GetKey("First");
+    while (childRef != nullptr)
     {
-        next = GetDictionary().GetKey("Next")->GetReference();
-        m_Next = new PdfOutlineItem(obj.GetDocument()->GetObjects().MustGetObject(next), parentOutline, this);
+        auto child = new PdfOutlineItem(objects.MustGetObject(childRef->GetReference()), this, m_Last, visited);
+        if (m_Last == nullptr)
+            first.reset(child);
+        else
+            m_Last->m_Next = child;
+
+        m_Last = child;
+        childRef = child->GetDictionary().GetKey("Next");
     }
+
+    m_First = first.release();
 }
 
 PdfOutlineItem::PdfOutlineItem(PdfDocument& doc, PdfOutlineItem* parentOutline)
-    : PdfDictionaryElement(doc, "Outlines"_n), m_ParentOutline(nullptr), m_Prev(nullptr),
+    : PdfDictionaryElement(doc, "Outlines"_n), m_ParentOutline(parentOutline), m_Prev(nullptr),
     m_Next(nullptr), m_First(nullptr), m_Last(nullptr), m_Destination(nullptr), m_Action(nullptr)
 {
     if (parentOutline != nullptr)
@@ -44,15 +69,12 @@ PdfOutlineItem::PdfOutlineItem(PdfDocument& doc, PdfOutlineItem* parentOutline)
 
 PdfOutlineItem::~PdfOutlineItem()
 {
-    delete m_Next;
-    delete m_First;
-    m_Next = nullptr;
-    m_First = nullptr;
+    deleteItems(m_First);
 }
 
 PdfOutlineItem& PdfOutlineItem::CreateChild(const PdfString& title)
 {
-    unique_ptr< PdfOutlineItem> item(new PdfOutlineItem(GetDocument(), this));
+    unique_ptr<PdfOutlineItem> item(new PdfOutlineItem(GetDocument()));
     item->SetTitle(title);
     this->insertChildInternal(item.get(), false);
     return *item.release();
@@ -84,6 +106,10 @@ void PdfOutlineItem::insertChildInternal(PdfOutlineItem* item, bool checkSameTre
             PODOFO_RAISE_ERROR(PdfErrorCode::ItemAlreadyPresent);
     }
 
+    // The item belongs to this outline from now on
+    item->m_ParentOutline = this;
+    item->GetDictionary().AddKey("Parent"_n, GetObject().GetIndirectReference());
+
     if (m_Last != nullptr)
     {
         m_Last->setNext(item);
@@ -101,6 +127,10 @@ void PdfOutlineItem::insertChildInternal(PdfOutlineItem* item, bool checkSameTre
 
 PdfOutlineItem& PdfOutlineItem::CreateNext(const PdfString& title)
 {
+    // The siblings are owned by the parent, which the root doesn't have
+    if (m_ParentOutline == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedOperation, "The outlines root can't have siblings");
+
     unique_ptr<PdfOutlineItem> item(new PdfOutlineItem(GetDocument(), m_ParentOutline));
     item->SetTitle(title);
 
@@ -115,7 +145,7 @@ PdfOutlineItem& PdfOutlineItem::CreateNext(const PdfString& title)
 
     GetDictionary().AddKey("Next"_n, item->GetObject().GetIndirectReference());
 
-    if (m_ParentOutline != nullptr && item->Next() == nullptr)
+    if (item->Next() == nullptr)
         m_ParentOutline->setLast(item.get());
 
     return *item.release();
@@ -160,6 +190,10 @@ void PdfOutlineItem::setFirst(PdfOutlineItem* item)
 
 void PdfOutlineItem::Erase()
 {
+    // The root is owned by the document and can't erase itself
+    if (m_ParentOutline == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedOperation, "The outlines root can't be erased");
+
     while (m_First != nullptr)
     {
         // Erase will set a new first
@@ -181,7 +215,6 @@ void PdfOutlineItem::Erase()
     if (m_Next == nullptr && m_ParentOutline != nullptr && m_ParentOutline->Last() == this)
         m_ParentOutline->setLast(m_Prev);
 
-    m_Next = nullptr;
     delete this;
 }
 
@@ -195,10 +228,13 @@ void PdfOutlineItem::SetDestination(nullable<const PdfDestination&> destination)
     }
     else
     {
-        m_Destination = unique_ptr<PdfDestination>(new PdfDestination(*destination));
-        m_Action *= nullptr;
+        // NOTE: The dictionary is updated first, as destination may be
+        // the cached instance. The cache is then rebuilt from the stored
+        // /Dest on access, as the caller's object is not the stored one
         destination->AddToDictionary(dict);
         dict.RemoveKey("A");
+        m_Destination = { };
+        m_Action *= nullptr;
     }
 }
 
@@ -214,17 +250,22 @@ nullable<PdfDestination&> PdfOutlineItem::GetDestination()
 
 nullable<PdfDestination&> PdfOutlineItem::getDestination()
 {
-    if (m_Destination == nullptr)
+    // NOTE: /Dest is resolved on every access: a name tree insertion can relocate
+    // the destination array, and a setter writing an aliased /Dests entry can retype it
+    PdfObject* destObj;
+    auto obj = GetDictionary().FindKey("Dest");
+    if (obj == nullptr || (destObj = PdfDestination::FindDestinationObject(GetDocument(), *obj)) == nullptr)
     {
-        auto obj = GetDictionary().FindKey("Dest");
-        unique_ptr<PdfDestination> dest;
-        if (obj == nullptr || !PdfDestination::TryCreateFromObject(*obj, dest))
-            m_Destination *= nullptr;
-        else
-            m_Destination = std::move(dest);
+        m_Destination *= nullptr;
+    }
+    else if (!m_Destination.has_value() || *m_Destination == nullptr
+        || &(*m_Destination)->GetObject() != destObj)
+    {
+        m_Destination = unique_ptr<PdfDestination>(new PdfDestination(*destObj));
     }
 
-    if (m_Destination == nullptr)
+    // NOTE: The nullable has a value also when no destination was found
+    if (*m_Destination == nullptr)
         return { };
     else
         return **m_Destination;
@@ -240,10 +281,13 @@ void PdfOutlineItem::SetAction(nullable<const PdfAction&> action)
     }
     else
     {
+        // NOTE: The dictionary is updated first, as action may be the
+        // cached instance replaced by the assignment below, and the
+        // caches must not change when the insertion fails
+        dict.AddKeyIndirect("A"_n, action->GetObject());
+        dict.RemoveKey("Dest");
         m_Action = PdfAction::Create(*action);
         m_Destination *= nullptr;
-        dict.RemoveKey("Dest");
-        dict.AddKeyIndirect("A"_n, action->GetObject());
     }
 }
 
@@ -274,7 +318,8 @@ nullable<PdfAction&> PdfOutlineItem::getAction()
         }
     }
 
-    if (m_Action == nullptr)
+    // NOTE: The nullable has a value also when no action was found
+    if (*m_Action == nullptr)
         return { };
     else
         return **m_Action;
@@ -336,7 +381,16 @@ PdfOutlines::PdfOutlines(PdfObject& obj)
 
 PdfOutlineItem& PdfOutlines::CreateRoot(const PdfString& title)
 {
-    auto& ret = this->CreateChild(title);
-    ret.SetDestination(*GetDocument().CreateDestination());
-    return ret;
+    return this->CreateChild(title);
+}
+
+// Delete a chain of sibling items in a loop, as each item owns only its children
+void deleteItems(PdfOutlineItem* item)
+{
+    while (item != nullptr)
+    {
+        auto next = item->Next();
+        delete item;
+        item = next;
+    }
 }

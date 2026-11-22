@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 from functools import partial, wraps
+from typing import TYPE_CHECKING
 from urllib.parse import urlparse
 
 from qt.core import (
@@ -62,6 +63,7 @@ from calibre.gui2.tweak_book.completion.worker import completion_worker
 from calibre.gui2.tweak_book.editor import editor_from_syntax, syntax_from_mime
 from calibre.gui2.tweak_book.editor.insert_resource import NewBook, get_resource_data
 from calibre.gui2.tweak_book.file_list import FILE_COPY_MIME, NewFileDialog
+from calibre.gui2.tweak_book.grammar import BookIssue, grammar_service, language_name, select_issue_in_editor, show_rewrite_popup, shutdown_grammar_service
 from calibre.gui2.tweak_book.preferences import Preferences
 from calibre.gui2.tweak_book.preview import parse_worker
 from calibre.gui2.tweak_book.save import SaveManager, find_first_existing_ancestor, save_container
@@ -91,6 +93,9 @@ from calibre.utils.ipc.launch import exe_path, macos_edit_book_bundle_path
 from calibre.utils.localization import _, ngettext
 from calibre.utils.tdir_in_cache import tdir_in_cache
 from polyglot.builtins import as_bytes
+
+if TYPE_CHECKING:
+    from calibre.gui2.tweak_book.editor.text import TextEdit
 
 _diff_dialogs = []
 last_used_transform_rules = []
@@ -183,6 +188,8 @@ class Boss(QObject):
         fl.initiate_file_paste.connect(self.paste_files_from_clipboard)
         fl.open_file_with.connect(self.open_file_with)
         self.gui.central.current_editor_changed.connect(self.apply_current_editor_state)
+        self.gui.central.current_editor_changed.connect(self.update_rewrite_suggestions)
+        self.gui.rewrite_suggestions.current_text_edit = self.current_text_edit
         self.gui.central.close_requested.connect(self.editor_close_requested)
         self.gui.central.search_panel.search_triggered.connect(self.search)
         self.gui.text_search.find_text.connect(self.find_text)
@@ -209,6 +216,15 @@ class Boss(QObject):
         self.gui.spell_check.word_replaced.connect(self.word_replaced)
         self.gui.spell_check.word_ignored.connect(self.word_ignored)
         self.gui.spell_check.change_requested.connect(self.word_change_requested)
+        self.gui.grammar_check.commit_requested.connect(self.commit_all_editors_to_container)
+        self.gui.grammar_check.files_changed.connect(self.word_replaced)
+        self.gui.grammar_check.show_issue.connect(self.show_grammar_issue)
+        # The paragraph highlighted in the preview when showing an issue is
+        # only relevant while the grammar check window is open
+        self.gui.grammar_check.hidden.connect(self.gui.preview.clear_paragraph_highlight)
+        gs = grammar_service()
+        gs.language_data_needed.connect(self.grammar_language_data_needed)
+        gs.inline_check_failed.connect(self.inline_grammar_check_failed)
         self.gui.live_css.goto_declaration.connect(self.goto_style_declaration)
         self.gui.manage_fonts.container_changed.connect(self.apply_container_update_to_gui)
         self.gui.manage_fonts.embed_all_fonts.connect(self.manage_fonts_embed)
@@ -224,6 +240,8 @@ class Boss(QObject):
 
     def preferences(self) -> None:
         orig_spell = tprefs['inline_spell_check']
+        orig_grammar = tprefs['inline_grammar_check']
+        orig_gpu_mode = tprefs['grammar_gpu_mode']
         orig_size = tprefs['toolbar_icon_size']
         p = Preferences(self.gui)
         ret = p.exec()
@@ -249,6 +267,12 @@ class Boss(QObject):
         if ret == QDialog.DialogCode.Accepted or p.dictionaries_changed:
             for ed in editors.values():
                 ed.apply_settings(dictionaries_changed=p.dictionaries_changed)
+        if orig_gpu_mode != tprefs['grammar_gpu_mode']:
+            grammar_service().gpu_mode_changed()
+        if orig_grammar != tprefs['inline_grammar_check']:
+            for ed in editors.values():
+                if (gc := getattr(getattr(ed, 'editor', None), 'grammar_checker', None)) is not None:
+                    gc.recheck()
         if orig_spell != tprefs['inline_spell_check']:
             from calibre.gui2.tweak_book.editor.syntax.html import refresh_spell_check_status
 
@@ -458,6 +482,8 @@ class Boss(QObject):
         self.gui.check_book.clear_at_startup()
         self.gui.spell_check.clear_caches()
         dictionaries.clear_ignored(), dictionaries.clear_caches()
+        grammar_service().clear_ignored()
+        self.gui.grammar_check.book_changed()
         parse_worker.clear()
         container = job.result
         set_current_container(container)
@@ -1771,6 +1797,63 @@ class Boss(QObject):
         c.parent().raise_and_focus()
         c.run_checks(current_container())
 
+    def grammar_check_requested(self) -> None:
+        if current_container() is None:
+            return
+        self.commit_all_editors_to_container()
+        self.add_savepoint(_('Before: Grammar check'))
+        self.gui.grammar_check.show()
+        self.gui.grammar_check.raise_and_focus()
+
+    def next_grammar_issue(self) -> None:
+        ed = self.gui.central.current_editor
+        gc = getattr(getattr(ed, 'editor', None), 'grammar_checker', None)
+        if gc is None:
+            self.gui.show_status_message(_('Grammar checking is only available for HTML files'))
+        elif not tprefs['inline_grammar_check']:
+            self.gui.show_status_message(_('Showing grammar issues in the editor is turned off in Preferences->Editor settings'))
+        elif not gc.select_next():
+            self.gui.show_status_message(_('No grammar issues found in this file'))
+
+    def update_rewrite_suggestions(self, *a: object) -> None:
+        self.gui.rewrite_suggestions.cursor_moved()
+
+    def current_text_edit(self) -> TextEdit | None:
+        return getattr(self.gui.central.current_editor, 'editor', None)
+
+    def suggest_rewrites(self) -> None:
+        ed = self.gui.central.current_editor
+        te = getattr(ed, 'editor', None)
+        gc = getattr(te, 'grammar_checker', None)
+        if te is None or gc is None:
+            self.gui.show_status_message(_('Suggestions for rewriting sentences are only available for HTML files'))
+            return
+        target = gc.sentence_target(te.textCursor().position())
+        if target is None:
+            self.gui.show_status_message(_('The cursor is not in a sentence'))
+            return
+        r = te.cursorRect()
+        show_rewrite_popup(te, target, gc.apply_suggestion, te.viewport().mapToGlobal(r.bottomLeft()))
+
+    def show_grammar_issue(self, issue: BookIssue) -> None:
+        ed = self.edit_file(issue.file_name)
+        if ed is None or not hasattr(ed, 'editor'):
+            return
+        selected = select_issue_in_editor(ed.editor, issue.default_lang, issue.ref, issue.issue)
+        if selected is None:
+            self.gui.show_status_message(_('The text has changed since it was checked, click Refresh in the Check grammar tool to check it again'), 10)
+        else:
+            self.gui.preview.highlight_paragraph(issue.file_name, selected.sourceline_address, selected.paragraph.text)
+
+    def grammar_language_data_needed(self, lang: str) -> None:
+        if tprefs['inline_grammar_check']:
+            self.gui.show_status_message(
+                _('Showing grammar issues in {} needs data to be downloaded. Right click in the editor to download it.').format(language_name(lang)), 15
+            )
+
+    def inline_grammar_check_failed(self, error: str, details: str) -> None:
+        self.gui.show_status_message(_('Checking grammar failed with error: {}').format(error), 15)
+
     def spell_check_requested(self) -> None:
         if current_container() is None:
             return
@@ -2054,6 +2137,7 @@ class Boss(QObject):
         editor.data_changed.connect(self.editor_data_changed)
         editor.copy_available_state_changed.connect(self.editor_copy_available_state_changed)
         editor.cursor_position_changed.connect(self.sync_preview_to_editor)
+        editor.cursor_position_changed.connect(self.update_rewrite_suggestions)
         editor.cursor_position_changed.connect(self.update_cursor_position)
         if hasattr(editor, 'word_ignored'):
             editor.word_ignored.connect(self.word_ignored)
@@ -2333,6 +2417,8 @@ class Boss(QObject):
     def shutdown(self) -> None:
         self.save_state()
         completion_worker().shutdown()
+        self.gui.grammar_check.cancel()
+        shutdown_grammar_service()
         self.save_manager.check_for_completion.disconnect()
         self.gui.preview.stop_refresh_timer()
         self.gui.live_css.stop_update_timer()

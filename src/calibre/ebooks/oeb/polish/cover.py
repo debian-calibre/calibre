@@ -8,7 +8,7 @@ from typing import IO, TYPE_CHECKING, Literal, TypedDict, cast
 
 from lxml import etree
 
-from calibre.ebooks.oeb.base import OEB_DOCS, OPF, XLINK, XML, XPath, xml2text
+from calibre.ebooks.oeb.base import OEB_DOCS, OPF, XLINK, XML, XPath
 from calibre.ebooks.oeb.polish.replace import get_recommended_folders, replace_links
 from calibre.utils.imghdr import identify
 from calibre.utils.localization import _
@@ -332,7 +332,9 @@ def find_cover_image_in_page(container: Container, cover_page: str) -> str | Non
         if href:
             name = container.href_to_name(href, base=cover_page)
             images.append(name)
-    text = re.sub(r'\s+', '', xml2text(body))
+    # The text alternative of SVG images (<title> and <desc>), such as the
+    # book title in calibre generated cover pages, is not content
+    text = re.sub(r'\s+', '', ''.join(XPath('descendant::text()[not(ancestor::svg:title or ancestor::svg:desc)]')(body)))
     if text or len(images) > 1:
         # Document has more content than a single image
         return
@@ -373,7 +375,7 @@ def create_epub_cover(
     from calibre.ebooks.oeb.transforms.cover import CoverManager
 
     try:
-        ext = cover_path.rpartition('.')[-1].lower()  # ty: ignore[unresolved-attribute] callables are handled by the except clause
+        ext = cover_path.rpartition('.')[-1].lower()  # ty: ignore[missing-union-attribute] callables are handled by the except clause
     except Exception:
         ext = 'jpeg'
     cname, tname = 'cover.' + ext, 'titlepage.xhtml'

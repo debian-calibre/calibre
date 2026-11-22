@@ -15,7 +15,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Andrei Stepanov, 2026\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -447,7 +447,7 @@ msgstr "Если True, этот плагин запускается после �
 msgid ""
 "The path to the original file, before any file type plugins are run. Set "
 "just before :meth:`run` is called."
-msgstr ""
+msgstr "Путь к исходному файлу до запуска каких-либо плагинов типов файлов. Задаётся непосредственно перед вызовом :meth:`run`."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
@@ -778,7 +778,7 @@ msgstr "Если установлено значение True, этот исто
 msgid ""
 "Seconds taken by the last identify() run, set by "
 ":func:`calibre.ebooks.metadata.sources.identify.identify`"
-msgstr ""
+msgstr "Секунды, затраченные последним запуском identify(), задаются в :func:`calibre.ebooks.metadata.sources.identify.identify`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -2177,7 +2177,7 @@ msgid ""
 " device connections however it does that. If the plugin is already accepting"
 " connections, then do nothing. Return an error message if starting the "
 "plugin failed, otherwise None."
-msgstr ""
+msgstr "Этот метод вызывается для запуска плагина. Плагин должен начать принимать подключения устройств — так, как он это делает. Если плагин уже принимает подключения, ничего не делайте. Верните сообщение об ошибке, если запуск плагина не удался, иначе None."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2312,7 +2312,7 @@ msgstr "Вернуть True, если устройство поддержива�
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
 "metadata. Return the book (a truthy value) if booklists must be sync'ed"
-msgstr ""
+msgstr "Добавить книгу в список книг. Цель — сохранить любые внутренние метаданные устройства. Верните книгу (значение, приводящееся к истине), если списки книг нужно синхронизировать"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2446,6 +2446,26 @@ msgid ""
 msgstr "Базовый класс для всех устройств USBMS. Реализует логику отправки/получения/обновления метаданных/кеширования метаданных и т. д."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.SCAN_SKIP_DIR_SUFFIXES:1
+msgid "Folders whose names end with one of these are not searched for books"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.FOLDER_SCAN_THREADS:1
+msgid ""
+"Number of folders to list at the same time when the device is a folder, "
+"which may be on a slow network drive, see :meth:`scan_threads`"
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.scan_threads:1
+msgid ""
+"The number of threads to use to list the folders on the device. Only folders"
+" connected as devices use more than one, as they may be on a high latency "
+"network drive, whereas real devices gain nothing from it."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
 msgid "Upload book cover to the device. Default implementation does nothing."
 msgstr "Загрузить обложку книги на устройство. Реализация по умолчанию ничего не делает."
@@ -2474,6 +2494,32 @@ msgstr "Полный путь к файлу электронной книги"
 #: of calibre.devices.usbms.driver.USBMS.normalize_path:1
 msgid "Return path with platform native path separators"
 msgstr "Вернуть путь с нативными разделителями путей платформы"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.supports_deferred_datetime:1
+msgid ""
+"True if :attr:`book_class` can be created without looking up the date of the"
+" book file, see the defer_datetime argument of :class:`Book`. Book classes "
+"that override __init__() without that argument are created normally."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.parse_metadata_cache:1
+msgid ""
+"Do not look up the date of every book, which is slow on network drives, the "
+"caller must set it. Only use when :meth:`supports_deferred_datetime` returns"
+" True."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:1
+msgid "Re-read the metadata of book if the size of its file changed."
+msgstr ""
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:3
+msgid "The size of the file, if already known, to avoid a stat() call."
+msgstr ""
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"
@@ -2804,7 +2850,7 @@ msgstr "Вызывается один раз для каждого плагин�
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.actual_plugin:1
 msgid "Import path of the actual interface action class as module:class"
-msgstr ""
+msgstr "Путь импорта фактического класса действия интерфейса в виде module:class"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

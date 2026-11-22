@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-18 02:55+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Serbian (Latin) (http://app.transifex.com/calibre/calibre/language/sr@latin/)\n"
@@ -439,7 +439,7 @@ msgstr "Ako je True, ovaj dodatak se pokreće nakon konverzije na konačnoj dato
 msgid ""
 "The path to the original file, before any file type plugins are run. Set "
 "just before :meth:`run` is called."
-msgstr ""
+msgstr "Putanja do izvorne datoteke, pre pokretanja bilo kog dodatka za tip datoteke. Postavlja se neposredno pre pozivanja metode :meth:`run`."
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.FileTypePlugin.run:1
@@ -770,7 +770,7 @@ msgstr "Ako je postavljeno na True, ovaj izvor koristi pregledač Camoufox koji 
 msgid ""
 "Seconds taken by the last identify() run, set by "
 ":func:`calibre.ebooks.metadata.sources.identify.identify`"
-msgstr ""
+msgstr "Broj sekundi koliko je trajalo poslednje izvršavanje identify(); postavlja ga :func:`calibre.ebooks.metadata.sources.identify.identify`"
 
 #: ../../../__w/calibre/calibre/src/calibre/ebooks/metadata/sources/base.pydocstring
 #: of calibre.ebooks.metadata.sources.base.Source.is_configured:1
@@ -2169,7 +2169,7 @@ msgid ""
 " device connections however it does that. If the plugin is already accepting"
 " connections, then do nothing. Return an error message if starting the "
 "plugin failed, otherwise None."
-msgstr ""
+msgstr "Ova metoda se poziva radi pokretanja dodatka. Dodatak treba da počne da prihvata povezivanja uređaja na način koji koristi. Ako dodatak već prihvata povezivanja, ne radi ništa. Vraća poruku o grešci ako pokretanje dodatka nije uspelo, a u suprotnom None."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.DevicePlugin.stop_plugin:1
@@ -2304,7 +2304,7 @@ msgstr "Vraća True ako uređaj podržava kolekcije za ovu listu knjiga."
 msgid ""
 "Add the book to the booklist. Intent is to maintain any device-internal "
 "metadata. Return the book (a truthy value) if booklists must be sync'ed"
-msgstr ""
+msgstr "Dodaje knjigu na listu knjiga. Svrha je očuvanje internih metapodataka uređaja. Vraća knjigu (vrednost koja se tumači kao tačna) ako liste knjiga moraju da se sinhronizuju"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/interface.pydocstring of
 #: calibre.devices.interface.BookList.remove_book:1
@@ -2438,6 +2438,26 @@ msgid ""
 msgstr "Osnovna klasa za sve USBMS uređaje. Implementira logiku za slanje/dobijanje/ažuriranje metapodataka/keširanje metapodataka/itd."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.SCAN_SKIP_DIR_SUFFIXES:1
+msgid "Folders whose names end with one of these are not searched for books"
+msgstr "U fasciklama čija se imena završavaju jednim od ovih nastavaka ne traže se knjige"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.FOLDER_SCAN_THREADS:1
+msgid ""
+"Number of folders to list at the same time when the device is a folder, "
+"which may be on a slow network drive, see :meth:`scan_threads`"
+msgstr "Broj fascikli čiji se sadržaj istovremeno izlistava kada se fascikla koristi kao uređaj, a može se nalaziti na sporom mrežnom disku; pogledajte :meth:`scan_threads`"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.scan_threads:1
+msgid ""
+"The number of threads to use to list the folders on the device. Only folders"
+" connected as devices use more than one, as they may be on a high latency "
+"network drive, whereas real devices gain nothing from it."
+msgstr "Broj niti koje se koriste za izlistavanje fascikli na uređaju. Više od jedne niti koriste samo fascikle povezane kao uređaji, jer se mogu nalaziti na mrežnom disku sa velikim kašnjenjem, dok pravi uređaji od toga nemaju koristi."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
 msgid "Upload book cover to the device. Default implementation does nothing."
 msgstr "Otpremite korice knjige na uređaj. Podrazumevana implementacija ne radi ništa."
@@ -2466,6 +2486,32 @@ msgstr "Puna putanja do e-knjige"
 #: of calibre.devices.usbms.driver.USBMS.normalize_path:1
 msgid "Return path with platform native path separators"
 msgstr "Vratite putanju sa separatorima putanje specifičnim za platformu"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.supports_deferred_datetime:1
+msgid ""
+"True if :attr:`book_class` can be created without looking up the date of the"
+" book file, see the defer_datetime argument of :class:`Book`. Book classes "
+"that override __init__() without that argument are created normally."
+msgstr "True ako :attr:`book_class` može da se napravi bez pribavljanja datuma datoteke knjige; pogledajte argument defer_datetime klase :class:`Book`. Klase knjiga koje redefinišu __init__() bez tog argumenta prave se na uobičajen način."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.parse_metadata_cache:1
+msgid ""
+"Do not look up the date of every book, which is slow on network drives, the "
+"caller must set it. Only use when :meth:`supports_deferred_datetime` returns"
+" True."
+msgstr "Ne pribavlja datum svake knjige, što je sporo na mrežnim diskovima; pozivalac mora da ga postavi. Koristiti samo kada :meth:`supports_deferred_datetime` vraća True."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:1
+msgid "Re-read the metadata of book if the size of its file changed."
+msgstr "Ponovo čita metapodatke knjige ako se veličina njene datoteke promenila."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:3
+msgid "The size of the file, if already known, to avoid a stat() call."
+msgstr "Veličina datoteke, ako je već poznata, radi izbegavanja poziva stat()."
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"
@@ -2796,7 +2842,7 @@ msgstr "Poziva se jednom po dodatku kada je glavni GUI u procesu gašenja. Oslob
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.actual_plugin:1
 msgid "Import path of the actual interface action class as module:class"
-msgstr ""
+msgstr "Putanja za uvoz stvarne klase radnje interfejsa, u obliku module:class"
 
 #: ../../../__w/calibre/calibre/src/calibre/customize/__init__.pydocstring of
 #: calibre.customize.InterfaceActionBase.load_actual_plugin:1

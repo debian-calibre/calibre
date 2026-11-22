@@ -216,6 +216,8 @@ bool PdfParserObject::HasStreamToParse() const
 void PdfParserObject::parseStream(bool shallow, bool dryRun)
 {
     PODOFO_ASSERT(IsDelayedLoadDone());
+    // NOTE: Only a dictionary followed by "stream" sets m_HasStream
+    PODOFO_ASSERT(m_Variant.IsDictionary());
 
     char ch;
     ssize_t size;
@@ -279,16 +281,19 @@ void PdfParserObject::parseStream(bool shallow, bool dryRun)
 
 ReadStream:
     // NOTE: Retrieve the first list before seeking, otherwise
-    // the following operation may also adjust the position
-    auto filters = PdfFilterFactory::CreateFilterList(*this);
+    // the following operation may also adjust the position.
+    // A dry run doesn't need it, and an invalid list must not stop it
+    PdfFilterList filters;
+    if (!dryRun)
+        filters = PdfFilterFactory::CreateFilterList(*this);
 
     if (size < 0)
     {
         m_device->Seek(streamOffset);
         if (!shallow)
         {
-            PODOFO_INVARIANT(GetDocument() != nullptr);
-            if (GetDocument()->IsStrictParsing())
+            // The document is null when parsing a previous revision
+            if (GetDocument() != nullptr && GetDocument()->IsStrictParsing())
             {
                 PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidStream, "Oject {} {} R has invalid stream length",
                     GetIndirectReference().ObjectNumber(), GetIndirectReference().GenerationNumber());
@@ -374,6 +379,8 @@ bool PdfParserObject::TryUnload()
 
     m_Variant = PdfVariant();
     FreeStream();
+    // The stream is found again when reloading
+    removeStream();
     EnableDelayedLoading();
     EnableDelayedLoadingStream();
     return true;

@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "новембар 06, 2026" "9.18.0" "calibre"
+.TH "CALIBREDB" "1" "новембар 21, 2026" "9.19.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -676,19 +676,19 @@ calibredb saved_searches [options] [list|add|remove]
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Upravljajte sačuvanim pretragama u ovoj bazi podataka.
+Ako pokušate da dodate upit sa imenom koje već postoji, postojeći upit
+biće zamenjen.
 .sp
-Syntax for listing, the default action:
+Sintaksa za prikazivanje liste, podrazumevanu radnju:
 .sp
 calibredb \fBsaved_searches\fP list
 .sp
-Syntax for adding:
+Sintaksa za dodavanje:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Sintaksa za uklanjanje:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -1066,37 +1066,37 @@ calibredb notes [options] [list|search|show|set|remove]
 .UNINDENT
 .UNINDENT
 .sp
-Manage the \fBnotes\fP attached to items such as authors, series, tags and
-publishers. FIELD is the lookup name of the field, for example: authors,
-series, tags, publisher or #mycolumn. ITEM is the name of the item, for
-example the name of an author. Items are matched case insensitively.
+Upravljajte beleškama pridruženim stavkama kao što su autori, serije, oznake i
+izdavači. FIELD je ime polja za pretragu, na primer: authors,
+series, tags, publisher ili #mycolumn. ITEM je ime stavke, na primer ime
+autora. Pri podudaranju stavki ne razlikuju se velika i mala slova.
 .sp
-List the items that have \fBnotes\fP, optionally only those in the specified field.
-This is the default action:
+Prikažite stavke koje imaju beleške, opciono samo one u navedenom polju.
+Ovo je podrazumevana radnja:
 .sp
 calibredb \fBnotes\fP list [FIELD]
 .sp
-Search the text of \fBnotes\fP using the same SQLite full text search syntax as
-the Browse \fBnotes\fP tool in calibre. Print the field, item name and an excerpt
-for each match. Use \-\-field to search only the \fBnotes\fP in a particular field:
+Pretražite tekst beleški koristeći istu SQLite sintaksu za pretragu punog teksta
+kao u alatki za pregledanje beleški u calibre\-u. Za svako podudaranje ispišite
+polje, ime stavke i isečak. Koristite \-\-field da pretražite samo beleške u određenom polju:
 .sp
 calibredb \fBnotes\fP search \(dqsearch expression\(dq
 calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
 .sp
-Print the note for an item as Markdown formatted text, or with \-\-as\-html as
-an HTML document with any images embedded, suitable for use with set:
+Ispišite belešku stavke kao tekst u Markdown formatu ili, uz \-\-as\-html, kao
+HTML dokument sa ugrađenim slikama, pogodan za upotrebu sa set:
 .sp
 calibredb \fBnotes\fP show FIELD ITEM
 .sp
-Replace the note for an item with the contents of an HTML file. Use \- to
-read the HTML from standard input. Images embedded as base64\-encoded data:
-URLs are added to the note for both local and remote libraries. When using a
-local library and reading from a file, images referenced by paths relative to
-the file are added as well:
+Zamenite belešku stavke sadržajem HTML datoteke. Koristite \- za čitanje HTML\-a
+sa standardnog ulaza. Slike ugrađene kao data: URL adrese kodirane pomoću base64
+dodaju se belešci i u lokalnim i u udaljenim bibliotekama. Kada koristite lokalnu
+biblioteku i čitate iz datoteke, dodaju se i slike navedene putanjama relativnim
+u odnosu na tu datoteku:
 .sp
 calibredb \fBnotes\fP set FIELD ITEM FILE
 .sp
-Remove the note for an item:
+Uklonite belešku stavke:
 .sp
 calibredb \fBnotes\fP remove FIELD ITEM
 .sp
@@ -1153,24 +1153,24 @@ calibredb virtual_libraries [options] [list|add|rename|remove]
 .UNINDENT
 .UNINDENT
 .sp
-Manage the Virtual libraries of this library. A Virtual library is a search
-that behaves as though the library contains only the books it matches. To list
-or search the books in a Virtual library, use: calibredb search \(aqvl:\(dqname\(dq\(aq
+Upravljajte virtuelnim bibliotekama ove biblioteke. Virtuelna biblioteka je pretraga
+koja se ponaša kao da biblioteka sadrži samo knjige koje joj odgovaraju. Za prikazivanje
+ili pretraživanje knjiga u virtuelnoj biblioteci koristite: calibredb search \(aqvl:\(dqname\(dq\(aq
 .sp
-List the Virtual libraries, with their searches and number of books. This is the
-default action:
+Prikažite virtuelne biblioteke sa njihovim pretragama i brojem knjiga.
+Ovo je podrazumevana radnja:
 .sp
 calibredb \fBvirtual_libraries\fP list
 .sp
-Create a Virtual library from a search:
+Napravite virtuelnu biblioteku na osnovu pretrage:
 .sp
 calibredb \fBvirtual_libraries\fP add name search_expression
 .sp
-Rename a Virtual library:
+Preimenujte virtuelnu biblioteku:
 .sp
 calibredb \fBvirtual_libraries\fP rename name new_name
 .sp
-Remove Virtual libraries, the books in them are not changed:
+Uklonite virtuelne biblioteke; knjige u njima se ne menjaju:
 .sp
 calibredb \fBvirtual_libraries\fP remove name ...
 .sp
@@ -1195,52 +1195,52 @@ calibredb annotations [options] [list|search|export|import|remove]
 .UNINDENT
 .UNINDENT
 .sp
-Manage the \fBannotations\fP, that is the highlights and bookmarks, of books, as
-created in the calibre E\-book viewer or synced from other applications.
+Upravljajte napomenama u knjigama, odnosno isticanjima i obeleživačima,
+napravljenim u calibre pregledaču e\-knjiga ili sinhronizovanim iz drugih aplikacija.
 .sp
-List the \fBannotations\fP, with their ids. This is the default action:
+Prikažite napomene sa njihovim identifikatorima. Ovo je podrazumevana radnja:
 .sp
 calibredb \fBannotations\fP list
 .sp
-Search highlighted text, annotation notes and bookmark titles using the same
-SQLite full text search syntax as the Browse \fBannotations\fP tool. Results are
-ordered by relevance and include annotation ids, book titles and matching
-excerpts. Use \-\-search to restrict the books, \-\-type to restrict the annotation
-type, \-\-user\-type and \-\-annotation\-user to restrict the user, \-\-no\-stemming to
-match exact word forms, or \-\-format json for a JSON array of results including
-the annotation data and excerpts:
+Pretražite istaknuti tekst, beleške napomena i naslove obeleživača koristeći istu
+SQLite sintaksu za pretragu punog teksta kao alatka za pregledanje napomena.
+Rezultati su poređani po relevantnosti i uključuju identifikatore napomena,
+naslove knjiga i isečke sa podudaranjima. Koristite \-\-search za ograničavanje
+knjiga, \-\-type za ograničavanje tipa napomene, \-\-user\-type i \-\-annotation\-user
+za ograničavanje korisnika, \-\-no\-stemming za podudaranje tačnih oblika reči
+ili \-\-format json za JSON niz rezultata koji uključuje podatke napomena i isečke:
 .sp
 calibredb \fBannotations\fP search \(dqsearch expression\(dq
 .sp
-Export the \fBannotations\fP as plain text, Markdown or JSON, grouped by book. The
-JSON is the same calibre annotation collection as created by the Export
-button in the Browse \fBannotations\fP tool:
+Izvezite napomene kao običan tekst, Markdown ili JSON, grupisane po knjigama.
+JSON ima isti oblik zbirke calibre napomena kao onaj koji pravi dugme Izvezi
+u alatki za pregledanje napomena:
 .sp
 calibredb \fBannotations\fP export
 .sp
-Import a calibre annotation collection exported as JSON by this command or
-the Browse \fBannotations\fP tool. The collection must contain \fBannotations\fP from
-only one book. BOOK_ID is the destination book id, not the id stored in the
-file. Only the \fBannotations\fP of the format FORMAT are imported, \fBannotations\fP of
-other formats are skipped. FORMAT must exist in the destination book. Use the
-same edition of the book so positions match:
+Uvezite zbirku calibre napomena izvezenu kao JSON pomoću ove komande ili
+alatke za pregledanje napomena. Zbirka mora da sadrži napomene samo iz jedne
+knjige. BOOK_ID je identifikator odredišne knjige, a ne identifikator sačuvan
+u datoteci. Uvoze se samo napomene za format FORMAT, a napomene za druge
+formate se preskaču. FORMAT mora da postoji u odredišnoj knjizi. Koristite
+isto izdanje knjige kako bi se položaji podudarali:
 .sp
 calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
 .sp
-Use \- for FILE to read from standard input. The entire collection is
-validated before importing. Annotations are merged with existing ones using
-the viewer\(aqs rules: highlights are matched by UUID and bookmarks by title,
-and the newer timestamp wins. Repeated imports do not create duplicates.
-Unrelated \fBannotations\fP and reading positions are preserved.
+Za FILE koristite \- da biste čitali sa standardnog ulaza. Cela zbirka se
+proverava pre uvoza. Napomene se spajaju sa postojećim prema pravilima
+pregledača: isticanja se uparuju prema UUID\-u, a obeleživači prema naslovu,
+pri čemu prednost ima novija vremenska oznaka. Ponovljeni uvozi ne prave duplikate.
+Ostale napomene i položaji čitanja ostaju sačuvani.
 .sp
-By default \fBannotations\fP are imported into those of the calibre E\-book viewer.
-Use \-\-user\-type web \-\-annotation\-user USER to import them into those of a
-Content server user instead. Exported collections record the user the
-\fBannotations\fP belong to, and if a collection contains \fBannotations\fP of more than
-one user, it is rejected. Use the \-\-user\-type and \-\-annotation\-user
-options when exporting, to export the \fBannotations\fP of a single user.
+Napomene se podrazumevano uvoze među napomene calibre pregledača e\-knjiga.
+Koristite \-\-user\-type web \-\-annotation\-user USER da biste ih umesto toga uvezli
+među napomene korisnika servera sadržaja. Izvezene zbirke beleže korisnika kojem
+napomene pripadaju, a zbirka koja sadrži napomene više korisnika se odbija.
+Pri izvozu koristite opcije \-\-user\-type i \-\-annotation\-user da biste izvezli
+napomene samo jednog korisnika.
 .sp
-Permanently remove the \fBannotations\fP with the specified ids, as shown by list:
+Trajno uklonite napomene sa navedenim identifikatorima prikazanim pomoću list:
 .sp
 calibredb \fBannotations\fP remove ID ...
 .sp
@@ -1248,32 +1248,32 @@ Kada god prosleđujete argumente programu calibredb koji sadrže razmake, stavit
 .INDENT 0.0
 .TP
 .B \-\-annotation\-user
-Only list, search or export the annotations of the specified user. For import, the Content server user to import the annotations for, required with \fB\-\-user\-type\fP web. Note that this can be any user, not just the one used to connect to a remote library.
+Prikaži, pretraži ili izvezi samo napomene navedenog korisnika. Pri uvozu, korisnik servera sadržaja za kojeg se napomene uvoze; obavezno uz \fB\-\-user\-type\fP web. Imajte u vidu da to može biti bilo koji korisnik, a ne samo onaj koji se koristi za povezivanje sa udaljenom bibliotekom.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-format, \-f
-The export format, one of: text, markdown, json. For search, text or json. Default is: text
+Format izvoza, jedan od: text, markdown, json. Za pretragu, text ili json. Podrazumevano je: text
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-stemming
-For search, match exact word forms instead of word stems
+Pri pretraživanju traži tačne oblike reči umesto njihovih osnova
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Only list, search or export the annotations of books matching the specified book search query, for example: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+Prikaži, pretraži ili izvezi samo napomene knjiga koje odgovaraju navedenom upitu za pretragu knjiga, na primer: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-type, \-t
-Only list, search or export annotations of the specified type, one of: highlight, bookmark
+Prikaži, pretraži ili izvezi samo napomene navedenog tipa, jednog od: highlight, bookmark
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-user\-type
-Only list, search or export the annotations of the specified type of user. For import, the type of user to import the annotations for, the calibre E\-book viewer (local) or a Content server user (web). Default for import is local.
+Prikaži, pretraži ili izvezi samo napomene navedenog tipa korisnika. Pri uvozu, tip korisnika za kojeg se napomene uvoze: calibre pregledač e\-knjiga (local) ili korisnik servera sadržaja (web). Podrazumevani tip pri uvozu je local.
 .UNINDENT
 .SH TRASH
 .INDENT 0.0

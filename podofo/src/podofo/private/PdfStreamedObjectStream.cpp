@@ -30,8 +30,20 @@ public:
 
     ~ObjectOutputStream()
     {
-        Flush(*m_outputStream);
-        m_objectStream->FinishOutput();
+        // NOTE: Destructors can't throw: a failure leaves the stream truncated
+        try
+        {
+            Flush(*m_outputStream);
+            m_objectStream->FinishOutput();
+        }
+        catch (const std::exception& e)
+        {
+            PoDoFo::LogMessage(PdfLogSeverity::Error, "Error while finishing the streamed object stream: {}", e.what());
+        }
+        catch (...)
+        {
+            PoDoFo::LogMessage(PdfLogSeverity::Error, "Unknown error while finishing the streamed object stream");
+        }
     }
 
 protected:
@@ -94,6 +106,13 @@ unique_ptr<InputStream> PdfStreamedObjectStream::GetInputStream(PdfObject& obj)
 
 unique_ptr<OutputStream> PdfStreamedObjectStream::GetOutputStream(PdfObject& obj)
 {
+    // The object is written to the device together with its first stream
+    if (obj.IsImmutable())
+    {
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::ChangeOnImmutable, "The object {} was already written to the device",
+            obj.GetIndirectReference().ToString());
+    }
+
     if (m_Encrypt == nullptr)
     {
         return std::make_unique<ObjectOutputStream>(*this, *m_Device);

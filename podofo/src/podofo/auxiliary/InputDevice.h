@@ -33,6 +33,17 @@ protected:
     virtual bool peek(char& ch) const = 0;
 
     void checkRead() const override;
+
+    void resetBuffers() override;
+
+    /// Enable the inline read window over the supplied memory region
+    void enableReadWindow(const char* head, const char* tail);
+
+    /// Disarm the read window, handing the logical position back to the device
+    void disableReadWindow();
+
+private:
+    bool peekSlowPath(char& ch) const;
 };
 
 };

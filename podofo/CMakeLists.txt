@@ -95,6 +95,12 @@ endif()
 
 option(PODOFO_BUILD_STATIC "Build static libraries (.a/.lib)" FALSE)
 option(PODOFO_WITH_AFDKO "Enable AFDKO support" ON)
+# NOTE: It lets the compiler inline across translation units. When left empty it's
+# enabled only in shared builds, as static libraries objects would contain compiler
+# specific intermediate code that consumers may have to link with LTO
+set(PODOFO_WITH_LTO "" CACHE STRING "Enable link time optimization in optimized builds")
+set_property(CACHE PODOFO_WITH_LTO PROPERTY STRINGS "" ON OFF)
+option(PODOFO_WITH_ASAN "Compile with address sanitizer instrumentation" FALSE)
 
 if(PODOFO_WITH_AFDKO)
     set(PODOFO_ENABLE_AFDKO TRUE)
@@ -106,6 +112,18 @@ if(PODOFO_BUILD_STATIC)
 else()
     set(PODOFO_BUILD_SHARED TRUE)
     add_compile_definitions(PODOFO_SHARED)
+endif()
+
+if(PODOFO_WITH_LTO STREQUAL "")
+    set(PODOFO_ENABLE_LTO ${PODOFO_BUILD_SHARED})
+else()
+    set(PODOFO_ENABLE_LTO ${PODOFO_WITH_LTO})
+endif()
+
+if(PODOFO_ENABLE_LTO)
+    message("Link time optimization in optimized builds: ON")
+else()
+    message("Link time optimization in optimized builds: OFF")
 endif()
 
 message("Will install libraries to ${CMAKE_INSTALL_FULL_LIBDIR}")
@@ -128,6 +146,14 @@ if(WIN32)
     list(APPEND PLATFORM_SYSTEM_LIBRARIES ws2_32 crypt32 Bcrypt)
 endif()
 
+if(NOT WIN32)
+    # Large File Support. It must be defined on every target of this
+    # build tree, since a mismatch across translation units changes the
+    # size of off_t. It stays out of the consumer ABI: no public header
+    # names off_t. On Windows _lseeki64 is 64 bit unconditionally
+    add_compile_definitions(_FILE_OFFSET_BITS=64)
+endif()
+
 # Set minimum required standard C++17, but also enforce it
 # with compiler options as CMAKE_CXX_STANDARD (or any other
 # CMake construct) won't really do it.
@@ -147,7 +173,15 @@ else()
     # By default hide symbols on gcc/clang
     # TODO: Remove -Wno-format-truncation after porting the
     # code to std::fmt as it will be unuseful
-    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17> $<$<COMPILE_LANGUAGE:CXX>:-Woverloaded-virtual> $<$<COMPILE_LANGUAGE:CXX>:-Wreorder> -fvisibility=hidden -Wall -Wswitch -Wcast-qual -Wwrite-strings -Wredundant-decls -Wno-format-truncation -Wno-unknown-pragmas -Wno-unknown-warning-option)
+    # NOTE: -Wno-attributes silences GCC warning on PODOFO_INLINE
+    # functions, which deliberately are not declared inline
+    # NOTE: -fno-semantic-interposition tells GCC that exported
+    # (PODOFO_API) symbols won't be interposed at dynamic link
+    # time, so it stays free to honour PODOFO_INLINE always_inline
+    # calls to them across translation units during LTO, instead
+    # of erroring out. This should be the default in Clang, see
+    # https://maskray.me/blog/fno-semantic-interposition
+    add_compile_options($<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17> $<$<COMPILE_LANGUAGE:CXX>:-Woverloaded-virtual> $<$<COMPILE_LANGUAGE:CXX>:-Wreorder> -fvisibility=hidden -fno-semantic-interposition -Wall -Wswitch -Wcast-qual -Wwrite-strings -Wredundant-decls -Wno-format-truncation -Wno-unknown-pragmas -Wno-attributes)
 
     # Note that we do not need debug definitions here. Set
     # -DCMAKE_BUILD_TYPE=debug or (if you want an optimised
@@ -160,17 +194,62 @@ else()
         add_definitions(-W)
     endif()
 
-    if ("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-        # Silence warnings on use of typeid(*ptr)
-        # See https://stackoverflow.com/questions/46494928/clang-warning-on-expression-side-effects
-        add_compile_options(-Wno-potentially-evaluated-expression)
+    if ("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+        add_compile_options(
+            -Wno-unknown-warning-option
+            # Silence warnings on use of typeid(*ptr)
+            # See https://stackoverflow.com/questions/46494928/clang-warning-on-expression-side-effects
+            -Wno-potentially-evaluated-expression)
     endif()
 endif()
 
+if(PODOFO_WITH_ASAN)
+    message("Address sanitizer instrumentation enabled")
+    if(MSVC)
+        add_compile_options(/fsanitize=address)
+        # Runtime checks and incremental linking are incompatible with the sanitizer
+        string(REGEX REPLACE "/RTC[a-zA-Z1]*" "" CMAKE_C_FLAGS_DEBUG "${CMAKE_C_FLAGS_DEBUG}")
+        string(REGEX REPLACE "/RTC[a-zA-Z1]*" "" CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG}")
+        add_link_options(/INCREMENTAL:NO)
+        # Instrumented stack frames are much bigger: raise the default 1MB stack reserve
+        # to the 8MB that is customary on Unix, so deep recursions don't overflow the stack
+        add_link_options(/STACK:8388608)
+
+        # The sanitizer runtime dll lives in the toolchain compiler folder, which is not
+        # in the search path when running the binaries outside of Visual Studio: deploy it
+        if(NOT "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}" STREQUAL "")
+            get_filename_component(MSVC_COMPILER_DIR "${CMAKE_CXX_COMPILER}" DIRECTORY)
+            file(GLOB ASAN_RUNTIME_DLLS "${MSVC_COMPILER_DIR}/clang_rt.asan*dynamic-*.dll")
+            if("${ASAN_RUNTIME_DLLS}" STREQUAL "")
+                message(WARNING "Address sanitizer runtime not found in \"${MSVC_COMPILER_DIR}\"")
+            else()
+                # With a multi configuration generator the binaries are placed in a per configuration subfolder
+                set(ASAN_RUNTIME_DESTINATIONS "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+                if(DEFINED CMAKE_CONFIGURATION_TYPES)
+                    set(ASAN_RUNTIME_DESTINATIONS)
+                    foreach(CONFIG_TYPE ${CMAKE_CONFIGURATION_TYPES})
+                        list(APPEND ASAN_RUNTIME_DESTINATIONS "${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${CONFIG_TYPE}")
+                    endforeach()
+                endif()
+
+                foreach(DESTINATION ${ASAN_RUNTIME_DESTINATIONS})
+                    file(COPY ${ASAN_RUNTIME_DLLS} DESTINATION "${DESTINATION}")
+                endforeach()
+                message("Deployed address sanitizer runtime from \"${MSVC_COMPILER_DIR}\"")
+            endif()
+        endif()
+    else()
+        add_compile_options(-fsanitize=address -fno-omit-frame-pointer)
+        add_link_options(-fsanitize=address)
+    endif()
+endif()
+
+set(PODOFO_3RDPARTY_DEPENDS)
 set(PODOFO_3RDPARTY_INCLUDES
     "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/adobe"
     "${CMAKE_CURRENT_SOURCE_DIR}/3rdparty/chromium"
 )
+set(PODOFO_PKGCONFIG_REQUIRES_PRIVATE)
 
 find_package(ZLIB REQUIRED)
 message("Found zlib headers in ${ZLIB_INCLUDE_DIR}, library at ${ZLIB_LIBRARIES}")
@@ -289,63 +368,59 @@ endif()
 # NOTE: Be careful when adding/removing: the order may be
 # platform sensible, so don't modify the current order
 
-set(PODOFO_PKGCONFIG_REQUIRES_PRIVATE "")
-set(PODOFO_HEADERS_DEPENDS)
-set(PODOFO_LIB_DEPENDS)
-
 if (PODOFO_DEVENDOR_TCBSPAN)
-    list(APPEND PODOFO_LIB_DEPENDS PUBLIC $<COMPILE_ONLY:tcbspan::tcbspan>)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PUBLIC $<COMPILE_ONLY:tcbspan::tcbspan>)
 endif()
-list(APPEND PODOFO_LIB_DEPENDS PRIVATE OpenSSL::SSL)
+list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE OpenSSL::SSL)
 string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libssl")
 if(Fontconfig_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE Fontconfig::Fontconfig)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE Fontconfig::Fontconfig)
     string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " fontconfig")
 endif()
-list(APPEND PODOFO_LIB_DEPENDS PRIVATE Freetype::Freetype)
+list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE Freetype::Freetype)
 string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " freetype2")
-list(APPEND PODOFO_LIB_DEPENDS PRIVATE LibXml2::LibXml2)
+list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE LibXml2::LibXml2)
 string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libxml-2.0")
 if(PNG_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE PNG::PNG)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE PNG::PNG)
     string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libpng")
 endif()
 if(TIFF_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE TIFF::TIFF)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE TIFF::TIFF)
     string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libtiff-4")
 endif()
 if(JPEG_FOUND)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE JPEG::JPEG)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE JPEG::JPEG)
     string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libjpeg")
 endif()
-list(APPEND PODOFO_LIB_DEPENDS PRIVATE ZLIB::ZLIB)
+list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE ZLIB::ZLIB)
 string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " zlib")
 if (PODOFO_DEVENDOR_DATE)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:date::date>)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE $<COMPILE_ONLY:date::date>)
 endif()
 if (PODOFO_DEVENDOR_FASTFLOAT)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:FastFloat::fast_float>)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE $<COMPILE_ONLY:FastFloat::fast_float>)
 endif()
 if (PODOFO_DEVENDOR_FMT)
     if (PODOFO_DEVENDOR_FMT_HEADER_ONLY)
-        list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:fmt::fmt-header-only>)
+        list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE $<COMPILE_ONLY:fmt::fmt-header-only>)
     else()
-        list(APPEND PODOFO_LIB_DEPENDS PRIVATE fmt::fmt)
+        list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE fmt::fmt)
     endif()
 endif()
 if (PODOFO_DEVENDOR_UTF8CPP)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE $<COMPILE_ONLY:utf8cpp::utf8cpp>)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE $<COMPILE_ONLY:utf8cpp::utf8cpp>)
 endif()
 if (PODOFO_DEVENDOR_UTF8PROC)
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE utf8proc::utf8proc)
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE utf8proc::utf8proc)
     string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " libutf8proc")
 endif()
-list(APPEND PODOFO_LIB_DEPENDS PRIVATE ${PLATFORM_SYSTEM_LIBRARIES})
+list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE ${PLATFORM_SYSTEM_LIBRARIES})
 
 if(LCMS2_FOUND)
     # little-cms2 doesn't provide targets.
-    list(APPEND PODOFO_LIB_DEPENDS PRIVATE ${LCMS2_LIBRARIES})
-    list(APPEND PODOFO_HEADERS_DEPENDS ${LCMS2_INCLUDE_DIR})
+    list(APPEND PODOFO_3RDPARTY_DEPENDS PRIVATE ${LCMS2_LIBRARIES})
+    list(APPEND PODOFO_3RDPARTY_INCLUDES ${LCMS2_INCLUDE_DIR})
     string(APPEND PODOFO_PKGCONFIG_REQUIRES_PRIVATE " lcms2")
 endif()
 
@@ -365,17 +440,46 @@ function(add_source subdir subdir_path dstsources dstheaders)
     set(${dstheaders} ${${dstheaders}} PARENT_SCOPE)
 endfunction()
 
+if(PODOFO_ENABLE_LTO)
+    # NOTE: Only optimized configurations are considered. It must be enabled on
+    # all the targets linked in the library, or the compiler won't be able to
+    # inline across their translation units
+    include(CheckIPOSupported)
+    check_ipo_supported(RESULT LTO_SUPPORTED OUTPUT LTO_NOT_SUPPORTED_REASON LANGUAGES C CXX)
+    if(LTO_SUPPORTED)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELEASE TRUE)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_RELWITHDEBINFO TRUE)
+        set(CMAKE_INTERPROCEDURAL_OPTIMIZATION_MINSIZEREL TRUE)
+        if(CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
+            # Force full /LTCG: the default for CMake is to enable /LTCG:incremental,
+            # which caches generated code in .iobj/.ipdb files. Verified with latest
+            # MSVC 2026 19.51.36257 that this may end producing a miscompiled binary
+            # TODO: Report this to Microsoft, as it seems a bug in the linker
+            foreach(_config RELEASE RELWITHDEBINFO MINSIZEREL)
+                foreach(_type EXE SHARED MODULE STATIC)
+                    string(APPEND CMAKE_${_type}_LINKER_FLAGS_${_config} " /LTCG")
+                endforeach()
+            endforeach()
+        endif()
+    else()
+        message(WARNING "Link time optimization is not supported: ${LTO_NOT_SUPPORTED_REASON}")
+    endif()
+endif()
+
 add_subdirectory(3rdparty)
 add_subdirectory(src/podofo)
-include_directories(${PODOFO_INCLUDE_DIRS})
+
+if(PODOFO_BUILD_EXAMPLES)
+    add_subdirectory(examples)
+endif()
+
+# Unit tests and tools consume private headers as well. The public
+# includes come transitively from the podofo::podofo target
+include_directories(${PODOFO_INCLUDE_DIRS_PRIVATE})
 
 if(PODOFO_BUILD_TEST)
     enable_testing()
     add_subdirectory(test)
-endif()
-
-if(PODOFO_BUILD_EXAMPLES)
-    add_subdirectory(examples)
 endif()
 
 if(PODOFO_BUILD_UNSUPPORTED_TOOLS)

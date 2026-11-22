@@ -192,6 +192,11 @@ examples and tools. By default a shared library is built;
 
 - `PODOFO_WITH_AFDKO`: Enable the [Adobe Font Development Kit for OpenType](https://github.com/adobe-type-tools/afdko) integration (used in Type1/OpenType font subsetting), defaults to ON;
 
+- `PODOFO_WITH_LTO`: Enable link-time optimizations in optimized builds. By default it's empty, which enables it when building a shared library and disables it when building a static library. Set it to ON or OFF to override this;
+
+- `PODOFO_WITH_ASAN`: Compile the library, tests, examples and tools with address sanitizer
+instrumentation, defaults to FALSE;
+
 - `PODOFO_DEVENDOR_TCBSPAN`: If TRUE, the [`tcb::span`](https://github.com/tcbrindle/span) library will be devendored;
 
 - `PODOFO_DEVENDOR_DATE`: If TRUE, the [`date`](https://github.com/howardhinnant/date) library will be devendored;
@@ -256,9 +261,15 @@ instead represent a generic octet buffer.
 
 ## Thread safety
 
-For the most part PoDoFo is not a thread safe library. As a general rule: use any object on the same thread it was created on.
-Alternatively: guard access to objects obtained through a `PdfDocument` using a mutex. Explicit support is provided for freeing
-object instances in different threads, as is done in modern garbage collected languages.
+PoDoFo is reentrant:
+
+- Different documents can be used at the same time from different threads, while a `PdfDocument` and most objects
+  obtained through it must be used by one thread at a time: guard the access with a mutex when sharing them between
+  threads;
+- Instances shared by the whole process, such as the built-in encodings and the predefined CMaps, can be used from any
+  thread at the same time;
+- Object instances can be freed in a thread other than the one that used them, as is done in modern garbage collected
+  languages.
 
 ## PoDoFo Tools
 

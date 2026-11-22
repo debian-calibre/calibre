@@ -26,7 +26,7 @@ src/podofo/
 - `3rdparty/` vendored headers/sources (fmtlib, fast_float, utf8cpp, date, tcb::span, chromium numerics, Adobe AFDKO)
 - `test/unit/`: Catch2-based unit tests (single executable `podofo-unit`)
 - `test/common/`: shared test utilities (`PdfTest.h`, `TestUtils`)
-- `tools/`: CLI utilities built on top of the library
+- `tools/`: CLI utilities built on top of the library. Tools are not currently supported, tested, or maintained: issue a warning if any attempt is made to modify them
 - `examples/`: simple sample programs
 - `playground/`: development and test bed using pre-built dependencies
 - `extern/resources/`: test fixture files (git submodule)
@@ -56,6 +56,11 @@ The `playground` shall be used with a CMake build dir named accordingly to the h
 cd playground
 cmake -B build-{win|linux|macos}-{Debug|Release} -DCMAKE_BUILD_TYPE={Debug|Release}
 ```
+
+Add `-DPODOFO_WITH_ASAN=TRUE` to compile with address sanitizer instrumentation. It defaults to
+FALSE and it's not enabled during regular development: turn it on only when hunting memory errors,
+using a separate build directory (eg. `build-win-Debug-asan`) to avoid rebuilding the regular one.
+
 ### Build:
 ```
 cmake --build build-{win|linux|macos}-{Debug|Release}
@@ -106,3 +111,5 @@ Refer to `CODING-STYLE.md`, but don't follow any hyperlink there. In addition:
 - Test files live in `test/unit/` and follow the naming pattern `<Topic>Test.cpp`
 - Tests include `<PdfTest.h>` (which pulls in Catch2, PoDoFo headers, and `TestUtils`). The macros `ASSERT_EQUAL` and `ASSERT_THROW_WITH_ERROR_CODE` are available for common assertions
 - Test resource files are read via `TestUtils::GetTestInputFilePath(...)` and output goes to `TestUtils::GetTestOutputFilePath(...)`
+- Wrapper lifetime: elements and collections cache the objects they wrap. Editing through the raw `PdfDictionary`/`PdfArray` a key managed by a typed accessor (e.g. removing /Annots or /A through `GetDictionary()`) is unsupported, and the stale wrappers it leaves, also after garbage collection, are the caller's responsibility: don't add code to detect such edits, and don't report as a vulnerability a defect that needs such an edit to be triggered. Invalidations caused by the typed API itself, including the garbage collection run by `Save`, must be handled
+- Thread safety: a document and the objects obtained through it are used by one thread at a time, so they need no synchronization. Instances shared by the whole process, such as the `PdfEncodingMapFactory` encodings and predefined CMaps, must stay safe for concurrent use: fill them completely in their constructor, which runs in a thread safe static initialization, or publish lazily built state atomically, e.g. with a compare and swap on a pointer

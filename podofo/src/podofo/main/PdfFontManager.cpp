@@ -6,6 +6,7 @@
 #include "PdfFontManager.h"
 
 #include <algorithm>
+#include <mutex>
 #include <podofo/private/FileSystem.h>
 
 #if defined(_WIN32) && defined(PODOFO_HAVE_WIN32GDI)
@@ -39,6 +40,7 @@ namespace
 
 static bool tryAdaptSearchParams(const std::string_view& patternName, const PdfFontSearchParams& params,
     unique_ptr<AdaptedFontSearch>& adaptedParams);
+static string getInlineFontIdPrefix(const PdfObject& obj);
 
 #if defined(_WIN32) && defined(PODOFO_HAVE_WIN32GDI)
 
@@ -56,6 +58,7 @@ static unique_ptr<charbuff> getWin32FontData(
 
 #if defined(PODOFO_HAVE_FONTCONFIG)
 shared_ptr<PdfFontConfigWrapper> PdfFontManager::m_fontConfig;
+static mutex s_fontConfigMutex;
 #endif
 
 static constexpr unsigned SUBSET_PREFIX_LEN = 6;
@@ -71,6 +74,41 @@ void PdfFontManager::Clear()
     m_cachedQueries.clear();
     m_cachedPaths.clear();
     m_fonts.clear();
+    m_inlineFonts.clear();
+}
+
+void PdfFontManager::RemoveCollected(const unordered_set<PdfReference>& collected)
+{
+    for (auto it = m_fonts.begin(); it != m_fonts.end(); )
+    {
+        if (collected.find(it->first) == collected.end())
+        {
+            it++;
+            continue;
+        }
+
+        // Remove the font from the query and path caches as well
+        auto font = it->second.Font.get();
+        for (auto qit = m_cachedQueries.begin(); qit != m_cachedQueries.end(); )
+        {
+            auto& fonts = qit->second;
+            fonts.erase(std::remove(fonts.begin(), fonts.end(), font), fonts.end());
+            if (fonts.size() == 0)
+                qit = m_cachedQueries.erase(qit);
+            else
+                qit++;
+        }
+
+        for (auto pit = m_cachedPaths.begin(); pit != m_cachedPaths.end(); )
+        {
+            if (pit->second == font)
+                pit = m_cachedPaths.erase(pit);
+            else
+                pit++;
+        }
+
+        it = m_fonts.erase(it);
+    }
 }
 
 string PdfFontManager::GenerateSubsetPrefix()
@@ -136,23 +174,10 @@ const PdfFont* PdfFontManager::GetLoadedFont(const PdfResources& resources, cons
         // It's a specification invalid inline font. We must support
         // it anyway, since Adobe is lenient as usual. We create an id
         // for this font and put it in the inline fonts map
-        auto obj = &resources.GetObject();
-        PdfReference ref;
-        do
-        {
-            // Find the first indirect ancestor object
-            ref = obj->GetIndirectReference();
-            if (ref.IsIndirect())
-                break;
-
-            PODOFO_INVARIANT(obj->GetParent() != nullptr);
-            obj = obj->GetParent()->GetOwner();
-        } while (obj != nullptr);
-        auto inlineFontId = utls::Format("R{}_{}-{}", ref.ObjectNumber(), ref.GenerationNumber(), name);
+        auto inlineFontId = getInlineFontIdPrefix(resources.GetObject()).append(name);
         auto found = m_inlineFonts.find(inlineFontId);
         if (found != m_inlineFonts.end())
             return found->second.get();
-
 
         // Create a new font
         unique_ptr<PdfFont> font;
@@ -161,6 +186,26 @@ const PdfFont* PdfFontManager::GetLoadedFont(const PdfResources& resources, cons
 
         auto inserted = m_inlineFonts.emplace(inlineFontId, std::move(font));
         return inserted.first->second.get();
+    }
+}
+
+void PdfFontManager::RemoveInlineFont(const PdfResources& resources, const string_view& name)
+{
+    m_inlineFonts.erase(getInlineFontIdPrefix(resources.GetObject()).append(name));
+}
+
+void PdfFontManager::RemoveInlineFonts(const PdfResources& resources)
+{
+    auto prefix = getInlineFontIdPrefix(resources.GetObject());
+    for (auto it = m_inlineFonts.begin(); it != m_inlineFonts.end(); )
+    {
+        if (it->first.compare(0, prefix.size(), prefix) == 0)
+        {
+            it = m_inlineFonts.erase(it);
+            continue;
+        }
+
+        it++;
     }
 }
 
@@ -235,6 +280,9 @@ PdfFont& PdfFontManager::GetOrCreateFontFromBuffer(const bufferview& buffer, con
 
 PdfFont& PdfFontManager::GetOrCreateFont(PdfFontMetricsConstPtr metrics, const PdfFontCreateParams& params)
 {
+    if (metrics == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The font metrics must not be null");
+
     return getOrCreateFontHashed(std::move(metrics), params);
 }
 
@@ -249,7 +297,11 @@ PdfFont* PdfFontManager::GetCachedFont(const PdfReference& ref)
 
 PdfFont& PdfFontManager::GetOrCreateFontFromBuffer(const bufferview& buffer, unsigned faceIndex, const PdfFontCreateParams& params)
 {
-    return getOrCreateFontHashed(PdfFontMetrics::CreateFromBuffer(buffer, faceIndex), params);
+    auto metrics = PdfFontMetrics::CreateFromBuffer(buffer, faceIndex);
+    if (metrics == nullptr)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidFontData, "Invalid or unsupported font");
+
+    return getOrCreateFontHashed(std::move(metrics), params);
 }
 
 PdfFont& PdfFontManager::getOrCreateFontHashed(PdfFontMetricsConstPtr&& metrics, const PdfFontCreateParams& params)
@@ -323,8 +375,8 @@ PdfFontMetricsConstPtr PdfFontManager::SearchFontMetrics(const string_view& font
 void PdfFontManager::AddFontDirectory(const string_view& path)
 {
 #ifdef PODOFO_HAVE_FONTCONFIG
-    auto& fc = GetFontConfigWrapper();
-    fc.AddFontDirectory(path);
+    auto fc = getFontConfigWrapper();
+    fc->AddFontDirectory(path);
 #endif
 #if defined(_WIN32) && defined(PODOFO_ENABLE_WIN32GDI_FONT_SEARCH)
     string fontDir(path);
@@ -378,8 +430,8 @@ unique_ptr<const PdfFontMetrics> PdfFontManager::searchFontMetrics(const string_
         ? PdfFontConfigSearchFlags::None
         : PdfFontConfigSearchFlags::SkipMatchPostScriptName;
 
-    auto& fc = GetFontConfigWrapper();
-    path = fc.SearchFontPath(fontName, fcParams, faceIndex);
+    auto fc = getFontConfigWrapper();
+    path = fc->SearchFontPath(fontName, fcParams, faceIndex);
 #endif
 
     unique_ptr<const PdfFontMetrics> ret = nullptr;
@@ -395,8 +447,7 @@ unique_ptr<const PdfFontMetrics> PdfFontManager::searchFontMetrics(const string_
         {
             // NOTE: The font has been already extracted from collections at this point
             auto face = FT::CreateFaceFromBuffer(*data);
-            ret = PdfFontMetrics::CreateFromFace(face.get(), std::move(data), refMetrics, skipNormalization);
-            (void)face.release();
+            ret = PdfFontMetrics::CreateFromFace(std::move(face), std::move(data), refMetrics, skipNormalization);
         }
 #endif
     }
@@ -462,8 +513,7 @@ PdfFont& PdfFontManager::GetOrCreateFont(HFONT font, const PdfFontCreateParams& 
 
     // NOTE: The font has been already extracted from collections at this point
     auto face = FT::CreateFaceFromBuffer(*data);
-    auto metrics = PdfFontMetrics::CreateFromFace(face.get(), std::move(data), nullptr, false);
-    (void)face.release();
+    auto metrics = PdfFontMetrics::CreateFromFace(std::move(face), std::move(data), nullptr, false);
     if (metrics == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidFontData, "Could not create valid font!");
 
@@ -513,21 +563,25 @@ unique_ptr<charbuff> getWin32FontData(
 
 void PdfFontManager::SetFontConfigWrapper(const shared_ptr<PdfFontConfigWrapper>& fontConfig)
 {
-    if (m_fontConfig == fontConfig)
-        return;
-
     if (fontConfig == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Fontconfig wrapper can't be null");
 
+    lock_guard<mutex> lock(s_fontConfigMutex);
     m_fontConfig = fontConfig;
 }
 
 PdfFontConfigWrapper& PdfFontManager::GetFontConfigWrapper()
 {
+    return *getFontConfigWrapper();
+}
+
+shared_ptr<PdfFontConfigWrapper> PdfFontManager::getFontConfigWrapper()
+{
+    lock_guard<mutex> lock(s_fontConfigMutex);
     if (m_fontConfig == nullptr)
         m_fontConfig.reset(new PdfFontConfigWrapper());
 
-    return *m_fontConfig;
+    return m_fontConfig;
 }
 
 #endif // PODOFO_HAVE_FONTCONFIG
@@ -717,4 +771,28 @@ bool tryAdaptSearchParams(const string_view& fontName, const PdfFontSearchParams
         adaptedParams->Params.Style = style;
 
     return true;
+}
+
+// Inline fonts are keyed by the first indirect ancestor of their resources
+string getInlineFontIdPrefix(const PdfObject& obj)
+{
+    auto curr = &obj;
+    PdfReference ref;
+    do
+    {
+        ref = curr->GetIndirectReference();
+        if (ref.IsIndirect())
+            break;
+
+        // The trailer is neither indirect nor contained: a font that is inlined
+        // in a chain of direct objects reaches it, albeit is a very unlikely case,
+        // possibly only fabricated. See TestInlineFontDirectRoot
+        auto parent = curr->GetParent();
+        if (parent == nullptr)
+            break;
+
+        curr = parent->GetOwner();
+    } while (curr != nullptr);
+
+    return utls::Format("R{}_{}-", ref.ObjectNumber(), ref.GenerationNumber());
 }

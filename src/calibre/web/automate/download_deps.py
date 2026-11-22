@@ -14,9 +14,24 @@ threads and multiple processes.
 Superseded versions are removed only once no process is using them, since a
 running browser can open files from its install at any time. Processes mark a
 version as in use by holding a shared lock on it, see :class:`VersionLock`.
+
+A failed install is recorded, along with an explanation of what went wrong, and
+not tried again for a while, see :class:`InstallFailed`, since installing
+camoufox means downloading hundreds of megabytes.
+
+This module is updated live from the calibre website, so that changes to where
+the dependencies are downloaded from can reach users without needing a new
+calibre release. Everything outside this module that uses it should do so
+through the live version of it, see :func:`live_module`.
 """
 
+# These two are read by calibre.live, see live_module()
+module_version = 1
+minimum_calibre_version = (9, 20, 0)
+
+import errno
 import hashlib
+import io
 import json
 import os
 import platform
@@ -31,9 +46,10 @@ from functools import lru_cache
 from pathlib import Path
 from threading import Lock, Thread
 from typing import IO, TYPE_CHECKING, Any, NamedTuple, Self
+from urllib.error import HTTPError, URLError
 from urllib.request import OpenerDirector, ProxyHandler, Request, build_opener
 
-from calibre import get_proxies
+from calibre import get_proxies, human_readable
 from calibre.constants import __version__, bin_install_dir, ismacos, iswindows
 from calibre.ptempfile import TemporaryDirectory
 from calibre.utils.lock import ExclusiveFile, unix_open
@@ -41,6 +57,7 @@ from calibre.utils.safe_atexit import remove_dir
 
 if TYPE_CHECKING:
     from collections.abc import Callable
+    from types import ModuleType
 
 if iswindows:
     import msvcrt
@@ -54,12 +71,21 @@ INSTALL_LOCK_TIMEOUT = 3600  # seconds, installing camoufox means downloading hu
 METADATA_LOCK_TIMEOUT = 120  # seconds
 NETWORK_TIMEOUT = 120  # seconds
 FONT_LISTS_TIMEOUT = 20  # seconds
+# A failed install is not tried again for this long, see InstallFailed
+INSTALL_RETRY_INTERVAL = 3600  # seconds
 
 METADATA_FILE_NAME = 'metadata.json'
+# The key in the metadata recording the last failed install
+INSTALL_FAILURE_KEY = 'install_failed'
 VERSION_LOCK_SUFFIX = '.lock'
 VERSION_PAT = re.compile(r'[a-zA-Z0-9][a-zA-Z0-9._-]*')
 
 CAMOUFOX_REPO = 'daijro/camoufox'
+# Repositories with backups of the camoufox releases, used, in order, when the
+# camoufox repository is not found, as happened when GitHub removed it
+CAMOUFOX_BACKUP_REPOS = ('jo-inc/camofox-browser',)
+# The camoufox python package, which bundles the font lists, see camoufox_font_lists()
+CAMOUFOX_PYPI_PACKAGE = 'camoufox'
 
 
 def github_api_headers() -> dict[str, str]:
@@ -115,13 +141,25 @@ def download_json(url: str, headers: dict[str, str] | None = None, timeout: floa
     return json.loads(download_data(url, headers, timeout))
 
 
-def download_file(url: str, dest: str, expected_sha256: str = '') -> None:
-    """Download url to the file dest, verifying its checksum, if known."""
+def download_file(url: str, dest: str, expected_sha256: str = '', progress: Callable[[int, int], None] | None = None) -> None:
+    """Download url to the file dest, verifying its checksum, if known.
+
+    progress, if given, is called with the number of bytes downloaded so far
+    and the total number of bytes, which is zero if not known.
+    """
     h = hashlib.sha256()
     with opener().open(url, timeout=NETWORK_TIMEOUT) as response, open(dest, 'wb') as output:
+        try:
+            total = int(response.headers.get('Content-Length') or 0)
+        except ValueError:
+            total = 0
+        done = 0
         while data := response.read(1024 * 1024):
             h.update(data)
             output.write(data)
+            if progress is not None:
+                done += len(data)
+                progress(done, total)
     if expected_sha256 and h.hexdigest() != expected_sha256:
         raise ValueError(f'The data downloaded from {url} does not match its expected SHA-256 checksum')
 
@@ -172,6 +210,17 @@ def make_executable(path: str) -> None:
 
 # }}}
 
+
+def latest_pypi_wheel(package: str, timeout: float = NETWORK_TIMEOUT) -> Release:
+    """The wheel of the latest release of package on PyPI."""
+    data = download_json(f'https://pypi.org/pypi/{package}/json', timeout=timeout)
+    version = data['info']['version']
+    for f in data.get('urls', ()):
+        if f.get('packagetype') == 'bdist_wheel' and not f.get('yanked'):
+            return Release(version, f['url'], (f.get('digests') or {}).get('sha256', ''))
+    raise ValueError(f'No wheel found for {package} {version} on PyPI')
+
+
 # Version numbers {{{
 
 
@@ -206,6 +255,86 @@ class Release(NamedTuple):
 class Install(NamedTuple):
     path: str
     version: str
+
+
+class InstallProgress(NamedTuple):
+    stage: str  # downloading or unpacking
+    done: int = 0  # bytes downloaded so far
+    total: int = 0  # bytes to download, zero if not known
+
+
+class InstallFailed(Exception):
+    """Installing a dependency failed, either just now or recently enough that
+    it is not tried again until retry_at.
+
+    message explains what went wrong and, when possible, how to fix it. details
+    is the traceback of the original failure.
+    """
+
+    def __init__(self, message: str, details: str = '', retry_at: float = 0) -> None:
+        super().__init__(message)
+        self.message, self.details, self.retry_at = message, details, retry_at
+
+
+# Windows error codes, as found in OSError.winerror
+ERROR_ACCESS_DENIED = 5
+ERROR_SHARING_VIOLATION = 32
+ERROR_LOCK_VIOLATION = 33
+ERROR_HANDLE_DISK_FULL = 39
+ERROR_DISK_FULL = 112
+ERROR_FILENAME_EXCED_RANGE = 206
+
+
+def free_disk_space(path: str) -> int | None:
+    """The free space on the drive containing path, which need not exist yet."""
+    while path:
+        try:
+            return shutil.disk_usage(path).free
+        except OSError:
+            parent = os.path.dirname(path)
+            if parent == path:
+                break
+            path = parent
+    return None
+
+
+def install_failure_advice(err: BaseException, install_dir: str, space_needed: int = 0) -> str:
+    """How to fix the problem that caused err, or the empty string if not known."""
+    winerror: int | None = getattr(err, 'winerror', None)
+    err_no: int | None = getattr(err, 'errno', None)
+    if err_no == errno.ENOSPC or winerror in (ERROR_DISK_FULL, ERROR_HANDLE_DISK_FULL):
+        ans = f'There is not enough free space on the drive containing {install_dir}.'
+        if space_needed:
+            ans += f' About {human_readable(space_needed)} of free space is needed'
+            if (free := free_disk_space(install_dir)) is not None:
+                ans += f', there is {human_readable(free)} free now'
+            ans += '.'
+        return ans
+    if err_no == errno.ENAMETOOLONG or winerror == ERROR_FILENAME_EXCED_RANGE:
+        return f'The path of the folder {install_dir} is too long, move calibre, or its data if it is a portable install, to a folder with a shorter path.'
+    if isinstance(err, PermissionError) or winerror in (ERROR_ACCESS_DENIED, ERROR_SHARING_VIOLATION, ERROR_LOCK_VIOLATION):
+        if iswindows:
+            return (
+                'Access to a file was denied. This is usually caused by antivirus software scanning or locking the newly downloaded'
+                f' files. Try adding an exception for the folder {install_dir} to your antivirus software.'
+            )
+        return f'Access to a file was denied. Check that you are allowed to create files in the folder {install_dir}.'
+    if isinstance(err, (URLError, TimeoutError, ConnectionError)):
+        return 'Check your internet connection and, if you use one, your proxy settings.'
+    return ''
+
+
+def explain_install_failure(display_name: str, err: BaseException, install_dir: str, space_needed: int = 0) -> str:
+    """A description of the failure to install display_name with the error err,
+    including how to fix it, when that is known."""
+    ans = f'Failed to install {display_name} with error: {err}'
+    if advice := install_failure_advice(err, install_dir, space_needed):
+        ans += f'. {advice}'
+    return ans
+
+
+def retry_note(retry_at: float) -> str:
+    return f' Installing will be tried again after {time.strftime("%H:%M", time.localtime(retry_at))}.'
 
 
 def install_root() -> str:
@@ -326,13 +455,22 @@ class Installer:
     ``<version>.lock`` file used to mark it as in use, see :class:`VersionLock`.
     """
 
+    # Used in messages to the user
+    display_name = ''
+    # The approximate amount of disk space installing needs, zero if not known
+    space_needed = 0
+
     def __init__(self, name: str) -> None:
         self.name = name
+        self.display_name = self.display_name or name
         # Serializes calls in this process, cross process serialization is done
         # via a lock on the metadata file
         self.thread_lock = Lock()
         self.update_check_lock = Lock()
         self.update_check_running = False
+        # How far along an install being done by this process is, None if this
+        # process is not installing anything. Read from other threads.
+        self.install_progress: InstallProgress | None = None
 
     # Implemented by subclasses {{{
 
@@ -408,20 +546,29 @@ class Installer:
         # referred to by the metadata, re-use it if it is still in use
         if not remove_version_if_unused(dest) and self.is_complete(dest):
             return
-        with TemporaryDirectory('-install', self.name, dir=base) as tdir:
-            downloaded = os.path.join(tdir, 'download')
-            download_file(release.url, downloaded, release.sha256)
-            unpacked = os.path.join(tdir, 'unpacked')
-            os.mkdir(unpacked)
-            self.unpack(downloaded, unpacked)
-            os.remove(downloaded)
-            if not self.is_complete(unpacked):
-                raise ValueError(f'The {self.name} package downloaded from {release.url} is missing needed files')
-            self.finalize(unpacked)
-            if os.path.exists(dest):
-                # Not fully removed above, no running process is using it
-                os.rename(dest, os.path.join(tdir, 'previous'))
-            os.rename(unpacked, dest)
+
+        def progress(done: int, total: int) -> None:
+            self.install_progress = InstallProgress('downloading', done, total)
+
+        self.install_progress = InstallProgress('downloading')
+        try:
+            with TemporaryDirectory('-install', self.name, dir=base) as tdir:
+                downloaded = os.path.join(tdir, 'download')
+                download_file(release.url, downloaded, release.sha256, progress=progress)
+                self.install_progress = InstallProgress('unpacking')
+                unpacked = os.path.join(tdir, 'unpacked')
+                os.mkdir(unpacked)
+                self.unpack(downloaded, unpacked)
+                os.remove(downloaded)
+                if not self.is_complete(unpacked):
+                    raise ValueError(f'The {self.name} package downloaded from {release.url} is missing needed files')
+                self.finalize(unpacked)
+                if os.path.exists(dest):
+                    # Not fully removed above, no running process is using it
+                    os.rename(dest, os.path.join(tdir, 'previous'))
+                os.rename(unpacked, dest)
+        finally:
+            self.install_progress = None
 
     def install(self, f: IO[bytes], release: Release, metadata: dict[str, Any]) -> dict[str, Any]:
         self.install_files(release)
@@ -429,8 +576,54 @@ class Installer:
         metadata.update(release.as_dict())
         metadata['installed_at'] = metadata['last_update_check'] = time.time()
         metadata.pop('update_available', None)
+        metadata.pop(INSTALL_FAILURE_KEY, None)
         write_metadata(f, metadata)
         return metadata
+
+    # Failed installs {{{
+
+    def raise_if_failed_recently(self, metadata: dict[str, Any]) -> None:
+        """Raise InstallFailed if installing failed too recently to try again."""
+        failure = metadata.get(INSTALL_FAILURE_KEY)
+        if not isinstance(failure, dict):
+            return
+        failed_at = failure.get('failed_at')
+        if not isinstance(failed_at, (int, float)) or not 0 <= time.time() - failed_at < INSTALL_RETRY_INTERVAL:
+            return
+        retry_at = failed_at + INSTALL_RETRY_INTERVAL
+        message = str(failure.get('message') or f'Failed to install {self.display_name}')
+        raise InstallFailed(message + retry_note(retry_at), str(failure.get('details') or ''), retry_at)
+
+    def install_or_record_failure(self, f: IO[bytes], release: Release, metadata: dict[str, Any]) -> dict[str, Any]:
+        """Install release, recording any failure in the metadata, so that it is
+        not tried again until INSTALL_RETRY_INTERVAL has passed and raising
+        InstallFailed with an explanation of what went wrong."""
+        try:
+            return self.install(f, release, metadata)
+        except Exception as err:
+            details = traceback.format_exc()
+            message = explain_install_failure(self.display_name, err, self.install_dir, self.space_needed)
+            failed_at = time.time()
+            metadata = dict(metadata)
+            metadata[INSTALL_FAILURE_KEY] = {'failed_at': failed_at, 'version': release.version, 'message': message, 'details': details}
+            try:
+                write_metadata(f, metadata)
+            except OSError:
+                # For example, when the disk is full, which is likely what
+                # the original failure was about
+                debug(f'Failed to record the failure to install {self.name} with error:')
+                traceback.print_exc()
+            retry_at = failed_at + INSTALL_RETRY_INTERVAL
+            raise InstallFailed(message + retry_note(retry_at), details, retry_at) from err
+
+    def forget_install_failure(self) -> None:
+        """Have the next call try installing again, even if the last attempt failed recently."""
+        with self.thread_lock, ExclusiveFile(self.metadata_path, timeout=INSTALL_LOCK_TIMEOUT) as f:
+            metadata = read_metadata(f)
+            if metadata.pop(INSTALL_FAILURE_KEY, None) is not None:
+                write_metadata(f, metadata)
+
+    # }}}
 
     def apply_pending_update(self, f: IO[bytes], metadata: dict[str, Any], update: dict[str, Any]) -> dict[str, Any]:
         try:
@@ -464,7 +657,8 @@ class Installer:
         needs_update_check = False
         metadata = read_metadata(f)
         if not self.is_installed(metadata.get('version', '')):
-            metadata = self.install(f, self.latest_release(**kw), metadata)
+            self.raise_if_failed_recently(metadata)
+            metadata = self.install_or_record_failure(f, self.latest_release(**kw), metadata)
         else:
             if (update := self.pending_update(metadata)) is not None:
                 metadata = self.apply_pending_update(f, metadata, update)
@@ -620,14 +814,33 @@ def camoufox_asset_pattern(os_name: str, archs: tuple[str, ...]) -> re.Pattern[s
     return re.compile(rf'camoufox-(?P<version>[^-]+)-(?P<build>[^-]+)-{re.escape(os_name)}\.(?P<arch>{arch})\.zip')
 
 
+def camoufox_releases() -> tuple[str, list[dict[str, Any]]]:
+    """The GitHub releases of camoufox and the repository they came from,
+    falling back to the backups of them if the camoufox repository is not found."""
+    repo, backups = CAMOUFOX_REPO, list(CAMOUFOX_BACKUP_REPOS)
+    while True:
+        try:
+            return repo, download_json(f'https://api.github.com/repos/{repo}/releases?per_page=50', github_api_headers())
+        except HTTPError as e:
+            if e.code != 404 or not backups:
+                raise
+            debug(f'The camoufox releases in {repo} were not found, using the backups in {backups[0]} instead')
+            repo = backups.pop(0)
+
+
 class Camoufox(Installer):
+    display_name = 'the Camoufox browser'
+    # The download is about 1.3 GB, unpacking to about 2.6 GB, both of
+    # which are present at the same time
+    space_needed = 4 * 1024**3
+
     def __init__(self) -> None:
         super().__init__('camoufox')
 
     def latest_release(self, allow_prerelease: bool = False, **kw: Any) -> Release:  # ruff: ignore[any-type]
         os_name, archs = camoufox_os(), camoufox_archs()
         pat = camoufox_asset_pattern(os_name, archs)
-        releases = download_json(f'https://api.github.com/repos/{CAMOUFOX_REPO}/releases?per_page=50', github_api_headers())
+        repo, releases = camoufox_releases()
         ans: Release | None = None
         ans_key: tuple[tuple[int, ...], int] = ((), 0)
         for release in releases:
@@ -648,7 +861,7 @@ class Camoufox(Installer):
                     sha256 = (asset.get('digest') or '').partition('sha256:')[2]
                     ans, ans_key = Release(version, asset['browser_download_url'], sha256), key
         if ans is None:
-            raise ValueError(f'No camoufox release for {" or ".join(f"{os_name}.{a}" for a in archs)} found in {CAMOUFOX_REPO}')
+            raise ValueError(f'No camoufox release for {" or ".join(f"{os_name}.{a}" for a in archs)} found in {repo}')
         return ans
 
     def unpack(self, downloaded_file: str, dest: str) -> None:
@@ -752,6 +965,22 @@ def use_camoufox(allow_prerelease: bool = False) -> tuple[Install, VersionLock |
     return camoufox_installer.use(allow_prerelease=allow_prerelease)
 
 
+live: ModuleType | None = None
+
+
+def live_module() -> ModuleType:
+    """The live version of this module, which is either this one or a newer one
+    downloaded from the calibre website. Any newer version is checked for in
+    the background, for use from the next time calibre is run."""
+    global live
+    if live is None:
+        from calibre.live import Strategy, load_module, start_worker
+
+        start_worker()
+        live = load_module(__name__, strategy=Strategy.fast)
+    return live
+
+
 def lock_camoufox_install(install: Install) -> VersionLock | None:
     """Stop install, as returned by :func:`camoufox_install`, possibly in another
     process, from being removed by updates. Returns None if install is not one
@@ -782,15 +1011,36 @@ def camoufox_font_lists(version: str) -> dict[str, list[str]]:
     """The font families upstream camoufox reports for each OS, keyed by win,
     mac and lin, for the specified camoufox version. Downloaded from the
     camoufox source repository, as newer camoufox bundles do not record which
-    fonts belong to which OS, except on Linux."""
+    fonts belong to which OS, except on Linux. Falls back to the camoufox
+    python package if the source repository is not found."""
     if VERSION_PAT.fullmatch(version) is None:
         raise ValueError(f'The version {version!r} of camoufox is not a valid version number')
     url = f'https://raw.githubusercontent.com/{CAMOUFOX_REPO}/v{version}/pythonlib/camoufox/fonts.json'
-    # A short timeout as this is done when launching the browser
-    data = download_json(url, timeout=FONT_LISTS_TIMEOUT)
+    try:
+        # A short timeout as this is done when launching the browser
+        data = download_json(url, timeout=FONT_LISTS_TIMEOUT)
+    except HTTPError as e:
+        if e.code != 404:
+            raise
+        debug(f'The camoufox font lists at {url} were not found, using the ones in the {CAMOUFOX_PYPI_PACKAGE} package on PyPI instead')
+        url, data = camoufox_font_lists_from_pypi()
     if not isinstance(data, dict) or not all(isinstance(families, list) and all(isinstance(f, str) for f in families) for families in data.values()):
         raise ValueError(f'The camoufox font lists downloaded from {url} are not a mapping of OS names to lists of font families')
     return data
+
+
+def camoufox_font_lists_from_pypi() -> tuple[str, Any]:
+    """The URL of and the font lists in the latest release of the camoufox
+    python package, which contains the fonts.json of the source repository.
+    The package is not released in step with the browser, but the font lists
+    rarely change and any fonts in them that a browser does not bundle are
+    ignored anyway, see :func:`calibre.web.automate.camoufox.reportable_font_families`."""
+    release = latest_pypi_wheel(CAMOUFOX_PYPI_PACKAGE, timeout=FONT_LISTS_TIMEOUT)
+    wheel = download_data(release.url, timeout=FONT_LISTS_TIMEOUT)
+    if release.sha256 and hashlib.sha256(wheel).hexdigest() != release.sha256:
+        raise ValueError(f'The checksum of {release.url} does not match the one PyPI reports for it')
+    with zipfile.ZipFile(io.BytesIO(wheel)) as zf:
+        return release.url, json.loads(zf.read(f'{CAMOUFOX_PYPI_PACKAGE}/fonts.json'))
 
 
 # }}}
@@ -799,18 +1049,14 @@ def camoufox_font_lists(version: str) -> dict[str, list[str]]:
 
 
 class BrowserforgeData(Installer):
+    display_name = 'the browserforge data files'
+
     def __init__(self) -> None:
         super().__init__('browserforge')
 
     def latest_release(self, **kw: Any) -> Release:  # ruff: ignore[any-type]
         # The data files are distributed as the apify_fingerprint_datapoints package
-        name = BROWSERFORGE_DATA_PACKAGE.replace('_', '-')
-        data = download_json(f'https://pypi.org/pypi/{name}/json')
-        version = data['info']['version']
-        for f in data.get('urls', ()):
-            if f.get('packagetype') == 'bdist_wheel' and not f.get('yanked'):
-                return Release(version, f['url'], (f.get('digests') or {}).get('sha256', ''))
-        raise ValueError(f'No wheel found for {name} {version} on PyPI')
+        return latest_pypi_wheel(BROWSERFORGE_DATA_PACKAGE.replace('_', '-'))
 
     def unpack(self, downloaded_file: str, dest: str) -> None:
         prefix = BROWSERFORGE_DATA_PACKAGE + '/data/'
@@ -939,9 +1185,13 @@ def browserforge_data(patch_browserforge: bool = True) -> str:
 
 def main(args: list[str] = sys.argv) -> None:
     which = args[1] if len(args) > 1 else 'all'
+    # Being run by hand is the way to try again right away after fixing
+    # whatever made an install fail
     if which in ('all', 'camoufox'):
+        camoufox_installer.forget_install_failure()
         print('camoufox:', camoufox_binary(allow_prerelease='--allow-prerelease' in args))
     if which in ('all', 'browserforge'):
+        browserforge_installer.forget_install_failure()
         print('browserforge data:', browserforge_data(patch_browserforge=False))
 
 

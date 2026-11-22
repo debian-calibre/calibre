@@ -55,7 +55,11 @@ namespace PoDoFo
         public:
             Iterator() { }
         private:
-            Iterator(const TListIterator& iterator) : m_iterator(iterator) { }
+            Iterator(const TListIterator& iterator, const TListIterator& end)
+                : m_iterator(iterator), m_end(end)
+            {
+                skipPlaceholders();
+            }
         public:
             Iterator(const Iterator&) = default;
             Iterator& operator=(const Iterator&) = default;
@@ -70,24 +74,34 @@ namespace PoDoFo
             Iterator& operator++()
             {
                 m_iterator++;
+                skipPlaceholders();
                 return *this;
             }
             Iterator operator++(int)
             {
                 auto copy = *this;
                 m_iterator++;
+                skipPlaceholders();
                 return copy;
             }
             value_type operator*()
             {
-                return m_iterator.get();
+                return (*m_iterator).get();
             }
             value_type operator->()
             {
-                return m_iterator.get();
+                return (*m_iterator).get();
+            }
+        private:
+            // Invalid fields are stored as null placeholders: the iteration skips them
+            void skipPlaceholders()
+            {
+                while (m_iterator != m_end && *m_iterator == nullptr)
+                    m_iterator++;
             }
         private:
             TListIterator m_iterator;
+            TListIterator m_end;
         };
 
         using iterator = Iterator<PdfField, FieldList::iterator>;
@@ -102,9 +116,12 @@ namespace PoDoFo
     private:
         // To be called by PdfField
         PdfField& AddChild(std::shared_ptr<PdfField> field);
+        std::shared_ptr<PdfField> GetFieldPtr(const PdfReference& ref) const;
     private:
         PdfArray* getKidsArray() const;
+        void inlineKidsArray();
         void initFields();
+        void promoteDirectEntries();
         PdfField& getFieldAt(unsigned index) const;
         PdfField& getField(const PdfReference& ref) const;
         void fixIndices(unsigned index);

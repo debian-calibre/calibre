@@ -281,6 +281,27 @@ class EditorSettings(BasicSettings):  # {{{
         lw.setToolTip('<p>' + _('This will cause spelling errors to be highlighted in the code view for easy correction as you type.'))
         l.addRow(lw)
 
+        lw = self('inline_grammar_check')
+        lw.setText(_('Show &grammar issues underlined in the code view'))
+        lw.setToolTip(
+            '<p>'
+            + _(
+                'This will cause grammar issues to be highlighted in the code view for easy correction as you type. The data needed'
+                ' for checking a language is downloaded the first time it is needed, by right clicking in the editor or with Tools->Check grammar.'
+            )
+        )
+        l.addRow(lw)
+
+        lw = self.choices_widget('grammar_gpu_mode', {'auto': _('Automatically'), 'on': _('Always'), 'off': _('Never')}, 'auto', '')
+        lw.setToolTip(
+            '<p>'
+            + _(
+                'Whether to use the GPU for the neural networks used for deep grammar checks and suggestions for rewriting sentences.'
+                ' When set to Automatically, the GPU is used if it is supported and faster than the CPU.'
+            )
+        )
+        l.addRow(_('Use the &GPU for grammar neural networks:'), lw)
+
         lw = self('editor_accepts_drops')
         lw.setText(_('Allow drag and drop &editing of text'))
         lw.setToolTip(
@@ -706,7 +727,7 @@ class ToolbarSettings(QWidget):
         for x in ('gb1', 'gb2', 'lb', 'rb'):
             getattr(self, x).setVisible(visible)
 
-    def move(self, up=True) -> None:  # ty: ignore[invalid-method-override]
+    def move(self, up=True) -> None:  # ty: ignore[incompatible-method-override]
         r = self.current.currentRow()
         v = self.current
         if r < 0 or (r < 1 and up) or (r > v.count() - 2 and not up):

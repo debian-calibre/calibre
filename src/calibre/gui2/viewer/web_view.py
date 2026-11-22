@@ -253,8 +253,8 @@ window.calibre_translations_data = {translations_json};
         url_handler = UrlSchemeHandler(ans)
         ans.installUrlSchemeHandler(QByteArray(FAKE_PROTOCOL.encode('ascii')), url_handler)
         s = ans.settings()
-        s.setDefaultTextEncoding('utf-8')  # ty: ignore[unresolved-attribute]
-        s.setAttribute(QWebEngineSettings.WebAttribute.LinksIncludedInFocusChain, False)  # ty: ignore[unresolved-attribute]
+        s.setDefaultTextEncoding('utf-8')  # ty: ignore[missing-union-attribute]
+        s.setAttribute(QWebEngineSettings.WebAttribute.LinksIncludedInFocusChain, False)  # ty: ignore[missing-union-attribute]
         setattr(create_profile, 'ans', ans)
     return ans
 
@@ -469,6 +469,7 @@ class Inspector(QWidget):
             view_page = self.view.page()
             assert view_page is not None
             setup_profile(view_page.profile())
+            view_page.windowCloseRequested.connect(self.close_requested)
             view_to_debug = self.view_to_debug
             assert view_to_debug is not None
             debug_page = view_to_debug.page()
@@ -477,6 +478,11 @@ class Inspector(QWidget):
             h = self.layout()
             assert h is not None
             h.addWidget(self.view)
+
+    def close_requested(self) -> None:
+        # The close button in the DevTools toolbar requests the window be closed
+        if self.dock_action.isChecked():
+            self.dock_action.trigger()
 
     def sizeHint(self):
         return QSize(600, 1200)

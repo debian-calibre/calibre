@@ -15,26 +15,28 @@ using namespace PoDoFo;
 // macOS: 8MB on main thread, 512KB on secondary threads https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Multithreading/CreatingThreads/CreatingThreads.html
 // iOS: 1MB on main thread, 512KB on secondary threads
 // Modern Linux distros: usually 8MB on main and secondary threads (but setting ulimit RLIMIT_STACK to unlimited *reduces* the secondary stack size on most architectures: see https://man7.org/linux/man-pages/man3/pthread_create.3.html#NOTES )
-// the amount allocated on stack for local variables and function parameters varies between x86 and x64
-// in x86 pointers are 32-bit but all function parameters are on stack
-// in x64 pointers are 64-bit but first 4 function params are passed in registers
-// the biggest difference is between debug and non-debug stacks: a debug stack frame can be around 3x larger
-// due to instrumentation like ASAN which put guard bytes around stack variables to detect buffer overflows
-constexpr unsigned MaxRecursionDepthDefault = 450;
+// The default must fit the deepest guarded walker in the 1 MB default stack of
+// Windows, in a Debug build as well: the name tree lookup survives up to 349
+// levels there (/RTC1, x64) and up to 1509 in Release, measured with the unit tests
+constexpr unsigned MaxRecursionDepthDefault = 256;
 
 PODOFO_EXPORT unsigned s_MaxRecursionDepth = MaxRecursionDepthDefault;
 
-#ifdef DEBUG
-PODOFO_EXPORT PdfLogSeverity s_MaxLogSeverity = PdfLogSeverity::Debug;
-#else
+#ifdef NDEBUG
 PODOFO_EXPORT PdfLogSeverity s_MaxLogSeverity = PdfLogSeverity::Information;
-#endif // DEBUG
+#else // !NDEBUG
+PODOFO_EXPORT PdfLogSeverity s_MaxLogSeverity = PdfLogSeverity::Debug;
+#endif // NDEBUG
 
 PODOFO_EXPORT LogMessageCallback s_LogMessageCallback;
 
 PODOFO_EXPORT ssl::OpenSSLMain s_SSL;
 
-static unsigned s_MaxObjectCount = (1U << 23) - 1;
+static unsigned s_MaxObjectCount = MAX_OBJECT_COUNT;
+
+// A few compressed bytes may decode to orders of magnitude more: this
+// fits a color A4 page scanned at 1200 dpi or an A0 one at 300 dpi
+static size_t s_MaxDecodedStreamSize = 512 * 1024 * 1024;
 
 #if OPENSSL_VERSION_MAJOR >= 3
 OSSL_LIB_CTX* ssl::Init()
@@ -53,6 +55,15 @@ void ssl::Init()
 #if OPENSSL_VERSION_MAJOR >= 3
     return s_SSL.GetLibCtx();
 #endif // OPENSSL_VERSION_MAJOR >= 3
+}
+
+bool PdfCommon::IsDebugBuild()
+{
+#ifdef NDEBUG
+    return false;
+#else // !NDEBUG
+    return true;
+#endif // NDEBUG
 }
 
 void PdfCommon::AddFontDirectory(const string_view& path)
@@ -87,7 +98,8 @@ unsigned PdfCommon::GetMaxObjectCount()
 
 void PdfCommon::SetMaxObjectCount(unsigned maxObjectCount)
 {
-    s_MaxObjectCount = maxObjectCount;
+    // NOTE: Leave room for the object number following the last one
+    s_MaxObjectCount = std::min<unsigned>(maxObjectCount, numeric_limits<uint32_t>::max() - 1);
 }
 
 void PdfCommon::SetMaxRecursionDepth(unsigned maxRecursionDepth)
@@ -98,4 +110,14 @@ void PdfCommon::SetMaxRecursionDepth(unsigned maxRecursionDepth)
 unsigned PdfCommon::GetMaxRecursionDepth()
 {
     return s_MaxRecursionDepth;
+}
+
+void PdfCommon::SetMaxDecodedStreamSize(size_t maxDecodedStreamSize)
+{
+    s_MaxDecodedStreamSize = maxDecodedStreamSize;
+}
+
+size_t PdfCommon::GetMaxDecodedStreamSize()
+{
+    return s_MaxDecodedStreamSize;
 }

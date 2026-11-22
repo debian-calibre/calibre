@@ -398,13 +398,18 @@ class EPUBOutput(OutputFormatPlugin):
     def upgrade_to_epub3(self, tdir: str, opf: str, encryption: str | bytes | None = None) -> bytes | None:
         self.log.info('Upgrading to EPUB 3...')
         from calibre.ebooks.oeb.polish.cover import fix_conversion_titlepage_links_in_nav
+        from calibre.ebooks.oeb.polish.opf import set_package_language
         from calibre.ebooks.oeb.polish.upgrade import epub_2_to_3
 
         existing_nav = getattr(self.opts, 'epub3_nav_parsed', None)
         nav_href = getattr(self.opts, 'epub3_nav_href', None)
         previous_nav = (nav_href, existing_nav) if existing_nav is not None and nav_href else None
         container, cxpath, encpath = self.create_container(tdir, opf, encryption)
-        epub_2_to_3(container, self.log.info, previous_nav=previous_nav)
+        # The language of the book from the OPF may have been guessed from the
+        # interface language, which must not be used, see html_language()
+        epub_2_to_3(container, self.log.info, previous_nav=previous_nav, set_package_lang=False)
+        if lang := self.html_language():
+            set_package_language(container, lang)
         fix_conversion_titlepage_links_in_nav(container)
         container.commit()
         if cb := getattr(self, 'container_callback', None):
@@ -633,29 +638,52 @@ class EPUBOutput(OutputFormatPlugin):
         """
         from lxml import etree
 
-        from calibre.ebooks.oeb.base import XPath, urldefrag
+        from calibre.ebooks.oeb.base import urldefrag
         from calibre.ebooks.oeb.polish.toc import item_at_top
 
-        def frag_is_at_top(root: _Element, frag: str) -> bool:
-            elem = XPath(f'//*[@id="{frag}" or @name="{frag}"]')(root)
-            if elem:
-                elem = elem[0]
-            else:
-                return False
-            return item_at_top(elem)
+        # Cache spine lookups, id/name -> element maps and results per
+        # document so that large TOCs dont need a full document XPath query
+        # and spine scan for every entry
+        spine_by_href = {x.href: x for x in self.oeb.spine}
+        id_maps: dict[str, dict[str, _Element]] = {}
+        at_top_cache: dict[tuple[str, str], bool] = {}
+
+        def id_map_for(href: str, root: _Element) -> dict[str, _Element]:
+            cached = id_maps.get(href)
+            if cached is not None:
+                return cached
+            mapping: dict[str, _Element] = {}
+            for el in root.xpath('//*[@id or @name]'):
+                eid = el.get('id')
+                if eid:
+                    mapping.setdefault(eid, el)
+                name = el.get('name')
+                if name:
+                    mapping.setdefault(name, el)
+            id_maps[href] = mapping
+            return mapping
+
+        def frag_is_at_top(href: str, root: _Element, frag: str) -> bool:
+            key = (href, frag)
+            cached = at_top_cache.get(key)
+            if cached is not None:
+                return cached
+            elem = id_map_for(href, root).get(frag)
+            ans = bool(elem is not None and item_at_top(elem))
+            at_top_cache[key] = ans
+            return ans
 
         def simplify_toc_entry(toc: TOC) -> None:
             if toc.href:
                 href, frag = urldefrag(toc.href)
                 if frag:
-                    for x in self.oeb.spine:
-                        if x.href == href:
-                            root = x.data
-                            assert isinstance(root, etree._Element)
-                            if frag_is_at_top(root, frag):
-                                self.log.debug('Removing anchor from TOC href:', href + '#' + frag)
-                                toc.href = href
-                            break
+                    item = spine_by_href.get(href)
+                    if item is not None:
+                        root = item.data
+                        assert isinstance(root, etree._Element)
+                        if frag_is_at_top(href, root, frag):
+                            self.log.debug('Removing anchor from TOC href:', href + '#' + frag)
+                            toc.href = href
             for x in toc:
                 simplify_toc_entry(x)
 

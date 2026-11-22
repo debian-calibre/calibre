@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>, 2026\n"
 "Language-Team: Czech (http://app.transifex.com/calibre/calibre/language/cs/)\n"
@@ -2441,6 +2441,26 @@ msgid ""
 msgstr "Základní třída pro všechna zařízení USBMS. Implementuje logiku pro odesílání, získávání, aktualizaci a ukládání metadat do mezipaměti atd."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.SCAN_SKIP_DIR_SUFFIXES:1
+msgid "Folders whose names end with one of these are not searched for books"
+msgstr "Složky, jejichž názvy končí některým z těchto řetězců, se při hledání knih vynechávají"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.FOLDER_SCAN_THREADS:1
+msgid ""
+"Number of folders to list at the same time when the device is a folder, "
+"which may be on a slow network drive, see :meth:`scan_threads`"
+msgstr "Počet složek, jejichž obsah se vypisuje souběžně, pokud je jako zařízení připojena složka. Ta může být na pomalém síťovém disku. Viz :meth:`scan_threads`"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.scan_threads:1
+msgid ""
+"The number of threads to use to list the folders on the device. Only folders"
+" connected as devices use more than one, as they may be on a high latency "
+"network drive, whereas real devices gain nothing from it."
+msgstr "Vrátí počet vláken pro výpis obsahu složek na zařízení. Více než jedno vlákno se používá jen u složek připojených jako zařízení, protože mohou být na síťovém disku s vysokou latencí. Skutečným zařízením více vláken nepřináší žádnou výhodu."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
 msgid "Upload book cover to the device. Default implementation does nothing."
 msgstr "Odešle obálku knihy do zařízení. Výchozí implementace nedělá nic."
@@ -2469,6 +2489,32 @@ msgstr "Úplná cesta k souboru e-knihy"
 #: of calibre.devices.usbms.driver.USBMS.normalize_path:1
 msgid "Return path with platform native path separators"
 msgstr "Vrátí cestu s nativními oddělovači cest pro danou platformu"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.supports_deferred_datetime:1
+msgid ""
+"True if :attr:`book_class` can be created without looking up the date of the"
+" book file, see the defer_datetime argument of :class:`Book`. Book classes "
+"that override __init__() without that argument are created normally."
+msgstr "Vrátí True, pokud lze vytvořit instanci třídy :attr:`book_class` bez zjišťování data souboru knihy. Viz argument defer_datetime třídy :class:`Book`. Instance tříd knih, které přepisují __init__() bez tohoto argumentu, se vytvářejí běžným způsobem."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.parse_metadata_cache:1
+msgid ""
+"Do not look up the date of every book, which is slow on network drives, the "
+"caller must set it. Only use when :meth:`supports_deferred_datetime` returns"
+" True."
+msgstr "Umožňuje přeskočit zjišťování data každé knihy, které je na síťových discích pomalé. Datum pak musí nastavit volající. Tuto možnost lze použít pouze tehdy, když :meth:`supports_deferred_datetime` vrátí True."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:1
+msgid "Re-read the metadata of book if the size of its file changed."
+msgstr "Znovu načte metadata knihy, pokud se změnila velikost jejího souboru."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:3
+msgid "The size of the file, if already known, to avoid a stat() call."
+msgstr "Velikost souboru, pokud je již známá. Jejím předáním se předejde volání stat()."
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"

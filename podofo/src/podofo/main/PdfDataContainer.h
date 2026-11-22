@@ -44,21 +44,38 @@ public:
     virtual void Write(OutputStream& stream, PdfWriteFlags writeMode,
         const PdfStatefulEncrypt* encrypt, charbuff& buffer) const = 0;
 
+    /// @returns the document of the owner object, or nullptr if it has no owner
+    /// @remarks It's stored here so contained objects can recover it without
+    /// keeping a copy of their own
+    PdfDocument* GetDocument() const { return m_Document; }
+
 protected:
     virtual void resetDirty() = 0;
     PdfObject* GetIndirectObject(const PdfReference& reference) const;
-    PdfDocument* GetObjectDocument();
+
+    [[deprecated("Use GetDocument() instead")]]
+    PdfDocument* GetObjectDocument() const { return m_Document; }
     void SetDirty();
     bool IsIndirectReferenceAllowed(const PdfObject& obj);
     virtual void setChildrenParent() = 0;
     void AssertMutable() const;
 
 private:
-    void SetOwner(PdfObject& owner);
+    /// Set the owner object, along with the document it belongs to
+    /// @remarks The document is supplied by the caller, which always knows it
+    /// already, so it's not read back from the owner
+    void SetOwner(PdfObject& owner, PdfDocument* document);
+
+    /// Set the owner without visiting the children, which is enough when the
+    /// owner was just relocated: the children stay attached to this container,
+    /// which didn't move itself
+    void SetOwnerShallow(PdfObject& owner) { m_Owner = &owner; }
+
     void ResetDirty();
 
 private:
     PdfObject* m_Owner;
+    PdfDocument* m_Document;
 };
 
 class PODOFO_API PdfIndirectIterableBase

@@ -12,9 +12,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: calibre 9.17.100\n"
+"Project-Id-Version: calibre 9.18.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2017-12-15 03:02+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2026\n"
 "Language-Team: Japanese (https://app.transifex.com/calibre/teams/19337/ja/)\n"
@@ -33,7 +33,7 @@ msgid ""
 "This checklist summarizes the most commonly used/hard to remember parts of "
 "the regexp engine available in most parts of calibre."
 msgstr ""
-"このチェックリストには、calibre のほとんどのパーツで利用可能な正規表現エンジンのうち、最も一般的に利用される/覚えにくいものをまとめてあります。"
+"このチェックリストには、calibre のほとんどの場所で利用可能な正規表現エンジンのうち、最も一般的に利用される/覚えにくいものをまとめてあります。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:10
 msgid "Contents"
@@ -73,7 +73,7 @@ msgstr "``[a-z]``"
 msgid ""
 "Lowercase letters. Does not include characters with accent mark and "
 "ligatures"
-msgstr "小文字。アクセント記号や合字を含むことはできません"
+msgstr "小文字。アクセント記号付きの文字や合字は含みません"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:27
 msgid "``[a-z0-9]``"
@@ -93,7 +93,7 @@ msgid ""
 "you must put it at the beginning or at the end so as not to confuse it with "
 "the hyphen that specifies a range of characters"
 msgstr ""
-"大文字、小文字、ダッシュ。クラスにダッシュを含めるには、文字の範囲を指定するハイフンと混合させないように、先頭または後尾でダッシュを入れる必要があります。"
+"大文字、小文字、ダッシュ。クラスにダッシュを含めるには、文字の範囲を指定するハイフンと混同されないように、先頭または末尾にダッシュを置く必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:33
 msgid "``[^0-9]``"
@@ -103,7 +103,7 @@ msgstr "``[^0-9]``"
 msgid ""
 "Any character except a digit. The caret (^) placed at the beginning of the "
 "class excludes the characters of the class (complemented class)"
-msgstr "10進数字を除いた任意の文字。クラスの先頭に (^) を置くと、そのクラス (補完クラス) の文字を除外します"
+msgstr "10進数字を除いた任意の文字。クラスの先頭にキャレット (^) を置くと、そのクラスの文字を除外します (補集合クラス)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:36
 msgid "``[[a-z]--[aeiouy]]``"
@@ -192,7 +192,7 @@ msgid ""
 "Any character except newline. Use the “dot all” checkbox or the ``(?s)`` "
 "regexp modifier to include the newline character."
 msgstr ""
-"改行を除いた任意の文字。改行文字を含めるには「すべてドット」のチェックボックスを使用するか、正規表現修飾子 ``(?s)`` を使用してください。"
+"改行を除いた任意の文字。改行文字を含めるには「DOT ALL」のチェックボックスを使用するか、正規表現修飾子 ``(?s)`` を使用してください。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:73
 msgid "The quantifiers"
@@ -252,7 +252,7 @@ msgstr "``{min,}``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:89
 msgid "Number of occurrences between the minimum value included and infinity"
-msgstr "最小値と無限大の間の発生回数"
+msgstr "出現の回数が min 以上 (上限なし)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:91
 msgid "``{,max}``"
@@ -404,7 +404,7 @@ msgid ""
 "number of the capturing group (starting at 1 in reading order)"
 msgstr ""
 "グループをキャプチャします。グループには選択範囲が格納され、後で *検索* や *置換* のパターンとして ``\\n`` で参照できます。``n`` "
-"はキャプチャしたグループの連番 (1 から順に読込み順) です"
+"はキャプチャグループの連番 (読む順に 1 から数えます) です"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:167
 msgid "``(?:expression)``"
@@ -424,8 +424,8 @@ msgid ""
 "passes, and if the rest of the pattern fails, it will not backtrack to try "
 "other combinations with the expression. Atomic groups do not capture."
 msgstr ""
-"アトミックグループ: expression が満足したら即座に正規表現エンジンが処理を抜け、もし残りのパターンが失敗した場合には、その "
-"expression の他の組み合わせを試すためのバックトラッキングを行いません。"
+"アトミックグループ: expression が満たされたら即座に正規表現エンジンが処理を抜け、もし残りのパターンが失敗した場合には、その "
+"expression の他の組み合わせを試すためのバックトラッキングを行いません。アトミックグループはキャプチャしません。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:176
 msgid "``(?|expression)``"
@@ -469,7 +469,7 @@ msgstr "``?=``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:193
 msgid "Positive lookahead (to be placed after the selection)"
-msgstr "肯定先読み (選択部分の前の位置)"
+msgstr "肯定先読み (選択部分の後ろの位置)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:196
 msgid "``?!``"
@@ -485,7 +485,7 @@ msgstr "``?<=``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:199
 msgid "Positive lookbehind (to be placed before the selection)"
-msgstr "肯定後読み (選択部分の後ろの位置)"
+msgstr "肯定後読み (選択部分の前の位置)"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:202
 msgid "``?<!``"
@@ -502,7 +502,7 @@ msgid ""
 "satisfied, the regexp engine passes, and if the rest of the pattern fails, "
 "it will not backtrack inside the lookaround to try other combinations."
 msgstr ""
-"先読みと後読みは文字を消費せず、長さゼロでキャプチャされません。どちらもアトミックグループです。条件が満たされると即座に正規表現エンジンは処理を抜け、もし残りのパターンが失敗した場合には、その他の組み合わせを試すためのバックトラッキングを行いません。"
+"先読みと後読みは文字を消費せず、長さゼロでキャプチャされません。どちらもアトミックグループです。条件が満たされると即座に正規表現エンジンは処理を抜け、もし残りのパターンが失敗した場合には、前後読みの内側で他の組み合わせを試すためのバックトラッキングを行いません。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:211
 msgid ""
@@ -531,8 +531,8 @@ msgid ""
 "``\\K`` rather than a positive lookbehind when you have a quantifier (or "
 "worse, several) in a capturing group of the positive lookbehind."
 msgstr ""
-"前後読みの内側にグループを配置することも可能ですが、キャプチャが役に立つことは滅多にありません。それでももし有用である場合には、後読みの中での量指定子の使用にはとても慎重になるべきです。バックトラックがないことに関連付けられた貪欲さは、びっくりするようなキャプチャをもたらすことがあります。このような理由から、肯定後読みのキャプチャグループの中に量指定子がある場合には、肯定後読みではなく"
-" ``\\K`` を使用してください。"
+"前後読みの内側にグループを配置することも可能ですが、キャプチャが役に立つことは滅多にありません。それでももし有用である場合には、後読みの中での量指定子の使用にはとても慎重になるべきです。貪欲さとバックトラックがないことが重なって、びっくりするようなキャプチャになることがあります。このような理由から、肯定後読みのキャプチャグループの中に量指定子"
+" (さらに悪いことには複数の量指定子) がある場合には、肯定後読みではなく ``\\K`` を使用してください。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:228
 msgid "Example of negative lookahead:"
@@ -552,7 +552,7 @@ msgstr "パターンの最後に配置すると、ファイルに埋め込まれ
 msgid ""
 "Whenever possible, it is always better to \"anchor\" the lookarounds, to "
 "reduce the number of steps necessary to obtain the result."
-msgstr "可能な限り、結果を得るのに必要なステップ数を減らすために、後読みを「アンカー」する方がよいでしょう。"
+msgstr "可能な限り、結果を得るのに必要なステップ数を減らすために、前後読みを「アンカー」する方がよいでしょう。"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:238
 msgid "Recursion"
@@ -635,7 +635,7 @@ msgstr "``\\xa0``"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:283
 msgid "no-break space"
-msgstr "ノーブレークスペース"
+msgstr "ノンブレークスペース"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:288
 msgid "Meta-characters"
@@ -656,7 +656,7 @@ msgstr ""
 msgid ""
 "Seven other meta-characters do not need to be preceded by a backslash (but "
 "can be without any other consequence)::"
-msgstr "残りの 7 個の特殊文字はバックスラッシュを前に付ける必要はありません (付けても特に影響はありません)::"
+msgstr "残りの 7 個のメタ文字はバックスラッシュを前に付ける必要はありません (付けても特に影響はありません)::"
 
 #: ../../../__w/calibre/calibre/manual/regexp_quick_reference.rst:302
 msgid ""

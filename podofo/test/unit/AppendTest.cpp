@@ -108,3 +108,60 @@ TEST_CASE("TestAppendInheritedAttributes")
     REQUIRE(tag != nullptr);
     REQUIRE(tag->GetString().GetString() == "INHERITED_MARKER");
 }
+
+TEST_CASE("TestAppendPageWithLongObjectChain")
+{
+    // The page references a chain of 100000 distinct indirect objects: the
+    // copy of the referenced objects must not recurse once per object
+    PdfMemDocument src;
+    auto& page = src.GetPages().CreatePage();
+    PdfObject* curr = &src.GetObjects().CreateArrayObject();
+    page.GetDictionary().AddKeyIndirect("Chain"_n, *curr);
+    for (unsigned i = 0; i < 100000; i++)
+    {
+        auto& next = src.GetObjects().CreateArrayObject();
+        curr->GetArray().Add(PdfObject(next.GetIndirectReference()));
+        curr = &next;
+    }
+
+    PdfMemDocument dst;
+    dst.GetPages().AppendDocumentPages(src);
+
+    unsigned length = 0;
+    auto obj = dst.GetPages().GetPageAt(0).GetDictionary().FindKey("Chain");
+    while (obj != nullptr && obj->GetArray().GetSize() != 0)
+    {
+        obj = obj->GetArray().FindAt(0);
+        length++;
+    }
+
+    REQUIRE(length == 100000);
+}
+
+TEST_CASE("TestAppendPageWithSelfReferencingDecodeParms")
+{
+    // The /DecodeParms of the content stream is the stream object itself:
+    // copying the stream must copy only its dictionary, not the stream again
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 9 9]/Contents 4 0 R>>endobj
+4 0 obj<</Length 0/DecodeParms 4 0 R>>stream
+
+endstream
+endobj
+trailer<</Root 1 0 R/Size 5>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument src;
+    src.LoadFromBuffer(pdf);
+    PdfMemDocument dst;
+    dst.GetPages().AppendDocumentPages(src);
+    auto& contents = dst.GetPages().GetPageAt(0).GetDictionary().MustFindKey("Contents");
+    REQUIRE(contents.HasStream());
+    auto& decodeParms = contents.GetDictionary().MustGetKey("DecodeParms");
+    REQUIRE(!decodeParms.HasStream());
+    REQUIRE(decodeParms.GetDictionary().MustFindKey("Length").GetNumber() == 0);
+}

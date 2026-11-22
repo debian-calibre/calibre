@@ -24,6 +24,10 @@ struct CodeLimits
     unsigned char MaxCodeSize = 0;
 };
 
+// ISO 32000-2:2020 "9.10.3 ToUnicode CMaps", for both beginbfchar and
+// beginbfrange: "The value of dstString can be a string of up to 512 bytes"
+constexpr unsigned MaxCMapDstStringSize = 512;
+
 static void readNextVariantSequence(PdfPostScriptTokenizer& tokenizer, InputStreamDevice& device,
     PdfVariant& variant, const string_view& endSequenceKeyword, bool& endOfSequence);
 static uint32_t getCodeFromVariant(const PdfVariant& var);
@@ -106,7 +110,7 @@ bool PdfEncodingMapFactory::TryParseCMapEncoding(const PdfObject& cmapObj, uniqu
     if (!map.IsEmpty() != 0 && mapLimits.MinCodeSize == mapLimits.MaxCodeSize && map.IsTrivialIdentity())
     {
         encoding.reset(new PdfIdentityEncoding(
-            PdfEncodingMapType::CMap, mapLimits, PdfIdentityOrientation::Unkwnown));
+            PdfEncodingMapType::CMap, mapLimits, PdfIdentityOrientation::Unknown));
         return true;
     }
 
@@ -328,7 +332,18 @@ PdfCharCodeMap parseCMapObject(InputStreamDevice& device, PdfName& cmapName,
                             PoDoFo::LogMessage(PdfLogSeverity::Warning, "begincidrange: Found range with srcCodeHi {} < srcCodeLo {}", srcCodeHi, srcCodeLo);
                             continue;
                         }
+                        if (dstCIDLo > MAX_CID)
+                        {
+                            PoDoFo::LogMessage(PdfLogSeverity::Warning, "begincidrange: Found range starting at CID {} exceeding the maximum CID {}", (unsigned)dstCIDLo, MAX_CID);
+                            continue;
+                        }
                         unsigned rangeSize = srcCodeHi - srcCodeLo + 1;
+                        // NOTE: rangeSize wraps to 0 for the full 32-bit code space
+                        if (rangeSize - 1 > MAX_CID - dstCIDLo)
+                        {
+                            PoDoFo::LogMessage(PdfLogSeverity::Warning, "begincidrange: Truncated range starting at CID {} to the maximum CID {}", (unsigned)dstCIDLo, MAX_CID);
+                            rangeSize = MAX_CID - dstCIDLo + 1;
+                        }
                         pushRangeMapping(ret, srcCodeLo, rangeSize, { &dstCIDLo, 1 }, codeSize);
                     }
                 }
@@ -346,6 +361,11 @@ PdfCharCodeMap parseCMapObject(InputStreamDevice& device, PdfName& cmapName,
                         uint32_t srcCode = getCodeFromVariant(*var, codeLimits, codeSize);
                         tokenizer.ReadNextVariant(device, *var);
                         char32_t dstCode = (char32_t)getCodeFromVariant(*var);
+                        if (dstCode > MAX_CID)
+                        {
+                            PoDoFo::LogMessage(PdfLogSeverity::Warning, "begincidchar: Found CID {} exceeding the maximum CID {}", (unsigned)dstCode, MAX_CID);
+                            continue;
+                        }
                         mappedCodes.clear();
                         mappedCodes.push_back(dstCode);
                         pushMapping(ret, srcCode, codeSize, mappedCodes);
@@ -414,13 +434,21 @@ PdfCharCodeMap parseCMapObject(InputStreamDevice& device, PdfName& cmapName,
 }
 
 // Base Font 3 type CMap interprets strings as found in
-// beginbfchar and beginbfrange as UTF-16BE, see PdfReference 1.7
-// page 472. NOTE: Before UTF-16BE there was UCS-2 but UTF-16
+// beginbfchar and beginbfrange as UTF-16BE.
+// NOTE: Before UTF-16BE there was UCS-2 but UTF-16
 // is backward compatible with UCS-2
 void handleStringMapping(const PdfString& str, vector<char32_t>& codePoints)
 {
+    auto rawData = str.GetRawData();
+    if (rawData.size() > MaxCMapDstStringSize)
+    {
+        PoDoFo::LogMessage(PdfLogSeverity::Warning, "CMap destination string of {} bytes exceeds the maximum of {} and was truncated",
+            rawData.size(), MaxCMapDstStringSize);
+        rawData = rawData.substr(0, MaxCMapDstStringSize);
+    }
+
     string utf8;
-    utls::ReadUtf16BEString(str.GetRawData(), utf8);
+    utls::ReadUtf16BEString(rawData, utf8);
     return handleUtf8String(utf8, codePoints);
 }
 

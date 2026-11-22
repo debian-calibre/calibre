@@ -57,6 +57,8 @@ namespace PoDoFo
         }
     };
 
+    // NOTE: Comparing with a key of the wrong type
+    // never matches a lookup nor bounds it
     template <>
     struct PdfTreeKeyAccess<PdfString>
     {
@@ -69,17 +71,20 @@ namespace PoDoFo
 
         static bool Equals(const PdfObject& obj, std::string_view key)
         {
-            return obj.GetString().GetString() == key;
+            const PdfString* str;
+            return obj.TryGetString(str) && str->GetString() == key;
         }
 
         static bool GreaterThan(const PdfObject& obj, std::string_view key)
         {
-            return obj.GetString().GetString() > key;
+            const PdfString* str;
+            return obj.TryGetString(str) && str->GetString() > key;
         }
 
         static bool LessThan(const PdfObject& obj, std::string_view key)
         {
-            return obj.GetString().GetString() < key;
+            const PdfString* str;
+            return obj.TryGetString(str) && str->GetString() < key;
         }
 
         static PdfName GetKeyStoreName()
@@ -105,17 +110,20 @@ namespace PoDoFo
 
         static bool Equals(const PdfObject& obj, int64_t key)
         {
-            return obj.GetNumber() == key;
+            int64_t num;
+            return obj.TryGetNumber(num) && num == key;
         }
 
         static bool GreaterThan(const PdfObject& obj, int64_t key)
         {
-            return obj.GetNumber() > key;
+            int64_t num;
+            return obj.TryGetNumber(num) && num > key;
         }
 
         static bool LessThan(const PdfObject& obj, int64_t key)
         {
-            return obj.GetNumber() < key;
+            int64_t num;
+            return obj.TryGetNumber(num) && num < key;
         }
 
         static PdfName GetKeyStoreName()
@@ -227,6 +235,8 @@ namespace PoDoFo
         if (!value.IsIndirect())
             PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidObject, "Input object must be indirect");
 
+        // The /Kids may loop back to this node or to an ancestor
+        utls::RecursionGuard guard;
         if (m_HasKids)
         {
             auto& kids = GetDictionary().MustFindKey("Kids").GetArray();
@@ -283,28 +293,34 @@ namespace PoDoFo
             if (namesObj != nullptr)
             {
                 auto& arr = namesObj->GetArray();
-                PdfArray::iterator it = arr.begin();
-                while (it != arr.end())
-                {
-                    if (PdfTreeKeyAccess<TKey>::Equals(*it, key))
-                    {
-                        // no need to write the key as it is anyways the same
-                        it++;
-                        // write the value
-                        *it = value.GetIndirectReference();
-                        break;
-                    }
-                    else if (PdfTreeKeyAccess<TKey>::GreaterThan(*it, key))
-                    {
-                        it = arr.insert(it, value.GetIndirectReference()); // arr.insert invalidates the iterator
-                        it = arr.insert(it, key);
-                        break;
-                    }
 
-                    it += 2;
+                // NOTE: The array is a set of key/value pairs: drop a lone trailing
+                // key, which has no value and can't be paired with the new one
+                unsigned size = arr.GetSize();
+                if (size % 2 != 0)
+                {
+                    size--;
+                    arr.RemoveAt(size);
                 }
 
-                if (it == arr.end())
+                unsigned i = 0;
+                for (; i < size; i += 2)
+                {
+                    if (PdfTreeKeyAccess<TKey>::Equals(arr[i], key))
+                    {
+                        // no need to write the key as it is anyways the same
+                        arr[i + 1] = value.GetIndirectReference();
+                        break;
+                    }
+                    else if (PdfTreeKeyAccess<TKey>::GreaterThan(arr[i], key))
+                    {
+                        arr.insert(arr.begin() + i, value.GetIndirectReference());
+                        arr.insert(arr.begin() + i, key);
+                        break;
+                    }
+                }
+
+                if (i == size)
                 {
                     arr.Add(key);
                     arr.Add(value.GetIndirectReference());
@@ -372,19 +388,20 @@ namespace PoDoFo
             {
                 PODOFO_ASSERT(arr->GetSize() != 0);
 
-                PdfObject* limitsObj = nullptr;
+                // The limits of the children come from the file and may be empty
+                PdfArray* childLimits;
                 if (arr->TryFindAtAs(0, childDict)
-                    && (limitsObj = childDict->FindKey("Limits")) != nullptr
-                    && limitsObj->IsArray())
+                    && childDict->TryFindKeyAs("Limits", childLimits)
+                    && childLimits->GetSize() != 0)
                 {
-                    limits.Add(limitsObj->GetArray().front());
+                    limits.Add(childLimits->front());
                 }
 
                 if (arr->TryFindAtAs(arr->GetSize() - 1, childDict)
-                    && (limitsObj = childDict->FindKey("Limits")) != nullptr
-                    && limitsObj->IsArray())
+                    && childDict->TryFindKeyAs("Limits", childLimits)
+                    && childLimits->GetSize() != 0)
                 {
-                    limits.Add(limitsObj->GetArray().back());
+                    limits.Add(childLimits->back());
                 }
             }
             else
@@ -400,6 +417,8 @@ namespace PoDoFo
             auto namesObj = GetDictionary().FindKey(PdfTreeKeyAccess<TKey>::GetKeyStoreNameStr());
             if (namesObj != nullptr && namesObj->TryGetArray(arr))
             {
+                // NOTE: Called only on the halves of a split array, which hold many pairs
+                PODOFO_ASSERT(arr->GetSize() >= 2);
                 limits.Add(*arr->begin());
                 limits.Add(*(arr->end() - 2));
             }
@@ -503,20 +522,18 @@ namespace PoDoFo
     template <typename TKey>
     typename PdfTreeNode<TKey>::PdfNameLimits PdfTreeNode<TKey>::checkLimits(const PdfObject& obj, typename PdfTreeKeyAccess<TKey>::TLookup key)
     {
-        auto limitsObj = obj.GetDictionary().FindKey("Limits");
-        if (limitsObj != nullptr)
+        const PdfArray* limits;
+        if (obj.GetDictionary().TryFindKeyAs("Limits", limits) && limits->GetSize() >= 2)
         {
-            auto& limits = limitsObj->GetArray();
-
-            if (PdfTreeKeyAccess<TKey>::GreaterThan(limits[0], key))
+            if (PdfTreeKeyAccess<TKey>::GreaterThan((*limits)[0], key))
                 return PdfNameLimits::Before;
 
-            if (PdfTreeKeyAccess<TKey>::LessThan(limits[1], key))
+            if (PdfTreeKeyAccess<TKey>::LessThan((*limits)[1], key))
                 return PdfNameLimits::After;
         }
         else
         {
-            PoDoFo::LogMessage(PdfLogSeverity::Debug, "Name tree object {} {} R does not have a limits key!",
+            PoDoFo::LogMessage(PdfLogSeverity::Debug, "Name tree object {} {} R does not have a valid limits key!",
                 obj.GetIndirectReference().ObjectNumber(),
                 obj.GetIndirectReference().GenerationNumber());
         }
@@ -531,23 +548,28 @@ namespace PoDoFo
     template <typename TKey>
     PdfObject* PdfTreeNode<TKey>::getKeyValue(PdfObject& obj, typename PdfTreeKeyAccess<TKey>::TLookup key, const PdfIndirectObjectList& objects)
     {
+        // The /Kids may loop back to this node or to an ancestor
+        utls::RecursionGuard guard;
         if (checkLimits(obj, key) != PdfNameLimits::Inside)
             return nullptr;
 
-        auto kidsObj = obj.GetDictionary().FindKey("Kids");
-        if (kidsObj != nullptr)
+        // NOTE: Kids that aren't references to dictionaries are skipped
+        PdfArray* kids;
+        if (obj.GetDictionary().TryFindKeyAs("Kids", kids))
         {
-            auto& kids = kidsObj->GetArray();
-            for (auto& child : kids)
+            for (auto& child : *kids)
             {
-                auto childObj = objects.GetObject(child.GetReference());
+                PdfReference ref;
+                if (!child.TryGetReference(ref))
+                    continue;
+
+                auto childObj = objects.GetObject(ref);
                 if (childObj == nullptr)
                 {
                     PoDoFo::LogMessage(PdfLogSeverity::Debug, "Object {} {} R is child of nametree but was not found!",
-                        child.GetReference().ObjectNumber(),
-                        child.GetReference().GenerationNumber());
+                        ref.ObjectNumber(), ref.GenerationNumber());
                 }
-                else
+                else if (childObj->IsDictionary())
                 {
                     auto result = getKeyValue(*childObj, key, objects);
                     if (result != nullptr)
@@ -564,22 +586,20 @@ namespace PoDoFo
             PdfArray* namesArr;
             if (obj.GetDictionary().TryFindKeyAs(PdfTreeKeyAccess<TKey>::GetKeyStoreNameStr(), namesArr))
             {
-                PdfArray::iterator it = namesArr->begin();
-
-                // a names array is a set of PdfString/PdfObject pairs
-                // so we loop in sets of two - getting each pair
-                while (it != namesArr->end())
+                // NOTE: The array is a set of key/value pairs:
+                // a lone trailing key has no value and is ignored
+                unsigned size = namesArr->GetSize();
+                size -= size % 2;
+                for (unsigned i = 0; i < size; i += 2)
                 {
-                    if (PdfTreeKeyAccess<TKey>::Equals(*it, key))
+                    if (PdfTreeKeyAccess<TKey>::Equals((*namesArr)[i], key))
                     {
-                        it++;
-                        if (it->IsReference())
-                            return objects.GetObject((*it).GetReference());
+                        auto& valueObj = (*namesArr)[i + 1];
+                        if (valueObj.IsReference())
+                            return objects.GetObject(valueObj.GetReference());
 
-                        return &(*it);
+                        return &valueObj;
                     }
-
-                    it += 2;
                 }
             }
         }
@@ -590,6 +610,7 @@ namespace PoDoFo
     template<typename TKey>
     typename PdfTreeNode<TKey>::iterator PdfTreeNode<TKey>::getLeftMost(PdfDictionary& dict)
     {
+        utls::RecursionGuard guard;
         auto kidsArr = dict.FindKeyAsSafe<PdfArray*>("Kids");
         if (kidsArr == nullptr)
         {
@@ -623,6 +644,7 @@ namespace PoDoFo
     template<typename TKey>
     typename PdfTreeNode<TKey>::iterator PdfTreeNode<TKey>::getRightMost(PdfDictionary& dict)
     {
+        utls::RecursionGuard guard;
         auto kidsArr = dict.FindKeyAsSafe<PdfArray*>("Kids");
         unsigned size;
         if (kidsArr == nullptr)

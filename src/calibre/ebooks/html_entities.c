@@ -39,6 +39,10 @@ encode_utf8(uint32_t ch, char *dest) {
     return 0;
 }
 
+// Numbers larger than this are clamped to it while parsing, so that they
+// cannot wrap around to a valid code point
+#define CODEPOINT_LIMIT 0x110000
+
 static uint32_t
 parse_base10_integer(const char *input, size_t sz, bool *ok) {
     uint32_t ans = 0;
@@ -51,6 +55,7 @@ parse_base10_integer(const char *input, size_t sz, bool *ok) {
         }
         uint32_t digit = ch - '0';
         ans = ans * 10 + digit;
+        if (ans > CODEPOINT_LIMIT) ans = CODEPOINT_LIMIT;
     }
     return ans;
 }
@@ -72,6 +77,7 @@ parse_base16_integer(const char *input, size_t sz, bool *ok) {
             digit = ch - '0';
         }
         ans = ans * 16 + digit;
+        if (ans > CODEPOINT_LIMIT) ans = CODEPOINT_LIMIT;
     }
     return ans;
 }
@@ -79,6 +85,27 @@ parse_base16_integer(const char *input, size_t sz, bool *ok) {
 static bool
 is_xml_unsafe(uint32_t codepoint) {
     return codepoint == '<' || codepoint == '>' || codepoint == '&' || codepoint == '"' || codepoint == '\'';
+}
+
+// Map the value of a numeric character reference to the code point it decodes
+// to, as specified by the HTML5 numeric character reference end state:
+// https://html.spec.whatwg.org/multipage/parsing.html#numeric-character-reference-end-state
+static uint32_t
+html5_numeric_entity_codepoint(uint32_t codepoint) {
+    // NUL, surrogates and numbers beyond the last code point decode to U+FFFD
+    if (!codepoint || codepoint >= CODEPOINT_LIMIT || (0xD800 <= codepoint && codepoint <= 0xDFFF)) return 0xFFFD;
+    // C1 controls are decoded as windows-1252, except for the five bytes that
+    // are undefined in windows-1252, which are left unchanged
+    if (0x80 <= codepoint && codepoint <= 0x9F) {
+        static const uint16_t windows_1252[32] = {
+            0x20AC, 0x0081, 0x201A, 0x0192, 0x201E, 0x2026, 0x2020, 0x2021, // 80-87
+            0x02C6, 0x2030, 0x0160, 0x2039, 0x0152, 0x008D, 0x017D, 0x008F, // 88-8F
+            0x0090, 0x2018, 0x2019, 0x201C, 0x201D, 0x2022, 0x2013, 0x2014, // 90-97
+            0x02DC, 0x2122, 0x0161, 0x203A, 0x0153, 0x009D, 0x017E, 0x0178, // 98-9F
+        };
+        return windows_1252[codepoint - 0x80];
+    }
+    return codepoint;
 }
 
 // Largest number of bytes convert_entity() can write: four for a numeric
@@ -96,8 +123,10 @@ convert_entity(const char *entity, const size_t elen, char *output, bool keep_xm
         } else {
             codepoint = parse_base10_integer(entity + 1, elen - 1, &ok);
         }
-        if (!ok || (keep_xml_entities && is_xml_unsafe(codepoint))) return -1;
-        return codepoint ? encode_utf8(codepoint, output) : 0;
+        if (!ok) return -1;
+        codepoint = html5_numeric_entity_codepoint(codepoint);
+        if (keep_xml_entities && is_xml_unsafe(codepoint)) return -1;
+        return encode_utf8(codepoint, output);
     }
     const struct html_entity *s = in_word_set(entity, elen);
     if (!s) return -1;
@@ -213,7 +242,7 @@ replace_all_entities(PyObject *self, PyObject *const *args, Py_ssize_t nargs) {
     Py_BEGIN_ALLOW_THREADS ok = replace(input, input_sz, &o, keep_xml_entities);
     Py_END_ALLOW_THREADS PyObject *retval;
     if (!ok) retval = PyErr_NoMemory();
-    else if (!o.pos) retval = Py_NewRef(args[0]);
+    else if (!input_sz) retval = Py_NewRef(args[0]);
     else if (PyUnicode_Check(args[0])) retval = PyUnicode_FromStringAndSize(o.data, o.pos);
     else retval = PyBytes_FromStringAndSize(o.data, o.pos);
     free(o.data);

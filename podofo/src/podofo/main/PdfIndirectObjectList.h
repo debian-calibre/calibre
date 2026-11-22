@@ -33,6 +33,7 @@ enum class PdfGarbageCollectionFlags : uint32_t
 class PODOFO_API PdfIndirectObjectList final
 {
     friend class PdfDocument;
+    friend class PdfMemDocument;
     friend class PdfObject;
     friend class PdfObjectOutputStream;
     PODOFO_PRIVATE_FRIEND(class PdfObjectStreamParser);
@@ -76,6 +77,11 @@ public:
 
     PdfObject& CreateArrayObject();
 
+    /// Creates a new null object and inserts it into the vector.
+    /// This function assigns the next free object number to the PdfObject.
+    /// @remarks Useful to allocate an object before moving content into it
+    PdfObject& CreateNullObject();
+
     /// Creates a new object and inserts it into the vector.
     /// This function assigns the next free object number to the PdfObject.
     ///
@@ -87,6 +93,7 @@ public:
     /// Deletes all objects that are not references by other objects
     /// besides the trailer (which references the root dictionary, which in
     /// turn should reference all other objects).
+    /// @remarks Not supported on a PdfStreamedDocument
     void CollectGarbage();
 
     void CollectGarbage(PdfGarbageCollectionFlags flags);
@@ -149,7 +156,6 @@ private:
     };
 
     using ReferenceSet = std::set<PdfReference>;
-    using ObserverList = std::vector<Observer*>;
     using ObjectList = std::set<PdfObject*, PdfObjectInequality>;
 
 public:
@@ -206,24 +212,19 @@ private:
     /// @returns the removed object
     std::unique_ptr<PdfObject> RemoveObject(const iterator& it);
 
-    /// Removes all objects from the vector
-    /// and resets it to the default state.
-    ///
-    /// If SetAutoDelete is true all objects are deleted.
-    /// All observers are removed from the vector.
-    ///
-    /// @see SetAutoDelete
-    /// @see IsAutoDelete
+    /// Removes and deletes all the objects, resetting
+    /// the list to the default state
+    /// @remarks The attached observer and stream factory are left untouched
     void Clear();
 
-    /// Attach a new observer
-    /// @param observer to attach
+    /// Attach the observer, replacing the one currently attached, if any
+    /// @param observer the observer to attach
     void AttachObserver(Observer& observer);
 
-    /// Detach an observer.
-    ///
-    /// @param observer observer to detach
-    void DetachObserver(Observer& observer);
+    /// Detach the currently attached observer
+    /// @remarks It shall be called by the observer before it's destroyed,
+    /// as the list outlives it
+    void DetachObserver();
 
     /// Every stream implementation has to call this in BeginAppend
     /// @param stream the stream object that is calling
@@ -237,6 +238,8 @@ private:
     /// the vector remains sorted w.r.t.
     /// the ordering based on object and generation numbers
     /// m_ObjectCount will be increased for the object.
+    /// An existing object with the same object number is
+    /// replaced, whatever its generation number
     ///
     /// @param obj pointer to the object you want to insert
     void PushObject(std::unique_ptr<PdfObject> obj);
@@ -254,8 +257,25 @@ private:
 
     /// Add the reference object number as an object stream
     /// @remarks These objects are usually compressed and can't be removed,
-    /// that's why the generation number is irrelevant
+    /// that's why the generation number is irrelevant. The object must exist,
+    /// as the garbage collection visits it
     void AddCompressedObjectStream(uint32_t objectNum);
+
+    /// Forget the registered object streams, so their containers are
+    /// removable and are collected as garbage when unreferenced
+    /// @remarks To be called only when the whole document is rewritten: on an
+    /// incremental update previous revisions still reference the containers
+    /// for their compressed objects
+    void ClearCompressedObjectStreams();
+
+    /// Forget a single registered object stream
+    /// @see ClearCompressedObjectStreams
+    void RemoveCompressedObjectStream(uint32_t objectNum);
+
+    /// @returns true if the object number is a registered object stream
+    bool IsCompressedObjectStream(uint32_t objectNum) const;
+
+    inline const PdfObjectNumSet& GetCompressedObjectStreams() const { return m_compressedObjectStreams; }
 
     std::unique_ptr<PdfObject> RemoveObject(const PdfReference& ref, bool markAsFree);
 
@@ -264,11 +284,16 @@ private:
     /// @param factory a stream factory or nullptr to reset to the default factory
     void SetStreamFactory(StreamFactory* factory);
 
-    /// Reset the flag which determines if the free objects were invalidated
-    void ResetFreeObjectsInvalidated();
+    /// Forget the tracked free object changes, after they have been
+    /// written or after the document has been loaded
+    void ClearFreeObjectsDelta();
 
-    /// Determine if the free objects needs re-writing in incremental updates
-    bool AreFreeObjectsInvalidated() const { return m_FreeObjectsInvalidated; }
+    /// @returns the object numbers whose free state changed since the last save
+    /// @remarks Used to write only the modified entries in incremental updates
+    inline const PdfObjectNumSet& GetFreeObjectsDelta() const { return m_freeObjectsDelta; }
+
+    /// Try to find the reference of the free object with the given object number
+    bool TryFindFreeObject(uint32_t objNum, PdfReference& ref) const;
 
 private:
     /// Mark a reference as unused so that it can be reused for new objects.
@@ -299,12 +324,12 @@ private:
     PdfDocument* m_Document;
     ObjectList m_Objects;
     unsigned m_LastObjectNumber;
-    bool m_FreeObjectsInvalidated;
     PdfFreeObjectList m_FreeObjects;
     PdfObjectNumSet m_UnavailableObjects;
+    PdfObjectNumSet m_freeObjectsDelta;
     PdfObjectNumSet m_compressedObjectStreams;
 
-    ObserverList m_observers;
+    Observer* m_observer;
     StreamFactory* m_StreamFactory;
 };
 
