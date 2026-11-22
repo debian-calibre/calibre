@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-11-21 02:54+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -28,7 +28,7 @@ msgid ""
 "mode*. In this mode, you can combine regular expressions (see :doc:`regexp`)"
 " with arbitrarily powerful Python functions to do all sorts of advanced text"
 " processing."
-msgstr "エディタの :guilabel:`検索と置換` ツールは *関数モード* をサポートしています。このモードでは、正規表現（ :doc:`regexp` を参照）と任意の強力な Python 関数を組み合わせて、あらゆる種類の高度なテキスト処理を行うことができます。"
+msgstr "エディタの :guilabel:`検索と置換` ツールは *関数モード* をサポートしています。このモードでは、正規表現（ :doc:`regexp` を参照）といくらでも強力にできる Python 関数を組み合わせて、あらゆる種類の高度なテキスト処理を行うことができます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:9
 msgid ""
@@ -80,7 +80,7 @@ msgid ""
 "functions to process text in arbitrary ways. The Smarten Punctuation tool in"
 " the editor leaves individual hyphens alone, so you can use this function to"
 " replace them with em-dashes."
-msgstr "関数モードの真の強みは、独自の関数を作成してテキストを任意の方法で処理できることです。エディターのスマート句読点ツールは個々のハイフンをそのまま残すので、この機能を使ってハイフンをemダッシュに置き換えることができます。"
+msgstr "関数モードの真の強みは、独自の関数を作成してテキストを任意の方法で処理できることです。エディタの「句読点をスマート化」ツールは個々のハイフンをそのまま残すので、この関数を使ってハイフンをemダッシュに置き換えることができます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:47
 msgid ""
@@ -100,7 +100,7 @@ msgid ""
 " simply returns all the matched text and all we do is replace hyphens in "
 "that text with em-dashes, first replacing double hyphens and then single "
 "hyphens."
-msgstr ":guilabel:`検索 & 置換` カスタム関数は一意の名前を持ち、replace という名前の Python 関数で構成される必要があります。この関数は上に示すすべての引数を受け付けます。今のところは ``replace()`` 関数のすべての異なる引数について頭を悩ませる必要はありません。引数 ``match`` にだけ注目してください。これは検索と置換を実行するときのマッチを表します。詳細な説明は `こちら<https://docs.python.org/library/re.html#match-objects>`_ です。``match.group()`` は、マッチしたテキストをすべて返します。そのテキスト内のハイフンを em-dash に置換すればよいのですが、その際にまずダブルハイフンを置換してから、次にシングルハイフンを置換します。"
+msgstr ":guilabel:`検索と置換` カスタム関数は一意の名前を持ち、replace という名前の Python 関数で構成される必要があります。この関数は上に示すすべての引数を受け付けます。今のところは ``replace()`` 関数のすべての異なる引数について頭を悩ませる必要はありません。引数 ``match`` にだけ注目してください。これは検索と置換を実行するときのマッチを表します。詳細な説明は `こちら <https://docs.python.org/library/re.html#match-objects>`_ です。``match.group()`` は、マッチしたテキストをすべて返します。そのテキスト内のハイフンを em-dash に置換すればよいのですが、その際にまずダブルハイフンを置換してから、次にシングルハイフンを置換します。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:65
 msgid "Use this function with the find regular expression::"
@@ -138,7 +138,7 @@ msgid ""
 " for words separated by a hyphen, remove the hyphen and check if the "
 "dictionary recognizes the composite word, if it does, the original words are"
 " replaced by the hyphen free composite word."
-msgstr "そして、これは本のテキストの中にある誤ってハイフンでつながれたすべての単語を魔法のように修正します。主な秘訣は、replace 関数の便利な追加引数のひとつである ``dictionaries`` を利用することです。これはエディタ自身が本のテキストのスペルチェックに使用する辞書を参照します。この関数が行うのは、ハイフンで区切られた単語を探し、ハイフンを削除して合成した単語を辞書が認識するか確認し、認識した場合にはもとの単語をハイフンなしの合成語で置換します。"
+msgstr "そして、これは本のテキストの中にある誤ってハイフンでつながれたすべての単語を魔法のように修正します。主な秘訣は、replace 関数の便利な追加引数のひとつである ``dictionaries`` を利用することです。これはエディタ自身が本のテキストのスペルチェックに使用する辞書を参照します。この関数が行うのは、ハイフンで区切られた単語を探し、ハイフンを削除して合成した単語を辞書が認識するか確認し、認識した場合にはもとの単語をハイフンなしの合成語で置換することです。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:113
 msgid ""
@@ -214,7 +214,7 @@ msgid ""
 "``replace()`` function, the ``data`` object. The ``data`` object is a Python"
 " *dictionary* that persists between all successive invocations of "
 "``replace()`` during a single :guilabel:`Replace All` operation."
-msgstr "上記の関数には多くのコメントが付いているので、簡単にフォローできるはずです。重要な新機能は、``replace()`` 関数にもう一つの便利な追加引数である ``data`` オブジェクトの使用です。``data`` オブジェクトは Python *辞書* であり、:guilabel:`Replace All` 操作中に連続して実行される ``replace()`` 間で保持されます。"
+msgstr "上記の関数には多くのコメントが付いているので、簡単に理解できるはずです。重要な新機能は、``replace()`` 関数のもう一つの便利な追加引数である ``data`` オブジェクトを使うことです。``data`` オブジェクトは Python *辞書* であり、:guilabel:`すべて置換` 操作中に連続して実行される ``replace()`` 間で保持されます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:213
 msgid ""
@@ -262,7 +262,7 @@ msgid ""
 " most useful method is ``group()`` which can be used to get the matched text"
 " corresponding to individual capture groups in the search regular "
 "expression."
-msgstr "引数 ``match`` は現在見つかったマッチを表します。これは `Python Match オブジェクト<https://docs.python.org/library/re.html#match-objects>`_ です。その最も便利なメソッドは ``group()`` で、これを使用すると検索正規表現の中の個別のキャプチャグループに対応するマッチしたテキストを取得できます。"
+msgstr "引数 ``match`` は現在見つかったマッチを表します。これは `Python Match オブジェクト <https://docs.python.org/library/re.html#match-objects>`_ です。その最も便利なメソッドは ``group()`` で、これを使用すると検索正規表現の中の個別のキャプチャグループに対応するマッチしたテキストを取得できます。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:248
 msgid "The ``number`` argument"
@@ -285,7 +285,7 @@ msgid ""
 "searching inside marked text, the ``file_name`` is empty. The ``file_name`` "
 "is in canonical form, a path relative to the root of the book, using ``/`` "
 "as the path separator."
-msgstr "現在のマッチが見つかったファイルのファイル名です。マークしたテキスト内を検索するときには、``file_name`` は空です。``file_name`` は基準形で、セパレータに ``/`` を使用した本のルートの相対パスです。"
+msgstr "現在のマッチが見つかったファイルのファイル名です。マークしたテキスト内を検索するときには、``file_name`` は空です。``file_name`` は正規形で、セパレータに ``/`` を使用した、本のルートからの相対パスです。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:263
 msgid "The ``metadata`` argument"
@@ -361,7 +361,7 @@ msgid ""
 "function from Python. The output of print will be displayed in a popup "
 "window after the Find/replace has completed. You saw an example of using "
 "``print()`` to output an entire table of contents above."
-msgstr "作成した関数をデバッグするには Python から標準の ``print()`` 関数を使用します。print の出力は検索/置換が完了した後にポップアップウィンドウに表示されます。``print()`` の使用例は、上で目次全体を出力する説明にあります。"
+msgstr "作成した関数をデバッグするには Python の標準の ``print()`` 関数を使用します。print の出力は検索/置換が完了した後にポップアップウィンドウに表示されます。``print()`` の使用例は、上で目次全体を出力する説明にあります。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:341
 msgid "Choose file order when running on multiple HTML files"
@@ -381,7 +381,7 @@ msgid ""
 "``file_order`` accepts two values, ``spine`` and ``spine-reverse`` which "
 "cause the search to process multiple files in the order they appear in the "
 "book, either forwards or backwards, respectively."
-msgstr "``file_order`` は ``spine`` と ``spine-reverse`` という 2 つの値を受け取り、検索が複数ファイルを処理するのに本の中に現れた順で、それぞれ降順または昇順に処理するようにします。"
+msgstr "``file_order`` は ``spine`` と ``spine-reverse`` という 2 つの値を受け取り、検索時に複数のファイルを、本の中に現れる順で、それぞれ順方向または逆方向に処理します。"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:360
 msgid ""
@@ -417,7 +417,7 @@ msgid ""
 "You can also suppress the result dialog (which can slow down the repeated "
 "application of a search/replace on many blocks of text) by setting the "
 "``suppress_result_dialog`` attribute on your function, like this:"
-msgstr "結果ダイアログ (これがあると、検索/置換を数多くのテキストブロックに対して適用を繰り返すのが遅くなります) を抑制するには、次のように、関数の ``suppress_result_dialog`` 属性を設定します:"
+msgstr "結果ダイアログ (これがあると、検索/置換を数多くのテキストブロックに繰り返し適用するのが遅くなります) を抑制するには、次のように、関数の ``suppress_result_dialog`` 属性を設定します:"
 
 #: ../../../__w/calibre/calibre/manual/function_mode.rst:408
 msgid "More examples"

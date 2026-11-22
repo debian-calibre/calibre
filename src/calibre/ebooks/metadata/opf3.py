@@ -75,13 +75,13 @@ def regex(r: str, flags: int = 0) -> re.Pattern[str]:
 
 def remove_refines(e: _Element, refines: Refines) -> None:
     for x in refines[e.get('id')]:
-        x.getparent().remove(x)  # ty: ignore[unresolved-attribute] refines are only read from/added to the metadata element
+        x.getparent().remove(x)  # ty: ignore[missing-union-attribute] refines are only read from/added to the metadata element
     refines.pop(e.get('id'), None)
 
 
 def remove_element(e: _Element, refines: Refines) -> None:
     remove_refines(e, refines)
-    e.getparent().remove(e)  # ty: ignore[unresolved-attribute] callers only pass elements that are in the OPF tree
+    e.getparent().remove(e)  # ty: ignore[missing-union-attribute] callers only pass elements that are in the OPF tree
 
 
 def properties_for_id(item_id: str | None, refines: Refines) -> dict[str, str]:
@@ -362,32 +362,48 @@ set_uuid = identifier_writer('uuid')
 # Title {{{
 
 
+def is_subtitle(title: _Element, refines: Refines) -> bool:
+    q = properties_for_id(title.get('id'), refines).get('title-type') or ''
+    return 'subtitle' in q or 'sub-title' in q
+
+
+def main_title_fallback_rank(title: _Element, refines: Refines) -> int:
+    # Lower is better. Untyped titles are preferred, then the expanded title,
+    # then other types such as collection, short or edition, and last subtitles.
+    q = properties_for_id(title.get('id'), refines).get('title-type') or ''
+    if not q:
+        return 0
+    if q == 'expanded':
+        return 1
+    return 3 if is_subtitle(title, refines) else 2
+
+
 def find_main_title(root: _Element, refines: Refines, remove_blanks: bool = False) -> _Element | None:
-    first_title = main_title = None
+    # Use the title marked as main, falling back to the earliest title with the
+    # best main_title_fallback_rank()
+    fallback: _Element | None = None
+    fallback_rank = 0
     for title in XPath('./opf:metadata/dc:title')(root):
         if not title.text or not title.text.strip():
             if remove_blanks:
                 remove_element(title, refines)
             continue
-        if first_title is None:
-            first_title = title
-        props = properties_for_id(title.get('id'), refines)
-        if props.get('title-type') == 'main':
-            main_title = title
-            break
-    else:
-        main_title = first_title
-    return main_title
-
-
-def find_subtitle(root: _Element, refines: Refines) -> _Element | None:
-    for title in XPath('./opf:metadata/dc:title')(root):
-        if not title.text or not title.text.strip():
-            continue
-        props = properties_for_id(title.get('id'), refines)
-        q = props.get('title-type') or ''
-        if 'subtitle' in q or 'sub-title' in q:
+        if properties_for_id(title.get('id'), refines).get('title-type') == 'main':
             return title
+        rank = main_title_fallback_rank(title, refines)
+        if fallback is None or rank < fallback_rank:
+            fallback, fallback_rank = title, rank
+    return fallback
+
+
+def find_subtitles(root: _Element, refines: Refines, main_title: _Element | None) -> list[_Element]:
+    # The main title is never a subtitle, even when it is the fallback for a
+    # book whose titles are all marked as subtitles
+    return [
+        title
+        for title in XPath('./opf:metadata/dc:title')(root)
+        if title is not main_title and title.text and title.text.strip() and is_subtitle(title, refines)
+    ]
 
 
 @simple_text
@@ -397,10 +413,10 @@ def read_title(root: _Element, prefixes: Prefixes, refines: Refines) -> str | No
         return None
     assert main_title.text is not None  # find_main_title() only returns titles with non-blank text
     ans = main_title.text.strip()
-    st = find_subtitle(root, refines)
-    if st is not None and st is not main_title:
-        assert st.text is not None  # find_subtitle() only returns titles with non-blank text
-        ans += ': ' + st.text.strip()
+    subtitles = find_subtitles(root, refines, main_title)
+    if subtitles:
+        assert subtitles[0].text is not None  # find_subtitles() only returns titles with non-blank text
+        ans += ': ' + subtitles[0].text.strip()
     return ans
 
 
@@ -420,8 +436,9 @@ def read_title_sort(root: _Element, prefixes: Prefixes, refines: Refines) -> str
 
 def set_title(root: _Element, prefixes: Prefixes, refines: Refines, title: str | None, title_sort: str | None = None) -> None:
     main_title = find_main_title(root, refines, remove_blanks=True)
-    st = find_subtitle(root, refines)
-    if st is not None:
+    # The new title includes the subtitle, so remove all subtitles, otherwise
+    # the next one would be appended to the title when it is read back
+    for st in find_subtitles(root, refines, main_title):
         remove_element(st, refines)
     if main_title is None:
         m = XPath('./opf:metadata')(root)[0]
@@ -845,7 +862,7 @@ def read_series(root: _Element, prefixes: Prefixes, refines: Refines) -> tuple[s
             props = properties_for_id(meta.get('id'), refines)
             if props.get('collection-type') == 'series':
                 try:
-                    series_index = float(props.get('group-position').strip())  # ty: ignore[unresolved-attribute] the AttributeError when missing is suppressed
+                    series_index = float(props.get('group-position').strip())  # ty: ignore[missing-union-attribute] the AttributeError when missing is suppressed
                 except Exception:
                     pass
                 return normalize_whitespace(val), series_index

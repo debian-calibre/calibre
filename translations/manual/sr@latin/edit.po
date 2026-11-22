@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-18 02:55+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: Serbian (Latin) (http://app.transifex.com/calibre/calibre/language/sr@latin/)\n"
@@ -800,7 +800,7 @@ msgid ""
 "screen readers skip them. If the same image is used in several places, you "
 "can use the :guilabel:`Use for all uses of this image` button to copy its "
 "description to all of them."
-msgstr ""
+msgstr "Slike treba da imaju opis, koji se naziva *alternativni tekst*, za čitaoce koji ne mogu da ih vide. Ovde su prikazane sve slike u knjizi, po redosledu čitanja, uključujući SVG slike unutar HTML datoteka, zajedno sa njihovim trenutnim opisima, tako da na jednom mestu možete dodati ili promeniti opise svih slika. Opis SVG slike čuva se u njenom elementu ``<title>`` ili u atributu ``aria-label`` ako ga već ima. Kada izaberete sliku, prikazuje se njen uvećani pregled sa tekstom koji se u knjizi nalazi u njenoj blizini, kako bi vam se olakšalo opisivanje. Slike koje su isključivo ukrasne, kao što su ornamenti i razdelnici scena, treba označiti kao :guilabel:`Ukrasna` da bi ih čitači ekrana preskočili. Ako se ista slika koristi na više mesta, pomoću dugmeta :guilabel:`Primeni na sva pojavljivanja ove slike` možete kopirati njen opis na sva ta mesta."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:537
 msgid ":guilabel:`Accessibility metadata`"
@@ -1117,10 +1117,86 @@ msgid ""
 msgstr "Provera pravopisa dolazi sa ugrađenim rečnicima za engleski i španski jezik. Možete instalirati sopstvene rečnike preko :guilabel:`Preferences->Editor->Manage spelling dictionaries`. Provera pravopisa može da koristi rečnike iz programa LibreOffice (u .oxt formatu). Ove rečnike možete preuzeti sa `The LibreOffice Extensions repository <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:766
+msgid "Checking the grammar of the book"
+msgstr "Provera gramatike knjige"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:768
+msgid ""
+"As you edit HTML files, grammar, style and typography issues are underlined "
+"in the code view. Right click on an underlined issue to replace its text "
+"with one of the suggested corrections, ignore the issue for the current "
+"session, stop checking for that kind of issue altogether, or see an "
+"explanation of it. Hovering the mouse over an issue shows a description of "
+"it, and pressing :kbd:`Shift+F8` jumps to the next issue in the current "
+"file. Corrections are made only to the text, so formatting such as bold and "
+"italics is preserved. You can turn off the underlining in "
+":guilabel:`Preferences->Editor settings`."
+msgstr "Dok uređujete HTML datoteke, gramatički, stilski i tipografski problemi podvučeni su u prikazu koda. Kliknite desnim tasterom miša na podvučeni problem da biste zamenili njegov tekst jednom od predloženih ispravki, zanemarili problem tokom trenutne sesije, potpuno isključili proveru te vrste problema ili videli njegovo objašnjenje. Zadržavanjem pokazivača miša iznad problema prikazuje se njegov opis, a pritiskom na :kbd:`Shift+F8` prelazi se na sledeći problem u trenutnoj datoteci. Ispravke se primenjuju samo na tekst, pa se formatiranje, kao što su podebljana i kurzivna slova, čuva. Podvlačenje možete isključiti u :guilabel:`Podešavanja->Podešavanja uređivača`."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:777
+msgid ""
+"You can see all the issues in the book with :guilabel:`Tools->Check grammar`"
+" (:kbd:`Shift+F7`). Select an issue to see an explanation of it and the "
+"suggested replacements, then click :guilabel:`Change` to correct it, or "
+":guilabel:`Show in editor` to edit the text yourself. The list of issues can"
+" be filtered by text and by the type of issue. Issues can be ignored for the"
+" current session, and rules that find issues you are not interested in can "
+"be disabled, and enabled again with the :guilabel:`Manage disabled rules` "
+"button. The :guilabel:`Picky` option also checks for stylistic issues that "
+"are not errors, such as wordiness."
+msgstr "Sve probleme u knjizi možete videti pomoću :guilabel:`Alatke->Proveri gramatiku` (:kbd:`Shift+F7`). Izaberite problem da biste videli njegovo objašnjenje i predložene zamene, a zatim kliknite na :guilabel:`Promeni` da biste ga ispravili ili na :guilabel:`Prikaži u uređivaču` da biste sami uredili tekst. Lista problema može se filtrirati prema tekstu i vrsti problema. Problemi se mogu zanemariti tokom trenutne sesije, a pravila koja pronalaze probleme koji vas ne zanimaju mogu se isključiti i ponovo uključiti pomoću dugmeta :guilabel:`Upravljaj isključenim pravilima`. Opcija :guilabel:`Stroga provera` proverava i stilske probleme koji nisu greške, kao što je preopširnost."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:787
+msgid ""
+"Grammar checking works for many languages. As with spell checking, the "
+"language of the text comes from the book's metadata and ``lang`` attributes "
+"in the HTML files, so books with text in multiple languages are checked "
+"correctly. The data needed to check a language is downloaded the first time "
+"it is needed, either by right clicking in the editor and choosing to "
+"download it, or with the :guilabel:`Check grammar` tool."
+msgstr "Provera gramatike radi za mnoge jezike. Kao i pri proveri pravopisa, jezik teksta određuje se na osnovu metapodataka knjige i atributa ``lang`` u HTML datotekama, pa se knjige sa tekstom na više jezika pravilno proveravaju. Podaci potrebni za proveru jezika preuzimaju se kada prvi put zatrebaju, bilo desnim klikom u uređivaču i izborom preuzimanja ili pomoću alatke :guilabel:`Proveri gramatiku`."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:794
+msgid ""
+"For English, there is also a :guilabel:`Deep check` option, which checks "
+"every sentence with a neural network as well. This finds errors that the "
+"rules miss, but is slower and needs the neural network to be downloaded. "
+"Once downloaded, the neural network is also used to put the best suggestions"
+" for corrections first."
+msgstr "Za engleski postoji i opcija :guilabel:`Detaljna provera`, koja svaku rečenicu proverava i neuronskom mrežom. Tako se pronalaze greške koje pravila propuštaju, ali je provera sporija i zahteva preuzimanje neuronske mreže. Kada se preuzme, neuronska mreža se koristi i za postavljanje najboljih predloga za ispravke na početak liste."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:801
+msgid "Suggestions for rewriting sentences"
+msgstr "Predlozi za preformulisanje rečenica"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:803
+msgid ""
+"For English text, a neural network can suggest rewrites of sentences, to fix"
+" grammar, make them more fluent or clearer, simpler or more formal, or to "
+"paraphrase them. Right click on a sentence and choose :guilabel:`Suggest "
+"rewrites for the sentence` (:kbd:`Ctrl+Shift+F8`) to see suggestions for it,"
+" or open the :guilabel:`View->Rewrite suggestions` panel to see suggestions "
+"for the sentence the cursor is in as you move around the text. The changes "
+"each suggestion makes are highlighted, click :guilabel:`Apply` to rewrite "
+"the sentence, preserving its formatting. You can choose which kinds of "
+"suggestions to show. Suggestions are also available in the :guilabel:`Check "
+"grammar` tool, for the sentence containing the selected issue."
+msgstr "Za tekst na engleskom neuronska mreža može predlagati preformulacije rečenica radi ispravljanja gramatike, tečnijeg ili jasnijeg izražavanja, pojednostavljivanja, formalnijeg stila ili parafraziranja. Kliknite desnim tasterom miša na rečenicu i izaberite :guilabel:`Predloži preformulacije rečenice` (:kbd:`Ctrl+Shift+F8`) da biste videli predloge za nju ili otvorite okno :guilabel:`Prikaz->Predlozi za preformulisanje` da biste tokom kretanja po tekstu videli predloge za rečenicu u kojoj je kursor. Izmene koje donosi svaki predlog su istaknute; kliknite na :guilabel:`Primeni` da biste preformulisali rečenicu uz očuvanje njenog formatiranja. Možete izabrati koje vrste predloga želite da vidite. Predlozi su dostupni i u alatki :guilabel:`Proveri gramatiku`, za rečenicu koja sadrži izabrani problem."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:814
+msgid ""
+"The neural network is downloaded the first time it is needed, it is large, "
+"about a gigabyte. Generating suggestions is faster on a GPU. By default the "
+"GPU is used if it is supported and faster than the CPU, in which case "
+"versions of the neural network for both are downloaded, you can change this "
+"in :guilabel:`Preferences->Editor settings`."
+msgstr "Neuronska mreža preuzima se kada prvi put zatreba i velika je, oko jednog gigabajta. Pravljenje predloga je brže uz GPU. GPU se podrazumevano koristi ako je podržan i brži od CPU-a, a u tom slučaju preuzimaju se verzije neuronske mreže za oba. Ovo možete promeniti u :guilabel:`Podešavanja->Podešavanja uređivača`."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:822
 msgid "Inserting special characters"
 msgstr "Umetanje specijalnih karaktera"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:768
+#: ../../../__w/calibre/calibre/manual/edit.rst:824
 msgid ""
 "You can insert characters that are difficult to type by using the "
 ":guilabel:`Edit->Insert special character` tool. This shows you all Unicode "
@@ -1131,7 +1207,7 @@ msgid ""
 "Search and replace tool."
 msgstr "Možete ubaciti znakove koje je teško otkucati koristeći alatku :guilabel:`Uredi->Ubaci specijalni znak`. Ovo vam prikazuje sve Unicode znakove, jednostavno kliknite na znak koji želite da otkucate. Ako držite :kbd:`Ctrl` dok klikćete, prozor će se sam zatvoriti nakon ubacivanja izabranog znaka. Ova alatka se može koristiti za ubacivanje specijalnih znakova u glavni tekst ili u bilo koju drugu oblast korisničkog interfejsa, kao što je alatka za pretragu i zamenu."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:776
+#: ../../../__w/calibre/calibre/manual/edit.rst:832
 msgid ""
 "Because there are a lot of characters, you can define your own "
 ":guilabel:`Favorite` characters, that will be shown first. Simply right "
@@ -1142,7 +1218,7 @@ msgid ""
 "favorites around."
 msgstr "Pošto ima mnogo znakova, možete definisati svoje :guilabel:`Omiljene` znakove, koji će biti prikazani prvi. Jednostavno kliknite desnim tasterom miša na znak da biste ga označili kao omiljeni. Takođe možete kliknuti desnim tasterom miša na znak u omiljenima da biste ga uklonili iz omiljenih. Na kraju, možete preurediti redosled znakova u omiljenima klikom na dugme :guilabel:`Preuredi omiljene` i zatim prevlačenjem i ispuštanjem znakova u omiljenima."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:783
+#: ../../../__w/calibre/calibre/manual/edit.rst:839
 msgid ""
 "You can also directly type in special characters using the keyboard. To do "
 "this, you type the Unicode code for the character (in hexadecimal) and then "
@@ -1153,7 +1229,7 @@ msgid ""
 ":kbd:`Alt+X` and so on."
 msgstr "Takođe možete direktno kucati specijalne znakove koristeći tastaturu. Da biste to uradili, ukucajte Unicode kod za znak (u heksadecimalnom formatu) i zatim pritisnite taster :kbd:`Alt+X` koji će pretvoriti prethodno ukucani kod u odgovarajući znak. Na primer, da biste otkucali ÿ ukucali biste ff i zatim :kbd:`Alt+X`. Da biste otkucali neprekidajući razmak koristili biste a0 i zatim :kbd:`Alt+X`, da biste otkucali horizontalnu elipsu koristili biste 2026 i :kbd:`Alt+X` i tako dalje."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:791
+#: ../../../__w/calibre/calibre/manual/edit.rst:847
 msgid ""
 "Finally, you can type in special characters by using HTML named entities. "
 "For example, typing &nbsp; will be replaced by a non breaking space when you"
@@ -1161,11 +1237,11 @@ msgid ""
 "colon."
 msgstr "Na kraju, možete kucati specijalne znakove koristeći HTML imenovane entitete. Na primer, kucanje &nbsp; će biti zamenjeno neprekidajućim razmakom kada otkucate tačku i zarez. Zamena se dešava samo kada kucate tačku i zarez."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:796
+#: ../../../__w/calibre/calibre/manual/edit.rst:852
 msgid "The code inspector view"
 msgstr "Prikaz inspektora koda"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:798
+#: ../../../__w/calibre/calibre/manual/edit.rst:854
 msgid ""
 "This view shows you the HTML coding and CSS that applies to the current "
 "element of interest. You open it by right clicking a location in the preview"
@@ -1177,11 +1253,11 @@ msgid ""
 "ability to live edit inside the Inspector is under development."
 msgstr "Ovaj prikaz vam pokazuje HTML kodiranje i CSS koji se primenjuje na trenutni element od interesa. Otvarate ga desnim klikom na lokaciju u panelu za pregled i biranjem :guilabel:`Inspect`. Omogućava vam da vidite HTML kodiranje za taj element i što je još važnije, CSS stilove koji se primenjuju na njega. Možete čak i dinamički uređivati stilove i videti kakav efekat vaše promene imaju trenutno. Imajte na umu da uređivanje stilova zapravo ne menja sadržaj knjige, već samo omogućava brzo eksperimentisanje. Mogućnost uređivanja uživo unutar Inspektora je u razvoju."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:808
+#: ../../../__w/calibre/calibre/manual/edit.rst:864
 msgid "Checking external links"
 msgstr "Provera spoljnih veza"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:810
+#: ../../../__w/calibre/calibre/manual/edit.rst:866
 msgid ""
 "You can use this tool to check all links in your book that point to external"
 " websites. The tool will try to visit every externally linked website, and "
@@ -1189,11 +1265,11 @@ msgid ""
 "for you to fix."
 msgstr "Možete koristiti ovu alatku da proverite sve veze u vašoj knjizi koje vode ka spoljnim veb sajtovima. Alatka će pokušati da poseti svaki spoljno povezani veb sajt, i ako poseta ne uspe, prijaviće sve prekinute veze u pogodnom formatu da biste ih popravili."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:817
+#: ../../../__w/calibre/calibre/manual/edit.rst:873
 msgid "Downloading external resources"
 msgstr "Preuzimanje spoljnih resursa"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:819
+#: ../../../__w/calibre/calibre/manual/edit.rst:875
 msgid ""
 "You can use this tool to automatically download any images/stylesheets/etc. "
 "in the book that are not bundled with the book (i.e. they have URLs pointing"
@@ -1202,11 +1278,11 @@ msgid ""
 " to them to use the downloaded files."
 msgstr "Možete koristiti ovu alatku da automatski preuzmete sve slike/stilove/itd. u knjizi koji nisu u paketu sa knjigom (tj. imaju URL-ove koji pokazuju na lokaciju na internetu). Alatka će pronaći sve takve resurse i automatski ih preuzeti, dodati ih u knjigu i zameniti sve reference na njih da koriste preuzete datoteke."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:827
+#: ../../../__w/calibre/calibre/manual/edit.rst:883
 msgid "Arranging files into folders by type"
 msgstr "Raspoređivanje fajlova u fascikle po tipu"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:829
+#: ../../../__w/calibre/calibre/manual/edit.rst:885
 msgid ""
 "Often when editing EPUB files that you get from somewhere, you will find "
 "that the files inside the EPUB are arranged haphazardly, in different sub-"
@@ -1216,11 +1292,11 @@ msgid ""
 " the EPUB, it does not change how they are displayed in the File browser."
 msgstr "Kada uređujete EPUB fajlove nabavljene iz drugih izvora, često ćete zateći da su fajlovi unutar EPUB-a nasumično raspoređeni po različitim potfasciklama. Ova alatka omogućava da se svi fajlovi automatski premeste u potfascikle prema tipu. Pokrenite je preko :guilabel:`Tools->Arrange into folders`. Imajte na umu da ona menja samo raspored fajlova unutar EPUB-a, a ne način na koji se prikazuju u pregledaču fajlova."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:837
+#: ../../../__w/calibre/calibre/manual/edit.rst:893
 msgid "Importing files in other e-book formats as EPUB"
 msgstr "Uvoz fajlova drugih formata e-knjiga kao EPUB"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:839
+#: ../../../__w/calibre/calibre/manual/edit.rst:895
 msgid ""
 "The editor includes the ability to import files in some other e-book formats"
 " directly as a new EPUB, without going through a full conversion. This is "
@@ -1229,11 +1305,11 @@ msgid ""
 " as a new book`."
 msgstr "Uređivač može direktno da uveze fajlove u nekim drugim formatima e-knjiga kao novi EPUB, bez potpunog pretvaranja formata. To je posebno korisno kada želite da napravite EPUB od HTML fajlova koje ste sami uredili. Koristite :guilabel:`File->Import an HTML or DOCX file as a new book`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:852
+#: ../../../__w/calibre/calibre/manual/edit.rst:908
 msgid "The Reports tool"
 msgstr "Alatka za izveštaje"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:854
+#: ../../../__w/calibre/calibre/manual/edit.rst:910
 msgid ""
 "The editor includes a nice *Reports* tool (via :guilabel:`Tools->Reports`) "
 "that shows summaries of the files, images, links, words, characters and "
@@ -1245,35 +1321,35 @@ msgid ""
 "where the link points."
 msgstr "Uređivač sadrži korisnu alatku *Izveštaji* (preko :guilabel:`Tools->Reports`) koja prikazuje preglede fajlova, slika, linkova, reči, znakova i stilova korišćenih u knjizi. Svaki red izveštaja je povezan s odgovarajućim mestom. Dvostrukim klikom na red prelazite na mesto u knjizi na kom se stavka koristi ili definiše, zavisno od slučaja. Na primer, u prikazu :guilabel:`Links` možete dvaput kliknuti na stavku u koloni :guilabel:`Source` da biste prešli na mesto na kom je link definisan, ili na stavku u koloni :guilabel:`Target` da biste prešli na mesto na koje link vodi."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:862
+#: ../../../__w/calibre/calibre/manual/edit.rst:918
 msgid "The Reports tool with information and statistics about the book"
 msgstr "Alatka za izveštaje s podacima i statistikom o knjizi"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:869
+#: ../../../__w/calibre/calibre/manual/edit.rst:925
 msgid "Special features in the code editor"
 msgstr "Posebne mogućnosti uređivača koda"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:871
+#: ../../../__w/calibre/calibre/manual/edit.rst:927
 msgid ""
 "The calibre HTML editor is very powerful. It has many features that make "
 "editing of HTML (and CSS) easier."
 msgstr "Calibreov HTML uređivač veoma je moćan. Ima mnogo mogućnosti koje olakšavaju uređivanje HTML-a (i CSS-a)."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:875
+#: ../../../__w/calibre/calibre/manual/edit.rst:931
 msgid "Syntax highlighting"
 msgstr "Isticanje sintakse"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:877
+#: ../../../__w/calibre/calibre/manual/edit.rst:933
 msgid ""
 "The HTML editor has very sophisticated syntax highlighting. Features "
 "include:"
 msgstr "HTML uređivač ima napredno isticanje sintakse. Mogućnosti obuhvataju:"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:879
+#: ../../../__w/calibre/calibre/manual/edit.rst:935
 msgid "The text inside bold, italic and heading tags is made bold/italic"
 msgstr "Tekst unutar oznaka za podebljanje, kurziv i naslove prikazuje se podebljano ili u kurzivu"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:880
+#: ../../../__w/calibre/calibre/manual/edit.rst:936
 msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
@@ -1281,45 +1357,45 @@ msgid ""
 "select the contents of a tag with :kbd:`Ctrl+Alt+T` or :kbd:`Ctrl+Shift+T`."
 msgstr "Dok pomerate kursor kroz HTML, odgovarajuće HTML oznake se ističu. Na početnu ili završnu oznaku možete preći prečicama :kbd:`Ctrl+{` i :kbd:`Ctrl+}`. Sadržaj oznake možete izabrati prečicama :kbd:`Ctrl+Alt+T` ili :kbd:`Ctrl+Shift+T`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:885
+#: ../../../__w/calibre/calibre/manual/edit.rst:941
 msgid "Invalid HTML is highlighted with a red underline"
 msgstr "Neispravan HTML podvlači se crvenom linijom"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:886
+#: ../../../__w/calibre/calibre/manual/edit.rst:942
 msgid ""
 "Spelling errors in the text inside HTML tags and attributes such as title "
 "are highlighted. The spell checking is language aware, based on the value of"
 " the ``lang`` attribute of the current tag and the overall book language."
 msgstr "Pravopisne greške u tekstu unutar HTML oznaka i atributa, kao što je naslov, označavaju se. Provera pravopisa uzima u obzir jezik određen vrednošću atributa ``lang`` tekuće oznake i jezik knjige u celini."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:889
+#: ../../../__w/calibre/calibre/manual/edit.rst:945
 msgid "CSS embedded inside ``<style>`` tags is highlighted"
 msgstr "CSS ugrađen u oznake ``<style>`` ističe se"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:890
+#: ../../../__w/calibre/calibre/manual/edit.rst:946
 msgid ""
 "Special characters that can be hard to distinguish such as non-breaking "
 "spaces, different types of hyphens, etc. are highlighted."
 msgstr "Ističu se posebni znakovi koje je teško razlikovati, kao što su neprelomivi razmaci i različite vrste crtica."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:892
+#: ../../../__w/calibre/calibre/manual/edit.rst:948
 msgid ""
 "Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
 " the filenames highlighted. If the filename they point to does not exist, "
 "the filename is marked with a red underline."
 msgstr "U linkovima ka drugim fajlovima unutar oznaka ``<a>``, ``<img>`` i ``<link>`` ističu se nazivi fajlova. Ako navedeni fajl ne postoji, njegov naziv se podvlači crvenom linijom."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:897
+#: ../../../__w/calibre/calibre/manual/edit.rst:953
 msgid "Context sensitive help"
 msgstr "Pomoć prema kontekstu"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:899
+#: ../../../__w/calibre/calibre/manual/edit.rst:955
 msgid ""
 "You can right click on an HTML tag name or a CSS property name to get help "
 "for that tag or property."
 msgstr "Kliknite desnim tasterom miša na naziv HTML oznake ili CSS svojstva da biste dobili pomoć za tu oznaku ili svojstvo."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:901
+#: ../../../__w/calibre/calibre/manual/edit.rst:957
 msgid ""
 "You can also hold down the :kbd:`Ctrl` key and click on any filename inside "
 "a link tag to open that file in the editor automatically. Similarly, "
@@ -1327,18 +1403,18 @@ msgid ""
 " matches the tag and class."
 msgstr "Možete i da držite taster :kbd:`Ctrl` i kliknete na naziv fajla unutar oznake linka da biste taj fajl automatski otvorili u uređivaču. Isto tako, klik na naziv klase uz pritisnut :kbd:`Ctrl` vodi do prvog pravila stila koje odgovara toj oznaci i klasi."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:905
+#: ../../../__w/calibre/calibre/manual/edit.rst:961
 msgid ""
 "Right clicking a class name in an HTML file will allow you to rename the "
 "class, changing all occurrences of the class throughout the book and all its"
 " stylesheets."
 msgstr "Klik desnim tasterom miša na naziv klase u HTML fajlu omogućava da je preimenujete, pri čemu se menjaju sva pojavljivanja te klase u knjizi i svim njenim listovima stilova."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:912
+#: ../../../__w/calibre/calibre/manual/edit.rst:968
 msgid "Auto-complete"
 msgstr "Automatsko dovršavanje"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:914
+#: ../../../__w/calibre/calibre/manual/edit.rst:970
 msgid ""
 "When editing an e-book, one of the most tedious tasks is creating links to "
 "other files inside the book, or to CSS stylesheets, or images. You have to "
@@ -1346,7 +1422,7 @@ msgid ""
 "has auto-complete to make that easier."
 msgstr "Pri uređivanju e-knjige, jedan od najzamornijih poslova jeste pravljenje linkova ka drugim fajlovima u knjizi, CSS listovima stilova ili slikama. Morate da utvrdite tačan naziv fajla i relativnu putanju do njega. Uređivač nudi automatsko dovršavanje koje taj posao olakšava."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:919
+#: ../../../__w/calibre/calibre/manual/edit.rst:975
 msgid ""
 "As you type a filename, the editor automatically pops up suggestions. Simply"
 " use the :kbd:`Tab` key to select the correct file name. The editor even "
@@ -1356,7 +1432,7 @@ msgid ""
 "the right anchor."
 msgstr "Dok unosite naziv fajla, uređivač automatski prikazuje predloge. Izaberite odgovarajući naziv tasterom :kbd:`Tab`. Uređivač predlaže i linkove ka sidru unutar drugog HTML fajla. Pošto unesete znak ``#``, prikazaće listu svih sidara u odredišnom fajlu, uz kratak odlomak teksta koji vam pomaže da izaberete pravo sidro."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:925
+#: ../../../__w/calibre/calibre/manual/edit.rst:981
 msgid ""
 "Note that unlike most other completion systems, the editor's completion "
 "system uses subsequence matching. This means that you can type just two or "
@@ -1368,11 +1444,11 @@ msgid ""
 " system, you will find it saves you a lot of time and effort."
 msgstr "Za razliku od većine drugih sistema za dovršavanje, ovaj uređivač koristi podudaranje po podnizu znakova. Zato je dovoljno da unesete dva ili tri slova koja se pojavljuju bilo gde u nazivu fajla. Na primer, ako želite fajl ``../images/arrow1.png``, možete uneti samo ``ia1`` i pritisnuti :kbd:`Tab` da biste dovršili naziv. Pri traženju podudaranja prednost imaju slova na početku reči ili odmah posle razdelnika putanje. Kada se naviknete na ovaj sistem, uštedeće vam mnogo vremena i truda."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:935
+#: ../../../__w/calibre/calibre/manual/edit.rst:991
 msgid "Snippets"
 msgstr "Isečci"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:937
+#: ../../../__w/calibre/calibre/manual/edit.rst:993
 msgid ""
 "The calibre E-book editor supports *snippets*. A snippet is a piece of text "
 "that is either re-used often or contains a lot of redundant text. The editor"

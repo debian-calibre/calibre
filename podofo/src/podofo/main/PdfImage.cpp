@@ -55,6 +55,7 @@ static void createPngContext(png_structp& png, png_infop& pnginfo);
 static void fetchPDFScanLineRGB(unsigned char* dstScanLine,
     unsigned width, const unsigned char* srcScanLine, PdfPixelFormat srcPixelFormat);
 static void invalidateImageInfo(PdfImageInfo& info);
+static void checkImageDimensions(unsigned width, unsigned height);
 
 PdfImage::PdfImage(PdfDocument& doc)
     : PdfXObject(doc, PdfXObjectType::Image), m_ColorSpace(PdfColorSpaceFilterFactory::GetUnkownInstancePtr()), m_Width(0), m_Height(0), m_BitsPerComponent(0)
@@ -112,7 +113,8 @@ void PdfImage::DecodeTo(OutputStream& stream, PdfPixelFormat format, int scanLin
 
     if (mediaFilters.size() == 0)
     {
-        if ((size_t)m_ColorSpace->GetSourceScanLineSize(m_Width, m_BitsPerComponent) * m_Height > imageData.size())
+        // 64-bit, as the product exceeds a 32-bit size_t within the 16-bit /Width and /Height
+        if ((uint64_t)m_ColorSpace->GetSourceScanLineSize(m_Width, m_BitsPerComponent) * m_Height > imageData.size())
             PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat, "The source buffer size is too small");
 
         utls::FetchImage(stream, format, scanLineSize, (const unsigned char*)imageData.data(),
@@ -144,6 +146,16 @@ void PdfImage::DecodeTo(OutputStream& stream, PdfPixelFormat format, int scanLin
                     }
 
                     jpeg_start_decompress(&ctx);
+
+                    // The destination scan line is sized from the dictionary /Width
+                    // and /Height, but the decode loop is driven by the JPEG dimensions:
+                    // refuse a mismatch instead of writing past the scan line
+                    if (ctx.output_width != m_Width || ctx.output_height != m_Height)
+                    {
+                        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat,
+                            "The JPEG dimensions {}x{} don't match the image /Width {} and /Height {}",
+                            ctx.output_width, ctx.output_height, m_Width, m_Height);
+                    }
 
                     utls::FetchImageJPEG(stream, format, scanLineSize, &ctx, m_Width, m_Height, smaskData);
                 }
@@ -177,11 +189,25 @@ void PdfImage::DecodeTo(OutputStream& stream, PdfPixelFormat format, int scanLin
                     columns = (int)decodeParms->FindKeyAsSafe<int64_t>("Columns", 1728);
                     rows = (int)decodeParms->FindKeyAsSafe<int64_t>("Rows");
                 }
+                // The fax decoder counts the source bits in an int and traps
+                // on a larger payload: reject it with an error instead
+                if (imageData.size() > (size_t)std::numeric_limits<int>::max() / 8)
+                {
+                    PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat,
+                        "The CCITT payload of {} bytes is too big to be decoded", imageData.size());
+                }
+
                 auto decoder = chromium::FaxModule::CreateDecoder(
                     pdfium::span<const uint8_t>((const uint8_t *)imageData.data(), imageData.size()),
                     (int)m_Width, (int)m_Height, k, endOfLine, encodedByteAlign, blackIs1, columns, rows);
+                if (decoder == nullptr)
+                {
+                    PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat,
+                        "Invalid CCITT decode parameters: /Columns {}, /Rows {}, /Width {}, /Height {}",
+                        columns, rows, m_Width, m_Height);
+                }
 
-                utls::FetchImageCCITT(stream, format, scanLineSize, *decoder, m_Width, m_Height, smaskData);
+                utls::FetchImageCCITT(stream, format, scanLineSize, *decoder, m_Width, m_Height, blackIs1, smaskData);
                 break;
             }
             case PdfFilterType::JBIG2Decode:
@@ -298,7 +324,7 @@ const PdfXObjectForm* PdfImage::GetForm() const
 }
 
 PdfImage::PdfImage(PdfObject& obj)
-    : PdfXObject(obj, PdfXObjectType::Image)
+    : PdfXObject(obj, PdfXObjectType::Image), m_ColorSpace(PdfColorSpaceFilterFactory::GetUnkownInstancePtr())
 {
     auto& dict = this->GetDictionary();
     m_Width = static_cast<unsigned short>(dict.FindKeyAsSafe<int64_t>("Width"));
@@ -337,6 +363,7 @@ void PdfImage::SetData(const bufferview& buffer, unsigned width, unsigned height
 
 void PdfImage::SetData(InputStream& stream, unsigned width, unsigned height, PdfPixelFormat format, int scanLineSize)
 {
+    checkImageDimensions(width, height);
     m_Width = width;
     m_Height = height;
     m_BitsPerComponent = 8;
@@ -419,6 +446,7 @@ void PdfImage::setDataRaw(InputStream& stream, const PdfImageInfo& info, PdfImag
     if (info.ColorSpace.IsNull())
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Missing color space");
 
+    checkImageDimensions(info.Width, info.Height);
     m_ColorSpace = info.ColorSpace.GetFilterPtr();
     m_Width = info.Width;
     m_Height = info.Height;
@@ -727,7 +755,7 @@ void PdfImage::loadFromTiffHandle(void* handle, const PdfImageLoadParams& params
 {
     TIFF* hInTiffHandle = (TIFF*)handle;
 
-    int32_t row, width, height;
+    uint32_t row, width, height;
     uint16_t samplesPerPixel, bitsPerSample;
     uint16_t* sampleInfo;
     uint16_t extraSamples;
@@ -763,6 +791,9 @@ void PdfImage::loadFromTiffHandle(void* handle, const PdfImageLoadParams& params
 
     if (planarConfig != PLANARCONFIG_CONTIG && colorChannels != 1)
         PODOFO_RAISE_ERROR(PdfErrorCode::UnsupportedImageFormat);
+
+    // Checked early, as the scan lines are read before setting the data
+    checkImageDimensions(width, height);
 
     info.Width = width;
     info.Height = height;
@@ -841,6 +872,16 @@ void PdfImage::loadFromTiffHandle(void* handle, const PdfImageLoadParams& params
         }
         case PHOTOMETRIC_PALETTE:
         {
+            // In this case, the colormap becomes the lookup table of
+            // an /Indexed color space, whose pixels are single indices
+            // of at most 8 bits
+            if (samplesPerPixel != 1 || bitsPerSample > 8)
+            {
+                PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat,
+                    "Unsupported palette TIFF with {} samples per pixel and {} bits per sample",
+                    samplesPerPixel, bitsPerSample);
+            }
+
             unsigned numColors = (1 << bitsPixel);
             info.DecodeArray.push_back(0);
             info.DecodeArray.push_back(numColors - 1);
@@ -848,7 +889,8 @@ void PdfImage::loadFromTiffHandle(void* handle, const PdfImageLoadParams& params
             uint16_t* rgbRed;
             uint16_t* rgbGreen;
             uint16_t* rgbBlue;
-            TIFFGetField(hInTiffHandle, TIFFTAG_COLORMAP, &rgbRed, &rgbGreen, &rgbBlue);
+            if (TIFFGetField(hInTiffHandle, TIFFTAG_COLORMAP, &rgbRed, &rgbGreen, &rgbBlue) == 0)
+                PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat, "Missing TIFF colormap");
 
             charbuff data(numColors * 3);
 
@@ -902,7 +944,8 @@ void PdfImage::loadFromTiff(const string_view& filename, const PdfImageLoadParam
     auto filename16 = utf8::utf8to16((string)filename);
     TIFF* handle = TIFFOpenW((wchar_t*)filename16.c_str(), "rb");
 #else
-    TIFF* handle = TIFFOpen(filename.data(), "rb");
+    // NOTE: The view may not be NUL terminated
+    TIFF* handle = TIFFOpen(string(filename).c_str(), "rb");
 #endif
 
     if (handle == nullptr)
@@ -1044,6 +1087,18 @@ void PdfImage::loadFromPng(const string_view& filename, charbuff& buffer, PdfIma
     fclose(file);
 }
 
+// Run libpng calls with the error jump buffer set in this frame, which
+// stays alive across them and holds no object needing destruction: a
+// libpng error jumps back here and is reported as a PdfError
+template <typename TFunc>
+static void pngCall(png_structp png, const TFunc& func)
+{
+    if (setjmp(png_jmpbuf(png)))
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Error when reading the image");
+
+    func();
+}
+
 void PdfImage::loadFromPngHandle(FILE* stream, charbuff& buffer, PdfImageInfo& info)
 {
     png_byte header[8];
@@ -1115,56 +1170,57 @@ void PdfImage::loadFromPngData(const unsigned char* data, size_t len, charbuff& 
 
 void PdfImage::loadFromPngContent(png_structp png, png_infop pnginfo, charbuff& buffer, PdfImageInfo& info)
 {
-    png_set_sig_bytes(png, 8);
-    png_read_info(png, pnginfo);
-
-    // Begin
     png_uint_32 width;
     png_uint_32 height;
     int depth;
     int color_type;
     int interlace;
+    size_t rowLen;
+    pngCall(png, [&]() {
+        png_set_sig_bytes(png, 8);
+        png_read_info(png, pnginfo);
 
-    png_get_IHDR(png, pnginfo,
-        &width, &height, &depth,
-        &color_type, &interlace, NULL, NULL);
+        png_get_IHDR(png, pnginfo,
+            &width, &height, &depth,
+            &color_type, &interlace, NULL, NULL);
 
-    // convert palette/gray image to rgb
-    // expand gray bit depth if needed
-    if (color_type == PNG_COLOR_TYPE_GRAY)
-    {
+        // convert palette/gray image to rgb
+        // expand gray bit depth if needed
+        if (color_type == PNG_COLOR_TYPE_GRAY)
+        {
 #if PNG_LIBPNG_VER >= 10209
-        png_set_expand_gray_1_2_4_to_8(png);
+            png_set_expand_gray_1_2_4_to_8(png);
 #else
-        png_set_gray_1_2_4_to_8(pPng);
+            png_set_gray_1_2_4_to_8(pPng);
 #endif
-    }
-    else if (color_type != PNG_COLOR_TYPE_PALETTE && depth < 8)
-    {
-        png_set_packing(png);
-    }
+        }
+        else if (color_type != PNG_COLOR_TYPE_PALETTE && depth < 8)
+        {
+            png_set_packing(png);
+        }
 
-    // transform transparency to alpha
-    if (color_type != PNG_COLOR_TYPE_PALETTE && png_get_valid(png, pnginfo, PNG_INFO_tRNS))
-        png_set_tRNS_to_alpha(png);
+        // transform transparency to alpha
+        if (color_type != PNG_COLOR_TYPE_PALETTE && png_get_valid(png, pnginfo, PNG_INFO_tRNS))
+            png_set_tRNS_to_alpha(png);
 
-    if (depth == 16)
-        png_set_strip_16(png);
+        if (depth == 16)
+            png_set_strip_16(png);
 
-    if (interlace != PNG_INTERLACE_NONE)
-        png_set_interlace_handling(png);
+        if (interlace != PNG_INTERLACE_NONE)
+            png_set_interlace_handling(png);
 
-    //png_set_filler (pPng, 0xff, PNG_FILLER_AFTER);
+        //png_set_filler (pPng, 0xff, PNG_FILLER_AFTER);
 
-    // recheck header after setting EXPAND options
-    png_read_update_info(png, pnginfo);
-    png_get_IHDR(png, pnginfo,
-        &width, &height, &depth,
-        &color_type, &interlace, NULL, NULL);
-    // End
+        // recheck header after setting EXPAND options
+        png_read_update_info(png, pnginfo);
+        png_get_IHDR(png, pnginfo,
+            &width, &height, &depth,
+            &color_type, &interlace, NULL, NULL);
+
+        rowLen = png_get_rowbytes(png, pnginfo);
+    });
 
     // Read the file
-    size_t rowLen = png_get_rowbytes(png, pnginfo);
     size_t len = rowLen * height;
     buffer.resize(len);
 
@@ -1174,7 +1230,9 @@ void PdfImage::loadFromPngContent(png_structp png, png_infop pnginfo, charbuff& 
         rows[y] = reinterpret_cast<png_bytep>(buffer.data() + y * rowLen);
     }
 
-    png_read_image(png, rows.get());
+    pngCall(png, [&]() {
+        png_read_image(png, rows.get());
+    });
 
     png_bytep paletteTrans = nullptr;
     int numTransColors = 0;
@@ -1200,13 +1258,14 @@ void PdfImage::loadFromPngContent(png_structp png, png_infop pnginfo, charbuff& 
                             color = row[c];
                             break;
                         case 4:
-                            color = c % 2 ? row[c / 2] >> 4 : row[c / 2] & 0xF;
+                            // Sub-byte samples are packed MSB first
+                            color = c % 2 ? row[c / 2] & 0xF : row[c / 2] >> 4;
                             break;
                         case 2:
-                            color = (row[c / 4] >> c % 4 * 2) & 3;
+                            color = (row[c / 4] >> (3 - c % 4) * 2) & 3;
                             break;
                         case 1:
-                            color = (row[c / 4] >> c % 8) & 1;
+                            color = (row[c / 8] >> (7 - c % 8)) & 1;
                             break;
                         default:
                             PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
@@ -1294,9 +1353,6 @@ void createPngContext(png_structp& png, png_infop& pnginfo)
     pnginfo = png_create_info_struct(png);
     if (pnginfo == nullptr)
         PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "png_create_info_struct");
-
-    if (setjmp(png_jmpbuf(png)))
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "Error when reading the image");
 }
 
 #endif // PODOFO_HAVE_PNG_LIB
@@ -1366,23 +1422,33 @@ Rect PdfImage::GetRect() const
     return Rect(0, 0, m_Width, m_Height);
 }
 
-unsigned PdfImage::getBufferSize(PdfPixelFormat format) const
+size_t PdfImage::getBufferSize(PdfPixelFormat format) const
 {
+    // 64-bit, so the product of the dimensions can't wrap to a smaller buffer
+    uint64_t size;
     switch (format)
     {
         case PdfPixelFormat::RGBA:
         case PdfPixelFormat::BGRA:
         case PdfPixelFormat::ARGB:
         case PdfPixelFormat::ABGR:
-            return 4 * m_Width * m_Height;
+            size = 4 * (uint64_t)m_Width * m_Height;
+            break;
         case PdfPixelFormat::RGB24:
         case PdfPixelFormat::BGR24:
-            return 4 * ((3 * m_Width + 3) / 4) * m_Height;
+            size = 4 * ((3 * (uint64_t)m_Width + 3) / 4) * m_Height;
+            break;
         case PdfPixelFormat::Grayscale:
-            return 4 * ((m_Width + 3) / 4) * m_Height;
+            size = 4 * (((uint64_t)m_Width + 3) / 4) * m_Height;
+            break;
         default:
             PODOFO_RAISE_ERROR(PdfErrorCode::InvalidEnumValue);
     }
+
+    if (size > numeric_limits<size_t>::max())
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::ValueOutOfRange, "The image buffer size {} is too big", size);
+
+    return (size_t)size;
 }
 
 void fetchPDFScanLineRGB(unsigned char* dstScanLine, unsigned width, const unsigned char* srcScanLine, PdfPixelFormat srcPixelFormat)
@@ -1424,4 +1490,15 @@ void invalidateImageInfo(PdfImageInfo& info)
     info.ColorSpace = { };
     info.DecodeArray.clear();
     info.Orientation = PdfImageOrientation::Unknown;
+}
+
+void checkImageDimensions(unsigned width, unsigned height)
+{
+    // NOTE: Apply the limit of the dimensions read from an image dictionary,
+    // which are stored in 16 bits
+    if (width > numeric_limits<uint16_t>::max() || height > numeric_limits<uint16_t>::max())
+    {
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedImageFormat,
+            "Unsupported image dimensions {}x{}", width, height);
+    }
 }

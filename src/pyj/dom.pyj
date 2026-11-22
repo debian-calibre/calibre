@@ -209,6 +209,59 @@ def set_live_region_text(region, msg, delayed, still_wanted):
     , 100)
 
 
+def index_of_focused(elements):
+    # The index of the element that has focus among elements, or None
+    ans = Array.prototype.indexOf.call(elements, document.activeElement)
+    return None if ans < 0 else ans
+
+
+def cycle_focus(elements, backwards):
+    # Move focus to the next, or previous, of elements, wrapping around. When
+    # none of them has focus, focus the first, or the last when going backwards.
+    if not elements.length:
+        return
+    idx = index_of_focused(elements)
+    if idx is None:
+        idx = elements.length - 1 if backwards else 0
+    else:
+        idx = (idx + (-1 if backwards else 1) + elements.length) % elements.length
+    elements[idx].focus()
+
+
+def button_space_key_event(ev):
+    # Listen to keydown, keyup and blur with this, so that Space activates
+    # an element that acts as a button the way it does a native button: on
+    # release, without scrolling the page. Returns True for Space key events and
+    # blur.
+    target = ev.currentTarget
+    if ev.type is 'blur':
+        target.button_space_pressed = False
+        return True
+    if ev.key is not ' ':
+        return False
+    modified = ev.ctrlKey or ev.altKey or ev.metaKey
+    if ev.type is 'keydown':
+        if not modified:
+            ev.preventDefault(), ev.stopPropagation()
+            target.button_space_pressed = True
+    elif ev.type is 'keyup':
+        pressed, target.button_space_pressed = target.button_space_pressed, False
+        if pressed and not modified:
+            ev.preventDefault(), ev.stopPropagation()
+            target.click()
+    return True
+
+
+def make_link_a_button(a):
+    # Make a, an <a>, reachable with Tab and usable like a push button. A link
+    # is activated by Enter but not by Space, unlike the button it says it is.
+    a.setAttribute('href', 'javascript: void(0)')
+    a.setAttribute('role', 'button')
+    for name in ('keydown', 'keyup', 'blur'):
+        a.addEventListener(name, button_space_key_event)
+    return a
+
+
 def get_widget_css():
     ans = []
     for func in extra_css:

@@ -1,5 +1,149 @@
 [
     {
+        "version": "9.19.0",
+        "date": "2026-11-19",
+        "new features": [
+            {
+                "type": "major",
+                "title": "Edit book: Add grammar checking and suggestions for rewriting sentences",
+                "description": "Grammar, style and typography issues are underlined in the code view as you edit, with suggested corrections available by right clicking. Tools->Check grammar lists the issues in the whole book, allowing them to be corrected, ignored or their rules disabled. For English text, a neural network can also suggest rewrites of sentences for grammar, fluency, clarity, simplicity, formality or paraphrasing. The data needed for checking a language is downloaded, with confirmation, when first needed. All processing is local to your computer and no AI is used."
+            },
+            {
+                "title": "PDF Input: Greatly improve detection of paragraphs, headings and columns",
+                "description": "Paragraphs that continue across columns and pages are joined, headings wrapped onto several lines are joined, words split over two lines are de-hyphenated, columns with narrow gutters are detected and running heads such as chapter titles are removed."
+            },
+            {
+                "title": "Content server: Allow downloading metadata and covers in the book metadata editor"
+            },
+            {
+                "title": "Content server and E-book viewer: Many more accessibility improvements for keyboard and screen reader users, including dialogs, the footnote popup, the Read aloud and audio ebook controls, the color scheme and selection bar settings and rating books at their end"
+            },
+            {
+                "tickets": [
+                    2173690
+                ],
+                "title": "Content server: Allow non-ASCII passwords"
+            },
+            {
+                "tickets": [
+                    2173873
+                ],
+                "title": "Get books: Use a browser to search the Amazon stores, so that stores other than Amazon US return results"
+            },
+            {
+                "title": "Conversion: Speed up building large Tables of Contents and splitting large HTML files for EPUB output"
+            },
+            {
+                "title": "Edit book: Check book: Speed up fixing many link and id errors"
+            },
+            {
+                "tickets": [
+                    2173688
+                ],
+                "title": "Auto-add: Improve detection of files that are still being downloaded"
+            }
+        ],
+        "bug fixes": [
+            {
+                "tickets": [
+                    2173593
+                ],
+                "title": "Fix a regression in 9.16 that broke restoring the sort of the book list when it included fields that cannot be sorted on"
+            },
+            {
+                "tickets": [
+                    2173530
+                ],
+                "title": "RTF Output: Fix nested lists and other nested block elements being run together into a single paragraph"
+            },
+            {
+                "title": "RTF Input: Fix conversion of files using East Asian, Thai and Vietnamese code pages"
+            },
+            {
+                "title": "ebook-meta/ebook-convert: Fix the --rating option being interpreted as out of ten instead of a number of stars"
+            },
+            {
+                "title": "Edit metadata dialog: Fix setting metadata from a format doubling the rating"
+            },
+            {
+                "tickets": [
+                    2173877
+                ],
+                "title": "Edit book: Check book: Fix case mismatches in the OPF manifest causing the auto-fix to delete the file"
+            },
+            {
+                "title": "Polish book: Fix updating the cover adding a new cover page each time"
+            },
+            {
+                "title": "Fix extracting the cover from calibre generated SVG cover pages"
+            },
+            {
+                "title": "Fix setting the title of EPUB 3 books whose first title is a subtitle"
+            },
+            {
+                "title": "Conversion: Generate valid ids for non-ASCII Markdown headings"
+            },
+            {
+                "title": "PDF Input: Fix Table of Contents entries that link via JavaScript actions"
+            },
+            {
+                "title": "Heuristics: Preserve page anchors when dehyphenating across pages"
+            },
+            {
+                "title": "Fix reading damaged ZIP files whose data descriptors lack a signature"
+            },
+            {
+                "title": "PDF metadata: Fix escaped strings being carried over from corrupted XMP metadata"
+            },
+            {
+                "title": "Decode numeric HTML entities as specified by HTML5"
+            },
+            {
+                "tickets": [
+                    2173828
+                ],
+                "title": "Kobo driver: Handle boolean columns stored as either text or integers"
+            },
+            {
+                "title": "MTP driver: Show a clearer error message on Windows when the device stops responding"
+            },
+            {
+                "tickets": [
+                    2174504
+                ],
+                "title": "Fix icons in the system tray menu showing as missing on some Linux desktops"
+            },
+            {
+                "tickets": [
+                    2174668
+                ],
+                "title": "E-book viewer/Edit book: Fix the close button in the Inspector toolbar not working"
+            },
+            {
+                "title": "Content server: Fix changed covers not being shown until the page is reloaded"
+            },
+            {
+                "title": "Content server: Fix an error when pressing OK while editing a rating or enumeration whose value is not one of the choices"
+            },
+            {
+                "title": "Metadata download: Fix camoufox being downloaded over and over when installing it fails"
+            }
+        ],
+        "improved recipes": [
+            "Dagens Nyheter",
+            "Dagens Industri",
+            "Ekot",
+            "Fokus",
+            "Live Law"
+        ],
+        "new recipes": [
+            {
+                "title": "Various Swedish, Finnish, Sami, Me\u00e4nkieli, Romani and Yiddish news sources",
+                "author": "Jonatan Nyberg"
+            }
+        ]
+    },
+    {
         "version": "9.18.0",
         "date": "2026-11-06",
         "new features": [
@@ -13,7 +157,7 @@
             },
             {
                 "title": "Content server: Act as a progress sync server for KOReader",
-                "description": "In KOReader, set the custom sync server to http://server:port/kosync and log in with the username and password of a Content server user. Reading positions are shared across different copies and formats of the same book."
+                "description": "In KOReader, set the custom sync server to http://server:port/kosync and log in with the username and password of a Content server user."
             },
             {
                 "title": "Content server: Serve OPDS 2.0 feeds, with support for streaming CBZ comics, honoring the manga reading direction and searching book contents using the full text index"

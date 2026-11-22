@@ -4,16 +4,19 @@
 # 
 # Translators:
 # Andrei Stepanov, 2026
+# Andrei Stepanov, 2026
 # Anton Bershanskiy <bershan2@illinois.edu>, 2017
 # ashed <craysy@gmail.com>, 2020-2021,2024,2026
 # joshua ridney, 2015
+# joshua ridney, 2015
 # Алексей Воробьёв <svbvap@gmail.com>, 2019
+# Родион Р., 2020
 # Родион Р., 2020
 msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:36+0000\n"
 "Last-Translator: Andrei Stepanov, 2026\n"
 "Language-Team: Russian (http://app.transifex.com/calibre/calibre/language/ru/)\n"
@@ -146,7 +149,7 @@ msgid ""
 "Check that your device and computer are on the same network. This means they"
 " should both be connected to the same wireless router. In particular neither"
 " should be using a cellular or ISP provided direct-WiFi connection."
-msgstr "Убедитесь, что ваше устройство и компьютер находятся в одной сети. Это означает, что они оба должны быть подключены к одному беспроводному маршрутизатору. В частности, ни один из них не должен использовать сотовую связь или интернет-провайдер с прямым подключением."
+msgstr "Проверьте, что ваше устройство и компьютер находятся в одной сети. Это означает, что оба должны быть подключены к одному и тому же беспроводному маршрутизатору. В частности, ни одно из них не должно использовать сотовое соединение или прямое Wi-Fi-подключение, предоставляемое провайдером."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:90
 msgid ""
@@ -301,7 +304,7 @@ msgstr "Если вы оставите сервер содержимого вк�
 
 #: ../../../__w/calibre/calibre/manual/server.rst:195
 msgid "Searching book contents in OPDS applications"
-msgstr ""
+msgstr "Поиск по содержимому книг в приложениях OPDS"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:197
 msgid ""
@@ -313,7 +316,7 @@ msgid ""
 " links. Results contain the normal book information and download links. A "
 "book is listed once even if more than one of its formats matches. Only books"
 " available to the current user are searched."
-msgstr ""
+msgstr "Когда для библиотеки включено полнотекстовое индексирование, её каталог OPDS предлагает запись каталога под названием :guilabel:`Поиск по содержимому книг`. Откройте эту запись и воспользуйтесь элементом поиска приложения, чтобы находить книги по словам и фразам внутри них, используя существующий полнотекстовый индекс Calibre. В каждой ленте есть одна ссылка поиска, поэтому клиентам не приходится выбирать между несколькими ссылками поиска. Результаты содержат обычную информацию о книге и ссылки для скачивания. Книга указывается один раз, даже если совпадает более одного её формата. Поиск выполняется только по книгам, доступным текущему пользователю."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:206
 msgid ""
@@ -323,11 +326,11 @@ msgid ""
 " not appear yet. The content search entry is absent when indexing is "
 "disabled. Both OPDS 1 and OPDS 2 catalogs support content search, through "
 "the normal search URL with ``full_text=y`` added to its query parameters."
-msgstr ""
+msgstr "Исходный поиск по-прежнему ищет по метаданным книг. Поиск по содержимому использует тот же синтаксис полнотекстовых запросов SQLite, что и окно полнотекстового поиска Calibre. Он ищет по уже проиндексированному тексту; книги, ожидающие индексирования, пока не появятся. Запись поиска по содержимому отсутствует, когда индексирование отключено. Поиск по содержимому поддерживают как каталоги OPDS 1, так и OPDS 2 — через обычный URL-адрес поиска с добавленным к его параметрам запроса ``full_text=y``."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:215
 msgid "Reading comics in OPDS applications"
-msgstr ""
+msgstr "Чтение комиксов в приложениях OPDS"
 
 #: ../../../__w/calibre/calibre/manual/server.rst:217
 msgid ""
@@ -336,7 +339,7 @@ msgid ""
 "one page at a time, without downloading the entire archive. Connect the "
 "application to the server's ``/opds`` catalog. OPDS 2.0 applications request"
 " the JSON catalog using ``Accept: application/opds+json``."
-msgstr ""
+msgstr "Приложения, поддерживающие OPDS 2.0 и `формат Readium Divina <https://readium.org/webpub-manifest/profiles/divina>`_, могут читать комиксы CBZ постранично, не скачивая весь архив. Подключите приложение к каталогу сервера ``/opds``. Приложения OPDS 2.0 запрашивают каталог JSON, используя ``Accept: application/opds+json``."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:223
 msgid ""
@@ -347,7 +350,7 @@ msgid ""
 " may be animated, are only offered in their original format. The application"
 " chooses an image format it supports from those links. JPEG is offered as "
 "the default for AVIF and JPEG XL pages when conversion is available."
-msgstr ""
+msgstr "Записи комиксов ссылаются на манифест Divina. Сервер перечисляет страницы, только когда приложение открывает этот манифест, используя тот же порядок страниц, что и при преобразовании комиксов в Calibre. Для каждой страницы предлагается её исходный формат изображения, включая AVIF и JPEG XL, а также альтернативные форматы, которые может создать сервер. Страницы GIF, которые могут быть анимированными, предлагаются только в исходном формате. Приложение выбирает из этих ссылок поддерживаемый им формат изображения. JPEG предлагается по умолчанию для страниц AVIF и JPEG XL, когда доступно преобразование."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:231
 msgid ""
@@ -357,7 +360,7 @@ msgid ""
 "containing the page images. Page images remain in their original order. The "
 "reading direction is only given in the comic manifest, not in OPDS feeds, as"
 " finding it requires opening the archive."
-msgstr ""
+msgstr "Для манги файл ``ComicInfo.xml`` со значением ``Manga``, равным ``YesAndRightToLeft``, сообщает приложению об использовании направления чтения справа налево. Файл может находиться в корне архива или в папке со страницами изображений. Изображения страниц сохраняют исходный порядок. Направление чтения указывается только в манифесте комикса, но не в лентах OPDS, поскольку для его определения требуется открыть архив."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:238
 msgid ""
@@ -365,7 +368,7 @@ msgid ""
 " page images. Complete archive downloads remain available. This feature "
 "supports CBZ archives; CBR and CB7 comics can still be downloaded as "
 "complete files."
-msgstr ""
+msgstr "К манифестам и изображениям страниц применяются обычные ограничения по имени пользователя и паролю, а также ограничения библиотек. Скачивание архивов целиком остаётся доступным. Эта функция поддерживает архивы CBZ; комиксы CBR и CB7 по-прежнему можно скачивать как файлы целиком."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:244
 msgid "Browser support"
@@ -497,7 +500,7 @@ msgid ""
 "for such copies, set :guilabel:`Document matching method` in the KOReader "
 "progress sync settings to :guilabel:`Filename` on all devices and keep the "
 "file names of books the same."
-msgstr ""
+msgstr "По умолчанию KOReader идентифицирует книги по контрольной сумме файла книги. Сервер содержимого может изменять метаданные, встроенные в книги, при их скачивании, поэтому копии одной и той же книги, скачанные в разное время, могут иметь разные контрольные суммы. После первой синхронизации KOReader с сервером он запоминает контрольные суммы скачанных книг и файлов библиотеки, из которых они были созданы, так что все копии одного формата книги имеют общую позицию чтения. Разные форматы книги имеют отдельные позиции чтения, так как позиции в одном формате нельзя использовать в другом. Копии, скачанные до первой синхронизации KOReader с сервером или полученные иначе, чем скачиванием с сервера, не распознаются. Если позиции чтения не синхронизируются для таких копий, установите :guilabel:`Метод сопоставления документов` в настройках синхронизации прогресса KOReader в значение :guilabel:`Имя файла` на всех устройствах и сохраняйте имена файлов книг одинаковыми."
 
 #: ../../../__w/calibre/calibre/manual/server.rst:340
 msgid "Integrating the calibre Content server into other servers"

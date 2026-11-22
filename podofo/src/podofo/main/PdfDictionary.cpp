@@ -29,17 +29,25 @@ PdfDictionary::PdfDictionary(PdfDictionary&& rhs) noexcept
 PdfDictionary& PdfDictionary::operator=(const PdfDictionary& rhs)
 {
     AssertMutable();
-    m_Map = rhs.m_Map;
+    // NOTE: rhs may be nested in this dictionary, so its
+    // entries are copied before the current ones are destroyed
+    auto map = rhs.m_Map;
+    m_Map = std::move(map);
     setChildrenParent();
+    SetDirty();
     return *this;
 }
 
 PdfDictionary& PdfDictionary::operator=(PdfDictionary&& rhs) noexcept
 {
     AssertMutable();
-    m_Map = std::move(rhs.m_Map);
-    setChildrenParent();
+    // NOTE: rhs may be nested in this dictionary, so its entries are
+    // stolen and it's set dirty before the current ones are destroyed
+    auto map = std::move(rhs.m_Map);
     rhs.SetDirty();
+    m_Map = std::move(map);
+    setChildrenParent();
+    SetDirty();
     return *this;
 }
 
@@ -54,8 +62,8 @@ bool PdfDictionary::operator==(const PdfDictionary& rhs) const
 
 bool PdfDictionary::operator!=(const PdfDictionary& rhs) const
 {
-    if (this != &rhs)
-        return true;
+    if (this == &rhs)
+        return false;
 
     // We don't check owner
     return m_Map != rhs.m_Map;
@@ -191,7 +199,7 @@ PdfObject* PdfDictionary::findKeyParent(const string_view& key) const
     if (obj == nullptr)
     {
         auto parent = findKey("Parent");
-        if (parent == nullptr || parent->GetIndirectReference() == GetOwner()->GetIndirectReference())
+        if (parent == nullptr || parent == GetOwner())
         {
             return nullptr;
         }

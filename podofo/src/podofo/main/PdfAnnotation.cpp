@@ -393,10 +393,11 @@ void PdfAnnotation::PushAppearanceStream(const PdfXObject& xobj, PdfAppearanceTy
     double teta;
     if (raw || !MustGetPage().TryGetRotationRadians(teta))
     {
+        unique_ptr<PdfXObjectForm> actualXobj;
         if (form == nullptr)
         {
             // Create a preamble form that just draw the xobject
-            auto actualXobj = GetDocument().CreateXObjectForm(xobj.GetRect());
+            actualXobj = GetDocument().CreateXObjectForm(xobj.GetRect());
             static_cast<PdfResourceOperations&>(actualXobj->GetOrCreateResources())
                 .AddResource(PdfResourceType::XObject, "XOb1"_n, xobj.GetObject());
             PdfStringStream sstream;
@@ -568,9 +569,9 @@ bool PdfAnnotation::tryCreateFromObject(const PdfObject& obj, PdfAnnotationType 
 
 PdfAnnotationType PdfAnnotation::getAnnotationType(const PdfObject& obj)
 {
+    const PdfDictionary* dict;
     const PdfName* name;
-    auto subTypeObj = obj.GetDictionary().FindKey("Subtype");
-    if (subTypeObj == nullptr || !subTypeObj->TryGetName(name))
+    if (!obj.TryGetDictionary(dict) || !dict->TryFindKeyAs("Subtype", name))
         return PdfAnnotationType::Unknown;
 
     PdfAnnotationType ret;

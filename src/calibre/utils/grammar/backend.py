@@ -171,8 +171,12 @@ def compute_edits(original: str, nt: NormalizedText, corrected: str) -> list[Edi
             replacement = corrected[b[j1][1] : b[j2 - 1][2]] if tag == 'replace' else ''
             if not replacement:
                 # Remove the whitespace before the deleted text, or after it
-                # if it is at the start
-                while start > 0 and original[start - 1].isspace():
+                # if it is at the start. Text that is directly followed by
+                # a word, such as an opening quote, is attached to that
+                # word, so the whitespace before it separates the word from
+                # the preceding text and is kept.
+                attached_to_following = end < len(original) and original[end].isalnum()
+                while start > 0 and original[start - 1].isspace() and not attached_to_following:
                     start -= 1
                 if start == 0:
                     while end < len(original) and original[end].isspace():
@@ -230,6 +234,18 @@ def choose_variant(model_id: str, mode: GpuMode = DEFAULT_GPU_MODE) -> Variant:
         if all((d := get_decision(model_id, h, p)) is not None and not d['use_gpu'] for p in providers):
             return 'cpu'
     return 'gpu'
+
+
+def variants_to_download(model_id: str, mode: GpuMode = DEFAULT_GPU_MODE) -> tuple[Variant, ...]:
+    """
+    The variants of the model to download for the GPU mode. In auto mode, when
+    the GPU might be used, both variants are downloaded, as whether the GPU is
+    used is decided by trying it, which needs the GPU variant, and the CPU
+    variant is used if it is not.
+    """
+    if choose_variant(model_id, mode) == 'cpu':
+        return ('cpu',)
+    return ('cpu', 'gpu') if mode == 'auto' else ('gpu',)
 
 
 def create_model(model_id: str, variant: Variant, provider: str = '', num_threads: int = 0) -> Seq2SeqModel:

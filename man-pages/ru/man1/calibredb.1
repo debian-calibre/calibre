@@ -28,7 +28,7 @@ level margin: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .\" new: \\n[rst2man-indent\\n[rst2man-indent-level]]
 .in \\n[rst2man-indent\\n[rst2man-indent-level]]u
 ..
-.TH "CALIBREDB" "1" "ноября 06, 2026" "9.18.0" "calibre"
+.TH "CALIBREDB" "1" "ноября 21, 2026" "9.19.0" "calibre"
 .SH NAME
 calibredb \- calibredb
 .INDENT 0.0
@@ -369,7 +369,7 @@ calibredb remove ids
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Do not use the trash bin
+Не использовать корзину
 .UNINDENT
 .SH ADD_FORMAT
 .INDENT 0.0
@@ -673,24 +673,24 @@ Regex, описывающий теги для исключения в качес
 .INDENT 3.5
 .sp
 .EX
-calibredb saved_searches [options] [list|add|remove]
+calibredb saved_searches [параметры] [list|add|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Manage the saved searches stored in this database.
-If you try to add a query with a name that already exists, it will be
-replaced.
+Управление сохранёнными поисками, хранящимися в этой базе данных.
+Если вы попытаетесь добавить запрос с уже существующим именем, он будет
+заменён.
 .sp
-Syntax for listing, the default action:
+Синтаксис для вывода списка (действие по умолчанию):
 .sp
 calibredb \fBsaved_searches\fP list
 .sp
-Syntax for adding:
+Синтаксис для добавления:
 .sp
 calibredb \fBsaved_searches\fP add search_name search_expression
 .sp
-Syntax for removing:
+Синтаксис для удаления:
 .sp
 calibredb \fBsaved_searches\fP remove search_name
 .sp
@@ -780,22 +780,24 @@ custom_columns
 .INDENT 3.5
 .sp
 .EX
-calibredb restore_database [options]
+calibredb restore_database [параметры]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Restore this database from the metadata stored in OPF files in each
-folder of the calibre library. This is useful if your metadata.db file
-has been corrupted.
+Восстановить эту базу данных из метаданных, хранящихся в файлах OPF в каждой
+папке библиотеки Calibre. Это полезно, если ваш файл metadata.db
+был повреждён.
 .sp
-WARNING: This command completely regenerates your database. You will lose
-all saved searches, user categories, plugboards, stored per\-book conversion
-settings, and custom recipes. Restored metadata will only be as accurate as
-what is found in the OPF files.
+ВНИМАНИЕ: Эта команда полностью пересоздаёт вашу базу данных. Вы потеряете
+все сохранённые поиски, пользовательские категории, плагины, сохранённые
+настройки преобразования для каждой книги и пользовательские рецепты.
+Восстановленные метаданные будут настолько точны, насколько точны данные
+в файлах OPF.
 .sp
-The exit status is 0 if the restore succeeded, 1 if it failed completely and
-2 if the database was restored but some books or other data could not be.
+Код выхода — 0, если восстановление удалось, 1 — если оно полностью
+не удалось, и 2 — если база данных восстановлена, но некоторые книги или
+другие данные восстановить не удалось.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Напр.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
@@ -1061,42 +1063,31 @@ calibredb fts_search [параметры] выражение поиска
 .INDENT 3.5
 .sp
 .EX
-calibredb notes [options] [list|search|show|set|remove]
+calibredb notes [параметры] [list|search|show|set|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Manage the \fBnotes\fP attached to items such as authors, series, tags and
-publishers. FIELD is the lookup name of the field, for example: authors,
-series, tags, publisher or #mycolumn. ITEM is the name of the item, for
-example the name of an author. Items are matched case insensitively.
+Управление примечаниями, прикреплёнными к элементам, таким как авторы, серии, теги и издатели. FIELD — имя поиска поля, например: authors, series, tags, publisher или #mycolumn. ITEM — имя элемента, например имя автора. Элементы сопоставляются без учёта регистра.
 .sp
-List the items that have \fBnotes\fP, optionally only those in the specified field.
-This is the default action:
+Вывести элементы, у которых есть примечания, возможно, только в указанном поле. Это действие по умолчанию:
 .sp
 calibredb \fBnotes\fP list [FIELD]
 .sp
-Search the text of \fBnotes\fP using the same SQLite full text search syntax as
-the Browse \fBnotes\fP tool in calibre. Print the field, item name and an excerpt
-for each match. Use \-\-field to search only the \fBnotes\fP in a particular field:
+Искать текст примечаний, используя тот же синтаксис полнотекстового поиска SQLite, что и инструмент «Обзор примечаний» в Calibre. Для каждого совпадения выводится поле, имя элемента и фрагмент. Используйте \-\-field, чтобы искать только примечания в определённом поле:
 .sp
-calibredb \fBnotes\fP search \(dqsearch expression\(dq
-calibredb \fBnotes\fP search \-\-field authors \(dqsearch expression\(dq
+calibredb \fBnotes\fP search \(dqпоисковое выражение\(dq
+calibredb \fBnotes\fP search \-\-field authors \(dqпоисковое выражение\(dq
 .sp
-Print the note for an item as Markdown formatted text, or with \-\-as\-html as
-an HTML document with any images embedded, suitable for use with set:
+Вывести примечание для элемента в виде текста в формате Markdown или с \-\-as\-html в виде HTML\-документа со встроенными изображениями, подходящего для использования с set:
 .sp
 calibredb \fBnotes\fP show FIELD ITEM
 .sp
-Replace the note for an item with the contents of an HTML file. Use \- to
-read the HTML from standard input. Images embedded as base64\-encoded data:
-URLs are added to the note for both local and remote libraries. When using a
-local library and reading from a file, images referenced by paths relative to
-the file are added as well:
+Заменить примечание для элемента содержимым HTML\-файла. Используйте \- для чтения HTML из стандартного ввода. Изображения, встроенные как URL\-адреса данных в кодировке base64, добавляются в примечание как для локальных, так и для удалённых библиотек. При использовании локальной библиотеки и чтении из файла также добавляются изображения, на которые ссылаются пути относительно файла:
 .sp
 calibredb \fBnotes\fP set FIELD ITEM FILE
 .sp
-Remove the note for an item:
+Удалить примечание для элемента:
 .sp
 calibredb \fBnotes\fP remove FIELD ITEM
 .sp
@@ -1104,36 +1095,30 @@ calibredb \fBnotes\fP remove FIELD ITEM
 .INDENT 0.0
 .TP
 .B \-\-as\-html
-When showing a note, output it as HTML instead of Markdown formatted text
+При показе примечания выводить его в формате HTML вместо текста в формате Markdown
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-field
-When searching notes, restrict the search to this field, for example: authors, tags or #mycolumn
+При поиске примечаний ограничить поиск этим полем, например: authors, tags или #mycolumn
 .UNINDENT
 .SH ITEMS
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibredb items [options] (rename|remove) FIELD ITEM ...
+calibredb items [параметры] (rename|remove) FIELD ITEM ...
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Rename or remove \fBitems\fP such as authors, tags, series and publishers in all
-books, the same as the Manage authors, tags, etc. actions in the calibre
-interface. FIELD is the lookup name of the field, for example: authors, tags,
-series, publisher or #mycolumn. Items are matched case insensitively.
+Переименовать или удалить элементы, такие как авторы, теги, серии и издатели, во всех книгах — то же самое, что действия «Управление авторами», «Управление тегами» и т. д. в интерфейсе Calibre. FIELD — имя поиска поля, например: authors, tags, series, publisher или #mycolumn. Элементы сопоставляются без учёта регистра.
 .sp
-Rename an item. If an item named NEW_NAME already exists, the two \fBitems\fP are
-merged. For fields that contain multiple values, NEW_NAME can contain more
-than one value, separated by the separator for the field, for example a comma
-for tags. The item is then replaced by all the values:
+Переименовать элемент. Если элемент с именем NEW_NAME уже существует, два элемента объединяются. Для полей, содержащих несколько значений, NEW_NAME может содержать более одного значения, разделённых разделителем для поля, например запятой для тегов. Затем элемент заменяется всеми значениями:
 .sp
 calibredb \fBitems\fP rename FIELD ITEM NEW_NAME
 .sp
-Remove one or more \fBitems\fP from all books. Authors cannot be removed:
+Удалить один или несколько элементов из всех книг. Авторов удалить нельзя:
 .sp
 calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
 .sp
@@ -1141,7 +1126,7 @@ calibredb \fBitems\fP remove FIELD ITEM [ITEM ...]
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Only change books that match the specified search expression, for example: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
+Изменить только книги, соответствующие указанному поисковому выражению, например: tags:\fB\(dq\fP=Fiction\fB\(dq\fP
 .UNINDENT
 .SH VIRTUAL_LIBRARIES
 .INDENT 0.0
@@ -1178,69 +1163,75 @@ calibredb \fBvirtual_libraries\fP remove name ...
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output in JSON format, which is more suitable for machine parsing
+Создать вывод в формате JSON, более подходящем для машинного разбора
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-replace
-Replace the search of an existing Virtual library with the same name when adding
+Заменять поиск существующей виртуальной библиотеки с тем же именем при добавлении
 .UNINDENT
 .SH ANNOTATIONS
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibredb annotations [options] [list|search|export|import|remove]
+calibredb annotations [параметры] [list|search|export|import|remove]
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Manage the \fBannotations\fP, that is the highlights and bookmarks, of books, as
-created in the calibre E\-book viewer or synced from other applications.
+Управление аннотациями книг, то есть выделениями и закладками,
+созданными в просмотрщике электронных книг Calibre или синхронизированными
+из других приложений.
 .sp
-List the \fBannotations\fP, with their ids. This is the default action:
+Вывести список аннотаций с их идентификаторами. Это действие по умолчанию:
 .sp
 calibredb \fBannotations\fP list
 .sp
-Search highlighted text, annotation notes and bookmark titles using the same
-SQLite full text search syntax as the Browse \fBannotations\fP tool. Results are
-ordered by relevance and include annotation ids, book titles and matching
-excerpts. Use \-\-search to restrict the books, \-\-type to restrict the annotation
-type, \-\-user\-type and \-\-annotation\-user to restrict the user, \-\-no\-stemming to
-match exact word forms, or \-\-format json for a JSON array of results including
-the annotation data and excerpts:
+Искать по выделенному тексту, примечаниям к аннотациям и названиям закладок,
+используя тот же синтаксис полнотекстового поиска SQLite, что и инструмент
+«Обзор аннотаций». Результаты упорядочены по релевантности и включают
+идентификаторы аннотаций, названия книг и совпадающие фрагменты.
+Используйте \-\-search для ограничения книг, \-\-type для ограничения типа
+аннотации, \-\-user\-type и \-\-annotation\-user для ограничения пользователя,
+\-\-no\-stemming для поиска точных словоформ или \-\-format json для получения
+массива JSON с данными и фрагментами аннотаций:
 .sp
-calibredb \fBannotations\fP search \(dqsearch expression\(dq
+calibredb \fBannotations\fP search \(dqпоисковое выражение\(dq
 .sp
-Export the \fBannotations\fP as plain text, Markdown or JSON, grouped by book. The
-JSON is the same calibre annotation collection as created by the Export
-button in the Browse \fBannotations\fP tool:
+Экспортировать аннотации в виде простого текста, Markdown или JSON,
+сгруппировав по книгам. JSON совпадает с коллекцией аннотаций Calibre,
+создаваемой кнопкой «Экспорт» в инструменте «Обзор аннотаций»:
 .sp
 calibredb \fBannotations\fP export
 .sp
-Import a calibre annotation collection exported as JSON by this command or
-the Browse \fBannotations\fP tool. The collection must contain \fBannotations\fP from
-only one book. BOOK_ID is the destination book id, not the id stored in the
-file. Only the \fBannotations\fP of the format FORMAT are imported, \fBannotations\fP of
-other formats are skipped. FORMAT must exist in the destination book. Use the
-same edition of the book so positions match:
+Импортировать коллекцию аннотаций Calibre, экспортированную в JSON этой
+командой или инструментом «Обзор аннотаций». Коллекция должна содержать
+аннотации только одной книги. BOOK_ID — идентификатор книги назначения,
+а не идентификатор, сохранённый в файле. Импортируются только аннотации
+формата FORMAT, аннотации других форматов пропускаются. FORMAT должен
+существовать в книге назначения. Используйте то же издание книги, чтобы
+позиции совпадали:
 .sp
 calibredb \fBannotations\fP import BOOK_ID FORMAT FILE
 .sp
-Use \- for FILE to read from standard input. The entire collection is
-validated before importing. Annotations are merged with existing ones using
-the viewer\(aqs rules: highlights are matched by UUID and bookmarks by title,
-and the newer timestamp wins. Repeated imports do not create duplicates.
-Unrelated \fBannotations\fP and reading positions are preserved.
+Используйте \- вместо FILE, чтобы читать из стандартного ввода. Перед
+импортом проверяется вся коллекция. Аннотации объединяются с существующими
+по правилам просмотрщика: выделения сопоставляются по UUID, закладки — по
+названию, и побеждает более новая временная метка. Повторный импорт не
+создаёт дубликатов. Несвязанные аннотации и позиции чтения сохраняются.
 .sp
-By default \fBannotations\fP are imported into those of the calibre E\-book viewer.
-Use \-\-user\-type web \-\-annotation\-user USER to import them into those of a
-Content server user instead. Exported collections record the user the
-\fBannotations\fP belong to, and if a collection contains \fBannotations\fP of more than
-one user, it is rejected. Use the \-\-user\-type and \-\-annotation\-user
-options when exporting, to export the \fBannotations\fP of a single user.
+По умолчанию аннотации импортируются в аннотации просмотрщика электронных
+книг Calibre. Используйте \-\-user\-type web \-\-annotation\-user ПОЛЬЗОВАТЕЛЬ,
+чтобы импортировать их вместо этого в аннотации пользователя сервера
+содержимого. Экспортированные коллекции записывают пользователя, которому
+принадлежат аннотации, и если коллекция содержит аннотации более чем одного
+пользователя, она отклоняется. Используйте параметры \-\-user\-type и
+\-\-annotation\-user при экспорте, чтобы экспортировать аннотации одного
+пользователя.
 .sp
-Permanently remove the \fBannotations\fP with the specified ids, as shown by list:
+Безвозвратно удалить аннотации с указанными идентификаторами, как показано
+командой list:
 .sp
 calibredb \fBannotations\fP remove ID ...
 .sp
@@ -1248,32 +1239,32 @@ calibredb \fBannotations\fP remove ID ...
 .INDENT 0.0
 .TP
 .B \-\-annotation\-user
-Only list, search or export the annotations of the specified user. For import, the Content server user to import the annotations for, required with \fB\-\-user\-type\fP web. Note that this can be any user, not just the one used to connect to a remote library.
+Выводить в список, искать или экспортировать только аннотации указанного пользователя. Для импорта — пользователь сервера содержимого, для которого импортируются аннотации, требуется вместе с \fB\-\-user\-type\fP web. Обратите внимание, что это может быть любой пользователь, а не только тот, который используется для подключения к удалённой библиотеке.
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-format, \-f
-The export format, one of: text, markdown, json. For search, text or json. Default is: text
+Формат экспорта, один из: text, markdown, json. Для поиска — text или json. По умолчанию: text
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-no\-stemming
-For search, match exact word forms instead of word stems
+Для поиска: сопоставлять точные словоформы вместо основ слов
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-search, \-s
-Only list, search or export the annotations of books matching the specified book search query, for example: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
+Выводить в список, искать или экспортировать только аннотации книг, соответствующих указанному поисковому запросу книг, например: \fB\-\-search\fP \fB\(dq\fPseries:Foundation\fB\(dq\fP
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-type, \-t
-Only list, search or export annotations of the specified type, one of: highlight, bookmark
+Выводить в список, искать или экспортировать только аннотации указанного типа, одного из: highlight, bookmark
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-user\-type
-Only list, search or export the annotations of the specified type of user. For import, the type of user to import the annotations for, the calibre E\-book viewer (local) or a Content server user (web). Default for import is local.
+Выводить в список, искать или экспортировать только аннотации указанного типа пользователя. Для импорта — тип пользователя, для которого импортируются аннотации: просмотрщик электронных книг Calibre (local) или пользователь сервера содержимого (web). По умолчанию для импорта — local.
 .UNINDENT
 .SH TRASH
 .INDENT 0.0
@@ -1314,86 +1305,72 @@ calibredb \fBtrash\fP empty
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Generate output for the list action in JSON format, which is more suitable for machine parsing
+Создать вывод для действия list в формате JSON, более подходящем для машинного разбора
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-formats
-Act on the removed formats of the specified books, instead of on removed books
+Действовать с удалёнными форматами указанных книг, а не с удалёнными книгами
 .UNINDENT
 .SH DATA_FILES
 .INDENT 0.0
 .INDENT 3.5
 .sp
 .EX
-calibredb data_files [options] (list|add|get|rename|remove) BOOK_ID ...
+calibredb data_files [параметры] (list|add|get|rename|remove) BOOK_ID ...
 .EE
 .UNINDENT
 .UNINDENT
 .sp
-Manage the extra data files associated with a book, in local or remote libraries.
-Names are relative to the book\(aqs data directory. Use / for subdirectories,
-is also accepted. Files whose names contain a are listed, but cannot
-otherwise be managed.
-E\-book formats, covers and metadata.opf cannot be accessed with this command.
-Remote libraries require an account with write access, as for other management
-commands, and do not support accounts with per\-library search restrictions.
+Управление дополнительными файлами данных, связанными с книгой, в локальных или удалённых библиотеках. Имена указываются относительно каталога данных книги. Используйте / для подкаталогов, также допускается. Файлы, имена которых содержат , выводятся в списке, но иным образом ими управлять нельзя. Форматы электронных книг, обложки и metadata.opf недоступны через эту команду. Удалённые библиотеки требуют учётной записи с доступом на запись, как и другие команды управления, и не поддерживают учётные записи с ограничениями поиска по отдельным библиотекам.
 .sp
-List file names, sizes in bytes and modification times (seconds since the Unix
-epoch). Use \-\-for\-machine for JSON output:
+Вывести имена файлов, размеры в байтах и время изменения (секунды с начала эпохи Unix). Используйте \-\-for\-machine для вывода в JSON:
 .sp
 calibredb \fBdata_files\fP list BOOK_ID
 .sp
-Add a file, using its basename, or \-\-name to specify a name or subdirectory.
-Existing files are not replaced unless \-\-replace is specified. This is also
-available through add_format \-\-as\-extra\-data\-file:
+Добавить файл, используя его базовое имя, или \-\-name для указания имени или подкаталога. Существующие файлы не заменяются, если не указан \-\-replace. Также доступно через add_format \-\-as\-extra\-data\-file:
 .sp
 calibredb \fBdata_files\fP add BOOK_ID FILE
 .sp
-Save one data file to \-\-output on the local machine. Existing output files
-are not replaced unless \-\-replace is specified:
+Сохранить один файл данных в \-\-output на локальной машине. Существующие выходные файлы не заменяются, если не указан \-\-replace:
 .sp
 calibredb \fBdata_files\fP get BOOK_ID NAME \-\-output FILE
 .sp
-Rename a file. Existing destinations are not replaced unless \-\-replace is set:
+Переименовать файл. Существующие назначения не заменяются, если не указан \-\-replace:
 .sp
 calibredb \fBdata_files\fP rename BOOK_ID NAME NEW_NAME
 .sp
-Remove a file to the operating system\(aqs recycle bin. With \-\-permanent, delete
-it permanently instead. For remote libraries this happens on the server:
+Переместить файл в корзину операционной системы. С \-\-permanent удалить его безвозвратно. Для удалённых библиотек это происходит на сервере:
 .sp
 calibredb \fBdata_files\fP remove BOOK_ID NAME
 .sp
-Directories left empty by rename and remove are deleted. With remote
-libraries, each file is transferred in a single request, so very large files
-need enough memory on both the client and the server, and uploads are limited
-by the maximum request size of the server.
+Каталоги, оставшиеся пустыми после переименования и удаления, удаляются. В удалённых библиотеках каждый файл передаётся одним запросом, поэтому очень большим файлам требуется достаточно памяти как на клиенте, так и на сервере, а загрузки ограничены максимальным размером запроса сервера.
 .sp
 Когда вы передаёте аргументы с пробелами в calibredb, заключайте их в кавычки. Напр.: \(dq/some path/with spaces\(dq
 .INDENT 0.0
 .TP
 .B \-\-for\-machine
-Output the list of files as JSON
+Вывести список файлов в формате JSON
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-name
-Name to use for the added file, relative to the data directory
+Имя для добавляемого файла относительно каталога данных
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-output
-Local destination for the get action
+Локальное назначение для действия get
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-permanent
-Permanently delete the data file instead of using the recycle bin
+Безвозвратно удалить файл данных вместо перемещения в корзину
 .UNINDENT
 .INDENT 0.0
 .TP
 .B \-\-replace
-Allow replacing existing files when adding, getting or renaming
+Разрешить замену существующих файлов при добавлении, получении или переименовании
 .UNINDENT
 .SH Author
 Kovid Goyal

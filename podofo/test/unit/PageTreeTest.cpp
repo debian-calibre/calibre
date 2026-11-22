@@ -38,6 +38,33 @@ TEST_CASE("TestEmptyDoc")
     ASSERT_THROW_WITH_ERROR_CODE(doc.GetPages().GetPageAt(0), PdfErrorCode::ValueOutOfRange);
 }
 
+// GHSA-h2fg-3p95-qpgr: a tiny file with a huge /Pages /Count must not drive
+// a multi-gigabyte reserve before the real /Kids tree is walked
+TEST_CASE("TestHugePageCountReserve")
+{
+    static string_view hugeCountPdf = R"(%PDF-1.4
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [] /Count 4000000000 >>
+endobj
+xref
+0 3
+0000000000 65535 f 
+0000000009 00000 n 
+0000000058 00000 n 
+trailer
+<< /Root 1 0 R /Size 3 >>
+startxref
+119
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(hugeCountPdf);
+    REQUIRE(doc.GetPages().GetCount() == 0);
+}
+
 TEST_CASE("TestCreateDelete")
 {
     PdfMemDocument doc;
@@ -227,6 +254,66 @@ TEST_CASE("TestMovePage2")
     auto& pages = doc.GetPages();
     for (unsigned i = 0; i < pages.GetCount(); i++)
         REQUIRE(pages.GetPageAt(i).GetObject().GetIndirectReference() == refs[i]);
+}
+
+TEST_CASE("TestPageTreeDuplicatePage")
+{
+    // The same page is listed twice in /Kids: it must be wrapped once, as two
+    // wrappers would share the inline /Annots array and one would free it
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R 3 0 R 5 0 R]/Count 3>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 9 9]/Annots[4 0 R]>>endobj
+4 0 obj<</Type/Annot/Subtype/Square/Rect[0 0 5 5]>>endobj
+5 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 9 9]>>endobj
+trailer<</Root 1 0 R/Size 6>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    auto& pages = doc.GetPages();
+    REQUIRE(pages.GetCount() == 2);
+    REQUIRE(pages.GetPageAt(1).GetObject().GetIndirectReference() == PdfReference(5, 0));
+    auto& annots = pages.GetPageAt(0).GetAnnotations();
+    annots.CreateAnnot(PdfAnnotationType::Square, Rect(0, 0, 5, 5));
+    REQUIRE(annots.GetCount() == 2);
+}
+
+TEST_CASE("TestPageTreeDuplicatePageContents")
+{
+    // With two wrappers of the same page, appending content through one
+    // orphaned the stream still wrapped by the other, which the garbage
+    // collection on save then freed: the page must be wrapped once
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[3 0 R 3 0 R]/Count 2>>endobj
+3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 100 100]/Contents 4 0 R>>endobj
+4 0 obj<</Length 15>>stream
+0 0 m 50 50 l S
+endstream
+endobj
+trailer<</Root 1 0 R/Size 5>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    auto& pages = doc.GetPages();
+    REQUIRE(pages.GetCount() == 1);
+    {
+        PdfPainter painter;
+        painter.SetCanvas(pages.GetPageAt(0));
+        painter.DrawLine(0, 0, 50, 50);
+        painter.FinishDrawing();
+    }
+
+    doc.Save(TestUtils::GetTestOutputFilePath("TestPageTreeDuplicatePageContents.pdf"));
+    vector<PdfTextEntry> entries;
+    pages.GetPageAt(0).ExtractTextTo(entries);
+    REQUIRE(entries.size() == 0);
 }
 
 void testGetPages(PdfMemDocument& doc)

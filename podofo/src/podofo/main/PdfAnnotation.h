@@ -125,6 +125,7 @@ public:
         const PdfName& state = { }, bool skipSelectedState = false);
 
     /// Get a list of qualified appearance streams
+     ///  @param states a vector to receive the appearance streams
     void GetAppearanceStreams(std::vector<PdfAppearanceStream>& states) const;
 
     void ClearAppearances();
@@ -205,11 +206,13 @@ public:
     /// Get the color key of the Annotation dictionary
     /// which defines the color of the annotation,
     /// as per 8.4 of the pdf spec.
-
+    ///
+    /// @returns the color of the annotation
     PdfColor GetColor() const;
 
     /// Set the C key of the Annotation dictionary, which defines the
     /// color of the annotation, as per 8.4 of the pdf spec.
+    /// @param color the color of the annotation
     void SetColor(nullable<const PdfColor&> color);
 
 public:
@@ -253,7 +256,12 @@ bool PdfAnnotation::TryCreateFromObject(PdfObject& obj, std::unique_ptr<TAnnotat
     if (!tryCreateFromObject(obj, GetAnnotationType<TAnnotation>(), xobj_))
         return false;
 
-    xobj.reset((TAnnotation*)xobj_);
+    // NOTE: A class GetAnnotationType() maps to Unknown accepts any annotation, so the class created is checked
+    std::unique_ptr<PdfAnnotation> created(xobj_);
+    if (dynamic_cast<TAnnotation*>(created.get()) == nullptr)
+        return false;
+
+    xobj.reset(static_cast<TAnnotation*>(created.release()));
     return true;
 }
 
@@ -264,7 +272,11 @@ bool PdfAnnotation::TryCreateFromObject(const PdfObject& obj, std::unique_ptr<co
     if (!tryCreateFromObject(obj, GetAnnotationType<TAnnotation>(), xobj_))
         return false;
 
-    xobj.reset((const TAnnotation*)xobj_);
+    std::unique_ptr<const PdfAnnotation> created(xobj_);
+    if (dynamic_cast<const TAnnotation*>(created.get()) == nullptr)
+        return false;
+
+    xobj.reset(static_cast<const TAnnotation*>(created.release()));
     return true;
 }
 

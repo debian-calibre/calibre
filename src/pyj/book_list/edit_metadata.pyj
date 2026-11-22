@@ -4,11 +4,12 @@ from __python__ import bound_methods, hash_literals
 
 import traceback
 from elementmaker import E
-from gettext import gettext as _
+from gettext import gettext as _, ngettext
 
-from ajax import ajax_send
+from ajax import absolute_path, ajax, ajax_send
 from book_list.book_details import (
-    add_stars_to, basic_table_rules, fetch_metadata, field_sorter, no_book
+    add_stars_to, adjust_iframe_height, adjusting_sandboxed_html,
+    basic_table_rules, fetch_metadata, field_sorter, no_book
 )
 from book_list.comments_editor import (
     create_comments_editor, focus_comments_editor, get_comments_html, set_comments_html
@@ -27,8 +28,11 @@ from dom import add_extra_css, build_rule, clear, svgicon
 from file_uploads import update_status_widget, upload_files_widget, upload_status_widget
 from modals import error_dialog, question_dialog
 from session import get_interface_data
-from utils import fmt_sidx, parse_url_params, safe_set_inner_html
-from widgets import create_button
+from utils import debounce, fmt_sidx, parse_url_params, safe_set_inner_html
+from widgets import (
+    create_button, create_choice_list, create_spinner, current_choice,
+    focus_choice_list
+)
 
 CLASS_NAME = 'edit-metadata-panel'
 IGNORED_FIELDS = {
@@ -88,7 +92,7 @@ add_extra_css(def ():
         margin='0.5ex 0.5rem', margin_left='0', padding='0.5ex 0.5rem',
         border='var(--calibre-border-style-control)', border_radius='1ex', cursor='pointer'
     )
-    style += build_rule(sel + '.rating-edit-container > li.current-rating', color=get_color('window-background'), background=get_color('window-foreground'))
+    style += build_rule(sel + '.rating-edit-container > li[aria-checked=true]', color=get_color('window-background'), background=get_color('window-foreground'))
     # Floating editor modal (field editing)
     style += build_rule(sel + 'div[data-ctype="edit"]',
         position='fixed',
@@ -177,6 +181,73 @@ add_extra_css(def ():
     style += build_rule(sel + 'div[data-ctype="edit"] .cover-edit-layout .cs-upload-dropzone:hover',
         background_color='var(--calibre-color-primary-light-2)',
         border_color='var(--calibre-color-primary)',
+    )
+    # Download metadata
+    dsel = sel + 'div[data-ctype="edit"] '
+    style += build_rule(dsel + '.metadata-download-query', opacity='0.78', margin_bottom='0.75rem', overflow_wrap='anywhere')
+    style += build_rule(dsel + '.metadata-download-searching',
+        display='flex', align_items='center', justify_content='center', gap='0.75rem', padding='2rem 0', text_align='center'
+    )
+    style += build_rule(dsel + '.metadata-download-no-results', padding='1rem 0')
+    style += build_rule(dsel + '.metadata-download-results',
+        max_height='35vh', overflow='auto',
+        border='var(--calibre-border-style-subtle)', border_radius='12px'
+    )
+    style += build_rule(dsel + '.metadata-download-results table', width='100%', border_collapse='collapse')
+    style += build_rule(dsel + '.metadata-download-results th',
+        position='sticky', top='0', text_align='left', padding='0.5rem 0.75rem',
+        background_color=get_color('window-background'), border_bottom='var(--calibre-border-style-subtle)'
+    )
+    style += build_rule(dsel + '.metadata-download-results td',
+        padding='0.5rem 0.75rem', vertical_align='top', cursor='pointer', border_bottom='var(--calibre-border-style-subtle)'
+    )
+    style += build_rule(dsel + '.metadata-download-results tr:last-child td', border_bottom='none')
+    style += build_rule(dsel + '.metadata-download-results tr:hover td', background_color='var(--calibre-color-primary-light)')
+    style += build_rule(dsel + '.metadata-download-results tr[aria-selected="true"] td',
+        background_color=get_color('list-hover-background'), color=get_color('list-hover-foreground')
+    )
+    style += build_rule(dsel + '.metadata-download-results tr:focus', outline='none')
+    style += build_rule(dsel + '.metadata-download-results tr:focus-visible td', text_decoration='underline')
+    style += build_rule(dsel + '.metadata-download-results .secondary', font_size='smaller', opacity='0.78')
+    style += build_rule(dsel + '.metadata-download-preview', margin_top='1rem')
+    style += build_rule(dsel + '.metadata-download-fields', border_collapse='collapse', margin_bottom='0.75rem')
+    style += build_rule(dsel + '.metadata-download-fields td', padding='0.25rem 0', vertical_align='top', overflow_wrap='anywhere')
+    style += build_rule(dsel + '.metadata-download-fields td:first-child',
+        font_weight='600', padding_right='1rem', white_space='nowrap', overflow_wrap='normal'
+    )
+    style += build_rule(dsel + '.metadata-download-preview .ignored-note',
+        font_size='smaller', font_style='italic', color='var(--calibre-color-faded-text)'
+    )
+    style += build_rule(dsel + '.metadata-download-comments.ignored iframe', opacity='0.55')
+    style += build_rule(dsel + '.metadata-download-log', margin_top='0.75rem')
+    style += build_rule(dsel + '.metadata-download-log summary', cursor='pointer')
+    style += build_rule(dsel + '.metadata-download-log pre',
+        max_height='20em', overflow='auto', white_space='pre-wrap', font_size='smaller'
+    )
+    style += build_rule(dsel + '.cover-download-status', display='flex', align_items='center', margin_bottom='0.75rem', min_height='2em')
+    style += build_rule(dsel + '.cover-download-grid',
+        display='grid', grid_template_columns='repeat(auto-fill, minmax(9rem, 1fr))', gap='0.75rem'
+    )
+    style += build_rule(dsel + '.cover-download-tile',
+        padding='0.5rem', border_radius='12px', border='var(--calibre-border-style-subtle)',
+        cursor='pointer', text_align='center', font_size='smaller', overflow_wrap='anywhere'
+    )
+    style += build_rule(dsel + '.cover-download-tile:hover', background_color='var(--calibre-color-primary-light)')
+    style += build_rule(dsel + '.cover-download-tile[aria-selected="true"]',
+        background_color=get_color('list-hover-background'), color=get_color('list-hover-foreground')
+    )
+    style += build_rule(dsel + '.cover-download-tile:focus', outline='none')
+    style += build_rule(dsel + '.cover-download-tile:focus-visible', outline='var(--calibre-border-style)')
+    style += build_rule(dsel + '.cover-download-tile .secondary', opacity='0.78')
+    style += build_rule(dsel + '.cover-download-image',
+        height='12rem', display='flex', align_items='center', justify_content='center', margin_bottom='0.4rem'
+    )
+    style += build_rule(dsel + '.cover-download-image img', max_width='100%', max_height='100%', box_shadow='var(--calibre-shadow-cover)')
+    style += build_rule(dsel + '.cover-download-image .no-cover', opacity='0.78', font_style='italic')
+    # Keep the buttons visible when the preview is taller than the dialog
+    style += build_rule(dsel + '.metadata-download-buttons',
+        position='sticky', bottom='-1rem', padding='0.75rem 0', margin_bottom='-0.75rem',
+        background_color=get_color('window-background')
     )
     style += build_rule(sel + '[data-modal="1"] div[data-ctype="show"]',
         opacity='0.5',
@@ -686,62 +757,71 @@ def identifiers_edit(container_id, book_id, field, fm, div, mi):
     value_to_json = identity
 # }}}
 
+# Choice lists {{{
+# Rating, enum and bool fields are edited by picking one of a few choices,
+# presented as a radio group so they work with the keyboard and screen readers
+
+
+def show_choice_list(c, get_value, container_id, book_id, field, name, div):
+    c.classList.add('rating-edit-container')
+    form = create_form(c, get_value, container_id, book_id, field)
+    div.appendChild(E.div(style='margin: 0.5ex 1rem', _('Choose the "{}" below').format(name)))
+    div.appendChild(E.div(style='margin: 0.5ex 1rem', form))
+    focus_choice_list(c)
+
+
+# No choice is current when the field has a value that is not one of the
+# choices, for example an enumeration value that has since been removed. The
+# getters then return unchanged_value, so that OK leaves the field as it is.
+
+
+def choice_get_value(unchanged_value, container):
+    li = current_choice(container)
+    return True, (li.getAttribute('data-value') if li else unchanged_value)
+# }}}
+
 # Rating edit {{{
 
 
-def rating_get_value(container):
-    return True, parseInt(container.querySelector('.current-rating[data-rating]').getAttribute('data-rating'))
-
-
-def set_rating(evt):
-    li = evt.currentTarget
-    for nli in li.closest('ul').childNodes:
-        nli.classList.remove('current-rating')
-    li.classList.add('current-rating')
+def rating_get_value(unchanged_value, container):
+    li = current_choice(container)
+    return True, (parseInt(li.getAttribute('data-value')) if li else unchanged_value)
 
 
 def rating_edit(container_id, book_id, field, fm, div, mi):
     nonlocal value_to_json
     val = resolved_metadata(mi, field) or 0
-    numbers = list(range(11)) if fm.display?.allow_half_stars else list(range(0, 11, 2))
+    allow_half_stars = bool(fm.display?.allow_half_stars)
+    numbers = list(range(11)) if allow_half_stars else list(range(0, 11, 2))
     name = fm.name or field
-    c = E.ul(class_='rating-edit-container')
-    for n in numbers:
-        s = E.li(data_rating=n + '', onclick=set_rating)
-        c.appendChild(s)
-        if n is val:
-            s.classList.add('current-rating')
+
+    def render_choice(li, n):
         if n:
-            add_stars_to(s, n, numbers.length > 6)
+            add_stars_to(li, n, allow_half_stars)
+            # The stars are icons, so give the choice a name screen readers can read
+            stars = n / 2
+            li.setAttribute('aria-label', ngettext('{} star', '{} stars', stars).format(stars))
         else:
-            s.appendChild(document.createTextNode(_('Unrated')))
-    form = create_form(c, rating_get_value, container_id, book_id, field)
-    div.appendChild(E.div(style='margin: 0.5ex 1rem', _('Choose the "{}" below').format(name)))
-    div.appendChild(E.div(style='margin: 0.5ex 1rem', form))
+            li.appendChild(document.createTextNode(_('Unrated')))
+
+    c = create_choice_list(name, numbers, val, render_choice)
+    show_choice_list(c, rating_get_value.bind(None, val), container_id, book_id, field, name, div)
     value_to_json = identity
 # }}}
 
 # Enum edit {{{
 
 
-def enum_get_value(container):
-    return True, container.querySelector('.current-rating[data-rating]').getAttribute('data-rating')
-
-
 def enum_edit(container_id, book_id, field, fm, div, mi):
     nonlocal value_to_json
     val = resolved_metadata(mi, field) or ''
     name = fm.name or field
-    c = E.ul(class_='rating-edit-container')
-    for n in [''].concat(fm.display.enum_values):
-        s = E.li(data_rating=n + '', onclick=set_rating)
-        c.appendChild(s)
-        if n is val:
-            s.classList.add('current-rating')
-        s.appendChild(document.createTextNode(n or _('Blank')))
-    form = create_form(c, enum_get_value, container_id, book_id, field)
-    div.appendChild(E.div(style='margin: 0.5ex 1rem', _('Choose the "{}" below').format(name)))
-    div.appendChild(E.div(style='margin: 0.5ex 1rem', form))
+
+    def render_choice(li, n):
+        li.appendChild(document.createTextNode(n or _('Blank')))
+
+    c = create_choice_list(name, [''].concat(fm.display.enum_values), val, render_choice)
+    show_choice_list(c, choice_get_value.bind(None, val), container_id, book_id, field, name, div)
     value_to_json = identity
 # }}}
 
@@ -759,17 +839,13 @@ def bool_edit(container_id, book_id, field, fm, div, mi):
         else:
             val = ''
     name = fm.name or field
-    c = E.ul(class_='rating-edit-container')
     names = {'': _('Blank'), 'y': _('Yes'), 'n': _('No')}
-    for n in ['', 'y', 'n']:
-        s = E.li(data_rating=n + '', onclick=set_rating)
-        c.appendChild(s)
-        if n is val:
-            s.classList.add('current-rating')
-        s.appendChild(document.createTextNode(names[n]))
-    form = create_form(c, enum_get_value, container_id, book_id, field)
-    div.appendChild(E.div(style='margin: 0.5ex 1rem', _('Choose the "{}" below').format(name)))
-    div.appendChild(E.div(style='margin: 0.5ex 1rem', form))
+
+    def render_choice(li, n):
+        li.appendChild(document.createTextNode(names[n]))
+
+    c = create_choice_list(name, ['', 'y', 'n'], val, render_choice)
+    show_choice_list(c, choice_get_value.bind(None, val), container_id, book_id, field, name, div)
     val_map = {'': None, 'y': True, 'n': False}
     value_to_json = def (x):
         return val_map[x]
@@ -865,6 +941,16 @@ def cover_edit(container_id, book_id, field, fm, div, mi):
     dropzone.addEventListener('drop', drop, False)
 
     actions = E.div(class_='cover-edit-actions')
+
+    def download_cover():
+        nonlocal object_url
+        if object_url:
+            window.URL.revokeObjectURL(object_url)
+            object_url = None
+        begin_cover_download(container_id, book_id)
+
+    actions.appendChild(create_button(
+        _('Download cover'), icon='cloud-download', action=download_cover, tooltip=_('Download a cover from the internet')))
     actions.appendChild(create_button(_('Remove existing cover'), action=def (ev):
         pending.file = None
         pending.remove = True
@@ -971,6 +1057,8 @@ def formats_edit(container_id, book_id, field, fm, div, mi):
 
 
 def switch_to_edit_panel(container):
+    # Whatever was in the edit panel is replaced
+    stop_metadata_download()
     d = container.querySelector('div[data-ctype="edit"]')
     d.style.display = 'block'
     container.dataset.modal = '1'
@@ -1380,6 +1468,653 @@ def submit_changes(container_id, book_id):
     )
 
 
+# Download metadata {{{
+
+# The download whose results are being waited for, if any
+metadata_download = None
+# Stop downloaded comments, which come from the internet, from loading anything
+# when they are previewed. Only the comments of the result the user chooses are
+# saved, so they must not be able to leak that a book is being looked at.
+DOWNLOADED_COMMENTS_CSP = "default-src 'none'; style-src 'unsafe-inline'; img-src data:"
+
+
+def metadata_download_url(action, job_or_book_id, library_id):
+    return f'metadata-download/{action}/{job_or_book_id}/{encodeURIComponent(library_id)}'
+
+
+def stop_metadata_download():
+    # Stop waiting for the current download, aborting it on the server if it
+    # has not finished, or telling the server that its covers are no longer
+    # needed
+    nonlocal metadata_download
+    state = metadata_download
+    metadata_download = None
+    if not state:
+        return
+    if state.timer is not None:
+        window.clearTimeout(state.timer)
+        state.timer = None
+    for name in ('xhr', 'cover_xhr'):
+        if state[name]:
+            state[name].abort()
+            state[name] = None
+    if state.job_id is not None:
+        ajax_send(metadata_download_url('status', state.job_id, state.library_id), {}, def (end_type, xhr, ev):
+            if end_type is not 'load' and end_type is not 'abort':
+                print('Failed to stop metadata download:', xhr.error_html)
+        , query = {'abort': '1'})
+
+
+def new_download_state(container_id, book_id, body_selector, on_finished):
+    return {
+        'container_id': container_id, 'book_id': book_id, 'library_id': current_library_id(),
+        # The id of the download on the server, while the server has it
+        'job_id': None, 'timer': None, 'xhr': None,
+        # Getting the chosen cover, the status is not polled while doing so
+        'cover_xhr': None,
+        # The part of the dialog that shows the download
+        'body_selector': body_selector,
+        # Cover downloads are kept by the server until the browser is done
+        # with the covers
+        'keep_job': False,
+        'on_finished': on_finished, 'on_progress': None, 'on_failure': None,
+    }
+
+
+def start_download_job(state, action, query):
+    nonlocal metadata_download
+    stop_metadata_download()
+    metadata_download = state
+    state.xhr = ajax_send(
+        metadata_download_url(action, state.book_id, state.library_id), query,
+        on_metadata_download_started.bind(None, state))
+
+
+def metadata_download_is_active(state):
+    if metadata_download is not state:
+        return False
+    c = document.getElementById(state.container_id)
+    if not c or not panel_is_shown(state.container_id) or not is_edit_panel_showing(c) or not c.querySelector(
+            'div[data-ctype="edit"] ' + state.body_selector):
+        # The dialog was closed some other way, such as with the back button
+        stop_metadata_download()
+        return False
+    return True
+
+
+def metadata_download_failed(state, msg, details):
+    stop_metadata_download()
+    if state.on_failure:
+        state.on_failure(msg, details)
+    else:
+        on_close(state.container_id)
+        error_dialog(_('Failed to download metadata'), msg, details)
+
+
+def parse_metadata_download_response(state, end_type, xhr):
+    # Returns the response, or None if the download has failed
+    state.xhr = None
+    if end_type is not 'load':
+        if xhr.status is 404 and state.job_id is not None:
+            state.job_id = None
+            msg = _('The server no longer has the download, probably because its results were not asked for in time. Try downloading again.')
+        elif xhr.status is 429:
+            msg = _('Too many metadata downloads are in progress. Wait for them to finish and try again.')
+        else:
+            msg = _('Could not communicate with the server.')
+        metadata_download_failed(state, msg, xhr.error_html)
+        return None
+    try:
+        return JSON.parse(xhr.responseText)
+    except Exception as err:
+        metadata_download_failed(state, _('The server returned an invalid response.'), err.toString())
+    return None
+
+
+def wait_for_metadata_download(state):
+    if state.cover_xhr:
+        return
+
+    def check():
+        state.timer = None
+        if metadata_download_is_active(state):
+            state.xhr = ajax_send(
+                metadata_download_url('status', state.job_id, state.library_id), {},
+                on_metadata_download_status.bind(None, state))
+    state.timer = window.setTimeout(check, 1000)
+
+
+def on_metadata_download_started(state, end_type, xhr, ev):
+    if not metadata_download_is_active(state):
+        return
+    response = parse_metadata_download_response(state, end_type, xhr)
+    if response:
+        state.job_id = state.download_id = response.job_id
+        wait_for_metadata_download(state)
+
+
+def on_metadata_download_status(state, end_type, xhr, ev):
+    if not metadata_download_is_active(state):
+        return
+    response = parse_metadata_download_response(state, end_type, xhr)
+    if not response:
+        return
+    if response.running:
+        if state.on_progress:
+            state.on_progress(response)
+        wait_for_metadata_download(state)
+        return
+    if not state.keep_job:
+        # The server has forgotten the download, so there is nothing to abort
+        state.job_id = None
+    if response.was_aborted:
+        metadata_download_failed(state, _('Downloading took too long and was aborted.'))
+    elif not response.ok:
+        metadata_download_failed(state, _('Downloading failed with an error.'), response.traceback)
+    else:
+        state.on_finished(response)
+
+
+def query_description(title, authors):
+    return title + (' — ' + ' & '.join(authors) if authors.length else '')
+
+
+def create_download_dialog(container_id, heading, title, authors):
+    c = document.getElementById(container_id)
+    d = switch_to_edit_panel(c)
+    d.appendChild(E.h3(heading))
+    d.appendChild(E.div(class_='metadata-download-query', query_description(title, authors)))
+    d.appendChild(E.div(class_='edit-form-button-container metadata-download-buttons'))
+    return d
+
+
+def set_download_buttons(d, *buttons):
+    container = d.querySelector('.metadata-download-buttons')
+    clear(container)
+    for i, button in enumerate(buttons):
+        if i:
+            container.appendChild(document.createTextNode('\xa0'))
+        container.appendChild(button)
+
+
+def searching_message(msg):
+    return E.div(class_='metadata-download-searching', role='status', create_spinner('2em', '2em'), E.span(msg))
+
+
+def begin_metadata_download(container_id, book_id):
+    stop_metadata_download()
+    c = document.getElementById(container_id)
+    mi = book_metadata(book_id)
+    if not c or not mi:
+        return
+    # Search for what is in the editor, which may not have been saved yet
+    title = resolved_metadata(mi, 'title') or ''
+    authors = list(resolved_metadata(mi, 'authors') or [])
+    d = create_download_dialog(container_id, _('Download metadata'), title, authors)
+    d.insertBefore(E.div(
+        class_='metadata-download-body', searching_message(_('Searching for metadata online, this can take up to a minute…'))
+    ), d.lastChild)
+    set_download_buttons(d, create_button(_('Cancel'), icon='close', action=on_close.bind(None, container_id)))
+    state = new_download_state(container_id, book_id, '.metadata-download-body', None)
+    state.on_finished = show_downloaded_metadata.bind(None, state)
+    state.query = {
+        'title': title,
+        'authors': authors,
+        'identifiers': resolved_metadata(mi, 'identifiers') or {},
+        # Used when downloaded comments are to be appended to the existing ones
+        'comments': resolved_metadata(mi, 'comments') or '',
+    }
+    start_download_job(state, 'start', state.query)
+
+
+def begin_cover_download(container_id, book_id):
+    stop_metadata_download()
+    c = document.getElementById(container_id)
+    mi = book_metadata(book_id)
+    if not c or not mi:
+        return
+    title = resolved_metadata(mi, 'title') or ''
+    authors = list(resolved_metadata(mi, 'authors') or [])
+    d = create_download_dialog(container_id, _('Download cover'), title, authors)
+    query = {'title': title, 'authors': authors, 'identifiers': resolved_metadata(mi, 'identifiers') or {}}
+
+    def accept(cover):
+        if cover:
+            apply_downloaded_cover(cover)
+        on_close(container_id)
+
+    show_cover_choice(container_id, book_id, d, query, accept, None)
+
+
+def format_downloaded_pubdate(pubdate):
+    fm = library_data.field_metadata.pubdate
+    fmt = get_interface_data().gui_pubdate_display_format or (fm.display or {}).date_format
+    return format_date(date_to_datetime(pubdate), fmt)
+
+
+def sandboxed_downloaded_comments(html):
+    ans = adjusting_sandboxed_html(html, None)
+    ans.srcdoc = ans.srcdoc.replace('<head>', f'<head><meta http-equiv="Content-Security-Policy" content="{DOWNLOADED_COMMENTS_CSP}">')
+    # Links in the comments must not navigate away from the editor, losing
+    # unsaved changes. allow-same-origin is needed for resizing.
+    ans.setAttribute('sandbox', 'allow-same-origin')
+    ans.classList.add('downloaded-comments')
+    return ans
+
+
+def adjust_downloaded_comments_iframes():
+    for iframe in document.querySelectorAll(f'.{CLASS_NAME} iframe.downloaded-comments'):
+        if parseInt(iframe.dataset.last_window_width) is not window.innerWidth:
+            adjust_iframe_height(iframe)
+
+
+if window?:
+    window.addEventListener('resize', debounce(adjust_downloaded_comments_iframes, 250))
+
+
+def downloaded_rating(result):
+    # As the Edit metadata dialog does, drop half stars when the rating does
+    # not allow them
+    fm = library_data.field_metadata.rating
+    ans = result.rating or 0
+    if not (fm and fm.display and fm.display.allow_half_stars):
+        ans -= ans % 2
+    return ans
+
+
+def render_downloaded_metadata(container, result, ignored):
+    field_metadata = library_data.field_metadata
+    clear(container)
+    table = E.table(class_='metadata-download-fields')
+    container.appendChild(table)
+
+    def mark_ignored(elem, field):
+        if field in ignored:
+            elem.classList.add('ignored')
+            elem.appendChild(E.div(class_='ignored-note', _('Will not be changed, because of your settings for downloading metadata')))
+
+    def add(field, val):
+        if not val:
+            return
+        fm = field_metadata[field]
+        td = E.td(val)
+        table.appendChild(E.tr(E.td((fm.name if fm else None) or field), td))
+        mark_ignored(td, field)
+
+    add('title', result.title)
+    add('authors', ' & '.join(result.authors or []))
+    if result.series:
+        sidx = fmt_sidx(result.series_index, use_roman=get_interface_data().use_roman_numerals_for_series_number)
+        add('series', _('{0} of {1}').format(sidx, result.series))
+    rating = downloaded_rating(result)
+    if rating:
+        stars = E.span()
+        add_stars_to(stars, rating, True)
+        add('rating', stars)
+    add('publisher', result.publisher)
+    if result.pubdate:
+        add('pubdate', format_downloaded_pubdate(result.pubdate))
+    add('languages', ', '.join(result.languages or []))
+    add('tags', ', '.join(result.tags or []))
+    if result.identifiers:
+        add('identifiers', ', '.join([f'{k}:{result.identifiers[k]}' for k in Object.keys(result.identifiers)]))
+    if result.comments:
+        comments = E.div(class_='metadata-download-comments', sandboxed_downloaded_comments(result.comments))
+        container.appendChild(comments)
+        mark_ignored(comments, 'comments')
+
+
+def show_downloaded_metadata(state, response):
+    nonlocal metadata_download
+    metadata_download = None
+    c = document.getElementById(state.container_id)
+    d = c.querySelector('div[data-ctype="edit"]') if c else None
+    body = d.querySelector('.metadata-download-body') if d else None
+    if not body:
+        return
+    clear(body)
+    results = response.results
+    log = E.details(class_='metadata-download-log', E('summary', _('Show log')), E.pre(response.log or ''))
+    if not results.length:
+        body.appendChild(E.div(
+            class_='metadata-download-no-results', role='status',
+            _('No matches were found. Try correcting the title and authors, or adding an identifier such as the ISBN, and downloading again.')))
+        body.appendChild(log)
+        # There is nothing to cancel
+        set_download_buttons(d, create_button(_('Close'), icon='close', action=on_close.bind(None, state.container_id)))
+        return
+    ignored = set(response.ignore_fields)
+    preview = E.div(class_='metadata-download-preview')
+    tbody = E.tbody()
+    body.appendChild(E.div(
+        class_='metadata-download-results',
+        E.table(
+            aria_label=_('Downloaded metadata'),
+            E.thead(E.tr(E.th(_('Title')), E.th(library_data.field_metadata.pubdate.name))),
+            tbody,
+        )
+    ))
+    body.appendChild(preview)
+    body.appendChild(log)
+    selected = 0
+
+    def select(idx, focus):
+        nonlocal selected
+        selected = idx
+        rows = tbody.querySelectorAll('tr')
+        for i in range(rows.length):
+            rows[i].setAttribute('aria-selected', 'true' if i is idx else 'false')
+            rows[i].setAttribute('tabindex', '0' if i is idx else '-1')
+        row = rows[idx]
+        if focus:
+            row.focus()
+        row.scrollIntoView({'block': 'nearest'})
+        render_downloaded_metadata(preview, results[idx], ignored)
+
+    def set_buttons():
+        set_download_buttons(
+            d, create_button(_('Cancel'), icon='close', action=on_close.bind(None, state.container_id)),
+            create_button(_('Next'), icon='arrow-right', action=accept, highlight=True,
+                          tooltip=_('Choose a cover, the metadata is changed when you are done')),
+        )
+
+    def back():
+        # From choosing a cover
+        stop_metadata_download()
+        cb = d.querySelector('.cover-download-body')
+        if cb:
+            d.removeChild(cb)
+        body.style.display = 'block'
+        set_buttons()
+        select(selected, True)
+
+    def accept():
+        # As in the Edit metadata dialog, choose a cover for the chosen result
+        result = results[selected]
+
+        def accept_cover(cover):
+            apply_downloaded_metadata(state.book_id, result, ignored)
+            if cover:
+                apply_downloaded_cover(cover)
+            on_close(state.container_id)
+
+        query = {
+            'title': state.query.title, 'authors': state.query.authors, 'identifiers': result.identifiers or {},
+            # The server has the addresses of the covers of the results
+            'metadata_download_id': state.download_id,
+        }
+        body.style.display = 'none'
+        show_cover_choice(state.container_id, state.book_id, d, query, accept_cover, back)
+
+    def onkeydown(ev):
+        if ev.altKey or ev.ctrlKey or ev.metaKey or ev.shiftKey:
+            return
+        if ev.key is 'ArrowDown' or ev.key is 'ArrowUp':
+            ev.preventDefault(), ev.stopPropagation()
+            delta = 1 if ev.key is 'ArrowDown' else -1
+            select(max(0, min(results.length - 1, selected + delta)), True)
+        elif ev.key is 'Enter':
+            ev.preventDefault(), ev.stopPropagation()
+            accept()
+
+    for i, result in enumerate(results):
+        pubdate = format_downloaded_pubdate(result.pubdate) if result.pubdate else ''
+        row = E.tr(
+            E.td(E.div(result.title or ''), E.div(class_='secondary', ' & '.join(result.authors or []))),
+            E.td(E.div(pubdate), E.div(class_='secondary', result.publisher or '')),
+            onclick=select.bind(None, i, True), ondblclick=accept, onkeydown=onkeydown,
+        )
+        tbody.appendChild(row)
+    set_buttons()
+    select(0, True)
+
+
+def apply_downloaded_metadata(book_id, result, ignored):
+    # Change the fields in the editor in the same way as calibre does when
+    # metadata is downloaded in the Edit metadata dialog. The user can review
+    # the changes and save or discard them.
+    nonlocal has_changes
+    mi = book_metadata(book_id)
+    if not mi:
+        return
+    updates = {}
+
+    def update(field, val):
+        if field not in ignored and JSON.stringify(resolved_metadata(mi, field)) is not JSON.stringify(val):
+            updates[field] = val
+
+    if result.title:
+        update('title', result.title)
+    if result.authors and result.authors.length:
+        update('authors', result.authors)
+    if result.publisher:
+        update('publisher', result.publisher)
+    rating = downloaded_rating(result)
+    if rating:
+        update('rating', rating)
+    if result.pubdate and 'pubdate' not in ignored:
+        current = resolved_metadata(mi, 'pubdate')
+        if not current or format_date(current, 'yyyy-MM-dd') is not result.pubdate:
+            updates.pubdate = date_to_datetime(result.pubdate)
+    if result.series and 'series' not in ignored:
+        update('series', result.series)
+        update('series_index', float(result.series_index))
+    if result.languages and result.languages.length and 'languages' not in ignored:
+        # The editor uses language names, but book metadata has language codes
+        names = mi.lang_names or {}
+        current = [names[x] or x for x in (resolved_metadata(mi, 'languages') or [])]
+        if JSON.stringify(current) is not JSON.stringify(result.languages):
+            updates.languages = result.languages
+    if result.tags and result.tags.length:
+        # Keep the existing tags, adding the new ones before them
+        existing = list(resolved_metadata(mi, 'tags') or [])
+        lexisting = {t.toLowerCase() for t in existing}
+        update('tags', [t for t in result.tags if t.toLowerCase() not in lexisting].concat(existing))
+    if result.identifiers:
+        # Keep existing identifiers that were not downloaded
+        update('identifiers', Object.assign({}, resolved_metadata(mi, 'identifiers') or {}, result.identifiers))
+    if result.comments:
+        update('comments', result.merged_comments or result.comments)
+    fields = Object.keys(updates)
+    for field in fields:
+        draft_changes[field] = updates[field]
+    if fields.length:
+        has_changes = True
+
+
+def apply_downloaded_cover(data_url):
+    nonlocal has_changes
+    draft_changes.cover = data_url
+    has_changes = True
+
+
+def current_cover_url(book_id):
+    cover = draft_changes.cover
+    if cover is '--remove--':
+        return None
+    # A data URL when the cover has been changed in the editor
+    return cover or cover_url(book_id)
+
+
+def show_cover_choice(container_id, book_id, d, query, on_accept, on_back):
+    # Download covers and let the user choose one, or keep the current cover.
+    # on_accept() is called with the chosen cover as a data URL, or None to
+    # keep the current cover. on_back, if not None, goes back to choosing
+    # metadata.
+    body = E.div(class_='cover-download-body')
+    d.insertBefore(body, d.querySelector('.metadata-download-buttons'))
+    status = E.div(class_='cover-download-status', role='status')
+    grid = E.div(class_='cover-download-grid', role='listbox', aria_label=_('Covers'))
+    log = E.div()
+    body.appendChild(status), body.appendChild(grid), body.appendChild(log)
+    state = new_download_state(container_id, book_id, '.cover-download-body', None)
+    state.keep_job = True
+    selected = 'current'
+    tiles = {}
+
+    def set_status(msg, searching):
+        clear(status)
+        if searching:
+            status.appendChild(create_spinner('1.5em', '1.5em'))
+            status.appendChild(document.createTextNode('\xa0'))
+        status.appendChild(E.span(msg))
+
+    def select(key, focus):
+        nonlocal selected
+        selected = key
+        for k in Object.keys(tiles):
+            tiles[k].setAttribute('aria-selected', 'true' if k is key else 'false')
+            tiles[k].setAttribute('tabindex', '0' if k is key else '-1')
+        if focus:
+            tiles[key].focus()
+        tiles[key].scrollIntoView({'block': 'nearest'})
+
+    def move(delta):
+        options = grid.querySelectorAll('[role="option"]')
+        keys = [options[i].dataset.key for i in range(options.length)]
+        idx = max(0, min(keys.length - 1, keys.indexOf(selected) + delta))
+        select(keys[idx], True)
+
+    def onkeydown(ev):
+        if ev.altKey or ev.ctrlKey or ev.metaKey or ev.shiftKey:
+            return
+        if ev.key is 'ArrowLeft' or ev.key is 'ArrowUp' or ev.key is 'ArrowRight' or ev.key is 'ArrowDown':
+            ev.preventDefault(), ev.stopPropagation()
+            move(-1 if ev.key is 'ArrowLeft' or ev.key is 'ArrowUp' else 1)
+        elif ev.key is 'Enter':
+            ev.preventDefault(), ev.stopPropagation()
+            accept()
+
+    def add_tile(key, src, caption, details):
+        img = E.img(alt=caption, src=src) if src else E.div(class_='no-cover', _('No cover'))
+        tile = E.div(
+            role='option', class_='cover-download-tile', data_key=key, aria_selected='false', tabindex='-1',
+            E.div(class_='cover-download-image', img), E.div(caption), E.div(class_='secondary', details or '\xa0'),
+            onclick=select.bind(None, key, True), ondblclick=accept, onkeydown=onkeydown,
+        )
+        tiles[key] = tile
+        grid.appendChild(tile)
+
+    def cover_src(num):
+        return absolute_path(f'metadata-download/cover/{state.job_id}/{num}/{encodeURIComponent(state.library_id)}')
+
+    def show_covers(covers):
+        for c in covers:
+            key = str(c.num)
+            if not tiles[key]:
+                add_tile(key, cover_src(c.num), c.source, f'{c.width} × {c.height}')
+        # The order changes when the download finishes. Moving a tile in the
+        # document loses its focus, so only move tiles when needed.
+        had_focus = grid.contains(document.activeElement)
+        for i, c in enumerate(covers):
+            tile = tiles[str(c.num)]
+            # The current cover is always the first tile
+            if grid.children[i + 1] is not tile:
+                grid.insertBefore(tile, grid.children[i + 1])
+        if had_focus and not grid.contains(document.activeElement):
+            tiles[selected].focus()
+
+    def on_progress(response):
+        show_covers(response.covers)
+        n = response.covers.length
+        set_status(ngettext('Found {} cover, searching for more…', 'Found {} covers, searching for more…', n).format(n) if n else
+                   _('Searching for covers online, this can take up to a minute…'), True)
+
+    def on_keep_alive(end_type, xhr, ev):
+        state.xhr = None
+        if end_type is not 'load' and end_type is not 'abort':
+            print('Failed to keep cover download on the server:', xhr.error_html)
+
+    def watch_for_close():
+        # The server keeps the covers until told they are no longer needed,
+        # which must also happen when the dialog is closed by navigating away.
+        # It forgets covers that are not asked for, so ask for them
+        # occasionally, while the user is choosing.
+        state.timer = None
+        if metadata_download_is_active(state) and not state.cover_xhr:
+            state.idle_checks = (state.idle_checks or 0) + 1
+            if state.idle_checks % 30 is 0 and not state.xhr:
+                state.xhr = ajax_send(metadata_download_url('status', state.job_id, state.library_id), {}, on_keep_alive)
+            state.timer = window.setTimeout(watch_for_close, 2000)
+
+    def on_finished(response):
+        state.finished = True
+        watch_for_close()
+        show_covers(response.covers)
+        n = response.covers.length
+        set_status(ngettext('Found {} cover', 'Found {} covers', n).format(n) if n else _('No covers were found.'), False)
+        clear(log)
+        log.appendChild(E.details(class_='metadata-download-log', E('summary', _('Show log')), E.pre(response.log or '')))
+
+    def on_failure(msg, details):
+        # The server no longer has the covers, but the current cover can
+        # still be kept
+        for key in Object.keys(tiles):
+            if key is not 'current':
+                grid.removeChild(tiles[key])
+                v'delete tiles[key]'
+        select('current', grid.contains(document.activeElement))
+        set_status(_('Downloading covers failed.') + ' ' + msg, False)
+        if details:
+            clear(log)
+            log.appendChild(E.details(class_='metadata-download-log', E('summary', _('Show details')), E.pre(details)))
+
+    def accept():
+        if selected is 'current':
+            on_accept(None)
+            return
+        if not metadata_download_is_active(state) or state.cover_xhr:
+            return  # already getting the cover
+        # Stop asking for more covers, the user has chosen one
+        if state.timer is not None:
+            window.clearTimeout(state.timer)
+            state.timer = None
+
+        def failed(msg, details):
+            state.cover_xhr = None
+            set_status(msg, False)
+            error_dialog(_('Failed to get cover'), msg, details)
+            if state.finished:
+                watch_for_close()
+            else:
+                wait_for_metadata_download(state)
+
+        def on_cover(end_type, xhr, ev):
+            if not metadata_download_is_active(state):
+                return
+            if end_type is not 'load':
+                failed(_('Could not get the chosen cover from the server.'), xhr.error_html)
+                return
+            reader = FileReader()
+            reader.onload = def (evt):
+                if metadata_download_is_active(state):
+                    on_accept(evt.target.result)
+            reader.onerror = def (evt):
+                failed(_('Could not read the chosen cover.'), str(reader.error))
+            reader.readAsDataURL(xhr.response)
+
+        set_status(_('Getting the chosen cover…'), True)
+        state.cover_xhr = ajax(f'metadata-download/cover/{state.job_id}/{selected}/{encodeURIComponent(state.library_id)}', on_cover)
+        state.cover_xhr.responseType = 'blob'
+        state.cover_xhr.send()
+
+    add_tile('current', current_cover_url(book_id), _('Current cover'), '')
+    buttons = []
+    if on_back:
+        buttons.push(create_button(_('Back'), icon='arrow-left', action=on_back))
+    buttons.push(create_button(_('Cancel'), icon='close', action=on_close.bind(None, container_id)))
+    buttons.push(create_button(_('OK'), icon='check', action=accept, highlight=True))
+    set_download_buttons(d, *buttons)
+    set_status(_('Searching for covers online, this can take up to a minute…'), True)
+    select('current', True)
+    state.on_progress = on_progress
+    state.on_finished = on_finished
+    state.on_failure = on_failure
+    start_download_job(state, 'start-covers', query)
+
+# }}}
+
+
 def show_book(container_id, book_id):
     container = document.getElementById(container_id)
     mi = book_metadata(book_id)
@@ -1390,11 +2125,15 @@ def show_book(container_id, book_id):
         return
     clear(div)
     cq = get_current_query()
+    download_link = E.div(E.a(
+        svgicon('cloud-download'), '\xa0', _('Download metadata from the internet'),
+        href='javascript:void(0)', onclick=begin_metadata_download.bind(None, container_id, book_id), class_='blue-link'))
     if has_changes:
         div.appendChild(E.div(
             style='margin: 1ex 1rem',
             E.div(_('You have unsaved changes.')),
             E.div(_('Use Save/Cancel below to apply or discard them.')),
+            download_link,
         ))
     else:
         div.appendChild(E.div(
@@ -1405,6 +2144,7 @@ def show_book(container_id, book_id):
                     href='javascript:void(0)', onclick=show_select_panel, class_='blue-link'),
                 style='display:' + ('none' if cq.from_read_book else 'block'),
             ),
+            download_link,
         ))
     div.appendChild(E.table(class_='metadata'))
     render_metadata(mi, div.lastChild, container_id, book_id)
@@ -1437,6 +2177,7 @@ def is_edit_panel_showing(container):
 
 
 def close_edit_panel(container):
+    stop_metadata_download()
     d = container.querySelector('div[data-ctype="edit"]')
     d.style.display = 'none'
     container.dataset.modal = ''

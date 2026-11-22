@@ -6,6 +6,8 @@
 
 #include <ostream>
 #include <iostream>
+#include <thread>
+#include <atomic>
 
 using namespace std;
 using namespace PoDoFo;
@@ -230,6 +232,62 @@ end
     REQUIRE(map.GetCharMap().IsTrivialIdentity());
 }
 
+TEST_CASE("TestCMapShiftedRangeNotIdentity")
+{
+    // A single contiguous range that maps its codes to
+    // shifted code points must not be taken as an identity
+    string_view cmap =
+        "1 begincodespacerange\n"
+        "<0000> <FFFF>\n"
+        "endcodespacerange\n"
+        "1 beginbfrange\n"
+        "<0001> <00FF> <0041>\n"
+        "endbfrange\n"sv;
+
+    SpanStreamDevice device(cmap);
+    REQUIRE(!PdfCMapEncoding::Parse(device).GetCharMap().IsTrivialIdentity());
+
+    PdfMemDocument doc;
+    auto& cmapObj = doc.GetObjects().CreateDictionaryObject();
+    cmapObj.GetOrCreateStream().SetData(cmap);
+    PdfEncoding encoding(PdfEncodingMapFactory::GetHorizontalIdentityEncodingInstancePtr(),
+        PdfEncodingMapFactory::ParseCMapEncoding(cmapObj));
+    REQUIRE(encoding.ConvertToUtf8(PdfString::FromRaw("\x00\x01\x00\x02"sv)) == "AB");
+}
+
+TEST_CASE("TestCMapMultiCodePointAtStringEnd")
+{
+    // The last code of the string maps to two code points: the lookup must
+    // leave the iterator before the code so that the fallback consumes it
+    string_view cmap =
+        "1 begincodespacerange\n"
+        "<00> <FF>\n"
+        "endcodespacerange\n"
+        "1 beginbfchar\n"
+        "<41> <00410042>\n"
+        "endbfchar\n"sv;
+
+    PdfMemDocument doc;
+    auto& cmapObj = doc.GetObjects().CreateDictionaryObject();
+    cmapObj.GetOrCreateStream().SetData(cmap);
+    PdfEncoding encoding(PdfEncodingMapFactory::ParseCMapEncoding(cmapObj));
+
+    vector<PdfCID> cids;
+    REQUIRE(!encoding.TryConvertToCIDs(PdfString::FromRaw("BA"sv), cids));
+    REQUIRE(cids.size() == 2);
+    REQUIRE(cids[0].Unit.Code == 0x42);
+    REQUIRE(cids[1].Unit.Code == 0x41);
+
+    auto str = PdfString::FromRaw("A"sv);
+    auto context = encoding.StartStringScan(str);
+    PdfCID cid;
+    string utf8str;
+    CodePointSpan codePoints;
+    REQUIRE(!context.TryScan(cid, utf8str, codePoints));
+    REQUIRE(cid.Unit.Code == 0x41);
+    REQUIRE(context.IsEndOfString());
+}
+
 void PdfEncodingTest::TestToUnicodeParse()
 {
     string_view toUnicode =
@@ -303,4 +361,29 @@ void outofRangeHelper(PdfEncoding& encoding)
     REQUIRE(encoding.GetCodePoint(encoding.GetFirstChar().Code - 1) == U'\0');
     (void)encoding.GetCodePoint(encoding.GetLastChar());
     REQUIRE(encoding.GetCodePoint(encoding.GetLastChar().Code + 1) == U'\0');
+}
+
+TEST_CASE("TestBuiltInEncodingConcurrentLookup")
+{
+    // The reverse table of a shared built-in encoding is filled by the first lookup
+    auto& encoding = PdfEncodingMapFactory::GetMacRomanEncodingInstance();
+    atomic<unsigned> failures(0);
+    vector<thread> threads;
+    for (unsigned i = 0; i < 4; i++)
+    {
+        threads.emplace_back([&]
+        {
+            for (char32_t cp = U'A'; cp <= U'Z'; cp++)
+            {
+                PdfCharCode code;
+                if (!encoding.TryGetCharCode(cp, code) || code.Code != cp)
+                    failures++;
+            }
+        });
+    }
+
+    for (auto& thread : threads)
+        thread.join();
+
+    REQUIRE(failures.load() == 0);
 }

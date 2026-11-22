@@ -111,6 +111,9 @@ PdfString::PdfString(PdfString&& rhs) noexcept
 
 PdfString& PdfString::operator=(const PdfString& rhs)
 {
+    if (&rhs == this)
+        return *this;
+
     this->~PdfString();
     if (rhs.m_dataAllocated)
     {
@@ -129,6 +132,9 @@ PdfString& PdfString::operator=(const PdfString& rhs)
 
 PdfString& PdfString::operator=(PdfString&& rhs) noexcept
 {
+    if (&rhs == this)
+        return *this;
+
     this->~PdfString();
     moveFrom(std::move(rhs));
     return *this;
@@ -309,7 +315,7 @@ bool PdfString::operator==(const PdfString& rhs) const
             if (this->m_data == rhs.m_data)
                 return true;
 
-            if (this->m_data->StringEvaluated != this->m_data->StringEvaluated)
+            if (this->m_data->StringEvaluated != rhs.m_data->StringEvaluated)
                 return false;
 
             return this->m_data->Chars == rhs.m_data->Chars;
@@ -367,10 +373,10 @@ bool PdfString::operator!=(const PdfString& rhs) const
     {
         if (rhs.m_dataAllocated)
         {
-            if (this->m_data != rhs.m_data)
-                return true;
+            if (this->m_data == rhs.m_data)
+                return false;
 
-            if (this->m_data->StringEvaluated != this->m_data->StringEvaluated)
+            if (this->m_data->StringEvaluated != rhs.m_data->StringEvaluated)
                 return true;
 
             return this->m_data->Chars != rhs.m_data->Chars;
@@ -490,8 +496,19 @@ void PdfString::ensureCharsEvaluated() const
         }
         case StringEncoding::utf8:
         {
-            // Remove BOM
-            m_data->Chars.substr(3).swap(m_data->Chars);
+            // Remove BOM and replace the invalid sequences, if any,
+            // as the evaluated string must be valid UTF-8
+            auto view = string_view(m_data->Chars).substr(3);
+            if (utf8::is_valid(view.begin(), view.end()))
+            {
+                m_data->Chars.erase(0, 3);
+            }
+            else
+            {
+                string utf8;
+                utf8::replace_invalid(view.begin(), view.end(), std::back_inserter(utf8));
+                utf8.swap(m_data->Chars);
+            }
             break;
         }
         case StringEncoding::PdfDocEncoding:

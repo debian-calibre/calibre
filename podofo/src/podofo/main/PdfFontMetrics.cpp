@@ -49,14 +49,13 @@ unique_ptr<const PdfFontMetrics> PdfFontMetrics::CreateFromFile(const string_vie
         PoDoFo::LogMessage(PdfLogSeverity::Error, "Error when loading the face from the file");
         return nullptr;
     }
-    auto ret = CreateFromFace(face.get(), std::make_unique<charbuff>(std::move(buffer)), refMetrics, skipNormalization);
+    auto ret = CreateFromFace(std::move(face), std::make_unique<charbuff>(std::move(buffer)), refMetrics, skipNormalization);
     if (ret != nullptr)
     {
         ret->m_FilePath = filepath;
         ret->m_FaceIndex = faceIndex;
     }
 
-    (void)face.release();
     return ret;
 }
 
@@ -76,11 +75,10 @@ unique_ptr<const PdfFontMetrics> PdfFontMetrics::CreateFromBuffer(const buffervi
         return nullptr;
     }
 
-    auto ret = CreateFromFace(face.get(), std::make_unique<charbuff>(std::move(buffer)), refMetrics, skipNormalization);
+    auto ret = CreateFromFace(std::move(face), std::make_unique<charbuff>(std::move(buffer)), refMetrics, skipNormalization);
     if (ret != nullptr)
         ret->m_FaceIndex = faceIndex;
 
-    (void)face.release();
     return ret;
 }
 
@@ -113,11 +111,11 @@ unique_ptr<const PdfFontMetrics> PdfFontMetrics::CreateMergedMetrics(bool skipNo
     return ret;
 }
 
-unique_ptr<PdfFontMetrics> PdfFontMetrics::CreateFromFace(FT_Face face, unique_ptr<charbuff>&& buffer,
+unique_ptr<PdfFontMetrics> PdfFontMetrics::CreateFromFace(FT::FT_FacePtr face, unique_ptr<charbuff>&& buffer,
     const PdfFontMetrics* refMetrics, bool skipNormalization)
 {
     PdfFontFileType fontType;
-    if (!FT::TryGetFontFileFormat(face, fontType))
+    if (!FT::TryGetFontFileFormat(face.get(), fontType))
         return nullptr;
 
 #ifdef PODOFO_ENABLE_AFDKO
@@ -141,7 +139,9 @@ unique_ptr<PdfFontMetrics> PdfFontMetrics::CreateFromFace(FT_Face face, unique_p
     (void)skipNormalization;
 #endif // PODOFO_ENABLE_AFDKO
 
-    return unique_ptr<PdfFontMetrics>(new PdfFontMetricsFreetype(face, datahandle(std::move(buffer)), refMetrics));
+    auto ret = unique_ptr<PdfFontMetrics>(new PdfFontMetricsFreetype(face.get(), datahandle(std::move(buffer)), refMetrics));
+    (void)face.release();
+    return ret;
 }
 
 unsigned PdfFontMetrics::GetGlyphCount() const
@@ -247,6 +247,12 @@ const PdfObject* PdfFontMetrics::GetFontFileObject() const
     return nullptr;
 }
 
+string_view PdfFontMetrics::GetFontFamilyNameSafe() const
+{
+    const_cast<PdfFontMetrics&>(*this).initFamilyFontNameSafe();
+    return m_FamilyFontNameSafe;
+}
+
 string_view PdfFontMetrics::GeFontFamilyNameSafe() const
 {
     const_cast<PdfFontMetrics&>(*this).initFamilyFontNameSafe();
@@ -289,10 +295,12 @@ PdfCIDToGIDMapConstPtr PdfFontMetrics::GetTrueTypeBuiltinCIDToGIDMap() const
     FT_ULong code;
     FT_UInt index;
 
+    // NOTE: A crafted cmap can make FreeType enumerate up to 2^32 codes
+    // in ascending order: stop at maximum Unicode code point
     if (FT_Select_Charmap(face, FT_ENCODING_MS_SYMBOL) == 0)
     {
         code = FT_Get_First_Char(face, &index);
-        while (index != 0)
+        while (index != 0 && code <= MAX_UNICODE_CP)
         {
             // "If the font contains a (3, 0) subtable, the range of character
             // codes shall be one of these: 0x0000 - 0x00FF,
@@ -317,7 +325,7 @@ PdfCIDToGIDMapConstPtr PdfFontMetrics::GetTrueTypeBuiltinCIDToGIDMap() const
         }
 
         code = FT_Get_First_Char(face, &index);
-        while (index != 0)
+        while (index != 0 && code <= MAX_UNICODE_CP)
         {
             map.insert({ (unsigned)code, index });
             code = FT_Get_Next_Char(face, code, &index);
@@ -826,8 +834,8 @@ PdfCIDToGIDMapConstPtr getIntrinsicCIDToGIDMapTrueType(FT_Face face, const PdfEn
     CIDToGIDMap map;
     const PdfName* name = nullptr;
     CodePointSpan codePoints;
-    unique_ptr<unordered_map<string_view, unsigned>> fontPostMap;
-    unordered_map<string_view, unsigned>::const_iterator found;
+    unique_ptr<PdfNameHashMap<unsigned>> fontPostMap;
+    PdfNameHashMap<unsigned>::const_iterator found;
     PdfCharCode charCode;
     FT_UInt index;
     auto& standardEncoding = PdfEncodingMapFactory::GetStandardEncodingInstance();
@@ -876,7 +884,7 @@ PdfCIDToGIDMapConstPtr getIntrinsicCIDToGIDMapTrueType(FT_Face face, const PdfEn
         // the glyph name shall be looked up in the font program’s "post" table
         // (if one is present) and the associated glyph description shall be used
         if (fontPostMap == nullptr)
-            fontPostMap.reset(new unordered_map<string_view, unsigned>(FT::GetPostMap(face)));
+            fontPostMap.reset(new PdfNameHashMap<unsigned>(FT::GetPostMap(face)));
 
         if ((found = fontPostMap->find(*name)) == fontPostMap->end())
             continue;

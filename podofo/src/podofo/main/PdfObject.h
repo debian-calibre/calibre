@@ -41,6 +41,7 @@ class PODOFO_API PdfObject
     friend class PdfTokenizer;
     PODOFO_PRIVATE_FRIEND(class PdfStreamedObjectStream);
     PODOFO_PRIVATE_FRIEND(class PdfObjectStreamParser);
+    PODOFO_PRIVATE_FRIEND(class PdfCompressedObject);
     PODOFO_PRIVATE_FRIEND(class PdfParser);
     PODOFO_PRIVATE_FRIEND(class PdfParserObject);
     PODOFO_PRIVATE_FRIEND(class PdfWriter);
@@ -270,9 +271,10 @@ public:
 
     /// Write the complete object to a file.
     /// @param stream write the object to this device
+    /// @param writeMode additional options for writing the object
     /// @param encrypt an encryption object which is used to encrypt this object
     ///                  or nullptr to not encrypt this object
-    /// @param writeMode additional options for writing the object
+    /// @param buffer a buffer to be used for formatting
     void Write(OutputStream& stream, PdfWriteFlags writeMode,
         const PdfStatefulEncrypt* encrypt, charbuff& buffer) const;
 
@@ -357,7 +359,7 @@ public:
 
     /// Get the document of this object.
     /// @return the owner (if it wasn't changed anywhere, creator) of this object
-    inline PdfDocument* GetDocument() const { return m_Document; }
+    PdfDocument* GetDocument() const;
 
     /// Get the document of this object.
     /// @return the owner (if it wasn't changed anywhere, creator) of this object
@@ -367,7 +369,7 @@ public:
     /// @returns a PdfReference pointing to this object.
     inline const PdfReference& GetIndirectReference() const { return m_IndirectReference; }
 
-    inline const PdfDataContainer* GetParent() const { return m_Parent; }
+    const PdfDataContainer* GetParent() const;
 
     /// Returns true if delayed loading is disabled, or if it is enabled
     /// and loading has completed. External callers should never need to
@@ -383,6 +385,11 @@ private:
     PdfObject(PdfVariant&& var, const PdfReference& indirectReference, bool isDirty);
 
     PdfObject(PdfArray* arr);
+
+    // To be called by PdfArray, which places the objects itself, sparing a SetParent() call
+    PdfObject(PdfDataContainer& parent, std::nullptr_t);
+    PdfObject(PdfDataContainer& parent, const PdfObject& rhs);
+    PdfObject(PdfDataContainer& parent, PdfObject&& rhs) noexcept;
 
 protected:
     /// Dynamically load the contents of this object from a PDF file by calling
@@ -431,6 +438,14 @@ protected:
     void SetDocument(PdfDocument* document);
 
     void SetVariantOwner();
+
+    /// Fix the back pointers to this object after the container that stores it
+    /// relocated it in memory. Unlike a move, a relocation preserves the
+    /// attachment to the container, which didn't move itself, so the stored
+    /// children need no visit: they stay attached to the inner container
+    /// @remarks Only containers and streams point back to their owner, so it
+    /// does nothing for plain values
+    void RelocateBackPointers();
 
     void FreeStream();
 
@@ -500,6 +515,8 @@ private:
 
     void moveFrom(PdfObject&& rhs) noexcept;
 
+    void setVariantOwnerIfNeeded();
+
     void ResetDirty();
 
     void setDirty();
@@ -515,20 +532,28 @@ private:
     // Shared initialization between all the ctors
     void initObject();
 
+    void initContainedObject();
+
 protected:
     PdfVariant m_Variant;
 
 private:
     PdfReference m_IndirectReference;
-    PdfDocument* m_Document;
-    PdfDataContainer* m_Parent;
+    // A contained object takes the document from its container,
+    // m_isContained tells which one of them is stored
+    union
+    {
+        PdfDataContainer* m_Parent;
+        PdfDocument* m_Document;
+    };
     std::unique_ptr<PdfObjectStream> m_Stream;
+    bool m_isContained;
     bool m_IsDirty; // Indicates if this object was modified after construction
-    bool m_IsImmutable;
-    mutable bool m_IsDelayedLoadDone;
-    mutable bool m_IsDelayedLoadStreamDone;
     // Tracks whether deferred loading is still pending (in which case it'll be
     // false). If true, deferred loading is not required or has been completed.
+    mutable bool m_IsDelayedLoadDone;
+    mutable bool m_IsDelayedLoadStreamDone;
+    bool m_IsImmutable;
 };
 
     /// Templatized object type getter helper

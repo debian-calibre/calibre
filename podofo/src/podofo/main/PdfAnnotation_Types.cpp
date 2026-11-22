@@ -19,9 +19,12 @@ void PdfAnnotationLink::SetDestination(nullable<const PdfDestination&> destinati
     }
     else
     {
-        m_Destination = unique_ptr<PdfDestination>(new PdfDestination(*destination));
-        ResetAction();
+        // NOTE: The dictionary is updated first, as destination may be
+        // the cached instance. The cache is then rebuilt from the stored
+        // /Dest on access, as the caller's object is not the stored one
         destination->AddToDictionary(GetDictionary());
+        ResetAction();
+        m_Destination = { };
     }
 }
 
@@ -37,13 +40,18 @@ nullable<const PdfDestination&> PdfAnnotationLink::GetDestination() const
 
 nullable<PdfDestination&> PdfAnnotationLink::getDestination()
 {
-    if (m_Destination == nullptr)
+    // NOTE: /Dest is resolved on every access: a name tree insertion can relocate
+    // the destination array, and a setter writing an aliased /Dests entry can retype it
+    PdfObject* destObj;
+    auto obj = GetDictionary().FindKey("Dest");
+    if (obj == nullptr || (destObj = PdfDestination::FindDestinationObject(GetDocument(), *obj)) == nullptr)
     {
-        auto obj = GetDictionary().FindKey("Dest");
-        if (obj == nullptr)
-            m_Destination *= nullptr;
-        else
-            m_Destination = unique_ptr<PdfDestination>(new PdfDestination(*obj));
+        m_Destination *= nullptr;
+    }
+    else if (!m_Destination.has_value() || *m_Destination == nullptr
+        || &(*m_Destination)->GetObject() != destObj)
+    {
+        m_Destination = unique_ptr<PdfDestination>(new PdfDestination(*destObj));
     }
 
     if (*m_Destination == nullptr)

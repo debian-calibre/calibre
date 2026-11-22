@@ -344,6 +344,8 @@ class PreviewBridge(Bridge):
     live_css_data = from_js(object)
 
     go_to_sourceline_address = to_js()
+    highlight_paragraph = to_js()
+    clear_paragraph_highlight = to_js()
     go_to_anchor = to_js()
     set_split_mode = to_js()
     live_css = to_js()
@@ -390,6 +392,14 @@ class WebPage(QWebEnginePage):
             tags = [x.lower() for x in tags]
             self.bridge.go_to_sourceline_address.emit(lnum, tags, tprefs['preview_sync_context'])
 
+    def highlight_paragraph(self, sourceline: int, tags: list[str], text: str) -> None:
+        if self.bridge.ready:
+            self.bridge.highlight_paragraph.emit(sourceline, [x.lower() for x in tags], text, tprefs['preview_sync_context'])
+
+    def clear_paragraph_highlight(self) -> None:
+        if self.bridge.ready:
+            self.bridge.clear_paragraph_highlight.emit()
+
     def split_mode(self, enabled) -> None:
         if self.bridge.ready:
             self.bridge.set_split_mode.emit(1 if enabled else 0)
@@ -415,6 +425,7 @@ class Inspector(QWidget):
             view_page = self.view.page()
             assert view_page is not None
             setup_profile(view_page.profile())
+            view_page.windowCloseRequested.connect(self.close_requested)
             view_to_debug = self.view_to_debug
             assert view_to_debug is not None
             vtd_page = view_to_debug.page()
@@ -423,6 +434,12 @@ class Inspector(QWidget):
             h = self.layout()
             assert h is not None
             h.addWidget(self.view)
+
+    def close_requested(self) -> None:
+        # The close button in the DevTools toolbar requests the window be closed
+        ac = actions['inspector-dock']
+        if ac.isChecked():
+            ac.trigger()
 
     def sizeHint(self):
         return QSize(1280, 600)
@@ -574,6 +591,16 @@ class Preview(QWidget):
         self.view._page.loadFinished.connect(self.load_finished)
         self.view._page.loadStarted.connect(self.load_started)
         self.pending_go_to_anchor = None
+        self.pending_highlight: tuple[str, int, list[str], str] | None = None
+        self.highlight_retry_count = 0
+        # Whether a paragraph is highlighted in the currently loaded page
+        self.highlight_shown = False
+        # The last request to sync to the cursor position in the editor and
+        # the one made when the pending or shown highlight was requested
+        self.last_sync_request: tuple[str, object] | None = None
+        self.sync_request_at_highlight: tuple[str, object] | None = None
+        # Messages sent to the javascript while a page is loading are lost
+        self.page_loading = False
         self.inspector = self.view.inspector
         self.stack.addWidget(self.view)
         self.cover = c = QLabel(_('Loading preview, please wait...'))
@@ -685,6 +712,15 @@ class Preview(QWidget):
         return self.view._page.bridge.ready
 
     def sync_to_editor(self, name, sourceline_address) -> None:
+        self.last_sync_request = (name, sourceline_address)
+        if self.pending_highlight is not None or self.highlight_shown:
+            if self.last_sync_request == self.sync_request_at_highlight:
+                # The cursor has not moved since the highlight was requested,
+                # for instance, this is a sync made once syntax highlighting
+                # finishes, so keep showing the highlighted paragraph
+                return
+            # The user has moved on, so the highlight would be unexpected
+            self.clear_paragraph_highlight()
         self.current_sync_request = (name, sourceline_address)
         self.current_sync_retry_count = 0
         QTimer.singleShot(100, self._sync_to_editor)
@@ -699,6 +735,48 @@ class Preview(QWidget):
         self.current_sync_request = None
         self.current_sync_retry_count = 0
         self.view._page.go_to_sourceline_address(sourceline_address)
+
+    def highlight_paragraph(self, name: str, sourceline_address: tuple[int | None, list[str] | None], text: str) -> None:
+        """Scroll to the paragraph with the specified text and highlight it.
+        The paragraph is found from the sourceline address of the innermost
+        element containing its start. The highlight stays until
+        clear_paragraph_highlight() is called, the cursor in the editor is
+        moved to a different element or the preview is reloaded."""
+        sourceline, tags = sourceline_address
+        if sourceline is None or tags is None or not text or not self.is_visible or actions['split-in-preview'].isChecked():
+            return
+        # Showing the paragraph replaces syncing to the cursor position, which
+        # would scroll the preview to a different place
+        self.current_sync_request = None
+        self.sync_request_at_highlight = self.last_sync_request
+        self.pending_highlight = name, sourceline, tags, text
+        self.highlight_retry_count = 0
+        QTimer.singleShot(100, self._highlight_paragraph)
+
+    def _highlight_paragraph(self) -> None:
+        if self.pending_highlight is None:
+            return
+        name, sourceline, tags, text = self.pending_highlight
+        if self.refresh_timer.isActive() or self.page_loading or not self.bridge_ready or name != self.current_name:
+            # Give up after 30 seconds, as the highlight would then be unexpected
+            self.highlight_retry_count += 1
+            if self.highlight_retry_count >= 300:
+                self.pending_highlight = None
+            else:
+                QTimer.singleShot(100, self._highlight_paragraph)
+            return
+        self.pending_highlight = None
+        self.highlight_shown = True
+        self.view._page.highlight_paragraph(sourceline, tags, text)
+
+    def clear_paragraph_highlight(self) -> None:
+        """Remove the paragraph highlight, and cancel any pending one"""
+        self.pending_highlight = None
+        if self.highlight_shown:
+            self.highlight_shown = False
+            # A page that is loading has no highlight
+            if not self.page_loading:
+                self.view._page.clear_paragraph_highlight()
 
     def report_worker_launch_error(self) -> None:
         if parse_worker.launch_error is not None:
@@ -725,6 +803,9 @@ class Preview(QWidget):
             self.current_name = name
             self.report_worker_launch_error()
             parse_worker.add_request(name)
+            # loadStarted is emitted asynchronously, so mark the page as
+            # loading now, so that no messages are sent to the old page
+            self.page_loading = True
             self.view.set_url(self.name_to_qurl())
             return True
 
@@ -738,6 +819,9 @@ class Preview(QWidget):
             # Tell webkit to reload all html and associated resources
             current_url = self.name_to_qurl()
             self.refresh_starting.emit()
+            # loadStarted is emitted asynchronously, so mark the page as
+            # loading now, so that no messages are sent to the old page
+            self.page_loading = True
             if current_url != self.view.url():
                 # The container was changed
                 self.view.set_url(current_url)
@@ -805,18 +889,23 @@ class Preview(QWidget):
             self.view._page.split_mode(False)
 
     def do_start_split(self) -> None:
+        self.clear_paragraph_highlight()
         self.view._page.split_mode(True)
 
     def stop_split(self) -> None:
         actions['split-in-preview'].setChecked(False)
 
     def load_started(self) -> None:
+        self.page_loading = True
+        # Loading a page removes the highlight from the previous one
+        self.highlight_shown = False
         self.stack.setCurrentIndex(self.stack.indexOf(self.cover))
 
     def on_bridge_ready(self) -> None:
         self.stack.setCurrentIndex(self.stack.indexOf(self.view))
 
     def load_finished(self, ok) -> None:
+        self.page_loading = False
         self.stack.setCurrentIndex(self.stack.indexOf(self.view))
         if self.pending_go_to_anchor:
             self.view._page.go_to_anchor(self.pending_go_to_anchor)

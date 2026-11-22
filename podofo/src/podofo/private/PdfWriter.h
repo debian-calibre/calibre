@@ -8,7 +8,7 @@
 #include <podofo/auxiliary/InputDevice.h>
 #include <podofo/auxiliary/OutputDevice.h>
 #include <podofo/main/PdfIndirectObjectList.h>
-#include <podofo/main/PdfEncryptSession.h>
+#include "PdfEncryptSession.h"
 
 namespace PoDoFo {
 
@@ -40,12 +40,6 @@ public:
     /// @param device write to this output device
     void Write(OutputStreamDevice& device);
 
-    /// Create a XRef stream which is in some case
-    /// more compact but requires at least PDF 1.5
-    /// Default is false.
-    /// @param useXRefStream if true a XRef stream object will be created
-    void SetUseXRefStream(bool useXRefStream);
-
     /// Set the written document to be encrypted using a PdfEncrypt object
     ///
     /// @param encrypt an encryption object which is used to encrypt the written PDF file
@@ -57,6 +51,11 @@ public:
     /// @param onlySizeKey write only the size key
     void FillTrailerObject(PdfObject& trailer, size_t size, bool onlySizeKey) const;
 
+    /// Determine the XRef layout that will be used on writing
+    /// @param opts the save options in effect
+    /// @param useXRefStreamHint the layout of the parsed document, if any
+    static bool ShouldUseXRefStream(PdfSaveOptions opts, bool useXRefStreamHint);
+
 public:
     void SetSaveOptions(PdfSaveOptions saveOptions);
 
@@ -66,21 +65,26 @@ public:
     /// @returns the write mode
     inline PdfWriteFlags GetWriteFlags() const { return m_WriteFlags; }
 
-    /// Set the PDF Version of the document. Has to be called before Write() to
-    /// have an effect.
-    /// @param version  version of the pdf document
-    inline void SetPdfVersion(PdfVersion version) { m_Version = version; }
+    /// Set the PDF version of the document
+    /// @param version version of the pdf document
+    /// @remarks It's a hint: writing an XRef stream requires at least PDF 1.5
+    inline void SetPdfVersionHint(PdfVersion version) { m_VersionHint = version; }
 
-    /// Get the PDF version of the document
-    /// @returns PdfVersion version of the pdf document
-    inline PdfVersion GetPdfVersion() const { return m_Version; }
+    /// @returns the PDF version of the document, as previously set
+    inline PdfVersion GetPdfVersionHint() const { return m_VersionHint; }
+
+    /// Write a XRef stream
+    /// @param useXRefStream if true a XRef stream object will be tentatively created
+    /// @remarks It's a hint: PdfSaveOptions::ForceXRefTable or
+    /// PdfSaveOptions::ForceXRefStream take precedence over it
+    inline void SetUseXRefStreamHint(bool useXRefStream) { m_UseXRefStreamHint = useXRefStream; }
+
+    /// @returns whether an XRef stream is requested, as previously set
+    inline bool GetUseXRefStreamHint() const { return m_UseXRefStreamHint; }
 
     void SetPdfALevel(PdfALevel level);
 
     inline PdfALevel GetPdfALevel() const { return m_PdfALevel; }
-
-    /// @returns whether an XRef stream is used or not
-    inline bool GetUseXRefStream() const { return m_UseXRefStream; }
 
     /// Sets an offset to the previous XRef table. Set it to lower than
     /// or equal to 0, to not write a reference to the previous XRef table.
@@ -114,6 +118,12 @@ protected:
     /// Create a PdfWriter from a PdfIndirectObjectList
     PdfWriter(PdfIndirectObjectList& objects);
 
+    /// Determine the version and the XRef layout to actually write,
+    /// from the supplied hints and the save options
+    /// @remarks It's called at the beginning of Write(). Writers that
+    /// don't go through it must call it before writing anything
+    void InitWriteState();
+
     /// Writes the pdf header to the current file.
     /// @param device write to this output device
     void WritePdfHeader(OutputStreamDevice& device);
@@ -141,8 +151,17 @@ protected:
     void SetIdentifier(const PdfString& identifier) { m_identifier = identifier; }
     void SetEncryptObj(PdfObject& obj);
 
+    /// @returns the PDF version that is actually written
+    /// @remarks Meaningful only after InitWriteState()
+    inline PdfVersion GetPdfVersion() const { return m_Version; }
+
+    /// @returns whether an XRef stream is actually written or not
+    /// @remarks Meaningful only after InitWriteState()
+    inline bool GetUseXRefStream() const { return m_UseXRefStream; }
+
 private:
     void initWriteFlags();
+    PdfObject* getExistingEncryptObject();
 
 protected:
     charbuff m_buffer;
@@ -151,10 +170,12 @@ private:
     PdfIndirectObjectList* m_Objects;
     const PdfObject* m_Trailer;
     size_t m_MagicOffset;
-    PdfVersion m_Version;
+    PdfVersion m_VersionHint;
     PdfALevel m_PdfALevel;
+    bool m_UseXRefStreamHint;
 
-    bool m_UseXRefStream;
+    PdfVersion m_Version;                     // The version actually written
+    bool m_UseXRefStream;                     // The XRef layout actually written
 
     PdfEncryptSession* m_Encrypt;             // If not nullptr encrypt all strings and streams and
                                               // create an encryption dictionary in the trailer

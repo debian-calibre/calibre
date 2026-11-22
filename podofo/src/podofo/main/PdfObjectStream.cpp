@@ -73,6 +73,7 @@ void PdfObjectStream::CopyToSafe(charbuff& buffer) const
 
 void PdfObjectStream::CopyTo(OutputStream& stream, bool raw) const
 {
+    ensureClosed();
     PdfFilterList mediaFilters;
     vector<const PdfDictionary*> decodeParms;
     auto inputStream = const_cast<PdfObjectStream&>(*this).getInputStream(raw, mediaFilters, decodeParms);
@@ -85,6 +86,7 @@ void PdfObjectStream::CopyTo(OutputStream& stream, bool raw) const
 
 void PdfObjectStream::CopyToSafe(OutputStream& stream) const
 {
+    ensureClosed();
     PdfFilterList mediaFilters;
     vector<const PdfDictionary*> decodeParms;
     auto inputStream = const_cast<PdfObjectStream&>(*this).getInputStream(false, mediaFilters, decodeParms);
@@ -261,20 +263,23 @@ void PdfObjectStream::CopyFrom(const PdfObjectStream& rhs)
         this->SetData(stream, rhs.m_Filters, true);
     }
 
-    // Copy the /Filter and /DecodeParms keys
+    // Copy the /Filter and /DecodeParms keys. NOTE: Copy the resolved
+    // values only, not the objects: a hostile file can make them resolve
+    // to a stream object, even to this one, and copying its stream would
+    // re-enter this method without bound
     auto& lhsDict = m_Parent->GetDictionaryUnsafe();
     auto& rhsDict = rhs.m_Parent->GetDictionaryUnsafe();
     auto filter = rhsDict.FindKey("Filter");
     if (filter == nullptr)
         lhsDict.RemoveKeyNoDirtySet("Filter");
     else
-        lhsDict.AddKeyNoDirtySet("Filter"_n, PdfObject(*filter));
+        lhsDict.AddKeyNoDirtySet("Filter"_n, PdfVariant(filter->GetVariant()));
 
     auto decodeParms = rhsDict.FindKey("DecodeParms");
     if (decodeParms == nullptr)
         lhsDict.RemoveKeyNoDirtySet("DecodeParms");
     else
-        lhsDict.AddKeyNoDirtySet("DecodeParms"_n, PdfObject(*decodeParms));
+        lhsDict.AddKeyNoDirtySet("DecodeParms"_n, PdfVariant(decodeParms->GetVariant()));
 }
 
 void PdfObjectStream::SetData(const bufferview& buffer, bool raw)
@@ -330,7 +335,15 @@ unique_ptr<InputStream> PdfObjectStream::getInputStream(bool raw, PdfFilterList&
             }
             else if (decodeParmsObj->TryGetArray(decodeParmsArr))
             {
-                for (unsigned i = 0; i < decodeParmsArr->GetSize(); i++)
+                unsigned count = decodeParmsArr->GetSize();
+                if (count != decodeParms.size())
+                {
+                    PoDoFo::LogMessage(PdfLogSeverity::Warning, "/DecodeParms array size {} doesn't match /Filter size {}",
+                        count, decodeParms.size());
+                    count = std::min(count, (unsigned)decodeParms.size());
+                }
+
+                for (unsigned i = 0; i < count; i++)
                 {
                     auto decodeParmsEntry = decodeParmsArr->FindAt(i);
                     if (decodeParmsEntry == nullptr || !decodeParmsEntry->TryGetDictionary(decodeParmsDict))
@@ -404,6 +417,8 @@ PdfObjectInputStream::~PdfObjectInputStream()
 PdfObjectInputStream::PdfObjectInputStream(PdfObjectInputStream&& rhs) noexcept
 {
     utls::move(rhs.m_stream, m_stream);
+    m_input = std::move(rhs.m_input);
+    utls::move(rhs.m_MediaFilters, m_MediaFilters);
     utls::move(rhs.m_MediaDecodeParms, m_MediaDecodeParms);
 }
 
@@ -426,7 +441,17 @@ bool PdfObjectInputStream::readChar(char& ch)
 
 PdfObjectInputStream& PdfObjectInputStream::operator=(PdfObjectInputStream&& rhs) noexcept
 {
+    if (&rhs == this)
+        return *this;
+
+    // Unlock the stream currently wrapped, if any
+    if (m_stream != nullptr)
+        m_stream->m_locked = false;
+
     utls::move(rhs.m_stream, m_stream);
+    m_input = std::move(rhs.m_input);
+    utls::move(rhs.m_MediaFilters, m_MediaFilters);
+    utls::move(rhs.m_MediaDecodeParms, m_MediaDecodeParms);
     return *this;
 }
 
@@ -435,23 +460,13 @@ PdfObjectOutputStream::PdfObjectOutputStream()
 
 PdfObjectOutputStream::~PdfObjectOutputStream()
 {
-    // NOTE: Dispose the actual output stream now, so
-    // all data can be flushed before ending appending
-    m_output = nullptr;
-    if (m_stream != nullptr)
-    {
-        // Unlock the stream
-        m_stream->m_locked = false;
-
-        auto document = m_stream->GetParent().GetDocument();
-        if (document != nullptr)
-            document->GetObjects().EndAppendStream(*m_stream);
-    }
+    release();
 }
 
 PdfObjectOutputStream::PdfObjectOutputStream(PdfObjectOutputStream&& rhs) noexcept
 {
     utls::move(rhs.m_stream, m_stream);
+    m_output = std::move(rhs.m_output);
 }
 
 PdfObjectOutputStream::PdfObjectOutputStream(PdfObjectStream& stream,
@@ -475,8 +490,6 @@ PdfObjectOutputStream::PdfObjectOutputStream(PdfObjectStream& stream,
     charbuff buffer;
     if (append)
         stream.CopyTo(buffer);
-
-    m_stream->m_locked = true;
 
     if (filters_.has_value())
     {
@@ -538,6 +551,9 @@ PdfObjectOutputStream::PdfObjectOutputStream(PdfObjectStream& stream,
         // Unconditionally set the object as dirty on the stream creation
         stream.GetParent().SetDirty();
     }
+
+    // Lock last, as the destructor that unlocks won't run on a failure above
+    m_stream->m_locked = true;
 }
 
 void PdfObjectOutputStream::writeBuffer(const char* buffer, size_t size)
@@ -552,9 +568,47 @@ void PdfObjectOutputStream::flush()
 
 PdfObjectOutputStream& PdfObjectOutputStream::operator=(PdfObjectOutputStream&& rhs) noexcept
 {
+    if (&rhs == this)
+        return *this;
+
+    // Finish the stream currently wrapped, if any
+    release();
     utls::move(rhs.m_stream, m_stream);
     m_output = std::move(rhs.m_output);
     return *this;
+}
+
+void PdfObjectOutputStream::release()
+{
+    // NOTE: Dispose the actual output stream now, so
+    // all data can be flushed before ending appending
+    m_output = nullptr;
+    if (m_stream != nullptr)
+    {
+        // Unlock the stream
+        m_stream->m_locked = false;
+
+        auto document = m_stream->GetParent().GetDocument();
+        if (document != nullptr)
+        {
+            // NOTE: The destructor and the move assignment can't throw:
+            // a failure leaves the stream truncated
+            try
+            {
+                document->GetObjects().EndAppendStream(*m_stream);
+            }
+            catch (const std::exception& e)
+            {
+                PoDoFo::LogMessage(PdfLogSeverity::Error, "Error while ending the stream append: {}", e.what());
+            }
+            catch (...)
+            {
+                PoDoFo::LogMessage(PdfLogSeverity::Error, "Unknown error while ending the stream append");
+            }
+        }
+
+        m_stream = nullptr;
+    }
 }
 
 PdfObjectStreamProvider::~PdfObjectStreamProvider() { }

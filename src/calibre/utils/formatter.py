@@ -1255,7 +1255,7 @@ class _Interpreter:
         res = cls.eval_(self.parent, self.parent_kwargs, self.parent_book, self.locals, *args)
         if self.break_reporter:
             self.break_reporter(prog.node_name, res, prog.line_number)  # ty: ignore[invalid-argument-type]
-        return res  # ty: ignore[invalid-return-type]
+        return res  # ty: ignore[invalid-explicit-return]
 
     def do_node_stored_template_call(self, prog: StoredTemplateCallNode, args: Sequence[str] | None = None) -> str:
         if self.break_reporter:
@@ -1389,7 +1389,7 @@ class _Interpreter:
                 return res
             if res is not None:
                 if isinstance(res, list):
-                    fm = self.parent_book.metadata_for_field(name)  # ty: ignore[unresolved-attribute]
+                    fm = self.parent_book.metadata_for_field(name)  # ty: ignore[missing-union-attribute]
                     if fm is None:
                         res = ', '.join(res)
                     else:
@@ -2200,7 +2200,7 @@ class EvalFormatter(TemplateFormatter):
         if key == '':
             return ''
         key = str(key).lower()
-        return kwargs.get(key, _('No such variable {0}').format(key))  # ty: ignore[invalid-return-type]
+        return kwargs.get(key, _('No such variable {0}').format(key))  # ty: ignore[invalid-explicit-return]
 
 
 # DEPRECATED. This is not thread safe. Do not use.

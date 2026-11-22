@@ -3,14 +3,18 @@
 from __python__ import hash_literals
 
 from elementmaker import E
+from gettext import gettext as _
 
 from dom import unique_id
+from modals import close_all_modals, create_modal_container
 from read_book.bookmarks import create_bookmarks_list
 from read_book.globals import ui_operations
-from read_book.goto import create_page_list_overlay
+from read_book.goto import create_location_overlay, create_page_list_overlay
+from read_book.overlay import EndOfBook
+from read_book.prefs.head_foot import format_pos
 from read_book.profiles import got_all_profiles
 from test_book_list_helpers import with_empty_session
-from testing import assert_equal, test
+from testing import assert_equal, assert_true, test
 
 
 @test
@@ -69,3 +73,281 @@ def viewer_panel_primary_actions_open_bookmarks_profiles_and_page_destinations()
             parent.remove()
 
     with_empty_session(run)
+
+
+@test
+def end_of_book_rating_stars_are_named_toggle_buttons():
+    def run(sd):
+        container = E.div(id=unique_id())
+        document.body.appendChild(container)
+        overlay = {'view': {'book': {'key': ['library', 1], 'metadata': {'title': 'Title', 'rating': 6}}}}
+        eob = EndOfBook(overlay)
+        assert_true(eob.can_rate)
+        # Do not contact the server
+        eob.refresh_request = {'abort': def (): pass;}
+        ratings = []
+        eob.set_rating = def (rating):
+            ratings.push(rating)
+        eob.update_cached_metadata = def (mi):
+            eob.rating = mi.rating
+
+        def pressed():
+            return [b.getAttribute('aria-pressed') for b in buttons]
+
+        def current_rating():
+            return document.getElementById(group.getAttribute('aria-describedby')).textContent
+
+        try:
+            eob.show(container)
+            group = container.querySelector('.end-of-book-rating')
+            assert_equal(group.getAttribute('role'), 'group')
+            assert_equal(document.getElementById(group.getAttribute('aria-labelledby')).textContent, 'Rate this book:')
+            buttons = group.querySelectorAll('button')
+            assert_equal(buttons.length, 5)
+            for b in buttons:
+                assert_equal(b.type, 'button')
+            assert_equal(buttons[0].getAttribute('aria-label'), 'Rate this book 1 star')
+            assert_equal(buttons[4].getAttribute('aria-label'), 'Rate this book 5 stars')
+            assert_equal(pressed(), ['false', 'false', 'true', 'false', 'false'])
+            assert_equal(current_rating(), 'Current rating: 3 stars')
+
+            # Activating a star with the keyboard gives a whole star rating,
+            # and activating the current rating clears it
+            buttons[3].click()
+            buttons[2].click()
+            assert_equal(ratings, [8, 0])
+
+            # A half star rating has no star of its own, so only the
+            # description says what it is
+            eob.rating = 5
+            eob.update_stars()
+            assert_equal(pressed(), ['false', 'false', 'false', 'false', 'false'])
+            assert_equal(current_rating(), 'Current rating: 2.5 stars')
+
+            # The result of saving is announced to screen readers
+            status = container.querySelector('.end-of-book-status')
+            assert_equal(status.getAttribute('role'), 'status')
+            eob.rating_saved('load', {'responseText': JSON.stringify({'1': {'rating': 8}})})
+            assert_equal(status.textContent, 'Rating saved')
+            assert_equal(pressed(), ['false', 'false', 'false', 'true', 'false'])
+            assert_equal(current_rating(), 'Current rating: 4 stars')
+            eob.rating_saved('load', {'responseText': JSON.stringify({'1': {'rating': 0}})})
+            assert_equal(status.textContent, 'Rating removed')
+            assert_equal(pressed(), ['false', 'false', 'false', 'false', 'false'])
+            assert_equal(current_rating(), 'Not rated')
+        finally:
+            container.remove()
+
+    with_empty_session(run)
+
+
+@test
+def end_of_book_rating_half_stars_with_the_keyboard():
+    def press(button, key, kw):
+        ev = new window.KeyboardEvent('keydown', Object.assign({'key': key, 'bubbles': True, 'cancelable': True}, kw))
+        button.dispatchEvent(ev)
+        return ev
+
+    def run(sd):
+        for allow_half_stars in [True, False]:
+            container = E.div(id=unique_id())
+            document.body.appendChild(container)
+            overlay = {'view': {'book': {'key': ['library', 1], 'metadata': {'title': 'Title', 'rating': 6}}}}
+            eob = EndOfBook(overlay)
+            eob.allow_half_stars = allow_half_stars
+            # Do not contact the server
+            eob.refresh_request = {'abort': def (): pass;}
+            ratings = []
+            eob.set_rating = def (rating):
+                ratings.push(rating)
+            try:
+                eob.show(container)
+                buttons = container.querySelectorAll('.end-of-book-rating > button')
+                star3 = buttons[2]
+                assert_equal(star3.getAttribute('aria-label'), 'Rate this book 3 stars')
+                ev = press(star3, 'Enter', {'shiftKey': True})
+                if allow_half_stars:
+                    # The tooltip says how to give half a star, the name stays short
+                    assert_equal(star3.title, 'Rate this book 3 stars\nClick the left half of the star or press Shift+Enter for 2.5 stars')
+                    assert_true(ev.defaultPrevented)
+                    press(star3, ' ', {'shiftKey': True})
+                    press(buttons[0], 'Enter', {'shiftKey': True})
+                    # Choosing the current rating clears it
+                    press(buttons[3], 'Enter', {'shiftKey': True})
+                    eob.rating = 7
+                    press(buttons[3], 'Enter', {'shiftKey': True})
+                    assert_equal(ratings, [5, 5, 1, 7, 0])
+                    # Held keys, other modifiers and other keys are left alone
+                    ratings.length = 0
+                    for key, kw in [
+                        ['Enter', {'shiftKey': True, 'repeat': True}],
+                        ['Enter', {'shiftKey': True, 'ctrlKey': True}],
+                        ['Enter', {}],
+                        ['a', {'shiftKey': True}],
+                    ]:
+                        ev = press(star3, key, kw)
+                        assert_equal(ev.defaultPrevented, bool(kw.repeat), key)
+                    assert_equal(ratings, [])
+                else:
+                    assert_equal(star3.title, 'Rate this book 3 stars')
+                    # Shift+Enter activates the star as usual
+                    assert_equal(ev.defaultPrevented, False)
+                    assert_equal(ratings, [])
+            finally:
+                container.remove()
+
+    with_empty_session(run)
+
+
+def with_location_panel(proceed):
+    parent = E.div(id=unique_id())
+    document.body.appendChild(parent)
+    calls = {'position': [], 'cfi': [], 'reference': [], 'closed': 0}
+    previous = {}
+
+    def position(value):
+        calls.position.push(value)
+
+    def cfi(value):
+        calls.cfi.push(value)
+        return True
+
+    def reference(value):
+        calls.reference.push(value)
+        return True
+
+    def hide():
+        calls.closed += 1
+
+    replacements = {'goto_book_position': position, 'goto_cfi': cfi, 'goto_reference': reference}
+    for key in Object.keys(replacements):
+        previous[key] = ui_operations[key]
+        ui_operations[key] = replacements[key]
+    try:
+        create_location_overlay({'progress_frac': 0.25, 'book_length': 100, 'cfi': 'epubcfi(/6/2)'},
+            {'calibre_book_url': 'https://example.com/book'}, {'hide': hide}, parent)
+        proceed(parent, calls)
+    finally:
+        for key in Object.keys(previous):
+            ui_operations[key] = previous[key]
+        parent.remove()
+
+
+@test
+def goto_location_field_has_a_label_and_is_described_by_position_and_help():
+    def run(parent, calls):
+        input = parent.querySelector('[name=newpos]')
+        assert_equal(input.labels.length, 1)
+        assert_equal(input.labels[0].textContent, _('Go to:'))
+        assert_true(input.labels[0].control is input)
+        descriptions = input.getAttribute('aria-describedby').split(' ')
+        assert_equal(descriptions.length, 3)
+        assert_equal(document.getElementById(descriptions[0]).textContent, _('Current position: {}').format(format_pos(0.25, 100)))
+        for id in descriptions:
+            node = document.getElementById(id)
+            assert_true(parent.contains(node))
+            assert_true(node.textContent)
+
+        def other(other_parent, other_calls):
+            other_input = other_parent.querySelector('[name=newpos]')
+            assert_true(other_input.id is not input.id)
+            assert_true(other_input.labels[0].control is other_input)
+            assert_true(other_input.getAttribute('aria-describedby') is not input.getAttribute('aria-describedby'))
+
+        with_location_panel(other)
+
+    with_location_panel(run)
+
+
+@test
+def goto_copy_controls_have_distinct_names_and_copy_the_original_values():
+    def run(parent, calls):
+        buttons = parent.querySelectorAll('[aria-label]')
+        assert_equal(buttons.length, 2)
+        assert_equal(buttons[0].getAttribute('aria-label'), _('Copy current location'))
+        assert_equal(buttons[1].getAttribute('aria-label'), _('Copy URL for this position'))
+        input = parent.querySelector('[name=newpos]')
+        input.value = 'Unsaved position'
+        copied = []
+        previous = document.execCommand
+        document.execCommand = def (command):
+            copied.push([command, input.value])
+            return True
+        status = parent.querySelector('[role=status]')
+        try:
+            for button in buttons:
+                assert_equal(button.textContent, _('Copy'))
+                assert_equal(button.getAttribute('title'), button.getAttribute('aria-label'))
+                status.textContent = ''
+                button.focus()
+                button.click()
+                assert_equal(input.value, 'Unsaved position')
+                assert_true(document.activeElement is button)
+                assert_equal(status.textContent, _('Copied to clipboard'))
+            assert_equal(copied[0], ['copy', 'epubcfi(/6/2)'])
+            assert_equal(copied[1][0], 'copy')
+            assert_true(copied[1][1].startsWith('https://example.com/book?open_at='))
+            assert_equal(decodeURIComponent(copied[1][1].split('open_at=')[1]), 'epubcfi(/6/2)')
+        finally:
+            document.execCommand = previous
+
+    with_location_panel(run)
+
+
+@test
+def goto_copy_failure_is_reported():
+    def run(parent, calls):
+        create_modal_container()
+        button = parent.querySelector('[aria-label]')
+        previous = document.execCommand
+        document.execCommand = def (command):
+            return False
+        try:
+            button.focus()
+            button.click()
+            assert_true(document.activeElement is button)
+            assert_equal(parent.querySelector('[role=status]').textContent, _('Could not copy to clipboard'))
+            assert_equal(document.getElementById('modal-container').style.display, 'flex')
+        finally:
+            document.execCommand = previous
+            close_all_modals()
+
+    with_location_panel(run)
+
+
+@test
+def goto_location_enter_still_handles_positions_locations_and_references():
+    def run(parent, calls):
+        input = parent.querySelector('[name=newpos]')
+        for text in ['12.5', 'epubcfi(/6/4)', 'ref:1,2']:
+            input.value = text
+            input.dispatchEvent(new window.KeyboardEvent('keydown', {'key': 'Enter', 'bubbles': True}))
+        assert_equal(calls.position, [12.5])
+        assert_equal(calls.cfi, ['epubcfi(/6/4)'])
+        assert_equal(calls.reference, ['1.2'])
+        assert_equal(calls.closed, 3)
+
+    with_location_panel(run)
+
+
+@test
+def goto_page_number_field_has_a_name_and_preserves_enter_navigation():
+    parent = E.div()
+    document.body.appendChild(parent)
+    calls = []
+
+    def goto(page):
+        calls.push(page.pagenum)
+
+    try:
+        create_page_list_overlay({'manifest': {'page_list': [{'pagenum': 'xii'}, {'pagenum': '12'}]}}, {
+            'view': {'current_pagelist_items': [], 'goto_pagelist_item': goto}, 'hide': def (): pass
+        }, parent)
+        input = parent.querySelector('input')
+        assert_equal(input.getAttribute('aria-label'), _('Page number'))
+        assert_equal(input.getAttribute('placeholder'), _('Enter a page number'))
+        input.value = 'XII'
+        input.dispatchEvent(new window.KeyboardEvent('keydown', {'key': 'Enter', 'bubbles': True}))
+        assert_equal(calls, ['xii'])
+    finally:
+        parent.remove()

@@ -55,6 +55,14 @@ d['insert_tag_mru'] = ['p', 'div', 'li', 'h1', 'h2', 'h3', 'h4', 'em', 'strong',
 d['manage_tag_list_collapsed_tags'] = []
 d['spell_check_case_sensitive_sort'] = False
 d['inline_spell_check'] = True
+d['inline_grammar_check'] = True
+d['grammar_picky'] = False
+d['grammar_deep_check'] = False
+# Maps the ids of disabled grammar rules to their descriptions
+d['grammar_disabled_rules'] = {}
+# Whether to use the GPU for the neural networks used for grammar checking: auto, on or off
+d['grammar_gpu_mode'] = 'auto'
+d['grammar_suggestion_kinds'] = ['grammar', 'fluency', 'clarity']
 d['custom_themes'] = {}
 d['remove_unused_classes'] = False
 d['merge_identical_selectors'] = False
@@ -76,6 +84,7 @@ d['global_book_toolbar'] = [
 d['global_tools_toolbar'] = [
     'check-book',
     'spell-check-book',
+    'grammar-check-book',
     'edit-toc',
     'insert-character',
     'manage-fonts',

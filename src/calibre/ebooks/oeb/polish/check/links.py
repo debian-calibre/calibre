@@ -16,16 +16,17 @@ from calibre.ebooks.oeb.polish.check.base import ERROR, INFO, WARN, BaseError
 from calibre.ebooks.oeb.polish.cover import get_raster_cover_name
 from calibre.ebooks.oeb.polish.parsing import parse_html5
 from calibre.ebooks.oeb.polish.replace import remove_links_to
-from calibre.ebooks.oeb.polish.utils import OEB_FONTS, actual_case_for_name, corrected_case_for_name, guess_type
+from calibre.ebooks.oeb.polish.utils import OEB_FONTS, actual_case_for_name, case_mismatched_name, corrected_case_for_name, guess_type
 from calibre.utils.localization import _
 
 if TYPE_CHECKING:
-    from collections.abc import Callable, Iterator
+    from collections.abc import Callable, Iterator, Sequence
     from collections.abc import Set as AbstractSet
 
     from lxml.etree import _Element
 
     from calibre.ebooks.oeb.polish.container import Container
+    from calibre.ebooks.oeb.polish.utils import FolderCaseMap
 
 #: (name, href, lnum, col) of an external link
 type ExternalLinkLocation = tuple[str, str, int | None, int | None]
@@ -64,26 +65,43 @@ class CaseMismatch(BadLink):
         self.corrected_name = corrected_name
         self.href = href
 
+    has_batch_fix = True
+
     def __call__(self, container: Container) -> bool:
-        frag = urlparse(self.href).fragment
-        nhref = container.name_to_href(self.corrected_name, self.name)
-        if frag:
-            nhref += '#' + frag
-        orig_href = self.href
+        return self.fix_batch(container, (self,))
+
+    @classmethod
+    def fix_batch(cls, container: Container, errors: Sequence[CaseMismatch]) -> bool:
+        # Map of file name -> {href: corrected href} for the links in that file
+        replacements: dict[str, dict[str, str]] = {}
+        for err in errors:
+            frag = urlparse(err.href).fragment
+            nhref = container.name_to_href(err.corrected_name, err.name)
+            if frag:
+                nhref += '#' + frag
+            replacements.setdefault(err.name, {}).setdefault(err.href, nhref)
 
         class LinkReplacer:
-            replaced = False
             file_type: str  # set by Container.replace_links()
 
+            def __init__(self, href_map: dict[str, str]) -> None:
+                self.href_map = href_map
+                self.replaced = False
+
             def __call__(self, url: str) -> str:
-                if url != orig_href:
+                nhref = self.href_map.get(url)
+                if nhref is None:
                     return url
                 self.replaced = True
                 return nhref
 
-        replacer = LinkReplacer()
-        container.replace_links(self.name, replacer)
-        return replacer.replaced
+        changed = False
+        for name, href_map in replacements.items():
+            replacer = LinkReplacer(href_map)
+            container.replace_links(name, replacer)
+            if replacer.replaced:
+                changed = True
+        return changed
 
 
 class BadDestinationType(BaseError):
@@ -201,8 +219,15 @@ class DanglingLink(BadLink):
         self.INDIVIDUAL_FIX = _('Remove all references to %s from the HTML and CSS in the book') % target_name
         self.target_name = target_name
 
+    has_batch_fix = True
+
     def __call__(self, container: Container) -> bool:
-        return bool(remove_links_to(container, lambda name, *a: name == self.target_name))
+        return self.fix_batch(container, (self,))
+
+    @classmethod
+    def fix_batch(cls, container: Container, errors: Sequence[DanglingLink]) -> bool:
+        targets = frozenset(err.target_name for err in errors)
+        return bool(remove_links_to(container, lambda name, *a: name in targets))
 
 
 class Bookmarks(BadLink):
@@ -344,15 +369,26 @@ def find_referenced_names_in_smil(container: Container, name: str) -> Iterator[s
         yield container.href_to_name(src, name)
 
 
-def locate_spine_media_overlays(container: Container) -> Iterator[str | None]:
+def canonical_name(container: Container, name: str) -> str:
+    """Return the name of the file in the book that name refers to, correcting
+    for case mismatches. Case mismatches are reported as CaseMismatch errors
+    by check_links(), so they must not also cause the file they point to, to be
+    treated as missing or unreferenced, as the fixes for those errors would
+    conflict with the CaseMismatch fix, for example by deleting the file."""
+    return case_mismatched_name(container, name) or name
+
+
+def locate_spine_media_overlays(container: Container) -> Iterator[str]:
     mmap = {item.get('id', ''): item for item in container.manifest_items}
-    for item, name, is_linear in container.spine_iter:
-        if (m := mmap.get(item.get('idref', ''), None)) is not None:
-            if (mo_id := m.get('media-overlay')) and (mo := mmap.get(mo_id)) is not None and (href := mo.get('href')):
-                if (name := container.href_to_name(href, container.opf_name)) and container.has_name(name):
-                    match mo.get('media-type'):
-                        case 'application/smil+xml':
-                            yield from find_referenced_names_in_smil(container, name)
+    # Don't use container.spine_iter as it ignores items whose href has a case mismatch
+    for idref in container.opf_xpath('//opf:spine/opf:itemref/@idref'):
+        if (m := mmap.get(idref)) is not None and (mo_id := m.get('media-overlay')) and (mo := mmap.get(mo_id)) is not None and (href := mo.get('href')):
+            if (name := container.href_to_name(href, container.opf_name)) and (name := canonical_name(container, name)) in container.mime_map:
+                match mo.get('media-type'):
+                    case 'application/smil+xml':
+                        for x in find_referenced_names_in_smil(container, name):
+                            if x:
+                                yield canonical_name(container, x)
 
 
 def check_links(container: Container) -> list[BaseError]:
@@ -360,6 +396,7 @@ def check_links(container: Container) -> list[BaseError]:
     xml_types = {guess_type('a.opf'), guess_type('a.ncx')}
     errors: list[BaseError] = []
     a = errors.append
+    folder_case_map: FolderCaseMap = {}
 
     def fl(x: str) -> str:
         x = repr(x)
@@ -378,24 +415,23 @@ def check_links(container: Container) -> list[BaseError]:
                 except ValueError:
                     tname = None  # Absolute paths to files on another drive in windows cause this
                 if tname is not None:
+                    cname: str | None = None
                     if container.exists(tname):
                         if tname in container.mime_map:
                             links_map[name].add(tname)
+                        elif os.path.isdir(container.name_to_abspath(tname)):
+                            a(FolderLink(_('The linked resource %s is a folder') % fl(href), name, lnum, col))
                         else:
                             # Filesystem says the file exists, but it is not in
-                            # the mime_map, so either there is a case mismatch
-                            # or the link is a directory
-                            apath = container.name_to_abspath(tname)
-                            if os.path.isdir(apath):
-                                a(FolderLink(_('The linked resource %s is a folder') % fl(href), name, lnum, col))
-                            else:
-                                a(CaseMismatch(href, actual_case_for_name(container, tname), name, lnum, col))
-                    else:
-                        cname = corrected_case_for_name(container, tname)
-                        if cname is not None:
-                            a(CaseMismatch(href, cname, name, lnum, col))
-                        else:
-                            a(DanglingLink(_('The linked resource %s does not exist') % fl(href), tname, name, lnum, col))
+                            # the mime_map, so there is a case mismatch
+                            cname = actual_case_for_name(container, tname, folder_case_map)
+                    elif (cname := corrected_case_for_name(container, tname, folder_case_map)) is None:
+                        a(DanglingLink(_('The linked resource %s does not exist') % fl(href), tname, name, lnum, col))
+                    if cname is not None:
+                        if cname in container.mime_map:
+                            # The link still references the file, so it is not unreferenced
+                            links_map[name].add(cname)
+                        a(CaseMismatch(href, cname, name, lnum, col))
                 else:
                     try:
                         purl = urlparse(href)
@@ -416,7 +452,14 @@ def check_links(container: Container) -> list[BaseError]:
                                 )
                             )
 
-    spine_docs = {name for name, linear in container.spine_names}
+    def canonical(x: str) -> str:
+        return canonical_name(container, x)
+
+    manifest_id_map = container.manifest_id_map
+    spine_docs: set[str] = set()
+    for idref in container.opf_xpath('//opf:spine/opf:itemref/@idref'):
+        if (sname := manifest_id_map.get(idref)) and (sname := canonical(sname)) in container.mime_map:
+            spine_docs.add(sname)
     spine_styles = {tname for name in spine_docs for tname in links_map[name] if container.mime_map.get(tname, None) in OEB_STYLES}
     num = -1
     while len(spine_styles) > num:
@@ -429,7 +472,17 @@ def check_links(container: Container) -> list[BaseError]:
     unreferenced = set()
 
     cover_name = container.guide_type_map.get('cover', None)
-    nav_items = frozenset(container.manifest_items_with_property('nav'))
+    if cover_name is not None:
+        cover_name = canonical(cover_name)
+    nav_items = frozenset(canonical(x) for x in container.manifest_items_with_property('nav') if x)
+    raster_cover_names = set()
+    if (rcn := get_raster_cover_name(container)) is not None:
+        raster_cover_names.add(canonical(rcn))
+    # get_raster_cover_name() ignores <meta name="cover"> if the case of the
+    # href of the item it points to does not match the actual file
+    for item_id in container.opf_xpath('//opf:meta[@name="cover"]/@content'):
+        if (rcn := manifest_id_map.get(item_id)) is not None:
+            raster_cover_names.add(canonical(rcn))
 
     for name, mt in container.mime_map.items():
         if mt in OEB_STYLES and name not in spine_styles:
@@ -442,14 +495,14 @@ def check_links(container: Container) -> list[BaseError]:
             and name != cover_name
             and name not in media_overlays
         ):
-            if mt.partition('/')[0] == 'image' and name == get_raster_cover_name(container):
+            if mt.partition('/')[0] == 'image' and name in raster_cover_names:
                 continue
             a(UnreferencedResource(name))
         else:
             continue
         unreferenced.add(name)
 
-    manifest_names = set(container.manifest_id_map.values())
+    manifest_names = {canonical(x) for x in manifest_id_map.values() if x}
     for name in container.mime_map:
         if name not in manifest_names and not container.ok_to_be_unmanifested(name):
             a(Unmanifested(name, unreferenced=name in unreferenced))

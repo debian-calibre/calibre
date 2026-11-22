@@ -5,6 +5,7 @@
 #include "FreetypePrivate.h"
 
 #include <atomic>
+#include <mutex>
 
 #include FT_TRUETYPE_TAGS_H
 #include FT_TRUETYPE_TABLES_H
@@ -50,6 +51,9 @@ namespace
     struct FT_LibraryPtr
     {
         FT_Library Ptr = nullptr;
+        // NOTE: FreeType requires face creation and destruction on the
+        // same library to be serialized, and faces are freed by any thread
+        std::mutex Mutex;
 
         void Ref();
         void Unref();
@@ -60,7 +64,7 @@ namespace
 }
 
 static PdfFontFileType determineFormatCFF(FT_Face face);
-static unsigned determineFaceSize(FT_Face face, vector<TableInfo>& tables, unsigned& tableDirSize);
+static size_t determineFaceSize(FT_Face face, vector<TableInfo>& tables, unsigned& tableDirSize);
 static FT::FT_FacePtr createFaceFromBuffer(const bufferview& view, unsigned faceIndex, bool bare = false);
 static bool isTTCFont(FT_Face face);
 static bool isTTCFont(const bufferview& face);
@@ -115,16 +119,22 @@ void FT::FreeFace(FT_Face face)
     // NOTE: Store the hidden library pointer before freeing the face
     auto lib = static_cast<FT_LibraryPtr*>(face->extensions);
 
-    FT_Done_Face(face);
+    {
+        lock_guard<mutex> lock(lib->Mutex);
+        FT_Done_Face(face);
+    }
 
-    // Dereference the hidden library pointer
+    // Dereference the hidden library pointer. NOTE: It may
+    // delete the library, so it's done after releasing the lock
     lib->Unref();
 }
 
 void FT::ReferenceFace(FT_Face face)
 {
     // Reference the hidden library pointer
-    static_cast<FT_LibraryPtr*>(face->extensions)->Ref();
+    auto lib = static_cast<FT_LibraryPtr*>(face->extensions);
+    lib->Ref();
+    lock_guard<mutex> lock(lib->Mutex);
     FT_Reference_Face(face);
 }
 
@@ -137,11 +147,18 @@ FT::FT_FacePtr FT::CreateFaceFromFile(const string_view& filepath, unsigned face
         auto& lib = getLibrary();
         FT_Error rc;
         FT_Face face;
-        rc = FT_New_Face(lib.Ptr, filepath.data(), faceIndex, &face);
+        // NOTE: FT_New_Face reads the path as a NUL terminated C string,
+        // so a non NUL terminated string_view must be copied first
+        string filepathStr(filepath);
+        {
+            lock_guard<mutex> lock(lib.Mutex);
+            rc = FT_New_Face(lib.Ptr, filepathStr.data(), faceIndex, &face);
+        }
+
         if (rc != 0)
             return FT_FacePtr(nullptr, FT::FreeFace);
 
-        unique_ptr<struct FT_FaceRec_, decltype(&FT_Done_Face)> face_(face, FT_Done_Face);
+        unique_ptr<struct FT_FaceRec_, decltype(&freeFaceBare)> face_(face, freeFaceBare);
 
         // Try to extract data from the TTC font and re-create the face
         if (tryExtractDataFromTTC(face, buffer))
@@ -209,9 +226,9 @@ bool FT::IsPdfSupported(FT_Face face)
     return true;
 }
 
-unordered_map<string_view, unsigned> FT::GetPostMap(FT_Face face)
+PdfNameHashMap<unsigned> FT::GetPostMap(FT_Face face)
 {
-    unordered_map<string_view, unsigned> ret;
+    PdfNameHashMap<unsigned> ret;
     if (!FT_HAS_GLYPH_NAMES(face))
         return ret;
 
@@ -223,7 +240,7 @@ unordered_map<string_view, unsigned> FT::GetPostMap(FT_Face face)
         if (rc != 0)
             continue;
 
-        ret[string_view(buffer)] = (FT_UInt)i;
+        ret[PdfName(string_view(buffer))] = (FT_UInt)i;
     }
 
     return ret;
@@ -242,7 +259,11 @@ FT::FT_FacePtr createFaceFromBuffer(const bufferview& view, unsigned faceIndex, 
 
     auto& lib = getLibrary();
     FT_Face face;
-    rc = FT_Open_Face(lib.Ptr, &openArgs, faceIndex, &face);
+    {
+        lock_guard<mutex> lock(lib.Mutex);
+        rc = FT_Open_Face(lib.Ptr, &openArgs, faceIndex, &face);
+    }
+
     if (rc != 0)
         return FT::FT_FacePtr(nullptr, noOpFace);
 
@@ -321,7 +342,7 @@ bool tryExtractDataFromTTC(FT_Face face, charbuff& buffer)
     CHECK_FT_RC(rc, FT_Load_Sfnt_Table);
 
     auto tableRecords = (TT_TableHeader*)(buffer.data() + TableDirectoryFixedSize);
-    unsigned offset = tableDirSize;
+    size_t offset = tableDirSize;
     for (FT_ULong i = 0; i < tables.size(); i++)
     {
         // Read all the tables
@@ -331,7 +352,7 @@ bool tryExtractDataFromTTC(FT_Face face, charbuff& buffer)
         CHECK_FT_RC(rc, FT_Load_Sfnt_Table);
 
         // Fix the table offset in the table directory
-        tableRecords[i].offset = AS_BIG_ENDIAN(offset);
+        tableRecords[i].offset = AS_BIG_ENDIAN((uint32_t)offset);
         offset += table.Size;
     }
 
@@ -385,7 +406,7 @@ PdfFontFileType determineFormatCFF(FT_Face face)
     }
 }
 
-unsigned determineFaceSize(FT_Face face, vector<TableInfo>& tables, unsigned& tableDirSize)
+size_t determineFaceSize(FT_Face face, vector<TableInfo>& tables, unsigned& tableDirSize)
 {
     FT_Error rc;
     FT_ULong size;
@@ -393,8 +414,14 @@ unsigned determineFaceSize(FT_Face face, vector<TableInfo>& tables, unsigned& ta
     rc = FT_Sfnt_Table_Info(face, 0, nullptr, &size);
     CHECK_FT_RC(rc, FT_Sfnt_Table_Info);
 
-    unsigned faceSize = TableDirectoryFixedSize + (sizeof(TT_TableHeader) * size);
-    tableDirSize = faceSize;
+    // Tag 0 and a zero length return the size of the whole font stream
+    FT_ULong streamSize = 0;
+    rc = FT_Load_Sfnt_Table(face, 0, 0, nullptr, &streamSize);
+    CHECK_FT_RC(rc, FT_Load_Sfnt_Table);
+
+    // NOTE: The table count is a 16-bit field, the directory size can't overflow
+    tableDirSize = TableDirectoryFixedSize + (unsigned)(sizeof(TT_TableHeader) * size);
+    uint64_t faceSize = tableDirSize;
     tables.resize(size);
     for (FT_ULong i = 0; i < size; i++)
     {
@@ -404,7 +431,13 @@ unsigned determineFaceSize(FT_Face face, vector<TableInfo>& tables, unsigned& ta
         faceSize += table.Size;
     }
 
-    return faceSize;
+    // FreeType bounds each table length to the stream individually, not their
+    // sum. Tables in a well formed face don't overlap, so the sum can't exceed
+    // the stream: a larger one would wrap the buffer size and overflow it
+    if (faceSize > streamSize)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidFontData, "TTC face table lengths exceed the font size");
+
+    return (size_t)faceSize;
 }
 
 FT_LibraryPtr& getLibrary()
@@ -438,7 +471,10 @@ FT_LibraryPtr& getLibrary()
 
 void freeFaceBare(FT_Face face)
 {
-    // Just call the bare FT free face function
+    // NOTE: Bare faces have no library extension and are freed by the thread
+    // that created them, but still require access to the library to be synchronized
+    auto& lib = getLibrary();
+    lock_guard<mutex> lock(lib.Mutex);
     (void)FT_Done_Face(face);
 }
 

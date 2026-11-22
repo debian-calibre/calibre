@@ -8,6 +8,8 @@
 #include <podofo/auxiliary/StreamDevice.h>
 #include <podofo/private/PdfWriter.h>
 #include <podofo/private/PdfParser.h>
+#include <podofo/private/PdfCompressedObject.h>
+#include <podofo/private/PdfEncryptSession.h>
 
 #include "PdfCommon.h"
 
@@ -23,6 +25,7 @@ PdfMemDocument::PdfMemDocument(bool empty) :
     m_InitialVersion(PdfVersionDefault),
     m_HasXRefStream(false),
     m_HasBrokenXRef(false),
+    m_initiallyEncrypted(false),
     m_MagicOffset(0),
     m_PrevXRefOffset(0) // 0 is a sentinel for no or invalid XRef offset
 {
@@ -52,12 +55,21 @@ PdfMemDocument::PdfMemDocument(const PdfMemDocument& rhs) :
     m_InitialVersion(rhs.m_InitialVersion),
     m_HasXRefStream(rhs.m_HasXRefStream),
     m_HasBrokenXRef(rhs.m_HasBrokenXRef),
+    m_initiallyEncrypted(rhs.m_initiallyEncrypted),
     m_MagicOffset(rhs.m_MagicOffset),
     m_PrevXRefOffset(rhs.m_PrevXRefOffset)
 {
     // Do a full copy of the encrypt session
     if (rhs.m_Encrypt != nullptr)
         m_Encrypt.reset(new PdfEncryptSession(rhs.m_Encrypt->GetEncrypt(), rhs.m_Encrypt->GetContext()));
+}
+
+PdfMemDocument::~PdfMemDocument()
+{
+    // NOTE: This must be defined to avoid exposing PdfEncryptSession
+    // in the public header, as it is a private class. Otherwise the
+    // compiler will complain about an incomplete type when generating
+    // the destructor for PdfMemDocument
 }
 
 void PdfMemDocument::clear()
@@ -74,6 +86,7 @@ void PdfMemDocument::reset()
     m_InitialVersion = PdfVersionDefault;
     m_HasXRefStream = false;
     m_HasBrokenXRef = false;
+    m_initiallyEncrypted = false;
     m_MagicOffset = 0;
     m_PrevXRefOffset = 0;
 }
@@ -90,6 +103,7 @@ void PdfMemDocument::initFromParser(PdfParser& parser)
     SetEntryPoints(std::move(entryPoint.Trailer), entryPoint.Catalog);
 
     auto encrypt = parser.GetEncrypt();
+    m_initiallyEncrypted = encrypt != nullptr;
     if (encrypt != nullptr)
         m_Encrypt.reset(new PdfEncryptSession(*encrypt));
 
@@ -169,12 +183,13 @@ void PdfMemDocument::Save(const string_view& filename, PdfSaveOptions options)
 
 void PdfMemDocument::Save(OutputStreamDevice& device, PdfSaveOptions opts)
 {
-    beforeWrite(opts);
+    beforeWrite(opts, false);
 
     PdfWriter writer(this->GetObjects(), this->GetTrailer().GetObject(), 0);
-    writer.SetPdfVersion(GetMetadata().GetPdfVersion());
+    writer.SetPdfVersionHint(GetMetadata().GetPdfVersion());
     writer.SetPdfALevel(GetMetadata().GetPdfALevel());
     writer.SetSaveOptions(opts);
+    writer.SetUseXRefStreamHint(m_HasXRefStream);
 
     if (m_Encrypt != nullptr)
         writer.SetEncrypt(*m_Encrypt);
@@ -201,14 +216,27 @@ void PdfMemDocument::SaveUpdate(const string_view& filename, PdfSaveOptions opts
 
 void PdfMemDocument::SaveUpdate(OutputStreamDevice& device, PdfSaveOptions opts)
 {
-    beforeWrite(opts);
+    // The encryption in effect must be the one the document was parsed with:
+    // an update can't re-key the document, as the objects of the previous
+    // revisions are not rewritten and would stay encrypted with the previous one
+    bool encryptPreserved = m_Encrypt == nullptr
+        ? !m_initiallyEncrypted
+        : m_Encrypt->GetEncrypt().IsParsed();
+    if (!encryptPreserved)
+    {
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::UnsupportedOperation,
+            "The encryption of a document can't be set, changed or removed when "
+            "writing an incremental update. Perform a regular save instead");
+    }
+
+    beforeWrite(opts, true);
 
     PdfWriter writer(this->GetObjects(), this->GetTrailer().GetObject(), m_MagicOffset);
-    writer.SetPdfVersion(GetMetadata().GetPdfVersion());
+    writer.SetPdfVersionHint(GetMetadata().GetPdfVersion());
     writer.SetPdfALevel(GetMetadata().GetPdfALevel());
     writer.SetSaveOptions(opts);
     writer.SetPrevXRefOffset(m_PrevXRefOffset);
-    writer.SetUseXRefStream(m_HasXRefStream);
+    writer.SetUseXRefStreamHint(m_HasXRefStream);
     writer.SetIncrementalUpdate(true);
 
     if (m_Encrypt != nullptr)
@@ -237,7 +265,7 @@ void PdfMemDocument::SaveUpdate(OutputStreamDevice& device, PdfSaveOptions opts)
     m_HasBrokenXRef = false;
 }
 
-void PdfMemDocument::beforeWrite(PdfSaveOptions opts)
+void PdfMemDocument::beforeWrite(PdfSaveOptions opts, bool isUpdate)
 {
     if ((opts & PdfSaveOptions::NoMetadataUpdate) ==
         PdfSaveOptions::None)
@@ -248,6 +276,13 @@ void PdfMemDocument::beforeWrite(PdfSaveOptions opts)
 
     GetFonts().EmbedFonts();
 
+    // NOTE: This must run after every operation that may modify objects, as
+    // it determines which compressed objects can be preserved. On an
+    // incremental update the object streams are all preserved instead, as
+    // previous revisions still reference them for their compressed objects
+    if (!isUpdate)
+        pruneCompressedObjectStreams(opts);
+
     // After we are done with all operations on objects,
     // we can collect garbage
     if ((opts & PdfSaveOptions::NoCollectGarbage) ==
@@ -255,6 +290,50 @@ void PdfMemDocument::beforeWrite(PdfSaveOptions opts)
     {
         CollectGarbage();
     }
+}
+
+void PdfMemDocument::pruneCompressedObjectStreams(PdfSaveOptions opts)
+{
+    auto& objects = GetObjects();
+    if (objects.GetCompressedObjectStreams().size() == 0)
+        return;
+
+    if (!PdfWriter::ShouldUseXRefStream(opts, m_HasXRefStream))
+    {
+        // A legacy XRef table can't address compressed objects, so all
+        // the object streams are rewritten as top level objects and
+        // their containers can be collected as garbage
+        objects.ClearCompressedObjectStreams();
+        return;
+    }
+
+    // Collect the object streams that still store at least one unmodified
+    // object: those are written as they are
+    PdfObjectNumSet preserved;
+    for (auto obj : objects)
+    {
+        auto compressedObj = dynamic_cast<const PdfCompressedObject*>(obj);
+        if (compressedObj == nullptr || compressedObj->IsDirty())
+            continue;
+
+        preserved.insert(compressedObj->GetObjectStreamNumber());
+    }
+
+    vector<uint32_t> toRemove;
+    for (auto objNum : objects.GetCompressedObjectStreams())
+    {
+        // Also require the object stream to be untouched: a modified one
+        // may not describe anymore the objects stored in its contents
+        auto streamObj = objects.GetObject(PdfReference(objNum, 0));
+        if (streamObj == nullptr || streamObj->IsDirty()
+            || preserved.find(objNum) == preserved.end())
+        {
+            toRemove.push_back(objNum);
+        }
+    }
+
+    for (auto objNum : toRemove)
+        objects.RemoveCompressedObjectStream(objNum);
 }
 
 void PdfMemDocument::SetEncrypted(const string_view& userPassword, const string_view& ownerPassword,
@@ -267,9 +346,16 @@ void PdfMemDocument::SetEncrypted(const string_view& userPassword, const string_
 void PdfMemDocument::SetEncrypt(unique_ptr<PdfEncrypt>&& encrypt)
 {
     if (encrypt == nullptr)
+    {
         m_Encrypt = nullptr;
+        // Drop the reference to the encryption dictionary of a previously
+        // encrypted document, so it can be collected as garbage
+        GetTrailer().GetDictionary().RemoveKey("Encrypt");
+    }
     else
+    {
         m_Encrypt.reset(new PdfEncryptSession(std::move(encrypt)));
+    }
 }
 
 bool PdfMemDocument::HasOwnerPermissions() const

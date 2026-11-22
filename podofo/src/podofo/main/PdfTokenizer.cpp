@@ -49,6 +49,10 @@ PdfTokenizer::PdfTokenizer(std::in_place_t, shared_ptr<charbuff>&& buffer)
 {
     if (m_buffer == nullptr)
         PODOFO_RAISE_ERROR(PdfErrorCode::InvalidHandle);
+
+    // Room for the longest token plus the null termination
+    if (m_buffer->size() < MAX_TOKEN_LENGTH + 1)
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The tokenizer buffer must be at least {} bytes", MAX_TOKEN_LENGTH + 1);
 }
 
 bool PdfTokenizer::TryReadNextToken(InputStreamDevice& device, string_view& token)
@@ -60,8 +64,6 @@ bool PdfTokenizer::TryReadNextToken(InputStreamDevice& device, string_view& toke
 bool PdfTokenizer::TryReadNextToken(InputStreamDevice& device, string_view& token, PdfTokenType& tokenType)
 {
     char* buffer = m_buffer->data();
-    // NOTE: Reserve 1 byte for the null termination
-    size_t bufferSize = m_buffer->size() - 1;
 
     // check first if there are queued tokens and return them first
     if (m_tokenQueue.size() != 0)
@@ -69,7 +71,7 @@ bool PdfTokenizer::TryReadNextToken(InputStreamDevice& device, string_view& toke
         auto& pair = m_tokenQueue.front();
         tokenType = pair.second;
 
-        size_t size = std::min(bufferSize, pair.first.size());
+        size_t size = std::min((size_t)MAX_TOKEN_LENGTH, pair.first.size());
         // make sure buffer is \0 terminated
         std::memcpy(buffer, pair.first.data(), size);
         buffer[size] = '\0';
@@ -84,20 +86,24 @@ bool PdfTokenizer::TryReadNextToken(InputStreamDevice& device, string_view& toke
     char ch1;
     char ch2;
     size_t count = 0;
-    while (count < bufferSize)
+    while (count < MAX_TOKEN_LENGTH)
     {
         if (!device.Peek(ch1))
             goto Eof;
 
-        // ignore leading whitespaces
-        if (count == 0 && IsCharWhitespace(ch1))
+        if (count == 0)
         {
-            // Consume the whitespace character
-            (void)device.ReadChar();
-            continue;
+            // Consume the leading whitespaces
+            while (IsCharWhitespace(ch1))
+            {
+                (void)device.ReadChar();
+                if (!device.Peek(ch1))
+                    goto Eof;
+            }
         }
+
         // ignore comments
-        else if (ch1 == '%')
+        if (ch1 == '%')
         {
             // Consume all characters before the next line break
             do
@@ -172,6 +178,15 @@ bool PdfTokenizer::TryReadNextToken(InputStreamDevice& device, string_view& toke
                 break;
             }
         }
+    }
+
+    if (count == MAX_TOKEN_LENGTH && device.Peek(ch1) && !IsCharWhitespace(ch1) && !IsCharDelimiter(ch1))
+    {
+        PoDoFo::LogMessage(PdfLogSeverity::Warning, "Token longer than {} characters cut", MAX_TOKEN_LENGTH);
+        do
+        {
+            (void)device.ReadChar();
+        } while (device.Peek(ch1) && !IsCharWhitespace(ch1) && !IsCharDelimiter(ch1));
     }
 
 Exit:
@@ -255,7 +270,6 @@ bool PdfTokenizer::TryReadNextVariant(InputStreamDevice& device, PdfVariant& var
 
 void PdfTokenizer::ReadNextVariant(InputStreamDevice& device, const string_view& token, PdfTokenType tokenType, PdfVariant& variant, const PdfStatefulEncrypt* encrypt)
 {
-    utls::RecursionGuard guard;
     ParsingOptions flags{ true, (m_Params.Flags & PdfTokenizerFlags::StrictParsing) != PdfTokenizerFlags::None };
     PdfLiteralDataType dataType = DetermineDataType(device, token, tokenType, variant, flags);
     (void)readDataType(device, dataType, variant, encrypt, flags);
@@ -263,7 +277,6 @@ void PdfTokenizer::ReadNextVariant(InputStreamDevice& device, const string_view&
 
 bool PdfTokenizer::TryReadNextVariant(InputStreamDevice& device, const string_view& token, PdfTokenType tokenType, PdfVariant& variant, const PdfStatefulEncrypt* encrypt)
 {
-    utls::RecursionGuard guard;
     ParsingOptions flags{ false, (m_Params.Flags & PdfTokenizerFlags::StrictParsing) != PdfTokenizerFlags::None };
     PdfLiteralDataType dataType = DetermineDataType(device, token, tokenType, variant, flags);
     return readDataType(device, dataType, variant, encrypt, flags);
@@ -472,6 +485,8 @@ bool PdfTokenizer::readDataType(InputStreamDevice& device, PdfLiteralDataType da
 bool PdfTokenizer::ReadDictionary(InputStreamDevice& device, PdfVariant& variant, const PdfStatefulEncrypt* encrypt, ParsingOptions opts)
 {
     PODOFO_ASSERT(variant.GetDataType() == PdfDataType::Null);
+    // NOTE: Containers are the only recursive constructs: guard their nesting here
+    utls::RecursionGuard guard;
 
     PdfVariant nameVar;
     PdfTokenType tokenType;
@@ -512,6 +527,9 @@ bool PdfTokenizer::ReadDictionary(InputStreamDevice& device, PdfVariant& variant
             return handleContainerInnerError(device, endDelim, opts, PdfErrorCode::InvalidDataType, "Expected a name as dictionary key");
 
         auto& key = nameVar.GetName();
+        if (dict.GetSize() == MAX_CONTAINER_ENTRY_COUNT && !dict.HasKey(key.GetString()))
+            return handleContainerInnerError(device, endDelim, opts, PdfErrorCode::ValueOutOfRange, "Dictionary entry count exceeds maximum allowed size");
+
         gotToken = this->TryReadNextToken(device, token, tokenType);
         if (!gotToken)
             return handleContainerTruncation(opts, PdfErrorCode::UnexpectedEOF, "Expected variant");
@@ -566,6 +584,7 @@ bool PdfTokenizer::ReadDictionary(InputStreamDevice& device, PdfVariant& variant
 bool PdfTokenizer::ReadArray(InputStreamDevice& device, PdfVariant& variant, const PdfStatefulEncrypt* encrypt, ParsingOptions opts)
 {
     PODOFO_ASSERT(variant.GetDataType() == PdfDataType::Null);
+    utls::RecursionGuard guard;
 
     string_view token;
     PdfTokenType tokenType;
@@ -586,9 +605,9 @@ bool PdfTokenizer::ReadArray(InputStreamDevice& device, PdfVariant& variant, con
         if (tokenType == endDelim)
             break;
 
+        // NOTE: EmplaceBackNoDirtySet() wires the parent link up front. See
+        // ReadDictionary for the rationale
         auto& newobj = arr.EmplaceBackNoDirtySet();
-        // See ReadDictionary for rationale on the up-front parent link
-        newobj.SetParent(arr);
 
         bool success;
         if (innerOpts.ThrowOnError)
@@ -603,6 +622,14 @@ bool PdfTokenizer::ReadArray(InputStreamDevice& device, PdfVariant& variant, con
 
         if (!success)
             return handleContainerInnerError(device, endDelim, opts, PdfErrorCode::InvalidDataType, "Could not read a variant");
+
+        if (arr.GetSize() > MAX_CONTAINER_ENTRY_COUNT)
+        {
+            // NOTE: The element past the limit must be read whole before
+            // actually dropping it, otherwise it may unbalance drain tracking
+            arr.eraseAt(arr.GetSize() - 1, 1);
+            return handleContainerInnerError(device, endDelim, opts, PdfErrorCode::ValueOutOfRange, "Array element count exceeds maximum allowed size");
+        }
     }
 
     return true;

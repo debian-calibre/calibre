@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # License: GPLv3 Copyright: 2026, Kovid Goyal <kovid at kovidgoyal.net>
 
+import errno
+import hashlib
 import io
 import json
 import os
@@ -11,13 +13,29 @@ import tempfile
 import time
 import types
 import unittest
+import unittest.mock
 import zipfile
-from contextlib import redirect_stderr
+from contextlib import contextmanager, redirect_stderr
 from threading import Event, Thread
-from typing import Any
+from typing import TYPE_CHECKING, Any
+from urllib.error import HTTPError, URLError
 
 from calibre.constants import iswindows
 from calibre.web.automate import download_deps as dd
+
+if TYPE_CHECKING:
+    from collections.abc import Callable, Iterator
+
+
+@contextmanager
+def installed_download_deps() -> Iterator[None]:
+    """Have live_module() return the installed download_deps, so that the tests
+    neither run code from the calibre website nor check it for updates. Also in
+    any worker processes started meanwhile, such as the one recipes use."""
+    from calibre.live import NO_LIVE_MODULES_ENV_VAR
+
+    with unittest.mock.patch.object(dd, 'live', dd), unittest.mock.patch.dict(os.environ, {NO_LIVE_MODULES_ENV_VAR: '1'}):
+        yield
 
 
 class FakeInstaller(dd.Installer):
@@ -26,7 +44,8 @@ class FakeInstaller(dd.Installer):
         self.available = dd.Release('1.0', 'fake://1.0', '')
         self.num_of_release_queries = 0
         self.num_of_installs = 0
-        self.fail_downloads_of: set[str] = set()
+        self.fail_downloads_of: dict[str, Exception] = {}
+        self.progress_seen: list[dd.InstallProgress | None] = []
 
     def latest_release(self, **kw: Any) -> dd.Release:  # ruff: ignore[any-type]
         self.num_of_release_queries += 1
@@ -43,10 +62,14 @@ class FakeInstaller(dd.Installer):
     def is_complete(self, version_dir: str) -> bool:
         return os.path.exists(self.payload_path(version_dir))
 
-    def download_file(self, url: str, dest: str, expected_sha256: str = '') -> None:
+    def download_file(self, url: str, dest: str, expected_sha256: str = '', progress: Callable[[int, int], None] | None = None) -> None:
         version = url.rpartition('://')[2]
-        if version in self.fail_downloads_of:
-            raise ValueError(f'Failed to download {url} as required by the test')
+        self.progress_seen.append(self.install_progress)
+        if progress is not None:
+            progress(len(version), len(version))
+            self.progress_seen.append(self.install_progress)
+        if (err := self.fail_downloads_of.get(version)) is not None:
+            raise err
         with open(dest, 'w') as f:
             f.write(version)
 
@@ -236,7 +259,7 @@ class TestDownloadDeps(unittest.TestCase):
         i = self.installer
         i()
         i.available = dd.Release('2.0', 'fake://2.0', '')
-        i.fail_downloads_of.add('2.0')
+        i.fail_downloads_of['2.0'] = ValueError('Failed to download 2.0 as required by the test')
         self.make_update_check_due()
         i()
         self.wait_for_update_check()
@@ -257,6 +280,77 @@ class TestDownloadDeps(unittest.TestCase):
         metadata['update_available']['failed_at'] = time.time() - 2 * dd.UPDATE_CHECK_INTERVAL
         self.write_metadata(metadata)
         self.assertEqual(i().version, '2.0')
+
+    def test_download_deps_failed_install(self) -> None:
+        i = self.installer
+        i.fail_downloads_of['1.0'] = OSError(errno.ENOSPC, 'No space left on device')
+        with self.assertRaises(dd.InstallFailed) as cm:
+            i()
+        err = cm.exception
+        self.assertIn('Failed to install fake with error:', err.message)
+        self.assertIn('No space left on device', err.message)
+        self.assertIn('not enough free space', err.message)
+        self.assertIn('tried again after', err.message)
+        self.assertIn('OSError', err.details)
+        self.assertAlmostEqual(err.retry_at, time.time() + dd.INSTALL_RETRY_INTERVAL, delta=60)
+        self.assertIsInstance(err.__cause__, OSError)
+        failure = self.read_metadata()[dd.INSTALL_FAILURE_KEY]
+        self.assertEqual(failure['version'], '1.0')
+        # Progress is reported while installing, and only then
+        self.assertEqual(i.progress_seen, [dd.InstallProgress('downloading'), dd.InstallProgress('downloading', 3, 3)])
+        self.assertIsNone(i.install_progress)
+
+        # Not tried again, not even the check for the latest release, but
+        # reported the same way
+        del i.fail_downloads_of['1.0']
+        with self.assertRaises(dd.InstallFailed) as cm:
+            i.use()
+        self.assertIn('not enough free space', cm.exception.message)
+        self.assertEqual(cm.exception.details, err.details)
+        self.assertEqual(i.num_of_release_queries, 1)
+        self.assertFalse(self.installed_versions())
+
+        # Tried again once enough time has passed, and a success forgets
+        # about the failure
+        metadata = self.read_metadata()
+        metadata[dd.INSTALL_FAILURE_KEY]['failed_at'] = time.time() - 2 * dd.INSTALL_RETRY_INTERVAL
+        self.write_metadata(metadata)
+        self.assertEqual(i().version, '1.0')
+        self.assertNotIn(dd.INSTALL_FAILURE_KEY, self.read_metadata())
+
+        # Failures can be forgotten on demand
+        shutil.rmtree(i.version_dir('1.0'))
+        i.fail_downloads_of['1.0'] = ValueError('broken')
+        self.assertRaises(dd.InstallFailed, i)
+        self.assertRaises(dd.InstallFailed, i)
+        self.assertEqual(i.num_of_release_queries, 3)
+        i.forget_install_failure()
+        self.assertNotIn(dd.INSTALL_FAILURE_KEY, self.read_metadata())
+        del i.fail_downloads_of['1.0']
+        self.assertEqual(i().version, '1.0')
+
+        # A failure to find the latest release is not recorded, as it is cheap
+        # to try again
+        shutil.rmtree(i.version_dir('1.0'))
+        with unittest.mock.patch.object(i, 'latest_release', side_effect=OSError('offline')):
+            self.assertRaisesRegex(OSError, 'offline', i)
+        self.assertNotIn(dd.INSTALL_FAILURE_KEY, self.read_metadata())
+
+    def test_download_deps_install_failure_advice(self) -> None:
+        d = self.tdir
+        self.assertIn('not enough free space', dd.install_failure_advice(OSError(errno.ENOSPC, 'full'), d))
+        self.assertIn('needed, there is', dd.install_failure_advice(OSError(errno.ENOSPC, 'full'), os.path.join(d, 'not', 'yet'), 1024))
+        self.assertIn('too long', dd.install_failure_advice(OSError(errno.ENAMETOOLONG, 'long'), d))
+        self.assertIn('denied', dd.install_failure_advice(PermissionError(errno.EACCES, 'no'), d))
+        self.assertIn('internet connection', dd.install_failure_advice(URLError('no network'), d))
+        self.assertIn('internet connection', dd.install_failure_advice(TimeoutError(), d))
+        self.assertEqual(dd.install_failure_advice(ValueError('checksum mismatch'), d), '')
+        if iswindows:
+            winerr = OSError(None, 'Access is denied', None, dd.ERROR_ACCESS_DENIED)
+            self.assertIn('antivirus', dd.install_failure_advice(winerr, d))
+            winerr = OSError(None, 'Disk full', None, dd.ERROR_DISK_FULL)
+            self.assertIn('not enough free space', dd.install_failure_advice(winerr, d))
+        self.assertEqual(dd.explain_install_failure('X', ValueError('bad'), d), 'Failed to install X with error: bad')
 
     def test_download_deps_simultaneous_use(self) -> None:
         i, num = self.installer, 8
@@ -360,6 +454,43 @@ class TestDownloadDeps(unittest.TestCase):
                 dd.camoufox_installer.latest_release()
         finally:
             dd.download_json = original
+
+    def test_download_deps_camoufox_backup_repos(self) -> None:
+        name = f'camoufox-152.0.4-beta.29-{dd.camoufox_os()}.{dd.camoufox_arch()}.zip'
+        backup_releases = [{'prerelease': False, 'assets': [{'name': name, 'browser_download_url': f'https://example.com/{name}'}]}]
+        requested: list[str] = []
+        missing = {dd.CAMOUFOX_REPO}
+
+        def download_json(url: str, *a: object, **kw: object) -> list[dict[str, Any]]:
+            requested.append(url)
+            for repo in missing:
+                if f'/repos/{repo}/' in url:
+                    raise HTTPError(url, 404, 'Not Found', None, None)  # type: ignore[arg-type]
+            return backup_releases
+
+        with unittest.mock.patch.object(dd, 'download_json', download_json), redirect_stderr(io.StringIO()):
+            # Falls back to the backups when the camoufox repository is not found
+            self.assertEqual(dd.camoufox_installer.latest_release().version, '152.0.4-beta.29')
+            self.assertEqual(len(requested), 2)
+            self.assertIn(f'/repos/{dd.CAMOUFOX_BACKUP_REPOS[0]}/', requested[1])
+            self.assertEqual(dd.camoufox_releases()[0], dd.CAMOUFOX_BACKUP_REPOS[0])
+            # The camoufox repository itself is used when it is available
+            missing.clear()
+            requested.clear()
+            self.assertEqual(dd.camoufox_releases()[0], dd.CAMOUFOX_REPO)
+            self.assertEqual(len(requested), 1)
+            # The error is reported when the backups are not found either
+            missing.update((dd.CAMOUFOX_REPO,) + dd.CAMOUFOX_BACKUP_REPOS)
+            with self.assertRaises(HTTPError):
+                dd.camoufox_installer.latest_release()
+
+        def unavailable(url: str, *a: object, **kw: object) -> list[dict[str, Any]]:
+            raise HTTPError(url, 503, 'Service Unavailable', None, None)  # type: ignore[arg-type]
+
+        # Other errors are not a reason to use the backups
+        with unittest.mock.patch.object(dd, 'download_json', unavailable), self.assertRaises(HTTPError) as cm:
+            dd.camoufox_releases()
+        self.assertEqual(cm.exception.code, 503)
 
     def test_download_deps_camoufox_emulated_arch(self) -> None:
         def asset(build: str, arch: str) -> dict[str, Any]:
@@ -484,6 +615,67 @@ class TestDownloadDeps(unittest.TestCase):
             self.assertRaises(ValueError, dd.camoufox_font_lists, '../main')
         finally:
             dd.download_json = original
+
+    def test_download_deps_camoufox_font_lists_from_pypi(self) -> None:
+        font_lists = {'win': ['Segoe UI'], 'mac': ['Helvetica'], 'lin': ['Arimo']}
+        buf = io.BytesIO()
+        with zipfile.ZipFile(buf, 'w') as zf:
+            zf.writestr('camoufox/__init__.py', '')
+            zf.writestr('camoufox/fonts.json', json.dumps(font_lists))
+        wheel = buf.getvalue()
+        wheel_url = 'https://files.example.com/camoufox-0.5.9-py3-none-any.whl'
+        pypi = {
+            'info': {'version': '0.5.9'},
+            'urls': [
+                {'packagetype': 'sdist', 'url': 'https://files.example.com/camoufox-0.5.9.tar.gz'},
+                {'packagetype': 'bdist_wheel', 'url': wheel_url, 'digests': {'sha256': hashlib.sha256(wheel).hexdigest()}},
+            ],
+        }
+        repo_status = 404
+
+        def download_json(url: str, headers: dict[str, str] | None = None, timeout: float = dd.NETWORK_TIMEOUT) -> object:
+            self.assertLessEqual(timeout, dd.FONT_LISTS_TIMEOUT)
+            if url.startswith('https://raw.githubusercontent.com/'):
+                raise HTTPError(url, repo_status, 'error', None, None)  # type: ignore[arg-type]
+            self.assertEqual(url, f'https://pypi.org/pypi/{dd.CAMOUFOX_PYPI_PACKAGE}/json')
+            return pypi
+
+        def download_data(url: str, headers: dict[str, str] | None = None, timeout: float = dd.NETWORK_TIMEOUT) -> bytes:
+            self.assertEqual(url, wheel_url)
+            self.assertLessEqual(timeout, dd.FONT_LISTS_TIMEOUT)
+            return wheel
+
+        with (
+            unittest.mock.patch.object(dd, 'download_json', download_json),
+            unittest.mock.patch.object(dd, 'download_data', download_data),
+            redirect_stderr(io.StringIO()),
+        ):
+            # Falls back to the camoufox package when the source repository is not found
+            self.assertEqual(dd.camoufox_font_lists('158.0.1-beta.41'), font_lists)
+            # The package must match the checksum PyPI reports for it
+            pypi['urls'][1]['digests'] = {'sha256': '0' * 64}
+            with self.assertRaisesRegex(ValueError, 'checksum'):
+                dd.camoufox_font_lists('158.0.1-beta.41')
+            # Other errors are not a reason to use the package
+            repo_status = 503
+            with self.assertRaises(HTTPError):
+                dd.camoufox_font_lists('158.0.1-beta.41')
+
+    def test_download_deps_live_module(self) -> None:
+        live = types.ModuleType(dd.__name__)
+        with (
+            unittest.mock.patch.object(dd, 'live', None),
+            unittest.mock.patch('calibre.live.load_module', return_value=live) as load_module,
+            unittest.mock.patch('calibre.live.start_worker') as start_worker,
+        ):
+            self.assertIs(dd.live_module(), live)
+            self.assertIs(dd.live_module(), live)  # loaded only once
+            load_module.assert_called_once()
+            self.assertEqual(load_module.call_args.args, (dd.__name__,))
+            start_worker.assert_called_once()
+        # Live loading is set up the way calibre.live needs it
+        self.assertIsInstance(dd.module_version, int)
+        self.assertEqual(len(dd.minimum_calibre_version), 3)
 
     def test_download_deps_browserforge_patching(self) -> None:
         data_dir = os.path.join(self.tdir, 'bf-data')

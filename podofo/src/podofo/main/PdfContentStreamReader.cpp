@@ -14,6 +14,17 @@
 using namespace std;
 using namespace PoDoFo;
 
+// Form XObjects are followed again each time they are invoked, so a chain
+// of N forms, each invoking the next one twice, costs 2^N executions
+constexpr unsigned MaxFormXObjectCount = 1U << 16;
+
+// Operators take at most a few dozen operands, but a stream of operands
+// with no operator would otherwise grow the stack with the decoded data
+constexpr unsigned MaxOperandCount = 1U << 16;
+
+// An inline image dictionary has a dozen known keys
+constexpr unsigned MaxInlineImageKeyCount = 256;
+
 PdfContentStreamReader::PdfContentStreamReader(const PdfCanvas& canvas,
         nullable<const PdfContentReaderArgs&> args) :
     PdfContentStreamReader(std::make_shared<PdfCanvasInputDevice>(canvas),
@@ -29,6 +40,7 @@ PdfContentStreamReader::PdfContentStreamReader(shared_ptr<InputStreamDevice>&& d
     m_buffer(std::make_shared<charbuff>(PdfTokenizer::BufferSize)),
     m_tokenizer(m_buffer),
     m_readingInlineImgData(false),
+    m_formXObjectCount(0),
     m_temp{ }
 {
     if (device == nullptr)
@@ -151,6 +163,14 @@ bool PdfContentStreamReader::tryReadNextContent(PdfContent& content)
             }
             case PdfPostScriptTokenType::Variant:
             {
+                if (content.Data.Stack.GetSize() == MaxOperandCount)
+                {
+                    // Past the limit the content is most likely malformed: drop the operands
+                    // read so far, as an operator takes the last ones from the top of the stack
+                    content.Data.Stack.Clear();
+                    content.Warnings |= PdfContentWarnings::OperandLimitReached;
+                }
+
                 content.Data.Stack.Push(std::move(m_temp.Variant));
                 continue;
             }
@@ -320,10 +340,15 @@ bool PdfContentStreamReader::tryReadInlineImgDict(PdfContent& content)
             }
         }
 
-        if (m_tokenizer.TryReadNextVariant(*m_inputs.back().Device, m_temp.Variant))
-            content.Data.InlineImageDictionary.AddKey(m_temp.Name, std::move(m_temp.Variant));
-        else
+        if (!m_tokenizer.TryReadNextVariant(*m_inputs.back().Device, m_temp.Variant))
             return false;
+
+        // Past the limit the dictionary is malformed: drop the new keys
+        auto& dict = content.Data.InlineImageDictionary;
+        if (dict.GetSize() == MaxInlineImageKeyCount && !dict.HasKey(m_temp.Name.GetString()))
+            content.Warnings |= PdfContentWarnings::InvalidImageDictionaryContent;
+        else
+            dict.AddKey(m_temp.Name, std::move(m_temp.Variant));
     }
 }
 
@@ -374,15 +399,25 @@ bool PdfContentStreamReader::tryHandleXObject(PdfContent& content)
 
     if (followFormXObjecs && content.Data.XObject->GetType() == PdfXObjectType::Form)
     {
-        // Select the Form XObject for next input source
-        content.Type = PdfContentType::BeginFormXObject;
-
         if (isCalledRecursively(xobjraw))
         {
+            // The Form XObject is not followed again: signal a plain "Do",
+            // as no matching EndFormXObject would be issued
+            content.Type = PdfContentType::DoXObject;
             content.Warnings |= PdfContentWarnings::RecursiveXObject;
             return true;
         }
 
+        if (m_formXObjectCount >= MaxFormXObjectCount)
+        {
+            content.Type = PdfContentType::DoXObject;
+            content.Warnings |= PdfContentWarnings::FormXObjectLimitReached;
+            return true;
+        }
+
+        // Select the Form XObject for next input source
+        m_formXObjectCount++;
+        content.Type = PdfContentType::BeginFormXObject;
         m_inputs.push_back({
             content.Data.XObject,
             std::make_shared<PdfCanvasInputDevice>(static_cast<const PdfXObjectForm&>(*content.Data.XObject)),

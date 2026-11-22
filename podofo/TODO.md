@@ -58,4 +58,3 @@
 - PdfFontManager: Consider also statically caching the queries and filepaths.
   Maybe we could also weakly (weak shared pointer) cache metrics instead of fonts
 - PdfName: Evaluate unescape lazily, or offer a way to debug/inspect the unescaped sequence a posteriori
-- Consider saving/converting to XRef stream by default

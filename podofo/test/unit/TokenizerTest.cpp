@@ -321,6 +321,75 @@ TEST_CASE("TestMultipleInvalidTokenVariantsNocrash")
     }
 }
 
+TEST_CASE("TestMaxRecursionReachedKeepsDepth")
+{
+    // The destructor of a guard whose constructor throws never runs, so the
+    // depth counter must stay untouched or each MaxRecursionReached leaks a level
+    struct DepthRestorer
+    {
+        unsigned Depth = PdfCommon::GetMaxRecursionDepth();
+        ~DepthRestorer() { PdfCommon::SetMaxRecursionDepth(Depth); }
+    } restorer;
+
+    constexpr unsigned maxDepth = 4;
+    PdfCommon::SetMaxRecursionDepth(maxDepth);
+    for (unsigned i = 0; i <= maxDepth; i++)
+    {
+        SpanStreamDevice device("[[[[[[]]]]]]"sv);
+        PdfTokenizer tokenizer;
+        PdfVariant variant;
+        ASSERT_THROW_WITH_ERROR_CODE(tokenizer.ReadNextVariant(device, variant),
+            PdfErrorCode::MaxRecursionReached);
+    }
+
+    SpanStreamDevice device("[1]"sv);
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+    tokenizer.ReadNextVariant(device, variant);
+    REQUIRE(variant.IsArray());
+}
+
+TEST_CASE("TestTokenizerSmallBuffer")
+{
+    // The buffer must hold the longest token plus the null termination
+    auto buffer = std::make_shared<charbuff>(MAX_TOKEN_LENGTH);
+    ASSERT_THROW_WITH_ERROR_CODE(PdfTokenizer tokenizer(buffer), PdfErrorCode::InvalidHandle);
+    ASSERT_THROW_WITH_ERROR_CODE(PdfPostScriptTokenizer psTokenizer(buffer), PdfErrorCode::InvalidHandle);
+}
+
+TEST_CASE("TestTokenizerLongToken")
+{
+    // A token longer than the maximum is cut and its remaining characters skipped
+    string input(MAX_TOKEN_LENGTH + 45, 'a');
+    input.append(" endobj");
+    SpanStreamDevice device(input);
+    PdfTokenizer tokenizer;
+    string_view token;
+    REQUIRE(tokenizer.TryReadNextToken(device, token));
+    REQUIRE(token == string(MAX_TOKEN_LENGTH, 'a'));
+    REQUIRE(tokenizer.TryReadNextToken(device, token));
+    REQUIRE(token == "endobj");
+}
+
+TEST_CASE("TestArrayEntryCountLimit")
+{
+    // The elements past the limit are dropped, also when the first one is an
+    // array, and reading resumes after the outer array
+    string input("[");
+    for (unsigned i = 0; i < MAX_CONTAINER_ENTRY_COUNT; i++)
+        input.append("0 ");
+    input.append("[1] 2] /Next");
+
+    SpanStreamDevice device(input);
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+    REQUIRE(tokenizer.TryReadNextVariant(device, variant));
+    REQUIRE(variant.GetArray().GetSize() == MAX_CONTAINER_ENTRY_COUNT);
+    PdfVariant next;
+    REQUIRE(tokenizer.TryReadNextVariant(device, next));
+    REQUIRE(next.GetName() == "Next");
+}
+
 void Test(const string_view& buffer, PdfDataType dataType, string_view expected)
 {
     expected = expected.empty() ? buffer : expected;

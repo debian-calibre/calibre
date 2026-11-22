@@ -295,6 +295,37 @@ class Structure(BaseTest):
             landmarks,
         )
 
+    def test_split_on_page_breaks_in_conversion(self) -> None:
+        from calibre.ebooks.conversion.plumber import Plumber
+        from calibre.utils.logging import DevNull
+
+        css = '<style>h2 { page-break-before: always } .end { page-break-after: always }</style>'
+        flat = '<p>intro</p><h2>A</h2><p class="end">a</p><p>mid</p><h2 id="b">B</h2><p pb_order="1" pb_before="1">b</p>'
+        expected = ['intro', 'Aa', 'mid', 'Bb']
+        counter = count()
+
+        def convert(body: str) -> list[str]:
+            n = next(counter)
+            src = os.path.join(self.tdir, f'split-{n}.html')
+            with open(src, 'w') as f:
+                f.write(f'<html><head><title>t</title>{css}</head><body>{body}</body></html>')
+            out = os.path.join(self.tdir, f'split-{n}.epub')
+            plumber = Plumber(src, out, DevNull())
+            plumber.merge_ui_recommendations([('no_default_epub_cover', True, 3)])
+            plumber.run()
+            c = get_container(out, tdir=os.path.join(self.tdir, f'split-out-{n}'))
+            texts = []
+            for name, is_linear in c.spine_names:
+                root = c.parsed(name)
+                self.assertFalse(root.xpath('//*[@pb_order or @pb_before]'), 'Temporary attributes not removed')
+                texts.append(''.join(xml2text(x) for x in root.xpath('//*[local-name()="body"]')).replace('\n', '').replace(' ', ''))
+            return texts
+
+        # All split points are children of <body>
+        self.assertEqual(expected, convert(flat))
+        # Split points inside a wrapper, cannot be split at body children
+        self.assertEqual(expected, convert(f'<div class="wrapper">{flat}</div>'))
+
     def test_guide_reference_without_type(self) -> None:
         # Guide references with no type must not cause a crash, see
         # https://bugs.launchpad.net/bugs/2170400
@@ -373,8 +404,13 @@ class Structure(BaseTest):
         body = b'<html xmlns="http://www.w3.org/1999/xhtml"><body><p>x</p></body></html>'
         c = self.create_epub([cmi('xxx.html', body), cmi('a.html', body)], guide=[('xxx.html', 'cover', 'Cover'), ('a.html', 'text', 'Start')], ver=2)
         self.assertEqual(2, c.opf_version_parsed.major)
+        dc = c.opf_xpath('//opf:metadata')[0].makeelement('{http://purl.org/dc/elements/1.1/}language')
+        dc.text = 'eng'
+        c.opf_xpath('//opf:metadata')[0].append(dc)
         upgrade_book(c, lambda *a: None)
         self.assertEqual(3, c.opf_version_parsed.major)
+        # The default language of the OPF, which is only valid in EPUB 3
+        self.assertEqual(c.opf.get('{http://www.w3.org/XML/1998/namespace}lang'), 'en')
         self.assertFalse(c.opf_xpath('./opf:guide'))
         self.assertEqual(
             [
@@ -486,6 +522,16 @@ class Structure(BaseTest):
         self.assertFalse(root.get('{http://www.w3.org/XML/1998/namespace}lang') or root.get('lang'))
         self.assertEqual(problems, {MissingLanguage})
         self.assertNotIn(MissingAltText, problems)
+
+        # Setting the cover again replaces the generated cover page, whose SVG
+        # title is not content, instead of adding another cover page
+        for ver, no_svg in ((2, False), (3, False), (2, True), (3, True)):
+            c = self.create_epub([cmi('a.html', '<html xmlns="http://www.w3.org/1999/xhtml"><body><p>a</p></body></html>')], ver=ver)
+            for i in range(3):
+                set_cover(c, get_image_path('lt.png'), options={'no_svg': no_svg})
+                titlepage = find_cover_page(c)
+                self.assertEqual([name for name, linear in c.spine_names], [titlepage, 'a.html'], (ver, no_svg, i))
+                self.assertEqual(len([n for n in c.name_path_map if n.endswith('.png')]), 1, (ver, no_svg, i))
 
     def test_mark_sentences(self) -> None:
         from html5_parser import parse
@@ -620,6 +666,76 @@ class Structure(BaseTest):
         self.assertEqual(root.xpath('//*/@aria-describedby'), [nid])
         self.assertEqual(root.xpath('//*/@for'), [nid])
 
+    def test_batch_fixes(self) -> None:
+        "Test that fixing errors in batches gives the same result as fixing them one by one"
+        from calibre.ebooks.oeb.polish.check.links import CaseMismatch, DanglingLink, check_link_destinations, check_links
+        from calibre.ebooks.oeb.polish.check.main import fix_errors
+        from calibre.ebooks.oeb.polish.check.parsing import InvalidId, check_ids
+
+        def html(body: str, head: str = '') -> str:
+            return f'<html xmlns="http://www.w3.org/1999/xhtml"><head><link rel="stylesheet" href="s.css"/>{head}</head><body>{body}</body></html>'
+
+        ncx = (
+            '<ncx xmlns="http://www.daisy.org/z3986/2005/ncx/" version="2005-1"><head/><docTitle><text>x</text></docTitle><navMap>'
+            '<navPoint id="1np" playOrder="1"><navLabel><text>a</text></navLabel><content src="a.html#1"/></navPoint>'
+            '<navPoint id="2np" playOrder="2"><navLabel><text>b</text></navLabel><content src="b.html#2"/></navPoint>'
+            '</navMap></ncx>'
+        )
+        manifest = [
+            cmi(
+                'a.html',
+                html(
+                    '<p id="1">a</p><p id="1 a">b</p><p id="1_a">c</p><p id="id1_a">d</p><a href="#1">x</a><a href="b.html#2">y</a>'
+                    '<a href="gone.html">g</a><a href="gone.html#q">g</a><a href="B.html">c</a><a href="B.html">c</a><img src="IMG.png" alt="i"/>'
+                    '<div aria-labelledby="1 2"><label for="1">l</label></div>',
+                    '<style>#\\31 { color: red } p { background: url(gone.png) }</style>',
+                ),
+            ),
+            cmi(
+                'b.html',
+                html('<p id="2">b</p><p id="1">c</p><a href="a.html#1">l</a><a href="C.html#3x">c</a><span style="background: url(missing.png)">s</span>'),
+            ),
+            cmi('c.html', html('<p id="3x">c</p><a href="gone.html">g</a>')),
+            cmi('img.png', b'\x89PNG\r\n\x1a\n'),
+            cmi('s.css', '#\\31 { color: red }\n#\\32 , #\\33 x { color: blue }\np { background: url(gone2.png) }'),
+            cmi('toc.ncx', ncx),
+        ]
+        batch_types = (InvalidId, CaseMismatch, DanglingLink)
+
+        def errors(c: Container) -> list[BaseError]:
+            return [e for e in check_links(c) + check_ids(c) if isinstance(e, batch_types)]
+
+        def contents(c: Container) -> dict[str, bytes]:
+            for name in c.mime_map:
+                c.commit_item(name, keep_parsed=False)
+            return {name: c.raw_data(name, decode=False) for name in c.mime_map}
+
+        initial = errors(self.create_epub(manifest, ver=2))
+        self.assertEqual({type(e) for e in initial}, set(batch_types))
+        self.assertGreater(len(initial), 10)
+
+        def gui_order(errs: Sequence[BaseError]) -> list[BaseError]:
+            # The order in which the Check book tool passes errors to fix_errors()
+            return sorted(errs, key=lambda e: (100 - e.level, e.name))
+
+        for order in (list, lambda errs: list(reversed(errs)), gui_order):
+            # CaseMismatch errors are always fixed first, the rest in order
+            one_by_one = self.create_epub(manifest, ver=2)
+            errs = order(errors(one_by_one))
+            changed = False
+            for err in [e for e in errs if isinstance(e, CaseMismatch)] + [e for e in errs if not isinstance(e, CaseMismatch)]:
+                if err(one_by_one) is not False:
+                    changed = True
+            self.assertTrue(changed)
+            batched = self.create_epub(manifest, ver=2)
+            self.assertTrue(fix_errors(batched, order(errors(batched))))
+            self.assertEqual(contents(one_by_one), contents(batched))
+            self.assertEqual([str(e) for e in errors(batched)], [])
+            # The link with the wrong case must point to the renamed id
+            self.assertEqual([str(e) for e in check_link_destinations(batched)], [])
+            self.assertIn('c.html#id3x', batched.parsed('b.html').xpath('//*[local-name()="a"]/@href'))
+            self.assertFalse(fix_errors(batched, order(initial)))
+
     def test_dangling_id_reference(self) -> None:
         from calibre.ebooks.oeb.polish.check.main import fix_errors
         from calibre.ebooks.oeb.polish.check.parsing import DanglingIdReference, check_ids
@@ -725,6 +841,8 @@ class Structure(BaseTest):
                 for name, linear in c.spine_names:
                     root = c.parsed(name)
                     langs[name] = root.get('lang'), root.get(XML('lang'))
+                # The default language of the OPF is only valid in EPUB 3
+                self.assertEqual(c.opf.get(XML('lang')), ('fr' if src == de_html else expected[0]) if ver == '3' else None)
                 # The generated title page is in the language of the book
                 self.assertEqual(langs.pop('titlepage.xhtml'), ('fr', 'fr') if src == de_html else expected)
                 self.assertTrue(langs)
@@ -749,6 +867,7 @@ class Structure(BaseTest):
             MissingAccessibilitySummary,
             MissingAltText,
             MissingLanguage,
+            MissingPackageLanguage,
             SkippedHeadingLevel,
             check_accessibility,
         )
@@ -778,7 +897,12 @@ class Structure(BaseTest):
             cmi('i.png', b'\x89PNG\r\n\x1a\n'),
         ])
         found = errors(c)
-        self.assertEqual(set(found), {MissingAltText, SkippedHeadingLevel, MissingLanguage, MissingAccessibilityMetadata, MissingAccessibilitySummary})
+        self.assertEqual(
+            set(found),
+            {MissingAltText, SkippedHeadingLevel, MissingLanguage, MissingPackageLanguage, MissingAccessibilityMetadata, MissingAccessibilitySummary},
+        )
+        self.assertEqual(found[MissingPackageLanguage][0].name, c.opf_name)
+        self.assertFalse(found[MissingPackageLanguage][0].INDIVIDUAL_FIX)
         alt = found[MissingAltText]
         self.assertEqual([(e.name, [loc[1] for loc in e.all_locations]) for e in alt], [('a.html', [5, 7])])
         self.assertEqual([[loc[1] for loc in e.all_locations] for e in found[SkippedHeadingLevel]], [[2, 5]])
@@ -807,14 +931,31 @@ class Structure(BaseTest):
         # Fix the language, accessibility metadata cannot be fixed automatically
         found = errors(c)
         self.assertTrue(found[MissingLanguage][0].INDIVIDUAL_FIX)
+        self.assertTrue(found[MissingPackageLanguage][0].INDIVIDUAL_FIX)
         self.assertFalse(found[MissingAccessibilityMetadata][0].INDIVIDUAL_FIX)
         self.assertTrue(fix_errors(c, [e for v in found.values() for e in v]))
         for name in ('a.html', 'd.html'):
             root = c.parsed(name)
             self.assertEqual((root.get('lang'), root.get('{http://www.w3.org/XML/1998/namespace}lang')), ('de-AT', 'de-AT'))
         self.assertEqual(c.parsed('b.html').get('{http://www.w3.org/XML/1998/namespace}lang'), None)
+        self.assertEqual(c.opf.get('{http://www.w3.org/XML/1998/namespace}lang'), 'de-AT')
         self.assertFalse(c.opf_xpath('//opf:meta[@property]'))
         self.assertEqual(set(errors(c)), {MissingAltText, SkippedHeadingLevel, MissingAccessibilityMetadata, MissingAccessibilitySummary})
+
+        # Heading levels are checked across files in spine order, files not in
+        # the spine are checked on their own
+        c = self.create_epub(
+            [
+                cmi('part.html', html('<h2>part</h2>')),
+                cmi('cover.html', html('<p>no headings</p>')),
+                cmi('chapter.html', html('<h4>chapter</h4>\n<h2>next part</h2>')),
+                cmi('other.html', html('<h3>other</h3>')),
+                cmi('extra.html', html('<h4>not in spine</h4>')),
+            ],
+            spine=('part.html', 'cover.html', 'chapter.html', 'other.html'),
+        )
+        found = errors(c)
+        self.assertEqual([(e.name, [loc[1] for loc in e.all_locations]) for e in found[SkippedHeadingLevel]], [('chapter.html', [1])])
 
         # Only missing properties are reported
         c = self.create_epub([cmi('a.html', html('<p>a</p><img src="i.png" alt="x"/>')), cmi('i.png', b'\x89PNG\r\n\x1a\n')])
@@ -823,6 +964,7 @@ class Structure(BaseTest):
             meta = metadata.makeelement('{http://www.idpf.org/2007/opf}meta', property=prop)
             meta.text = val
             metadata.append(meta)
+        c.opf.set('{http://www.w3.org/XML/1998/namespace}lang', 'en')
         found = errors(c)
         self.assertEqual(set(found), {MissingAccessibilityMetadata})
         self.assertEqual(found[MissingAccessibilityMetadata][0].missing, ['schema:accessMode', 'schema:accessModeSufficient', 'schema:accessibilityFeature'])
@@ -845,6 +987,11 @@ class Structure(BaseTest):
         c = self.create_epub([cmi('a.html', html('<p>a</p>', lang=''))])
         self.assertFalse({type(e) for e in run_checks(c)} & set(found))
         self.assertIn(MissingLanguage, {type(e) for e in run_checks(c, accessibility=True)})
+        # The GUI uses is_accessibility_problem to show or hide accessibility problems
+        a11y = {type(e) for e in check_accessibility(c)}
+        self.assertTrue(a11y)
+        for e in run_checks(c, accessibility=True):
+            self.assertEqual(e.is_accessibility_problem, type(e) in a11y, str(e))
 
         # EPUB 2 books do not use the EPUB 3 accessibility metadata
         c = self.create_epub([cmi('a.html', html('<p>a</p>'))], ver=2)
@@ -855,6 +1002,7 @@ class Structure(BaseTest):
         self.assertTrue(fix_errors(c, errors(c)[MissingLanguage]))
         root = c.parsed('a.html')
         self.assertEqual((root.get('lang'), root.get('{http://www.w3.org/XML/1998/namespace}lang')), (None, 'en'))
+        self.assertIsNone(c.opf.get('{http://www.w3.org/XML/1998/namespace}lang'))
 
     def test_aria_roles(self) -> None:
         from calibre.ebooks.oeb.polish.check.accessibility import MissingRole, check_accessibility
@@ -983,11 +1131,20 @@ class Structure(BaseTest):
         self.assertTrue(apply_accessibility_changes(c, AccessibilityChanges(html_language=HTML_LANGUAGE_ALL)))
         self.assertEqual(langs(c), [('de', 'de'), ('de', 'de')])
         self.assertFalse(apply_accessibility_changes(c, AccessibilityChanges(languages=['deu'], html_language=HTML_LANGUAGE_ALL)))
+        # The default language of the OPF follows the language of the book
+        package_lang = '{http://www.w3.org/XML/1998/namespace}lang'
+        self.assertEqual(c.opf.get(package_lang), 'de')
+        c.opf.set(package_lang, 'fr')
+        self.assertFalse(apply_accessibility_changes(c, AccessibilityChanges(html_language=HTML_LANGUAGE_MISSING)))
+        self.assertEqual(c.opf.get(package_lang), 'fr')
+        self.assertTrue(apply_accessibility_changes(c, AccessibilityChanges(languages=['eng'])))
+        self.assertEqual(c.opf.get(package_lang), 'en')
 
         # The lang attribute is not valid in the XHTML 1.1 used by EPUB 2
         c = self.create_epub([('a.html', html(), None), ('b.html', html(' xml:lang="fr"'), None)], ver=2)
         self.assertTrue(apply_accessibility_changes(c, AccessibilityChanges(languages=['eng'], html_language=HTML_LANGUAGE_MISSING)))
         self.assertEqual(langs(c), [(None, 'en'), (None, 'fr')])
+        self.assertIsNone(c.opf.get('{http://www.w3.org/XML/1998/namespace}lang'))
 
     def test_accessibility_tool_alt_text(self) -> None:
         from calibre.ebooks.oeb.polish.accessibility import image_uses, set_alt_text

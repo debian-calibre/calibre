@@ -46,19 +46,22 @@ private:
     /// @param parentOutline parent of this outline item
     ///                        in the outline item hierarchy
     /// @param previous previous item of this item
-    PdfOutlineItem(PdfObject& obj, PdfOutlineItem* parentOutline, PdfOutlineItem* previous);
+    /// @param visited the objects already wrapped in the parsed hierarchy, or nullptr for the root
+    PdfOutlineItem(PdfObject& obj, PdfOutlineItem* parentOutline, PdfOutlineItem* previous,
+        std::unordered_set<const PdfObject*>* visited = nullptr);
 
     PdfOutlineItem(const PdfOutlineItem&) = delete;
 
 public:
     virtual ~PdfOutlineItem();
 
-    /// Create a PdfOutlineItem that is on the same level and follows the current item.
+    /// Create a PdfOutlineItem that is the last child of the current item.
     /// @param title title of this item
     PdfOutlineItem& CreateChild(const PdfString& title);
 
     /// Create a PdfOutlineItem that is on the same level and follows the current item.
     /// @param title title of this item
+    /// @remarks The outlines root can't have siblings
     PdfOutlineItem& CreateNext(const PdfString& title);
 
     /// @returns the previous item or nullptr if this is the first on the current level
@@ -82,10 +85,14 @@ public:
     /// the list of PdfObjects
     /// All pointers to this item will be invalid after this function
     /// call.
+    /// @remarks The outlines root can't be erased
     void Erase();
 
     /// Set the destination of this outline.
     /// @param dest the destination
+    /// @remarks The destination array is copied into the item: the given
+    /// instance is not the stored destination and the object behind it is
+    /// collected if nothing else references it
     void SetDestination(nullable<const PdfDestination&> dest);
 
     /// Get the destination of this outline.

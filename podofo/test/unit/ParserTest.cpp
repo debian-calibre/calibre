@@ -45,13 +45,13 @@ namespace PoDoFo
 
         static void TestReadXRefContents();
         static void TestMaxObjectCount();
-        static void TestMaxObjectCount2();
         static void TestReadXRefStreamContents();
         static void TestReadObjects();
         static void TestIsPdfFile();
         static void TestNestedArrays();
         static void TestNestedDictionaries();
         static void TestInvalidXRefEntries();
+        static void TestCollectGarbageMissingObjectStream();
 
         void ReadXRefContents(size_t offset, bool skipFollowPrevious)
         {
@@ -104,12 +104,12 @@ namespace PoDoFo
 
 METHOD_AS_TEST_CASE(PdfParserTest::TestReadXRefContents, "TestReadXRefContents");
 METHOD_AS_TEST_CASE(PdfParserTest::TestMaxObjectCount, "TestMaxObjectCount");
-METHOD_AS_TEST_CASE(PdfParserTest::TestMaxObjectCount2, "TestMaxObjectCount2", "[.]");
 METHOD_AS_TEST_CASE(PdfParserTest::TestReadXRefStreamContents, "TestReadXRefStreamContents");
 METHOD_AS_TEST_CASE(PdfParserTest::TestIsPdfFile, "TestIsPdfFile");
 METHOD_AS_TEST_CASE(PdfParserTest::TestNestedArrays, "TestNestedArrays");
 METHOD_AS_TEST_CASE(PdfParserTest::TestNestedDictionaries, "TestNestedDictionaries");
 METHOD_AS_TEST_CASE(PdfParserTest::TestInvalidXRefEntries, "TestInvalidXRefEntries");
+METHOD_AS_TEST_CASE(PdfParserTest::TestCollectGarbageMissingObjectStream, "TestCollectGarbageMissingObjectStream");
 
 TEST_CASE("TestRemoveStream")
 {
@@ -182,13 +182,6 @@ void PdfParserTest::TestMaxObjectCount()
     testReadXRefSubsection();
 
     PdfCommon::SetMaxObjectCount(maxNumberOfIndirectObjects);
-    testReadXRefSubsection();
-}
-
-// NOTE: This test is too long to be normally done on every run
-void PdfParserTest::TestMaxObjectCount2()
-{
-    PdfCommon::SetMaxObjectCount(numeric_limits<unsigned>::max());
     testReadXRefSubsection();
 }
 
@@ -2233,6 +2226,88 @@ void PdfParserTest::TestNestedDictionaries()
     }
 }
 
+// Dictionaries nested in value position must count towards the nesting depth
+TEST_CASE("TestNestedDictionaryValues")
+{
+    constexpr size_t maxNesting = 20000;
+    string buffer;
+    for (size_t i = 0; i < maxNesting; i++)
+        buffer.append("<</A ");
+    buffer.append("0");
+    for (size_t i = 0; i < maxNesting; i++)
+        buffer.append(">>");
+
+    SpanStreamDevice device(buffer);
+    PdfTokenizer tokenizer;
+    PdfVariant variant;
+    ASSERT_THROW_WITH_ERROR_CODE(tokenizer.ReadNextVariant(device, variant), PdfErrorCode::MaxRecursionReached);
+}
+
+// A chain of object streams where the /N of each stream is an indirect
+// reference to the single compressed object stored in the next stream:
+// decoding the first stream recurses through all the others
+TEST_CASE("TestChainedObjectStreams")
+{
+    constexpr unsigned streamCount = 32; // Above the object stream decoding cap
+    ostringstream oss;
+    vector<size_t> offsets(streamCount + 1);
+    oss << "%PDF-1.5\n";
+    for (unsigned i = 1; i <= streamCount; i++)
+    {
+        // The stream i stores the compressed object streamCount + i with value 1
+        string content = std::to_string(streamCount + i) + " 0 1";
+        offsets[i] = (size_t)oss.tellp();
+        oss << i << " 0 obj\n<< /Type /ObjStm /N ";
+        if (i == streamCount)
+            oss << "1";
+        else
+            oss << (streamCount + i + 1) << " 0 R";
+        oss << " /First " << content.size() - 1 << " /Length " << content.size() << " >>\nstream\n"
+            << content << "\nendstream\nendobj\n";
+    }
+
+    size_t xrefOffset = (size_t)oss.tellp();
+    ostringstream hex;
+    auto writeEntry = [&hex](unsigned type, size_t field2, unsigned field3)
+    {
+        hex << utls::Format("{:02X}{:06X}{:04X}", type, field2, field3);
+    };
+    writeEntry(0, 0, 0xFFFF);
+    for (unsigned i = 1; i <= streamCount; i++)
+        writeEntry(1, offsets[i], 0);
+    for (unsigned i = 1; i <= streamCount; i++)
+        writeEntry(2, i, 0);
+    writeEntry(1, xrefOffset, 0);
+    string entries = hex.str();
+    oss << (2 * streamCount + 1) << " 0 obj\n<< /Type /XRef /Size " << (2 * streamCount + 2)
+        << " /Root " << (streamCount + 1) << " 0 R /W [1 3 2] /Filter /ASCIIHexDecode /Length "
+        << entries.size() + 1 << " >>\nstream\n" << entries << ">\nendstream\nendobj\n"
+        << "startxref\n" << xrefOffset << "\n%%EOF";
+
+    string buffer = oss.str();
+    PdfMemDocument doc;
+    ASSERT_THROW_WITH_ERROR_CODE(doc.LoadFromBuffer(buffer, PdfLoadOptions::StrictParsing), PdfErrorCode::MaxRecursionReached);
+}
+
+// An all-zero /W consumes no stream bytes, so each /Index pair would
+// otherwise iterate up to the max object count regardless of the stream size
+TEST_CASE("TestXRefStreamZeroWidthEntries")
+{
+    static string_view zeroWidthPdf = R"(%PDF-1.5
+1 0 obj
+<< /Type /XRef /Size 1 /W [0 0 0] /Index [0 8388607 0 8388607] /Length 1 >>
+stream
+x
+endstream
+endobj
+startxref
+9
+%%EOF)";
+
+    PdfMemDocument doc;
+    ASSERT_THROW_WITH_ERROR_CODE(doc.LoadFromBuffer(zeroWidthPdf, PdfLoadOptions::SkipXRefRecovery), PdfErrorCode::InvalidXRefStream);
+}
+
 void PdfParserTest::TestInvalidXRefEntries()
 {
     auto currentLogSeverity = PdfCommon::GetMaxLoggingSeverity();
@@ -2689,13 +2764,13 @@ startxref
         PdfMemDocument doc;
         doc.LoadFromBuffer(strNextLoop);
 
-        // load should succeed, then GetOutlines goes recursive due to /Outlines loop
+        // load should succeed, then GetOutlines detects the /Outlines loop
         (void)doc.GetOutlines();
         FAIL("Should throw exception");
     }
     catch (PdfError& error)
     {
-        REQUIRE(error.GetCode() == PdfErrorCode::MaxRecursionReached);
+        REQUIRE(error.GetCode() == PdfErrorCode::BrokenFile);
     }
 
     // https://sourceforge.net/p/podofo/tickets/25/
@@ -2717,15 +2792,74 @@ startxref
     try
     {
         PdfMemDocument doc;
-        doc.LoadFromBuffer(strNextLoop);
+        doc.LoadFromBuffer(strSelfLoop);
 
-        // load should succeed, then GetOutlines goes recursive due to /Outlines loop
+        // load should succeed, then GetOutlines detects the /Outlines loop
         (void)doc.GetOutlines();
         FAIL("Should throw exception");
     }
     catch (PdfError& error)
     {
-        REQUIRE(error.GetCode() == PdfErrorCode::MaxRecursionReached);
+        REQUIRE(error.GetCode() == PdfErrorCode::BrokenFile);
+    }
+}
+
+TEST_CASE("TestOutlinesItemLinkedTwice")
+{
+    // /First and /Next of each item point to the next one: creating an item
+    // per path would unfold 2^32 items from 32 objects, without ever
+    // exceeding the recursion depth limit
+    string_view pdf = R"(%PDF-1.7
+1 0 obj<</Type/Catalog/Outlines 3 0 R/Pages 2 0 R>>endobj
+2 0 obj<</Type/Pages/Kids[]/Count 0>>endobj
+3 0 obj<</Type/Outlines/First 4 0 R/Last 4 0 R>>endobj
+4 0 obj<</Title(0)/First 5 0 R/Next 5 0 R>>endobj
+5 0 obj<</Title(1)/First 6 0 R/Next 6 0 R>>endobj
+6 0 obj<</Title(2)/First 7 0 R/Next 7 0 R>>endobj
+7 0 obj<</Title(3)/First 8 0 R/Next 8 0 R>>endobj
+8 0 obj<</Title(4)/First 9 0 R/Next 9 0 R>>endobj
+9 0 obj<</Title(5)/First 10 0 R/Next 10 0 R>>endobj
+10 0 obj<</Title(6)/First 11 0 R/Next 11 0 R>>endobj
+11 0 obj<</Title(7)/First 12 0 R/Next 12 0 R>>endobj
+12 0 obj<</Title(8)/First 13 0 R/Next 13 0 R>>endobj
+13 0 obj<</Title(9)/First 14 0 R/Next 14 0 R>>endobj
+14 0 obj<</Title(10)/First 15 0 R/Next 15 0 R>>endobj
+15 0 obj<</Title(11)/First 16 0 R/Next 16 0 R>>endobj
+16 0 obj<</Title(12)/First 17 0 R/Next 17 0 R>>endobj
+17 0 obj<</Title(13)/First 18 0 R/Next 18 0 R>>endobj
+18 0 obj<</Title(14)/First 19 0 R/Next 19 0 R>>endobj
+19 0 obj<</Title(15)/First 20 0 R/Next 20 0 R>>endobj
+20 0 obj<</Title(16)/First 21 0 R/Next 21 0 R>>endobj
+21 0 obj<</Title(17)/First 22 0 R/Next 22 0 R>>endobj
+22 0 obj<</Title(18)/First 23 0 R/Next 23 0 R>>endobj
+23 0 obj<</Title(19)/First 24 0 R/Next 24 0 R>>endobj
+24 0 obj<</Title(20)/First 25 0 R/Next 25 0 R>>endobj
+25 0 obj<</Title(21)/First 26 0 R/Next 26 0 R>>endobj
+26 0 obj<</Title(22)/First 27 0 R/Next 27 0 R>>endobj
+27 0 obj<</Title(23)/First 28 0 R/Next 28 0 R>>endobj
+28 0 obj<</Title(24)/First 29 0 R/Next 29 0 R>>endobj
+29 0 obj<</Title(25)/First 30 0 R/Next 30 0 R>>endobj
+30 0 obj<</Title(26)/First 31 0 R/Next 31 0 R>>endobj
+31 0 obj<</Title(27)/First 32 0 R/Next 32 0 R>>endobj
+32 0 obj<</Title(28)/First 33 0 R/Next 33 0 R>>endobj
+33 0 obj<</Title(29)/First 34 0 R/Next 34 0 R>>endobj
+34 0 obj<</Title(30)/First 35 0 R/Next 35 0 R>>endobj
+35 0 obj<</Title(31)>>endobj
+trailer<</Root 1 0 R/Size 36>>
+startxref
+999999
+%%EOF)";
+
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(pdf);
+    try
+    {
+        (void)doc.GetOutlines();
+        FAIL("Should throw exception");
+    }
+    catch (PdfError& error)
+    {
+        REQUIRE(error.GetCode() == PdfErrorCode::BrokenFile);
     }
 }
 
@@ -2864,6 +2998,158 @@ startxref
 
     PdfMemDocument doc;
     REQUIRE_NOTHROW(doc.LoadFromBuffer(pdf));
+}
+
+// A document storing the catalog (2 0 R), the page tree (3 0 R), the document
+// information (4 0 R) and a dictionary that is never accessed while saving
+// (7 0 R) in the object stream 1 0 R
+static string_view s_objStmPdf = R"(%PDF-1.5
+1 0 obj
+<< /Type /ObjStm /N 4 /First 20 /Length 206 >>
+stream
+2 0 3 52 4 94 7 143
+<< /Type /Catalog /Pages 3 0 R /PoDoFoTest 7 0 R >>
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+<< /Title (Compressed title) /Author (PoDoFo) >>
+<< /Type /PoDoFoTest /Value (Untouched) >>
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 595 842] >>
+endobj
+6 0 obj
+<< /Type /XRef /Size 8 /W [1 2 2] /Root 2 0 R /Info 4 0 R /Filter /ASCIIHexDecode /Length 80 >>
+stream
+000000FFFF0100090000020001000002000100010200010002010126000001016D00000200010003
+endstream
+endobj
+startxref
+365
+%%EOF)";
+
+// Same as above, but the entry of 7 0 R points to the missing object stream 9 0 R
+static string_view s_objStmMissingStreamPdf = R"(%PDF-1.5
+1 0 obj
+<< /Type /ObjStm /N 4 /First 20 /Length 206 >>
+stream
+2 0 3 52 4 94 7 143
+<< /Type /Catalog /Pages 3 0 R /PoDoFoTest 7 0 R >>
+<< /Type /Pages /Kids [5 0 R] /Count 1 >>
+<< /Title (Compressed title) /Author (PoDoFo) >>
+<< /Type /PoDoFoTest /Value (Untouched) >>
+endstream
+endobj
+5 0 obj
+<< /Type /Page /Parent 3 0 R /MediaBox [0 0 595 842] >>
+endobj
+6 0 obj
+<< /Type /XRef /Size 8 /W [1 2 2] /Root 2 0 R /Info 4 0 R /Filter /ASCIIHexDecode /Length 80 >>
+stream
+000000FFFF0100090000020001000002000100010200010002010126000001016D00000200090003
+endstream
+endobj
+startxref
+365
+%%EOF)";
+
+void PdfParserTest::TestCollectGarbageMissingObjectStream()
+{
+    // The missing object stream must not be registered, otherwise the
+    // garbage collection dereferences its missing object
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(s_objStmMissingStreamPdf);
+    doc.CollectGarbage();
+    REQUIRE(!doc.GetObjects().IsCompressedObjectStream(9));
+    REQUIRE(doc.GetObjects().GetObject(PdfReference(7, 0)) == nullptr);
+    REQUIRE(doc.GetObjects().GetObject(PdfReference(2, 0)) != nullptr);
+}
+
+TEST_CASE("TestCompressedObjectsLazyLoading")
+{
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(s_objStmPdf, PdfLoadOptions::SkipXRefRecovery | PdfLoadOptions::StrictParsing);
+
+    auto info = doc.GetObjects().GetObject(PdfReference(4, 0));
+    REQUIRE(info != nullptr);
+
+    // The catalog and the page tree were resolved while loading the document,
+    // but the information dictionary was not accessed yet
+    REQUIRE(!info->IsDelayedLoadDone());
+    REQUIRE(info->GetDictionary().MustFindKey("Title").GetString().GetString() == "Compressed title");
+    REQUIRE(info->IsDelayedLoadDone());
+
+    REQUIRE(info->TryUnload());
+    REQUIRE(!info->IsDelayedLoadDone());
+    REQUIRE(info->GetDictionary().MustFindKey("Author").GetString().GetString() == "PoDoFo");
+
+    // Moving an object that was never accessed must not lose its contents
+    auto& untouched = doc.GetObjects().MustGetObject(PdfReference(7, 0));
+    REQUIRE(!untouched.IsDelayedLoadDone());
+    PdfObject moved(std::move(untouched));
+    REQUIRE(moved.GetDictionary().MustFindKey("Value").GetString().GetString() == "Untouched");
+}
+
+// Compressed objects that were never accessed must be loaded
+// before being serialized in a full save
+TEST_CASE("TestNeverAccessedCompressedObjectFullSave")
+{
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(s_objStmPdf);
+    REQUIRE(!doc.GetObjects().MustGetObject(PdfReference(7, 0)).IsDelayedLoadDone());
+
+    string outBuff;
+    StringStreamDevice outDev(outBuff);
+    doc.Save(outDev, PdfSaveOptions::NoMetadataUpdate | PdfSaveOptions::NoCollectGarbage);
+
+    PdfMemDocument saved;
+    saved.LoadFromBuffer(outBuff);
+    REQUIRE(saved.GetCatalog().GetDictionary().MustFindKey("PoDoFoTest")
+        .GetDictionary().MustFindKey("Value").GetString().GetString() == "Untouched");
+}
+
+TEST_CASE("TestModifiedCompressedObjectPreservesObjectStream")
+{
+    PdfMemDocument doc;
+    doc.LoadFromBuffer(s_objStmPdf, PdfLoadOptions::SkipXRefRecovery | PdfLoadOptions::StrictParsing);
+
+    auto objStm = doc.GetObjects().GetObject(PdfReference(1, 0));
+    auto info = doc.GetObjects().GetObject(PdfReference(4, 0));
+    REQUIRE(objStm != nullptr);
+    REQUIRE(info != nullptr);
+
+    info->GetDictionary().AddKey("Title"_n, PdfString("Updated title"));
+    REQUIRE(info->IsDirty());
+
+    // The object stream still stores the contents of the other
+    // compressed objects, so it must not be invalidated
+    REQUIRE(!objStm->IsDirty());
+
+    string outBuff(s_objStmPdf);
+    StringStreamDevice outDev(outBuff);
+    doc.SaveUpdate(outDev, PdfSaveOptions::NoMetadataUpdate);
+
+    // The previous revision is untouched and the object stream is not rewritten
+    REQUIRE(string_view(outBuff).substr(0, s_objStmPdf.size()) == s_objStmPdf);
+    REQUIRE(outBuff.find("/ObjStm", s_objStmPdf.size()) == string::npos);
+
+    doc.LoadFromBuffer(outBuff);
+    REQUIRE(doc.GetTrailer().GetDictionary().MustFindKey("Info")
+        .GetDictionary().MustFindKey("Title").GetString().GetString() == "Updated title");
+    // The objects that were left in the object stream are still readable
+    ASSERT_EQUAL(doc.GetPages().GetCount(), 1u);
+}
+
+TEST_CASE("TestElementAccessorsAfterUnload")
+{
+    // The wrapper accessors reload an unloaded object instead of using the freed container
+    PdfMemDocument doc;
+    doc.Load(TestUtils::GetTestInputFilePath("TestImage2.pdf"));
+    auto& page = doc.GetPages().GetPageAt(0);
+    auto mediaBox = page.GetMediaBox();
+    REQUIRE(page.GetObject().TryUnload());
+    REQUIRE(!page.GetObject().IsDelayedLoadDone());
+    REQUIRE(page.GetMediaBox() == mediaBox);
+    REQUIRE(page.GetDictionary().HasKey("Type"));
 }
 
 string generateXRefEntries(size_t count)

@@ -76,6 +76,12 @@ PdfField::PdfField(PdfObject& obj, PdfAcroForm* acroform, PdfFieldType fieldType
 
 bool PdfField::TryCreateFromObject(PdfObject& obj, unique_ptr<PdfField>& field)
 {
+    if (!obj.IsDictionary())
+    {
+        field.reset();
+        return false;
+    }
+
     return tryCreateField(obj, getFieldType(obj), field);
 }
 
@@ -343,6 +349,15 @@ unique_ptr<PdfField> PdfField::createField(PdfAnnotationWidget& widget,
 
 shared_ptr<PdfField> PdfField::GetPtr()
 {
+    if (m_Parent.has_value() && m_Parent->get() != nullptr)
+    {
+        // A child field is owned by the children collection of its parent:
+        // being bound to the AcroForm doesn't mean it's listed in /Fields
+        auto ret = (*m_Parent)->GetChildren().GetFieldPtr(GetObject().GetIndirectReference());
+        if (ret != nullptr)
+            return ret;
+    }
+
     if (m_AcroForm != nullptr)
         return m_AcroForm->GetFieldPtr(GetObject().GetIndirectReference());
     else if (m_Widget != nullptr)
@@ -430,12 +445,12 @@ PdfFieldType PdfField::getFieldType(const PdfObject& obj)
     PdfFieldType ret = PdfFieldType::Unknown;
 
     // ISO 32000:2008, Section 12.7.3.1, Table 220, Page #432.
+    const PdfName* fieldType;
     auto ftObj = obj.GetDictionary().FindKeyParent("FT");
-    if (ftObj == nullptr)
+    if (ftObj == nullptr || !ftObj->TryGetName(fieldType))
         return PdfFieldType::Unknown;
 
-    auto& fieldType = ftObj->GetName();
-    if (fieldType == "Btn")
+    if (*fieldType == "Btn")
     {
         int64_t flags;
         PdfField::GetFieldFlags(obj, flags);
@@ -447,11 +462,11 @@ PdfFieldType PdfField::getFieldType(const PdfObject& obj)
         else
             ret = PdfFieldType::CheckBox;
     }
-    else if (fieldType == "Tx")
+    else if (*fieldType == "Tx")
     {
         ret = PdfFieldType::TextBox;
     }
-    else if (fieldType == "Ch")
+    else if (*fieldType == "Ch")
     {
         int64_t flags;
         PdfField::GetFieldFlags(obj, flags);
@@ -461,7 +476,7 @@ PdfFieldType PdfField::getFieldType(const PdfObject& obj)
         else
             ret = PdfFieldType::ListBox;
     }
-    else if (fieldType == "Sig")
+    else if (*fieldType == "Sig")
     {
         ret = PdfFieldType::Signature;
     }
@@ -590,13 +605,12 @@ bool PdfField::GetFieldFlag(int64_t value, bool defvalue) const
 bool PdfField::GetFieldFlags(const PdfObject& obj, int64_t& value)
 {
     auto flagsObject = obj.GetDictionary().FindKeyParent("Ff");
-    if (flagsObject == nullptr)
+    if (flagsObject == nullptr || !flagsObject->TryGetNumber(value))
     {
         value = 0;
         return false;
     }
 
-    value = flagsObject->GetNumber();
     return true;
 }
 
@@ -876,6 +890,8 @@ void PdfField::linkFieldObjectToParent(const shared_ptr<PdfField>& field, PdfFie
 
 void getFullName(const PdfObject& obj, bool skipEscapePartialName, string& fullname)
 {
+    // The /Parent chain of a hostile file can be a cycle
+    utls::RecursionGuard guard;
     auto& dict = obj.GetDictionary();
     auto parent = dict.FindKey("Parent");
     if (parent != nullptr)

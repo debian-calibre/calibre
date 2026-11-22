@@ -28,8 +28,8 @@ if TYPE_CHECKING:
 
     class PipeWorker(Popen[bytes]):
         # stdin and stdout are pipes unless the caller overrides them
-        stdin: IO[bytes]  # ty: ignore[invalid-mutable-override]
-        stdout: IO[bytes]  # ty: ignore[invalid-mutable-override]
+        stdin: IO[bytes]  # ty: ignore[incompatible-mutable-override]
+        stdout: IO[bytes]  # ty: ignore[incompatible-mutable-override]
 
 
 # Time to wait for the thread reading the worker's response to finish, once the
@@ -193,7 +193,7 @@ def start_pipe_worker(command: str, env: dict[str, str] | None = None, priority:
         if iswindows and pass_fds:
             for fd in pass_fds:
                 os.set_handle_inheritable(fd, False)
-    return p  # ty: ignore[invalid-return-type]
+    return p  # ty: ignore[invalid-explicit-return]
 
 
 def two_part_fork_job(env: dict[str, str] | None = None, priority: str = 'normal', cwd: str | None = None) -> Callable[..., dict[str, Any]]:

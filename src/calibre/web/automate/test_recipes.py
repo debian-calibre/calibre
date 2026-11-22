@@ -24,6 +24,7 @@ from calibre.web.automate import recipes
 from calibre.web.automate.bot_check import retry_bot_checks
 from calibre.web.automate.browser import Warmup
 from calibre.web.automate.test_camoufox import TEST_MAX_MOVE_TIME, TEST_TYPING_WPM, installed_camoufox
+from calibre.web.automate.test_download_deps import installed_download_deps
 
 if TYPE_CHECKING:
     from calibre.web.automate.download_deps import Install
@@ -448,6 +449,7 @@ class TestRecipeBrowser(unittest.TestCase):
         install = installed_camoufox()
         if install is None:
             raise unittest.SkipTest('the camoufox browser is not installed')
+        cls.enterClassContext(installed_download_deps())
         # Given to every browser so that none of them installs or updates it
         cls.install = install
         cls.server = Server()

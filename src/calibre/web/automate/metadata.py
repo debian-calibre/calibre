@@ -9,7 +9,7 @@ browser, for the sources whose websites block anything that is not a browser.
 # These two are read by calibre.live, which updates the server half of this
 # module from the calibre website, so that changes to the websites it drives
 # can be kept up with without needing a new calibre release
-module_version = 2
+module_version = 5
 minimum_calibre_version = (9, 17, 0)
 
 import asyncio
@@ -21,7 +21,9 @@ from threading import Lock, Thread
 from typing import TYPE_CHECKING, Any, ClassVar, NamedTuple
 from urllib.parse import urljoin, urlparse
 
+from calibre import human_readable
 from calibre.constants import ismacos
+from calibre.web.automate import download_deps
 from calibre.web.automate.camoufox import Element, Error, Page, TimeoutExceeded, debug, wait_for
 from calibre.web.automate.download_deps import Install
 from calibre.web.automate.worker import make_request, start_worker
@@ -33,6 +35,7 @@ if TYPE_CHECKING:
     from lxml.etree import _Element
 
     from calibre.web.automate.camoufox import Browser
+    from calibre.web.automate.download_deps import Release, VersionLock
 
 # How it fits together
 # ====================
@@ -79,6 +82,18 @@ FIELD_TIMEOUT = 20.0  # seconds
 # before clicking on anything in it, see SourceHandler.settle()
 SETTLE_TIMEOUT = 10.0  # seconds
 SCROLL_TIMEOUT = 3.0  # seconds
+# How long a request waits for the browser to be installed before being told
+# it is unavailable, long enough to find an existing install, even if another
+# process is checking it at the same time, not long enough to wait for a
+# download. Downloads by this process are spotted straight away.
+INSTALL_WAIT = 10.0  # seconds
+READY_POLL_INTERVAL = 0.25  # seconds
+# How long a failure to launch the browser is reported to every request,
+# before launching is tried again
+LAUNCH_RETRY_INTERVAL = 300.0  # seconds
+# Likewise for a failure to install it, used only with calibre < 9.19, which
+# does not record failed installs itself
+INSTALL_RETRY_INTERVAL = 3600.0  # seconds
 NEW_TAB_MODIFIER = 'meta' if ismacos else 'control'
 
 
@@ -544,6 +559,8 @@ class AmazonHandler(SourceHandler):
             match action:
                 case 'search':
                     return await self.search(args, deadline)
+                case 'search_results':
+                    return await self.search_results(args, deadline)
                 case 'details':
                     return {'details': await self.open_in_tabs(None, [Link(str(u)) for u in args['urls']], deadline)}
         except Blocked as err:
@@ -605,18 +622,23 @@ class AmazonHandler(SourceHandler):
                     await self.submit_and_wait(page, lambda: page.click(AMAZON_CHECKPOINT_SUBMIT, timeout=deadline.remaining(FIELD_TIMEOUT)), deadline)
         raise Blocked('blocked', 'Amazon keeps answering with pages that are not the one asked for')
 
-    async def search(self, args: Mapping[str, Any], deadline: Deadline) -> dict[str, Any]:
+    async def run_search(self, args: Mapping[str, Any], deadline: Deadline) -> tuple[Page, str, _Element]:
         """Search the way a person does, by typing the query into the search
         box of the store's home page, or of whatever page of the store the tab
-        was left on, and then open the books found in tabs of their own."""
+        was left on, handing back the tab, the HTML of the results page and
+        that page parsed."""
         site = str(args['site'])
-        domain = str(args.get('domain') or 'com')
         page = await self.search_page(site, deadline)
         if urlparse(page.url).hostname != site:
             await page.open(f'https://{site}/', wait='domcontentloaded', timeout=deadline.remaining(PAGE_TIMEOUT))
         root = (await self.check_page(page, deadline))[1]
         await self.settle(page, deadline)
-        if value := amazon_department_value(root, str(args.get('department') or 'aps')):
+        department = str(args.get('department') or 'aps')
+        if not (value := amazon_department_value(root, department)):
+            # The department menu can be filled in by the scripts of the page
+            # only once it has loaded
+            value = amazon_department_value(parse_html(await page.html()), department)
+        if value:
             await page.call(SELECT_OPTION_JS, AMAZON_DEPARTMENT, value)
         await self.scroll_to_top(page, deadline)
         box = await page.wait_for_selector(AMAZON_SEARCH_BOX, timeout=deadline.remaining(FIELD_TIMEOUT), visible=True)
@@ -625,8 +647,15 @@ class AmazonHandler(SourceHandler):
         finally:
             await box.dispose()
         await self.submit_and_wait(page, lambda: page.keyboard.press('Enter'), deadline)
-        root = (await self.check_page(page, deadline))[1]
+        html, root = await self.check_page(page, deadline)
         await self.settle(page, deadline)
+        return page, html, root
+
+    async def search(self, args: Mapping[str, Any], deadline: Deadline) -> dict[str, Any]:
+        """Search, see run_search(), and then open the books found in tabs of
+        their own."""
+        domain = str(args.get('domain') or 'com')
+        page, html, root = await self.run_search(args, deadline)
         links = amazon_results(root, page.url, domain, int(args.get('max_results') or 5), bool(args.get('prefer_kindle')))
         ans: dict[str, Any] = {'results_url': page.url, 'details': await self.open_in_tabs(page, links, deadline)}
         if args.get('include_results_html'):
@@ -634,6 +663,13 @@ class AmazonHandler(SourceHandler):
 
             ans['results_html'] = tostring(root, encoding='unicode', method='html')
         return ans
+
+    async def search_results(self, args: Mapping[str, Any], deadline: Deadline) -> dict[str, Any]:
+        """Search, see run_search(), handing back only the HTML of the results
+        page, used by the Get books store plugins, which get everything they
+        need from the results page."""
+        page, html, root = await self.run_search(args, deadline)
+        return {'url': page.url, 'html': html}
 
 
 # }}}
@@ -794,7 +830,7 @@ HANDLERS: tuple[type[SourceHandler], ...] = (AmazonHandler, GoogleImagesHandler)
 
 
 class State:
-    """Everything the worker process owns, created once, on the first request."""
+    """Everything the worker process owns, created once the browser has been launched, see Launcher."""
 
     def __init__(self, browser: Browser, handlers: Iterable[type[SourceHandler]] = HANDLERS, max_detail_tabs: int = MAX_DETAIL_TABS) -> None:
         self.browser = browser
@@ -845,38 +881,249 @@ class State:
 state: State | None = None
 
 
-async def impl_setup_browser(input_data: Mapping[str, Any]) -> None:
-    global state
-    from calibre.web.automate.browser import Browser, Warmup
+class BrowserUnavailable(Exception):
+    """The browser cannot be used, at least for now. The sources manage
+    without it when told so. The message says all there is to say, so the
+    worker does not send the traceback of where this was raised to the client."""
 
-    warmup = None
-    if input_data.get('warmup', True):
-        warmup = Warmup()
-        debug(f'Warming up camoufox on: {", ".join(warmup.urls)}')
-    install = None
-    if (install_data := input_data.get('install')) is not None:
-        install = Install(*install_data)
-    browser = Browser(headless=bool(input_data.get('headless', True)), warmup=warmup, install=install)
-    started = time.monotonic()
-    await browser.launch()
-    debug(f'Camoufox ready for metadata downloads in {time.monotonic() - started:.1f} seconds')
-    state = State(browser, max_detail_tabs=int(input_data.get('max_detail_tabs') or MAX_DETAIL_TABS))
-    state.start_reaper()
+    omit_traceback = True
+
+    def __init__(self, message: str, details: str = '') -> None:
+        super().__init__(f'{message}\n\n{details}'.rstrip() if details else message)
+        self.message = message
+
+
+def deps() -> ModuleType:
+    """The live version of download_deps, so that changes to where the browser
+    is downloaded from do not need a new calibre release. calibre < 9.20 has no
+    live version of it, so the installed one is used."""
+    live_deps: Callable[[], ModuleType] | None = getattr(download_deps, 'live_module', None)
+    return download_deps if live_deps is None else live_deps()
+
+
+def installing_message() -> str:
+    msg = 'The browser used to download from this website is being installed, which can take a while. Until that is done, this website cannot be used.'
+    # install_progress is not present in calibre < 9.19
+    p = getattr(deps().camoufox_installer, 'install_progress', None)
+    if p is not None:
+        if p.stage == 'downloading' and p.total:
+            msg += f' {human_readable(p.done)} of {human_readable(p.total)} downloaded so far.'
+        elif p.stage == 'unpacking':
+            msg += ' It has been downloaded and is being unpacked.'
+    return msg
+
+
+def is_installing() -> bool:
+    """Whether this process is downloading or unpacking the browser."""
+    return getattr(deps().camoufox_installer, 'install_progress', None) is not None
+
+
+class Launcher:
+    """Installs and launches the browser in the background.
+
+    Installing the browser means downloading over a gigabyte, so rather than
+    have requests wait for it, they are told the browser is unavailable,
+    letting the sources fall back to doing without it. A failure is reported
+    to every request until it is time to try again, instead of being retried
+    by every request, which would mean downloading the browser over and over.
+    """
+
+    def __init__(self, input_data: Mapping[str, Any]) -> None:
+        self.input_data = input_data
+        self.task: asyncio.Task[None] | None = None
+        self.stage = ''
+        self.stage_started = 0.0
+        self.failure: BrowserUnavailable | None = None
+        self.retry_at = 0.0
+        self.browser: Browser | None = None
+
+    def set_stage(self, stage: str) -> None:
+        self.stage, self.stage_started = stage, time.monotonic()
+
+    def start(self) -> asyncio.Task[None]:
+        """Start launching, unless that is already being done, has been done,
+        or has failed too recently to try again."""
+        if self.task is None or (self.task.done() and state is None and (self.failure is None or time.time() >= self.retry_at)):
+            self.failure = None
+            self.task = asyncio.create_task(self.run())
+        return self.task
+
+    async def run(self) -> None:
+        global state
+        try:
+            state = await self.launch()
+        except Exception as err:
+            self.failure, self.retry_at = self.failure_for(err)
+            debug(str(self.failure))
+        finally:
+            self.set_stage('')
+
+    async def install(self) -> tuple[Install, VersionLock | None]:
+        if (install_data := self.input_data.get('install')) is not None:
+            return Install(*install_data), None  # the browser locks it itself
+        self.set_stage('installing')
+        return await asyncio.get_running_loop().run_in_executor(None, lambda: deps().use_camoufox())
+
+    async def launch(self) -> State:
+        from calibre.web.automate.browser import Browser, Warmup
+
+        install, install_lock = await self.install()
+        try:
+            self.set_stage('launching')
+            warmup = None
+            if self.input_data.get('warmup', True):
+                warmup = Warmup()
+                debug(f'Warming up camoufox on: {", ".join(warmup.urls)}')
+            self.browser = browser = Browser(headless=bool(self.input_data.get('headless', True)), warmup=warmup, install=install)
+            started = time.monotonic()
+            await browser.launch()
+        finally:
+            # The browser holds a lock of its own on the install once launched
+            if install_lock is not None:
+                install_lock.release()
+        debug(f'Camoufox ready for metadata downloads in {time.monotonic() - started:.1f} seconds')
+        ans = State(browser, max_detail_tabs=int(self.input_data.get('max_detail_tabs') or MAX_DETAIL_TABS))
+        ans.start_reaper()
+        return ans
+
+    def failure_for(self, err: Exception) -> tuple[BrowserUnavailable, float]:
+        import traceback
+
+        now = time.time()
+        if self.stage != 'installing':
+            message = f'Failed to start the browser used to download from this website with error: {err}'
+            return BrowserUnavailable(message, ''.join(traceback.format_exception(err))), now + LAUNCH_RETRY_INTERVAL
+        if isinstance(err, getattr(dd := deps(), 'InstallFailed', ())):
+            # A failure recorded by calibre >= 9.19, with an explanation of it
+            return BrowserUnavailable(err.message, err.details), (err.retry_at or now + LAUNCH_RETRY_INTERVAL)
+        display_name = 'the browser used to download from this website'
+        if (explain := getattr(dd, 'explain_install_failure', None)) is not None:
+            message = explain(display_name, err, dd.camoufox_installer.install_dir)
+        else:
+            message = f'Failed to install {display_name} with error: {err}'
+        details = ''.join(traceback.format_exception(err))
+        if hasattr(dd, 'InstallFailed'):
+            # Not a failure to install, which would have been InstallFailed, so
+            # something cheap to retry, such as not being able to find out what
+            # the latest release is
+            return BrowserUnavailable(message, details), now + LAUNCH_RETRY_INTERVAL
+        # Older calibre does not record failures, so do not try downloading
+        # over a gigabyte again for a while
+        return BrowserUnavailable(message, details), now + INSTALL_RETRY_INTERVAL
+
+    async def wait_until_ready(self, deadline: Deadline) -> State:
+        """Wait for the browser to be launched, but not for it to be installed."""
+        while True:
+            if state is not None:
+                return state
+            task = self.start()
+            if self.failure is not None:
+                raise self.failure
+            if self.stage == 'installing' and (is_installing() or time.monotonic() - self.stage_started > INSTALL_WAIT):
+                raise BrowserUnavailable(installing_message())
+            if (remaining := deadline.remaining()) <= 0:
+                raise BrowserUnavailable('Timed out waiting for the browser used to download from this website to start')
+            await asyncio.wait((task,), timeout=min(remaining, READY_POLL_INTERVAL))
+
+    async def wait_until_launched(self) -> State:
+        """Wait for the browser to be launched, installing it first if needed."""
+        while True:
+            if state is not None:
+                return state
+            task = self.start()
+            if self.failure is not None:
+                raise self.failure
+            await asyncio.wait((task,))
+
+    def close(self) -> None:
+        """Abandon launching, closing the browser, if it was started."""
+        task, self.task = self.task, None
+        if task is not None and not task.done():
+            task.cancel()
+        browser, self.browser = self.browser, None
+        if browser is not None and (state is None or state.browser is not browser):
+            from calibre.web.automate.browser import close_browser_from_loop
+
+            close_browser_from_loop(browser)
+
+
+launcher: Launcher | None = None
+
+
+def get_launcher(input_data: Mapping[str, Any]) -> Launcher:
+    global launcher
+    if launcher is None:
+        launcher = Launcher(input_data)
+    return launcher
+
+
+# The backups of the camoufox releases, used if the camoufox repository is not
+# found, as happened when GitHub removed it. Only for calibre versions whose
+# download_deps does not know about the backups itself.
+CAMOUFOX_BACKUP_REPO = 'jo-inc/camofox-browser'
+
+
+def use_camoufox_backups_if_needed() -> None:
+    """Have calibre < 9.20 install camoufox from the backups of its releases when
+    the camoufox repository is not found. Done here since, in those versions,
+    download_deps is not updated live, unlike this module."""
+    if hasattr(dd := deps(), 'CAMOUFOX_BACKUP_REPOS'):
+        return  # download_deps falls back to the backups itself
+    from urllib.error import HTTPError
+
+    if (cls := getattr(dd, 'Camoufox', None)) is None:
+        return
+    original: Callable[..., Release] = cls.latest_release
+    if getattr(original, 'uses_camoufox_backups', False):
+        return
+
+    def latest_release(self: object, allow_prerelease: bool = False, **kw: Any) -> Release:  # ruff: ignore[any-type]
+        try:
+            return original(self, allow_prerelease=allow_prerelease, **kw)
+        except HTTPError as e:
+            if e.code != 404 or dd.CAMOUFOX_REPO == CAMOUFOX_BACKUP_REPO:
+                raise
+        debug(f'The camoufox releases in {dd.CAMOUFOX_REPO} were not found, using the backups in {CAMOUFOX_BACKUP_REPO} instead')
+        # Switched for good, so that later update checks go straight to the backups
+        dd.CAMOUFOX_REPO = CAMOUFOX_BACKUP_REPO
+        return original(self, allow_prerelease=allow_prerelease, **kw)
+
+    latest_release.uses_camoufox_backups = True  # type: ignore[attr-defined]
+    cls.latest_release = latest_release  # type: ignore[method-assign]
+
+
+async def impl_setup_browser(input_data: Mapping[str, Any]) -> None:
+    try:
+        use_camoufox_backups_if_needed()
+    except Exception as e:
+        # Not fatal, the camoufox repository might be available after all
+        debug(f'Failed to set up using the backups of the camoufox releases with error: {e}')
+    # Not waited for, so that the setup does not fail, which would have the
+    # worker try it again for every request, see Launcher
+    get_launcher(input_data).start()
 
 
 async def impl_handle_request(input_data: Mapping[str, Any], request: Mapping[str, Any]) -> dict[str, Any]:
-    assert state is not None
     if not request.get('source'):
         if request.get('action') == 'launch':
-            # Only there to get the browser launched, which has been done by
-            # the time any request is handled
+            # Waits for everything, including any install, so that the client
+            # gets to know if the browser cannot be used
+            if state is None:
+                await get_launcher(input_data).wait_until_launched()
             return {'module_version': module_version}
         raise KeyError(f'Unknown action for the camoufox metadata worker: {request.get("action")}')
-    return await state.handle(request)
+    current = state
+    if current is None:
+        deadline = Deadline(float(request.get('deadline') or 0) or time.time() + DEFAULT_REQUEST_TIMEOUT)
+        current = await get_launcher(input_data).wait_until_ready(deadline)
+    return await current.handle(request)
 
 
 def impl_finalize(input_data: Mapping[str, Any]) -> None:
-    global state
+    global state, launcher
+    current_launcher, launcher = launcher, None
+    if current_launcher is not None:
+        current_launcher.close()
     current, state = state, None
     if current is not None:
         from calibre.web.automate.browser import close_browser_from_loop
@@ -949,6 +1196,9 @@ class SessionWorker:
         self.path = ''
         self.close_worker: Callable[[], int] | None = None
         self.launch_requested = False
+        # Called, in a background thread, with the error message when the
+        # browser cannot be launched, for example, because installing it failed
+        self.on_launch_failure: Callable[[str], None] | None = None
 
     def ensure_started(self) -> str:
         with self.lock:
@@ -986,6 +1236,14 @@ class SessionWorker:
                     debug(f'Launching camoufox for metadata downloads failed: {response.exception}')
                     with self.lock:
                         self.launch_requested = False
+                    if (callback := self.on_launch_failure) is not None:
+                        try:
+                            callback(response.exception)
+                        except Exception:
+                            import traceback
+
+                            debug('Reporting the failure to launch camoufox for metadata downloads failed with error:')
+                            traceback.print_exc()
 
         Thread(target=launch, name='LaunchMetadataBrowser', daemon=True).start()
 

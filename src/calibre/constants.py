@@ -18,7 +18,7 @@ if TYPE_CHECKING:
     import apsw
 
 __appname__ = 'calibre'
-numeric_version = (9, 18, 0)
+numeric_version = (9, 19, 0)
 __version__ = '.'.join(map(str, numeric_version))
 git_version = None
 __author__ = 'Kovid Goyal <kovid@kovidgoyal.net>'
@@ -219,7 +219,7 @@ class DeVendorLoader(Loader):
     def create_module(self, spec: ModuleSpec) -> ModuleType:
         return self.aliased_module
 
-    def exec_module(self, module: ModuleType) -> ModuleType:  # ty: ignore[invalid-method-override]
+    def exec_module(self, module: ModuleType) -> ModuleType:  # ty: ignore[incompatible-method-override]
         return module
 
     def __repr__(self) -> str:

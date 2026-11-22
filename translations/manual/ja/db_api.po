@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-07-05 16:49+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -32,7 +32,7 @@ msgstr "この API はスレッドセーフです。(複数のリーダ、単一
 msgid ""
 "If you are in a calibre plugin that is part of the main calibre GUI, you get"
 " access to it like this instead::"
-msgstr "メインの calibre GUI の一部である calibre プラグインにいるなら、代わりに次のようにしてアクセスします::"
+msgstr "メインの calibre GUI の一部である calibre プラグインの中からは、代わりに次のようにしてアクセスします::"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:1
@@ -40,7 +40,7 @@ msgid ""
 "An in-memory cache of the metadata.db file from a calibre library. This "
 "class also serves as a threadsafe API for accessing the database. The in-"
 "memory cache is maintained in normal form for maximum performance."
-msgstr "calibre ライブラリの metadata.db ファイルのメモリ内キャッシュ。このクラスはデータベースにアクセスするためのスレッドセーフな API としても機能します。メモリ内キャッシュは、性能を最大化するために通常の形式で維持されます。"
+msgstr "calibre ライブラリの metadata.db ファイルのメモリ内キャッシュ。このクラスはデータベースにアクセスするためのスレッドセーフな API としても機能します。メモリ内キャッシュは、性能を最大化するために正規形で維持されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache:5
@@ -48,38 +48,38 @@ msgid ""
 "SQLITE is simply used as a way to read and write from metadata.db robustly. "
 "All table reading/sorting/searching/caching logic is re-implemented. This "
 "was necessary for maximum performance and flexibility."
-msgstr "SQLITE は metadata.db に安全に読み書きするための手段として使用されます。テーブルの読取り/並べ替え/検索/キャッシュのロジックが再実装されます。これは性能の最大化と柔軟性のために必要です。"
+msgstr "SQLITE は metadata.db に安全に読み書きするための手段として使用されます。テーブルの読取り/並べ替え/検索/キャッシュのロジックはすべて再実装されています。これは性能と柔軟性を最大化するために必要でした。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_created:1
 msgid ""
 "When a new book record is created in the database, with the book id as the "
 "only argument"
-msgstr "本の ID を唯一の引数として新しい本のレコードをデータベースに作成するとき"
+msgstr "新しい本のレコードがデータベースに作成されたとき。引数は本の ID のみ"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.book_edited:1
 msgid "When a book format is edited, with arguments: (book_id, fmt)"
-msgstr "次の引数とともに本の形式を編集するとき: (book_id, fmt)"
+msgstr "本の形式が編集されたとき。引数: (book_id, fmt)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.books_removed:1
 msgid ""
 "When books are removed from the database with the list of book ids as the "
 "only argument"
-msgstr "本の ID を唯一の引数としてデータベースから本を削除するとき"
+msgstr "データベースから本が削除されたとき。引数は本の ID のリストのみ"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.format_added:1
 msgid "When a format is added to a book, with arguments: (book_id, format)"
-msgstr "次の引数とともに本に形式を追加するとき: (book_id, format)"
+msgstr "本に形式が追加されたとき。引数: (book_id, format)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.formats_removed:1
 msgid ""
 "When formats are removed from a book, with arguments: (mapping of book id to"
 " set of formats removed from the book)"
-msgstr "次の引数とともに本から形式が削除されるとき: (book_id から、削除される本の形式のリストへのマッピング)"
+msgstr "本から形式が削除されたとき。引数: (本の ID から、その本から削除された形式のセットへのマッピング)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.indexing_progress_changed:1
@@ -106,21 +106,21 @@ msgstr "タグや著者などの項目の名前を一部またはすべての本
 msgid ""
 "When the links associated with items(s) are changed, with arguments: "
 "(field_name, item_ids)"
-msgstr "要素に関連するリンクを変更したとき。引数: (field_name, item_ids)"
+msgstr "項目に関連するリンクが変更されたとき。引数: (field_name, item_ids)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.metadata_changed:1
 msgid ""
 "When some metadata is changed for some books, with arguments: (name of "
 "changed field, set of affected book ids)"
-msgstr "次の引数とともに一部の本で一部の書誌を変更するとき: (変更したフィールド名, 影響する本の ID のセット)"
+msgstr "一部の本で書誌が変更されたとき。引数: (変更されたフィールド名, 影響を受ける本の ID のセット)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/listeners.pydocstring of
 #: calibre.db.cache.Cache.EventType.notes_changed:1
 msgid ""
 "When the notes associated with item(s) are changed, with arguments: "
 "(field_name, item_ids)"
-msgstr "要素に関連するノートを変更したとき。引数: (field_name, item_ids)"
+msgstr "項目に関連するノートが変更されたとき。引数: (field_name, item_ids)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:1
@@ -129,7 +129,7 @@ msgid ""
 "2-tuples, each 2-tuple of the form :code:`(mi, format_map)` where mi is a "
 "Metadata object and format_map is a dictionary of the form :code:`{fmt: "
 "path_or_stream}`, for example: :code:`{'EPUB': '/path/to/file.epub'}`."
-msgstr "指定した本をライブラリに追加。本は 2 タプルの繰り返し可能なもので、各 2 タプルは :code:`(mi, format_map)` のフォームです。mi は Metadata オブジェクトで、format_map はフォーム :code:`{fmt: path_or_stream}` の辞書です。例: :code:`{'EPUB': '/path/to/file.epub'}`"
+msgstr "指定した本をライブラリに追加。本は 2 タプルのイテラブルで、各 2 タプルは :code:`(mi, format_map)` という形式です。mi は Metadata オブジェクトで、format_map は :code:`{fmt: path_or_stream}` という形式の辞書です。例: :code:`{'EPUB': '/path/to/file.epub'}`"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_books:6
@@ -145,7 +145,7 @@ msgstr "リストのペア (:code:`ids, duplicates`) を返します。``ids`` �
 msgid ""
 "Add data for name where val_map is a map of book_ids to values. If "
 "delete_first is True, all previously stored data for name will be removed."
-msgstr "name のデータを追加。val_map は book_ids の値へのマップです。delete_first が True のとき、以前格納していた name のデータはすべて削除されます。"
+msgstr "name のデータを追加。val_map は book_ids から値へのマップです。delete_first が True のとき、以前格納していた name のデータはすべて削除されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_extra_files:1
@@ -188,24 +188,24 @@ msgid ""
 "Register a callback function that will be called after certain actions are "
 "taken on this database. The function must take three arguments: "
 "(:class:`EventType`, library_id, event_type_specific_data)"
-msgstr "このデータベースで特定のアクションが実行された後に呼び出されるコールバック関数を登録します。関数は 3 つの引数が必要です: (:class:`EventType`, library_id, event_type_specific_data)"
+msgstr "このデータベースで特定のアクションが実行された後に呼び出されるコールバック関数を登録します。関数には 3 つの引数が必要です: (:class:`EventType`, library_id, event_type_specific_data)"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.add_notes_resource:1
 msgid ""
 "Add the specified resource so it can be referenced by notes and return its "
 "content hash"
-msgstr "ノートを参照できるリソースを追加して、コンテンツハッシュを返します。"
+msgstr "指定したリソースをノートから参照できるように追加して、そのコンテンツハッシュを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_styles:1
 msgid "Return a tuple of all built-in annotation styles."
-msgstr "データベース中のすべての組み込み注釈をタプルで返します。"
+msgstr "すべての組み込み注釈スタイルをタプルで返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_types:1
 msgid "Return a tuple of all annotation types in the database."
-msgstr "データベース中のすべての注釈をタプルで返します。"
+msgstr "データベース中のすべての注釈の種類をタプルで返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_annotation_users:1
@@ -227,12 +227,12 @@ msgid ""
 "Return a tuple containing all annotations for the specified book_id as a "
 "dict with keys: `format`, `user_type`, `user`, `annotation`. Here, "
 "annotation is the annotation data."
-msgstr "指定のbook_idですべての注釈を含むタプルを返します。辞書のKEYは: `format`, `user_type`, `user`, `annotation` ここのannotaionは注釈データです。"
+msgstr "指定した book_id のすべての注釈を、キーが `format`, `user_type`, `user`, `annotation` の辞書として含むタプルを返します。annotation は注釈データです。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_book_ids:1
 msgid "Frozen set of all known book ids."
-msgstr "すべての既知の本の ID の凍結セット。"
+msgstr "すべての既知の本の ID のfrozenset。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_for:1
@@ -242,7 +242,7 @@ msgstr "field_for と同じですが、一度に複数の本を操作します"
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_ids:1
 msgid "Frozen set of ids for all values in the field ``name``."
-msgstr "フィールド ``name`` のすべての値の frozenset 。"
+msgstr "フィールド ``name`` のすべての値の ID の frozenset 。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.all_field_names:1
@@ -257,7 +257,7 @@ msgstr "すべてのフィールド名の frozenset です（多対1または多
 msgid ""
 "Return the number of annotations for the specified book available in the "
 "database."
-msgstr "データベース中の指定bookの注釈の個数を返します。"
+msgstr "データベース中の指定した本の注釈の個数を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.annotations_map_for_book:1
@@ -278,7 +278,7 @@ msgstr "著者データをキー付きの辞書として返します: name, sort
 msgid ""
 "If no authors with the specified ids are found an empty dictionary is "
 "returned. If author_ids is None, data for all authors is returned."
-msgstr "指定された ID を持つ著者が見つからない場合は、空の辞書が返されます。 a uthor_ids が None の場合、すべての著者のデータが返されます。"
+msgstr "指定された ID を持つ著者が見つからない場合は、空の辞書が返されます。 author_ids が None の場合、すべての著者のデータが返されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sort_from_authors:1
@@ -286,7 +286,7 @@ msgid ""
 "Given a list of authors, return the author_sort string for the authors, "
 "preferring the author sort associated with the author over the computed "
 "string."
-msgstr "著者のリストを指定して、著者の author_sort 文字列を返します。計算された文字列よりも、著者読みに関連付けられた著者の並べ替えを優先します。"
+msgstr "著者のリストを指定して、著者の author_sort 文字列を返します。計算された文字列よりも、著者に関連付けられた著者読みを優先します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.author_sorts:1
@@ -299,7 +299,7 @@ msgid ""
 "Return a map of annotation id to book id for those of the specified "
 "annotation ids that exist. `ignore_removed` controls whether removed "
 "(deleted) annotations are also returned."
-msgstr "指定されたアノテーションIDのうち、存在するアノテーションについて、アノテーションIDから本のIDへのマッピングを返します。`ignore_removed` は、削除済みのアノテーションを含めるかどうかを制御します。"
+msgstr "指定された注釈 ID のうち、存在する注釈について、注釈 ID から本の ID へのマッピングを返します。`ignore_removed` は、削除済みの注釈も返すかどうかを制御します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.book_storage_for_book:1
@@ -308,7 +308,7 @@ msgid ""
 "specified book_id, format, user_type and user or None if no storage exists. "
 "The storage is a dict of the form: {'timestamp': seconds since epoch, "
 "'data': {key: value}}."
-msgstr "指定された `book_id`、`format`、`user_type`、および `user` に対応する、本ごとのストレージ（ビューアーの `localStorage` 用）を返します。ストレージが存在しない場合は `None` を返します。このストレージは、`{'timestamp': エポックからの経過秒数, 'data': {key: value}}` という形式の辞書です。"
+msgstr "指定された `book_id`、`format`、`user_type`、および `user` に対応する、本ごとのストレージ（ビューアの `localStorage` 用）を返します。ストレージが存在しない場合は `None` を返します。このストレージは、`{'timestamp': エポックからの経過秒数, 'data': {key: value}}` という形式の辞書です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.books_for_field:1
@@ -351,7 +351,7 @@ msgid ""
 "exists or dest is the same file as the current cover. dest can also be a "
 "path in which case the cover is copied to it if and only if the path is "
 "different from the current path (taking case sensitivity into account)."
-msgstr "オブジェクト ``dest`` のようなファイルに表紙をコピーします。表紙が存在しない場合、または dest が現在の表紙と同じファイルである場合には、False を返します。 dest にはパスを指定することも可能です。その場合、パスが現在のパスと異なる場合にのみ、表紙をコピーします (大文字と小文字は区別されます)。"
+msgstr "ファイルライクオブジェクト ``dest`` に表紙をコピーします。表紙が存在しない場合、または dest が現在の表紙と同じファイルである場合には、False を返します。 dest にはパスを指定することも可能です。その場合、パスが現在のパスと異なる場合にのみ、表紙をコピーします (大文字と小文字は区別されます)。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.copy_format_to:1
@@ -391,7 +391,7 @@ msgstr "True のとき、QImage オブジェクトとして画像を返します
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:10
 msgid "If True return the image as a QPixmap object"
-msgstr "Trueのとき、QPixmapオブジェクトでイメージを返します。"
+msgstr "Trueのとき、QPixmapオブジェクトとして画像を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.cover:11
@@ -430,7 +430,7 @@ msgstr "name で指定されたデータを削除します。デフォルトで�
 msgid ""
 "Delete an entry from the trash. Here category is 'b' for books and 'f' for "
 "formats."
-msgstr "ごみ箱のエントリを削除します。ここで、'b' は本、'f' はフォーマットです。."
+msgstr "ゴミ箱のエントリを削除します。category には、本なら 'b'、形式なら 'f' を指定します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.embed_metadata:1
@@ -455,7 +455,7 @@ msgstr "埋め込み画像はdata: URLs として、ノートを単一HTMLドキ
 msgid ""
 "Same as field_for, except that it avoids the extra lookup to get the field "
 "object"
-msgstr "field_for と同じですが、フィールドオブジェクトを取得するために余分なルックアップ／検索を回避します"
+msgstr "field_for と同じですが、フィールドオブジェクトを取得するための余分なルックアップを回避します"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.field_for:1
@@ -503,7 +503,7 @@ msgstr "指定されたフィールドがノートをサポートしている場
 msgid ""
 "Finds books that have a superset of the authors in mi and the same title "
 "(title is fuzzy matched). See also :meth:`data_for_find_identical_books`."
-msgstr "mi に著者のスーパーセットがあり、タイトルが同じ本を検索します (タイトルはあいまい検索)。 :meth:`data_for_find_identical_books` も参照のこと。"
+msgstr "mi の著者のスーパーセットを持ち、タイトルが同じ本を検索します (タイトルはあいまい検索)。 :meth:`data_for_find_identical_books` も参照のこと。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format:1
@@ -548,14 +548,14 @@ msgid ""
 "Currently used only in calibredb list, the viewer, edit book, compare_format"
 " to original format, open with, bulk metadata edit and the catalogs (via "
 "get_data_as_dict())."
-msgstr "現在これを使用しているのは、calibredbリスト、ビューア、編集ブック、元の形式とのcompare_format、アプリケーションを指定して開く、一括書誌編集、およびカタログ (get_data_as_dict() 経由で) のみです。"
+msgstr "現在これを使用しているのは、calibredb list、ビューア、書籍編集、元の形式とのcompare_format、アプリケーションを選択して開く、一括書誌編集、およびカタログ (get_data_as_dict() 経由で) のみです。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_abspath:9
 msgid ""
 "Apart from the viewer, open with and edit book, I don't believe any of the "
 "others do any file write I/O with the results of this call."
-msgstr "ビューア、アプリケーションを指定して本を開く、本の編集を除き、この呼び出しの結果を使用してファイル書き込み I/O を実行する人はいないと思います。"
+msgstr "ビューア、アプリケーションを選択して開く、書籍編集を除き、この呼び出しの結果を使用してファイル書き込み I/O を実行するものはないと思います。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.format_hash:1
@@ -599,7 +599,7 @@ msgstr "指定された本のすべての形式のタプルを返します。 ve
 msgid ""
 "Return all item_ids for items that have notes in the specified field or all "
 "fields if field_name is None"
-msgstr "指定されたフィールドにノートがあるアイテムのすべてのID一覧 を返します。field_name が None の場合はすべてのフィールドを返します。"
+msgstr "指定されたフィールド (field_name が None の場合はすべてのフィールド) にノートがあるアイテムのすべての ID を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_all_link_maps_for_book:1
@@ -631,7 +631,7 @@ msgstr "返り値"
 msgid ""
 "{field: {field_value, link_value}, ...  for all fields with a field_value "
 "having a non-empty link value for that book"
-msgstr "{field: {field_value, link_value}, ... 空でないリンク値を持つ field_value を持つすべてのフィールドについて"
+msgstr "{field: {field_value, link_value}, ... その本について空でないリンク値を持つ field_value があるすべてのフィールドについて"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_book_path:1
@@ -675,12 +675,12 @@ msgid ""
 " slow if doing lookups for multiple names use either get_item_ids() or "
 "get_item_name_map(). Similarly, case sensitive lookups are faster than case "
 "insensitive ones."
-msgstr "item_name のアイテムIDを返します。見つからない場合はNoneを返します。get_item_ids()またはget_item_name_map()を使用して複数の名前を検索する場合、この関数は非常に遅くなります。同様に、大文字と小文字を区別する検索は、大文字と小文字を区別しない検索より高速です。"
+msgstr "item_name のアイテムIDを返します。見つからない場合はNoneを返します。この関数は非常に遅いため、複数の名前を検索する場合は get_item_ids() または get_item_name_map() を使用してください。同様に、大文字と小文字を区別する検索は、大文字と小文字を区別しない検索より高速です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_ids:1
 msgid "Return a dict mapping item_name to the item id or None"
-msgstr "item_name をアイテム ID にマッピングする辞書または None を返します。"
+msgstr "item_name からアイテム ID (または None) へのマッピングの辞書を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.get_item_name:1
@@ -763,7 +763,7 @@ msgstr ":meth:`get_metadata` と同様ですが、オンデマンドでデータ
 msgid ""
 "Return a mapping of id to usage count for all values of the specified field,"
 " which must be a many-one or many-many field."
-msgstr "IDから、指定したフィールドのすべての値の使用回数へのマッピングを返します。これは、多対1または多対多のフィールドである必要があります。"
+msgstr "IDから、指定したフィールドのすべての値の使用回数へのマッピングを返します。このフィールドは、多対1または多対多のフィールドである必要があります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.has_book:1
@@ -807,7 +807,7 @@ msgstr "指定したハッシュのリソースを使用しているすべての
 msgid ""
 "Return a dict of field to items that have associated notes for that field "
 "for the specified book"
-msgstr "指定された本のそのフィールドに関連付けられたノートを持つ、フィールドの辞書を返します。"
+msgstr "指定された本について、フィールドから、そのフィールドでノートが関連付けられている項目への辞書を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.link_for:1
@@ -840,12 +840,12 @@ msgid ""
 "the tuple is ExtraFile(relpath, file_path, stat_result). Where relpath is "
 "the relative path of the file to the book directory using / as a separator. "
 "stat_result is the result of calling os.stat() on the file."
-msgstr "指定されたパターンに一致するすべての追加ファイルのタプル。タプルの各要素は ExtraFile(relpath, file_path, stat_result) です。relpathは、/を区切り文字として使用した、本ディレクトリへのファイルの相対パスです。stat_resultは、ファイルに対して os.stat() を呼び出した結果です。"
+msgstr "指定されたパターンに一致するすべての追加ファイルのタプル。タプルの各要素は ExtraFile(relpath, file_path, stat_result) です。relpathは、/を区切り文字として使用した、本のディレクトリを基準としたファイルの相対パスです。stat_resultは、ファイルに対して os.stat() を呼び出した結果です。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.mark_for_pages_recount:1
 msgid "Mark all books for recount of pages"
-msgstr "ページ数を再カウントするすべての本をマーク"
+msgstr "すべての本をページ数の再カウント対象としてマーク"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.merge_annotations_for_book:1
@@ -883,7 +883,7 @@ msgstr "並べ替えられた本の ID のリストを返します。ids_to_sort
 msgid ""
 "fields must be a list of 2-tuples of the form (field_name, ascending=True or"
 " False). The most significant field is the first 2-tuple."
-msgstr "fields は、そのフォームの2 タプルのリストである必要があります (field_name、ascending=TrueまたはFalse)。最も重要なフィールドは最初の 2 タプルです。"
+msgstr "fields は、(field_name, ascending=True または False) という形式の 2 タプルのリストである必要があります。最も重要なフィールドは最初の 2 タプルです。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.notes_data_for:1
@@ -907,7 +907,7 @@ msgstr "指定されたアイテムのノートで使用されるすべてのリ
 msgid ""
 "Return the subset of books (or all books if empty) that are marked as "
 "needing a scan to update page count"
-msgstr "本のページ数を更新するのにスキャンが必要とマークされた本のサブセットを返します。もし存在しない時はすべての本となります。"
+msgstr "指定された本のうち (指定が空ならすべての本のうち)、ページ数を更新するためのスキャンが必要とマークされた本のサブセットを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.pref:1
@@ -923,7 +923,7 @@ msgid ""
 " is specified, then only that book is scanned and it is always scanned. When"
 " `force` is True, the existing pages value, if any, is discarded so that the"
 " book is forcibly rescanned even if the existing value was up-to-date."
-msgstr "スキャンが必要なすべての本のページ数を更新しながらスキャンを開始します。book_id が指定されている場合は、その本のみを対象にして常にスキャンされます。`force` が True の場合、既存のページ値（存在する場合）は破棄されます。そのため、既存の値が最新であっても、本は強制的に再スキャンされます。"
+msgstr "スキャンが必要なすべての本のページ数を更新するスキャンを開始します。book_id が指定されている場合は、その本のみを対象にして常にスキャンされます。`force` が True の場合、既存のページ値（存在する場合）は破棄されます。そのため、既存の値が最新であっても、本は強制的に再スキャンされます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.read_backup:1
@@ -940,7 +940,7 @@ msgid ""
 " fix stored sizes that have gone stale because format files were changed "
 "outside of calibre. Returns the ids of the books whose stored sizes were "
 "changed."
-msgstr "指定されたフォーマットのディスク上のファイルサイズでデータベースを更新します。``size_map`` は ``(book_id, fmt)`` をそのフォーマットのファイルサイズに対応付けます。これは、calibre の外部でファイルが変更されたことによって異なってしまった保存済みサイズを修正するために使用されます。保存済みサイズが変更された本の ID を返します。"
+msgstr "指定された形式のディスク上のファイルサイズでデータベースを更新します。``size_map`` は ``(book_id, fmt)`` をその形式のファイルサイズに対応付けます。これは、calibre の外部でファイルが変更されたことによって異なってしまった保存済みサイズを修正するために使用されます。保存済みサイズが変更された本の ID を返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_books:1
@@ -962,7 +962,7 @@ msgstr "一部の本のファイルが削除できない、またはゴミ箱に
 #: calibre.db.cache.Cache.remove_extra_files:1
 msgid ""
 "Delete the specified extra files, either to Recycle Bin or permanently."
-msgstr "指定された追加ファイルをゴミ箱または完全に削除します。"
+msgstr "指定された追加ファイルを、ゴミ箱に移動するか完全に削除します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.remove_formats:1
@@ -1005,7 +1005,7 @@ msgstr "追加データファイルを名称変更"
 #: calibre.db.cache.Cache.rename_items:1
 msgid ""
 "Rename items from a many-one or many-many field such as tags or series."
-msgstr "タグやシリーズのような、多対多のフィールドから項目の名前を変更します。"
+msgstr "タグやシリーズのような、多対1または多対多のフィールドの項目の名前を変更します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.rename_items:3
@@ -1018,7 +1018,7 @@ msgstr "シリーズのようなフィールドで名前を変更する場合は
 msgid ""
 "An optional set of book ids for which the rename is to be performed, "
 "defaults to all books."
-msgstr "名前の変更を実施しようとしている本の ID のセット。デフォルトではすべての本。"
+msgstr "名前の変更を実施する本の ID のセット (省略可)。デフォルトではすべての本。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.restore_book:1
@@ -1075,7 +1075,7 @@ msgid ""
 "A restriction that is ANDed to the specified query. Note that restrictions "
 "are cached, therefore the search for a AND b will be slower than a with "
 "restriction b."
-msgstr "指定したクエリに AND される制限。ただし制限がキャッシュされるため、AND bの 検索は、制限 b よりも遅くなります。"
+msgstr "指定したクエリに AND される制限。ただし制限はキャッシュされるため、a AND b の検索は、a を制限 b で検索するよりも遅くなります。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search:6
@@ -1087,7 +1087,7 @@ msgstr "内部使用 (検索する on_device のような仮想フィールド)"
 msgid ""
 "If not None, a set of book ids for which books will be searched instead of "
 "searching all books."
-msgstr "None でないとき、すべての本を検索するのではなく、検索される本の ID のセット。"
+msgstr "None でないとき、すべての本ではなく、検索の対象とする本の ID のセット。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search_annotations:1
@@ -1100,7 +1100,7 @@ msgstr "指定された全文検索クエリに一致する注釈をタプルで
 msgid ""
 "Search the text of notes using an FTS index. If the query is empty return "
 "all notes."
-msgstr "FTSインデックスを使用して注釈のテキストを検索します。クエリが空の場合は、すべてのノートを返します。"
+msgstr "FTSインデックスを使用してノートのテキストを検索します。クエリが空の場合は、すべてのノートを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.search_uses_templates:1
@@ -1141,7 +1141,7 @@ msgstr "この本の表紙を設定します。データは、QImage、QPixmap�
 msgid ""
 "Set the values of the field specified by ``name``. Returns the set of all "
 "book ids that were affected by the change."
-msgstr "``name`` で指定したフィールドの値を設定します。変更の影響を受けたすべての本 の IDのセットを返します。"
+msgstr "``name`` で指定したフィールドの値を設定します。変更の影響を受けたすべての本の ID のセットを返します。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_field:3
@@ -1188,7 +1188,7 @@ msgstr "リンクを設定することで変更された本"
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:1
 msgid "Set metadata for the book `id` from the `Metadata` object `mi`"
-msgstr "`Metadata` オブジェクト `mi` からの本 `id` の本に書誌を設定します"
+msgstr "`Metadata` オブジェクト `mi` の内容で本 `id` の書誌を設定します"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_metadata:3
@@ -1202,7 +1202,7 @@ msgid ""
 "the book to have. Covers are always changed if a new cover is provided, but "
 "are never deleted. Also note that force_changes has no effect on setting "
 "title or authors."
-msgstr "force_changes= True を設定すると、miに空の値が含まれていても、強制的に set_metadata を更新します。この場合、'None' と 'empty' は区別されます。 mi.XXX が None のとき XXX は置き換えられませんが、そうでなければ置き換えられます。タグ、識別子、および表紙属性は特殊なケースです。タグと識別子は None に設定できないため、force_changes が true の場合は常に置き換えられます。mi には本に持たせたい値が必ず含まれるようにしてください。新しい表紙が提供されると表紙は常に変更されますが、削除されることはありません。なお、force_changes はタイトルや著者の設定には影響しません。"
+msgstr "force_changes=True を設定すると、mi に空の値が含まれていても、set_metadata は強制的にフィールドを更新します。この場合、'None' と 'empty' は区別されます。 mi.XXX が None のとき XXX は置き換えられませんが、そうでなければ置き換えられます。タグ、識別子、および表紙属性は特殊なケースです。タグと識別子は None に設定できないため、force_changes が true の場合は常に置き換えられます。mi には本に持たせたい値が必ず含まれるようにしてください。新しい表紙が提供されると表紙は常に変更されますが、削除されることはありません。なお、force_changes はタイトルや著者の設定には影響しません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.set_notes_for:1
@@ -1242,13 +1242,13 @@ msgstr "f  が複合列のルックアップキーであり、列が is_multiple
 msgid ""
 "Return the ids of all books having the tag ``tag`` that are older than the "
 "specified time. tag comparison is case insensitive."
-msgstr "指定した時間より古いタグ ``tag`` を持つすべての本の ID を返します。tag の比較で大文字と小文字は区別されません。"
+msgstr "タグ ``tag`` を持ち、指定した時間より古いすべての本の ID を返します。tag の比較で大文字と小文字は区別されません。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:4
 msgid ""
 "A timedelta object or None. If None, then all ids with the tag are returned."
-msgstr "timedelta オブジェクト、または None。None のときにはそのタグの ID がすべて返されます。"
+msgstr "timedelta オブジェクト、または None。None のときにはそのタグを持つ本の ID がすべて返されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.tags_older_than:7
@@ -1269,7 +1269,7 @@ msgstr "著者のリスト。 None でないとき、マッチするリストは
 msgid ""
 "Unretire a previously retired note for the specified item. Notes are retired"
 " when an item is removed from the database"
-msgstr "指定されたアイテムの、以前に廃止されたノートを復元します。ノートは、アイテムがデータベースから削除された時に削除されます。"
+msgstr "指定されたアイテムの、以前に廃止されたノートを復元します。ノートは、アイテムがデータベースから削除された時に廃止されます。"
 
 #: ../../../__w/calibre/calibre/src/calibre/db/cache.pydocstring of
 #: calibre.db.cache.Cache.update_annotations:1

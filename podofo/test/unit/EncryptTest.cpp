@@ -12,6 +12,8 @@ using namespace PoDoFo;
 static void testAuthenticate(PdfEncrypt& encrypt, PdfEncryptContext& context);
 static void testEncrypt(PdfEncrypt& encrypt, PdfEncryptContext& context);
 static void createEncryptedPdf(const string_view& filename);
+static string lastEncryptReference(const string_view& pdf);
+static unsigned encryptObjectDefinitionCount(const string_view& pdf, const string_view& encryptRef);
 
 charbuff s_encBuffer;
 PdfPermissions s_protection;
@@ -360,11 +362,32 @@ TEST_CASE("TestEncryptMetadataFalse")
     PdfMemDocument doc;
     // This one has /EncryptMetadata false and /Filter[/Crypt] in /Metadata
     doc.Load(TestUtils::GetTestInputFilePath("EncryptMetadataFalseCrypt.pdf"), "userpass");
-    REQUIRE(doc.GetMetadata().GetProducer()->GetString() == "PoDoFo - http://podofo.sf.net");
+    REQUIRE(doc.GetMetadata().GetProducer()->GetString() == "PoDoFo - https://podofo.github.io/");
 
     // This one has /EncryptMetadata false and no /Filter in /Metadata. Should still work
     doc.Load(TestUtils::GetTestInputFilePath("EncryptMetadataFalseNoCrypt.pdf"), "userpass");
-    REQUIRE(doc.GetMetadata().GetProducer()->GetString() == "PoDoFo - http://podofo.sf.net");
+    REQUIRE(doc.GetMetadata().GetProducer()->GetString() == "PoDoFo - https://podofo.github.io/");
+}
+
+// With /EncryptMetadata false the /Metadata stream must be written back
+// unencrypted, as the parser reads it without decrypting it
+TEST_CASE("TestEncryptMetadataFalseRoundTrip")
+{
+    charbuff buffer;
+    for (auto filename : { "EncryptMetadataFalseCrypt.pdf", "EncryptMetadataFalseNoCrypt.pdf" })
+    {
+        PdfMemDocument doc;
+        doc.Load(TestUtils::GetTestInputFilePath(filename), "userpass");
+        auto device = std::make_shared<BufferStreamDevice>(buffer);
+        doc.Save(*device, PdfSaveOptions::NoMetadataUpdate);
+
+        doc.Load(device, "userpass");
+        REQUIRE(!doc.GetEncrypt()->IsMetadataEncrypted());
+
+        charbuff xmp;
+        doc.GetCatalog().GetMetadataObject()->MustGetStream().CopyTo(xmp);
+        REQUIRE(xmp.substr(0, 9) == "<?xpacket");
+    }
 }
 
 TEST_CASE("TestRemoveEncryption")
@@ -440,6 +463,128 @@ TEST_CASE("TestPreserveEncrypt")
     testSave(true, true);
 }
 
+// An RC4 40 bits encrypted document, "userpass"/"ownerpass", with an explicit
+// /Length entry in the encryption dictionary, which is optional with /V 1
+constexpr string_view RC4V1ExplicitLengthPdf = R"(%PDF-1.4
+1 0 obj<</Type/Catalog/Pages 2 0 R>>
+endobj
+2 0 obj<</Type/Pages/Count 1/Kids[ 3 0 R]>>
+endobj
+3 0 obj<</Type/Page/MediaBox[ 0 0 595 842]/Parent 2 0 R/Resources<<>>>>
+endobj
+4 0 obj<</Filter/Standard/Length 40/O<F86213EB0CED81F097947F3B343E34CAC8CA92CE8F6FEE2556FA31EC1FE968AF>/P -4/R 2/U<0DBF73C61F9580BCBFF4787E3E6DAB212ADBFDE4E8B61E463D891025EA589A19>/V 1>>
+endobj
+xref
+0 5
+0000000000 65535 f 
+0000000009 00000 n 
+0000000053 00000 n 
+0000000104 00000 n 
+0000000183 00000 n 
+trailer
+<</Encrypt 4 0 R/ID[<00A6FEA383DCAD1750509D09E1237E7E><00A6FEA383DCAD1750509D09E1237E7E>]/Root 1 0 R/Size 5>>
+startxref
+377
+%%EOF)"sv;
+
+// A parsed encryption dictionary may hold entries that are not recreated,
+// like the optional /Length with /V 1: an update must preserve it as it is,
+// or the document security would result as modified
+TEST_CASE("TestUpdateEncryptedDocPreservesEncryptDictionary")
+{
+    constexpr string_view filename = "TestUpdateEncryptedDocPreservesEncryptDictionary.pdf";
+    TestUtils::WriteTestOutputFileTo(filename, RC4V1ExplicitLengthPdf);
+    auto outputPath = TestUtils::GetTestOutputFilePath(filename);
+    auto stream = std::make_shared<FileStreamDevice>(outputPath, FileMode::Open);
+
+    PdfMemDocument doc(stream, PdfLoadOptions::SkipXRefRecovery | PdfLoadOptions::StrictParsing, "userpass");
+    doc.GetCatalog().GetDictionary().AddKey("Lang"_n, PdfString("en"));
+    doc.SaveUpdate(*stream, PdfSaveOptions::NoMetadataUpdate);
+
+    charbuff output;
+    utls::ReadTo(output, outputPath);
+    REQUIRE(output.size() > RC4V1ExplicitLengthPdf.size());
+    REQUIRE(std::equal(RC4V1ExplicitLengthPdf.begin(), RC4V1ExplicitLengthPdf.end(), output.begin()));
+    REQUIRE(encryptObjectDefinitionCount(output, lastEncryptReference(RC4V1ExplicitLengthPdf)) == 1);
+}
+
+// An incremental signature must keep the same encryption dictionary object.
+// Replacing /Encrypt changes document security and invalidates DocMDP
+// certifications in Acrobat, even if the new dictionary has identical values.
+TEST_CASE("TestSignEncryptedDocPreservesEncryptReference")
+{
+    auto inputPath = TestUtils::GetTestInputFilePath("AESV3R6-256.pdf");
+    auto outputPath = TestUtils::GetTestOutputFilePath(
+        "TestSignEncryptedDocPreservesEncryptReference.pdf");
+
+    charbuff input;
+    utls::ReadTo(input, inputPath);
+    const auto originalEncrypt = lastEncryptReference(input);
+
+    fs::copy_file(fs::u8path(inputPath), fs::u8path(outputPath),
+        fs::copy_options::overwrite_existing);
+    auto stream = std::make_shared<FileStreamDevice>(outputPath, FileMode::Open);
+
+    string cert;
+    TestUtils::ReadTestInputFileTo(cert, "mycert.der");
+    string pkey;
+    TestUtils::ReadTestInputFileTo(pkey, "mykey-pkcs8.der");
+
+    PdfMemDocument doc(stream, "userpass");
+    auto& page = doc.GetPages().GetPageAt(0);
+    auto& signature = page.CreateField<PdfSignature>("Signature", Rect());
+    signature.SetSignatureDate(PdfDate::Parse("D:20260713192456+01'00'"));
+    auto signer = PdfSignerCms(cert, pkey);
+    PoDoFo::SignDocument(doc, *stream, signer, signature,
+        PdfSaveOptions::NoMetadataUpdate | PdfSaveOptions::NoCollectGarbage);
+
+    charbuff output;
+    utls::ReadTo(output, outputPath);
+    // The update must be appended, leaving the previous revision untouched
+    REQUIRE(output.size() > input.size());
+    REQUIRE(std::equal(input.begin(), input.end(), output.begin()));
+    REQUIRE(lastEncryptReference(output) == originalEncrypt);
+    // The encryption dictionary must not be rewritten in the new revision
+    REQUIRE(encryptObjectDefinitionCount(output, originalEncrypt)
+        == encryptObjectDefinitionCount(input, originalEncrypt));
+}
+
+// An incremental update can't re-key the document: the objects of the previous
+// revisions are not rewritten and would stay encrypted with the previous encryption
+TEST_CASE("TestChangeEncryptionOnUpdateRejected")
+{
+    auto encryptedPath = TestUtils::GetTestInputFilePath("AESV3R6-256.pdf");
+    auto plainPath = TestUtils::GetTestInputFilePath("TestSignature.pdf");
+    charbuff pdfBuffer;
+    PdfMemDocument doc;
+
+    auto saveUpdate = [&](const string_view& path)
+    {
+        utls::ReadTo(pdfBuffer, path);
+        BufferStreamDevice device(pdfBuffer);
+        doc.SaveUpdate(device);
+    };
+
+    // Changing the encryption
+    doc.Load(encryptedPath, "ownerpass");
+    doc.SetEncrypted("newuser", "newowner");
+    ASSERT_THROW_WITH_ERROR_CODE(saveUpdate(encryptedPath), PdfErrorCode::UnsupportedOperation);
+
+    // Removing the encryption
+    doc.Load(encryptedPath, "ownerpass");
+    doc.SetEncrypt(nullptr);
+    ASSERT_THROW_WITH_ERROR_CODE(saveUpdate(encryptedPath), PdfErrorCode::UnsupportedOperation);
+
+    // Encrypting a document that was not encrypted
+    doc.Load(plainPath);
+    doc.SetEncrypted("newuser", "newowner");
+    ASSERT_THROW_WITH_ERROR_CODE(saveUpdate(plainPath), PdfErrorCode::UnsupportedOperation);
+
+    // Updating a document keeping its own encryption is allowed
+    doc.Load(encryptedPath, "ownerpass");
+    saveUpdate(encryptedPath);
+}
+
 void testEncrypt(PdfEncrypt& encrypt, PdfEncryptContext& context)
 {
     charbuff encrypted;
@@ -468,6 +613,35 @@ void testEncrypt(PdfEncrypt& encrypt, PdfEncryptContext& context)
     REQUIRE(memcmp(s_encBuffer.data(), decrypted.data(), s_encBuffer.size()) == 0);
 }
 
+// Count the "<num> <gen> obj" definitions of the object addressed by
+// an "/Encrypt <num> <gen> R" reference
+unsigned encryptObjectDefinitionCount(const string_view& pdf, const string_view& encryptRef)
+{
+    string definition(encryptRef.substr("/Encrypt "sv.length()));
+    definition.replace(definition.length() - 1, 1, "obj");
+    unsigned ret = 0;
+    for (size_t pos = pdf.find(definition); pos != string_view::npos;
+        pos = pdf.find(definition, pos + definition.length()))
+    {
+        // Skip matches on the tail of a bigger object number
+        if (pos != 0 && pdf[pos - 1] >= '0' && pdf[pos - 1] <= '9')
+            continue;
+
+        ret++;
+    }
+
+    return ret;
+}
+
+string lastEncryptReference(const string_view& pdf)
+{
+    const auto key = pdf.rfind("/Encrypt "sv);
+    REQUIRE(key != string_view::npos);
+    const auto end = pdf.find('R', key);
+    REQUIRE(end != string_view::npos);
+    return string(pdf.substr(key, end - key + 1));
+}
+
 void createEncryptedPdf(const string_view& filename)
 {
     PdfMemDocument doc;
@@ -487,4 +661,36 @@ void createEncryptedPdf(const string_view& filename)
     doc.Save(filename);
 
     INFO(utls::Format("Wrote: {} (R={})", filename, doc.GetEncrypt()->GetRevision()));
+}
+
+TEST_CASE("TestAESInputStreamSmallReads")
+{
+    // The cipher may output more bytes than a read asks for: the excess must wait for the next read
+    auto encrypt = PdfEncrypt::Create(PDF_USER_PASSWORD, PDF_OWNER_PASSWORD, s_protection,
+        PdfEncryptionAlgorithm::AESV2, PdfKeyLength::L128);
+    PdfEncryptContext context;
+    encrypt->EnsureEncryptionInitialized(PdfString::FromHexData("BF37541A9083A51619AD5924ECF156DF"), context);
+    charbuff encrypted;
+    encrypt->EncryptTo(encrypted, s_encBuffer, context, PdfReference(7, 0));
+
+    SpanStreamDevice input(encrypted);
+    auto stream = encrypt->CreateEncryptionInputStream(input, encrypted.size(), context, PdfReference(7, 0));
+    string decrypted;
+    char ch;
+    while (stream->Read(ch))
+        decrypted.push_back(ch);
+
+    REQUIRE(decrypted == s_encBuffer);
+
+    SpanStreamDevice input2(encrypted);
+    stream = encrypt->CreateEncryptionInputStream(input2, encrypted.size(), context, PdfReference(7, 0));
+    decrypted.clear();
+    char buffer[7];
+    bool eof;
+    do
+    {
+        decrypted.append(buffer, stream->Read(buffer, sizeof(buffer), eof));
+    } while (!eof);
+
+    REQUIRE(decrypted == s_encBuffer);
 }

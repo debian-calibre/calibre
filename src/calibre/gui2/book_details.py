@@ -1199,7 +1199,7 @@ class CoverView(QWidget):  # {{{
 class FormatAction(QAction):
     current_fmt: tuple[str | int, str] | None = None
     current_url: str | None = None
-    data: tuple[str | None, str | None, str | None] = None, None, None  # ty: ignore[invalid-attribute-override]
+    data: tuple[str | None, str | None, str | None] = None, None, None  # ty: ignore[incompatible-attribute-override]
 
 
 class BookInfo(HTMLDisplay):
@@ -1518,13 +1518,13 @@ class DropMixin:
     def __init__(self: DropMixinSelf) -> None:
         self.setAcceptDrops(True)
 
-    def dragEnterEvent(self: DropMixinSelf, a0) -> None:
+    def dragEnterEvent(self: DropMixinSelf, a0, /) -> None:
         event = a0
         md = event.mimeData()
         if dnd_has_extension(md, image_extensions() + BOOK_EXTENSIONS, allow_all_extensions=True, allow_remote=True) or dnd_has_image(md):
             event.acceptProposedAction()
 
-    def dropEvent(self: DropMixinSelf, a0) -> None:
+    def dropEvent(self: DropMixinSelf, a0, /) -> None:
         event = a0
         event.setDropAction(Qt.DropAction.CopyAction)
         md = event.mimeData()
@@ -1563,7 +1563,7 @@ class DropMixin:
             self.remote_file_dropped.emit(urls[0], filenames[0])
         event.accept()
 
-    def dragMoveEvent(self, a0) -> None:
+    def dragMoveEvent(self, a0, /) -> None:
         a0.acceptProposedAction()
 
     # }}}

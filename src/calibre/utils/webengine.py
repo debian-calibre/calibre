@@ -25,14 +25,14 @@ def setup_fake_protocol() -> None:
 
 def setup_profile(profile: QWebEngineProfile | None) -> QWebEngineProfile:
     # Qt uses persistent storage path to store cached GPU data even for OTR profiles
-    base = os.path.abspath(os.path.join(cache_dir(), 'qwe', profile.storageName() or 'dp'))  # ty: ignore[unresolved-attribute]
+    base = os.path.abspath(os.path.join(cache_dir(), 'qwe', profile.storageName() or 'dp'))  # ty: ignore[missing-union-attribute]
     cp = os.path.join(base, 'c')
-    if profile.cachePath() != cp:  # ty: ignore[unresolved-attribute]
-        profile.setCachePath(cp)  # ty: ignore[unresolved-attribute]
+    if profile.cachePath() != cp:  # ty: ignore[missing-union-attribute]
+        profile.setCachePath(cp)  # ty: ignore[missing-union-attribute]
     sp = os.path.join(base, 'sp')
-    if profile.persistentStoragePath() != sp:  # ty: ignore[unresolved-attribute]
-        profile.setPersistentStoragePath(sp)  # ty: ignore[unresolved-attribute]
-    return profile  # ty: ignore[invalid-return-type]
+    if profile.persistentStoragePath() != sp:  # ty: ignore[missing-union-attribute]
+        profile.setPersistentStoragePath(sp)  # ty: ignore[missing-union-attribute]
+    return profile  # ty: ignore[invalid-explicit-return]
 
 
 def setup_default_profile() -> QWebEngineProfile:
@@ -55,14 +55,14 @@ def send_reply(rq: QWebEngineUrlRequestJob, mime_type: str, data: bytes) -> None
 
 
 def secure_webengine(view_or_page_or_settings: QWebEngineView | QWebEnginePage | QWebEngineSettings | None, for_viewer: bool = False) -> QWebEngineSettings:
-    s: QWebEngineSettings = view_or_page_or_settings.settings() if hasattr(view_or_page_or_settings, 'settings') else view_or_page_or_settings  # ty: ignore[call-non-callable, invalid-assignment]
+    s: QWebEngineSettings = view_or_page_or_settings.settings() if hasattr(view_or_page_or_settings, 'settings') else view_or_page_or_settings  # ty: ignore[not-callable, invalid-assignment]
     a = s.setAttribute
     a(QWebEngineSettings.WebAttribute.PluginsEnabled, False)
     if not for_viewer:
         a(QWebEngineSettings.WebAttribute.JavascriptEnabled, False)
         s.setUnknownUrlSchemePolicy(QWebEngineSettings.UnknownUrlSchemePolicy.DisallowUnknownUrlSchemes)
         if hasattr(view_or_page_or_settings, 'setAudioMuted'):
-            view_or_page_or_settings.setAudioMuted(True)  # ty: ignore[call-non-callable]
+            view_or_page_or_settings.setAudioMuted(True)  # ty: ignore[not-callable]
     a(QWebEngineSettings.WebAttribute.JavascriptCanOpenWindows, False)
     a(QWebEngineSettings.WebAttribute.JavascriptCanAccessClipboard, False)
     # ensure javascript cannot read from local files
@@ -142,7 +142,7 @@ class Bridge(QObject):
 
     @property
     def page(self) -> QWebEnginePage:
-        return self.parent()  # ty: ignore[invalid-return-type]
+        return self.parent()  # ty: ignore[invalid-explicit-return]
 
     @property
     def ready(self) -> bool:

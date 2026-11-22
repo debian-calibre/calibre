@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-12 07:53+0000\n"
 "PO-Revision-Date: 2014-06-17 08:34+0000\n"
 "Last-Translator: akihiko tanae (tanaeakihiko), 2025-2026\n"
 "Language-Team: Japanese (http://app.transifex.com/calibre/calibre/language/ja/)\n"
@@ -46,7 +46,7 @@ msgid ""
 ":doc:`generated/en/ebook-convert`. In calibre, you can obtain help on any "
 "individual setting by holding your mouse over it, a tooltip will appear "
 "describing the setting."
-msgstr "このドキュメントでは主に、下の図に示す変換ダイアログの変換設定について説明します。これらの設定はすべて、コマンドラインインターフェイスからの変換にも使用できます。これについては、:doc:`generated/ja/ebook-convert` に記載されています。calibreでは、それぞれの設定項目の上にマウスを置くと、その設定に関するヘルプがツールチップで表示されます。"
+msgstr "このドキュメントでは主に、下の図に示す変換ダイアログの変換設定について説明します。これらの設定はすべて、コマンドラインインタフェースからの変換にも使用できます。これについては、:doc:`generated/ja/ebook-convert` に記載されています。calibreでは、それぞれの設定項目の上にマウスを置くと、その設定に関するヘルプがツールチップで表示されます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:24
 msgid "E-book conversion dialog"
@@ -94,7 +94,7 @@ msgid ""
 "XHTML internally, the various transforms will be applied to the XHTML and "
 "then the *Output plugin* will create the EPUB file, automatically generating"
 " all metadata, Table of Contents, et cetera."
-msgstr "XHTML 出力に作用する変形こそが、すべての作業が行われる場所です。変形にはさまざまなものがありますが、たとえば、書誌を本の冒頭にページとして挿入したり、章の見出しを探して目次を自動的に作成したり、フォントサイズを比例的に調整したりするなど、といったことを行います。ただしこうした変形はすべて、入力ファイルそのものではなく、*入力プラグイン* から出力される XHTML に対して作用します。したがって、たとえば、calibre に RTF ファイルを EPUB に変換するよう求めると、まず内部で XHTML に変換され、さまざまな変形が XHTML に適用されてから、*出力プラグイン* がすべての書誌や目次などを自動的に生成して EPUB ファイルを作成します。"
+msgstr "実際の処理はすべて、XHTML 出力に作用する変形の段階で行われます。変形にはさまざまなものがありますが、たとえば、書誌を本の冒頭にページとして挿入したり、章の見出しを探して目次を自動的に作成したり、フォントサイズを比例的に調整したりします。ただしこうした変形はすべて、入力ファイルそのものではなく、*入力プラグイン* から出力される XHTML に対して作用します。したがって、たとえば、calibre に RTF ファイルを EPUB に変換するよう求めると、まず内部で XHTML に変換され、さまざまな変形が XHTML に適用されてから、*出力プラグイン* がすべての書誌や目次などを自動的に生成して EPUB ファイルを作成します。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:65
 msgid ""
@@ -138,7 +138,7 @@ msgstr "parsed"
 msgid ""
 "The result of pre-processing and converting to XHTML the output from the "
 "Input plugin. Use to debug structure detection."
-msgstr "入力プラグインからの出力を前処理して XHTML に変換した結果。構造検出をデバッグするために使用します"
+msgstr "入力プラグインからの出力を前処理して XHTML に変換した結果。構造検出をデバッグするために使用します。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:77
 msgid "structure"
@@ -198,7 +198,7 @@ msgid ""
 "calibre has sophisticated algorithms to ensure that all the books it outputs"
 " have consistent font sizes, no matter what font sizes are specified in the "
 "input document."
-msgstr "電子読書体験において最もすばらしい機能のひとつは、個々のニーズや照明条件に合わせてフォントサイズを簡単に調整できることです。calibre には高度なアルゴリズムがあり、入力ドキュメントでどのようなフォントサイズが指定されていようとも、出力される本ではどれもフォントサイズがそのままであることを保証します。"
+msgstr "電子読書体験において最もすばらしい機能のひとつは、個々のニーズや照明条件に合わせてフォントサイズを簡単に調整できることです。calibre には高度なアルゴリズムがあり、入力ドキュメントでどのようなフォントサイズが指定されていようとも、出力される本ではどれもフォントサイズが一貫したものになるようにします。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:109
 msgid ""
@@ -231,7 +231,7 @@ msgid ""
 "of sizes for super/sub scripts and footnotes. The font size key allows "
 "calibre to compartmentalize the font sizes in the input documents into "
 "separate \"bins\" corresponding to the different logical font sizes."
-msgstr ":guilabel:`フォントサイズのキー` オプションを使用すると、基本フォントサイズ以外のフォントをサイズ調整する方法を制御できます。フォントサイズ調整アルゴリズムは、フォントサイズのキーを使用して機能します。フォントサイズのキーは、フォントサイズのコンマ区切りのリストです。フォントサイズのキーは、特定のフォントサイズを基本フォントサイズと比較して、いくつの「ステップ」を大きくしたり小さくしたりするかを calibre に指示します。大事なのは、ドキュメント内のフォントサイズの数を制限する必要があるということです。たとえば、本文テキスト用に 1 個のサイズ、さまざまなレベルの見出し用に 2、3 個のサイズ、上付き/下付き文字と脚注用に 2、3 個のサイズがあります。フォントサイズのキーを使用すれば、calibre が入力ドキュメントのフォントサイズを、さまざまな論理フォントサイズに対応する個別の「ビン」に区分することができるようになります。"
+msgstr ":guilabel:`フォントサイズのキー` オプションを使用すると、基本フォントサイズ以外のフォントをサイズ調整する方法を制御できます。フォントサイズ調整アルゴリズムは、フォントサイズのキーを使用して機能します。フォントサイズのキーは、フォントサイズのコンマ区切りのリストです。フォントサイズのキーは、特定のフォントサイズを基本フォントサイズと比較して、何「ステップ」大きくまたは小さくするかを calibre に指示します。これは、ドキュメント内で使われるフォントサイズの数は限られているはずだ、という考え方に基づいています。たとえば、本文テキスト用に 1 個のサイズ、さまざまなレベルの見出し用に 2、3 個のサイズ、上付き/下付き文字と脚注用に 2、3 個のサイズがあります。フォントサイズのキーを使用すれば、calibre が入力ドキュメントのフォントサイズを、さまざまな論理フォントサイズに対応する個別の「ビン」に区分することができるようになります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:130
 msgid ""
@@ -256,7 +256,7 @@ msgid ""
 "9pt. You can play with these settings to try and figure out what would be "
 "optimum for you by using the font rescaling wizard, which can be accessed by"
 " clicking the little button next to the :guilabel:`Font size key` setting."
-msgstr "最大の見出しが 18pt になり、脚注は 9pt になります。これらの設定を試して、フォントサイズ調整ウィザードを使用して最適なものを見つけてください。このウィザードには :guilabel:`フォントサイズのキー` 設定の横にある小さなボタンをクリックすると利用できます。"
+msgstr "最大の見出しが 18pt になり、脚注は 9pt になります。これらの設定を試して、フォントサイズ調整ウィザードを使用して最適なものを見つけてください。このウィザードは :guilabel:`フォントサイズのキー` 設定の横にある小さなボタンをクリックすると利用できます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:150
 msgid ""
@@ -273,7 +273,7 @@ msgid ""
 "heights. However, this is something of a blunt weapon and should be used "
 "sparingly. If you want to adjust the line heights for some section of the "
 "input, it's better to use the :ref:`Extra CSS <extra-css>`."
-msgstr "関連する設定は :guilabel:`行の高さ` です。行の高さは、行の垂直方向の高さを制御します。デフォルトでは (行の高さは0)、行の高さの操作は実行されません。デフォルト以外の値を指定すると、行の高さは、独自の行の高さを指定しないすべての場所に設定されます。ただしこれは鈍器のようなものであり、控えめに使用する必要があります。入力の一部のセクションの行の高さを調整する場合は、:ref:`追加 CSS <extra-css>` を使用することをお勧めします。"
+msgstr "関連する設定は :guilabel:`行の高さ` です。行の高さは、行の垂直方向の高さを制御します。デフォルトでは (行の高さは0)、行の高さの操作は実行されません。デフォルト以外の値を指定すると、行の高さは、独自の行の高さを指定しないすべての場所に設定されます。ただしこれは大まかな調整手段なので、控えめに使用してください。入力の一部のセクションの行の高さを調整する場合は、:ref:`追加 CSS <extra-css>` を使用することをお勧めします。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:160
 msgid ""
@@ -302,7 +302,7 @@ msgid ""
 " alternatives. Note that this algorithm is not perfect so it is worth "
 "reviewing the results. The reverse, namely, :guilabel:`Unsmarted "
 "punctuation` is also available."
-msgstr "また、calibreに :guilabel:`句読点をスマート化` を指定することもできます。指定すると、プレーンな引用符、ダッシュ、省略記号が、活字で正しい代替記号に置き換えられます。ただしアルゴリズムは完全ではないため、結果を確認する価値があります。逆、つまり :guilabel:`スマート化されていない句読点` も使用できます。"
+msgstr "また、calibreに :guilabel:`句読点をスマート化` を指定することもできます。指定すると、プレーンな引用符、ダッシュ、省略記号が、組版上正しい記号に置き換えられます。ただしアルゴリズムは完全ではないため、結果を確認することをお勧めします。逆、つまり :guilabel:`スマート化されていない句読点` も使用できます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:178
 msgid ""
@@ -314,7 +314,7 @@ msgid ""
 " a particular character encoding by using this setting.  `cp1252` is a "
 "common encoding for documents produced using Windows software. You should "
 "also read :ref:`char-encoding-faq` for more on encoding issues."
-msgstr "最後に、:guilabel:`入力文字コード` があります。古いドキュメントでは、文字コードが指定されていないことがあります。これを変換すると、英語以外の文字やスマート引用符などの特殊文字が破損する可能性があります。calibre はソースドキュメントの文字コードの自動検出を試みますが、常に成功するとは限りません。この設定を使用すれば、特定の文字コードを前提とするように強制できます。 cp1252は、Windowsソフトウェアを使用して作成されたドキュメントの一般的な文字コードです。文字コードの問題について詳しくは :ref:`char-encoding-faq` もお読みください。"
+msgstr "最後に、:guilabel:`入力文字コード` があります。古いドキュメントでは、文字コードが指定されていないことがあります。これを変換すると、英語以外の文字やスマート引用符などの特殊文字が破損する可能性があります。calibre はソースドキュメントの文字コードの自動検出を試みますが、常に成功するとは限りません。この設定を使用すれば、特定の文字コードを前提とするように強制できます。 `cp1252` は、Windowsソフトウェアを使用して作成されたドキュメントの一般的な文字コードです。文字コードの問題について詳しくは :ref:`char-encoding-faq` もお読みください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:188
 msgid "Layout"
@@ -341,7 +341,7 @@ msgid ""
 "If you want to remove the spacing between all paragraphs, except a select "
 "few, don't use these options. Instead add the following CSS code to "
 ":ref:`Extra CSS <extra-css>`::"
-msgstr "すべての段落間の間隔を削除したい場合は、一部の例外を除き、これらのオプションを使用しないでください。代わりに、次の CSS コードを :ref:`追加 CSS <extra-css>` に追加します::"
+msgstr "ごく一部の段落を除いてすべての段落間の間隔を削除したい場合は、これらのオプションを使用しないでください。代わりに、次の CSS コードを :ref:`追加 CSS <extra-css>` に追加します::"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:207
 msgid ""
@@ -349,7 +349,7 @@ msgid ""
 "`class=\"spacious\"`. If your input document is not in HTML, use the Debug "
 "option, described in the Introduction to get HTML (use the :file:`input` "
 "sub-folder)."
-msgstr "次にソースドキュメントで、間隔が必要な段落に `class=\"spacious\"` とマークします。入力ドキュメントが HTML でない場合は、HTML を取得するための入門部分で説明されているデバッグオプションを使用します (:file:`input` サブフォルダを使用します)。"
+msgstr "次にソースドキュメントで、間隔が必要な段落に `class=\"spacious\"` とマークします。入力ドキュメントが HTML でない場合は、「はじめに」で説明されているデバッグオプションを使用して HTML を取得します (:file:`input` サブフォルダを使用します)。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:211
 msgid ""
@@ -360,7 +360,7 @@ msgid ""
 "it in a linear fashion.  Note that this option linearizes *all* tables, so "
 "only use it if you are sure the input document does not use tables for "
 "legitimate purposes, like presenting tabular information."
-msgstr "もうひとつの便利なオプションは、 :guilabel:`表を展開` です。不適切に設計されたドキュメントの中には、表を使ってページ上のテキストのレイアウトを制御するものがあります。このようなドキュメントを変換すると、ページからはみ出すテキストやその他の歪みが含まれていることがよくあります。このオプションは、表からコンテンツを抽出し、線形に表示します。ただしこのオプションは *すべて* の表を線形化するため、入力ドキュメントが表形式の情報の表示などの正当な目的でテーブルを使用していないことが確実な場合にのみ使用してください。"
+msgstr "もうひとつの便利なオプションは、 :guilabel:`表を展開` です。不適切に設計されたドキュメントの中には、表を使ってページ上のテキストのレイアウトを制御するものがあります。このようなドキュメントを変換すると、ページからはみ出すテキストやその他の歪みが含まれていることがよくあります。このオプションは、表からコンテンツを抽出し、線形に表示します。ただしこのオプションは *すべて* の表を線形化するため、入力ドキュメントが表形式の情報の表示などの正当な目的で表を使用していないことが確実な場合にのみ使用してください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:220
 msgid "Styling"
@@ -374,7 +374,7 @@ msgid ""
 "document** itself. You can use this setting to fine tune the "
 "presentation/layout of your document. For example, if you want all "
 "paragraphs of class `endnote` to be right aligned, just add::"
-msgstr ":guilabel:`追加 CSS` オプションを使用すると、入力内のすべての HTML ファイルに適用される任意のCSSを指定できます。このCSSは非常に高い優先度で適用されるため、 **入力ドキュメント** 自体に存在するほとんどの CSS を上書きします。この設定を使用すれば、ドキュメントのプレゼンテーション/レイアウトを微調整できます。たとえば、クラスの文末脚注のすべての段落を右揃えにしたい場合は、次を追加します::"
+msgstr ":guilabel:`追加 CSS` オプションを使用すると、入力内のすべての HTML ファイルに適用される任意のCSSを指定できます。このCSSは非常に高い優先度で適用されるため、 **入力ドキュメント** 自体に存在するほとんどの CSS を上書きします。この設定を使用すれば、ドキュメントのプレゼンテーション/レイアウトを微調整できます。たとえば、クラスが `endnote` であるすべての段落を右揃えにしたい場合は、次を追加します::"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:233
 msgid "or if you want to change the indentation of all paragraphs::"
@@ -416,7 +416,7 @@ msgid ""
 "Similar to transform styles, but allows you to make changes to the HTML "
 "content of the book. You can replace one tag with another, add classes or "
 "other attributes to tags based on their content, etc."
-msgstr "変換スタイルに似た機能で、本の HTML コンテンツに変更を加えることができます。あるタグを別のタグに置き換えたり、コンテンツに基づいてクラスやその他の属性をタグに追加したりできます。"
+msgstr "「スタイルの変形」に似た機能で、本の HTML コンテンツに変更を加えることができます。あるタグを別のタグに置き換えたり、コンテンツに基づいてクラスやその他の属性をタグに追加したりできます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:265
 msgid "Page setup"
@@ -431,7 +431,7 @@ msgid ""
 "profile. Both sets of profiles basically deal with how to interpret "
 "measurements in the input/output documents, screen sizes and default font "
 "rescaling keys."
-msgstr ":guilabel:`ページ設定` オプションは、余白や画面サイズなどの画面レイアウトを制御するためのものです。選択した出力形式がページ余白をサポートしている場合に出力プラグインによって使用される、ページ余白を設定するオプションがあります。さらに、入力プロファイルと出力プロファイルを選択する必要があります。プロファイルのセットは両方とも基本的には、入力/出力ドキュメント、画面サイズ、およびデフォルトのフォントサイズ調整のキーの寸法をどのように解釈するかを扱います。"
+msgstr ":guilabel:`ページ設定` オプションは、余白や画面サイズなどの画面レイアウトを制御するためのものです。選択した出力形式がページ余白をサポートしている場合に出力プラグインによって使用される、ページ余白を設定するオプションがあります。さらに、入力プロファイルと出力プロファイルを選択する必要があります。どちらのプロファイルも基本的には、入力/出力ドキュメント内の寸法の解釈方法、画面サイズ、デフォルトのフォントサイズ調整のキーを扱います。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:274
 msgid ""
@@ -452,7 +452,7 @@ msgid ""
 "example, images to be auto-resized to be fit to the screen in some output "
 "formats. So choose a profile of a device that has a screen size similar to "
 "your device."
-msgstr "出力プロファイルは、画面サイズも制御します。これにより、たとえば一部の出力形式では、画像が画面に収まるように自動的にサイズ変更されることになります。ですから、デバイスと同じような画面サイズを持つデバイスのプロファイルを選択してください。"
+msgstr "出力プロファイルは、画面サイズも制御します。これにより、たとえば一部の出力形式では、画像が画面に収まるように自動的にサイズ変更されることになります。ですから、お使いのデバイスと同じような画面サイズを持つデバイスのプロファイルを選択してください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:291
 msgid "Heuristic processing"
@@ -467,7 +467,7 @@ msgid ""
 "in some cases an option may lead to worse results, so use with care.  As an "
 "example, several of these options will remove all non-breaking-space "
 "entities, or may include false positive matches relating to the function."
-msgstr "ヒューリスティック処理は、書式のくずれた入力ドキュメントにありがちな問題を検出して修正するためのさまざまな機能を提供します。入力ドキュメントの書式がくずれている場合は、これらの関数を使用してください。ただしこれらの関数は一般的なパターンに頼っているため、オプションによっては結果が悪化する可能性があります。例を挙げると、これらのオプションのいくつかは、すべてのノンブレークスペースエンティティを削除したり、関数に関連して誤検知することがあります。"
+msgstr "ヒューリスティック処理は、書式のくずれた入力ドキュメントにありがちな問題を検出して修正するためのさまざまな機能を提供します。入力ドキュメントの書式がくずれている場合は、これらの機能を使用してください。ただしこれらの機能は一般的なパターンに頼っているため、オプションによっては結果が悪化する可能性があります。注意して使用してください。例を挙げると、これらのオプションのいくつかは、すべてのノンブレークスペースエンティティを削除したり、その機能に関連して誤検知したりすることがあります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:299
 msgid ":guilabel:`Enable heuristic processing`"
@@ -478,7 +478,7 @@ msgid ""
 "This option activates calibre's :guilabel:`Heuristic processing` stage of "
 "the conversion pipeline. This must be enabled in order for various sub-"
 "functions to be applied"
-msgstr "このオプションは、calibreの 変換パイプラインの :guilabel:`ヒューリスティック処理` ステージを有効にします。さまざまなサブ機能を適用するには、これが有効になっている必要があります。"
+msgstr "このオプションは、calibre の変換パイプラインの :guilabel:`ヒューリスティック処理` ステージを有効にします。さまざまなサブ機能を適用するには、これが有効になっている必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:303
 msgid ":guilabel:`Unwrap lines`"
@@ -566,7 +566,7 @@ msgid ""
 "while the other option modifies the document styles.  This option can also "
 "remove paragraphs which were inserted using calibre's :guilabel:`Insert "
 "blank line` option."
-msgstr "このオプションを設定すると、calibreはドキュメントに含まれる空白行を分析します。すべての段落に空白行がとじ込みされている場合、calibre はその空白の段落をすべて削除します。連続した複数行の空白はシーン区切りと見なされ、ひとつの段落としてそのまま保持されます。このオプションは :guilabel:`外観` の下の :guilabel:`段落間の空白を削除` オプションとは HTML コンテンツ自体を変更する点が異なります。:guilabel:`段落間の空白を削除` オプションはドキュメントスタイルを変更します。このオプションでは、calibreの :guilabel:`空行を挿入` オプションを使って挿入された段落を削除することもできます。"
+msgstr "このオプションを設定すると、calibreはドキュメントに含まれる空白行を分析します。すべての段落の間に空白行が挟まれている場合、calibre はその空白の段落をすべて削除します。連続した複数行の空白はシーン区切りと見なされ、ひとつの段落としてそのまま保持されます。このオプションは :guilabel:`外観` の下の :guilabel:`段落間の空白を削除` オプションとは HTML コンテンツ自体を変更する点が異なります。:guilabel:`段落間の空白を削除` オプションはドキュメントスタイルを変更します。このオプションでは、calibreの :guilabel:`空行を挿入` オプションを使って挿入された段落を削除することもできます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:346
 msgid ":guilabel:`Ensure scene breaks are consistently formatted`"
@@ -589,7 +589,7 @@ msgid ""
 "If this option is configured then calibre will replace scene break markers "
 "it finds with the replacement text specified by the user.  Please note that "
 "some ornamental characters may not be supported across all reading devices."
-msgstr "このオプションが設定されていると、calibreは検出したシーン区切りマーカーをユーザが指定した置換テキストに置き換えます。ただし一部の装飾用文字は、読み取りデバイスによっては表示できないこともあります。"
+msgstr "このオプションが設定されていると、calibreは検出したシーン区切りマーカーをユーザが指定した置換テキストに置き換えます。ただし一部の装飾用文字は、リーダーデバイスによっては表示できないこともあります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:355
 msgid ""
@@ -600,7 +600,7 @@ msgid ""
 "setting, otherwise the style information will be discarded.  Image tags can "
 "used, but calibre does not provide the ability to add the image during "
 "conversion, this must be done after the fact using the 'Edit book' feature."
-msgstr "全般的に HTML タグの使用は避けてください。calibre はタグをすべて破棄し、事前に定義したマークアップを使用します。 <hr /> タグ、つまり水平線、および <img> タグは例外です。オプションで水平線のスタイルを指定できます。自分でスタイルを追加する場合には、必ず '幅' 設定を含めてください。そうしないと、スタイル情報が破棄されます。画像タグは使用可能ですが、calibre は変換中に画像を追加する機能を提供していません。これは、'本の編集' 機能を使用して事後に行う必要があります。"
+msgstr "全般的に HTML タグの使用は避けてください。calibre はタグをすべて破棄し、事前に定義したマークアップを使用します。 <hr /> タグ、つまり水平線、および <img> タグは例外です。オプションで水平線のスタイルを指定できます。自分でスタイルを追加する場合には、必ず 'width' 設定を含めてください。そうしないと、スタイル情報が破棄されます。画像タグは使用可能ですが、calibre は変換中に画像を追加する機能を提供していません。これは、'書籍編集' 機能を使用して事後に行う必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:361
 msgid ""
@@ -638,7 +638,7 @@ msgid ""
 "without a hyphen in the document.  The second pass analyzes all hyphenated "
 "words throughout the document, hyphens are removed if the word exists "
 "elsewhere in the document without a match."
-msgstr "このオプションを有効にすると、calibre はドキュメント内のハイフンでつながれたすべてのコンテンツを分析します。ドキュメントそのものが、分析用の辞書として使われます。これのオプションを使用すれば、calibre は文書内の言語が何であれ、造語であろうとあいまいな科学用語であろうと正しくハイフンを削除できます。主な欠点は、ドキュメントに 1 回しか表示されない単語は変更できないことです。分析は 2 つの工程で行われ、最初の工程では行末を分析します。その単語がドキュメント内にハイフンの有無にかかわらず存在する場合にのみ、行の折り返しが解除されます。 2 番目の工程では、ドキュメント全体でハイフンが付けられたすべての単語が分析されます。単語がマッチすることなくドキュメント内の他の場所に存在する場合、ハイフンは削除されます。"
+msgstr "このオプションを有効にすると、calibre はドキュメント内のハイフンでつながれたすべてのコンテンツを分析します。ドキュメントそのものが、分析用の辞書として使われます。このオプションを使用すれば、calibre は文書内の言語が何であれ、造語であろうとあまり知られていない科学用語であろうと正しくハイフンを削除できます。主な欠点は、ドキュメントに 1 回しか出現しない単語は変更できないことです。分析は 2 つの工程で行われ、最初の工程では行末を分析します。その単語がドキュメント内にハイフンの有無にかかわらず存在する場合にのみ、行の折り返しが解除されます。 2 番目の工程では、ドキュメント全体でハイフンが付けられたすべての単語が分析されます。単語がマッチすることなくドキュメント内の他の場所に存在する場合、ハイフンは削除されます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:375
 msgid ":guilabel:`Italicize common words and patterns`"
@@ -654,7 +654,7 @@ msgstr "有効にすると、calibre は一般的にイタリックとする単�
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:379
 msgid ":guilabel:`Replace entity indents with CSS indents`"
-msgstr ":guilabel:`要素のインデントを CSS のインデントに置換`"
+msgstr ":guilabel:`エンティティのインデントを CSS のインデントに置換`"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:380
 msgid ""
@@ -679,7 +679,7 @@ msgid ""
 "expressions for your document.  Click the magic wand beside the expression "
 "box, and click the 'Test' button after composing your search expression.  "
 "Successful matches will be highlighted in Yellow."
-msgstr "これらのオプションは、主に PDF ドキュメントの変換や OCR 変換に役立つものですが、多くのドキュメント固有の問題を修正するためにも使用できます。例として、一部の変換では、テキストにページのヘッダとフッタが残る場合があります。これらのオプションは、正規表現を使用して、ヘッダ、フッタ、またはその他の任意のテキストを探し、削除したり置換したりします。ただしこれが操作する対象は、変換パイプラインによって生成された中間 XHTML です。ウィザードを使うと、ドキュメントの正規表現のカスタマイズを手助けしてくれます。式ボックスの横にある魔法の杖をクリックし、検索式を作成した後、'テスト' ボタンをクリックしてください。マッチに成功したものは黄色で強調表示されます。"
+msgstr "これらのオプションは、主に PDF ドキュメントの変換や OCR 変換に役立つものですが、多くのドキュメント固有の問題を修正するためにも使用できます。例として、一部の変換では、テキストにページのヘッダとフッタが残る場合があります。これらのオプションは、正規表現を使用して、ヘッダ、フッタ、またはその他の任意のテキストを探し、削除したり置換したりします。ただしこれが操作する対象は、変換パイプラインによって生成された中間 XHTML です。ドキュメントに合わせて正規表現をカスタマイズするのを手助けするウィザードがあります。式ボックスの横にある魔法の杖をクリックし、検索式を作成した後、'テスト' ボタンをクリックしてください。マッチに成功したものは黄色で強調表示されます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:396
 msgid ""
@@ -703,7 +703,7 @@ msgid ""
 "powerful options to control this. With power comes complexity, but if once "
 "you take the time to learn the complexity, you will find it well worth the "
 "effort."
-msgstr "構造検出は、入力ドキュメント内の構造要素が適切に指定されていない場合に、calibre がそれ検出するのに最善を尽くすことに関わります。たとえば、章、ページ分割、ヘッダ、フッタなどです。容易に想像できることですが、この処理は本ごとに大きく異なります。幸い、calibre にはこれを制御するための非常に強力なオプションがあります。強力さには複雑さが伴うものですが、時間をかけて複雑さを学んでみれば、努力するだけの価値が十分にあるとわかるでしょう。"
+msgstr "構造検出は、入力ドキュメント内の構造要素が適切に指定されていない場合に、calibre がそれを検出するのに最善を尽くすことに関わります。たとえば、章、ページ分割、ヘッダ、フッタなどです。容易に想像できることですが、この処理は本ごとに大きく異なります。幸い、calibre にはこれを制御するための非常に強力なオプションがあります。強力さには複雑さが伴うものですが、時間をかけて複雑さを学んでみれば、努力するだけの価値が十分にあるとわかるでしょう。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:412
 msgid "Chapters and page breaks"
@@ -744,7 +744,7 @@ msgid ""
 "chapters start at either `<h1>` or `<h2>` tags that have any of the words "
 "`(chapter, book, section or part)` in them or that have the "
 "`class=\"chapter\"` attribute."
-msgstr "この式はかなり複雑です。数多くの一般的なケースを同時に処理しようとしているためです。どういう意味かと言うと、calibreは、章が <h1> または <h2> タグのいずれかで始まり、その中に単語 `(chapter, book, section または part)` のうちいずれかが含まれている、または `class=\"chapter\"` 属性がつけられているものと想定しています。"
+msgstr "この式はかなり複雑です。数多くの一般的なケースを同時に処理しようとしているためです。どういう意味かと言うと、calibreは、章が `<h1>` または `<h2>` タグのいずれかで始まり、その中に単語 `(chapter, book, section または part)` のうちいずれかが含まれている、または `class=\"chapter\"` 属性がつけられているものと想定しています。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:433
 msgid ""
@@ -752,7 +752,7 @@ msgid ""
 "what calibre does when it detects a chapter. By default, it will insert a "
 "page break before the chapter. You can have it insert a ruled line instead "
 "of, or in addition to the page break. You can also have it do nothing."
-msgstr "関連するオプションに :guilabel:`章のマーク` があります。これを使用すると、章を見つけたときの calibre の動作を制御できます。デフォルトでは、章の前に改ページが挿入されます。改ページの代わりに、または改ページに加えて、罫線を挿入することができます。何もしないようにすることもできます"
+msgstr "関連するオプションに :guilabel:`章のマーク` があります。これを使用すると、章を見つけたときの calibre の動作を制御できます。デフォルトでは、章の前に改ページが挿入されます。改ページの代わりに、または改ページに加えて、罫線を挿入することができます。何もしないようにすることもできます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:437
 msgid "The default setting for detecting page breaks is::"
@@ -762,7 +762,7 @@ msgstr "改ページを探すためのデフォルトの設定は次のように
 msgid ""
 "which means that calibre will insert page breaks before every `<h1>` and "
 "`<h2>` tag by default."
-msgstr "これは、デフォルトで、calibreがすべての <h1> および <h2> タグの前に改ページを挿入することを意味します。"
+msgstr "これは、デフォルトで、calibreがすべての `<h1>` および `<h2>` タグの前に改ページを挿入することを意味します。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:445
 msgid ""
@@ -789,7 +789,7 @@ msgid ""
 "comments, etc. This option will create a single page with all this metadata "
 "and insert it into the converted e-book, typically just after the cover. "
 "Think of it as a way to create your own customised book jacket."
-msgstr "calibreの優れた点のひとつに、書籍に関するまさに完璧な書誌を管理できることが挙げられます。評価、タグ、コメントなど、すべてを管理できます。このオプションは、こうした書誌を含むひとつのページを作成し、変換した電子書籍に挿入します。通常は表紙の直後に挿入します。自分でカスタマイズした表紙を作成する方法のひとつと考えてください。"
+msgstr "calibreの優れた点のひとつに、書籍に関するまさに完璧な書誌を管理できることが挙げられます。評価、タグ、コメントなど、すべてを管理できます。このオプションは、こうした書誌を含むひとつのページを作成し、変換した電子書籍に挿入します。通常は表紙の直後に挿入します。自分でカスタマイズしたブックジャケットを作成する方法のひとつと考えてください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:458
 msgid ":guilabel:`Remove first image`"
@@ -816,7 +816,7 @@ msgid ""
 "one. In these cases, the options in this section can help you automatically "
 "generate a Table of Contents in the converted e-book, based on the actual "
 "content in the input document."
-msgstr "入力ドキュメントの書誌に目次があれば、calibre はそれを使用します。しかし古い形式の多くは書誌ベースの目次をサポートしていなかったり、個々のドキュメントが書誌を持たなかったりします。こうした場合にこのセクションのオプションを使えば、入力ドキュメントの実際のコンテンツに基づいて、変換された電子書籍の中に自動的に目次を生成してくれます。"
+msgstr "入力ドキュメントの書誌に目次があれば、calibre はそれを使用します。しかし古い形式の多くは書誌ベースの目次をサポートしていなかったり、個々のドキュメントに書誌ベースの目次がなかったりします。こうした場合にこのセクションのオプションを使えば、入力ドキュメントの実際のコンテンツに基づいて、変換された電子書籍の中に自動的に目次を生成してくれます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:473
 msgid ""
@@ -831,7 +831,7 @@ msgid ""
 " a conversion. Go to :guilabel:`Preferences->Interface->Toolbars` and add "
 "the :guilabel:`ToC Editor` to the main toolbar. Then just select the book "
 "you want to edit and click the :guilabel:`ToC Editor` button."
-msgstr "このオプションの使い方を正確に理解するのには、少々手こずるかもしれません。目次を手作業で作成/編集したい場合は、EPUB または AZW3 形式に変換し、変換ダイアログの目次セクションの下部にある :guilabel:`変換完了後に目次を手動で調整` にチェックします。こうすると、変換後に目次編集ツールが起動するようになります。このツールを使えば、本の中の目次に入れたい場所をクリックするだけで目次に項目を作成できます。変換せずに目次エディタを単独で使用することもできます。:guilabel:`環境設定->インタフェース->ツールバー` へ行き、:guilabel:`目次エディタ` をメインツールバーに追加してください。それから編集する本を選択して、:guilabel:`目次エディタ` ボタンをクリックします。"
+msgstr "このオプションの使い方を正確に理解するのには、少々手こずるかもしれません。目次を手作業で作成/編集したい場合は、EPUB または AZW3 形式に変換し、変換ダイアログの目次セクションの下部にある :guilabel:`変換完了後に目次を手動で調整` にチェックします。こうすると、変換後に目次エディタツールが起動するようになります。このツールを使えば、本の中の目次に入れたい場所をクリックするだけで目次に項目を作成できます。変換せずに目次エディタを単独で使用することもできます。:guilabel:`環境設定->インタフェース->ツールバー` へ行き、:guilabel:`目次エディタ` をメインツールバーに追加してください。それから編集する本を選択して、:guilabel:`目次エディタ` ボタンをクリックします。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:485
 msgid ""
@@ -849,7 +849,7 @@ msgid ""
 " chapters in the :ref:`structure-detection` section above. If you do not "
 "want to include detected chapters in the generated table of contents, check "
 "the :guilabel:`Do not add detected chapters` option."
-msgstr "自動生成される目次はデフォルトでは、calibreはまず、見つかった章を生成される目次に追加しようとします。章の検出をカスタマイズする方法については、上の :ref:`structure-detection` の章で詳しく説明しています。見つかった章を生成される目次に含めたくない場合は、:guilabel:`見つかった章を目次に追加しない` オプションをチェックしてください。"
+msgstr "自動生成される目次は、デフォルトでは次のように作成されます。calibre はまず、見つかった章を生成される目次に追加しようとします。章の検出をカスタマイズする方法については、上の :ref:`structure-detection` の章で詳しく説明しています。見つかった章を生成される目次に含めたくない場合は、:guilabel:`見つかった章を目次に追加しない` オプションをチェックしてください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:494
 msgid ""
@@ -969,7 +969,7 @@ msgid ""
 " selecting all the books and then clicking the :guilabel:`Edit metadata` "
 "button to bring up the bulk metadata edit dialog, near the bottom of the "
 "dialog is an option to remove stored conversion settings."
-msgstr "本の変換ごとに、変換ダイアログで設定を変更することもできます。本を変換するとき、calibre はその本に使用した設定を記憶します。次にまた変換するときには、:guilabel:`環境設定` で設定されたデフォルトよりも、それぞれの本に保存された設定を優先します。本の変換ダイアログの :guilabel:`デフォルトに戻す` ボタンを使用すれば、個別の設定をデフォルトに戻すことができます。本のグループに保存されている設定を削除するには、すべての本を選択して :guilabel:`書誌を編集` ボタンをクリックし、書誌の一括編集ダイアログを表示します。ダイアログの下部に、保存されている変換を削除するオプションがあります。"
+msgstr "本の変換ごとに、変換ダイアログで設定を変更することもできます。本を変換するとき、calibre はその本に使用した設定を記憶します。次にまた変換するときには、:guilabel:`環境設定` で設定されたデフォルトよりも、それぞれの本に保存された設定を優先します。本の変換ダイアログの :guilabel:`デフォルトに戻す` ボタンを使用すれば、個別の設定をデフォルトに戻すことができます。本のグループに保存されている設定を削除するには、すべての本を選択して :guilabel:`書誌の編集` ボタンをクリックし、書誌の一括編集ダイアログを表示します。ダイアログの下部に、保存されている変換設定を削除するオプションがあります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:616
 msgid ""
@@ -1010,7 +1010,7 @@ msgid ""
 "rotating icon in the lower right corner and then double clicking the "
 "individual conversion job. This will bring up a conversion log that will "
 "contain the actual settings used, near the top."
-msgstr "右下端にある回転アイコンをクリックしてから、個々の変換ジョブをダブルクリックすると、変換中に使用された実際の設定を確認できます。これは使用された実際の設定を含む変換ログを上部に表示します。"
+msgstr "右下端にある回転アイコンをクリックしてから、個々の変換ジョブをダブルクリックすると、変換中に使用された実際の設定を確認できます。変換ログが表示され、その上部付近に実際に使用された設定が記載されています。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:642
 msgid "Format specific tips"
@@ -1022,7 +1022,7 @@ msgid ""
 "Options specific to particular format, whether input or output are available"
 " in the conversion dialog under their own section, for example `TXT input` "
 "or `EPUB output`."
-msgstr "ここでは特定の形式の変換に固有な情報を記載します。特定の形式に特有なオプションや、`TXT 入力` や `EPUB 出力` のような入力と出力がそれぞれの変換ダイアログのもとで利用可能かどうか、といったことです。"
+msgstr "ここでは特定の形式の変換に固有な情報を記載します。入力でも出力でも、特定の形式に固有のオプションは、変換ダイアログ内のそれぞれのセクション (たとえば `TXT 入力` や `EPUB 出力`) にあります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:649
 msgid "Convert Microsoft Word documents"
@@ -1088,7 +1088,7 @@ msgstr "テキストドキュメントには、太字、斜体などの書式設
 msgid ""
 "TXT input supports a number of options to differentiate how paragraphs are "
 "detected."
-msgstr "テキスト入力は、段落の検出方法を差別化するためのいくつかのオプションをサポートしています。"
+msgstr "テキスト入力は、段落の検出方法を切り替えるためのいくつかのオプションをサポートしています。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:687
 msgid ":guilabel:`Paragraph style: Auto`"
@@ -1137,7 +1137,7 @@ msgid ""
 "Assumes that the document has no formatting, but does use hard line breaks."
 "  Punctuation and median line length are used to attempt to re-create "
 "paragraphs."
-msgstr "ドキュメントには書式設定がないものとみなしますが、ハード改行は使用します。段落の再現を試みるために、句読点と行の平均長を使用します"
+msgstr "ドキュメントに書式設定はないものの、ハード改行は使われているものとみなします。段落の再現を試みるために、句読点と行の長さの中央値を使用します。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:721
 msgid ":guilabel:`Formatting style: Auto`"
@@ -1173,7 +1173,7 @@ msgid ""
 "a proper table of contents generated from a TXT document. You can learn more"
 " about the Markdown syntax at `daringfireball "
 "<https://daringfireball.net/projects/markdown/syntax>`_."
-msgstr "calibre は、Markdownと呼ばれる変換プリプロセッサを介した TXT 入力の実行もサポートしています。Markdown を使用すると、太字、斜体、セクション見出し、表、リスト、目次などの基本的な書式を TXTドキュメントに追加できます。章の見出しには先頭に＃を付けて、章のXPath検出式を \"//h:h1\" に設定するのが、TXTドキュメントから適切な目次を生成するための最も簡単な方法です。Markdown 構文の詳細については、 `daringfireball <https://daringfireball.net/projects/markdown/syntax>`_ を参照してください。"
+msgstr "calibre は、Markdownと呼ばれる変換プリプロセッサを介した TXT 入力の実行もサポートしています。Markdown を使用すると、太字、斜体、セクション見出し、表、リスト、目次などの基本的な書式を TXTドキュメントに追加できます。章の見出しには先頭に # を付けて、章のXPath検出式を \"//h:h1\" に設定するのが、TXTドキュメントから適切な目次を生成するための最も簡単な方法です。Markdown 構文の詳細については、 `daringfireball <https://daringfireball.net/projects/markdown/syntax>`_ を参照してください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:736
 msgid ":guilabel:`Formatting style: None`"
@@ -1200,7 +1200,7 @@ msgid ""
 "just under the median line length. Lower this value to include more text in "
 "the unwrapping. Increase to include less. You can adjust this value in the "
 "conversion settings under :guilabel:`PDF Input`."
-msgstr "PDFドキュメントは、変換元としては最悪の形式のひとつです。ページサイズは固定で、テキスト配置形式です。つまり、ある段落がどこで終わり、別の段落がどこから始まるかを判断するのが非常に困難なのです。 calibre は、設定変更可能な :guilabel:`行折り返し解除係数` を使って段落の行折り返し解除を試みます。この係数は、どの長さで行の折り返しを解除をするか判断するために使用する尺度です。有効な値は 0 から 1 までの小数です。デフォルトは 0.45 で、行の平均長より少し小さい値です。この値を下げると、折り返し解除した行により多くのテキストが含まれます。増やすとテキストが少なくなります。この値は、:guilabel:`PDF入力` の下の変換設定で調整できます。"
+msgstr "PDFドキュメントは、変換元としては最悪の形式のひとつです。ページサイズとテキストの配置が固定された形式です。つまり、ある段落がどこで終わり、別の段落がどこから始まるかを判断するのが非常に困難なのです。 calibre は、設定変更可能な :guilabel:`行折り返し解除係数` を使って段落の行折り返し解除を試みます。この係数は、どの長さで行の折り返しを解除するか判断するために使用する尺度です。有効な値は 0 から 1 までの小数です。デフォルトは 0.45 で、行の長さの中央値より少し小さい値です。この値を下げると、折り返し解除した行により多くのテキストが含まれます。増やすとテキストが少なくなります。この値は、:guilabel:`PDF入力` の下の変換設定で調整できます。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:751
 msgid ""
@@ -1210,7 +1210,7 @@ msgid ""
 "footers are not removed from the text it can throw off the paragraph "
 "unwrapping. To learn how to use the header and footer removal options, read "
 ":ref:`regexptutorial`."
-msgstr "また多くの場合、ドキュメントの一部であるヘッダとフッタがテキストに含まれるような形になっています。 :guilabel:`検索と置換` パネルを使用してヘッダとフッタを削除し、この問題を緩和してください。ヘッダとフッタがテキストから削除されていないと、段落の行折り返し解除を放棄する可能性があります。ヘッダとフッタの削除オプションの使い方については :ref:`regexptutorial` を参照してください。"
+msgstr "また多くの場合、ドキュメントの一部であるヘッダとフッタがテキストに含まれるような形になっています。 :guilabel:`検索と置換` パネルを使用してヘッダとフッタを削除し、この問題を緩和してください。ヘッダとフッタがテキストから削除されていないと、段落の行折り返し解除がうまくいかなくなる可能性があります。ヘッダとフッタの削除オプションの使い方については :ref:`regexptutorial` を参照してください。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:756
 msgid "Some limitations of PDF input are:"
@@ -1231,7 +1231,7 @@ msgid ""
 "Some PDFs use special glyphs to represent ll or ff or fi, etc. Conversion of"
 " these may or may not work depending on just how they are represented "
 "internally in the PDF."
-msgstr "一部のPDFは、ll、ff、fiなどを表すのに特別なグリフを使用してます。PDF内部での表現方法次第で、これらのテキストの変換が機能する場合と機能しない場合があります。"
+msgstr "一部のPDFは、ll、ff、fiなどを表すのに特別なグリフを使用しています。PDF内部での表現方法次第で、これらのテキストの変換が機能する場合と機能しない場合があります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:761
 msgid "Links and Tables of Contents are not supported"
@@ -1288,7 +1288,7 @@ msgstr "calibreは、この .cbc ファイルを comics.txt の各項目を指�
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:791
 msgid "EPUB advanced formatting demo"
-msgstr "EPUB の優れた書式のデモ"
+msgstr "EPUB の高度な書式のデモ"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:793
 msgid ""
@@ -1296,7 +1296,7 @@ msgid ""
 ":download_file:`demo file <demos/demo.epub>`. The file was created from hand"
 " coded HTML using calibre and is meant to be used as a template for your own"
 " EPUB creation efforts."
-msgstr "この :download_file:`デモファイル <demos/demo.epub>` では、EPUBファイルのさまざまな優れた書式を紹介しています。このファイルは calibre を使用して手書きの HTML から作成しました。自分で EPUB を作成するときのテンプレートとして使えるよう作られています。"
+msgstr "この :download_file:`デモファイル <demos/demo.epub>` では、EPUBファイルのさまざまな高度な書式を紹介しています。このファイルは calibre を使用して手書きの HTML から作成しました。自分で EPUB を作成するときのテンプレートとして使えるよう作られています。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:796
 msgid ""
@@ -1310,7 +1310,7 @@ msgid ""
 "Note that because this file explores the potential of EPUB, most of the "
 "advanced formatting is not going to work on readers less capable than "
 "calibre's built-in EPUB viewer."
-msgstr "ただしこのファイルでは EPUB の可能性を追求しているため、優れた書式のうちかなりの部分は、calibre のビルトイン EPUBビューアに比べて能力の劣るリーダーでは機能しません。"
+msgstr "ただしこのファイルでは EPUB の可能性を追求しているため、高度な書式のうちかなりの部分は、calibre のビルトイン EPUBビューアに比べて能力の劣るリーダーでは機能しません。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:805
 msgid "Convert ODT documents"
@@ -1339,7 +1339,7 @@ msgstr "章の自動検出を有効にするには、ビルトインスタイル
 msgid ""
 "If you mark Chapters with style :guilabel:`Heading 2`, you have to set the "
 "'Detect chapters at' box to ``//h:h2``"
-msgstr "章をスタイル :guilabel:`Heading 2` でマークする場合、'章を検出' ボックスは ``//h:h2``"
+msgstr "章をスタイル :guilabel:`Heading 2` でマークする場合、'章を検出' ボックスを ``//h:h2`` に設定する必要があります。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:817
 msgid ""
@@ -1347,7 +1347,7 @@ msgid ""
 "Chapters marked with :guilabel:`Heading 3` you need to enter "
 "``//h:h2|//h:h3``. On the Convert - TOC page set the :guilabel:`Level 1 TOC`"
 " box to ``//h:h2`` and the :guilabel:`Level 2 TOC` box to ``//h:h3``."
-msgstr "セクションが :guilabel:`Heading 2` でマーク、章を :guilabel:`Heading 3` でマークしている階層化された目次には、``//h:h2|//h:h3`` と入力する必要があります。変換の目次ページでは :guilabel:`レベル 1 目次` ボックスに ``//h:h2`` を、そして :guilabel:`レベル 2 目次` ボックスには ``//h:h3`` を入力します。"
+msgstr "セクションを :guilabel:`Heading 2` で、章を :guilabel:`Heading 3` でマークした階層化された目次の場合は、``//h:h2|//h:h3`` と入力する必要があります。変換の目次ページでは :guilabel:`レベル 1 目次` ボックスに ``//h:h2`` を、そして :guilabel:`レベル 2 目次` ボックスには ``//h:h3`` を入力します。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:819
 msgid ""
@@ -1363,7 +1363,7 @@ msgid ""
 "your ODT document (File->Properties->Custom Properties). If this property is"
 " detected by calibre, the following custom properties are recognized "
 "(``opf.authors`` overrides document creator)::"
-msgstr "優れたプロパティ変換モードもあり、このモードを有効にするには ODT ドキュメントでカスタムプロパティ ``opf.metadata`` (Yes/No タイプ) を Yesに設定します (ファイル->プロパティ->カスタムプロパティ)。calibre がこのプロパティを検出すると、次のカスタムプロパティが認識されます (``opf.authors`` はドキュメント作成者を上書きします)::"
+msgstr "高度なプロパティ変換モードもあり、このモードを有効にするには ODT ドキュメントでカスタムプロパティ ``opf.metadata`` (Yes/No タイプ) を Yesに設定します (ファイル->プロパティ->カスタムプロパティ)。calibre がこのプロパティを検出すると、次のカスタムプロパティが認識されます (``opf.authors`` はドキュメント作成者を上書きします)::"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:834
 msgid ""
@@ -1379,7 +1379,7 @@ msgstr "これに加え、表紙として使用する画像を指定すること
 msgid ""
 "To disable cover detection you can set the custom property ``opf.nocover`` "
 "('Yes or No' type) to Yes in advanced mode."
-msgstr "表紙検出を無効にするには、上級者モードでカスタムプロパティ ``opf.nocover`` (Yes/No タイプ) に Yes を設定します。"
+msgstr "表紙検出を無効にするには、高度なモードでカスタムプロパティ ``opf.nocover`` (Yes/No タイプ) に Yes を設定します。"
 
 #: ../../../__w/calibre/calibre/manual/conversion.rst:844
 msgid "Converting to PDF"
@@ -1537,4 +1537,4 @@ msgid ""
 "Then, in the PDF output section of the conversion dialog, turn on the option"
 " to :guilabel:`Use page margins from the document being converted`. Now all "
 "pages generated from this HTML file will have ``10pt`` margins."
-msgstr "次に、変換ダイアログの PDF 出力セクションで、:guilabel:`変換するドキュメントのページマージンを使用` オプションを有効にします。ここうすると、この HTML ファイルから生成されたすべてのページに ``10pt`` の余白ができます。"
+msgstr "次に、変換ダイアログの PDF 出力セクションで、:guilabel:`変換するドキュメントのページマージンを使用` オプションを有効にします。こうすると、この HTML ファイルから生成されたすべてのページに ``10pt`` の余白ができます。"

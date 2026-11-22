@@ -19,7 +19,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-18 02:55+0000\n"
 "PO-Revision-Date: 2016-02-29 11:58+0000\n"
 "Last-Translator: Merarom <merarom@yahoo.es>, 2016\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -551,7 +551,7 @@ msgid ""
 "properties not defined in the CSS 2.1 standard (plus a few from CSS 3) are "
 "reported. CSS is checked in all stylesheets, inline style attributes and "
 "<style> tags in HTML files."
-msgstr "Felaktiga eller okända CSS-stilar. Ogiltig CSS och egenskaper som inte är definierade i CSS 2.1-standarden (samt några från CSS 3) rapporteras. CSS kontrolleras i alla stilmallar, style-attribut i HTML-element och <style>-taggar i HTML-filer."
+msgstr "Felaktiga eller okända CSS-stilar. CSS som är ogiltig eller innehåller egenskaper som inte stöds rapporteras. De egenskaper som stöds är de som definieras i CSS 2.1-standarden samt några från CSS 3. CSS kontrolleras i alla stilmallar, style-attribut i HTML-element och <style>-taggar i HTML-filer."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:362
 msgid ""
@@ -1129,10 +1129,86 @@ msgid ""
 msgstr "Stavningskontrollen har inbyggda ordböcker för engelska och spanska. Du kan installera egna via :guilabel:`Inställningar->Inställningar för redigerare->Hantera stavningsordböcker`. Stavningskontrollen kan använda ordböcker från LibreOffice i .oxt-format. Du kan hämta dem från `LibreOffices tilläggsförråd <https://extensions.libreoffice.org/?Tags%5B%5D=50>`_."
 
 #: ../../../__w/calibre/calibre/manual/edit.rst:766
+msgid "Checking the grammar of the book"
+msgstr "Kontrollera grammatiken i boken"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:768
+msgid ""
+"As you edit HTML files, grammar, style and typography issues are underlined "
+"in the code view. Right click on an underlined issue to replace its text "
+"with one of the suggested corrections, ignore the issue for the current "
+"session, stop checking for that kind of issue altogether, or see an "
+"explanation of it. Hovering the mouse over an issue shows a description of "
+"it, and pressing :kbd:`Shift+F8` jumps to the next issue in the current "
+"file. Corrections are made only to the text, so formatting such as bold and "
+"italics is preserved. You can turn off the underlining in "
+":guilabel:`Preferences->Editor settings`."
+msgstr "När du redigerar HTML-filer markeras grammatiska, stilistiska och typografiska problem med understrykningar i kodvyn. Högerklicka på ett understruket problem för att ersätta texten med en av de föreslagna rättningarna, ignorera problemet under den aktuella sessionen, helt sluta kontrollera den typen av problem eller visa en förklaring till det. Om du håller muspekaren över ett problem visas en beskrivning av det. Tryck på :kbd:`Shift+F8` för att hoppa till nästa problem i den aktuella filen. Endast texten ändras, så formatering som fetstil och kursiv stil bevaras. Du kan stänga av understrykningarna i :guilabel:`Inställningar->Inställningar för redigerare`."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:777
+msgid ""
+"You can see all the issues in the book with :guilabel:`Tools->Check grammar`"
+" (:kbd:`Shift+F7`). Select an issue to see an explanation of it and the "
+"suggested replacements, then click :guilabel:`Change` to correct it, or "
+":guilabel:`Show in editor` to edit the text yourself. The list of issues can"
+" be filtered by text and by the type of issue. Issues can be ignored for the"
+" current session, and rules that find issues you are not interested in can "
+"be disabled, and enabled again with the :guilabel:`Manage disabled rules` "
+"button. The :guilabel:`Picky` option also checks for stylistic issues that "
+"are not errors, such as wordiness."
+msgstr "Du kan se alla problem i boken med :guilabel:`Verktyg->Kontrollera grammatik` (:kbd:`Shift+F7`). Välj ett problem för att se en förklaring och de föreslagna ersättningarna. Klicka sedan på :guilabel:`Ändra` för att rätta det eller på :guilabel:`Visa i redigeraren` för att redigera texten själv. Listan över problem kan filtreras efter text och problemtyp. Problem kan ignoreras under den aktuella sessionen. Regler som hittar problem du inte är intresserad av kan inaktiveras och aktiveras igen med knappen :guilabel:`Hantera inaktiverade regler`. Alternativet :guilabel:`Stilkontroll` letar även efter stilistiska problem som inte är fel, till exempel onödigt mångordiga formuleringar."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:787
+msgid ""
+"Grammar checking works for many languages. As with spell checking, the "
+"language of the text comes from the book's metadata and ``lang`` attributes "
+"in the HTML files, so books with text in multiple languages are checked "
+"correctly. The data needed to check a language is downloaded the first time "
+"it is needed, either by right clicking in the editor and choosing to "
+"download it, or with the :guilabel:`Check grammar` tool."
+msgstr "Grammatikkontrollen fungerar för många språk. Precis som vid stavningskontrollen hämtas textens språk från bokens metadata och ``lang``-attributen i HTML-filerna, så att böcker med text på flera språk kontrolleras korrekt. De data som behövs för att kontrollera ett språk hämtas första gången de behövs, antingen genom att du högerklickar i redigeraren och väljer att hämta dem eller med verktyget :guilabel:`Kontrollera grammatik`."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:794
+msgid ""
+"For English, there is also a :guilabel:`Deep check` option, which checks "
+"every sentence with a neural network as well. This finds errors that the "
+"rules miss, but is slower and needs the neural network to be downloaded. "
+"Once downloaded, the neural network is also used to put the best suggestions"
+" for corrections first."
+msgstr "För engelska finns även alternativet :guilabel:`Fördjupad kontroll`, som dessutom kontrollerar varje mening med ett neuralt nätverk. Detta hittar fel som reglerna missar, men är långsammare och kräver att det neurala nätverket hämtas. När nätverket har hämtats används det också för att placera de bästa rättningsförslagen först."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:801
+msgid "Suggestions for rewriting sentences"
+msgstr "Förslag på omformuleringar av meningar"
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:803
+msgid ""
+"For English text, a neural network can suggest rewrites of sentences, to fix"
+" grammar, make them more fluent or clearer, simpler or more formal, or to "
+"paraphrase them. Right click on a sentence and choose :guilabel:`Suggest "
+"rewrites for the sentence` (:kbd:`Ctrl+Shift+F8`) to see suggestions for it,"
+" or open the :guilabel:`View->Rewrite suggestions` panel to see suggestions "
+"for the sentence the cursor is in as you move around the text. The changes "
+"each suggestion makes are highlighted, click :guilabel:`Apply` to rewrite "
+"the sentence, preserving its formatting. You can choose which kinds of "
+"suggestions to show. Suggestions are also available in the :guilabel:`Check "
+"grammar` tool, for the sentence containing the selected issue."
+msgstr "För engelsk text kan ett neuralt nätverk föreslå omformuleringar av meningar för att rätta grammatiken, förbättra flytet, göra dem tydligare, enklare eller mer formella, eller uttrycka samma sak med andra ord. Högerklicka på en mening och välj :guilabel:`Föreslå omformuleringar av meningen` (:kbd:`Ctrl+Shift+F8`) för att se förslag för den. Du kan också öppna panelen :guilabel:`Visa->Förslag på omformuleringar` för att se förslag för den mening som markören befinner sig i när du flyttar runt i texten. Ändringarna i varje förslag markeras. Klicka på :guilabel:`Tillämpa` för att omformulera meningen med bibehållen formatering. Du kan välja vilka typer av förslag som ska visas. Förslag finns även i verktyget :guilabel:`Kontrollera grammatik`, för den mening som innehåller det valda problemet."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:814
+msgid ""
+"The neural network is downloaded the first time it is needed, it is large, "
+"about a gigabyte. Generating suggestions is faster on a GPU. By default the "
+"GPU is used if it is supported and faster than the CPU, in which case "
+"versions of the neural network for both are downloaded, you can change this "
+"in :guilabel:`Preferences->Editor settings`."
+msgstr "Det neurala nätverket hämtas första gången det behövs. Det är stort, ungefär en gigabyte. Det går snabbare att generera förslag med en grafikprocessor. Som standard används grafikprocessorn om den stöds och är snabbare än processorn. Då hämtas versioner av det neurala nätverket för båda. Du kan ändra detta i :guilabel:`Inställningar->Inställningar för redigerare`."
+
+#: ../../../__w/calibre/calibre/manual/edit.rst:822
 msgid "Inserting special characters"
 msgstr "Infoga specialtecken"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:768
+#: ../../../__w/calibre/calibre/manual/edit.rst:824
 msgid ""
 "You can insert characters that are difficult to type by using the "
 ":guilabel:`Edit->Insert special character` tool. This shows you all Unicode "
@@ -1143,7 +1219,7 @@ msgid ""
 "Search and replace tool."
 msgstr "Du kan infoga tecken som är svåra att skriva med hjälp av verktyget :guilabel:`Redigera->Infoga specialtecken`. Detta visar alla Unicode-tecken, klicka på det tecken du vill skriva. Om du håller :kbd:`Ctrl` medan du klickar stängs fönstret efter att det valda tecknet har infogats. Det här verktyget kan användas för att infoga specialtecken i huvudtexten eller i något annat område i användargränssnittet, till exempel verktyget Sök och ersätt."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:776
+#: ../../../__w/calibre/calibre/manual/edit.rst:832
 msgid ""
 "Because there are a lot of characters, you can define your own "
 ":guilabel:`Favorite` characters, that will be shown first. Simply right "
@@ -1154,7 +1230,7 @@ msgid ""
 "favorites around."
 msgstr "Eftersom det finns många tecken kan du välja ut :guilabel:`Favoriter` som visas först. Högerklicka på ett tecken för att lägga till det som favorit. Högerklicka på ett tecken i favoriterna för att ta bort det därifrån. Du kan också ändra tecknens ordning genom att klicka på :guilabel:`Ordna om favoriter` och sedan dra och släppa tecknen."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:783
+#: ../../../__w/calibre/calibre/manual/edit.rst:839
 msgid ""
 "You can also directly type in special characters using the keyboard. To do "
 "this, you type the Unicode code for the character (in hexadecimal) and then "
@@ -1165,7 +1241,7 @@ msgid ""
 ":kbd:`Alt+X` and so on."
 msgstr "Du kan också skriva specialtecken direkt med tangentbordet. Skriv tecknets Unicode-kod i hexadecimal form och tryck sedan på :kbd:`Alt+X` för att omvandla koden till motsvarande tecken. För att skriva ÿ skriver du till exempel ff och sedan :kbd:`Alt+X`. För ett hårt blanksteg skriver du a0 och sedan :kbd:`Alt+X`, och för en horisontell ellips skriver du 2026 och sedan :kbd:`Alt+X` och så vidare."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:791
+#: ../../../__w/calibre/calibre/manual/edit.rst:847
 msgid ""
 "Finally, you can type in special characters by using HTML named entities. "
 "For example, typing &nbsp; will be replaced by a non breaking space when you"
@@ -1173,11 +1249,11 @@ msgid ""
 "colon."
 msgstr "Du kan också skriva specialtecken med namngivna HTML-entiteter. Skriver du till exempel &nbsp; ersätts det med ett hårt blanksteg när du skriver semikolonet. Ersättningen sker först när semikolonet skrivs."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:796
+#: ../../../__w/calibre/calibre/manual/edit.rst:852
 msgid "The code inspector view"
 msgstr "Kodinspektörsvyn"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:798
+#: ../../../__w/calibre/calibre/manual/edit.rst:854
 msgid ""
 "This view shows you the HTML coding and CSS that applies to the current "
 "element of interest. You open it by right clicking a location in the preview"
@@ -1189,11 +1265,11 @@ msgid ""
 "ability to live edit inside the Inspector is under development."
 msgstr "Den här vyn visar HTML-koden och CSS-reglerna för det aktuella elementet. Öppna den genom att högerklicka på en plats i förhandsgranskningen och välja :guilabel:`Inspektera`. Här kan du se elementets HTML-kod och de CSS-stilar som tillämpas på det. Du kan även redigera stilarna dynamiskt och omedelbart se effekten. Dessa ändringar påverkar inte bokens innehåll utan låter dig snabbt experimentera. Möjligheten att redigera i realtid i inspektören är under utveckling."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:808
+#: ../../../__w/calibre/calibre/manual/edit.rst:864
 msgid "Checking external links"
 msgstr "Kontrollera externa länkar"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:810
+#: ../../../__w/calibre/calibre/manual/edit.rst:866
 msgid ""
 "You can use this tool to check all links in your book that point to external"
 " websites. The tool will try to visit every externally linked website, and "
@@ -1201,11 +1277,11 @@ msgid ""
 "for you to fix."
 msgstr "Du kan använda detta verktyg för att kontrollera alla länkar i din bok som hänvisar till externa webbplatser. Verktyget kommer att försöka besöka varje externt länkad webbplats, och om besöket misslyckas, kommer det att rapportera alla trasiga länkar i ett behändigt format för dig att åtgärda."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:817
+#: ../../../__w/calibre/calibre/manual/edit.rst:873
 msgid "Downloading external resources"
 msgstr "Hämta externa resurser"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:819
+#: ../../../__w/calibre/calibre/manual/edit.rst:875
 msgid ""
 "You can use this tool to automatically download any images/stylesheets/etc. "
 "in the book that are not bundled with the book (i.e. they have URLs pointing"
@@ -1214,11 +1290,11 @@ msgid ""
 " to them to use the downloaded files."
 msgstr "Det här verktyget hämtar automatiskt bilder, stilmallar och andra resurser som används i boken men inte medföljer den, utan har URL:er som pekar till internet. Verktyget hittar alla sådana resurser, hämtar dem, lägger till dem i boken och uppdaterar alla hänvisningar så att de använder de hämtade filerna."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:827
+#: ../../../__w/calibre/calibre/manual/edit.rst:883
 msgid "Arranging files into folders by type"
 msgstr "Ordna filer i mappar efter typ"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:829
+#: ../../../__w/calibre/calibre/manual/edit.rst:885
 msgid ""
 "Often when editing EPUB files that you get from somewhere, you will find "
 "that the files inside the EPUB are arranged haphazardly, in different sub-"
@@ -1228,11 +1304,11 @@ msgid ""
 " the EPUB, it does not change how they are displayed in the File browser."
 msgstr "När du redigerar EPUB-filer från olika källor är filerna inuti EPUB-filen ofta oregelbundet ordnade i undermappar. Det här verktyget flyttar automatiskt alla filer till undermappar efter filtyp. Du öppnar det via :guilabel:`Verktyg->Ordna i mappar`. Verktyget ändrar bara hur filerna är ordnade inuti EPUB-filen, inte hur de visas i filhanteraren."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:837
+#: ../../../__w/calibre/calibre/manual/edit.rst:893
 msgid "Importing files in other e-book formats as EPUB"
 msgstr "Importera filer i andra e-bokformat som EPUB"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:839
+#: ../../../__w/calibre/calibre/manual/edit.rst:895
 msgid ""
 "The editor includes the ability to import files in some other e-book formats"
 " directly as a new EPUB, without going through a full conversion. This is "
@@ -1241,11 +1317,11 @@ msgid ""
 " as a new book`."
 msgstr "Redigeraren inkluderar möjligheten att importera filer i vissa andra e-bokformat direkt som en ny EPUB, utan att gå igenom en full konvertering. Detta är särskilt användbart för att direkt skapa EPUB-filer från dina egna handredigerade HTML-filer. Du kan göra detta via :guilabel:`Arkiv->Importera en HTML- eller DOCX-fil som en ny bok`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:852
+#: ../../../__w/calibre/calibre/manual/edit.rst:908
 msgid "The Reports tool"
 msgstr "Rapportverktyget"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:854
+#: ../../../__w/calibre/calibre/manual/edit.rst:910
 msgid ""
 "The editor includes a nice *Reports* tool (via :guilabel:`Tools->Reports`) "
 "that shows summaries of the files, images, links, words, characters and "
@@ -1257,35 +1333,35 @@ msgid ""
 "where the link points."
 msgstr "Redigeraren har ett praktiskt verktyg, *Rapporter*, som nås via :guilabel:`Verktyg->Rapporter`. Det visar sammanfattningar av de filer, bilder, länkar, ord, tecken och stilar som används i boken. Varje rad är klickbar. Dubbelklicka på en rad för att gå till den plats där posten används eller definieras. I vyn :guilabel:`Länkar` kan du till exempel dubbelklicka på en post i kolumnen :guilabel:`Källa` för att gå till länkens definition, eller i kolumnen :guilabel:`Mål` för att gå till dess destination."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:862
+#: ../../../__w/calibre/calibre/manual/edit.rst:918
 msgid "The Reports tool with information and statistics about the book"
 msgstr "Rapportverktyget med information och statistik om boken"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:869
+#: ../../../__w/calibre/calibre/manual/edit.rst:925
 msgid "Special features in the code editor"
 msgstr "Speciella funktioner i kodredigeraren"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:871
+#: ../../../__w/calibre/calibre/manual/edit.rst:927
 msgid ""
 "The calibre HTML editor is very powerful. It has many features that make "
 "editing of HTML (and CSS) easier."
 msgstr "calibre-HTML-redigeraren är mycket kraftfull. Den har många funktioner som gör redigering av HTML (och CSS) enklare."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:875
+#: ../../../__w/calibre/calibre/manual/edit.rst:931
 msgid "Syntax highlighting"
 msgstr "Syntaxmarkering"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:877
+#: ../../../__w/calibre/calibre/manual/edit.rst:933
 msgid ""
 "The HTML editor has very sophisticated syntax highlighting. Features "
 "include:"
 msgstr "HTML-redigeraren har mycket sofistikerad syntaxmarkering. Funktioner inkluderar:"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:879
+#: ../../../__w/calibre/calibre/manual/edit.rst:935
 msgid "The text inside bold, italic and heading tags is made bold/italic"
 msgstr "Text inuti taggar för fetstil, kursiv stil och rubriker visas med fetstil eller kursiv stil"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:880
+#: ../../../__w/calibre/calibre/manual/edit.rst:936
 msgid ""
 "As you move your cursor through the HTML, the matching HTML tags are "
 "highlighted, and you can jump to the opening or closing tag with the "
@@ -1293,45 +1369,45 @@ msgid ""
 "select the contents of a tag with :kbd:`Ctrl+Alt+T` or :kbd:`Ctrl+Shift+T`."
 msgstr "När du flyttar markören i HTML-koden markeras matchande HTML-taggar. Du kan hoppa till den inledande eller avslutande taggen med kortkommandona :kbd:`Ctrl+{` och :kbd:`Ctrl+}`. Du kan också markera innehållet i en tagg med :kbd:`Ctrl+Alt+T` eller :kbd:`Ctrl+Shift+T`."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:885
+#: ../../../__w/calibre/calibre/manual/edit.rst:941
 msgid "Invalid HTML is highlighted with a red underline"
 msgstr "Ogiltig HTML markeras med en röd understrykning"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:886
+#: ../../../__w/calibre/calibre/manual/edit.rst:942
 msgid ""
 "Spelling errors in the text inside HTML tags and attributes such as title "
 "are highlighted. The spell checking is language aware, based on the value of"
 " the ``lang`` attribute of the current tag and the overall book language."
 msgstr "Stavfel markeras i texten inuti HTML-taggar och attribut som title. Stavningskontrollen tar hänsyn till språket utifrån den aktuella taggens ``lang``-attribut och bokens övergripande språk."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:889
+#: ../../../__w/calibre/calibre/manual/edit.rst:945
 msgid "CSS embedded inside ``<style>`` tags is highlighted"
 msgstr "CSS som är inbäddad i ``<style>``-taggar syntaxmarkeras"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:890
+#: ../../../__w/calibre/calibre/manual/edit.rst:946
 msgid ""
 "Special characters that can be hard to distinguish such as non-breaking "
 "spaces, different types of hyphens, etc. are highlighted."
 msgstr "Specialtecken som kan vara svåra att skilja åt, till exempel hårda blanksteg och olika typer av bindestreck, markeras."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:892
+#: ../../../__w/calibre/calibre/manual/edit.rst:948
 msgid ""
 "Links to other files in ``<a>`` tags, ``<img>`` and ``<link>`` tags all have"
 " the filenames highlighted. If the filename they point to does not exist, "
 "the filename is marked with a red underline."
 msgstr "Filnamnen i länkar till andra filer i ``<a>``-, ``<img>``- och ``<link>``-taggar markeras. Om filen som länken hänvisar till inte finns markeras filnamnet med en röd understrykning."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:897
+#: ../../../__w/calibre/calibre/manual/edit.rst:953
 msgid "Context sensitive help"
 msgstr "Kontextkänslig hjälp"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:899
+#: ../../../__w/calibre/calibre/manual/edit.rst:955
 msgid ""
 "You can right click on an HTML tag name or a CSS property name to get help "
 "for that tag or property."
 msgstr "Du kan högerklicka på ett HTML-taggnamn eller ett CSS-egenskapsnamn för att få hjälp för den taggen eller egenskapen."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:901
+#: ../../../__w/calibre/calibre/manual/edit.rst:957
 msgid ""
 "You can also hold down the :kbd:`Ctrl` key and click on any filename inside "
 "a link tag to open that file in the editor automatically. Similarly, "
@@ -1339,18 +1415,18 @@ msgid ""
 " matches the tag and class."
 msgstr "Du kan hålla ner :kbd:`Ctrl` och klicka på ett filnamn i en länktagg för att öppna filen i redigeraren. Om du håller ner :kbd:`Ctrl` och klickar på ett klassnamn kommer du till den första stilregeln som matchar taggen och klassen."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:905
+#: ../../../__w/calibre/calibre/manual/edit.rst:961
 msgid ""
 "Right clicking a class name in an HTML file will allow you to rename the "
 "class, changing all occurrences of the class throughout the book and all its"
 " stylesheets."
 msgstr "Högerklicka på ett klassnamn i en HTML-fil för att byta namn på klassen. Alla förekomster av klassen i hela boken och dess stilmallar ändras då."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:912
+#: ../../../__w/calibre/calibre/manual/edit.rst:968
 msgid "Auto-complete"
 msgstr "Automatisk komplettering"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:914
+#: ../../../__w/calibre/calibre/manual/edit.rst:970
 msgid ""
 "When editing an e-book, one of the most tedious tasks is creating links to "
 "other files inside the book, or to CSS stylesheets, or images. You have to "
@@ -1358,7 +1434,7 @@ msgid ""
 "has auto-complete to make that easier."
 msgstr "När du redigerar en e-bok är en av de tråkigaste uppgifterna att skapa länkar till andra filer i boken, eller till CSS-stilmallar eller bilder. Du måste räkna ut rätt filnamn och relativ sökväg till filen. Redigeraren kompletterar automatiskt för att göra det lättare."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:919
+#: ../../../__w/calibre/calibre/manual/edit.rst:975
 msgid ""
 "As you type a filename, the editor automatically pops up suggestions. Simply"
 " use the :kbd:`Tab` key to select the correct file name. The editor even "
@@ -1368,7 +1444,7 @@ msgid ""
 "the right anchor."
 msgstr "När du skriver ett filnamn visar redigeraren automatiskt förslag. Använd :kbd:`Tab` för att välja rätt filnamn. Redigeraren föreslår även länkar till ankare i andra HTML-filer. När du skriver tecknet ``#`` visas alla ankare i målfilen tillsammans med ett kort textutdrag som hjälper dig att välja rätt."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:925
+#: ../../../__w/calibre/calibre/manual/edit.rst:981
 msgid ""
 "Note that unlike most other completion systems, the editor's completion "
 "system uses subsequence matching. This means that you can type just two or "
@@ -1380,11 +1456,11 @@ msgid ""
 " system, you will find it saves you a lot of time and effort."
 msgstr "Till skillnad från de flesta andra kompletteringssystem använder redigerarens system delsekvensmatchning. Det betyder att du kan skriva bara två eller tre bokstäver från olika delar av filnamnet för att komplettera det. Om du till exempel vill ange ``../images/arrow1.png`` kan du skriva ``ia1`` och trycka på :kbd:`Tab` för att komplettera filnamnet. Vid sökning efter träffar prioriterar systemet bokstäver i början av ett ord eller direkt efter en sökvägsavskiljare. När du har vant dig vid systemet sparar det mycket tid och arbete."
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:935
+#: ../../../__w/calibre/calibre/manual/edit.rst:991
 msgid "Snippets"
 msgstr "Kodavsnitt"
 
-#: ../../../__w/calibre/calibre/manual/edit.rst:937
+#: ../../../__w/calibre/calibre/manual/edit.rst:993
 msgid ""
 "The calibre E-book editor supports *snippets*. A snippet is a piece of text "
 "that is either re-used often or contains a lot of redundant text. The editor"

@@ -191,6 +191,10 @@ bool PdfPageCollection::TryMovePageTo(unsigned atIndex, unsigned toIndex)
 
 void PdfPageCollection::insertPagesAt(unsigned atIndex, mspan<unique_ptr<PdfPage>> pages)
 {
+    // NOTE: This clamps the index given to all the public insertion methods
+    if (atIndex > m_Pages.size())
+        atIndex = (unsigned)m_Pages.size();
+
     // Reserve capacity in all lists before touching any page state, so
     // any allocation failure is caught here before ownership is transferred
     m_Pages.reserve(m_Pages.size() + pages.size());
@@ -241,11 +245,6 @@ PdfPage& PdfPageCollection::CreatePageAt(unsigned atIndex, const nullable<Rect>&
 {
     FlattenStructure();
     auto size = getActualRect(size_);
-
-    unsigned pageCount = this->GetCount();
-    if (atIndex > pageCount)
-        atIndex = pageCount;
-
     unique_ptr<PdfPage> page(new PdfPage(GetDocument(), size));
     auto& pageRef = *page;
     insertPageAt(atIndex, std::move(page));
@@ -261,11 +260,6 @@ void PdfPageCollection::CreatePagesAt(unsigned atIndex, unsigned count, const nu
 {
     FlattenStructure();
     auto size = getActualRect(size_);
-
-    unsigned pageCount = this->GetCount();
-    if (atIndex > pageCount)
-        atIndex = pageCount;
-
     vector<unique_ptr<PdfPage>> pages(count);
     for (unsigned i = 0; i < count; i++)
         pages[i].reset(new PdfPage(GetDocument(), size));
@@ -293,7 +287,7 @@ void PdfPageCollection::AppendDocumentPages(const PdfDocument& doc, unsigned pag
     if (map == nullptr)
     {
         // If a map is not supplied create one now
-        unordered_map<PdfReference, PdfObject*> mappedObjects;
+        unordered_map<PdfReference, PdfReference> mappedObjects;
         return GetDocument().AppendDocumentPages(doc, pageIndex, pageCount, mappedObjects);
     }
 
@@ -310,7 +304,7 @@ void PdfPageCollection::InsertDocumentPageAt(unsigned atIndex, const PdfDocument
     if (map == nullptr)
     {
         // If a map is not supplied create one now
-        unordered_map<PdfReference, PdfObject*> mappedObjects;
+        unordered_map<PdfReference, PdfReference> mappedObjects;
         return GetDocument().InsertDocumentPageAt(atIndex, doc, pageIndex, mappedObjects);
     }
 
@@ -348,7 +342,10 @@ void PdfPageCollection::initPages()
     unsigned count = getChildCount(GetObject());
     if (count != 0)
     {
-        m_Pages.reserve(count);
+        // /Count is attacker-controlled and may be far larger than the real
+        // page tree: a page can't outnumber the document objects, so cap the
+        // reservation (only a hint) to avoid a huge allocation from a tiny file
+        m_Pages.reserve(std::min(count, GetDocument().GetObjects().GetObjectCount()));
         unordered_set<PdfObject*> visitedNodes;
         (void)traversePageTreeNode(GetObject(), count, parents, visitedNodes);
     }
@@ -399,6 +396,14 @@ unsigned PdfPageCollection::traversePageTreeNode(PdfObject& obj, unsigned count,
         }
         case PdfPageTreeNodeType::Page:
         {
+            // A page listed more than once would get sibling wrappers sharing
+            // its inline arrays, which one of them could replace and free
+            if (!visitedNodes.insert(&obj).second)
+            {
+                PoDoFo::LogMessage(PdfLogSeverity::Warning, "Skipping a page listed more than once in the page tree");
+                return count;
+            }
+
             unsigned index = (unsigned)m_Pages.size();
             unique_ptr<PdfPage> page(new PdfPage(obj, vector<PdfObject*>(parents)));
             m_Pages.push_back(page.get());
@@ -414,6 +419,11 @@ unsigned PdfPageCollection::traversePageTreeNode(PdfObject& obj, unsigned count,
     }
 }
 
+// Flatten the document page structure by recreating a single /Pages
+// node and insert all pages there. This is allowed by PDF
+// Specification, see ISO 32000-2:2020, 7.7.3.2 Page tree nodes:
+// "PDF processors shall not be required to preserve the existing
+// structure of the page tree"
 void PdfPageCollection::FlattenStructure()
 {
     if (m_kidsArray != nullptr)
@@ -421,11 +431,18 @@ void PdfPageCollection::FlattenStructure()
 
     initPages();
 
-    // Flatten the document page structure by recreating a single /Pages
-    // node and insert all pages there. This is allowed by PDF
-    // Specification, see ISO 32000-2:2020, 7.7.3.2 Page tree nodes:
-    // "PDF processors shall not be required to preserve the existing
-    // structure of the page tree"
+    // /Kids in the page tree which may hold inlined pages: flatten
+    // the pages eagerly to move them to new objects in such case,
+    // so they are not destroyed when the /Kids array is replaced.
+    // It also leaves the collection unflattened if a page throws
+    for (unsigned i = 0; i < m_Pages.size(); i++)
+        m_Pages[i]->FlattenStructure();
+
+    // The pages now hold their own copy of the attributes inherited from
+    // the root: remove them, so the pages inserted later don't inherit them
+    for (auto& name : PdfPage::GetInheritableAttributes())
+        GetDictionary().RemoveKey(name);
+
     auto& kidsObj = GetDocument().GetObjects().CreateArrayObject();
     GetDictionary().AddKeyIndirect("Kids"_n, kidsObj);
     m_kidsArray = &kidsObj.GetArray();
@@ -433,8 +450,6 @@ void PdfPageCollection::FlattenStructure()
     for (unsigned i = 0; i < m_Pages.size(); i++)
     {
         auto page = m_Pages[i];
-        page->FlattenStructure();
-
         // Fix pages parent and add them to /Kids
         page->GetDictionary().AddKey("Parent"_n, GetObject().GetIndirectReference());
         (*m_kidsArray).AddIndirect(page->GetObject());

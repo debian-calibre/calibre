@@ -46,12 +46,8 @@ void PdfAnnotationCollection::RemoveAnnotAt(unsigned index)
     if (index >= m_Annots.size())
         PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
 
-    if (m_Annots[index] != nullptr)
-    {
-        // It may be null if the annotation is invalid
-        m_annotMap->erase(m_annotMap->find(m_Annots[index]->GetObject().GetIndirectReference()));
-    }
-
+    inlineAnnotationArray();
+    promoteDirectEntries();
     m_annotArray->RemoveAt(index);
     m_Annots.erase(m_Annots.begin() + index);
     fixIndices(index);
@@ -68,9 +64,11 @@ void PdfAnnotationCollection::RemoveAnnot(const PdfReference& ref)
         return;
 
     unsigned index = found->second;
-    m_Annots.erase(m_Annots.begin() + index);
+    PODOFO_ASSERT(index < m_Annots.size());
+    inlineAnnotationArray();
+    promoteDirectEntries();
     m_annotArray->RemoveAt(index);
-    m_annotMap->erase(found);
+    m_Annots.erase(m_Annots.begin() + index);
     fixIndices(index);
 
     // NOTE: No need to remove the object from the document
@@ -86,38 +84,90 @@ unsigned PdfAnnotationCollection::GetCount() const
 PdfAnnotationCollection::iterator PdfAnnotationCollection::begin()
 {
     initAnnotations();
-    return m_Annots.begin();
+    return iterator(m_Annots.begin(), m_Annots.end());
 }
 
 PdfAnnotationCollection::iterator PdfAnnotationCollection::end()
 {
     initAnnotations();
-    return m_Annots.end();
+    return iterator(m_Annots.end(), m_Annots.end());
 }
 
 PdfAnnotationCollection::const_iterator PdfAnnotationCollection::begin() const
 {
     const_cast<PdfAnnotationCollection&>(*this).initAnnotations();
-    return m_Annots.begin();
+    return const_iterator(m_Annots.begin(), m_Annots.end());
 }
 
 PdfAnnotationCollection::const_iterator PdfAnnotationCollection::end() const
 {
     const_cast<PdfAnnotationCollection&>(*this).initAnnotations();
-    return m_Annots.end();
+    return const_iterator(m_Annots.end(), m_Annots.end());
 }
 
 PdfAnnotation& PdfAnnotationCollection::addAnnotation(unique_ptr<PdfAnnotation>&& annot)
 {
     initAnnotations();
     if (m_annotArray == nullptr)
+    {
         m_annotArray = &m_Page->GetDictionary().AddKey("Annots"_n, PdfArray()).GetArray();
+    }
+    else
+    {
+        inlineAnnotationArray();
+        promoteDirectEntries();
+    }
 
-    (*m_annotMap)[annot->GetObject().GetIndirectReference()] = m_annotArray->GetSize();
+    (*m_annotMap)[annot->GetObject().GetIndirectReference()] = (unsigned)m_Annots.size();
     m_annotArray->AddIndirectSafe(annot->GetObject());
     auto ret = annot.get();
     m_Annots.push_back(std::move(annot));
     return *ret;
+}
+
+// An /Annots array stored in its own object may be shared with other pages, and
+// Adobe Acrobat reports its change on an incremental update as a generic DocMDP
+// change: it's copied inline in the page before a modification
+void PdfAnnotationCollection::inlineAnnotationArray()
+{
+    if (!m_annotArray->GetOwner()->IsIndirect())
+        return;
+
+    m_annotArray = &m_Page->GetDictionary().AddKey("Annots"_n, PdfArray(*m_annotArray)).GetArray();
+}
+
+// Annotations from direct dictionaries point into the array storage, which a
+// modification can relocate or free: such entries are first moved to indirect
+// objects, as the specification requires, and the elements are rebound to them
+void PdfAnnotationCollection::promoteDirectEntries()
+{
+    PODOFO_ASSERT(m_annotArray->GetSize() == m_Annots.size());
+    bool promoted = false;
+    for (unsigned i = 0; i < m_annotArray->GetSize(); i++)
+    {
+        auto& elem = (*m_annotArray)[i];
+        if (elem.IsDictionary())
+        {
+            // It's an annotation stored directly in the array
+            auto& obj = PoDoFo::MoveToIndirect(elem);
+            if (m_Annots[i] != nullptr)
+                m_Annots[i]->SetObject(obj);
+
+            promoted = true;
+        }
+    }
+
+    if (!promoted)
+        return;
+
+    // Key the map again, as the promoted entries have their own references now
+    m_annotMap->clear();
+    unsigned i = 0;
+    for (auto obj : m_annotArray->GetIndirectIterator())
+    {
+        (void)m_annotMap->try_emplace(obj->GetIndirectReference(), i);
+        i++;
+    }
 }
 
 PdfArray* PdfAnnotationCollection::getAnnotationsArray() const
@@ -137,7 +187,7 @@ PdfAnnotation& PdfAnnotationCollection::getAnnotAt(unsigned index) const
 
     auto ret = m_Annots[index].get();
     if (ret == nullptr)
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The exception at index {} is invalid", index);
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The annotation at index {} is invalid", index);
 
     return *ret;
 }
@@ -145,10 +195,15 @@ PdfAnnotation& PdfAnnotationCollection::getAnnotAt(unsigned index) const
 PdfAnnotation& PdfAnnotationCollection::getAnnot(const PdfReference& ref) const
 {
     const_cast<PdfAnnotationCollection&>(*this).initAnnotations();
-    unsigned index = (*m_annotMap).at(ref);
+    auto found = m_annotMap->find(ref);
+    if (found == m_annotMap->end())
+        PODOFO_RAISE_ERROR(PdfErrorCode::ValueOutOfRange);
+
+    unsigned index = found->second;
+    PODOFO_ASSERT(index < m_Annots.size());
     auto ret = m_Annots[index].get();
     if (ret == nullptr)
-        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The exception at index {} is invalid", index);
+        PODOFO_RAISE_ERROR_INFO(PdfErrorCode::InvalidHandle, "The annotation at index {} is invalid", index);
 
     return *ret;
 }
@@ -158,38 +213,60 @@ void PdfAnnotationCollection::initAnnotations()
     if (m_annotMap != nullptr)
         return;
 
-    m_annotMap.reset(new AnnotationMap());
-    m_annotArray = getAnnotationsArray();
-    if (m_annotArray == nullptr)
-        return;
-
-    m_Annots.reserve(m_annotArray->size());
-    unique_ptr<PdfAnnotation> annot;
-    unsigned i = 0;
-    for (auto obj : m_annotArray->GetIndirectIterator())
+    // The state is built in locals and committed at the end, so a throwing
+    // entry doesn't leave the collection half initialized
+    unique_ptr<AnnotationMap> annotMap(new AnnotationMap());
+    AnnotationList annots;
+    auto annotArray = getAnnotationsArray();
+    if (annotArray != nullptr)
     {
-        (*m_annotMap)[obj->GetIndirectReference()] = i;
-        // The annotation may be invalid. In that case we push a placeholder
-        if (PdfAnnotation::TryCreateFromObject(*obj, annot))
+        annots.reserve(annotArray->size());
+        unique_ptr<PdfAnnotation> annot;
+        unsigned i = 0;
+        for (auto obj : annotArray->GetIndirectIterator())
         {
-            annot->SetPage(*m_Page);
-            m_Annots.push_back(std::move(annot));
-        }
-        else
-        {
-            m_Annots.push_back(nullptr);
-        }
+            auto& ref = obj->GetIndirectReference();
+            // NOTE: Direct annotations all share the 0 0 R reference
+            if (!annotMap->try_emplace(ref, i).second && ref.IsIndirect())
+            {
+                // A repeated reference is wrapped only once: the duplicate is a placeholder
+                annots.push_back(nullptr);
+            }
+            else if (PdfAnnotation::TryCreateFromObject(*obj, annot))
+            {
+                annot->SetPage(*m_Page);
+                annots.push_back(std::move(annot));
+            }
+            else
+            {
+                // The annotation may be invalid. In that case we push a placeholder
+                annots.push_back(nullptr);
+            }
 
-        i++;
+            i++;
+        }
     }
+
+    m_annotMap = std::move(annotMap);
+    m_Annots = std::move(annots);
+    m_annotArray = annotArray;
 }
 
 void PdfAnnotationCollection::fixIndices(unsigned index)
 {
-    for (auto& pair : *m_annotMap)
+    for (auto it = m_annotMap->begin(); it != m_annotMap->end(); )
     {
+        if (it->second == index)
+        {
+            // The entry of the removed slot: it exists also for placeholders
+            it = m_annotMap->erase(it);
+            continue;
+        }
+
         // Decrement indices where needed
-        if (pair.second > index)
-            pair.second--;
+        if (it->second > index)
+            it->second--;
+
+        it++;
     }
 }

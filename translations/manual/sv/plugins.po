@@ -18,7 +18,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: calibre\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-11-05 03:11+0000\n"
+"POT-Creation-Date: 2026-11-18 02:55+0000\n"
 "PO-Revision-Date: 2014-06-17 08:35+0000\n"
 "Last-Translator: Sofie Sundberg <filaes@gmail.com>, 2018\n"
 "Language-Team: Swedish (http://app.transifex.com/calibre/calibre/language/sv/)\n"
@@ -2429,7 +2429,7 @@ msgstr "Återanrop som låter drivrutiner ändra det standardfilnamn som anges a
 msgid ""
 "Perform any device specific sanitization on the path components for files to"
 " be uploaded to the device"
-msgstr "Utför valfri enhetsspecifik sanering på sökvägskomponenter för filer som överförs till enheten"
+msgstr "Utför eventuell enhetsspecifik sanering av sökvägskomponenterna för filer som ska överföras till enheten"
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/device.pydocstring
 #: of calibre.devices.usbms.device.Device.get_annotations:1
@@ -2447,6 +2447,26 @@ msgid ""
 "The base class for all USBMS devices. Implements the logic for "
 "sending/getting/updating metadata/caching metadata/etc."
 msgstr "Basklassen för alla USBMS-enheter. Implementerar logiken för att skicka, hämta, uppdatera och cachelagra metadata med mera."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.SCAN_SKIP_DIR_SUFFIXES:1
+msgid "Folders whose names end with one of these are not searched for books"
+msgstr "Mappar vars namn slutar med någon av dessa ändelser genomsöks inte efter böcker"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.FOLDER_SCAN_THREADS:1
+msgid ""
+"Number of folders to list at the same time when the device is a folder, "
+"which may be on a slow network drive, see :meth:`scan_threads`"
+msgstr "Antal mappar vars innehåll ska listas samtidigt när enheten är en mapp, som kan finnas på en långsam nätverksenhet. Se :meth:`scan_threads`"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.scan_threads:1
+msgid ""
+"The number of threads to use to list the folders on the device. Only folders"
+" connected as devices use more than one, as they may be on a high latency "
+"network drive, whereas real devices gain nothing from it."
+msgstr "Antalet trådar som ska användas för att lista innehållet i mapparna på enheten. Fler än en tråd används endast för mappar som anslutits som enheter, eftersom dessa kan finnas på en nätverksenhet med hög latens. Fysiska enheter har ingen nytta av detta."
 
 #: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
 #: of calibre.devices.usbms.driver.USBMS.upload_cover:1
@@ -2477,6 +2497,32 @@ msgstr "Fullständig sökväg till e-bokfilen"
 #: of calibre.devices.usbms.driver.USBMS.normalize_path:1
 msgid "Return path with platform native path separators"
 msgstr "Returnera sökvägen med plattformens egna sökvägsavskiljare"
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.supports_deferred_datetime:1
+msgid ""
+"True if :attr:`book_class` can be created without looking up the date of the"
+" book file, see the defer_datetime argument of :class:`Book`. Book classes "
+"that override __init__() without that argument are created normally."
+msgstr "True om en instans av :attr:`book_class` kan skapas utan att bokfilens datum hämtas. Se argumentet defer_datetime till :class:`Book`. Instanser av Book-klasser som åsidosätter __init__() utan detta argument skapas på vanligt sätt."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.parse_metadata_cache:1
+msgid ""
+"Do not look up the date of every book, which is slow on network drives, the "
+"caller must set it. Only use when :meth:`supports_deferred_datetime` returns"
+" True."
+msgstr "Hämta inte datumet för varje bok, eftersom det går långsamt på nätverksenheter. Anroparen måste själv ange datumet. Använd endast när :meth:`supports_deferred_datetime` returnerar True."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:1
+msgid "Re-read the metadata of book if the size of its file changed."
+msgstr "Läs in bokens metadata på nytt om bokfilens storlek har ändrats."
+
+#: ../../../__w/calibre/calibre/src/calibre/devices/usbms/driver.pydocstring
+#: of calibre.devices.usbms.driver.USBMS.update_metadata_item:3
+msgid "The size of the file, if already known, to avoid a stat() call."
+msgstr "Filens storlek, om den redan är känd, för att undvika ett stat()-anrop."
 
 #: ../../../__w/calibre/calibre/manual/plugins.rst:157
 msgid "User interface actions"

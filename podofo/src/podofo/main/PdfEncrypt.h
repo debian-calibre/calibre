@@ -90,6 +90,8 @@ enum class PdfEncryptionAlgorithm : uint8_t
 
 enum class PdfAuthResult : uint8_t
 {
+    Unknown = 0,
+    ///< @deprecated Use Unknown instead
     Unkwnon = 0,
     Failed,     ///< Failed to authenticate to this PDF
     User,       ///< Success authenticating a user for this PDF
@@ -168,12 +170,14 @@ public:
     /// Ensure encryption key and /O, /U, /OE, /UE values are initialized
     ///
     /// @param documentId the documentId of the current document
+    /// @param context the encryption context
     void EnsureEncryptionInitialized(const PdfString& documentId, PdfEncryptContext& context);
 
     /// Tries to authenticate a user using either the user or owner password
     ///
     /// @param password owner or user password
     /// @param documentId the documentId of the PDF file
+    /// @param context the encryption context
     ///
     /// @returns true if either the owner or user password matches password
     void Authenticate(const std::string_view& password, const PdfString& documentId, PdfEncryptContext& context) const;
@@ -191,8 +195,10 @@ public:
     ///
     /// Warning: Currently only RC4 based encryption is supported using output streams!
     ///
-    /// @param inputStream the created InputStream reads all decrypted
-    ///         data to this input stream.
+    /// @param inputStream the input stream to wrap with decryption
+    /// @param inputLen the length of the data in the input stream
+    /// @param context the encryption context
+    /// @param objref the indirect reference of the object being decrypted
     ///
     /// @returns an InputStream that decrypts all data.
     virtual std::unique_ptr<InputStream> CreateEncryptionInputStream(InputStream& inputStream, size_t inputLen,
@@ -203,8 +209,9 @@ public:
     ///
     /// Warning: Currently only RC4 based encryption is supported using output streams!
     ///
-    /// @param outputStream the created OutputStream writes all encrypted
-    ///         data to this output stream.
+    /// @param outputStream the output stream to wrap with encryption
+    /// @param context the encryption context
+    /// @param objref the indirect reference of the object being encrypted
     ///
     /// @returns a OutputStream that encrypts all data.
     virtual std::unique_ptr<OutputStream> CreateEncryptionOutputStream(OutputStream& outputStream,
@@ -295,6 +302,7 @@ public:
     void DecryptTo(charbuff& out, const bufferview& view, PdfEncryptContext& context, const PdfReference& objref) const;
 
     /// Calculate stream size
+    /// @param length original stream size
     virtual size_t CalculateStreamLength(size_t length) const = 0;
 
     /// Calculate stream offset
