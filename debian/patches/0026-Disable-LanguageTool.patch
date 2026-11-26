@@ -37,7 +37,7 @@ index e493203..953326e 100644
          import langtool
          from langtool._base import speedups
 diff --git a/src/calibre/utils/grammar/rules.py b/src/calibre/utils/grammar/rules.py
-index 4af1f46..f0b6677 100644
+index 4af1f46..4878a45 100644
 --- a/src/calibre/utils/grammar/rules.py
 +++ b/src/calibre/utils/grammar/rules.py
 @@ -124,24 +124,17 @@ def langtool_cache_dir() -> str:
@@ -79,7 +79,7 @@ index 4af1f46..f0b6677 100644
  def is_language_data_downloaded(lang: str | None) -> bool:
      """True if checking the language needs no downloads. Raises UnsupportedRulesLanguage for unsupported languages."""
 -    return bool(get_langtool().is_ready(code_for(lang)))
-+    raise UnsupportedRulesLanguage
++    raise UnsupportedRulesLanguage(lang)
 +    return bool(True)
  
  
